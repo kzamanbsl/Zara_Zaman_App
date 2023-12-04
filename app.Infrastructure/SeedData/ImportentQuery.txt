@@ -1,0 +1,4 @@
+﻿
+--#Delete Table Date with Identity
+	DELETE FROM FiscalYear;
+	DBCC CHECKIDENT (FiscalYear, RESEED, 0);
