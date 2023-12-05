@@ -131,6 +131,28 @@ namespace app.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("MainMenu", "dbo");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            CreatedBy = "System Admin",
+                            CreatedOn = new DateTime(2023, 12, 5, 17, 29, 10, 546, DateTimeKind.Local).AddTicks(9993),
+                            Icon = "<i class=\"fas fa-user\"></i>",
+                            IsActive = true,
+                            Name = "User Management",
+                            OrderNo = 1
+                        },
+                        new
+                        {
+                            Id = 2L,
+                            CreatedBy = "System Admin",
+                            CreatedOn = new DateTime(2023, 12, 5, 17, 29, 10, 547, DateTimeKind.Local).AddTicks(5),
+                            Icon = "<i class=\"fas fa-cog\"></i>",
+                            IsActive = true,
+                            Name = "Configuration",
+                            OrderNo = 2
+                        });
                 });
 
             modelBuilder.Entity("app.EntityModel.CoreModel.MenuItem", b =>
@@ -182,6 +204,106 @@ namespace app.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("MenuItem", "dbo");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            Action = "AddRecord",
+                            Controller = "MainMenu",
+                            CreatedBy = "System Admin",
+                            CreatedOn = new DateTime(2023, 12, 5, 17, 29, 10, 547, DateTimeKind.Local).AddTicks(20),
+                            Icon = "<i class=\"fas fa-plus\"></i>",
+                            IsActive = true,
+                            MenuId = 1L,
+                            Name = "Add Menu",
+                            OrderNo = 1,
+                            ShortName = "Add Menu"
+                        },
+                        new
+                        {
+                            Id = 2L,
+                            Action = "Index",
+                            Controller = "MainMenu",
+                            CreatedBy = "System Admin",
+                            CreatedOn = new DateTime(2023, 12, 5, 17, 29, 10, 547, DateTimeKind.Local).AddTicks(24),
+                            Icon = "<i class=\"fas fa-list\"></i>",
+                            IsActive = true,
+                            MenuId = 1L,
+                            Name = "Main Menu List",
+                            OrderNo = 2,
+                            ShortName = "Main Menu List"
+                        },
+                        new
+                        {
+                            Id = 3L,
+                            Action = "AddRecord",
+                            Controller = "MenuItem",
+                            CreatedBy = "System Admin",
+                            CreatedOn = new DateTime(2023, 12, 5, 17, 29, 10, 547, DateTimeKind.Local).AddTicks(26),
+                            Icon = "<i class=\"fas fa-plus\"></i>",
+                            IsActive = true,
+                            MenuId = 1L,
+                            Name = "Add Menu Item",
+                            OrderNo = 3,
+                            ShortName = "Add Menu Item"
+                        },
+                        new
+                        {
+                            Id = 4L,
+                            Action = "Index",
+                            Controller = "MenuItem",
+                            CreatedBy = "System Admin",
+                            CreatedOn = new DateTime(2023, 12, 5, 17, 29, 10, 547, DateTimeKind.Local).AddTicks(28),
+                            Icon = "<i class=\"fas fa-list\"></i>",
+                            IsActive = true,
+                            MenuId = 1L,
+                            Name = "Menu Item List",
+                            OrderNo = 4,
+                            ShortName = "Menu Item List"
+                        },
+                        new
+                        {
+                            Id = 5L,
+                            Action = "AddPermission",
+                            Controller = "UserPermission",
+                            CreatedBy = "System Admin",
+                            CreatedOn = new DateTime(2023, 12, 5, 17, 29, 10, 547, DateTimeKind.Local).AddTicks(29),
+                            Icon = "<i class=\"fas fa-plus\"></i>",
+                            IsActive = true,
+                            MenuId = 1L,
+                            Name = "Menu Permission",
+                            OrderNo = 5,
+                            ShortName = "Menu Permission"
+                        },
+                        new
+                        {
+                            Id = 6L,
+                            Action = "AddRecord",
+                            Controller = "Company",
+                            CreatedBy = "System Admin",
+                            CreatedOn = new DateTime(2023, 12, 5, 17, 29, 10, 547, DateTimeKind.Local).AddTicks(30),
+                            Icon = "<i class=\"fas fa-plus\"></i>",
+                            IsActive = true,
+                            MenuId = 2L,
+                            Name = "Add Company",
+                            OrderNo = 6,
+                            ShortName = "Add Company"
+                        },
+                        new
+                        {
+                            Id = 7L,
+                            Action = "Index",
+                            Controller = "Company",
+                            CreatedBy = "System Admin",
+                            CreatedOn = new DateTime(2023, 12, 5, 17, 29, 10, 547, DateTimeKind.Local).AddTicks(31),
+                            Icon = "<i class=\"fas fa-list\"></i>",
+                            IsActive = true,
+                            MenuId = 2L,
+                            Name = "Company List",
+                            OrderNo = 7,
+                            ShortName = "Company List"
+                        });
                 });
 
             modelBuilder.Entity("app.EntityModel.CoreModel.UserPermissions", b =>
@@ -219,6 +341,78 @@ namespace app.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("UserPermissions", "dbo");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            CreatedBy = "System Admin",
+                            CreatedOn = new DateTime(2023, 12, 5, 17, 29, 10, 547, DateTimeKind.Local).AddTicks(156),
+                            IsActive = true,
+                            MenuItemId = 1L,
+                            OrderNo = 0,
+                            UserId = "0f04028e-587c-47ad-8b36-6dbd6a059fa4"
+                        },
+                        new
+                        {
+                            Id = 2L,
+                            CreatedBy = "System Admin",
+                            CreatedOn = new DateTime(2023, 12, 5, 17, 29, 10, 547, DateTimeKind.Local).AddTicks(158),
+                            IsActive = true,
+                            MenuItemId = 2L,
+                            OrderNo = 0,
+                            UserId = "0f04028e-587c-47ad-8b36-6dbd6a059fa4"
+                        },
+                        new
+                        {
+                            Id = 3L,
+                            CreatedBy = "System Admin",
+                            CreatedOn = new DateTime(2023, 12, 5, 17, 29, 10, 547, DateTimeKind.Local).AddTicks(159),
+                            IsActive = true,
+                            MenuItemId = 3L,
+                            OrderNo = 0,
+                            UserId = "0f04028e-587c-47ad-8b36-6dbd6a059fa4"
+                        },
+                        new
+                        {
+                            Id = 4L,
+                            CreatedBy = "System Admin",
+                            CreatedOn = new DateTime(2023, 12, 5, 17, 29, 10, 547, DateTimeKind.Local).AddTicks(160),
+                            IsActive = true,
+                            MenuItemId = 4L,
+                            OrderNo = 0,
+                            UserId = "0f04028e-587c-47ad-8b36-6dbd6a059fa4"
+                        },
+                        new
+                        {
+                            Id = 5L,
+                            CreatedBy = "System Admin",
+                            CreatedOn = new DateTime(2023, 12, 5, 17, 29, 10, 547, DateTimeKind.Local).AddTicks(161),
+                            IsActive = true,
+                            MenuItemId = 5L,
+                            OrderNo = 0,
+                            UserId = "0f04028e-587c-47ad-8b36-6dbd6a059fa4"
+                        },
+                        new
+                        {
+                            Id = 6L,
+                            CreatedBy = "System Admin",
+                            CreatedOn = new DateTime(2023, 12, 5, 17, 29, 10, 547, DateTimeKind.Local).AddTicks(161),
+                            IsActive = true,
+                            MenuItemId = 6L,
+                            OrderNo = 0,
+                            UserId = "0f04028e-587c-47ad-8b36-6dbd6a059fa4"
+                        },
+                        new
+                        {
+                            Id = 7L,
+                            CreatedBy = "System Admin",
+                            CreatedOn = new DateTime(2023, 12, 5, 17, 29, 10, 547, DateTimeKind.Local).AddTicks(162),
+                            IsActive = true,
+                            MenuItemId = 7L,
+                            OrderNo = 0,
+                            UserId = "0f04028e-587c-47ad-8b36-6dbd6a059fa4"
+                        });
                 });
 
             modelBuilder.Entity("app.Infrastructure.Auth.ApplicationUser", b =>
@@ -311,6 +505,50 @@ namespace app.Infrastructure.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", "dbo");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "0f04028e-587c-47ad-8b36-6dbd6a059fa4",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "616a2e8f-dc94-4576-8ec4-c9d75d1df6d1",
+                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "jishan.bd46@gmail.com",
+                            EmailConfirmed = true,
+                            FullName = "System Admin",
+                            IsActive = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "JISHAN.BD46@GMAIL.COM",
+                            NormalizedUserName = "ADMINISTRATOR",
+                            PasswordHash = "AQAAAAEAACcQAAAAEE8d8uAFK+zBNJ3j+s3k5c6D+OqrJJqgpV0CF42z2UDwqm/kSD/LWNXN8OAx/56YHg==",
+                            PhoneNumber = "01840019826",
+                            PhoneNumberConfirmed = true,
+                            SecurityStamp = "37QJAUUNCSSXNFFB6ZXI6OJLHSCS5J6I",
+                            TwoFactorEnabled = false,
+                            UserName = "administrator",
+                            UserType = 1
+                        },
+                        new
+                        {
+                            Id = "0f04028e-587c-37ad-8b36-6dbd6a059fa10",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "616a2e8f-dc94-4576-8ec4-c9d75d1df6d9",
+                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "cus.jishan@gmail.com",
+                            EmailConfirmed = true,
+                            FullName = "System Engineers",
+                            IsActive = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "CUS.JISHAN@GMAIL.COM",
+                            NormalizedUserName = "CUSTOMER",
+                            PasswordHash = "AQAAAAEAACcQAAAAEE8d8uAFK+zBNJ3j+s3k5c6D+OqrJJqgpV0CF42z2UDwqm/kSD/LWNXN8OAx/56YHg==",
+                            PhoneNumber = "01840019826",
+                            PhoneNumberConfirmed = true,
+                            SecurityStamp = "37QJAUUNCSSXNFFB6ZXI6OJLHSCS5J63",
+                            TwoFactorEnabled = false,
+                            UserName = "Customer",
+                            UserType = 2
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -338,6 +576,22 @@ namespace app.Infrastructure.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", "dbo");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "8e445865-a24d-4543-a6c6-9443d048cdb9",
+                            ConcurrencyStamp = "785b26c9-66ab-42e6-9623-ac7731386466",
+                            Name = "Customer",
+                            NormalizedName = "CUSTOMER"
+                        },
+                        new
+                        {
+                            Id = "2c5e174e-3b0e-446f-86af-483d56fd7210",
+                            ConcurrencyStamp = "02bdbd9b-639d-443b-ad94-fee846d666b8",
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -425,6 +679,18 @@ namespace app.Infrastructure.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", "dbo");
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "0f04028e-587c-47ad-8b36-6dbd6a059fa4",
+                            RoleId = "2c5e174e-3b0e-446f-86af-483d56fd7210"
+                        },
+                        new
+                        {
+                            UserId = "0f04028e-587c-37ad-8b36-6dbd6a059fa10",
+                            RoleId = "8e445865-a24d-4543-a6c6-9443d048cdb9"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>

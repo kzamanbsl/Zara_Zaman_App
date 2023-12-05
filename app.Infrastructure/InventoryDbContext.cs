@@ -18,7 +18,7 @@ namespace app.Infrastructure
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-            // BaseFixedData.SeedData(builder); // This Data Execute only 1st time Migration.
+            BaseFixedData.SeedData(builder);
             base.OnModelCreating(builder);
             new BaseModelConfig().ModelBuilderConfig(builder);
         }
