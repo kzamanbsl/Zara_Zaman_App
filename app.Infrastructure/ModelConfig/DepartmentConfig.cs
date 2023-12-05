@@ -4,16 +4,16 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace app.Infrastructure.ModelConfig
 {
-    public class TestItemConfig : IEntityTypeConfiguration<TestItem>
+    public class DepartmentConfig : IEntityTypeConfiguration<Department>
     {
 
-        public void Configure(EntityTypeBuilder<TestItem> builder)
+        public void Configure(EntityTypeBuilder<Department> builder)
         {
             builder.HasKey(c => c.Id);
             builder.Property(c => c.Name).HasMaxLength(100);
-            builder.Property(c => c.Description).HasMaxLength(500);
+            builder.Property(c => c.Description).HasMaxLength(250);
 
-            builder.ToTable(TableNameEnum.TestItem.ToString());
+            builder.ToTable(TableNameEnum.Department.ToString());
         }
     }
 }

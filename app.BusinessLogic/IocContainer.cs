@@ -7,6 +7,7 @@ using app.Services.UserServices;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using app.Services.UserPermissionsServices;
+using app.Services.DepartmentServices;
 
 namespace app.Services
 {
@@ -21,6 +22,7 @@ namespace app.Services
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IDropDownService, DropDownService>();
             services.AddTransient<ICompanyService, CompanyService>();
+            services.AddTransient<IDepartmentService, DepartmentService>();
             return services;
         }
     }

@@ -15,7 +15,7 @@ namespace app.Infrastructure.ModelConfig
             new UserPermissionsConfig()?.Configure(builder.Entity<UserPermissions>());
             new CompanyConfig()?.Configure(builder.Entity<Company>());
 
-            new TestItemConfig()?.Configure(builder.Entity<TestItem>());
+            new DepartmentConfig()?.Configure(builder.Entity<Department>());
 
         }
     }

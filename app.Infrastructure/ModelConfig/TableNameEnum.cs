@@ -8,7 +8,7 @@
         UserPermissions,
         Company,
 
-        TestItem,
+        Department,
        
     }
 }

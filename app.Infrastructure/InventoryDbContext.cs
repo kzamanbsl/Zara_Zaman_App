@@ -28,7 +28,7 @@ namespace app.Infrastructure
         public virtual DbSet<UserPermissions> UserPermissions { get; set; }
         public virtual DbSet<Company> Company { get; set; }
 
-        public virtual DbSet<TestItem> TestItem { get; set; }
+        public virtual DbSet<Department> Department { get; set; }
 
     }
 }
