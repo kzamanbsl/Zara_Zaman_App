@@ -9,6 +9,6 @@
         Company,
 
         Department,
-       
+        Grade,
     }
 }
