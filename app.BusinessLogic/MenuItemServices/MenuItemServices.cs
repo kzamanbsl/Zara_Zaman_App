@@ -1,6 +1,7 @@
 ﻿using app.EntityModel.CoreModel;
 using app.Infrastructure;
 using app.Infrastructure.Repository;
+using Microsoft.EntityFrameworkCore;
 
 namespace app.Services.MenuItemServices
 {
@@ -16,7 +17,7 @@ namespace app.Services.MenuItemServices
 
         public async Task<bool> AddRecord(MenuItemViewModel model)
         {
-            var getItem = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name == model.Name && f.Action == model.Action && f.Controller == model.Controller);
+            var getItem = _iEntityRepository.AllIQueryableAsync().AsNoTracking().FirstOrDefault(f => f.Name == model.Name && f.Action == model.Action && f.Controller == model.Controller);
             if (getItem == null)
             {
                 MenuItem item = new MenuItem();
@@ -95,7 +96,7 @@ namespace app.Services.MenuItemServices
 
         public async Task<bool> UpdateRecord(MenuItemViewModel model)
         {
-            var getItem = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name == model.Name && f.Action == model.Action && f.Controller == model.Controller && f.Id != model.Id);
+            var getItem = _iEntityRepository.AllIQueryableAsync().AsNoTracking().FirstOrDefault(f => f.Name == model.Name && f.Action == model.Action && f.Controller == model.Controller && f.Id != model.Id);
             if (getItem == null)
             {
                 MenuItem item = await _iEntityRepository.GetByIdAsync(model.Id);
