@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace app.EntityModel.AppModels
 {
-    public class Designation
+    public class Designation:BaseEntity
     {
         public string Name { get; set; }
     }
