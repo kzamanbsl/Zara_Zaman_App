@@ -15,6 +15,7 @@ namespace app.WebApp.AdminControllers
             _iRoleService = iRoleService;
         }
 
+        #region User Section 
         [HttpGet]
         public async Task<IActionResult> Index()
         {
@@ -25,7 +26,7 @@ namespace app.WebApp.AdminControllers
 
         [HttpGet]
         public async Task<IActionResult> AddRecord()
-        {           
+        {
             UserViewModel model = new UserViewModel();
             ViewBag.Record = new SelectList(_iRoleService.GetAllAsync().Select(s => new { Id = s.Name, Name = s.Name }), "Id", "Name");
             return View(model);
@@ -76,5 +77,19 @@ namespace app.WebApp.AdminControllers
             var res = await _iUserService.SoftDelete(id);
             return RedirectToAction("Index");
         }
+        #endregion
+
+        #region Role Section   
+
+        [HttpPost]
+        public async Task<IActionResult> AddNewRole(RoleViewModel model)
+        {
+            var result = await _iRoleService.AddAsync(model);
+            return View(result); 
+        }
+
+
+        #endregion
+
     }
 }
