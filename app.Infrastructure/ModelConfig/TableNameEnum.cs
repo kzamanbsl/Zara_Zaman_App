@@ -9,7 +9,9 @@
         Company,
 
         Department,
+        Grade,
         Designation,
         EmployeeCategory,
+
     }
 }

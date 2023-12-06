@@ -27,10 +27,10 @@ namespace app.Infrastructure
         public virtual DbSet<MenuItem> MenuItem { get; set; }
         public virtual DbSet<UserPermissions> UserPermissions { get; set; }
         public virtual DbSet<Company> Company { get; set; }
-
-        public virtual DbSet<Department> Department { get; set; }
         public virtual DbSet<Designation> Designation { get; set; }
+        public virtual DbSet<Department> Department { get; set; }
         public virtual DbSet<EmployeeCategory> EmployeeCategory { get; set; }
+        public virtual DbSet<Grade> Grade { get; set; }
 
     }
 }
