@@ -10,6 +10,6 @@
 
         Department,
         Designation,
-
+        EmployeeCategory,
     }
 }

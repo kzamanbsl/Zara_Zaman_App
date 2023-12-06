@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using app.Services.UserPermissionsServices;
 using app.Services.DepartmentServices;
 using app.Services.DesignationServices;
+using app.Services.EmployeeCategoryServices;
 
 namespace app.Services
 {
@@ -25,6 +26,7 @@ namespace app.Services
             services.AddTransient<ICompanyService, CompanyService>();
             services.AddTransient<IDepartmentService, DepartmentService>();
             services.AddTransient<IDesignationService, DesignationService>();
+            services.AddTransient<IEmployeeCategoryService, EmployeeCategoryService>();
 
             return services;
         }
