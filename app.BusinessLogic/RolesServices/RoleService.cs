@@ -28,7 +28,6 @@ namespace app.Services.RolesServices
 
                     return true;
                 }
-
             }
             return false;
 
