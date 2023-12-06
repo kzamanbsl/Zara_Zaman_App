@@ -8,7 +8,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using app.Services.UserPermissionsServices;
 using app.Services.DepartmentServices;
+<<<<<<< HEAD
 using app.Services.GradeServices;
+=======
+using app.Services.DesignationServices;
+>>>>>>> 1a047ec59cb181f128dca383423de02d92ca7f11
 
 namespace app.Services
 {
@@ -24,7 +28,12 @@ namespace app.Services
             services.AddTransient<IDropDownService, DropDownService>();
             services.AddTransient<ICompanyService, CompanyService>();
             services.AddTransient<IDepartmentService, DepartmentService>();
+<<<<<<< HEAD
             services.AddTransient<IGradeService, GradeService>();
+=======
+            services.AddTransient<IDesignationService, DesignationService>();
+
+>>>>>>> 1a047ec59cb181f128dca383423de02d92ca7f11
             return services;
         }
     }

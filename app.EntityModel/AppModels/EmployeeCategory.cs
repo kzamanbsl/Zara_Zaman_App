@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace app.EntityModel.AppModels
 {
-    public class Designation:BaseEntity
+    public class EmployeeCategory : BaseEntity
     {
-        public string Name { get; set; }
+        public string Name { get; set; }    
     }
 }

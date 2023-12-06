@@ -16,7 +16,11 @@ namespace app.Infrastructure.ModelConfig
             new CompanyConfig()?.Configure(builder.Entity<Company>());
 
             new DepartmentConfig()?.Configure(builder.Entity<Department>());
+<<<<<<< HEAD
             new GradeConfig()?.Configure(builder.Entity<Grade>());
+=======
+            new DesignationConfig()?.Configure(builder.Entity<Designation>());
+>>>>>>> 1a047ec59cb181f128dca383423de02d92ca7f11
 
         }
     }
