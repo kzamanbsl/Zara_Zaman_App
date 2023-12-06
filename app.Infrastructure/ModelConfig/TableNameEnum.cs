@@ -12,6 +12,7 @@
         Grade,
         Designation,
         EmployeeCategory,
+        ServiceType,
 
     }
 }
