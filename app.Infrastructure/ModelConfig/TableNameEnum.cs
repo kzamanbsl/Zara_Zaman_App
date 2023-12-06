@@ -9,6 +9,7 @@
         Company,
 
         Department,
-       
+        Designation,
+
     }
 }

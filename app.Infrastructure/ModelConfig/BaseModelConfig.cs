@@ -16,6 +16,7 @@ namespace app.Infrastructure.ModelConfig
             new CompanyConfig()?.Configure(builder.Entity<Company>());
 
             new DepartmentConfig()?.Configure(builder.Entity<Department>());
+            new DesignationConfig()?.Configure(builder.Entity<Designation>());
 
         }
     }

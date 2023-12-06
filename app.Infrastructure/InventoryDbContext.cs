@@ -29,6 +29,6 @@ namespace app.Infrastructure
         public virtual DbSet<Company> Company { get; set; }
 
         public virtual DbSet<Department> Department { get; set; }
-
+        public virtual DbSet<Designation> Designation { get; set; }
     }
 }
