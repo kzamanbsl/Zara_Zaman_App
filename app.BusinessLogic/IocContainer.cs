@@ -12,7 +12,7 @@ using app.Services.GradeServices;
 using app.Services.DesignationServices;
 using app.Services.EmployeeCategoryServices;
 using app.Services.ServiceTypeServices;
-
+using app.Services.OfficeTypeServices;
 
 namespace app.Services
 {
@@ -32,6 +32,7 @@ namespace app.Services
             services.AddTransient<IDesignationService, DesignationService>();
             services.AddTransient<IEmployeeCategoryService, EmployeeCategoryService>();
             services.AddTransient<IServiceTypeService, ServiceTypeService>();
+            services.AddTransient<IOfficeTypeService, OfficeTypeService>();
 
 
             return services;

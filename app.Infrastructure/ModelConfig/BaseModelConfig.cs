@@ -20,6 +20,7 @@ namespace app.Infrastructure.ModelConfig
             new DesignationConfig()?.Configure(builder.Entity<Designation>());
             new EmployeeCategoryConfig()?.Configure(builder.Entity<EmployeeCategory>());
             new ServiceTypeConfig()?.Configure(builder.Entity<ServiceType>());
+            new OfficeTypeConfig()?.Configure(builder.Entity<OfficeType>());
 
 
         }

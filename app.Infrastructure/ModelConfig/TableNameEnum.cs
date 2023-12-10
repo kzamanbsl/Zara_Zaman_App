@@ -13,6 +13,6 @@
         Designation,
         EmployeeCategory,
         ServiceType,
-
+        OfficeType,
     }
 }
