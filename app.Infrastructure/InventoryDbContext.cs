@@ -33,6 +33,8 @@ namespace app.Infrastructure
         public virtual DbSet<Grade> Grade { get; set; }
         public virtual DbSet<ServiceType> ServiceType { get; set; }
         public virtual DbSet<OfficeType> OfficeType { get; set; }
+        public virtual DbSet<DropDownItem> DropDownItem { get; set; }
+
 
     }
 }

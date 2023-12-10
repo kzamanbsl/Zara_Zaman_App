@@ -13,6 +13,7 @@ using app.Services.DesignationServices;
 using app.Services.EmployeeCategoryServices;
 using app.Services.ServiceTypeServices;
 using app.Services.OfficeTypeServices;
+using app.Services.DropDownItemServices;
 
 namespace app.Services
 {
@@ -33,6 +34,7 @@ namespace app.Services
             services.AddTransient<IEmployeeCategoryService, EmployeeCategoryService>();
             services.AddTransient<IServiceTypeService, ServiceTypeService>();
             services.AddTransient<IOfficeTypeService, OfficeTypeService>();
+            services.AddTransient<IDropDownItemService, DropDownItemService>();
 
 
             return services;
