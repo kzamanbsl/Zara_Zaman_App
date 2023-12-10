@@ -13,6 +13,7 @@
         public string MenuName { get; set; }
         public bool IsActive { get; set; }
         public bool IsPermission { get; set; }
+        public bool IsMenuShow { get; set; } 
         public IEnumerable<MenuItemViewModel> DataList { get; set; }
     }
 }

@@ -28,6 +28,7 @@ namespace app.Services.MenuItemServices
                 item.Action = model.Action;
                 item.Controller = model.Controller;
                 item.OrderNo = model.OrderNo;
+                item.IsMenuShow = model.IsMenuShow;
                 var result = await _iEntityRepository.AddAsync(item);
                 if (result.Id > 0)
                 {
@@ -75,6 +76,7 @@ namespace app.Services.MenuItemServices
                                                        MenuId = t1.MenuId,
                                                        MenuName = t2.Name,
                                                        IsActive = t1.IsActive,
+                                                       IsMenuShow = t1.IsMenuShow,
                                                    }).OrderByDescending(x => x.OrderNo).AsEnumerable());
             return model;
         }
@@ -91,6 +93,7 @@ namespace app.Services.MenuItemServices
             model.Icon = item.Icon;
             model.MenuId = item.MenuId;
             model.IsActive = item.IsActive;
+            model.IsMenuShow = item.IsMenuShow;
             return model;
         }
 
@@ -108,6 +111,7 @@ namespace app.Services.MenuItemServices
                 item.Controller = model.Controller;
                 item.OrderNo = model.OrderNo;
                 item.IsActive = model.IsActive;
+                item.IsMenuShow= model.IsMenuShow;
                 var result = await _iEntityRepository.UpdateAsync(item);
                 if (result)
                 {

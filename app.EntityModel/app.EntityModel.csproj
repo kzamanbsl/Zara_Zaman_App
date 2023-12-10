@@ -6,4 +6,8 @@
     <Nullable></Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\app.Utility\app.Utility.csproj" />
+  </ItemGroup>
+
 </Project>
