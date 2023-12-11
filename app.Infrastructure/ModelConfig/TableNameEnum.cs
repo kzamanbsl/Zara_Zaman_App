@@ -17,5 +17,6 @@
         EmployeeServiceType,
         OfficeType,
         DropDownItem,
+        LeaveBalance,
     }
 }
