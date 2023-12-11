@@ -1,6 +1,8 @@
 ﻿using app.Services.CompanyServices;
+using app.Services.DropdownServices;
 using app.Services.LeaveBalanceServices;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace app.WebApp.Controllers
 {
@@ -8,9 +10,11 @@ namespace app.WebApp.Controllers
     {
 
         private readonly ILeaveBalanceService _iService;
-        public LeaveBalanceController(ILeaveBalanceService iService)
+        private readonly IDropdownService _dropdownService;
+        public LeaveBalanceController(ILeaveBalanceService iService,IDropdownService dropdownService)
         {
             _iService = iService;
+            _dropdownService = dropdownService; 
         }
 
         [HttpGet]
@@ -23,6 +27,7 @@ namespace app.WebApp.Controllers
         [HttpGet]
         public async Task<IActionResult> AddRecord()
         {
+            ViewBag.leaveCategory = new SelectList((await _dropdownService.LeaveCategorySelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
             LeaveBalanceViewModel viewModel = new LeaveBalanceViewModel();
             return View(viewModel);
         }

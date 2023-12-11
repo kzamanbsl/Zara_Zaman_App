@@ -32,7 +32,6 @@ namespace app.Services.LeaveApplicationServices
                 LeaveApplication com = new LeaveApplication();
                 com.Id = model.Id;
                 com.ManagerName = model.ManagerName;
-                com.LeaveType = model.LeaveType;
                 com.LeaveCategory = model.LeaveCategory;
                 com.StartDate = model.StartDate;
                 com.EndDate = model.EndDate;
@@ -63,7 +62,6 @@ namespace app.Services.LeaveApplicationServices
                                                                {
                                                                    Id = t1.Id,
                                                                    ManagerName = t1.ManagerName,
-                                                                   LeaveType = t1.LeaveType,
                                                                    LeaveCategory = t1.LeaveCategory,
                                                                    StartDate = t1.StartDate,
                                                                    EndDate = t1.EndDate,
@@ -81,7 +79,6 @@ namespace app.Services.LeaveApplicationServices
             LeaveApplicationViewModel model = new LeaveApplicationViewModel();
             model.Id = result.Id;
             model.ManagerName = result.ManagerName;
-            model.LeaveType = result.LeaveType;
             model.LeaveCategory = result.LeaveCategory;
             model.StartDate = result.StartDate;
             model.EndDate = result.EndDate;
@@ -100,7 +97,6 @@ namespace app.Services.LeaveApplicationServices
             {
                 var result = await _iEntityRepository.GetByIdAsync(model.Id);
                 result.ManagerName = model.ManagerName;
-                result.LeaveType = model.LeaveType;
                 result.LeaveCategory = model.LeaveCategory;
                 result.StartDate = model.StartDate;
                 result.EndDate = model.EndDate;

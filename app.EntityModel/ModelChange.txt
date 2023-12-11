@@ -28,7 +28,7 @@ Date : 10-12-2023
 ===================
  * ManuItem
      +IsMenuShow
- * DropdownItem
+ * DropdownItem   == Done
      +DropdownTypeId
 
 

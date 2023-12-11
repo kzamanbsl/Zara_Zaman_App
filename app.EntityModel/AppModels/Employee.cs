@@ -8,9 +8,8 @@ using System.Threading.Tasks;
 
 namespace app.EntityModel.AppModels
 {
-    public class Employee
+    public class Employee : BaseEntity
     {
-        public long Id { get; set; }
         public string EmployeeId { get; set; }
         [Required]
         public string Name { get; set; }
