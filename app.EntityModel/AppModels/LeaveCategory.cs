@@ -10,5 +10,8 @@ namespace app.EntityModel.AppModels
     public class LeaveCategory : BaseEntity
     {
         public string Name { get; set; }
+        //public List<LeaveBalance> Balances { get; set; }
+        public List<LeaveBalance> LeaveBalances { get; set; }
+
     }
 }

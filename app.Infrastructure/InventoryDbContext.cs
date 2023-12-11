@@ -36,8 +36,8 @@ namespace app.Infrastructure
         public virtual DbSet<EmployeeServiceType> EmployeeServiceType { get; set; }
         public virtual DbSet<OfficeType> OfficeType { get; set; }
         public virtual DbSet<DropdownItem> DropdownItem { get; set; }
+        public virtual DbSet<LeaveBalance> LeaveBalance { get; set; }
         public virtual DbSet<LeaveCategory> LeaveCategory { get; set; }
-
 
     }
 }

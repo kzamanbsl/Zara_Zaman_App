@@ -24,8 +24,8 @@ namespace app.Infrastructure.ModelConfig
             new OfficeTypeConfig()?.Configure(builder.Entity<OfficeType>());
             new DropdownItemConfig()?.Configure(builder.Entity<DropdownItem>());
             new EmployeeServiceTypeConfig()?.Configure(builder.Entity<EmployeeServiceType>());
+            new LeaveBalanceConfig()?.Configure(builder.Entity<LeaveBalance>());
             new LeaveCategoryConfig()?.Configure(builder.Entity<LeaveCategory>());
-
 
         }
     }
