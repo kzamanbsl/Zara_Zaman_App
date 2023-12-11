@@ -1,23 +1,45 @@
 ﻿using app.Infrastructure;
 using app.Infrastructure.Auth;
 
-namespace app.Services.DropDownServices
+namespace app.Services.DropdownServices
 {
-    public class DropDownService : IDropDownService
+    public class DropdownService : IDropdownService
     {
         private readonly InventoryDbContext _dbContext;
         private readonly IWorkContext _iWorkContext;
-        public DropDownService(InventoryDbContext dbContext, IWorkContext iWorkContext)
+        public DropdownService(InventoryDbContext dbContext, IWorkContext iWorkContext)
         {
             _dbContext = dbContext;
             _iWorkContext = iWorkContext;
         }
 
-        public async Task<IEnumerable<DropDownViewModel>> CompanyList()
+        public async Task<IEnumerable<DropdownViewModel>> CompanySelectionList()
         {
-            var user = await _iWorkContext.GetCurrentAdminUserAsync();
-            IEnumerable<DropDownViewModel> dropDownViewModels = await Task.Run(() => (from t1 in _dbContext.Company
-                                                                                      select new DropDownViewModel
+            //var user = await _iWorkContext.GetCurrentAdminUserAsync();
+            IEnumerable<DropdownViewModel> dropDownViewModels = await Task.Run(() => (from t1 in _dbContext.Company
+                                                                                      select new DropdownViewModel
+                                                                                      {
+                                                                                          Id = t1.Id,
+                                                                                          Name = t1.Name
+                                                                                      }).AsQueryable());
+            return dropDownViewModels;
+        }
+
+        public async Task<IEnumerable<DropdownViewModel>> DepartmentSelectionList()
+        {
+            IEnumerable<DropdownViewModel> dropDownViewModels = await Task.Run(() => (from t1 in _dbContext.Department
+                                                                                      select new DropdownViewModel
+                                                                                      {
+                                                                                          Id = t1.Id,
+                                                                                          Name = t1.Name
+                                                                                      }).AsQueryable());
+            return dropDownViewModels;
+        }
+
+        public async Task<IEnumerable<DropdownViewModel>> DesignatinSelectionList()
+        {
+            IEnumerable<DropdownViewModel> dropDownViewModels = await Task.Run(() => (from t1 in _dbContext.Designation
+                                                                                      select new DropdownViewModel
                                                                                       {
                                                                                           Id = t1.Id,
                                                                                           Name = t1.Name

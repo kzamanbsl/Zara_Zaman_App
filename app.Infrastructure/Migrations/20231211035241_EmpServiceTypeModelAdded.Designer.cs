@@ -93,7 +93,7 @@ namespace app.Infrastructure.Migrations
                     b.ToTable("Designation", "dbo");
                 });
 
-            modelBuilder.Entity("app.EntityModel.AppModels.DropDownItem", b =>
+            modelBuilder.Entity("app.EntityModel.AppModels.DropdownItem", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -111,7 +111,7 @@ namespace app.Infrastructure.Migrations
                         .HasMaxLength(250)
                         .HasColumnType("nvarchar(250)");
 
-                    b.Property<int>("DropDownTypeId")
+                    b.Property<int>("DropdownTypeId")
                         .HasColumnType("int");
 
                     b.Property<bool>("IsActive")
@@ -129,7 +129,7 @@ namespace app.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("DropDownItem", "dbo");
+                    b.ToTable("DropdownItem", "dbo");
                 });
 
             modelBuilder.Entity("app.EntityModel.AppModels.EmployeeCategory", b =>

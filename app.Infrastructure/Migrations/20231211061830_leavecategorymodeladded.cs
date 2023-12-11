@@ -5,27 +5,30 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace app.Infrastructure.Migrations
 {
-    public partial class DropdownAdded : Migration
+    public partial class leavecategorymodeladded : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<bool>(
-                name: "IsMenuShow",
+            migrationBuilder.AlterColumn<string>(
+                name: "Name",
                 schema: "dbo",
-                table: "MenuItem",
-                type: "bit",
-                nullable: false,
-                defaultValue: false);
+                table: "EmployeeServiceType",
+                type: "nvarchar(200)",
+                maxLength: 200,
+                nullable: true,
+                oldClrType: typeof(string),
+                oldType: "nvarchar(100)",
+                oldMaxLength: 100,
+                oldNullable: true);
 
             migrationBuilder.CreateTable(
-                name: "DropdownItem",
+                name: "LeaveCategory",
                 schema: "dbo",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -34,7 +37,7 @@ namespace app.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_DropdownItem", x => x.Id);
+                    table.PrimaryKey("PK_LeaveCategory", x => x.Id);
                 });
 
             migrationBuilder.UpdateData(
@@ -43,7 +46,7 @@ namespace app.Infrastructure.Migrations
                 keyColumn: "Id",
                 keyValue: "2c5e174e-3b0e-446f-86af-483d56fd7210",
                 column: "ConcurrencyStamp",
-                value: "23714abd-2ce5-4006-ba65-8a5da96afea6");
+                value: "8b0d1a44-d7a8-45b8-b499-8c6aa3e188b5");
 
             migrationBuilder.UpdateData(
                 schema: "dbo",
@@ -51,7 +54,7 @@ namespace app.Infrastructure.Migrations
                 keyColumn: "Id",
                 keyValue: "8e445865-a24d-4543-a6c6-9443d048cdb9",
                 column: "ConcurrencyStamp",
-                value: "6f28944a-29e3-4df4-9d17-e4106c798da6");
+                value: "31f98bbf-440d-4cbd-a85b-6f74673afe24");
 
             migrationBuilder.UpdateData(
                 schema: "dbo",
@@ -59,7 +62,7 @@ namespace app.Infrastructure.Migrations
                 keyColumn: "Id",
                 keyValue: 1L,
                 column: "CreatedOn",
-                value: new DateTime(2023, 12, 10, 12, 18, 48, 548, DateTimeKind.Local).AddTicks(1046));
+                value: new DateTime(2023, 12, 11, 12, 18, 29, 438, DateTimeKind.Local).AddTicks(7156));
 
             migrationBuilder.UpdateData(
                 schema: "dbo",
@@ -67,63 +70,63 @@ namespace app.Infrastructure.Migrations
                 keyColumn: "Id",
                 keyValue: 2L,
                 column: "CreatedOn",
-                value: new DateTime(2023, 12, 10, 12, 18, 48, 548, DateTimeKind.Local).AddTicks(1058));
+                value: new DateTime(2023, 12, 11, 12, 18, 29, 438, DateTimeKind.Local).AddTicks(7167));
 
             migrationBuilder.UpdateData(
                 schema: "dbo",
                 table: "MenuItem",
                 keyColumn: "Id",
                 keyValue: 1L,
-                columns: new[] { "CreatedOn", "IsMenuShow" },
-                values: new object[] { new DateTime(2023, 12, 10, 12, 18, 48, 548, DateTimeKind.Local).AddTicks(1079), true });
+                column: "CreatedOn",
+                value: new DateTime(2023, 12, 11, 12, 18, 29, 438, DateTimeKind.Local).AddTicks(7185));
 
             migrationBuilder.UpdateData(
                 schema: "dbo",
                 table: "MenuItem",
                 keyColumn: "Id",
                 keyValue: 2L,
-                columns: new[] { "CreatedOn", "IsMenuShow" },
-                values: new object[] { new DateTime(2023, 12, 10, 12, 18, 48, 548, DateTimeKind.Local).AddTicks(1081), true });
+                column: "CreatedOn",
+                value: new DateTime(2023, 12, 11, 12, 18, 29, 438, DateTimeKind.Local).AddTicks(7187));
 
             migrationBuilder.UpdateData(
                 schema: "dbo",
                 table: "MenuItem",
                 keyColumn: "Id",
                 keyValue: 3L,
-                columns: new[] { "CreatedOn", "IsMenuShow" },
-                values: new object[] { new DateTime(2023, 12, 10, 12, 18, 48, 548, DateTimeKind.Local).AddTicks(1083), true });
+                column: "CreatedOn",
+                value: new DateTime(2023, 12, 11, 12, 18, 29, 438, DateTimeKind.Local).AddTicks(7188));
 
             migrationBuilder.UpdateData(
                 schema: "dbo",
                 table: "MenuItem",
                 keyColumn: "Id",
                 keyValue: 4L,
-                columns: new[] { "CreatedOn", "IsMenuShow" },
-                values: new object[] { new DateTime(2023, 12, 10, 12, 18, 48, 548, DateTimeKind.Local).AddTicks(1084), true });
+                column: "CreatedOn",
+                value: new DateTime(2023, 12, 11, 12, 18, 29, 438, DateTimeKind.Local).AddTicks(7189));
 
             migrationBuilder.UpdateData(
                 schema: "dbo",
                 table: "MenuItem",
                 keyColumn: "Id",
                 keyValue: 5L,
-                columns: new[] { "CreatedOn", "IsMenuShow" },
-                values: new object[] { new DateTime(2023, 12, 10, 12, 18, 48, 548, DateTimeKind.Local).AddTicks(1085), true });
+                column: "CreatedOn",
+                value: new DateTime(2023, 12, 11, 12, 18, 29, 438, DateTimeKind.Local).AddTicks(7191));
 
             migrationBuilder.UpdateData(
                 schema: "dbo",
                 table: "MenuItem",
                 keyColumn: "Id",
                 keyValue: 6L,
-                columns: new[] { "CreatedOn", "IsMenuShow" },
-                values: new object[] { new DateTime(2023, 12, 10, 12, 18, 48, 548, DateTimeKind.Local).AddTicks(1086), true });
+                column: "CreatedOn",
+                value: new DateTime(2023, 12, 11, 12, 18, 29, 438, DateTimeKind.Local).AddTicks(7192));
 
             migrationBuilder.UpdateData(
                 schema: "dbo",
                 table: "MenuItem",
                 keyColumn: "Id",
                 keyValue: 7L,
-                columns: new[] { "CreatedOn", "IsMenuShow" },
-                values: new object[] { new DateTime(2023, 12, 10, 12, 18, 48, 548, DateTimeKind.Local).AddTicks(1087), true });
+                column: "CreatedOn",
+                value: new DateTime(2023, 12, 11, 12, 18, 29, 438, DateTimeKind.Local).AddTicks(7193));
 
             migrationBuilder.UpdateData(
                 schema: "dbo",
@@ -131,7 +134,7 @@ namespace app.Infrastructure.Migrations
                 keyColumn: "Id",
                 keyValue: 1L,
                 column: "CreatedOn",
-                value: new DateTime(2023, 12, 10, 12, 18, 48, 548, DateTimeKind.Local).AddTicks(1104));
+                value: new DateTime(2023, 12, 11, 12, 18, 29, 438, DateTimeKind.Local).AddTicks(7211));
 
             migrationBuilder.UpdateData(
                 schema: "dbo",
@@ -139,7 +142,7 @@ namespace app.Infrastructure.Migrations
                 keyColumn: "Id",
                 keyValue: 2L,
                 column: "CreatedOn",
-                value: new DateTime(2023, 12, 10, 12, 18, 48, 548, DateTimeKind.Local).AddTicks(1105));
+                value: new DateTime(2023, 12, 11, 12, 18, 29, 438, DateTimeKind.Local).AddTicks(7212));
 
             migrationBuilder.UpdateData(
                 schema: "dbo",
@@ -147,7 +150,7 @@ namespace app.Infrastructure.Migrations
                 keyColumn: "Id",
                 keyValue: 3L,
                 column: "CreatedOn",
-                value: new DateTime(2023, 12, 10, 12, 18, 48, 548, DateTimeKind.Local).AddTicks(1106));
+                value: new DateTime(2023, 12, 11, 12, 18, 29, 438, DateTimeKind.Local).AddTicks(7213));
 
             migrationBuilder.UpdateData(
                 schema: "dbo",
@@ -155,7 +158,7 @@ namespace app.Infrastructure.Migrations
                 keyColumn: "Id",
                 keyValue: 4L,
                 column: "CreatedOn",
-                value: new DateTime(2023, 12, 10, 12, 18, 48, 548, DateTimeKind.Local).AddTicks(1107));
+                value: new DateTime(2023, 12, 11, 12, 18, 29, 438, DateTimeKind.Local).AddTicks(7214));
 
             migrationBuilder.UpdateData(
                 schema: "dbo",
@@ -163,7 +166,7 @@ namespace app.Infrastructure.Migrations
                 keyColumn: "Id",
                 keyValue: 5L,
                 column: "CreatedOn",
-                value: new DateTime(2023, 12, 10, 12, 18, 48, 548, DateTimeKind.Local).AddTicks(1108));
+                value: new DateTime(2023, 12, 11, 12, 18, 29, 438, DateTimeKind.Local).AddTicks(7215));
 
             migrationBuilder.UpdateData(
                 schema: "dbo",
@@ -171,7 +174,7 @@ namespace app.Infrastructure.Migrations
                 keyColumn: "Id",
                 keyValue: 6L,
                 column: "CreatedOn",
-                value: new DateTime(2023, 12, 10, 12, 18, 48, 548, DateTimeKind.Local).AddTicks(1109));
+                value: new DateTime(2023, 12, 11, 12, 18, 29, 438, DateTimeKind.Local).AddTicks(7216));
 
             migrationBuilder.UpdateData(
                 schema: "dbo",
@@ -179,19 +182,26 @@ namespace app.Infrastructure.Migrations
                 keyColumn: "Id",
                 keyValue: 7L,
                 column: "CreatedOn",
-                value: new DateTime(2023, 12, 10, 12, 18, 48, 548, DateTimeKind.Local).AddTicks(1110));
+                value: new DateTime(2023, 12, 11, 12, 18, 29, 438, DateTimeKind.Local).AddTicks(7217));
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "DropdownItem",
+                name: "LeaveCategory",
                 schema: "dbo");
 
-            migrationBuilder.DropColumn(
-                name: "IsMenuShow",
+            migrationBuilder.AlterColumn<string>(
+                name: "Name",
                 schema: "dbo",
-                table: "MenuItem");
+                table: "EmployeeServiceType",
+                type: "nvarchar(100)",
+                maxLength: 100,
+                nullable: true,
+                oldClrType: typeof(string),
+                oldType: "nvarchar(200)",
+                oldMaxLength: 200,
+                oldNullable: true);
 
             migrationBuilder.UpdateData(
                 schema: "dbo",
@@ -199,7 +209,7 @@ namespace app.Infrastructure.Migrations
                 keyColumn: "Id",
                 keyValue: "2c5e174e-3b0e-446f-86af-483d56fd7210",
                 column: "ConcurrencyStamp",
-                value: "83f8fe2d-bfd8-4235-bae8-12cc27d258d0");
+                value: "247b01c2-9e5e-4c63-bbdf-f7c188db0fc1");
 
             migrationBuilder.UpdateData(
                 schema: "dbo",
@@ -207,7 +217,7 @@ namespace app.Infrastructure.Migrations
                 keyColumn: "Id",
                 keyValue: "8e445865-a24d-4543-a6c6-9443d048cdb9",
                 column: "ConcurrencyStamp",
-                value: "ed5d1a9a-e2dd-468d-8955-021c3b9b9297");
+                value: "bd31d677-9ef8-45e3-840a-f570caf888b5");
 
             migrationBuilder.UpdateData(
                 schema: "dbo",
@@ -215,7 +225,7 @@ namespace app.Infrastructure.Migrations
                 keyColumn: "Id",
                 keyValue: 1L,
                 column: "CreatedOn",
-                value: new DateTime(2023, 12, 10, 10, 35, 48, 428, DateTimeKind.Local).AddTicks(1530));
+                value: new DateTime(2023, 12, 11, 9, 52, 40, 757, DateTimeKind.Local).AddTicks(5982));
 
             migrationBuilder.UpdateData(
                 schema: "dbo",
@@ -223,7 +233,7 @@ namespace app.Infrastructure.Migrations
                 keyColumn: "Id",
                 keyValue: 2L,
                 column: "CreatedOn",
-                value: new DateTime(2023, 12, 10, 10, 35, 48, 428, DateTimeKind.Local).AddTicks(1565));
+                value: new DateTime(2023, 12, 11, 9, 52, 40, 757, DateTimeKind.Local).AddTicks(5995));
 
             migrationBuilder.UpdateData(
                 schema: "dbo",
@@ -231,7 +241,7 @@ namespace app.Infrastructure.Migrations
                 keyColumn: "Id",
                 keyValue: 1L,
                 column: "CreatedOn",
-                value: new DateTime(2023, 12, 10, 10, 35, 48, 428, DateTimeKind.Local).AddTicks(1585));
+                value: new DateTime(2023, 12, 11, 9, 52, 40, 757, DateTimeKind.Local).AddTicks(6012));
 
             migrationBuilder.UpdateData(
                 schema: "dbo",
@@ -239,7 +249,7 @@ namespace app.Infrastructure.Migrations
                 keyColumn: "Id",
                 keyValue: 2L,
                 column: "CreatedOn",
-                value: new DateTime(2023, 12, 10, 10, 35, 48, 428, DateTimeKind.Local).AddTicks(1587));
+                value: new DateTime(2023, 12, 11, 9, 52, 40, 757, DateTimeKind.Local).AddTicks(6014));
 
             migrationBuilder.UpdateData(
                 schema: "dbo",
@@ -247,7 +257,7 @@ namespace app.Infrastructure.Migrations
                 keyColumn: "Id",
                 keyValue: 3L,
                 column: "CreatedOn",
-                value: new DateTime(2023, 12, 10, 10, 35, 48, 428, DateTimeKind.Local).AddTicks(1590));
+                value: new DateTime(2023, 12, 11, 9, 52, 40, 757, DateTimeKind.Local).AddTicks(6015));
 
             migrationBuilder.UpdateData(
                 schema: "dbo",
@@ -255,7 +265,7 @@ namespace app.Infrastructure.Migrations
                 keyColumn: "Id",
                 keyValue: 4L,
                 column: "CreatedOn",
-                value: new DateTime(2023, 12, 10, 10, 35, 48, 428, DateTimeKind.Local).AddTicks(1591));
+                value: new DateTime(2023, 12, 11, 9, 52, 40, 757, DateTimeKind.Local).AddTicks(6017));
 
             migrationBuilder.UpdateData(
                 schema: "dbo",
@@ -263,7 +273,7 @@ namespace app.Infrastructure.Migrations
                 keyColumn: "Id",
                 keyValue: 5L,
                 column: "CreatedOn",
-                value: new DateTime(2023, 12, 10, 10, 35, 48, 428, DateTimeKind.Local).AddTicks(1593));
+                value: new DateTime(2023, 12, 11, 9, 52, 40, 757, DateTimeKind.Local).AddTicks(6018));
 
             migrationBuilder.UpdateData(
                 schema: "dbo",
@@ -271,7 +281,7 @@ namespace app.Infrastructure.Migrations
                 keyColumn: "Id",
                 keyValue: 6L,
                 column: "CreatedOn",
-                value: new DateTime(2023, 12, 10, 10, 35, 48, 428, DateTimeKind.Local).AddTicks(1600));
+                value: new DateTime(2023, 12, 11, 9, 52, 40, 757, DateTimeKind.Local).AddTicks(6020));
 
             migrationBuilder.UpdateData(
                 schema: "dbo",
@@ -279,7 +289,7 @@ namespace app.Infrastructure.Migrations
                 keyColumn: "Id",
                 keyValue: 7L,
                 column: "CreatedOn",
-                value: new DateTime(2023, 12, 10, 10, 35, 48, 428, DateTimeKind.Local).AddTicks(1601));
+                value: new DateTime(2023, 12, 11, 9, 52, 40, 757, DateTimeKind.Local).AddTicks(6021));
 
             migrationBuilder.UpdateData(
                 schema: "dbo",
@@ -287,7 +297,7 @@ namespace app.Infrastructure.Migrations
                 keyColumn: "Id",
                 keyValue: 1L,
                 column: "CreatedOn",
-                value: new DateTime(2023, 12, 10, 10, 35, 48, 428, DateTimeKind.Local).AddTicks(1623));
+                value: new DateTime(2023, 12, 11, 9, 52, 40, 757, DateTimeKind.Local).AddTicks(6038));
 
             migrationBuilder.UpdateData(
                 schema: "dbo",
@@ -295,7 +305,7 @@ namespace app.Infrastructure.Migrations
                 keyColumn: "Id",
                 keyValue: 2L,
                 column: "CreatedOn",
-                value: new DateTime(2023, 12, 10, 10, 35, 48, 428, DateTimeKind.Local).AddTicks(1624));
+                value: new DateTime(2023, 12, 11, 9, 52, 40, 757, DateTimeKind.Local).AddTicks(6039));
 
             migrationBuilder.UpdateData(
                 schema: "dbo",
@@ -303,7 +313,7 @@ namespace app.Infrastructure.Migrations
                 keyColumn: "Id",
                 keyValue: 3L,
                 column: "CreatedOn",
-                value: new DateTime(2023, 12, 10, 10, 35, 48, 428, DateTimeKind.Local).AddTicks(1625));
+                value: new DateTime(2023, 12, 11, 9, 52, 40, 757, DateTimeKind.Local).AddTicks(6041));
 
             migrationBuilder.UpdateData(
                 schema: "dbo",
@@ -311,7 +321,7 @@ namespace app.Infrastructure.Migrations
                 keyColumn: "Id",
                 keyValue: 4L,
                 column: "CreatedOn",
-                value: new DateTime(2023, 12, 10, 10, 35, 48, 428, DateTimeKind.Local).AddTicks(1626));
+                value: new DateTime(2023, 12, 11, 9, 52, 40, 757, DateTimeKind.Local).AddTicks(6042));
 
             migrationBuilder.UpdateData(
                 schema: "dbo",
@@ -319,7 +329,7 @@ namespace app.Infrastructure.Migrations
                 keyColumn: "Id",
                 keyValue: 5L,
                 column: "CreatedOn",
-                value: new DateTime(2023, 12, 10, 10, 35, 48, 428, DateTimeKind.Local).AddTicks(1627));
+                value: new DateTime(2023, 12, 11, 9, 52, 40, 757, DateTimeKind.Local).AddTicks(6043));
 
             migrationBuilder.UpdateData(
                 schema: "dbo",
@@ -327,7 +337,7 @@ namespace app.Infrastructure.Migrations
                 keyColumn: "Id",
                 keyValue: 6L,
                 column: "CreatedOn",
-                value: new DateTime(2023, 12, 10, 10, 35, 48, 428, DateTimeKind.Local).AddTicks(1675));
+                value: new DateTime(2023, 12, 11, 9, 52, 40, 757, DateTimeKind.Local).AddTicks(6045));
 
             migrationBuilder.UpdateData(
                 schema: "dbo",
@@ -335,7 +345,7 @@ namespace app.Infrastructure.Migrations
                 keyColumn: "Id",
                 keyValue: 7L,
                 column: "CreatedOn",
-                value: new DateTime(2023, 12, 10, 10, 35, 48, 428, DateTimeKind.Local).AddTicks(1676));
+                value: new DateTime(2023, 12, 11, 9, 52, 40, 757, DateTimeKind.Local).AddTicks(6046));
         }
     }
 }

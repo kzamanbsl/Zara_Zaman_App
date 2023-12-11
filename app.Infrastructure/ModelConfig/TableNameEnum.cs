@@ -16,11 +16,9 @@
         Shift,
         EmployeeServiceType,
         OfficeType,
+        DropdownItem,
         DropDownItem,
-<<<<<<< HEAD
         LeaveBalance,
-=======
         LeaveCategory,
->>>>>>> f0cb851e271893f514720d0b398ef47037ccc49e
     }
 }

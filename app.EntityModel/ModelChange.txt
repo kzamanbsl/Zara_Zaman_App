@@ -28,8 +28,8 @@ Date : 10-12-2023
 ===================
  * ManuItem
      +IsMenuShow
- * DropDownItem
-     +DropDownTypeId
+ * DropdownItem
+     +DropdownTypeId
 
 
 Date : 11-12-2023

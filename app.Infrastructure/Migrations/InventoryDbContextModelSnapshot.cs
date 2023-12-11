@@ -91,7 +91,7 @@ namespace app.Infrastructure.Migrations
                     b.ToTable("Designation", "dbo");
                 });
 
-            modelBuilder.Entity("app.EntityModel.AppModels.DropDownItem", b =>
+            modelBuilder.Entity("app.EntityModel.AppModels.DropdownItem", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -109,7 +109,7 @@ namespace app.Infrastructure.Migrations
                         .HasMaxLength(250)
                         .HasColumnType("nvarchar(250)");
 
-                    b.Property<int>("DropDownTypeId")
+                    b.Property<int>("DropdownTypeId")
                         .HasColumnType("int");
 
                     b.Property<bool>("IsActive")
@@ -127,7 +127,7 @@ namespace app.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("DropDownItem", "dbo");
+                    b.ToTable("DropdownItem", "dbo");
                 });
 
             modelBuilder.Entity("app.EntityModel.AppModels.EmployeeCategory", b =>
@@ -180,8 +180,8 @@ namespace app.Infrastructure.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
@@ -228,6 +228,78 @@ namespace app.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Grade", "dbo");
+                });
+
+            modelBuilder.Entity("app.EntityModel.AppModels.LeaveBalance", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<long>("LeaveCategoryId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("LeaveQty")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LeaveCategoryId");
+
+                    b.ToTable("LeaveBalance", "dbo");
+                });
+
+            modelBuilder.Entity("app.EntityModel.AppModels.LeaveCategory", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("LeaveCategory", "dbo");
                 });
 
             modelBuilder.Entity("app.EntityModel.AppModels.OfficeType", b =>
@@ -410,7 +482,7 @@ namespace app.Infrastructure.Migrations
                         {
                             Id = 1L,
                             CreatedBy = "System Admin",
-                            CreatedOn = new DateTime(2023, 12, 11, 12, 5, 10, 759, DateTimeKind.Local).AddTicks(121),
+                            CreatedOn = new DateTime(2023, 12, 11, 15, 6, 24, 834, DateTimeKind.Local).AddTicks(4473),
                             Icon = "<i class=\"fas fa-user\"></i>",
                             IsActive = true,
                             Name = "User Management",
@@ -420,7 +492,7 @@ namespace app.Infrastructure.Migrations
                         {
                             Id = 2L,
                             CreatedBy = "System Admin",
-                            CreatedOn = new DateTime(2023, 12, 11, 12, 5, 10, 759, DateTimeKind.Local).AddTicks(131),
+                            CreatedOn = new DateTime(2023, 12, 11, 15, 6, 24, 834, DateTimeKind.Local).AddTicks(4484),
                             Icon = "<i class=\"fas fa-cog\"></i>",
                             IsActive = true,
                             Name = "Configuration",
@@ -488,7 +560,7 @@ namespace app.Infrastructure.Migrations
                             Action = "AddRecord",
                             Controller = "MainMenu",
                             CreatedBy = "System Admin",
-                            CreatedOn = new DateTime(2023, 12, 11, 12, 5, 10, 759, DateTimeKind.Local).AddTicks(145),
+                            CreatedOn = new DateTime(2023, 12, 11, 15, 6, 24, 834, DateTimeKind.Local).AddTicks(4499),
                             Icon = "<i class=\"fas fa-plus\"></i>",
                             IsActive = true,
                             IsMenuShow = true,
@@ -503,7 +575,7 @@ namespace app.Infrastructure.Migrations
                             Action = "Index",
                             Controller = "MainMenu",
                             CreatedBy = "System Admin",
-                            CreatedOn = new DateTime(2023, 12, 11, 12, 5, 10, 759, DateTimeKind.Local).AddTicks(147),
+                            CreatedOn = new DateTime(2023, 12, 11, 15, 6, 24, 834, DateTimeKind.Local).AddTicks(4500),
                             Icon = "<i class=\"fas fa-list\"></i>",
                             IsActive = true,
                             IsMenuShow = true,
@@ -518,7 +590,7 @@ namespace app.Infrastructure.Migrations
                             Action = "AddRecord",
                             Controller = "MenuItem",
                             CreatedBy = "System Admin",
-                            CreatedOn = new DateTime(2023, 12, 11, 12, 5, 10, 759, DateTimeKind.Local).AddTicks(148),
+                            CreatedOn = new DateTime(2023, 12, 11, 15, 6, 24, 834, DateTimeKind.Local).AddTicks(4502),
                             Icon = "<i class=\"fas fa-plus\"></i>",
                             IsActive = true,
                             IsMenuShow = true,
@@ -533,7 +605,7 @@ namespace app.Infrastructure.Migrations
                             Action = "Index",
                             Controller = "MenuItem",
                             CreatedBy = "System Admin",
-                            CreatedOn = new DateTime(2023, 12, 11, 12, 5, 10, 759, DateTimeKind.Local).AddTicks(151),
+                            CreatedOn = new DateTime(2023, 12, 11, 15, 6, 24, 834, DateTimeKind.Local).AddTicks(4503),
                             Icon = "<i class=\"fas fa-list\"></i>",
                             IsActive = true,
                             IsMenuShow = true,
@@ -548,7 +620,7 @@ namespace app.Infrastructure.Migrations
                             Action = "AddPermission",
                             Controller = "UserPermission",
                             CreatedBy = "System Admin",
-                            CreatedOn = new DateTime(2023, 12, 11, 12, 5, 10, 759, DateTimeKind.Local).AddTicks(152),
+                            CreatedOn = new DateTime(2023, 12, 11, 15, 6, 24, 834, DateTimeKind.Local).AddTicks(4504),
                             Icon = "<i class=\"fas fa-plus\"></i>",
                             IsActive = true,
                             IsMenuShow = true,
@@ -563,7 +635,7 @@ namespace app.Infrastructure.Migrations
                             Action = "AddRecord",
                             Controller = "Company",
                             CreatedBy = "System Admin",
-                            CreatedOn = new DateTime(2023, 12, 11, 12, 5, 10, 759, DateTimeKind.Local).AddTicks(153),
+                            CreatedOn = new DateTime(2023, 12, 11, 15, 6, 24, 834, DateTimeKind.Local).AddTicks(4505),
                             Icon = "<i class=\"fas fa-plus\"></i>",
                             IsActive = true,
                             IsMenuShow = true,
@@ -578,7 +650,7 @@ namespace app.Infrastructure.Migrations
                             Action = "Index",
                             Controller = "Company",
                             CreatedBy = "System Admin",
-                            CreatedOn = new DateTime(2023, 12, 11, 12, 5, 10, 759, DateTimeKind.Local).AddTicks(155),
+                            CreatedOn = new DateTime(2023, 12, 11, 15, 6, 24, 834, DateTimeKind.Local).AddTicks(4506),
                             Icon = "<i class=\"fas fa-list\"></i>",
                             IsActive = true,
                             IsMenuShow = true,
@@ -630,7 +702,7 @@ namespace app.Infrastructure.Migrations
                         {
                             Id = 1L,
                             CreatedBy = "System Admin",
-                            CreatedOn = new DateTime(2023, 12, 11, 12, 5, 10, 759, DateTimeKind.Local).AddTicks(169),
+                            CreatedOn = new DateTime(2023, 12, 11, 15, 6, 24, 834, DateTimeKind.Local).AddTicks(4520),
                             IsActive = true,
                             MenuItemId = 1L,
                             OrderNo = 0,
@@ -640,7 +712,7 @@ namespace app.Infrastructure.Migrations
                         {
                             Id = 2L,
                             CreatedBy = "System Admin",
-                            CreatedOn = new DateTime(2023, 12, 11, 12, 5, 10, 759, DateTimeKind.Local).AddTicks(170),
+                            CreatedOn = new DateTime(2023, 12, 11, 15, 6, 24, 834, DateTimeKind.Local).AddTicks(4522),
                             IsActive = true,
                             MenuItemId = 2L,
                             OrderNo = 0,
@@ -650,7 +722,7 @@ namespace app.Infrastructure.Migrations
                         {
                             Id = 3L,
                             CreatedBy = "System Admin",
-                            CreatedOn = new DateTime(2023, 12, 11, 12, 5, 10, 759, DateTimeKind.Local).AddTicks(171),
+                            CreatedOn = new DateTime(2023, 12, 11, 15, 6, 24, 834, DateTimeKind.Local).AddTicks(4524),
                             IsActive = true,
                             MenuItemId = 3L,
                             OrderNo = 0,
@@ -660,7 +732,7 @@ namespace app.Infrastructure.Migrations
                         {
                             Id = 4L,
                             CreatedBy = "System Admin",
-                            CreatedOn = new DateTime(2023, 12, 11, 12, 5, 10, 759, DateTimeKind.Local).AddTicks(172),
+                            CreatedOn = new DateTime(2023, 12, 11, 15, 6, 24, 834, DateTimeKind.Local).AddTicks(4525),
                             IsActive = true,
                             MenuItemId = 4L,
                             OrderNo = 0,
@@ -670,7 +742,7 @@ namespace app.Infrastructure.Migrations
                         {
                             Id = 5L,
                             CreatedBy = "System Admin",
-                            CreatedOn = new DateTime(2023, 12, 11, 12, 5, 10, 759, DateTimeKind.Local).AddTicks(173),
+                            CreatedOn = new DateTime(2023, 12, 11, 15, 6, 24, 834, DateTimeKind.Local).AddTicks(4526),
                             IsActive = true,
                             MenuItemId = 5L,
                             OrderNo = 0,
@@ -680,7 +752,7 @@ namespace app.Infrastructure.Migrations
                         {
                             Id = 6L,
                             CreatedBy = "System Admin",
-                            CreatedOn = new DateTime(2023, 12, 11, 12, 5, 10, 759, DateTimeKind.Local).AddTicks(174),
+                            CreatedOn = new DateTime(2023, 12, 11, 15, 6, 24, 834, DateTimeKind.Local).AddTicks(4527),
                             IsActive = true,
                             MenuItemId = 6L,
                             OrderNo = 0,
@@ -690,7 +762,7 @@ namespace app.Infrastructure.Migrations
                         {
                             Id = 7L,
                             CreatedBy = "System Admin",
-                            CreatedOn = new DateTime(2023, 12, 11, 12, 5, 10, 759, DateTimeKind.Local).AddTicks(174),
+                            CreatedOn = new DateTime(2023, 12, 11, 15, 6, 24, 834, DateTimeKind.Local).AddTicks(4527),
                             IsActive = true,
                             MenuItemId = 7L,
                             OrderNo = 0,
@@ -864,14 +936,14 @@ namespace app.Infrastructure.Migrations
                         new
                         {
                             Id = "8e445865-a24d-4543-a6c6-9443d048cdb9",
-                            ConcurrencyStamp = "d488a9dc-8b61-4415-92e4-bb0d2d5d2e70",
+                            ConcurrencyStamp = "350301e1-f7ed-4d89-90d6-db9bfad85ec7",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         },
                         new
                         {
                             Id = "2c5e174e-3b0e-446f-86af-483d56fd7210",
-                            ConcurrencyStamp = "3fa43027-7904-453f-a682-c7fad61bc150",
+                            ConcurrencyStamp = "61fec71c-b2b3-4cba-a840-f28f860ea89d",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -995,6 +1067,17 @@ namespace app.Infrastructure.Migrations
                     b.ToTable("AspNetUserTokens", "dbo");
                 });
 
+            modelBuilder.Entity("app.EntityModel.AppModels.LeaveBalance", b =>
+                {
+                    b.HasOne("app.EntityModel.AppModels.LeaveCategory", "leaveCategory")
+                        .WithMany("LeaveBalances")
+                        .HasForeignKey("LeaveCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("leaveCategory");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -1044,6 +1127,11 @@ namespace app.Infrastructure.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("app.EntityModel.AppModels.LeaveCategory", b =>
+                {
+                    b.Navigation("LeaveBalances");
                 });
 #pragma warning restore 612, 618
         }

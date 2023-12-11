@@ -1,6 +1,6 @@
-﻿namespace app.Services.DropDownServices
+﻿namespace app.Services.DropdownServices
 {
-    public class DropDownViewModel
+    public class DropdownViewModel
     {
         public long Id { get; set; }
         public string Name { get; set; }    

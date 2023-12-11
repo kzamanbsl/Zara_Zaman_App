@@ -1,13 +1,13 @@
-﻿using app.Services.DropDownItemServices;
+﻿using app.Services.DropdownItemServices;
 using Microsoft.AspNetCore.Mvc;
 
 namespace app.WebApp.Controllers
 {
-    public class DropDownItemController : Controller
+    public class DropdownItemController : Controller
     {
 
-        private readonly IDropDownItemService _iService;
-        public DropDownItemController(IDropDownItemService iService)
+        private readonly IDropdownItemService _iService;
+        public DropdownItemController(IDropdownItemService iService)
         {
             _iService = iService;
         }
@@ -22,12 +22,12 @@ namespace app.WebApp.Controllers
         [HttpGet]
         public async Task<IActionResult> AddRecord()
         {
-            DropDownItemViewModel viewModel = new DropDownItemViewModel();
+            DropdownItemViewModel viewModel = new DropdownItemViewModel();
             return View(viewModel);
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddRecord(DropDownItemViewModel viewModel)
+        public async Task<IActionResult> AddRecord(DropdownItemViewModel viewModel)
         {
             var result = await _iService.AddRecord(viewModel);
             if (result == 2)
@@ -46,7 +46,7 @@ namespace app.WebApp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> UpdateRecord(DropDownItemViewModel model)
+        public async Task<IActionResult> UpdateRecord(DropdownItemViewModel model)
         {
             var result = await _iService.UpdateRecord(model);
             if (result == 2)

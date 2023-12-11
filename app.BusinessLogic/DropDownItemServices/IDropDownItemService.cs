@@ -1,18 +1,18 @@
-﻿using app.Services.DropDownItemServices;
+﻿using app.Services.DropdownItemServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace app.Services.DropDownItemServices
+namespace app.Services.DropdownItemServices
 {
-    public interface IDropDownItemService
+    public interface IDropdownItemService
     {
-        Task<DropDownItemViewModel> GetAllRecord();
-        Task<int> AddRecord(DropDownItemViewModel model);
-        Task<int> UpdateRecord(DropDownItemViewModel model);
+        Task<DropdownItemViewModel> GetAllRecord();
+        Task<int> AddRecord(DropdownItemViewModel model);
+        Task<int> UpdateRecord(DropdownItemViewModel model);
         Task<bool> DeleteRecord(long id);
-        Task<DropDownItemViewModel> GetRecordById(long id);
+        Task<DropdownItemViewModel> GetRecordById(long id);
     }
 }

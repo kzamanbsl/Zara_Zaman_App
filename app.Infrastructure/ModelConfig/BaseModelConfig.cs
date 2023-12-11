@@ -22,14 +22,10 @@ namespace app.Infrastructure.ModelConfig
             new ServiceTypeConfig()?.Configure(builder.Entity<ServiceType>());
             new ShiftConfig()?.Configure(builder.Entity<Shift>());
             new OfficeTypeConfig()?.Configure(builder.Entity<OfficeType>());
-            new DropDownItemConfig()?.Configure(builder.Entity<DropDownItem>());
+            new DropdownItemConfig()?.Configure(builder.Entity<DropdownItem>());
             new EmployeeServiceTypeConfig()?.Configure(builder.Entity<EmployeeServiceType>());
-<<<<<<< HEAD
             new LeaveBalanceConfig()?.Configure(builder.Entity<LeaveBalance>());
-=======
             new LeaveCategoryConfig()?.Configure(builder.Entity<LeaveCategory>());
->>>>>>> f0cb851e271893f514720d0b398ef47037ccc49e
-
 
         }
     }
