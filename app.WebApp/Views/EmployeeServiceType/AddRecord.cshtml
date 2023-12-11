@@ -1,21 +1,24 @@
-﻿@model app.Services.ServiceTypeServices.ServiceTypeViewModel
+﻿@model app.Services.EmployeeServiceTypeServices.EmployeeServiceTypeViewModel
 @{
-    ViewData["Title"] = "UpdateRecord";
+    ViewData["Title"] = "AddRecord";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
+
 <div class="content-header">
     <div class="container-fluid ">
         <div class="breadcrumb d-flex justify-content-between align-items-center  pl-3 pr-3">
             <ol class="breadcrumb mb-0 p-0">
                 <li class="breadcrumb-item"><a href="/Admin/Index">Home</a></li>
-                <li class="breadcrumb-item active"> ServiceType List </li>
+                <li class="breadcrumb-item active"> EmployeeServiceType List </li>
             </ol>
             <div>
-                <a asp-action="Index"><i class="fa fa-list"></i>  ServiceType List </a>
+                <a asp-action="Index"><i class="fa fa-list"></i>  EmployeeServiceType List </a>
             </div>
         </div>
     </div>
 </div>
+
+
 
 <section class="content">
     <div class="container-fluid">
@@ -23,23 +26,22 @@
             <div class="card-header">
                 <h3 class="card-title text-info">
                     <i class="fas fa-plus"></i>
-                    Update ServiceType
+                    Add EmployeeServiceType
                 </h3>
 
             </div>
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-4">
-                        <form asp-action="UpdateRecord" method="post">
+                        <form asp-action="AddRecord" method="post">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                            @Html.HiddenFor(model => model.Id)
                             <div class="form-group">
                                 <label asp-for="Name" class="control-label"></label>
                                 <input asp-for="Name" class="form-control" required />
                                 <span asp-validation-for="Name" class="text-danger"></span>
                             </div>
                             <div class="form-group">
-                                <input type="submit" value="Update" class="btn btn-warning" />
+                                <input type="submit" value="Create" class="btn btn-primary" />
                             </div>
                         </form>
                     </div>
@@ -53,15 +55,13 @@
     <script>
         $(document).ready(function () {
             $('#Configuration').addClass('menu-open');
-           
+            $('#EmployeeServiceTypeAddRecord').addClass('active');
         });
     </script>
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
     }
-
-
 
 
 

@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace app.EntityModel.AppModels
 {
-    public class Shift : BaseEntity
+    public class EmployeeServiceType:BaseEntity
     {
         public string Name { get; set; }
-        public DateTime StartAt { get; set; }
-        public DateTime EndAt { get; set; }
     }
 }

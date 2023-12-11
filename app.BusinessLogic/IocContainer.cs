@@ -12,6 +12,8 @@ using app.Services.GradeServices;
 using app.Services.DesignationServices;
 using app.Services.EmployeeCategoryServices;
 using app.Services.ServiceTypeServices;
+using app.Services.ShiftServices;
+using app.Services.EmployeeServiceTypeServices;
 
 
 namespace app.Services
@@ -32,6 +34,8 @@ namespace app.Services
             services.AddTransient<IDesignationService, DesignationService>();
             services.AddTransient<IEmployeeCategoryService, EmployeeCategoryService>();
             services.AddTransient<IServiceTypeService, ServiceTypeService>();
+            services.AddTransient<IShiftService, ShiftService>();
+            services.AddTransient<IEmployeeServiceTypeService,EmployeeServiceTypeService>();
 
 
             return services;

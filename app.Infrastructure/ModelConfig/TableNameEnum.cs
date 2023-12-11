@@ -13,6 +13,7 @@
         Designation,
         EmployeeCategory,
         ServiceType,
-
+        Shift,
+        EmployeeServiceType
     }
 }
