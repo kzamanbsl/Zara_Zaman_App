@@ -29,3 +29,10 @@ Date : 10-12-2023
      +IsMenuShow
  * DropDownItem
      +DropDownTypeId
+
+
+Date : 11-12-2023
+===================
++ LeaveApplication
++ LeaveBalance
++ LeaveCategory

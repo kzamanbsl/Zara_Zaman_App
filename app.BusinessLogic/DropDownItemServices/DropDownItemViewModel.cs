@@ -1,5 +1,7 @@
 ﻿using app.EntityModel;
 using app.Services.DropDownItemServices;
+using app.Utility;
+using app.Utility.UtilityServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,5 +16,9 @@ namespace app.Services.DropDownItemServices
         public IEnumerable<DropDownItemViewModel> DropDownItemList { get; set; }
         public string Description { get; set; }
         public int DropDownTypeId { get; set; }
+        //public string DropDownTypeName
+        //{
+        //    get { return UtilityService.GetEnumDescription((DropdownTypeEnum)DropDownTypeId); }
+        //}
     }
 }

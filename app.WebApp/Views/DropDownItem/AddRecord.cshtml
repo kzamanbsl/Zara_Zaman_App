@@ -1,4 +1,5 @@
-﻿@model app.Services.DropDownItemServices.DropDownItemViewModel
+﻿@using app.Utility;
+@model app.Services.DropDownItemServices.DropDownItemViewModel
 @{
     ViewData["Title"] = "AddRecord";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
@@ -36,7 +37,12 @@
                         <form asp-action="AddRecord" method="post">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-                        
+                            <div class="form-group">
+                                <label asp-for="DropDownTypeId" class="control-label">Add DropDown Type</label>
+                                <select id="fieldHotelTypeVal" asp-for="DropDownTypeId" asp-items="Html.GetEnumSelectList<DropdownTypeEnum>()" class="form-control">
+                                    <option value="0" selected>-- Select DropDown Type --</option>
+                                </select>
+                            </div>
 
                             <div class="form-group">
                                 <label asp-for="Name" class="control-label"></label>

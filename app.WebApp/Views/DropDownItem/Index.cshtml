@@ -39,7 +39,10 @@
                                     #
                                 </th>
                                 <th>
-                                    Name
+                                   DropDown Type Name
+                                </th>
+                                <th>
+                                    Items
                                 </th>
                                 <th class="text-center">Action</th>
                             </tr>
@@ -51,6 +54,9 @@
                                 <tr>
                                     <td>
                                         @SN
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.DropDownTypeId)
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.Name)
