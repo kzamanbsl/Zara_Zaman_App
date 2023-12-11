@@ -12,5 +12,7 @@ namespace app.Services.DropDownItemServices
     {
         public string Name { get; set; }
         public IEnumerable<DropDownItemViewModel> DropDownItemList { get; set; }
+        public string Description { get; set; }
+        public int DropDownTypeId { get; set; }
     }
 }
