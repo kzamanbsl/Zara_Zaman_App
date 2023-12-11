@@ -19,6 +19,7 @@ using app.Services.DropdownItemServices;
 using app.Services.LeaveCategoryServices;
 using app.Utility.UtilityServices;
 using app.Services.LeaveBalanceServices;
+using app.Services.LeaveApplicationServices;
 
 namespace app.Services
 {
@@ -45,6 +46,7 @@ namespace app.Services
             services.AddTransient<IDropdownItemService, DropdownItemService>();
             services.AddTransient<ILeaveBalanceService, LeaveBalanceService>();
             services.AddTransient<ILeaveCategoryService, LeaveCategoryService>();
+            services.AddTransient<ILeaveApplicationService, LeaveApplicationService>();
 
 
             return services;
