@@ -9,16 +9,16 @@ using System.Threading.Tasks;
 
 namespace app.Infrastructure.ModelConfig
 {
-    public class DropDownItemConfig : IEntityTypeConfiguration<DropDownItem>
+    public class DropdownItemConfig : IEntityTypeConfiguration<DropdownItem>
     {
-        public void Configure(EntityTypeBuilder<DropDownItem> builder)
+        public void Configure(EntityTypeBuilder<DropdownItem> builder)
         {
             builder.HasKey(c => c.Id);
             builder.Property(c => c.Name).HasMaxLength(100);
             builder.Property(c => c.Description).HasMaxLength(250);
-            builder.Property(c => c.DropDownTypeId);
+            builder.Property(c => c.DropdownTypeId);
 
-            builder.ToTable(TableNameEnum.DropDownItem.ToString());
+            builder.ToTable(TableNameEnum.DropdownItem.ToString());
         }
     }
 }

@@ -1,7 +1,9 @@
-﻿namespace app.Services.DropDownServices
+﻿namespace app.Services.DropdownServices
 {
-    public interface IDropDownService
+    public interface IDropdownService
     {
-        Task<IEnumerable<DropDownViewModel>> CompanyList();
+        Task<IEnumerable<DropdownViewModel>> CompanySelectionList();
+        Task<IEnumerable<DropdownViewModel>> DesignatinSelectionList();
+        Task<IEnumerable<DropdownViewModel>> DepartmentSelectionList();
     }
 }

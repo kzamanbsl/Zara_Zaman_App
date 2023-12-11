@@ -22,7 +22,7 @@ namespace app.Infrastructure.ModelConfig
             new ServiceTypeConfig()?.Configure(builder.Entity<ServiceType>());
             new ShiftConfig()?.Configure(builder.Entity<Shift>());
             new OfficeTypeConfig()?.Configure(builder.Entity<OfficeType>());
-            new DropDownItemConfig()?.Configure(builder.Entity<DropDownItem>());
+            new DropdownItemConfig()?.Configure(builder.Entity<DropdownItem>());
             new EmployeeServiceTypeConfig()?.Configure(builder.Entity<EmployeeServiceType>());
             new LeaveCategoryConfig()?.Configure(builder.Entity<LeaveCategory>());
 

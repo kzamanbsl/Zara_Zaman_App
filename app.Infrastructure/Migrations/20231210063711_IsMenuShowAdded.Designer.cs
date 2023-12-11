@@ -93,7 +93,7 @@ namespace app.Infrastructure.Migrations
                     b.ToTable("Designation", "dbo");
                 });
 
-            modelBuilder.Entity("app.EntityModel.AppModels.DropDownItem", b =>
+            modelBuilder.Entity("app.EntityModel.AppModels.DropdownItem", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -126,7 +126,7 @@ namespace app.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("DropDownItem", "dbo");
+                    b.ToTable("DropdownItem", "dbo");
                 });
 
             modelBuilder.Entity("app.EntityModel.AppModels.EmployeeCategory", b =>

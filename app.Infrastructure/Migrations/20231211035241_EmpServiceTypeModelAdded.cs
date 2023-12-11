@@ -10,9 +10,9 @@ namespace app.Infrastructure.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<int>(
-                name: "DropDownTypeId",
+                name: "DropdownTypeId",
                 schema: "dbo",
-                table: "DropDownItem",
+                table: "DropdownItem",
                 type: "int",
                 nullable: false,
                 defaultValue: 0);
@@ -213,9 +213,9 @@ namespace app.Infrastructure.Migrations
                 schema: "dbo");
 
             migrationBuilder.DropColumn(
-                name: "DropDownTypeId",
+                name: "DropdownTypeId",
                 schema: "dbo",
-                table: "DropDownItem");
+                table: "DropdownItem");
 
             migrationBuilder.UpdateData(
                 schema: "dbo",

@@ -18,7 +18,7 @@ namespace app.Infrastructure.Migrations
                 defaultValue: false);
 
             migrationBuilder.CreateTable(
-                name: "DropDownItem",
+                name: "DropdownItem",
                 schema: "dbo",
                 columns: table => new
                 {
@@ -34,7 +34,7 @@ namespace app.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_DropDownItem", x => x.Id);
+                    table.PrimaryKey("PK_DropdownItem", x => x.Id);
                 });
 
             migrationBuilder.UpdateData(
@@ -185,7 +185,7 @@ namespace app.Infrastructure.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "DropDownItem",
+                name: "DropdownItem",
                 schema: "dbo");
 
             migrationBuilder.DropColumn(
