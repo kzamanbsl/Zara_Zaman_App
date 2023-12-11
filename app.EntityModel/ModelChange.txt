@@ -7,17 +7,25 @@
 
 Date: 06-12-2023
 ================
-+ Country
++ Country 
 + Division 
 + District
 + Upozila
-+ Department
-+ Designation
-+ Grade
-+ OfficeType
++ Department == Done
++ Designation == Done
++ Grade == Done
++ OfficeType == Done
 + Shift
-+ ServiceType
++ ServiceType == Done
 
 Date: 06-12-2023
 ================
 + EmployeeCategory
+
+
+Date : 10-12-2023
+===================
+ * ManuItem
+     +IsMenuShow
+ * DropDownItem
+     +DropDownTypeId

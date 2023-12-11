@@ -21,6 +21,9 @@ namespace app.Infrastructure.ModelConfig
             new EmployeeCategoryConfig()?.Configure(builder.Entity<EmployeeCategory>());
             new ServiceTypeConfig()?.Configure(builder.Entity<ServiceType>());
             new ShiftConfig()?.Configure(builder.Entity<Shift>());
+            new OfficeTypeConfig()?.Configure(builder.Entity<OfficeType>());
+            new DropDownItemConfig()?.Configure(builder.Entity<DropDownItem>());
+            new EmployeeServiceTypeConfig()?.Configure(builder.Entity<EmployeeServiceType>());
 
 
         }

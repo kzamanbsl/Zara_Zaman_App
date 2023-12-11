@@ -73,6 +73,7 @@
                                 <input asp-for="OrderNo" class="form-control" required />
                                 <span asp-validation-for="OrderNo" class="text-danger"></span>
                             </div>
+                            @Html.HiddenFor(model => model.IsMenuShow)
                             <div class="form-group">
                                 <input type="submit" value="Create" class="btn btn-primary" />
                             </div>
