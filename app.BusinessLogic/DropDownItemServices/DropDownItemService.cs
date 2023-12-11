@@ -31,6 +31,7 @@ namespace app.Services.DropDownItemServices
             {
                 DropDownItem com = new DropDownItem();
                 com.Name = model.Name;
+                com.DropDownTypeId = model.DropDownTypeId;
                 var res = await _iEntityRepository.AddAsync(com);
                 return 2;
             }
@@ -54,6 +55,7 @@ namespace app.Services.DropDownItemServices
                                                          {
                                                              Id = t1.Id,
                                                              Name = t1.Name,
+                                                             DropDownTypeId = t1.DropDownTypeId,
                                                          }).AsQueryable());
             return model;
         }
@@ -64,6 +66,7 @@ namespace app.Services.DropDownItemServices
             DropDownItemViewModel model = new DropDownItemViewModel();
             model.Id = result.Id;
             model.Name = result.Name;
+            model.DropDownTypeId = result.DropDownTypeId;
             return model;
         }
 
@@ -75,6 +78,7 @@ namespace app.Services.DropDownItemServices
             {
                 var result = await _iEntityRepository.GetByIdAsync(model.Id);
                 result.Name = model.Name;
+                result.DropDownTypeId = model.DropDownTypeId;
                 await _iEntityRepository.UpdateAsync(result);
                 return 2;
             }
