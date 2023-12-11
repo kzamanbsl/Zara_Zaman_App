@@ -1,26 +1,20 @@
-﻿using app.Services.CompanyServices;
-using app.Services.DropdownServices;
-using app.Services.LeaveBalanceServices;
+﻿using app.Services.LeaveApplicationServices;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace app.WebApp.Controllers
 {
-    public class LeaveBalanceController : Controller
+    public class LeaveApplicationController : Controller
     {
 
-        private readonly ILeaveBalanceService _iService;
-        private readonly IDropdownService _dropdownService;
-        public LeaveBalanceController(ILeaveBalanceService iService,IDropdownService dropdownService)
+        private readonly ILeaveApplicationService _iService;
+        public LeaveApplicationController(ILeaveApplicationService iService)
         {
             _iService = iService;
-            _dropdownService = dropdownService; 
         }
 
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-
             var result = await _iService.GetAllRecord();
             return View(result);
         }
@@ -28,13 +22,12 @@ namespace app.WebApp.Controllers
         [HttpGet]
         public async Task<IActionResult> AddRecord()
         {
-            ViewBag.leaveCategory = new SelectList((await _dropdownService.LeaveCategorySelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
-            LeaveBalanceViewModel viewModel = new LeaveBalanceViewModel();
+            LeaveApplicationViewModel viewModel = new LeaveApplicationViewModel();
             return View(viewModel);
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddRecord(LeaveBalanceViewModel viewModel)
+        public async Task<IActionResult> AddRecord(LeaveApplicationViewModel viewModel)
         {
             var result = await _iService.AddRecord(viewModel);
             if (result == 2)
@@ -48,13 +41,12 @@ namespace app.WebApp.Controllers
         [HttpGet]
         public async Task<IActionResult> UpdateRecord(long id)
         {
-            ViewBag.leaveCategory = new SelectList((await _dropdownService.LeaveCategorySelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
             var result = await _iService.GetRecordById(id);
             return View(result);
         }
 
         [HttpPost]
-        public async Task<IActionResult> UpdateRecord(LeaveBalanceViewModel model)
+        public async Task<IActionResult> UpdateRecord(LeaveApplicationViewModel model)
         {
             var result = await _iService.UpdateRecord(model);
             if (result == 2)

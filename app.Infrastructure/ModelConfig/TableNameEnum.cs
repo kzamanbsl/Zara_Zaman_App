@@ -20,6 +20,10 @@
         DropDownItem,
         LeaveBalance,
         LeaveCategory,
+<<<<<<< HEAD
+        LeaveApplication,
+=======
         Employee,
+>>>>>>> 98f57d32a8748794e26465d5b6ea050c80c69730
     }
 }

@@ -26,6 +26,7 @@ namespace app.Infrastructure.ModelConfig
             new EmployeeServiceTypeConfig()?.Configure(builder.Entity<EmployeeServiceType>());
             new LeaveBalanceConfig()?.Configure(builder.Entity<LeaveBalance>());
             new LeaveCategoryConfig()?.Configure(builder.Entity<LeaveCategory>());
+            new LeaveApplicationConfig()?.Configure(builder.Entity<LeaveApplication>());
 
         }
     }
