@@ -36,9 +36,9 @@
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                             @Html.HiddenFor(model => model.Id)
                             <div class="form-group">
-                                <label asp-for="Name" class="control-label"></label>
-                                <input asp-for="Name" class="form-control" required />
-                                <span asp-validation-for="Name" class="text-danger"></span>
+                                <label asp-for="LeaveQty" class="control-label"></label>
+                                <input type="number" asp-for="LeaveQty" class="form-control" required min="0" />
+                                <span asp-validation-for="LeaveQty" class="text-danger"></span>
                             </div>
                             <div class="form-group">
                                 <input type="submit" value="Update" class="btn btn-warning" />
