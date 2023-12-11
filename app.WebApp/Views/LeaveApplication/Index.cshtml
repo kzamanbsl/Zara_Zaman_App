@@ -1,0 +1,119 @@
+﻿@model app.Services.LeaveApplicationServices.LeaveApplicationViewModel
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    int SN = 1;
+}
+
+
+<div class="content-header">
+    <div class="container-fluid ">
+        <div class="breadcrumb d-flex justify-content-between align-items-center  pl-3 pr-3">
+            <ol class="breadcrumb mb-0 p-0">
+                <li class="breadcrumb-item"><a href="/Admin/Index">Home</a></li>
+                <li class="breadcrumb-item active"> LeaveApplication List </li>
+            </ol>
+            <div>
+                <a asp-action="AddRecord"><i class="fa fa-plus"></i>  Add LeaveApplication </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="card">
+            <div class="card-header">
+                <div class="row w-100">
+                    <div class="col-sm-3">
+                        <h5> <i class="fas fa-list"></i>  All LeaveApplication </h5>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-sm table-bordered">
+                        <thead>
+                            <tr>
+                                <th>
+                                    #
+                                </th>
+                                <th>
+                                    Manager Name
+                                </th>
+                                <th>Category</th>
+                                <th>Start Date </th>
+                                <th>End Date </th>
+                                <th>Days </th>
+                                <th>Stay During Leave</th>
+                                <th>Reason</th>
+                                <th>Remarks </th>
+
+                                <th class="text-center">Action</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            @foreach (var item in Model.LeaveApplicationList)
+                            {
+                                <tr>
+                                    <td>
+                                        @SN
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ManagerName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.LeaveCategory)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.StartDate)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.EndDate)
+                                    </td>
+                                     <td>
+                                        @Html.DisplayFor(modelItem => item.LeaveDays)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.LeaveDue)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Reason)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Remarks)
+                                    </td>
+                                    <td class="text-center">
+                                        @Html.ActionLink("", "UpdateRecord", new {id=item.Id},new {@class = "text-danger fas fa-edit",  onclick = "return confirm('Are you sure you want to edit this?')" }) |
+                                        @Html.ActionLink("","Delete", new {  id=item.Id},new {@class = "text-danger fas fa-trash",  onclick = "return confirm('Are you sure you want to delete this?')" })
+                                    </td>
+                                </tr>
+                                SN++;
+                            }
+                        </tbody>
+
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#Configuration').addClass('menu-open');
+            $('#LeaveApplicationIndex').addClass('active');
+        });
+    </script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }
+
+

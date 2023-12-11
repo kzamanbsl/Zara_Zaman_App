@@ -38,7 +38,12 @@ namespace app.Infrastructure
         public virtual DbSet<DropdownItem> DropdownItem { get; set; }
         public virtual DbSet<LeaveBalance> LeaveBalance { get; set; }
         public virtual DbSet<LeaveCategory> LeaveCategory { get; set; }
+<<<<<<< HEAD
+        public virtual DbSet<LeaveApplication> LeaveApplication { get; set; }
+
+=======
         public virtual DbSet<Employee> Employee { get; set; }
+>>>>>>> 98f57d32a8748794e26465d5b6ea050c80c69730
 
     }
 }
