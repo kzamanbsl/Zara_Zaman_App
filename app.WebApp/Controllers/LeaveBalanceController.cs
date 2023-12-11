@@ -20,6 +20,7 @@ namespace app.WebApp.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
+
             var result = await _iService.GetAllRecord();
             return View(result);
         }
@@ -47,6 +48,7 @@ namespace app.WebApp.Controllers
         [HttpGet]
         public async Task<IActionResult> UpdateRecord(long id)
         {
+            ViewBag.leaveCategory = new SelectList((await _dropdownService.LeaveCategorySelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
             var result = await _iService.GetRecordById(id);
             return View(result);
         }
