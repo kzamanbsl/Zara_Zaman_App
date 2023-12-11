@@ -10,7 +10,7 @@ namespace app.Infrastructure.ModelConfig
         public void Configure(EntityTypeBuilder<EmployeeServiceType> builder)
         {
             builder.HasKey(c => c.Id);
-            builder.Property(c => c.Name).HasMaxLength(100);
+            builder.Property(c => c.Name).HasMaxLength(200);
 
             builder.ToTable(TableNameEnum.EmployeeServiceType.ToString());
         }
