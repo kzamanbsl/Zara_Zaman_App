@@ -20,5 +20,6 @@
         DropDownItem,
         LeaveBalance,
         LeaveCategory,
+        Employee,
     }
 }
