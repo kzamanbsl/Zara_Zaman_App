@@ -1,18 +1,17 @@
-﻿@model app.Services.ShiftServices.ShiftViewModel
+﻿@model app.Services.LeaveCategoryServices.LeaveCategoryViewModel
 @{
     ViewData["Title"] = "UpdateRecord";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
-
 <div class="content-header">
     <div class="container-fluid ">
         <div class="breadcrumb d-flex justify-content-between align-items-center  pl-3 pr-3">
             <ol class="breadcrumb mb-0 p-0">
                 <li class="breadcrumb-item"><a href="/Admin/Index">Home</a></li>
-                <li class="breadcrumb-item active"> Shift List </li>
+                <li class="breadcrumb-item active"> LeaveCategory List </li>
             </ol>
             <div>
-                <a asp-action="Index"><i class="fa fa-list"></i>  Shift List </a>
+                <a asp-action="Index"><i class="fa fa-list"></i>  LeaveCategory List </a>
             </div>
         </div>
     </div>
@@ -26,7 +25,7 @@
             <div class="card-header">
                 <h3 class="card-title text-info">
                     <i class="fas fa-plus"></i>
-                    Update Shift
+                    Update LeaveCategory
                 </h3>
 
             </div>
@@ -40,16 +39,6 @@
                                 <label asp-for="Name" class="control-label"></label>
                                 <input asp-for="Name" class="form-control" required />
                                 <span asp-validation-for="Name" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="StartAt" class="control-label"></label>
-                                <input type="time" asp-for="StartAt" class="form-control" required />
-                                <span asp-validation-for="StartAt" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="EndAt" class="control-label"></label>
-                                <input type="time" asp-for="EndAt" class="form-control" required />
-                                <span asp-validation-for="EndAt" class="text-danger"></span>
                             </div>
                             <div class="form-group">
                                 <input type="submit" value="Update" class="btn btn-warning" />
@@ -66,7 +55,7 @@
     <script>
         $(document).ready(function () {
             $('#Configuration').addClass('menu-open');
-           
+
         });
     </script>
     @{
