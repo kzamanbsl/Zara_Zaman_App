@@ -28,5 +28,13 @@ Date : 10-12-2023
 ===================
  * ManuItem
      +IsMenuShow
- * DropDownItem == Done
+ * DropDownItem
      +DropDownTypeId
+
+
+Date : 11-12-2023
+===================
++ LeaveApplication
++ LeaveBalance
++ LeaveCategory
+

@@ -16,7 +16,11 @@ using app.Services.ShiftServices;
 using app.Services.EmployeeServiceTypeServices;
 using app.Services.OfficeTypeServices;
 using app.Services.DropDownItemServices;
+<<<<<<< HEAD
 using app.Services.LeaveBalanceServices;
+=======
+using app.Services.LeaveCategoryServices;
+>>>>>>> f0cb851e271893f514720d0b398ef47037ccc49e
 
 namespace app.Services
 {
@@ -40,7 +44,11 @@ namespace app.Services
             services.AddTransient<IEmployeeServiceTypeService,EmployeeServiceTypeService>();
             services.AddTransient<IOfficeTypeService, OfficeTypeService>();
             services.AddTransient<IDropDownItemService, DropDownItemService>();
+<<<<<<< HEAD
             services.AddTransient<ILeaveBalanceService, LeaveBalanceService>();
+=======
+            services.AddTransient<ILeaveCategoryService, LeaveCategoryService>();
+>>>>>>> f0cb851e271893f514720d0b398ef47037ccc49e
 
 
             return services;

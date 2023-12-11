@@ -1,19 +1,21 @@
-﻿@model app.Services.DropDownItemServices.DropDownItemViewModel
+﻿@model app.Services.LeaveCategoryServices.LeaveCategoryViewModel
+
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
     int SN = 1;
 }
 
+
 <div class="content-header">
     <div class="container-fluid ">
         <div class="breadcrumb d-flex justify-content-between align-items-center  pl-3 pr-3">
             <ol class="breadcrumb mb-0 p-0">
                 <li class="breadcrumb-item"><a href="/Admin/Index">Home</a></li>
-                <li class="breadcrumb-item active"> DropDownItem List </li>
+                <li class="breadcrumb-item active"> LeaveCategory List </li>
             </ol>
             <div>
-                <a asp-action="AddRecord"><i class="fa fa-plus"></i>  Add DropDownItem </a>
+                <a asp-action="AddRecord"><i class="fa fa-plus"></i>  Add LeaveCategory </a>
             </div>
         </div>
     </div>
@@ -26,7 +28,7 @@
             <div class="card-header">
                 <div class="row w-100">
                     <div class="col-sm-3">
-                        <h5> <i class="fas fa-list"></i>  All DropDownItem </h5>
+                        <h5> <i class="fas fa-list"></i>  All LeaveCategory </h5>
                     </div>
                 </div>
             </div>
@@ -39,24 +41,18 @@
                                     #
                                 </th>
                                 <th>
-                                   DropDown Type Name
-                                </th>
-                                <th>
-                                    Items
+                                    Name
                                 </th>
                                 <th class="text-center">Action</th>
                             </tr>
                         </thead>
 
                         <tbody>
-                            @foreach (var item in Model.DropDownItemList)
+                            @foreach (var item in Model.LeaveCategoryList)
                             {
                                 <tr>
                                     <td>
                                         @SN
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.DropDownTypeId)
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.Name)
@@ -84,10 +80,12 @@
     <script>
         $(document).ready(function () {
             $('#Configuration').addClass('menu-open');
-            $('#DropDownItemIndex').addClass('active');
+            $('#LeaveCategoryIndex').addClass('active');
         });
     </script>
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
     }
+
+

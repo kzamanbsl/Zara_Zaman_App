@@ -32,7 +32,6 @@ namespace app.Utility.UtilityServices
             {
                 list.Add(new { Value = (int)item, Text = GetEnumDescription((Enum)Enum.Parse(typeof(T), item.ToString())) });
             }
-
             return list;
         }
     }
