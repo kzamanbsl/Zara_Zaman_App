@@ -18,6 +18,17 @@ namespace app.WebApp.Controllers
             return View();
         }
 
-        
+        [HttpPost]
+        public async Task<IActionResult> AddRecord(EmployeeViewModel viewModel)
+        {
+            var result = await _iService.AddRecord(viewModel);
+            if (result == 2)
+            {
+                return RedirectToAction("Index");
+            }
+            ModelState.AddModelError(string.Empty, "Same Name already exists!");
+            return View(viewModel);
+        }
+
     }
 }
