@@ -1,7 +1,9 @@
-﻿using app.Services.DropdownServices;
+﻿using app.EntityModel.AppModels;
+using app.Services.DropdownServices;
 using app.Services.LeaveApplicationServices;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 
 namespace app.WebApp.Controllers
 {
@@ -26,6 +28,9 @@ namespace app.WebApp.Controllers
         [HttpGet]
         public async Task<IActionResult> AddRecord()
         {
+            ViewBag.LeaveCategories = new SelectList((await _dropdownService.LeaveCategorySelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
+            ViewBag.Employees = new SelectList((await _dropdownService.EmployeeSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
+            ViewBag.Managers = new SelectList((await _dropdownService.EmployeeSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
             LeaveApplicationViewModel viewModel = new LeaveApplicationViewModel();
             return View(viewModel);
         }
@@ -45,7 +50,8 @@ namespace app.WebApp.Controllers
         [HttpGet]
         public async Task<IActionResult> UpdateRecord(long id)
         {
-             var result = await _iService.GetRecordById(id);
+
+            var result = await _iService.GetRecordById(id);
             return View(result);
         }
 

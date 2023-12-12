@@ -38,26 +38,29 @@
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label asp-for="ManagerName" class="control-label"></label>
-                                        <input asp-for="ManagerName" class="form-control" required />
-                                        <span asp-validation-for="ManagerName" class="text-danger"></span>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label>Leave Category</label>
-                                        <select class="form-control" asp-for="LeaveCategoryId" asp-items="ViewBag.leaveCategory">
-                                            <option value="0" selected>--Leave Category --</option>
+                                        <label>Employee</label>
+                                        <select class="form-control" asp-for="EmployeeId" asp-items="ViewBag.Employees" required>
+                                            <option value="" selected>--Employee --</option>
+                                            <span asp-validation-for="EmployeeId" class="text-danger"></span>
                                         </select>
                                     </div>
                                 </div>
-
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label asp-for="StartDate" class="control-label"></label>
-                                        <input type="date" asp-for="StartDate" class="form-control" id="txtStartDate" autocomplete="off" onchange="getLeaveDays()" required />
-                                        <span asp-validation-for="StartDate" class="text-danger"></span>
+                                        <label>Manager</label>
+                                        <select class="form-control" asp-for="ManagerId" asp-items="ViewBag.Managers" required>
+                                            <option value="" selected>--Manager --</option>
+                                            <span asp-validation-for="ManagerId" class="text-danger"></span>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Leave Category</label>
+                                        <select class="form-control" asp-for="LeaveCategoryId" asp-items="ViewBag.LeaveCategories" required>
+                                            <option value="0" selected>--Leave Category --</option>
+                                            <span asp-validation-for="LeaveCategoryId" class="text-danger"></span>
+                                        </select>
                                     </div>
                                 </div>
 
@@ -66,7 +69,13 @@
                             </div>
 
                             <div class="row">
-                                <!-- Add more rows with three columns as needed -->
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label asp-for="StartDate" class="control-label"></label>
+                                        <input type="date" asp-for="StartDate" class="form-control" id="txtStartDate" autocomplete="off" onchange="getLeaveDays()" required />
+                                        <span asp-validation-for="StartDate" class="text-danger"></span>
+                                    </div>
+                                </div>
 
                                 <div class="col-md-4">
                                     <div class="form-group">
@@ -78,42 +87,34 @@
 
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label asp-for="LeaveDays" class="control-label"></label>
+                                        <label asp-for="LeaveDays" class="control-label">Leave Days</label>
                                         <input asp-for="LeaveDays" class="form-control" id="txtLeaveDays" required />
                                         <span asp-validation-for="LeaveDays" class="text-danger"></span>
                                     </div>
                                 </div>
 
-@*                                 <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label asp-for="LeaveDue" class="control-label"></label>
-                                        <input asp-for="LeaveDue" class="form-control" required />
-                                        <span asp-validation-for="LeaveDue" class="text-danger"></span>
-                                    </div>
-                                </div> *@
-
                             </div>
 
 
-                            <!-- Add more form elements for the remaining columns as needed -->
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label asp-for="Reason " class="control-label"></label>
-                                        <input asp-for="Reason "  class="form-control" required />
+                                        <textarea asp-for="Reason" class="form-control" required rows="2"></textarea>
                                         <span asp-validation-for="Reason " class="text-danger"></span>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+
+                                <div class="col-md-4">
                                     <div class="form-group">
-                                        <label asp-for="Remarks " class="control-label"></label>
-                                        <input asp-for="Remarks " class="form-control" required />
-                                        <span asp-validation-for="Remarks " class="text-danger"></span>
+                                        <label asp-for="StayDuringLeave" class="control-label">Stay During Leave</label>
+                                        <textarea asp-for="StayDuringLeave" class="form-control" required rows="2"></textarea>
+                                        <span asp-validation-for="StayDuringLeave" class="text-danger"></span>
                                     </div>
                                 </div>
-                            </div>                         
+                            </div>
                             <div class="form-group">
-                                <input type="submit" value="Create" class="btn btn-primary" />
+                                <input type="submit" value="Submit" class="btn btn-primary" />
                             </div>
                         </form>
 
@@ -173,6 +174,6 @@
             });
         });
     </script>
-    
+
     }
 

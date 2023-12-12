@@ -1,4 +1,5 @@
-﻿using app.Infrastructure;
+﻿using app.EntityModel.AppModels;
+using app.Infrastructure;
 using app.Infrastructure.Auth;
 
 namespace app.Services.DropdownServices
@@ -37,7 +38,7 @@ namespace app.Services.DropdownServices
             return dropDownViewModels;
         }
 
-        public async Task<IEnumerable<DropdownViewModel>> DesignatinSelectionList()
+        public async Task<IEnumerable<DropdownViewModel>> DesignationSelectionList()
         {
             IEnumerable<DropdownViewModel> dropDownViewModels = await Task.Run(() => (from t1 in _dbContext.Designation
                                                                                       select new DropdownViewModel
@@ -48,7 +49,7 @@ namespace app.Services.DropdownServices
             return dropDownViewModels;
         }
 
-     
+
 
         public async Task<IEnumerable<DropdownViewModel>> LeaveCategorySelectionList()
         {
@@ -89,7 +90,7 @@ namespace app.Services.DropdownServices
                                                                                       {
                                                                                           Id = t1.Id,
                                                                                           Name = t1.Name
-                                                                                      }).AsQueryable()) ;
+                                                                                      }).AsQueryable());
             return dropDownViewModels;
         }
 
@@ -97,9 +98,21 @@ namespace app.Services.DropdownServices
         {
             IEnumerable<DropdownViewModel> dropDownViewModels = await Task.Run(() => (from t1 in _dbContext.Upazila
                                                                                       join t2 in _dbContext.District on t1.DistrictId equals t2.Id
-                                                                                      where (divisionId > 0 && districtsId > 0 ) ? t2.DivisionId == divisionId && t1.DistrictId == districtsId 
+                                                                                      where (divisionId > 0 && districtsId > 0) ? t2.DivisionId == divisionId && t1.DistrictId == districtsId
                                                                                       : (divisionId == 0 && districtsId > 0) ? t1.DistrictId == districtsId
                                                                                       : t1.Id > 0
+                                                                                      select new DropdownViewModel
+                                                                                      {
+                                                                                          Id = t1.Id,
+                                                                                          Name = t1.Name
+                                                                                      }).AsQueryable());
+            return dropDownViewModels;
+        }
+
+        public async Task<IEnumerable<DropdownViewModel>> EmployeeSelectionList(long managerId = 0)
+        {
+            IEnumerable<DropdownViewModel> dropDownViewModels = await Task.Run(() => (from t1 in _dbContext.Employee
+                                                                                      where (managerId > 0) ? t1.ManagerId == managerId && t1.IsActive == true : t1.IsActive==true
                                                                                       select new DropdownViewModel
                                                                                       {
                                                                                           Id = t1.Id,

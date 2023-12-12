@@ -13,10 +13,12 @@ namespace app.Services.LeaveApplicationServices
     public class LeaveApplicationViewModel : BaseViewModel
     {
         public long EmployeeId { get; set; }
+        public string EmployeeName { get; set; }
         public long ManagerId { get; set; }
         public string ManagerName { get; set; }
-        public string LeaveType { get; set; }
+      
         public int LeaveCategoryId { get; set; }
+        public string LeaveCategoryName { get; set; }
 
         [Required]
         [DisplayName("Start Date")]
@@ -29,16 +31,13 @@ namespace app.Services.LeaveApplicationServices
         public DateTime EndDate { get; set; }
 
         public int LeaveDays { get; set; }
-        public int LeaveDue { get; set; }
-        public string Address { get; set; }
+        public string StayDuringLeave { get; set; }
+
         public string Reason { get; set; }
         public string Remarks { get; set; }
-        public string AppliedBy { get; set; }
         public DateTime ApplicationDate { get; set; }
-        public virtual Employee Employee { get; set; }
-        public virtual LeaveCategory LeaveCategory { get; set; }
         public IEnumerable<LeaveApplicationViewModel> LeaveApplicationList { get; set; }
-        public List<LeaveCategory> leaveCategory { get; set; }
+
 
     }
 }
