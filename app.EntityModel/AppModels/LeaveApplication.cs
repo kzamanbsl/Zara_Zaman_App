@@ -18,7 +18,7 @@ namespace app.EntityModel.AppModels
         public string Reason { get; set; }
         public string StayDuringLeave { get; set; }
         public string Remarks { get; set; }
-        public int LeaveCategoryId { get; set; }
+        public long LeaveCategoryId { get; set; }
         public virtual LeaveCategory LeaveCategory { get; set; }
         public long EmployeeId { get; set; }
         public virtual Employee Employee { get; set; }

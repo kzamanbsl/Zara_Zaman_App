@@ -17,7 +17,7 @@ namespace app.Services.LeaveApplicationServices
         public long ManagerId { get; set; }
         public string ManagerName { get; set; }
       
-        public int LeaveCategoryId { get; set; }
+        public long LeaveCategoryId { get; set; }
         public string LeaveCategoryName { get; set; }
 
         [Required]
