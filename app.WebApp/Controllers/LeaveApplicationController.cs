@@ -1,7 +1,9 @@
-﻿using app.Services.DropdownServices;
+﻿using app.EntityModel.AppModels;
+using app.Services.DropdownServices;
 using app.Services.LeaveApplicationServices;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 
 namespace app.WebApp.Controllers
 {
@@ -26,6 +28,7 @@ namespace app.WebApp.Controllers
         [HttpGet]
         public async Task<IActionResult> AddRecord()
         {
+            ViewBag.leaveCategory = new SelectList((await _dropdownService.LeaveCategorySelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
             LeaveApplicationViewModel viewModel = new LeaveApplicationViewModel();
             return View(viewModel);
         }

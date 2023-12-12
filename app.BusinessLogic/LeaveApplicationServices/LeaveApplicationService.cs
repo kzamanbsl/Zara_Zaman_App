@@ -30,7 +30,7 @@ namespace app.Services.LeaveApplicationServices
             if (checkName == null)
             {
                 LeaveApplication com = new LeaveApplication();
-                com.Id = model.Id;
+                //com.Id = model.Id;
                 com.ManagerName = model.ManagerName;
                 com.LeaveCategory = model.LeaveCategory;
                 com.StartDate = model.StartDate;
