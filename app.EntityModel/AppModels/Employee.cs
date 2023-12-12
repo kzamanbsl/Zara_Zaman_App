@@ -69,5 +69,6 @@ namespace app.EntityModel.AppModels
         [Required]
         public long ManagerId { get; set; }
 
+
     }
 }

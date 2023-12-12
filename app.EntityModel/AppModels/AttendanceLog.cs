@@ -12,6 +12,5 @@ namespace app.EntityModel.AppModels
         public DateTime LoginTime { get; set; }
         public DateTime LogoutTime { get; set; }
         public string Remarks { get; set; }
-
     }
 }
