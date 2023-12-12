@@ -27,6 +27,7 @@ namespace app.Services.LeaveApplicationServices
         [DisplayName("End Date")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime EndDate { get; set; }
+        public string StayDuringLeave { get; set; }
 
         public int LeaveDays { get; set; }
         public int LeaveDue { get; set; }

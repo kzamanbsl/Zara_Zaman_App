@@ -36,7 +36,7 @@ namespace app.Services.LeaveApplicationServices
                 com.StartDate = model.StartDate;
                 com.EndDate = model.EndDate;
                 com.LeaveDays = model.LeaveDays;
-                //com.LeaveDue = model.LeaveDue;
+                com.StayDuringLeave = model.StayDuringLeave;
                 com.Reason = model.Reason;
                 com.Remarks = model.Remarks;
                 var res = await _iEntityRepository.AddAsync(com);
@@ -66,7 +66,7 @@ namespace app.Services.LeaveApplicationServices
                                                                    StartDate = t1.StartDate,
                                                                    EndDate = t1.EndDate,
                                                                    LeaveDays = t1.LeaveDays,
-                                                                   //LeaveDue = t1.LeaveDue,
+                                                                   StayDuringLeave = t1.StayDuringLeave,
                                                                    Reason = t1.Reason,
                                                                    Remarks = t1.Remarks
                                                                }).AsQueryable());
@@ -83,7 +83,7 @@ namespace app.Services.LeaveApplicationServices
             model.StartDate = result.StartDate;
             model.EndDate = result.EndDate;
             model.LeaveDays = result.LeaveDays;
-            //model.LeaveDue = result.LeaveDue;
+            model.StayDuringLeave = result.StayDuringLeave;
             model.Reason = result.Reason;
             model.Remarks = result.Remarks;
             return model;
@@ -101,7 +101,7 @@ namespace app.Services.LeaveApplicationServices
                 result.StartDate = model.StartDate;
                 result.EndDate = model.EndDate;
                 result.LeaveDays = model.LeaveDays;
-                //result.LeaveDue = model.LeaveDue;
+                result.StayDuringLeave = model.StayDuringLeave;
                 result.Reason = model.Reason;
                 result.Remarks = model.Remarks;
                 await _iEntityRepository.UpdateAsync(result);
