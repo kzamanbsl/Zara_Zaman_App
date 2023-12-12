@@ -22,5 +22,6 @@
         LeaveCategory,
         LeaveApplication,
         Employee,
+        Attendance,
     }
 }

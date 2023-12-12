@@ -57,5 +57,25 @@ namespace app.Services.DropdownServices
                                                                                       }).AsQueryable());
             return dropDownViewModels;
         }
+        public async Task<IEnumerable<DropdownViewModel>> EmployeeSelectionList()
+        {
+            IEnumerable<DropdownViewModel> dropDownViewModels = await Task.Run(() => (from t1 in _dbContext.Employee
+                                                                                      select new DropdownViewModel
+                                                                                      {
+                                                                                          Id = t1.Id,
+                                                                                          Name = t1.Name
+                                                                                      }).AsQueryable());
+            return dropDownViewModels;
+        }
+        public async Task<IEnumerable<DropdownViewModel>> ShiftSelectionList()
+        {
+            IEnumerable<DropdownViewModel> dropDownViewModels = await Task.Run(() => (from t1 in _dbContext.Shift
+                                                                                      select new DropdownViewModel
+                                                                                      {
+                                                                                          Id = t1.Id,
+                                                                                          Name = t1.Name
+                                                                                      }).AsQueryable());
+            return dropDownViewModels;
+        }
     }
 }
