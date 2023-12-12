@@ -16,6 +16,9 @@ namespace app.Infrastructure.ModelConfig
         {
             builder.HasKey(e => e.Id);
             builder.Property(e => e.Name).HasMaxLength(250);
+            builder.Property(e => e.ShortName).HasMaxLength(100);
+            builder.Property(e => e.FatherName).HasMaxLength(200);
+            builder.Property(e => e.MotherName).HasMaxLength(200);
             builder.Property(e => e.MobileNo).HasMaxLength(11);
             builder.ToTable(TableNameEnum.Employee.ToString());
         }
