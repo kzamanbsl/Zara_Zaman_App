@@ -22,13 +22,10 @@
         LeaveCategory,
         LeaveApplication,
         Employee,
-<<<<<<< HEAD
         Attendance,
-=======
         Country,
         Division,
         District,
         Upazila,
->>>>>>> 5c9edfa9bfab953abf7c038e68678a1d94518a15
     }
 }

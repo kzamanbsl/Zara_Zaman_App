@@ -20,6 +20,7 @@ using app.Services.LeaveCategoryServices;
 using app.Utility.UtilityServices;
 using app.Services.LeaveBalanceServices;
 using app.Services.LeaveApplicationServices;
+using app.Services.AttendanceServices;
 
 namespace app.Services
 {
@@ -47,7 +48,7 @@ namespace app.Services
             services.AddTransient<ILeaveBalanceService, LeaveBalanceService>();
             services.AddTransient<ILeaveCategoryService, LeaveCategoryService>();
             services.AddTransient<ILeaveApplicationService, LeaveApplicationService>();
-
+            services.AddTransient<IAttendanceService, AttendanceService>();
 
             return services;
         }

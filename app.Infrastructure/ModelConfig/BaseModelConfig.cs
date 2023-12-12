@@ -32,6 +32,7 @@ namespace app.Infrastructure.ModelConfig
             new LeaveCategoryConfig()?.Configure(builder.Entity<LeaveCategory>());
             new LeaveApplicationConfig()?.Configure(builder.Entity<LeaveApplication>());
             new EmployeeConfig()?.Configure(builder.Entity<Employee>());
+            new AttendanceConfig()?.Configure(builder.Entity<Attendance>());
 
         }
     }
