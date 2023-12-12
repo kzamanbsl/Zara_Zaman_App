@@ -40,6 +40,13 @@ namespace app.Infrastructure
         public virtual DbSet<LeaveCategory> LeaveCategory { get; set; }
         public virtual DbSet<LeaveApplication> LeaveApplication { get; set; }
         public virtual DbSet<Employee> Employee { get; set; }
+<<<<<<< HEAD
         public virtual DbSet<Attendance> Attendance { get; set; }
+=======
+        public virtual DbSet<Country> Country { get; set; }
+        public virtual DbSet<Division> Division { get; set; }
+        public virtual DbSet<District> District { get; set; }
+        public virtual DbSet<Upazila> Upazila { get; set; }
+>>>>>>> 5c9edfa9bfab953abf7c038e68678a1d94518a15
     }
 }

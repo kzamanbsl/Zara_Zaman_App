@@ -39,3 +39,14 @@ Date : 11-12-2023
 + LeaveBalance
 + LeaveCategory
 
+Date : 12-12-2023
+===================
+* Division 
+     +BnName
+* District
+     +Lat
+     +Lon
+     +Website
+     +BnName
+* Upozila
+     +BnName

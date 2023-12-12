@@ -14,6 +14,10 @@ namespace app.Infrastructure.ModelConfig
             new MenuItemConfig()?.Configure(builder.Entity<MenuItem>());
             new UserPermissionsConfig()?.Configure(builder.Entity<UserPermissions>());
             new CompanyConfig()?.Configure(builder.Entity<Company>());
+            new CountryConfig()?.Configure(builder.Entity<Country>());
+            new DivisionConfig()?.Configure(builder.Entity<Division>());
+            new DistrictConfig()?.Configure(builder.Entity<District>());
+            new UpazilaConfig()?.Configure(builder.Entity<Upazila>());
 
             new DepartmentConfig()?.Configure(builder.Entity<Department>());
             new GradeConfig()?.Configure(builder.Entity<Grade>());
@@ -27,6 +31,7 @@ namespace app.Infrastructure.ModelConfig
             new LeaveBalanceConfig()?.Configure(builder.Entity<LeaveBalance>());
             new LeaveCategoryConfig()?.Configure(builder.Entity<LeaveCategory>());
             new LeaveApplicationConfig()?.Configure(builder.Entity<LeaveApplication>());
+            new EmployeeConfig()?.Configure(builder.Entity<Employee>());
 
         }
     }
