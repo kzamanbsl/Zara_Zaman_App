@@ -48,6 +48,7 @@ namespace app.WebApp.Controllers
         [HttpGet]
         public async Task<IActionResult> UpdateRecord(long id)
         {
+
             var result = await _iService.GetRecordById(id);
             return View(result);
         }
