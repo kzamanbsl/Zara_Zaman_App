@@ -13,6 +13,7 @@ namespace app.Services.EmployeeServices
         public string EmployeeId { get; set; }
         [Required]
         public string Name { get; set; }
+        public string EmployeeCode { get; set; }
         public string ShortName { get; set; }
         public string PresentAddress { get; set; }
         public string FatherName { get; set; }
@@ -41,8 +42,8 @@ namespace app.Services.EmployeeServices
         public string Division { get; set; }
         public int DistrictId { get; set; }
         public string DistrictName { get; set; }
-        public string Upzilla { get; set; }
-        public int UpzillaId { get; set; }
+        public string Upazila { get; set; }
+        public int UpazilaId { get; set; }
         public string NationalId { get; set; }
         public string TinNo { get; set; }
         public string Religion { get; set; }

@@ -32,53 +32,92 @@
             </div>
             <div class="card-body">
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-12">
                         <form asp-action="AddRecord" method="post">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                            <div class="form-group">
-                                <label asp-for="ManagerName " class="control-label"></label>
-                                <input asp-for="ManagerName " class="form-control" required />
-                                <span asp-validation-for="ManagerName " class="text-danger"></span>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Employee</label>
+                                        <select class="form-control" asp-for="EmployeeId" asp-items="ViewBag.Employees" required>
+                                            <option value="" selected>--Employee --</option>
+                                            <span asp-validation-for="EmployeeId" class="text-danger"></span>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Manager</label>
+                                        <select class="form-control" asp-for="ManagerId" asp-items="ViewBag.Managers" required>
+                                            <option value="" selected>--Manager --</option>
+                                            <span asp-validation-for="ManagerId" class="text-danger"></span>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Leave Category</label>
+                                        <select class="form-control" asp-for="LeaveCategoryId" asp-items="ViewBag.LeaveCategories" required>
+                                            <option value="0" selected>--Leave Category --</option>
+                                            <span asp-validation-for="LeaveCategoryId" class="text-danger"></span>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <!-- Add more columns as needed -->
+
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label asp-for="StartDate" class="control-label"></label>
+                                        <input type="date" asp-for="StartDate" class="form-control" id="txtStartDate" autocomplete="off" onchange="getLeaveDays()" required />
+                                        <span asp-validation-for="StartDate" class="text-danger"></span>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label asp-for="EndDate" class="control-label"></label>
+                                        <input type="date" asp-for="EndDate" class="form-control" id="txtEndDate" autocomplete="off" onchange="getLeaveDays()" required />
+                                        <span asp-validation-for="EndDate" class="text-danger" id="endDate"></span>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label asp-for="LeaveDays" class="control-label">Leave Days</label>
+                                        <input asp-for="LeaveDays" class="form-control" id="txtLeaveDays" required />
+                                        <span asp-validation-for="LeaveDays" class="text-danger"></span>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label asp-for="Reason " class="control-label"></label>
+                                        <textarea asp-for="Reason" class="form-control" required rows="2"></textarea>
+                                        <span asp-validation-for="Reason " class="text-danger"></span>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label asp-for="StayDuringLeave" class="control-label">Stay During Leave</label>
+                                        <textarea asp-for="StayDuringLeave" class="form-control" required rows="2"></textarea>
+                                        <span asp-validation-for="StayDuringLeave" class="text-danger"></span>
+                                    </div>
+                                </div>
                             </div>
                             <div class="form-group">
-                                <label asp-for="LeaveCategory " class="control-label"></label>
-                                <input asp-for="LeaveCategory " class="form-control" required />
-                                <span asp-validation-for="LeaveCategory " class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="StartDate " class="control-label" ></label>
-                                <input asp-for="StartDate " class="form-control" required />
-                                <span asp-validation-for="StartDate " class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="EndDate " class="control-label"></label>
-                                <input asp-for="EndDate " class="form-control" required />
-                                <span asp-validation-for="EndDate " class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="LeaveDays " class="control-label"></label>
-                                <input asp-for="LeaveDays " class="form-control" required />
-                                <span asp-validation-for="LeaveDays " class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="LeaveDue " class="control-label"></label>
-                                <input asp-for="LeaveDue " class="form-control" required />
-                                <span asp-validation-for="LeaveDue " class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="Reason " class="control-label"></label>
-                                <input asp-for="Reason " class="form-control" required />
-                                <span asp-validation-for="Reason " class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="Remarks " class="control-label"></label>
-                                <input asp-for="Remarks " class="form-control" required />
-                                <span asp-validation-for="Remarks " class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <input type="submit" value="Create" class="btn btn-primary" />
+                                <input type="submit" value="Submit" class="btn btn-primary" />
                             </div>
                         </form>
+
                     </div>
                 </div>
             </div>
@@ -91,12 +130,50 @@
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
     <script>
-
         $(document).ready(function () {
             $('#Configuration').addClass('menu-open');
             $('#LeaveApplicationAddRecord').addClass('active');
         });
+
+        function stopRKey(evt) {
+            var evt = (evt) ? evt : ((event) ? event : null);
+            var node = (evt.target) ? evt.target : ((evt.srcElement) ? evt.srcElement : null);
+            if ((evt.keyCode == 13) && (node.type == "text")) {
+                return false;
+            }
+        }
+        document.onkeypress = stopRKey;
+
+        function getLeaveDays() {
+            var startDate = $('#txtStartDate').val();
+            var endDate = $('#txtEndDate').val();
+
+            if (startDate && endDate) {
+                var start = new Date(startDate);
+                var end = new Date(endDate);
+
+                var timeDiff = Math.abs(end.getTime() - start.getTime());
+                var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+
+                // Include both start and end days in the count
+                diffDays++;
+
+                if (end < start) {
+                    $('#txtLeaveDays').val(diffDays * -1);
+                } else {
+                    $('#txtLeaveDays').val(diffDays);
+                }
+            }
+        }
+
+        jQuery(document).ready(function () {
+            jQuery('[data-confirm]').click(function (e) {
+                if (!confirm(jQuery(this).attr("data-confirm"))) {
+                    e.preventDefault();
+                }
+            });
+        });
     </script>
-    
+
     }
 

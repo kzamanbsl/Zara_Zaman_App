@@ -10,22 +10,20 @@ namespace app.EntityModel.AppModels
 {
     public class LeaveApplication : BaseEntity
     {
-        public long EmployeeId { get; set; }
-        public long ManagerId { get; set; }
-        public string ManagerName { get; set; }        
+
+        public DateTime ApplicationDate { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public int LeaveDays { get; set; }
-        public int LeaveDue { get; set; }
-        public string Address { get; set; }
         public string Reason { get; set; }
         public string StayDuringLeave { get; set; }
         public string Remarks { get; set; }
-        public string AppliedBy { get; set; }
-        public DateTime ApplicationDate { get; set; }
-        public virtual Employee Employee { get; set; }        
         public int LeaveCategoryId { get; set; }
         public virtual LeaveCategory LeaveCategory { get; set; }
-       
+        public long EmployeeId { get; set; }
+        public virtual Employee Employee { get; set; }
+        public long ManagerId { get; set; }
+        public virtual Employee Manager { get; set; }
+
     }
 }
