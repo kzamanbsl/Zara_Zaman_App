@@ -33,6 +33,7 @@ namespace app.Services.EmployeeServices
                 emp.EmployeeCode = model.EmployeeCode;
                 emp.ShortName = model.ShortName;
                 emp.EmployeeOrder = model.EmployeeOrder;
+                emp.ManagerId = model.ManagerId;
                 emp.Remarks = model.Remarks;
 
 
@@ -64,7 +65,7 @@ namespace app.Services.EmployeeServices
                 emp.CountryId = model.CountryId;
                 emp.DivisionId = model.DivisionId;
                 emp.DistrictId = model.DistrictId;
-                emp.UpzillaId = model.UpzillaId;
+                emp.UpazilaId = model.UpazilaId;
                 emp.MobileNo = model.MobileNo;
                 emp.Email = model.Email;
                 

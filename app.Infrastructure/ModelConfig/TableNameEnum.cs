@@ -22,6 +22,7 @@
         LeaveCategory,
         LeaveApplication,
         Employee,
+        Attendance,
         Country,
         Division,
         District,
