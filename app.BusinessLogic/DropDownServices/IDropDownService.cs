@@ -6,6 +6,7 @@
         Task<IEnumerable<DropdownViewModel>> DesignatinSelectionList();
         Task<IEnumerable<DropdownViewModel>> DepartmentSelectionList();
         Task<IEnumerable<DropdownViewModel>> LeaveCategorySelectionList();
+        Task<IEnumerable<DropdownViewModel>> LeaveApplicationSelectionList();
 
     }
 }
