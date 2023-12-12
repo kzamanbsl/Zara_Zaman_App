@@ -19,6 +19,7 @@ namespace app.EntityModel.AppModels
         public int LeaveDue { get; set; }
         public string Address { get; set; }
         public string Reason { get; set; }
+        public string StayDuringLeave { get; set; }
         public string Remarks { get; set; }
         public string AppliedBy { get; set; }
         public DateTime ApplicationDate { get; set; }

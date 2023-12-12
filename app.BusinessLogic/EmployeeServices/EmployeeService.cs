@@ -29,13 +29,49 @@ namespace app.Services.EmployeeServices
             if (checkName == null)
             {
                 Employee emp = new Employee();
-                emp.EmployeeId = model.EmployeeId;
                 emp.Name = model.Name;
+                emp.EmployeeCode = model.EmployeeCode;
                 emp.ShortName = model.ShortName;
                 emp.EmployeeOrder = model.EmployeeOrder;
                 emp.Remarks = model.Remarks;
+
+
                 emp.FatherName = model.FatherName;
                 emp.MotherName = model.MotherName;
+                emp.DateOfMarriage = model.DateOfMarriage;
+                emp.MaritalTypeId = model.MaritalTypeId;
+                emp.SpouseName = model.SpouseName;
+                emp.DateOfBirth = model.DateOfBirth;
+                emp.NationalId = model.NationalId;
+                emp.GenderId = model.GenderId;
+                emp.BloodGroupId = model.BloodGroupId;
+                emp.ReligionId = model.ReligionId;
+                emp.TinNo = model.TinNo;
+
+
+                emp.JoiningDate = model.JoiningDate;
+                emp.ProbationEndDate = model.ProbationEndDate;
+                emp.DepartmentId = model.DepartmentId;
+                emp.DesignationId = model.DesignationId;
+                emp.EmployeeCategoryId = model.EmployeeCategoryId;
+                emp.JobStatusId = model.JobStatusId;
+                emp.ServiceTypeId = model.ServiceTypeId;
+                emp.OfficeTypeId = model.OfficeTypeId;
+                emp.ShiftId = model.ShiftId;
+                emp.GradeId = model.GradeId;
+                emp.PresentAddress = model.PresentAddress;
+                emp.PermanentAddress = model.PermanentAddress;
+                emp.CountryId = model.CountryId;
+                emp.DivisionId = model.DivisionId;
+                emp.DistrictId = model.DistrictId;
+                emp.UpzillaId = model.UpzillaId;
+                emp.MobileNo = model.MobileNo;
+                emp.Email = model.Email;
+                
+                emp.SignUrl = model.SignUrl;
+                emp.PhotoUrl = model.PhotoUrl;
+
+                
 
                
 

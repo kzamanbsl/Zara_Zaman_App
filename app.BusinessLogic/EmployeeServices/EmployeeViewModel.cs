@@ -13,6 +13,7 @@ namespace app.Services.EmployeeServices
         public string EmployeeId { get; set; }
         [Required]
         public string Name { get; set; }
+        public string EmployeeCode { get; set; }
         public string ShortName { get; set; }
         public string PresentAddress { get; set; }
         public string FatherName { get; set; }

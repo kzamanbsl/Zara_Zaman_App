@@ -10,7 +10,7 @@ namespace app.EntityModel.AppModels
 {
     public class Employee : BaseEntity
     {
-        public string EmployeeId { get; set; }
+        public string EmployeeCode { get; set; }
         [Required]
         public string Name { get; set; }
         public string ShortName { get; set; }
