@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace app.EntityModel.AppModels
 {
-    public class Division : BaseEntity
+    public class Division 
     {
+        public int Id { get; set; }
         public string Name { get; set; }
+        public string BnName { get; set; }
     }
 }

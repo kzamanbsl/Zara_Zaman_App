@@ -36,6 +36,7 @@ namespace app.Services.EmployeeServices
                 emp.Remarks = model.Remarks;
                 emp.FatherName = model.FatherName;
                 emp.MotherName = model.MotherName;
+                
 
                
 

@@ -22,5 +22,9 @@
         LeaveCategory,
         LeaveApplication,
         Employee,
+        Country,
+        Division,
+        District,
+        Upazila,
     }
 }
