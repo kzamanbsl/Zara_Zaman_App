@@ -1,0 +1,556 @@
+﻿@model app.Services.EmployeeServices.EmployeeViewModel
+@using app.Utility
+@{
+    ViewData["Title"] = "AddRecord";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<style>
+    class {
+        padding: 70px;
+        border: 1px solid #4CAF50;
+    }
+</style>
+
+@using (Html.BeginForm("AddOrUpdateRecord", "Employee", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal" style="padding-left:20px">
+        <div class="row">
+            @{
+                if (Model.Id > 0)
+                {
+                    <div class="header"><h4>Update Employee Information</h4></div>
+                }
+                else
+                {
+                    <div class="header"><h4>Add New Employee</h4></div>
+                }
+            }
+        </div>
+
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+        <div class="row">
+            <hr style="border-color:red; padding:0px;margin-top: 10px;margin-bottom: 10px; border-width: 2px;" />
+            <!--begin tabs going in narrow content -->
+            <ul class="nav nav-tabs sidebar-tabs" id="sidebar" role="tablist">
+                <li class="active"><a href="#tab-1" role="tab" data-toggle="tab">Employee Basic Information</a></li>
+                <li><a href="#tab-2" role="tab" data-toggle="tab">Personal Information</a></li>
+                <li><a href="#tab-3" role="tab" data-toggle="tab">Job Information</a></li>
+                <li><a href="#tab-4" role="tab" data-toggle="tab">Contact Information</a></li>
+                <li><a href="#tab-6" role="tab" data-toggle="tab">Picture</a></li>
+                <li><a href="#tab-7" role="tab" data-toggle="tab">Signature</a></li>
+            </ul><!--/.nav-tabs.sidebar-tabs -->
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <div class="tab-pane active" id="tab-1">
+                    <div class="panel panel-info">
+                        <div class="panel-heading" style="background-color:#4CAF50;color:#FFFFFF"><b>Employee Basic Information</b></div>
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <div class="col-md-8">
+                                            <div class="form-group">
+                                                <label asp-for="EmployeeCode" class="control-label">Employee Code</label>
+                                                <input asp-for="EmployeeCode" required class="form-control" />
+                                                <span asp-validation-for="EmployeeCode" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <div class="col-md-8">
+                                            <div class="form-group">
+                                                <label asp-for="Name" class="control-label">Employee Code</label>
+                                                <input asp-for="Name" required class="form-control" />
+                                                <span asp-validation-for="Name" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <div class="col-md-8">
+                                            <div class="form-group">
+                                                <label asp-for="ManagerId" class="control-label">Employee Code</label>
+                                                <input asp-for="ManagerId" required class="form-control" />
+                                                <span asp-validation-for="ManagerId" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <div class="col-md-8">
+                                            <div class="form-group">
+                                                <label asp-for="ShortName" class="control-label">Employee Code</label>
+                                                <input asp-for="ShortName" required class="form-control" />
+                                                <span asp-validation-for="ShortName" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <div class="col-md-8">
+                                            <div class="form-group">
+                                                <label asp-for="EmployeeOrder" class="control-label">Employee Code</label>
+                                                <input asp-for="EmployeeOrder" required class="form-control" />
+                                                <span asp-validation-for="EmployeeOrder" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <div class="col-md-8">
+                                        <div class="form-group">
+                                            <label asp-for="EmployeeOrder" class="control-label">Employee Code</label>
+                                            <input asp-for="EmployeeOrder" required class="form-control" />
+                                            <span asp-validation-for="EmployeeOrder" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!--/.tab-pane -->
+
+        <div class="tab-pane" id="tab-2">
+            <div class="panel panel-info">
+                <div class="panel-heading" style="background-color:#4CAF50;color:#FFFFFF"><b>Employee Personal Information</b></div>
+                <div class="panel-body">
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label asp-for="FatherName" class="control-label">Employee Code</label>
+                                    <input asp-for="FatherName" required class="form-control" />
+                                    <span asp-validation-for="FatherName" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label asp-for="MotherName" class="control-label">Employee Code</label>
+                                    <input asp-for="MotherName" required class="form-control" />
+                                    <span asp-validation-for="FatherName" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label asp-for="DateOfMarriage" class="control-label">Employee Code</label>
+                                    <input asp-for="DateOfMarriage" required class="form-control" />
+                                    <span asp-validation-for="DateOfMarriage" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label asp-for="SpouseName" class="control-label">Employee Code</label>
+                                    <input asp-for="SpouseName" required class="form-control" />
+                                    <span asp-validation-for="SpouseName" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label asp-for="DateOfBirth" class="control-label">Employee Code</label>
+                                    <input asp-for="DateOfBirth" required class="form-control" />
+                                    <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label asp-for="NationalId" class="control-label">Employee Code</label>
+                                    <input asp-for="NationalId" required class="form-control" />
+                                    <span asp-validation-for="NationalId" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label asp-for="GenderId" class="control-label">Employee Code</label>
+                                    <input asp-for="GenderId" required class="form-control" />
+                                    <span asp-validation-for="GenderId" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label asp-for="BloodGroupId" class="control-label">Employee Code</label>
+                                    <input asp-for="BloodGroupId" required class="form-control" />
+                                    <span asp-validation-for="BloodGroupId" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label asp-for="ReligionId" class="control-label">Employee Code</label>
+                                    <input asp-for="ReligionId" required class="form-control" />
+                                    <span asp-validation-for="ReligionId" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label asp-for="TinNo" class="control-label">Employee Code</label>
+                                    <input asp-for="TinNo" required class="form-control" />
+                                    <span asp-validation-for="TinNo" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div><!--/.tab-pane -->
+
+        <div class="tab-pane" id="tab-3">
+            <div class="panel panel-info">
+                <div class="panel-heading" style="background-color:#4CAF50;color:#FFFFFF"><b>Job Information</b></div>
+                <div class="panel-body">
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label asp-for="JoiningDate" class="control-label">Employee Code</label>
+                                    <input asp-for="JoiningDate" required class="form-control" />
+                                    <span asp-validation-for="JoiningDate" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label asp-for="JoiningDate" class="control-label">Employee Code</label>
+                                    <input asp-for="JoiningDate" required class="form-control" />
+                                    <span asp-validation-for="JoiningDate" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label asp-for="ProbationEndDate" class="control-label">Employee Code</label>
+                                    <input asp-for="ProbationEndDate" required class="form-control" />
+                                    <span asp-validation-for="ProbationEndDate" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label asp-for="DepartmentId" class="control-label">Employee Code</label>
+                                    <input asp-for="DepartmentId" required class="form-control" />
+                                    <span asp-validation-for="DepartmentId" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label asp-for="DesignationId" class="control-label">Employee Code</label>
+                                    <input asp-for="DesignationId" required class="form-control" />
+                                    <span asp-validation-for="DesignationId" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label asp-for="EmployeeCategoryId" class="control-label">Employee Code</label>
+                                    <input asp-for="EmployeeCategoryId" required class="form-control" />
+                                    <span asp-validation-for="EmployeeCategoryId" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label asp-for="ServiceTypeId" class="control-label">Employee Code</label>
+                                    <input asp-for="ServiceTypeId" required class="form-control" />
+                                    <span asp-validation-for="ServiceTypeId" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label asp-for="OfficeTypeId" class="control-label">Employee Code</label>
+                                    <input asp-for="OfficeTypeId" required class="form-control" />
+                                    <span asp-validation-for="OfficeTypeId" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label asp-for="ShiftId" class="control-label">Employee Code</label>
+                                    <input asp-for="ShiftId" required class="form-control" />
+                                    <span asp-validation-for="ShiftId" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label asp-for="GradeId" class="control-label">Employee Code</label>
+                                    <input asp-for="GradeId" required class="form-control" />
+                                    <span asp-validation-for="GradeId" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div><!--/.tab-pane -->
+
+        <div class="tab-pane" id="tab-4">
+
+            <div class="panel panel-info">
+                <div class="panel-heading" style="background-color:#4CAF50;color:#FFFFFF"><b>Contact Information</b></div>
+                <div class="panel-body">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label asp-for="PresentAddress" class="control-label">Employee Code</label>
+                                    <input asp-for="PresentAddress" required class="form-control" />
+                                    <span asp-validation-for="PresentAddress" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label asp-for="PermanentAddress" class="control-label">Employee Code</label>
+                                    <input asp-for="PermanentAddress" required class="form-control" />
+                                    <span asp-validation-for="PermanentAddress" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label asp-for="CountryId" class="control-label">Employee Code</label>
+                                    <input asp-for="CountryId" required class="form-control" />
+                                    <span asp-validation-for="CountryId" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label asp-for="DivisionId" class="control-label">Employee Code</label>
+                                    <input asp-for="DivisionId" required class="form-control" />
+                                    <span asp-validation-for="DivisionId" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label asp-for="DistrictName" class="control-label">Employee Code</label>
+                                    <input asp-for="DistrictName" required class="form-control" />
+                                    <span asp-validation-for="DistrictName" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label asp-for="UpazilaId" class="control-label">Employee Code</label>
+                                    <input asp-for="UpazilaId" required class="form-control" />
+                                    <span asp-validation-for="UpazilaId" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label asp-for="MobileNo" class="control-label">Employee Code</label>
+                                    <input asp-for="MobileNo" required class="form-control" />
+                                    <span asp-validation-for="MobileNo" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label asp-for="Email" class="control-label">Employee Code</label>
+                                    <input asp-for="Email" required class="form-control" />
+                                    <span asp-validation-for="Email" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="tab-pane" id="tab-6">
+            <div class="panel panel-info">
+                <div class="panel-heading" style="background-color:#4CAF50;color:#FFFFFF"><b>Picture</b></div>
+                <div class="panel-body">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="file">Upload Image</label>
+                            <input class="btn btn-success" type="file" name="image" id="image" style="width: 100%;" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <img height="300" width="300" src="@Url.Content(Model.PhotoUrl)" alt="User Image">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="tab-pane" id="tab-7">
+            <div class="panel panel-info">
+                <div class="panel-heading" style="background-color:#4CAF50;color:#FFFFFF"><b>Signature</b></div>
+                <div class="panel-body">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="file">Upload Signature</label>
+                            <input class="btn btn-success" type="file" name="signature" id="signature" style="width: 100%;" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <img height="300" width="300" src="@Url.Content(Model.SignUrl)" alt="User Signature">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!--/.tab-content -->
+
+
+
+    <div class="panel-body">
+        <div class="col-md-offset-6 col-md-6">
+            <div class="form-group">
+                <div class="col-md-offset-9">
+                    <input type="submit" class="btn btn-primary" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+
+@section Scripts {
+
+    <script type="text/javascript">
+    </script>
+
+}
