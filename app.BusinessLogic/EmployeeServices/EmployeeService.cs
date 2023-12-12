@@ -29,7 +29,7 @@ namespace app.Services.EmployeeServices
             if (checkName == null)
             {
                 Employee emp = new Employee();
-                emp.EmployeeId = model.EmployeeId;
+                //emp.EmployeeId = model.EmployeeId;
                 emp.Name = model.Name;
                 emp.ShortName = model.ShortName;
                 emp.EmployeeOrder = model.EmployeeOrder;

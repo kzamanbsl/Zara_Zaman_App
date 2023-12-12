@@ -12,7 +12,7 @@ namespace app.EntityModel.AppModels
         public DateTime LoginTime { get; set; }
         public DateTime LogoutTime { get; set; }        
         public string Remarks { get; set; }
-        public string EmployeeId { get; set; }
+        public long EmployeeId { get; set; }
         public Employee Employee { get; set; }
         public int ShiftId { get; set; }
         public Shift Shift { get; set; }
