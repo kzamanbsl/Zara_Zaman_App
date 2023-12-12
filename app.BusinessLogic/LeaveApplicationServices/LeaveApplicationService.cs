@@ -31,8 +31,8 @@ namespace app.Services.LeaveApplicationServices
             {
                 LeaveApplication com = new LeaveApplication();
                 //com.Id = model.Id;
-                com.ManagerName = model.ManagerName;
-                com.LeaveCategory = model.LeaveCategory;
+                com.ManagerId = model.ManagerId;
+                com.LeaveCategoryId = model.LeaveCategoryId;
                 com.StartDate = model.StartDate;
                 com.EndDate = model.EndDate;
                 com.LeaveDays = model.LeaveDays;
@@ -61,8 +61,8 @@ namespace app.Services.LeaveApplicationServices
                                                                select new LeaveApplicationViewModel
                                                                {
                                                                    Id = t1.Id,
-                                                                   ManagerName = t1.ManagerName,
-                                                                   LeaveCategory = _dbContext.LeaveApplication.FirstOrDefault(f => f.Id == t1.Id).LeaveCategory,
+                                                                   ManagerId = t1.ManagerId,
+                                                                   LeaveCategoryId = _dbContext.LeaveApplication.FirstOrDefault(f => f.Id == t1.Id).LeaveCategoryId,
                                                                    StartDate = t1.StartDate,
                                                                    EndDate = t1.EndDate,
                                                                    LeaveDays = t1.LeaveDays,
@@ -78,8 +78,8 @@ namespace app.Services.LeaveApplicationServices
             var result = await _iEntityRepository.GetByIdAsync(id);
             LeaveApplicationViewModel model = new LeaveApplicationViewModel();
             model.Id = result.Id;
-            model.ManagerName = result.ManagerName;
-            model.LeaveCategory = result.LeaveCategory;
+            model.ManagerId = result.ManagerId;
+            model.LeaveCategoryId = result.LeaveCategoryId;
             model.StartDate = result.StartDate;
             model.EndDate = result.EndDate;
             model.LeaveDays = result.LeaveDays;
@@ -96,8 +96,8 @@ namespace app.Services.LeaveApplicationServices
             if (checkName == null)
             {
                 var result = await _iEntityRepository.GetByIdAsync(model.Id);
-                result.ManagerName = model.ManagerName;
-                result.LeaveCategory = model.LeaveCategory;
+                result.ManagerId = model.ManagerId;
+                result.LeaveCategoryId = model.LeaveCategoryId;
                 result.StartDate = model.StartDate;
                 result.EndDate = model.EndDate;
                 result.LeaveDays = model.LeaveDays;

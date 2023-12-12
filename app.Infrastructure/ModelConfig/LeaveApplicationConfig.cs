@@ -14,6 +14,7 @@ namespace app.Infrastructure.ModelConfig
         public void Configure(EntityTypeBuilder<LeaveApplication> builder)
         {
             builder.HasKey(c => c.Id);
+            builder.Property(c => c.StayDuringLeave).HasMaxLength(200);
             builder.Property(c => c.Reason).HasMaxLength(500);
             builder.Property(c => c.Remarks).HasMaxLength(500);
 
