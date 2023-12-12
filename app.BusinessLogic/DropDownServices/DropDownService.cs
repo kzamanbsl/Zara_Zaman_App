@@ -60,13 +60,6 @@ namespace app.Services.DropdownServices
                                                                                       }).AsQueryable());
             return dropDownViewModels;
         }
-<<<<<<< HEAD
-        public async Task<IEnumerable<DropdownViewModel>> LeaveApplicationSelectionList()
-        {
-            IEnumerable<DropdownViewModel> dropDownViewModels = await Task.Run(() => (from t1 in _dbContext.LeaveCategory
-=======
-
-
         public async Task<IEnumerable<DropdownViewModel>> CountrySelectionList()
         {
             IEnumerable<DropdownViewModel> dropDownViewModels = await Task.Run(() => (from t1 in _dbContext.Country
@@ -107,7 +100,6 @@ namespace app.Services.DropdownServices
                                                                                       where (divisionId > 0 && districtsId > 0 ) ? t2.DivisionId == divisionId && t1.DistrictId == districtsId 
                                                                                       : (divisionId == 0 && districtsId > 0) ? t1.DistrictId == districtsId
                                                                                       : t1.Id > 0
->>>>>>> 7b3b8590839097205f65afa85b52c27a4a390d32
                                                                                       select new DropdownViewModel
                                                                                       {
                                                                                           Id = t1.Id,

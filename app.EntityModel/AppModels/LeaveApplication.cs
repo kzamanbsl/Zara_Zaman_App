@@ -16,7 +16,6 @@ namespace app.EntityModel.AppModels
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public int LeaveDays { get; set; }
-        public int LeaveDue { get; set; }
         public string Address { get; set; }
         public string Reason { get; set; }
         public string StayDuringLeave { get; set; }
