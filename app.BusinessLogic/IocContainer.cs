@@ -20,11 +20,8 @@ using app.Services.LeaveCategoryServices;
 using app.Utility.UtilityServices;
 using app.Services.LeaveBalanceServices;
 using app.Services.LeaveApplicationServices;
-<<<<<<< HEAD
 using app.Services.AttendanceServices;
-=======
 using app.Services.EmployeeServices;
->>>>>>> 56ced258b042471195870ed4ca434e75c9e064d4
 
 namespace app.Services
 {
@@ -52,12 +49,8 @@ namespace app.Services
             services.AddTransient<ILeaveBalanceService, LeaveBalanceService>();
             services.AddTransient<ILeaveCategoryService, LeaveCategoryService>();
             services.AddTransient<ILeaveApplicationService, LeaveApplicationService>();
-<<<<<<< HEAD
             services.AddTransient<IAttendanceService, AttendanceService>();
-=======
             services.AddTransient<IEmployeeService, EmployeeService>();
-
->>>>>>> 56ced258b042471195870ed4ca434e75c9e064d4
 
             return services;
         }
