@@ -25,8 +25,8 @@ namespace app.Services.EmployeeServices
         public async Task<int> AddRecord(EmployeeViewModel model)
         {
             var user = await _iWorkContext.GetCurrentAdminUserAsync();
-            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == model.Name.Trim());
-            if (checkName == null)
+            var existingEmployee = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id == model.Id && f.EmployeeCode == model.EmployeeCode);
+            if (existingEmployee == null)
             {
                 Employee emp = new Employee();
                 emp.Name = model.Name;
@@ -70,11 +70,6 @@ namespace app.Services.EmployeeServices
                 
                 emp.SignUrl = model.SignUrl;
                 emp.PhotoUrl = model.PhotoUrl;
-
-                
-
-               
-
                 var res = await _iEntityRepository.AddAsync(emp);
                 return 2;
             }

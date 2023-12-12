@@ -26,7 +26,6 @@ namespace app.WebApp.Controllers
         [HttpGet]
         public async Task<IActionResult> AddRecord()
         {
-            ViewBag.leaveCategory = new SelectList((await _dropdownService.LeaveApplicationSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
             LeaveApplicationViewModel viewModel = new LeaveApplicationViewModel();
             return View(viewModel);
         }
@@ -46,8 +45,7 @@ namespace app.WebApp.Controllers
         [HttpGet]
         public async Task<IActionResult> UpdateRecord(long id)
         {
-            ViewBag.leaveCategory = new SelectList((await _dropdownService.LeaveApplicationSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
-            var result = await _iService.GetRecordById(id);
+             var result = await _iService.GetRecordById(id);
             return View(result);
         }
 

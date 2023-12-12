@@ -19,7 +19,7 @@ namespace app.WebApp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddRecord(EmployeeViewModel viewModel)
+        public async Task<IActionResult> AddOrUpdateRecord(EmployeeViewModel viewModel)
         {
             var result = await _iService.AddRecord(viewModel);
             if (result == 2)
