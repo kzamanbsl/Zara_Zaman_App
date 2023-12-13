@@ -47,7 +47,16 @@ namespace app.Services.DropdownServices
                                                                                       }).AsQueryable());
             return dropDownViewModels;
         }
-
+        public async Task<IEnumerable<DropdownViewModel>> AttendanceSelectionList()
+        {
+            IEnumerable<DropdownViewModel> dropDownViewModels = await Task.Run(() => (from t1 in _dbContext.Attendance
+                                                                                      select new DropdownViewModel
+                                                                                      {
+                                                                                          Id = t1.Id,
+                                                                                          Name=nameof(Attendance)
+                                                                                      }).AsQueryable());
+            return dropDownViewModels;
+        }
         public async Task<IEnumerable<DropdownViewModel>> LeaveCategorySelectionList()
         {
             IEnumerable<DropdownViewModel> dropDownViewModels = await Task.Run(() => (from t1 in _dbContext.LeaveCategory
