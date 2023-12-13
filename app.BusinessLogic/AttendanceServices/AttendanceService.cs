@@ -57,7 +57,7 @@ namespace app.Services.AttendanceServices
                                                                     LoginTime= t1.LoginTime,
                                                                     LogoutTime= t1.LogoutTime,
                                                                     Remarks= t1.Remarks,
-                                                                    EmployeeCode = _dbContext.LeaveCategory.FirstOrDefault(f => f.Id == t1.EmployeeId).Name,
+                                                                    EmployeeCode = _dbContext.Employee.FirstOrDefault(f => f.Id == t1.EmployeeId).Name,
                                                                     //AttendanceLogId= t1.AttendanceLogId,
                                                                 }).AsQueryable());
             return model;

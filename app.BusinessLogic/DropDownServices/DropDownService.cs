@@ -61,7 +61,7 @@ namespace app.Services.DropdownServices
                                                                                       }).AsQueryable());
             return dropDownViewModels;
         }
-<<<<<<< HEAD
+
         public async Task<IEnumerable<DropdownViewModel>> EmployeeSelectionList()
         {
             IEnumerable<DropdownViewModel> dropDownViewModels = await Task.Run(() => (from t1 in _dbContext.Employee
@@ -72,10 +72,6 @@ namespace app.Services.DropdownServices
                                                                                       }).AsQueryable());
             return dropDownViewModels;
         }
-        public async Task<IEnumerable<DropdownViewModel>> ShiftSelectionList()
-        {
-            IEnumerable<DropdownViewModel> dropDownViewModels = await Task.Run(() => (from t1 in _dbContext.Shift
-=======
         public async Task<IEnumerable<DropdownViewModel>> CountrySelectionList()
         {
             IEnumerable<DropdownViewModel> dropDownViewModels = await Task.Run(() => (from t1 in _dbContext.Country
@@ -128,7 +124,7 @@ namespace app.Services.DropdownServices
         {
             IEnumerable<DropdownViewModel> dropDownViewModels = await Task.Run(() => (from t1 in _dbContext.Employee
                                                                                       where (managerId > 0) ? t1.ManagerId == managerId && t1.IsActive == true : t1.IsActive==true
->>>>>>> 56ced258b042471195870ed4ca434e75c9e064d4
+
                                                                                       select new DropdownViewModel
                                                                                       {
                                                                                           Id = t1.Id,

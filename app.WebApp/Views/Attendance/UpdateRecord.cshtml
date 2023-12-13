@@ -31,7 +31,7 @@
             </div>
             <div class="card-body">
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-12">
                         <form asp-action="UpdateRecord" method="post">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                             @Html.HiddenFor(model => model.Id)
@@ -51,13 +51,13 @@
 
                             <div class="form-group">
                                 <label asp-for="LoginTime" class="control-label">Login</label>
-                                <input type="checkbox" asp-for="LoginTime" class="form-control" required />
+                                <input type="time" asp-for="LoginTime" class="form-control" required />
                                 <span asp-validation-for="LoginTime" class="text-danger"></span>
                             </div>
 
                             <div class="form-group">
                                 <label asp-for="LogoutTime" class="control-label">Login</label>
-                                <input type="checkbox" asp-for="LogoutTime" class="form-control" required />
+                                <input type="time" asp-for="LogoutTime" class="form-control" required />
                                 <span asp-validation-for="LogoutTime" class="text-danger"></span>
                             </div>
 

@@ -50,13 +50,13 @@
                             
                                 <div class="form-group">
                                     <label asp-for="LoginTime" class="control-label">Login</label>
-                                    <input type="checkbox" asp-for="LoginTime" class="form-control" required />
+                                    <input type="time" asp-for="LoginTime" class="form-control" required />
                                     <span asp-validation-for="LoginTime" class="text-danger"></span>
                                 </div>
 
                                 <div class="form-group">
                                     <label asp-for="LogoutTime" class="control-label">Logout</label>
-                                    <input type="checkbox" asp-for="LogoutTime" class="form-control" required />
+                                    <input type="time" asp-for="LogoutTime" class="form-control" required />
                                     <span asp-validation-for="LogoutTime" class="text-danger"></span>
                                 </div>
                                 
@@ -67,7 +67,7 @@
                                 </div>
 
                             <div class="form-group">
-                                <input type="submit" value="Create" class="btn btn-primary" />
+                                <input type="submit" value="Save" class="btn btn-primary" />
                             </div>
                         </form>
                     </div>
