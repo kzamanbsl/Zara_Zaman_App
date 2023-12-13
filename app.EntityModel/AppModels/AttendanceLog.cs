@@ -9,6 +9,9 @@ namespace app.EntityModel.AppModels
     public class AttendanceLog : BaseEntity
     {
         public long AttendanceId { get; set; }
+        public Attendance Attendance { get; set; }
+        public long EmployeeId { get; set; }
+        public Employee Employee { get; set; }
         public DateTime LoginTime { get; set; }
         public DateTime LogoutTime { get; set; }
         public string Remarks { get; set; }

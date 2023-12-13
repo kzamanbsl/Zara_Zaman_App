@@ -1,4 +1,4 @@
-﻿@model app.Services.AttendanceServices.AttendanceViewModel
+﻿@model app.Services.AttendanceLogServices.AttendanceLogViewModel
 @{
     ViewData["Title"] = "UpdateRecord";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
@@ -8,10 +8,10 @@
         <div class="breadcrumb d-flex justify-content-between align-items-center  pl-3 pr-3">
             <ol class="breadcrumb mb-0 p-0">
                 <li class="breadcrumb-item"><a href="/Admin/Index">Home</a></li>
-                <li class="breadcrumb-item active"> Attendance List </li>
+                <li class="breadcrumb-item active"> AttendanceLog List </li>
             </ol>
             <div>
-                <a asp-action="Index"><i class="fa fa-list"></i>  Attendance List </a>
+                <a asp-action="Index"><i class="fa fa-list"></i>  AttendanceLog List </a>
             </div>
         </div>
     </div>
@@ -25,7 +25,7 @@
             <div class="card-header">
                 <h3 class="card-title text-info">
                     <i class="fas fa-plus"></i>
-                    Update Attendance
+                    Update AttendanceLog
                 </h3>
 
             </div>
@@ -36,21 +36,6 @@
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                             @Html.HiddenFor(model => model.Id)
                             <div class="row">
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label>Employee Id</label>
-                                        <select class="form-control" asp-for="EmployeeId" asp-items="ViewBag.EmployeeCode">
-                                            <option value="0" selected>-- Select Employee Id Type --</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label asp-for="AttendanceDate" class="control-label"></label>
-                                        <input type="datetime-local" asp-for="AttendanceDate" class="form-control" required />
-                                        <span asp-validation-for="AttendanceDate" class="text-danger"></span>
-                                    </div>
-                                </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label asp-for="LoginTime" class="control-label">Login</label>
@@ -72,9 +57,9 @@
                                         <span asp-validation-for="LogoutTime" class="text-danger"></span>
                                     </div>
                                 </div>
-                                <div class="form-group" style="float:right">
-                                    <input type="submit" value="Update" class="btn btn-warning" />
-                                </div>
+                            </div>
+                            <div class="form-group" style="float:right">
+                                <input type="submit" value="Update" class="btn btn-warning" />
                             </div>
                         </form>
                     </div>

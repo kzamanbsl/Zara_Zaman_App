@@ -23,9 +23,11 @@
         LeaveApplication,
         Employee,
         Attendance,
+        AttendanceLog,
         Country,
         Division,
         District,
         Upazila,
+
     }
 }
