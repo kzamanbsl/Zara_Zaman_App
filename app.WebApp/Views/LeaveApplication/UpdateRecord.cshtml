@@ -31,7 +31,7 @@
             </div>
             <div class="card-body">
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-12">
                         <form asp-action="UpdateRecord" method="post">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                             @Html.HiddenFor(model => model.Id)
@@ -124,19 +124,48 @@
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-    <script>
-        function editField(fieldName, selectId) {
-            var currentValue = $('input[name="' + fieldName + '"]').val();
-            $(selectId).val(currentValue);
-            $(selectId).show();
-            $('input[name="' + fieldName + '"]').hide();
+   <script>
+        $(document).ready(function () {
+            $('#Configuration').addClass('menu-open');
+            $('#LeaveApplicationAddRecord').addClass('active');
+        });
+
+        function stopRKey(evt) {
+            var evt = (evt) ? evt : ((event) ? event : null);
+            var node = (evt.target) ? evt.target : ((evt.srcElement) ? evt.srcElement : null);
+            if ((evt.keyCode == 13) && (node.type == "text")) {
+                return false;
+            }
+        }
+        document.onkeypress = stopRKey;
+
+        function getLeaveDays() {
+            var startDate = $('#txtStartDate').val();
+            var endDate = $('#txtEndDate').val();
+
+            if (startDate && endDate) {
+                var start = new Date(startDate);
+                var end = new Date(endDate);
+
+                var timeDiff = Math.abs(end.getTime() - start.getTime());
+                var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+
+                diffDays++;
+
+                if (end < start) {
+                    $('#txtLeaveDays').val(diffDays * -1);
+                } else {
+                    $('#txtLeaveDays').val(diffDays);
+                }
+            }
         }
 
-        function editDateField(fieldName, inputId) {
-            var currentValue = $('input[name="' + fieldName + '"]').val();
-            $(inputId).val(currentValue);
-            $(inputId).show();
-            $('input[name="' + fieldName + '"]').hide();
-        }
-    </script>
+        jQuery(document).ready(function () {
+            jQuery('[data-confirm]').click(function (e) {
+                if (!confirm(jQuery(this).attr("data-confirm"))) {
+                    e.preventDefault();
+                }
+            });
+        });
+</script>
     }
