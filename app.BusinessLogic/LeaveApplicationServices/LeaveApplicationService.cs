@@ -30,7 +30,8 @@ namespace app.Services.LeaveApplicationServices
             if (checkName == null)
             {
                 LeaveApplication com = new LeaveApplication();
-                //com.Id = model.Id;
+                com.Id = model.Id;
+                com.EmployeeId = model.EmployeeId;
                 com.ManagerId = model.ManagerId;
                 com.LeaveCategoryId = model.LeaveCategoryId;
                 com.StartDate = model.StartDate;
@@ -56,28 +57,40 @@ namespace app.Services.LeaveApplicationServices
         public async Task<LeaveApplicationViewModel> GetAllRecord()
         {
             LeaveApplicationViewModel model = new LeaveApplicationViewModel();
-            model.LeaveApplicationList = await Task.Run(() => (from t1 in _dbContext.LeaveApplication
-                                                               where t1.IsActive == true
-                                                               select new LeaveApplicationViewModel
-                                                               {
-                                                                   Id = t1.Id,
-                                                                   ManagerId = t1.ManagerId,
-                                                                   LeaveCategoryId = _dbContext.LeaveApplication.FirstOrDefault(f => f.Id == t1.Id).LeaveCategoryId,
-                                                                   StartDate = t1.StartDate,
-                                                                   EndDate = t1.EndDate,
-                                                                   LeaveDays = t1.LeaveDays,
-                                                                   StayDuringLeave = t1.StayDuringLeave,
-                                                                   Reason = t1.Reason,
-                                                                   Remarks = t1.Remarks
-                                                               }).AsQueryable());
+            model.LeaveApplicationList = await Task.Run(() =>
+            {
+                var query = from t1 in _dbContext.LeaveApplication
+                            where t1.IsActive == true
+                            select new LeaveApplicationViewModel
+                            {
+                                Id = t1.Id,
+                                EmployeeId = t1.EmployeeId,
+                                EmployeeName = t1.Employee.Name, 
+                                ManagerId = t1.ManagerId,
+                                ManagerName = t1.Manager.Name, 
+                                LeaveCategoryId = t1.LeaveCategoryId,
+                                LeaveCategoryName = t1.LeaveCategory.Name, 
+                                StartDate = t1.StartDate,
+                                EndDate = t1.EndDate,
+                                LeaveDays = t1.LeaveDays,
+                                StayDuringLeave = t1.StayDuringLeave,
+                                Reason = t1.Reason,
+                                Remarks = t1.Remarks
+                            };
+
+                return query.AsQueryable();
+            });
+
             return model;
         }
+
 
         public async Task<LeaveApplicationViewModel> GetRecordById(long id)
         {
             var result = await _iEntityRepository.GetByIdAsync(id);
             LeaveApplicationViewModel model = new LeaveApplicationViewModel();
             model.Id = result.Id;
+            model.EmployeeId = result.EmployeeId;   
             model.ManagerId = result.ManagerId;
             model.LeaveCategoryId = result.LeaveCategoryId;
             model.StartDate = result.StartDate;
@@ -96,6 +109,7 @@ namespace app.Services.LeaveApplicationServices
             if (checkName == null)
             {
                 var result = await _iEntityRepository.GetByIdAsync(model.Id);
+                result.EmployeeId = model.EmployeeId;
                 result.ManagerId = model.ManagerId;
                 result.LeaveCategoryId = model.LeaveCategoryId;
                 result.StartDate = model.StartDate;
