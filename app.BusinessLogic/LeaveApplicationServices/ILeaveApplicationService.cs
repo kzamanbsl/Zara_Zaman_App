@@ -10,9 +10,13 @@ namespace app.Services.LeaveApplicationServices
     public interface ILeaveApplicationService
     {
         Task<LeaveApplicationViewModel> GetAllRecord();
+        Task<LeaveApplicationViewModel> GetRecordById(long id);
         Task<int> AddRecord(LeaveApplicationViewModel model);
         Task<int> UpdateRecord(LeaveApplicationViewModel model);
+        Task<bool> ConfirmRecord(long id);
+        Task<bool> ApproveRecord(long id);
+        Task<bool> RejectRecord(long id);
         Task<bool> DeleteRecord(long id);
-        Task<LeaveApplicationViewModel> GetRecordById(long id);
+        
     }
 }

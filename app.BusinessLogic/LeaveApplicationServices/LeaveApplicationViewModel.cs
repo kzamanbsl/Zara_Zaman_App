@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using app.Utility;
 
 namespace app.Services.LeaveApplicationServices
 {
@@ -36,6 +37,9 @@ namespace app.Services.LeaveApplicationServices
         public string Reason { get; set; }
         public string Remarks { get; set; }
         public DateTime ApplicationDate { get; set; }
+        public int StatusId { get; set; }
+        public string StatusName { get { return GlobalVariable.GetEnumDescription((LeaveApplicationStatusEnum)StatusId); } }
+
         public IEnumerable<LeaveApplicationViewModel> LeaveApplicationList { get; set; }
 
 

@@ -7,5 +7,12 @@
         Gender,
         Religion 
     }
-   
+
+    public enum LeaveApplicationStatusEnum
+    {
+        Draft = 1,
+        Confirm,
+        Approve,
+        Reject
+    }
 }
