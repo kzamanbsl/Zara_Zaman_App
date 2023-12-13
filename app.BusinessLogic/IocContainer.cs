@@ -23,7 +23,6 @@ using app.Services.LeaveApplicationServices;
 using app.Services.EmployeeServices;
 using app.Services.AttendanceServices;
 
-
 namespace app.Services
 {
     public static class IocContainer

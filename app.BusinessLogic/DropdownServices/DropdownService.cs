@@ -26,7 +26,6 @@ namespace app.Services.DropdownServices
             return dropDownViewModels;
         }
 
-
         public async Task<IEnumerable<DropdownViewModel>> DepartmentSelectionList()
         {
             IEnumerable<DropdownViewModel> dropDownViewModels = await Task.Run(() => (from t1 in _dbContext.Department
@@ -49,8 +48,6 @@ namespace app.Services.DropdownServices
             return dropDownViewModels;
         }
 
-
-
         public async Task<IEnumerable<DropdownViewModel>> LeaveCategorySelectionList()
         {
             IEnumerable<DropdownViewModel> dropDownViewModels = await Task.Run(() => (from t1 in _dbContext.LeaveCategory
@@ -62,9 +59,11 @@ namespace app.Services.DropdownServices
             return dropDownViewModels;
         }
 
-        public async Task<IEnumerable<DropdownViewModel>> EmployeeSelectionList()
+        public async Task<IEnumerable<DropdownViewModel>> EmployeeSelectionList(long managerId = 0)
         {
             IEnumerable<DropdownViewModel> dropDownViewModels = await Task.Run(() => (from t1 in _dbContext.Employee
+                                                                                      where (managerId > 0) ? t1.ManagerId == managerId && t1.IsActive == true : t1.IsActive == true
+
                                                                                       select new DropdownViewModel
                                                                                       {
                                                                                           Id = t1.Id,
@@ -72,6 +71,7 @@ namespace app.Services.DropdownServices
                                                                                       }).AsQueryable());
             return dropDownViewModels;
         }
+
         public async Task<IEnumerable<DropdownViewModel>> CountrySelectionList()
         {
             IEnumerable<DropdownViewModel> dropDownViewModels = await Task.Run(() => (from t1 in _dbContext.Country
@@ -93,6 +93,7 @@ namespace app.Services.DropdownServices
                                                                                       }).AsQueryable());
             return dropDownViewModels;
         }
+
         public async Task<IEnumerable<DropdownViewModel>> DistrictSelectionList(int divisionId = 0)
         {
             IEnumerable<DropdownViewModel> dropDownViewModels = await Task.Run(() => (from t1 in _dbContext.District
@@ -112,19 +113,6 @@ namespace app.Services.DropdownServices
                                                                                       where (divisionId > 0 && districtsId > 0) ? t2.DivisionId == divisionId && t1.DistrictId == districtsId
                                                                                       : (divisionId == 0 && districtsId > 0) ? t1.DistrictId == districtsId
                                                                                       : t1.Id > 0
-                                                                                      select new DropdownViewModel
-                                                                                      {
-                                                                                          Id = t1.Id,
-                                                                                          Name = t1.Name
-                                                                                      }).AsQueryable());
-            return dropDownViewModels;
-        }
-
-        public async Task<IEnumerable<DropdownViewModel>> EmployeeSelectionList(long managerId = 0)
-        {
-            IEnumerable<DropdownViewModel> dropDownViewModels = await Task.Run(() => (from t1 in _dbContext.Employee
-                                                                                      where (managerId > 0) ? t1.ManagerId == managerId && t1.IsActive == true : t1.IsActive==true
-
                                                                                       select new DropdownViewModel
                                                                                       {
                                                                                           Id = t1.Id,
