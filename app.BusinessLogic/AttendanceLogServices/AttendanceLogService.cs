@@ -26,7 +26,6 @@ namespace app.Services.AttendanceLogServices
             {
                 AttendanceLog com = new AttendanceLog();
                 com.AttendanceId = model.AttendanceId;
-                com.EmployeeId = model.EmployeeId;
                 com.LoginTime = model.LoginTime;
                 com.LogoutTime = model.LogoutTime;
                 com.Remarks = model.Remarks;
@@ -53,9 +52,7 @@ namespace app.Services.AttendanceLogServices
                                                                 {
                                                                     Id = t1.Id,
                                                                     AttendanceId = t1.AttendanceId,
-                                                                    AttendanceDate = _dbContext.Attendance.FirstOrDefault(f => f.Id == t1.AttendanceId).AttendanceDate,
-                                                                    EmployeeId = t1.EmployeeId,
-                                                                    EmployeeCode = _dbContext.Employee.FirstOrDefault(f => f.Id == t1.AttendanceId).Name,
+                                                                    AttendanceDate = t1.Attendance.AttendanceDate,
                                                                     LoginTime = t1.LoginTime,
                                                                     LogoutTime= t1.LogoutTime,
                                                                     Remarks= t1.Remarks,
@@ -84,7 +81,6 @@ namespace app.Services.AttendanceLogServices
             {
                 var result = await _iEntityRepository.GetByIdAsync(model.Id);
                 result.AttendanceId = model.AttendanceId;
-                result.EmployeeId = model.EmployeeId;
                 result.LoginTime = model.LoginTime;
                 result.LogoutTime = model.LogoutTime;
                 result.Remarks = model.Remarks;
