@@ -18,5 +18,7 @@ namespace app.EntityModel.AppModels
         //public AttendanceLog AttendanceLog { get; set; }
         public int ShiftId { get; set; }
         public Shift Shift { get; set; }
+        public List<AttendanceLog> AttendanceLogs { get; set; }
+
     }
 }

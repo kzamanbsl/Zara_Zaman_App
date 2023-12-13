@@ -33,6 +33,7 @@ namespace app.Infrastructure.ModelConfig
             new LeaveApplicationConfig()?.Configure(builder.Entity<LeaveApplication>());
             new EmployeeConfig()?.Configure(builder.Entity<Employee>());
             new AttendanceConfig()?.Configure(builder.Entity<Attendance>());
+            new AttendanceLogConfig()?.Configure(builder.Entity<AttendanceLog>());
 
         }
     }

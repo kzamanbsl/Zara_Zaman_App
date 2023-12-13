@@ -41,6 +41,7 @@ namespace app.Infrastructure
         public virtual DbSet<LeaveApplication> LeaveApplication { get; set; }
         public virtual DbSet<Employee> Employee { get; set; }
         public virtual DbSet<Attendance> Attendance { get; set; }
+        public virtual DbSet<AttendanceLog> AttendanceLog { get; set; }
         public virtual DbSet<Country> Country { get; set; }
         public virtual DbSet<Division> Division { get; set; }
         public virtual DbSet<District> District { get; set; }
