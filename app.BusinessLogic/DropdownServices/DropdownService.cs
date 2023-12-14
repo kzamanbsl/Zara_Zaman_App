@@ -1,6 +1,8 @@
 ﻿using app.EntityModel.AppModels;
 using app.Infrastructure;
 using app.Infrastructure.Auth;
+using app.Utility;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace app.Services.DropdownServices
 {
@@ -117,6 +119,94 @@ namespace app.Services.DropdownServices
                                                                                       {
                                                                                           Id = t1.Id,
                                                                                           Name = t1.Name
+                                                                                      }).AsQueryable());
+            return dropDownViewModels;
+        }
+
+        public async Task<IEnumerable<DropdownViewModel>> BloodGroupSelectionList()
+        {
+            IEnumerable<DropdownViewModel> dropDownViewModels = await Task.Run(() => (from t1 in _dbContext.DropdownItem                                                                                     
+                                                                                      where t1.DropdownTypeId == (int)DropdownTypeEnum.BloodGroup && t1.IsActive == true
+                                                                                      select new DropdownViewModel
+                                                                                      {
+                                                                                          Id = t1.Id,
+                                                                                          Name = t1.Name                                                                                          
+                                                                                          
+                                                                                      }).AsQueryable());
+            return dropDownViewModels;
+        }
+        public async Task<IEnumerable<DropdownViewModel>> MaritalStatusSelectionList()
+        {
+            IEnumerable<DropdownViewModel> dropDownViewModels = await Task.Run(() => (from t1 in _dbContext.DropdownItem
+                                                                                      where t1.DropdownTypeId == (int)DropdownTypeEnum.MaritalStatus && t1.IsActive == true
+                                                                                      select new DropdownViewModel
+                                                                                      {
+                                                                                          Id = t1.Id,
+                                                                                          Name = t1.Name
+
+                                                                                      }).AsQueryable());
+            return dropDownViewModels;
+        }
+        public async Task<IEnumerable<DropdownViewModel>> GenderSelectionList()
+        {
+            IEnumerable<DropdownViewModel> dropDownViewModels = await Task.Run(() => (from t1 in _dbContext.DropdownItem
+                                                                                      where t1.DropdownTypeId == (int)DropdownTypeEnum.Gender && t1.IsActive == true
+                                                                                      select new DropdownViewModel
+                                                                                      {
+                                                                                          Id = t1.Id,
+                                                                                          Name = t1.Name
+
+                                                                                      }).AsQueryable());
+            return dropDownViewModels;
+        }
+        public async Task<IEnumerable<DropdownViewModel>> ReligionSelectionList()
+        {
+            IEnumerable<DropdownViewModel> dropDownViewModels = await Task.Run(() => (from t1 in _dbContext.DropdownItem
+                                                                                      where t1.DropdownTypeId == (int)DropdownTypeEnum.Religion && t1.IsActive == true
+                                                                                      select new DropdownViewModel
+                                                                                      {
+                                                                                          Id = t1.Id,
+                                                                                          Name = t1.Name
+
+                                                                                      }).AsQueryable());
+            return dropDownViewModels;
+        }
+
+        public async Task<IEnumerable<DropdownViewModel>> EmployeeCategorySelectionList()
+        {
+            IEnumerable<DropdownViewModel> dropDownViewModels = await Task.Run(() => (from t1 in _dbContext.EmployeeCategory
+                                                                                      where t1.IsActive == true
+                                                                                      select new DropdownViewModel
+                                                                                      {
+                                                                                          Id = t1.Id,
+                                                                                          Name = t1.Name
+
+                                                                                      }).AsQueryable());
+            return dropDownViewModels;
+        }
+
+        public async Task<IEnumerable<DropdownViewModel>> ServiceTypeSelectionList()
+        {
+            IEnumerable<DropdownViewModel> dropDownViewModels = await Task.Run(() => (from t1 in _dbContext.ServiceType
+                                                                                      where t1.IsActive == true
+                                                                                      select new DropdownViewModel
+                                                                                      {
+                                                                                          Id = t1.Id,
+                                                                                          Name = t1.Name
+
+                                                                                      }).AsQueryable());
+            return dropDownViewModels;
+        }
+
+        public async Task<IEnumerable<DropdownViewModel>> OfficeTypeSelectionList()
+        {
+            IEnumerable<DropdownViewModel> dropDownViewModels = await Task.Run(() => (from t1 in _dbContext.OfficeType
+                                                                                      where t1.IsActive == true
+                                                                                      select new DropdownViewModel
+                                                                                      {
+                                                                                          Id = t1.Id,
+                                                                                          Name = t1.Name
+
                                                                                       }).AsQueryable());
             return dropDownViewModels;
         }

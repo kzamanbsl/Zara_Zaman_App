@@ -13,5 +13,14 @@
         Task<IEnumerable<DropdownViewModel>> DivisionSelectionList();
         Task<IEnumerable<DropdownViewModel>> DistrictSelectionList(int divisionId = 0);
         Task<IEnumerable<DropdownViewModel>> UpazilaSelectionList(int divisionId = 0, int districtsId = 0);
+        Task<IEnumerable<DropdownViewModel>> BloodGroupSelectionList();
+        Task<IEnumerable<DropdownViewModel>> MaritalStatusSelectionList();
+        Task<IEnumerable<DropdownViewModel>> GenderSelectionList();
+        Task<IEnumerable<DropdownViewModel>> ReligionSelectionList();
+        Task<IEnumerable<DropdownViewModel>> EmployeeCategorySelectionList();
+        Task<IEnumerable<DropdownViewModel>> ServiceTypeSelectionList();
+        //Task<IEnumerable<DropdownViewModel>> JobStatusSelectionList();
+        Task<IEnumerable<DropdownViewModel>> OfficeTypeSelectionList();
+
     }
 }
