@@ -1,4 +1,5 @@
 ﻿using app.EntityModel.AppModels;
+using app.Services.AttendanceLogServices;
 
 namespace app.Services.AttendanceServices
 {
@@ -10,11 +11,12 @@ namespace app.Services.AttendanceServices
         public string Remarks { get; set; }
         //public long AttendanceLogId { get; set; }
         public long EmployeeId { get; set; }
-        public string EmployeeCode { get; set; }
+        public string EmployeeName { get; set; }
+        public long ShiftId { get; set; }
+        public string ShiftName { get; set; }
         public bool IsSave { get; set; } = false;
+
         public IEnumerable<AttendanceViewModel> AttendanceList { get; set; }
-        public List<Employee> Employees { get; set; }
-        public List<Shift> Shifts { get; set; }
-        public List<AttendanceLog> AttendanceLogs { get; set; }
+        public List<AttendanceLogViewModel> AttendanceLogList { get; set; }
     }
 }

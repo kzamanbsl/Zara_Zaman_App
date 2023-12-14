@@ -40,8 +40,9 @@
                                 <th>
                                     #
                                 </th>
+                                <th>Employee</th>
                                 <th>
-                                    Manager Name
+                                    Manager
                                 </th>
                                 <th>Category</th>
                                 <th>Start Date </th>
@@ -49,7 +50,7 @@
                                 <th>Days </th>
                                 <th>Stay During Leave</th>
                                 <th>Reason</th>
-                                <th>Remarks </th>
+                                @* <th>Remarks </th> *@
 
                                 <th class="text-center">Action</th>
                             </tr>
@@ -62,11 +63,12 @@
                                     <td>
                                         @SN
                                     </td>
+                                    <td> @Html.DisplayFor(modelItem => item.EmployeeName)</td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.ManagerName)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.LeaveApplicationList)
+                                        @Html.DisplayFor(modelItem => item.LeaveCategoryName)
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.StartDate)
@@ -83,9 +85,9 @@
                                     <td>
                                         @Html.DisplayFor(modelItem => item.Reason)
                                     </td>
-                                    <td>
+@*                                     <td>
                                         @Html.DisplayFor(modelItem => item.Remarks)
-                                    </td>
+                                    </td> *@
                                     <td class="text-center">
                                         @Html.ActionLink("", "UpdateRecord", new {id=item.Id},new {@class = "text-danger fas fa-edit",  onclick = "return confirm('Are you sure you want to edit this?')" }) |
                                         @Html.ActionLink("","Delete", new {  id=item.Id},new {@class = "text-danger fas fa-trash",  onclick = "return confirm('Are you sure you want to delete this?')" })
@@ -105,15 +107,16 @@
 </section>
 
 @section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
     <script>
         $(document).ready(function () {
             $('#Configuration').addClass('menu-open');
             $('#LeaveApplicationIndex').addClass('active');
         });
-    </script>
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
-    }
 
+    </script>
+
+}
 

@@ -26,6 +26,7 @@ namespace app.Services.AttendanceServices
             {
                 Attendance com = new Attendance();
                 com.EmployeeId = model.EmployeeId;
+                com.ShiftId = model.ShiftId;
                 //com.AttendanceLogId = model.AttendanceLogId;
                 com.AttendanceDate= model.AttendanceDate;
                 com.LoginTime = model.LoginTime;
@@ -53,11 +54,15 @@ namespace app.Services.AttendanceServices
                                                                 select new AttendanceViewModel
                                                                 {
                                                                     Id = t1.Id,
+                                                                    EmployeeId = t1.EmployeeId,
+                                                                    EmployeeName=t1.Employee.Name,
                                                                     AttendanceDate = t1.AttendanceDate,
+                                                                    ShiftId = t1.ShiftId,
+                                                                    ShiftName=t1.Shift.Name,
                                                                     LoginTime= t1.LoginTime,
                                                                     LogoutTime= t1.LogoutTime,
                                                                     Remarks= t1.Remarks,
-                                                                    EmployeeCode = _dbContext.Employee.FirstOrDefault(f => f.Id == t1.EmployeeId).Name,
+                                                                    //EmployeeCode = _dbContext.Employee.FirstOrDefault(f => f.Id == t1.EmployeeId).Name,
                                                                     //AttendanceLogId= t1.AttendanceLogId,
                                                                 }).AsQueryable());
             return model;
@@ -85,6 +90,7 @@ namespace app.Services.AttendanceServices
             {
                 var result = await _iEntityRepository.GetByIdAsync(model.Id);
                 result.EmployeeId = model.EmployeeId;
+                result.ShiftId = model.ShiftId;
                 //result.AttendanceLogId = model.AttendanceLogId;
                 result.AttendanceDate= model.AttendanceDate;
                 result.LoginTime = model.LoginTime;

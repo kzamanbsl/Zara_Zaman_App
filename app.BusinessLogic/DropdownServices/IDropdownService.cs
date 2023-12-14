@@ -8,7 +8,7 @@
         Task<IEnumerable<DropdownViewModel>> LeaveCategorySelectionList();
         Task<IEnumerable<DropdownViewModel>> AttendanceSelectionList();
         Task<IEnumerable<DropdownViewModel>> EmployeeSelectionList(long managerId = 0);
-        //Task<IEnumerable<DropdownViewModel>> ShiftSelectionList();
+        Task<IEnumerable<DropdownViewModel>> ShiftSelectionList();
         Task<IEnumerable<DropdownViewModel>> CountrySelectionList();
         Task<IEnumerable<DropdownViewModel>> DivisionSelectionList();
         Task<IEnumerable<DropdownViewModel>> DistrictSelectionList(int divisionId = 0);

@@ -28,7 +28,7 @@ namespace app.WebApp.Controllers
         public async Task<IActionResult> AddRecord()
         {
             ViewBag.Employees = new SelectList((await _dropdownService.EmployeeSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
-
+            ViewBag.Shifts = new SelectList((await _dropdownService.ShiftSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
             AttendanceViewModel viewModel = new AttendanceViewModel();
             return View(viewModel);
         }
@@ -50,7 +50,7 @@ namespace app.WebApp.Controllers
         public async Task<IActionResult> UpdateRecord(long id)
         {
             ViewBag.Employees = new SelectList((await _dropdownService.EmployeeSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
-
+            ViewBag.Shifts = new SelectList((await _dropdownService.ShiftSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
             var result = await _iService.GetRecordById(id);
             return View(result);
         }

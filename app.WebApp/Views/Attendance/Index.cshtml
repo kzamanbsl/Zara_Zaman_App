@@ -39,7 +39,10 @@
                                     #
                                 </th>
                                 <th>
-                                    Employee Id
+                                    Employee Name
+                                </th>
+                                <th>
+                                    Shift
                                 </th>
                                 <th>
                                     AttendanceDate
@@ -66,7 +69,10 @@
                                         @SN
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.EmployeeCode)
+                                        @Html.DisplayFor(modelItem => item.EmployeeName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ShiftName)
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.AttendanceDate)
