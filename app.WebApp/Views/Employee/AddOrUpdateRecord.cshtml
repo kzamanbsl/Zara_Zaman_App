@@ -95,7 +95,7 @@
                                     <div class="form-group">
                                         <div class="col-md-8">
                                             <label asp-for="EmployeeOrder">Employee Order</label>
-                                            <input asp-for="EmployeeOrder" class="form-control" min="0"/>
+                                            <input asp-for="EmployeeOrder" class="form-control" min="0" />
                                             <span asp-validation-for="EmployeeOrder" class="text-danger"></span>
                                         </div>
                                     </div>
@@ -210,7 +210,7 @@
                                     <div class="form-group">
                                         <div class="col-md-8">
                                             <label asp-for="BloodGroupId">Blood Group</label>
-                                            <select asp-for="BloodGroupId" class="form-control" asp-items="ViewBag.ReligionList">
+                                            <select asp-for="BloodGroupId" class="form-control" asp-items="ViewBag.BloodgroupList">
                                                 <option value="">-- Select --</option>
                                             </select>
                                             <span asp-validation-for="BloodGroupId" class="text-danger"></span>
@@ -277,7 +277,7 @@
                                             <span asp-validation-for="DepartmentId" class="text-danger"></span>
                                         </div>
                                     </div>
-                                </div>                               
+                                </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <div class="col-md-8">
@@ -310,8 +310,8 @@
                                             <span asp-validation-for="JobStatusId" class="text-danger"></span>
                                         </div>
                                     </div>
-                                </div>    
-                                   <div class="col-md-6">
+                                </div>
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <div class="col-md-8">
                                             <label asp-for="ServiceTypeId">Service Type</label>
@@ -322,7 +322,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                   <div class="col-md-6">
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <div class="col-md-8">
                                             <label asp-for="OfficeTypeId">Office Type</label>
@@ -333,7 +333,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                   <div class="col-md-6">
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <div class="col-md-8">
                                             <label asp-for="ShiftId">Shift</label>
@@ -500,20 +500,23 @@
                 </div>
             </div>
 
-          
+
 
         </div>
 
 
-        <div class="panel-body text-right">
-            <div class="col-md-offset-6 col-md-6">
-                <div class="form-group">
-                    <div class="col-md-offset-9">
-                        <input type="submit" class="btn btn-primary" />
+        <div class="row">
+            <div class="col-md-6 col-md-offset-6">
+                <div class="panel-body">
+                    <div class="form-group">
+                        <div class="col-md-offset-3 col-md-9">
+                            <input type="submit" class="btn btn-primary" />
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+
     </div>
 </form>
 
