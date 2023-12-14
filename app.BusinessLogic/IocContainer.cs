@@ -23,6 +23,7 @@ using app.Services.LeaveApplicationServices;
 using app.Services.EmployeeServices;
 using app.Services.AttendanceServices;
 using app.Services.AttendanceLogServices;
+using app.Services.JobStatusServices;
 
 namespace app.Services
 {
@@ -53,6 +54,7 @@ namespace app.Services
             services.AddTransient<IAttendanceService, AttendanceService>();
             services.AddTransient<IAttendanceLogService, AttendanceLogService>();
             services.AddTransient<IEmployeeService, EmployeeService>();
+            services.AddTransient<IJobStatusService, JobStatusService>();
 
             return services;
         }

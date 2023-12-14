@@ -46,7 +46,7 @@ namespace app.Services.LeaveApplicationServices
                                 StayDuringLeave = t1.StayDuringLeave,
                                 Reason = t1.Reason,
                                 Remarks = t1.Remarks,
-                                StatusId = t1.StatusId
+                                StatusId = t1.StatusId,
                             };
 
                 return query.AsQueryable();
@@ -88,7 +88,6 @@ namespace app.Services.LeaveApplicationServices
                 com.EndDate = model.EndDate;
                 com.LeaveDays = model.LeaveDays;
                 com.StayDuringLeave = model.StayDuringLeave;
-                com.StatusId = model.StatusId;
                 com.Reason = model.Reason;
                 com.Remarks = model.Remarks;
                 com.StatusId = (int)LeaveApplicationStatusEnum.Draft ;
@@ -106,8 +105,11 @@ namespace app.Services.LeaveApplicationServices
             {
                 var result = await _iEntityRepository.GetByIdAsync(model.Id);
                 result.EmployeeId = model.EmployeeId;
+                result.Employee.Name = model.EmployeeName;
                 result.ManagerId = model.ManagerId;
+                result.Manager.Name = model.ManagerName;
                 result.LeaveCategoryId = model.LeaveCategoryId;
+                result.LeaveCategory.Name = model.LeaveCategoryName;
                 result.StartDate = model.StartDate;
                 result.EndDate = model.EndDate;
                 result.LeaveDays = model.LeaveDays;
@@ -115,6 +117,7 @@ namespace app.Services.LeaveApplicationServices
                 result.Reason = model.Reason;
                 result.Remarks = model.Remarks;
                 result.StatusId = model.StatusId;
+                result.Employee.Name = model.StatusName;
                 await _iEntityRepository.UpdateAsync(result);
                 return 2;
             }

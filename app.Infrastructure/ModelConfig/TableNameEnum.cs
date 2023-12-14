@@ -28,6 +28,6 @@
         Division,
         District,
         Upazila,
-
+        JobStatus,
     }
 }
