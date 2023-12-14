@@ -46,5 +46,7 @@ namespace app.Infrastructure
         public virtual DbSet<Division> Division { get; set; }
         public virtual DbSet<District> District { get; set; }
         public virtual DbSet<Upazila> Upazila { get; set; }
+        public virtual DbSet<JobStatus> JobStatus { get; set; }
+
     }
 }
