@@ -348,7 +348,7 @@
                                     <div class="form-group">
                                         <div class="col-md-8">
                                             <label asp-for="GradeId">Grade</label>
-                                            <select asp-for="GradeId" class="form-control" required asp-items="ViewBag.GradeList">
+                                            <select asp-for="GradeId" class="form-control" asp-items="ViewBag.GradeList">
                                                 <option value="">-- Select --</option>
                                             </select>
                                             <span asp-validation-for="GradeId" class="text-danger"></span>

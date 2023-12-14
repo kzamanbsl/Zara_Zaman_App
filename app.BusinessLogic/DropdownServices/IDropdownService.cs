@@ -19,7 +19,7 @@
         Task<IEnumerable<DropdownViewModel>> ReligionSelectionList();
         Task<IEnumerable<DropdownViewModel>> EmployeeCategorySelectionList();
         Task<IEnumerable<DropdownViewModel>> ServiceTypeSelectionList();
-        //Task<IEnumerable<DropdownViewModel>> JobStatusSelectionList();
+        Task<IEnumerable<DropdownViewModel>> JobStatusSelectionList();
         Task<IEnumerable<DropdownViewModel>> OfficeTypeSelectionList();
         Task<IEnumerable<DropdownViewModel>> GradeSelectionList();
 
