@@ -88,6 +88,7 @@ namespace app.Services.LeaveApplicationServices
                 com.EndDate = model.EndDate;
                 com.LeaveDays = model.LeaveDays;
                 com.StayDuringLeave = model.StayDuringLeave;
+                com.StatusId = model.StatusId;
                 com.Reason = model.Reason;
                 com.Remarks = model.Remarks;
                 com.StatusId = (int)LeaveApplicationStatusEnum.Draft ;
@@ -113,6 +114,7 @@ namespace app.Services.LeaveApplicationServices
                 result.StayDuringLeave = model.StayDuringLeave;
                 result.Reason = model.Reason;
                 result.Remarks = model.Remarks;
+                result.StatusId = model.StatusId;
                 await _iEntityRepository.UpdateAsync(result);
                 return 2;
             }
