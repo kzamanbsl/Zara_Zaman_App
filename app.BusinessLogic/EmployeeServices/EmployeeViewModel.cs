@@ -10,7 +10,6 @@ namespace app.Services.EmployeeServices
 {
     public class EmployeeViewModel : BaseViewModel
     {
-        public string EmployeeId { get; set; }
         [Required]
         public string Name { get; set; }
         public string EmployeeCode { get; set; }

@@ -20,7 +20,7 @@ namespace app.Infrastructure.ModelConfig
             new UpazilaConfig()?.Configure(builder.Entity<Upazila>());
 
             new DepartmentConfig()?.Configure(builder.Entity<Department>());
-            new GradeConfig()?.Configure(builder.Entity<Grade>());
+            new EmployeeGradeConfig()?.Configure(builder.Entity<EmployeeGrade>());
             new DesignationConfig()?.Configure(builder.Entity<Designation>());
             new EmployeeCategoryConfig()?.Configure(builder.Entity<EmployeeCategory>());
             new ServiceTypeConfig()?.Configure(builder.Entity<ServiceType>());

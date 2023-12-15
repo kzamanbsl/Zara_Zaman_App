@@ -30,7 +30,7 @@ namespace app.Infrastructure
         public virtual DbSet<Designation> Designation { get; set; }
         public virtual DbSet<Department> Department { get; set; }
         public virtual DbSet<EmployeeCategory> EmployeeCategory { get; set; }
-        public virtual DbSet<Grade> Grade { get; set; }
+        public virtual DbSet<EmployeeGrade> EmployeeGrade { get; set; }
         public virtual DbSet<ServiceType> ServiceType { get; set; }
         public virtual DbSet<Shift> Shift { get; set; }
         public virtual DbSet<EmployeeServiceType> EmployeeServiceType { get; set; }

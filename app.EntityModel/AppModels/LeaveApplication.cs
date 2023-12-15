@@ -23,7 +23,7 @@ namespace app.EntityModel.AppModels
         public virtual LeaveCategory LeaveCategory { get; set; }
         public long EmployeeId { get; set; }
         public virtual Employee Employee { get; set; }
-        public long ManagerId { get; set; }
+        public long? ManagerId { get; set; }
         public virtual Employee Manager { get; set; }
 
     }

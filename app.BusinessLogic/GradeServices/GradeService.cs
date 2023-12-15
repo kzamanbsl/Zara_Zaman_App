@@ -9,10 +9,10 @@ namespace app.Services.GradeServices
 {
     public class GradeService : IGradeService
     {
-        private readonly IEntityRepository<Grade> _iEntityRepository;
+        private readonly IEntityRepository<EmployeeGrade> _iEntityRepository;
         private readonly InventoryDbContext _dbContext;
         private readonly IWorkContext _iWorkContext;
-        public GradeService(IEntityRepository<Grade> iEntityRepository, InventoryDbContext dbContext, IWorkContext iWorkContext)
+        public GradeService(IEntityRepository<EmployeeGrade> iEntityRepository, InventoryDbContext dbContext, IWorkContext iWorkContext)
         {
             _iEntityRepository = iEntityRepository;
             _dbContext = dbContext;
@@ -25,7 +25,7 @@ namespace app.Services.GradeServices
             var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == model.Name.Trim());
             if (checkName == null)
             {
-                Grade com = new Grade();
+                EmployeeGrade com = new EmployeeGrade();
                 com.Name = model.Name;
                 var res = await _iEntityRepository.AddAsync(com);
                 return 2;
@@ -44,7 +44,7 @@ namespace app.Services.GradeServices
         public async Task<GradeViewModel> GetAllRecord()
         {
             GradeViewModel model = new GradeViewModel();
-            model.GradeList = await Task.Run(() => (from t1 in _dbContext.Grade
+            model.GradeList = await Task.Run(() => (from t1 in _dbContext.EmployeeGrade
                                                                 where t1.IsActive == true
                                                                 select new GradeViewModel
                                                                 {

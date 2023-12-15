@@ -1,4 +1,5 @@
-﻿using app.EntityModel.AppModels;
+﻿using System.ComponentModel;
+using app.EntityModel.AppModels;
 
 namespace app.Services.AttendanceLogServices
 {
@@ -6,15 +7,19 @@ namespace app.Services.AttendanceLogServices
     {
 
         public long AttendanceId { get; set; }
+
+        [DisplayName("Attendance Date")]
         public DateTime AttendanceDate { get; set; }
+
+        [DisplayName("Login Time")]
         public DateTime LoginTime { get; set; }
+
+        [DisplayName("Logout Time")]
         public DateTime LogoutTime { get; set; }
+
         public string Remarks { get; set; }
-        public long EmployeeId { get; set; }
-        public string EmployeeCode { get; set; }
+       
         public IEnumerable<AttendanceLogViewModel> AttendanceLogList { get; set; }
-        public List<Attendance> Attendances { get; set; }
-        public List<Employee> Employees { get; set; }
 
     }
 }

@@ -226,7 +226,7 @@ namespace app.Services.DropdownServices
 
         public async Task<IEnumerable<DropdownViewModel>> GradeSelectionList()
         {
-            IEnumerable<DropdownViewModel> dropDownViewModels = await Task.Run(() => (from t1 in _dbContext.Grade
+            IEnumerable<DropdownViewModel> dropDownViewModels = await Task.Run(() => (from t1 in _dbContext.EmployeeGrade
                                                                                       where t1.IsActive == true
                                                                                       select new DropdownViewModel
                                                                                       {
