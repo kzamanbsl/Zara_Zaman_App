@@ -1,5 +1,4 @@
 ﻿using app.EntityModel.AppModels;
-using app.EntityModel.CoreModel;
 using app.Infrastructure;
 using app.Infrastructure.Auth;
 using app.Infrastructure.Repository;
@@ -18,30 +17,46 @@ namespace app.Services.ShiftServices
             _iWorkContext = iWorkContext;
         }
 
-        public async Task<int> AddRecord(ShiftViewModel model)
+        public async Task<bool> AddRecord(ShiftViewModel vm)
         {
-            var user = await _iWorkContext.GetCurrentAdminUserAsync();
-            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == model.Name.Trim());
+            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim());
             if (checkName == null)
             {
                 Shift com = new Shift();
-                com.Name = model.Name;
-                com.StartAt = model.StartAt;
-                com.EndAt = model.EndAt;
+                com.Name = vm.Name;
+                com.StartAt = vm.StartAt;
+                com.EndAt = vm.EndAt;
                 var res = await _iEntityRepository.AddAsync(com);
-                return 2;
+                vm.Id = res.Id;
+                return true;
             }
-            return 1;
+            return false;
         }
+        public async Task<bool> UpdateRecord(ShiftViewModel vm)
+        {
 
-        public async Task<bool> DeleteRecord(long id)
+            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim());
+            if (checkName == null)
+            {
+                var result = await _iEntityRepository.GetByIdAsync(vm.Id);
+                result.Name = vm.Name;
+                result.StartAt = vm.StartAt;
+                result.EndAt = vm.EndAt;
+                await _iEntityRepository.UpdateAsync(result);
+                return true;
+            }
+            return false;
+        }
+        public async Task<ShiftViewModel> GetRecordById(long id)
         {
             var result = await _iEntityRepository.GetByIdAsync(id);
-            result.IsActive = false;
-            await _iEntityRepository.UpdateAsync(result);
-            return true;
+            ShiftViewModel model = new ShiftViewModel();
+            model.Id = result.Id;
+            model.Name = result.Name;
+            model.StartAt = result.StartAt;
+            model.EndAt = result.EndAt;
+            return model;
         }
-
         public async Task<ShiftViewModel> GetAllRecord()
         {
             ShiftViewModel model = new ShiftViewModel();
@@ -56,32 +71,12 @@ namespace app.Services.ShiftServices
                                                                 }).AsQueryable());
             return model;
         }
-
-        public async Task<ShiftViewModel> GetRecordById(long id)
+        public async Task<bool> DeleteRecord(long id)
         {
             var result = await _iEntityRepository.GetByIdAsync(id);
-            ShiftViewModel model = new ShiftViewModel();
-            model.Id = result.Id;
-            model.Name = result.Name;
-            model.StartAt = result.StartAt;
-            model.EndAt = result.EndAt;
-            return model;
-        }
-
-        public async Task<int> UpdateRecord(ShiftViewModel model)
-        {
-
-            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == model.Name.Trim());
-            if (checkName == null)
-            {
-                var result = await _iEntityRepository.GetByIdAsync(model.Id);
-                result.Name = model.Name;
-                result.StartAt = model.StartAt;
-                result.EndAt = model.EndAt;
-                await _iEntityRepository.UpdateAsync(result);
-                return 2;
-            }
-            return 1;
+            result.IsActive = false;
+            await _iEntityRepository.UpdateAsync(result);
+            return true;
         }
     }
 }

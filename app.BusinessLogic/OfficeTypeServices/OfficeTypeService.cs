@@ -2,12 +2,6 @@
 using app.Infrastructure.Auth;
 using app.Infrastructure.Repository;
 using app.Infrastructure;
-using app.Services.OfficeTypeServices;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace app.Services.OfficeTypeServices
 {
@@ -23,28 +17,41 @@ namespace app.Services.OfficeTypeServices
             _iWorkContext = iWorkContext;
         }
 
-        public async Task<int> AddRecord(OfficeTypeViewModel model)
+        public async Task<bool> AddRecord(OfficeTypeViewModel vm)
         {
-            var user = await _iWorkContext.GetCurrentAdminUserAsync();
-            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == model.Name.Trim());
+            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim());
             if (checkName == null)
             {
                 OfficeType com = new OfficeType();
-                com.Name = model.Name;
+                com.Name = vm.Name;
                 var res = await _iEntityRepository.AddAsync(com);
-                return 2;
+                vm.Id=res.Id;
+                return true;
             }
-            return 1;
+            return false;
         }
+        public async Task<bool> UpdateRecord(OfficeTypeViewModel vm)
+        {
 
-        public async Task<bool> DeleteRecord(long id)
+            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim());
+            if (checkName == null)
+            {
+                var result = await _iEntityRepository.GetByIdAsync(vm.Id);
+                result.Name = vm.Name;
+                await _iEntityRepository.UpdateAsync(result);
+                return true;
+            }
+            return false;
+        }
+       
+        public async Task<OfficeTypeViewModel> GetRecordById(long id)
         {
             var result = await _iEntityRepository.GetByIdAsync(id);
-            result.IsActive = false;
-            await _iEntityRepository.UpdateAsync(result);
-            return true;
+            OfficeTypeViewModel model = new OfficeTypeViewModel();
+            model.Id = result.Id;
+            model.Name = result.Name;
+            return model;
         }
-
         public async Task<OfficeTypeViewModel> GetAllRecord()
         {
             OfficeTypeViewModel model = new OfficeTypeViewModel();
@@ -57,28 +64,12 @@ namespace app.Services.OfficeTypeServices
                                                           }).AsQueryable());
             return model;
         }
-
-        public async Task<OfficeTypeViewModel> GetRecordById(long id)
+        public async Task<bool> DeleteRecord(long id)
         {
             var result = await _iEntityRepository.GetByIdAsync(id);
-            OfficeTypeViewModel model = new OfficeTypeViewModel();
-            model.Id = result.Id;
-            model.Name = result.Name;
-            return model;
-        }
-
-        public async Task<int> UpdateRecord(OfficeTypeViewModel model)
-        {
-
-            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == model.Name.Trim());
-            if (checkName == null)
-            {
-                var result = await _iEntityRepository.GetByIdAsync(model.Id);
-                result.Name = model.Name;
-                await _iEntityRepository.UpdateAsync(result);
-                return 2;
-            }
-            return 1;
+            result.IsActive = false;
+            await _iEntityRepository.UpdateAsync(result);
+            return true;
         }
     }
 }

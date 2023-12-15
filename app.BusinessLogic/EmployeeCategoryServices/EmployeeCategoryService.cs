@@ -2,12 +2,6 @@
 using app.Infrastructure.Auth;
 using app.Infrastructure.Repository;
 using app.Infrastructure;
-using app.Services.EmployeeCategoryServices;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace app.Services.EmployeeCategoryServices
 {
@@ -23,28 +17,40 @@ namespace app.Services.EmployeeCategoryServices
             _iWorkContext = iWorkContext;
         }
 
-        public async Task<int> AddRecord(EmployeeCategoryViewModel model)
+        public async Task<bool> AddRecord(EmployeeCategoryViewModel vm)
         {
-            var user = await _iWorkContext.GetCurrentAdminUserAsync();
-            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == model.Name.Trim());
+            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim());
             if (checkName == null)
             {
                 EmployeeCategory com = new EmployeeCategory();
-                com.Name = model.Name;
+                com.Name = vm.Name;
                 var res = await _iEntityRepository.AddAsync(com);
-                return 2;
+                vm.Id=res.Id;
+                return true;
             }
-            return 1;
+            return false;
         }
+        public async Task<bool> UpdateRecord(EmployeeCategoryViewModel vm)
+        {
 
-        public async Task<bool> DeleteRecord(long id)
+            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim());
+            if (checkName == null)
+            {
+                var result = await _iEntityRepository.GetByIdAsync(vm.Id);
+                result.Name = vm.Name;
+                await _iEntityRepository.UpdateAsync(result);
+                return true;
+            }
+            return false;
+        }
+        public async Task<EmployeeCategoryViewModel> GetRecordById(long id)
         {
             var result = await _iEntityRepository.GetByIdAsync(id);
-            result.IsActive = false;
-            await _iEntityRepository.UpdateAsync(result);
-            return true;
+            EmployeeCategoryViewModel model = new EmployeeCategoryViewModel();
+            model.Id = result.Id;
+            model.Name = result.Name;
+            return model;
         }
-
         public async Task<EmployeeCategoryViewModel> GetAllRecord()
         {
             EmployeeCategoryViewModel model = new EmployeeCategoryViewModel();
@@ -57,28 +63,13 @@ namespace app.Services.EmployeeCategoryServices
                                                           }).AsQueryable());
             return model;
         }
-
-        public async Task<EmployeeCategoryViewModel> GetRecordById(long id)
+        public async Task<bool> DeleteRecord(long id)
         {
             var result = await _iEntityRepository.GetByIdAsync(id);
-            EmployeeCategoryViewModel model = new EmployeeCategoryViewModel();
-            model.Id = result.Id;
-            model.Name = result.Name;
-            return model;
+            result.IsActive = false;
+            await _iEntityRepository.UpdateAsync(result);
+            return true;
         }
 
-        public async Task<int> UpdateRecord(EmployeeCategoryViewModel model)
-        {
-
-            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == model.Name.Trim());
-            if (checkName == null)
-            {
-                var result = await _iEntityRepository.GetByIdAsync(model.Id);
-                result.Name = model.Name;
-                await _iEntityRepository.UpdateAsync(result);
-                return 2;
-            }
-            return 1;
-        }
     }
 }

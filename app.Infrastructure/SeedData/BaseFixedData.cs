@@ -9,6 +9,8 @@ namespace app.Infrastructure.SeedData
     {
         public static void SeedData(ModelBuilder builder)
         {
+            var dateString = "11/21/2023 09:00:00";
+
             builder.Entity<IdentityRole>().HasData(
                 new IdentityRole { Id = "8e445865-a24d-4543-a6c6-9443d048cdb9", Name = "Customer", NormalizedName = "CUSTOMER" },
                 new IdentityRole { Id = "2c5e174e-3b0e-446f-86af-483d56fd7210", Name = "Admin", NormalizedName = "ADMIN" }
@@ -77,7 +79,7 @@ namespace app.Infrastructure.SeedData
                     OrderNo = 1,
                     Icon = "<i class=\"fas fa-user\"></i>",
                     CreatedBy = "System Admin",
-                    CreatedOn = DateTime.Now,
+                    CreatedOn = DateTime.Parse(dateString),
                     IsActive = true
                 },
                 new MainMenu()
@@ -87,7 +89,7 @@ namespace app.Infrastructure.SeedData
                     OrderNo = 2,
                     Icon = "<i class=\"fas fa-cog\"></i>",
                     CreatedBy = "System Admin",
-                    CreatedOn = DateTime.Now,
+                    CreatedOn = DateTime.Parse(dateString),
                     IsActive = true
                 }
             );
@@ -104,7 +106,7 @@ namespace app.Infrastructure.SeedData
                     Icon = "<i class=\"fas fa-plus\"></i>",
                     MenuId = 1,
                     CreatedBy = "System Admin",
-                    CreatedOn = DateTime.Now,
+                    CreatedOn = DateTime.Parse(dateString),
                     IsActive = true
                 },
                 new MenuItem()
@@ -118,7 +120,7 @@ namespace app.Infrastructure.SeedData
                     Icon = "<i class=\"fas fa-list\"></i>",
                     MenuId = 1,
                     CreatedBy = "System Admin",
-                    CreatedOn = DateTime.Now,
+                    CreatedOn = DateTime.Parse(dateString),
                     IsActive = true
                 },
                 new MenuItem()
@@ -132,7 +134,7 @@ namespace app.Infrastructure.SeedData
                     Icon = "<i class=\"fas fa-plus\"></i>",
                     MenuId = 1,
                     CreatedBy = "System Admin",
-                    CreatedOn = DateTime.Now,
+                    CreatedOn = DateTime.Parse(dateString),
                     IsActive = true
                 },
                 new MenuItem()
@@ -146,7 +148,7 @@ namespace app.Infrastructure.SeedData
                     Icon = "<i class=\"fas fa-list\"></i>",
                     MenuId = 1,
                     CreatedBy = "System Admin",
-                    CreatedOn = DateTime.Now,
+                    CreatedOn = DateTime.Parse(dateString),
                     IsActive = true
                 },
                 new MenuItem()
@@ -160,7 +162,7 @@ namespace app.Infrastructure.SeedData
                     Icon = "<i class=\"fas fa-plus\"></i>",
                     MenuId = 1,
                     CreatedBy = "System Admin",
-                    CreatedOn = DateTime.Now,
+                    CreatedOn = DateTime.Parse(dateString),
                     IsActive = true
                 },
                 new MenuItem()
@@ -174,7 +176,7 @@ namespace app.Infrastructure.SeedData
                     Icon = "<i class=\"fas fa-plus\"></i>",
                     MenuId = 2,
                     CreatedBy = "System Admin",
-                    CreatedOn = DateTime.Now,
+                    CreatedOn = DateTime.Parse(dateString),
                     IsActive = true
                 },
                 new MenuItem()
@@ -188,7 +190,7 @@ namespace app.Infrastructure.SeedData
                     Icon = "<i class=\"fas fa-list\"></i>",
                     MenuId = 2,
                     CreatedBy = "System Admin",
-                    CreatedOn = DateTime.Now,
+                    CreatedOn = DateTime.Parse(dateString),
                     IsActive = true
                 }
             );
@@ -200,7 +202,7 @@ namespace app.Infrastructure.SeedData
                     UserId = "0f04028e-587c-47ad-8b36-6dbd6a059fa4",
                     MenuItemId = 1,
                     CreatedBy = "System Admin",
-                    CreatedOn = DateTime.Now,
+                    CreatedOn = DateTime.Parse(dateString),
                     IsActive = true
                 },
                 new UserPermissions()
@@ -209,7 +211,7 @@ namespace app.Infrastructure.SeedData
                     UserId = "0f04028e-587c-47ad-8b36-6dbd6a059fa4",
                     MenuItemId = 2,
                     CreatedBy = "System Admin",
-                    CreatedOn = DateTime.Now,
+                    CreatedOn = DateTime.Parse(dateString),
                     IsActive = true
                 },
                 new UserPermissions()
@@ -218,7 +220,7 @@ namespace app.Infrastructure.SeedData
                     UserId = "0f04028e-587c-47ad-8b36-6dbd6a059fa4",
                     MenuItemId = 3,
                     CreatedBy = "System Admin",
-                    CreatedOn = DateTime.Now,
+                    CreatedOn = DateTime.Parse(dateString),
                     IsActive = true
                 },
                 new UserPermissions()
@@ -227,7 +229,7 @@ namespace app.Infrastructure.SeedData
                     UserId = "0f04028e-587c-47ad-8b36-6dbd6a059fa4",
                     MenuItemId = 4,
                     CreatedBy = "System Admin",
-                    CreatedOn = DateTime.Now,
+                    CreatedOn = DateTime.Parse(dateString),
                     IsActive = true
                 },
                 new UserPermissions()
@@ -236,7 +238,7 @@ namespace app.Infrastructure.SeedData
                     UserId = "0f04028e-587c-47ad-8b36-6dbd6a059fa4",
                     MenuItemId = 5,
                     CreatedBy = "System Admin",
-                    CreatedOn = DateTime.Now,
+                    CreatedOn = DateTime.Parse(dateString),
                     IsActive = true
                 },
                 new UserPermissions()
@@ -245,7 +247,7 @@ namespace app.Infrastructure.SeedData
                     UserId = "0f04028e-587c-47ad-8b36-6dbd6a059fa4",
                     MenuItemId = 6,
                     CreatedBy = "System Admin",
-                    CreatedOn = DateTime.Now,
+                    CreatedOn = DateTime.Parse(dateString),
                     IsActive = true
                 },
                 new UserPermissions()
@@ -254,7 +256,7 @@ namespace app.Infrastructure.SeedData
                     UserId = "0f04028e-587c-47ad-8b36-6dbd6a059fa4",
                     MenuItemId = 7,
                     CreatedBy = "System Admin",
-                    CreatedOn = DateTime.Now,
+                    CreatedOn = DateTime.Parse(dateString),
                     IsActive = true
                 }
             );

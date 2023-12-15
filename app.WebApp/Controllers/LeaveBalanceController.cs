@@ -10,11 +10,11 @@ namespace app.WebApp.Controllers
     {
 
         private readonly ILeaveBalanceService _iService;
-        private readonly IDropdownService _dropdownService;
-        public LeaveBalanceController(ILeaveBalanceService iService,IDropdownService dropdownService)
+        private readonly IDropdownService _iDropdownService;
+        public LeaveBalanceController(ILeaveBalanceService iService,IDropdownService iDropdownService)
         {
             _iService = iService;
-            _dropdownService = dropdownService; 
+            _iDropdownService = iDropdownService; 
         }
 
         [HttpGet]
@@ -28,7 +28,7 @@ namespace app.WebApp.Controllers
         [HttpGet]
         public async Task<IActionResult> AddRecord()
         {
-            ViewBag.leaveCategory = new SelectList((await _dropdownService.LeaveCategorySelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
+            ViewBag.leaveCategory = new SelectList((await _iDropdownService.LeaveCategorySelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
             LeaveBalanceViewModel viewModel = new LeaveBalanceViewModel();
             return View(viewModel);
         }
@@ -37,7 +37,7 @@ namespace app.WebApp.Controllers
         public async Task<IActionResult> AddRecord(LeaveBalanceViewModel viewModel)
         {
             var result = await _iService.AddRecord(viewModel);
-            if (result == 2)
+            if (result ==true)
             {
                 return RedirectToAction("Index");
             }
@@ -48,7 +48,7 @@ namespace app.WebApp.Controllers
         [HttpGet]
         public async Task<IActionResult> UpdateRecord(long id)
         {
-            ViewBag.leaveCategory = new SelectList((await _dropdownService.LeaveCategorySelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
+            ViewBag.leaveCategory = new SelectList((await _iDropdownService.LeaveCategorySelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
             var result = await _iService.GetRecordById(id);
             return View(result);
         }
@@ -57,7 +57,7 @@ namespace app.WebApp.Controllers
         public async Task<IActionResult> UpdateRecord(LeaveBalanceViewModel model)
         {
             var result = await _iService.UpdateRecord(model);
-            if (result == 2)
+            if (result == true)
             {
                 return RedirectToAction("Index");
             }

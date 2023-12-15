@@ -1,37 +1,36 @@
-﻿using app.EntityModel.CoreModel;
+﻿using app.EntityModel.AppModels;
 using app.Infrastructure;
 using app.Infrastructure.Auth;
 using app.Infrastructure.Repository;
 
-namespace app.Services.CompanyServices
+namespace app.Services.EmployeeGradeServices
 {
-    public class CompanyService : ICompanyService
+    public class EmployeeGradeService : IEmployeeGradeService
     {
-        private readonly IEntityRepository<Company> _iEntityRepository;
+        private readonly IEntityRepository<EmployeeGrade> _iEntityRepository;
         private readonly InventoryDbContext _dbContext;
         private readonly IWorkContext _iWorkContext;
-        public CompanyService(IEntityRepository<Company> iEntityRepository, InventoryDbContext dbContext, IWorkContext iWorkContext)
+        public EmployeeGradeService(IEntityRepository<EmployeeGrade> iEntityRepository, InventoryDbContext dbContext, IWorkContext iWorkContext)
         {
             _iEntityRepository = iEntityRepository;
             _dbContext = dbContext;
             _iWorkContext = iWorkContext;
         }
 
-        public async Task<bool> AddRecord(CompanyViewModel vm)
+        public async Task<bool> AddRecord(EmployeeGradeViewModel vm)
         {
-            var user = await _iWorkContext.GetCurrentAdminUserAsync();
             var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim());
             if (checkName == null)
             {
-                Company model = new Company();
-                model.Name = vm.Name;
-                var res = await _iEntityRepository.AddAsync(model);
+                EmployeeGrade com = new EmployeeGrade();
+                com.Name = vm.Name;
+                var res = await _iEntityRepository.AddAsync(com);
                 vm.Id=res.Id;
                 return true;
             }
             return false;
         }
-        public async Task<bool> UpdateRecord(CompanyViewModel vm)
+        public async Task<bool> UpdateRecord(EmployeeGradeViewModel vm)
         {
 
             var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim());
@@ -44,6 +43,26 @@ namespace app.Services.CompanyServices
             }
             return false;
         }
+        public async Task<EmployeeGradeViewModel> GetRecordById(long id)
+        {
+            var result = await _iEntityRepository.GetByIdAsync(id);
+            EmployeeGradeViewModel model = new EmployeeGradeViewModel();
+            model.Id = result.Id;
+            model.Name = result.Name;
+            return model;
+        }
+        public async Task<EmployeeGradeViewModel> GetAllRecord()
+        {
+            EmployeeGradeViewModel model = new EmployeeGradeViewModel();
+            model.EmployeeGradeList = await Task.Run(() => (from t1 in _dbContext.EmployeeGrade
+                                                                where t1.IsActive == true
+                                                                select new EmployeeGradeViewModel
+                                                                {
+                                                                    Id = t1.Id,
+                                                                    Name = t1.Name,
+                                                                }).AsQueryable());
+            return model;
+        }
         public async Task<bool> DeleteRecord(long id)
         {
             var result = await _iEntityRepository.GetByIdAsync(id);
@@ -51,26 +70,6 @@ namespace app.Services.CompanyServices
             await _iEntityRepository.UpdateAsync(result);
             return true;
         }
-        public async Task<CompanyViewModel> GetRecordById(long id)
-        {
-            var result = await _iEntityRepository.GetByIdAsync(id);
-            CompanyViewModel model = new CompanyViewModel();
-            model.Id = result.Id;
-            model.Name = result.Name;
-            return model;
-        }
-        public async Task<CompanyViewModel> GetAllRecord()
-        {
-            CompanyViewModel model = new CompanyViewModel();
-            model.CompanyList = await Task.Run(() => (from t1 in _dbContext.Company
-                                                                where t1.IsActive == true
-                                                                select new CompanyViewModel
-                                                                {
-                                                                    Id = t1.Id,
-                                                                    Name = t1.Name,
-                                                                }).AsQueryable());
-            return model;
-        }
-        
+
     }
 }

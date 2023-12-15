@@ -1,9 +1,7 @@
-﻿using app.EntityModel.AppModels;
-using app.Services.DropdownServices;
+﻿using app.Services.DropdownServices;
 using app.Services.LeaveApplicationServices;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 
 namespace app.WebApp.Controllers
 {
@@ -39,7 +37,7 @@ namespace app.WebApp.Controllers
         public async Task<IActionResult> AddRecord(LeaveApplicationViewModel viewModel)
         {
             var result = await _iService.AddRecord(viewModel);
-            if (result == 2)
+            if (result == true)
             {
                 return RedirectToAction("Index");
             }
@@ -61,7 +59,7 @@ namespace app.WebApp.Controllers
         public async Task<IActionResult> UpdateRecord(LeaveApplicationViewModel model)
         {
             var result = await _iService.UpdateRecord(model);
-            if (result == 2)
+            if (result ==true)
             {
                 return RedirectToAction("Index");
             }
@@ -75,18 +73,21 @@ namespace app.WebApp.Controllers
             var res = await _iService.ConfirmRecord(id);
             return RedirectToAction("Index");
         }
+
         [HttpGet]
         public async Task<ActionResult> ApproveRecord(long id)
         {
             var res = await _iService.ApproveRecord(id);
             return RedirectToAction("Index");
         }
+
         [HttpGet]
         public async Task<ActionResult> RejectRecord(long id)
         {
             var res = await _iService.RejectRecord(id);
             return RedirectToAction("Index");
         }
+
         [HttpGet]
         public async Task<IActionResult> Delete(long id)
         {

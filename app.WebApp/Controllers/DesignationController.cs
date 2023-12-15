@@ -30,7 +30,7 @@ namespace app.WebApp.Controllers
         public async Task<IActionResult> AddRecord(DesignationViewModel viewModel)
         {
             var result = await _iService.AddRecord(viewModel);
-            if (result == 2)
+            if (result == true)
             {
                 return RedirectToAction("Index");
             }
@@ -49,7 +49,7 @@ namespace app.WebApp.Controllers
         public async Task<IActionResult> UpdateRecord(DesignationViewModel model)
         {
             var result = await _iService.UpdateRecord(model);
-            if (result == 2)
+            if (result == true)
             {
                 return RedirectToAction("Index");
             }

@@ -1,8 +1,6 @@
-﻿using app.EntityModel.AppModels;
-using app.Infrastructure;
+﻿using app.Infrastructure;
 using app.Infrastructure.Auth;
 using app.Utility;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace app.Services.DropdownServices
 {
@@ -18,7 +16,6 @@ namespace app.Services.DropdownServices
 
         public async Task<IEnumerable<DropdownViewModel>> CompanySelectionList()
         {
-            //var user = await _iWorkContext.GetCurrentAdminUserAsync();
             IEnumerable<DropdownViewModel> dropDownViewModels = await Task.Run(() => (from t1 in _dbContext.Company
                                                                                       select new DropdownViewModel
                                                                                       {
@@ -27,7 +24,6 @@ namespace app.Services.DropdownServices
                                                                                       }).AsQueryable());
             return dropDownViewModels;
         }
-
         public async Task<IEnumerable<DropdownViewModel>> DepartmentSelectionList()
         {
             IEnumerable<DropdownViewModel> dropDownViewModels = await Task.Run(() => (from t1 in _dbContext.Department
@@ -38,7 +34,6 @@ namespace app.Services.DropdownServices
                                                                                       }).AsQueryable());
             return dropDownViewModels;
         }
-
         public async Task<IEnumerable<DropdownViewModel>> DesignationSelectionList()
         {
             IEnumerable<DropdownViewModel> dropDownViewModels = await Task.Run(() => (from t1 in _dbContext.Designation
@@ -49,7 +44,6 @@ namespace app.Services.DropdownServices
                                                                                       }).AsQueryable());
             return dropDownViewModels;
         }
-
         public async Task<IEnumerable<DropdownViewModel>> LeaveCategorySelectionList()
         {
             IEnumerable<DropdownViewModel> dropDownViewModels = await Task.Run(() => (from t1 in _dbContext.LeaveCategory
@@ -60,7 +54,6 @@ namespace app.Services.DropdownServices
                                                                                       }).AsQueryable());
             return dropDownViewModels;
         }
-
         public async Task<IEnumerable<DropdownViewModel>> EmployeeSelectionList(long managerId = 0)
         {
             IEnumerable<DropdownViewModel> dropDownViewModels = await Task.Run(() => (from t1 in _dbContext.Employee
@@ -73,7 +66,6 @@ namespace app.Services.DropdownServices
                                                                                       }).AsQueryable());
             return dropDownViewModels;
         }
-
         public async Task<IEnumerable<DropdownViewModel>> CountrySelectionList()
         {
             IEnumerable<DropdownViewModel> dropDownViewModels = await Task.Run(() => (from t1 in _dbContext.Country
@@ -84,7 +76,6 @@ namespace app.Services.DropdownServices
                                                                                       }).AsQueryable());
             return dropDownViewModels;
         }
-
         public async Task<IEnumerable<DropdownViewModel>> DivisionSelectionList()
         {
             IEnumerable<DropdownViewModel> dropDownViewModels = await Task.Run(() => (from t1 in _dbContext.Division
@@ -95,7 +86,6 @@ namespace app.Services.DropdownServices
                                                                                       }).AsQueryable());
             return dropDownViewModels;
         }
-
         public async Task<IEnumerable<DropdownViewModel>> DistrictSelectionList(int divisionId = 0)
         {
             IEnumerable<DropdownViewModel> dropDownViewModels = await Task.Run(() => (from t1 in _dbContext.District
@@ -107,7 +97,6 @@ namespace app.Services.DropdownServices
                                                                                       }).AsQueryable());
             return dropDownViewModels;
         }
-
         public async Task<IEnumerable<DropdownViewModel>> UpazilaSelectionList(int divisionId = 0, int districtsId = 0)
         {
             IEnumerable<DropdownViewModel> dropDownViewModels = await Task.Run(() => (from t1 in _dbContext.Upazila
@@ -122,7 +111,6 @@ namespace app.Services.DropdownServices
                                                                                       }).AsQueryable());
             return dropDownViewModels;
         }
-
         public async Task<IEnumerable<DropdownViewModel>> BloodGroupSelectionList()
         {
             IEnumerable<DropdownViewModel> dropDownViewModels = await Task.Run(() => (from t1 in _dbContext.DropdownItem                                                                                     
@@ -171,7 +159,6 @@ namespace app.Services.DropdownServices
                                                                                       }).AsQueryable());
             return dropDownViewModels;
         }
-
         public async Task<IEnumerable<DropdownViewModel>> EmployeeCategorySelectionList()
         {
             IEnumerable<DropdownViewModel> dropDownViewModels = await Task.Run(() => (from t1 in _dbContext.EmployeeCategory
@@ -184,7 +171,6 @@ namespace app.Services.DropdownServices
                                                                                       }).AsQueryable());
             return dropDownViewModels;
         }
-
         public async Task<IEnumerable<DropdownViewModel>> ServiceTypeSelectionList()
         {
             IEnumerable<DropdownViewModel> dropDownViewModels = await Task.Run(() => (from t1 in _dbContext.ServiceType
@@ -197,7 +183,6 @@ namespace app.Services.DropdownServices
                                                                                       }).AsQueryable());
             return dropDownViewModels;
         }
-
         public async Task<IEnumerable<DropdownViewModel>> OfficeTypeSelectionList()
         {
             IEnumerable<DropdownViewModel> dropDownViewModels = await Task.Run(() => (from t1 in _dbContext.OfficeType
@@ -210,7 +195,6 @@ namespace app.Services.DropdownServices
                                                                                       }).AsQueryable());
             return dropDownViewModels;
         }
-
         public async Task<IEnumerable<DropdownViewModel>> ShiftSelectionList()
         {
             IEnumerable<DropdownViewModel> dropDownViewModels = await Task.Run(() => (from t1 in _dbContext.Shift
@@ -223,7 +207,6 @@ namespace app.Services.DropdownServices
                                                                                       }).AsQueryable());
             return dropDownViewModels;
         }
-
         public async Task<IEnumerable<DropdownViewModel>> GradeSelectionList()
         {
             IEnumerable<DropdownViewModel> dropDownViewModels = await Task.Run(() => (from t1 in _dbContext.EmployeeGrade

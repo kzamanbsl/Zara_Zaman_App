@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel;
-using app.Services.AttendanceLogServices;
 
 namespace app.Services.AttendanceServices
 {
@@ -17,10 +16,11 @@ namespace app.Services.AttendanceServices
         public string Remarks { get; set; }
 
         public long EmployeeId { get; set; }
-        public string EmployeeCode { get; set; }
-        public bool IsSave { get; set; } = false;
+        public string EmployeeName { get; set; }
+
+        public long? ManagerId { get; set; }
+        public string ManagerName { get; set; }
 
         public IEnumerable<AttendanceViewModel> AttendanceList { get; set; }
-        public List<AttendanceLogViewModel> AttendanceLogList { get; set; }
     }
 }

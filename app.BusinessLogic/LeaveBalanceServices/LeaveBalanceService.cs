@@ -1,9 +1,7 @@
 ﻿using app.EntityModel.AppModels;
-using app.EntityModel.CoreModel;
 using app.Infrastructure;
 using app.Infrastructure.Auth;
 using app.Infrastructure.Repository;
-using Microsoft.EntityFrameworkCore;
 
 namespace app.Services.LeaveBalanceServices
 {
@@ -19,46 +17,37 @@ namespace app.Services.LeaveBalanceServices
             _iWorkContext = iWorkContext;
         }
 
-        public async Task<int> AddRecord(LeaveBalanceViewModel model)
+        public async Task<bool> AddRecord(LeaveBalanceViewModel vm)
         {
-            var user = await _iWorkContext.GetCurrentAdminUserAsync();
-            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id==model.Id && f.LeaveCategoryId ==model.LeaveCategoryId);
+            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id==vm.Id && f.LeaveCategoryId ==vm.LeaveCategoryId);
             if (checkName == null)
             {
                 LeaveBalance com = new LeaveBalance();
-                com.LeaveCategoryId = model.LeaveCategoryId;
-                com.LeaveQty = model.LeaveQty;
-                com.Description=model.Description;
+                com.LeaveCategoryId = vm.LeaveCategoryId;
+                com.LeaveQty = vm.LeaveQty;
+                com.Description=vm.Description;
                 var res = await _iEntityRepository.AddAsync(com);
-                return 2;
+                vm.Id = res.Id;
+                return true;
             }
-            return 1;
-        }
 
-        public async Task<bool> DeleteRecord(long id)
+            return false;
+        }
+        public async Task<bool> UpdateRecord(LeaveBalanceViewModel vm)
         {
-            var result = await _iEntityRepository.GetByIdAsync(id);
-            result.IsActive = false;
-            await _iEntityRepository.UpdateAsync(result);
-            return true;
+            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id == vm.Id && f.LeaveCategoryId == vm.LeaveCategoryId);
+            if (checkName == null)
+            {
+                var result = await _iEntityRepository.GetByIdAsync(vm.Id);
+                result.LeaveCategoryId = vm.LeaveCategoryId;
+                result.LeaveQty = vm.LeaveQty;
+                result.Description = vm.Description;
+                await _iEntityRepository.UpdateAsync(result);
+                return true;
+            }
+            return false;
         }
-
-        public async Task<LeaveBalanceViewModel> GetAllRecord()
-        {
-            LeaveBalanceViewModel model = new LeaveBalanceViewModel();
-            model.LeaveBalanceList = await Task.Run(() => (from t1 in _dbContext.LeaveBalance
-                                                                where t1.IsActive == true
-                                                                select new LeaveBalanceViewModel
-                                                                {
-                                                                    Id = t1.Id,
-                                                                    LeaveCategoryId=t1.LeaveCategoryId,
-                                                                    LeaveCategoryName= _dbContext.LeaveCategory.FirstOrDefault(f=>f.Id == t1.LeaveCategoryId).Name,
-                                                                    LeaveQty = t1.LeaveQty,
-                                                                    Description=t1.Description,
-                                                                }).AsQueryable());
-            return model;
-        }
-
+       
         public async Task<LeaveBalanceViewModel> GetRecordById(long id)
         {
             var result = await _iEntityRepository.GetByIdAsync(id);
@@ -69,21 +58,28 @@ namespace app.Services.LeaveBalanceServices
             model.Description = result.Description;
             return model;
         }
-
-        public async Task<int> UpdateRecord(LeaveBalanceViewModel model)
+        public async Task<LeaveBalanceViewModel> GetAllRecord()
         {
-            //LeaveBalanceViewModel model = new LeaveBalanceViewModel();
-            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id == model.Id && f.LeaveCategoryId == model.LeaveCategoryId);
-            if (checkName == null)
-            {
-                var result = await _iEntityRepository.GetByIdAsync(model.Id);
-                result.LeaveCategoryId = model.LeaveCategoryId;  
-                result.LeaveQty = model.LeaveQty;
-                result.Description = model.Description;
-                await _iEntityRepository.UpdateAsync(result);
-                return 2;
-            }
-            return 1;
+            LeaveBalanceViewModel model = new LeaveBalanceViewModel();
+            model.LeaveBalanceList = await Task.Run(() => (from t1 in _dbContext.LeaveBalance
+                                                                where t1.IsActive == true
+                                                                select new LeaveBalanceViewModel
+                                                                {
+                                                                    Id = t1.Id,
+                                                                    LeaveCategoryId=t1.LeaveCategoryId,
+                                                                    LeaveCategoryName= t1.LeaveCategory.Name,
+                                                                    LeaveQty = t1.LeaveQty,
+                                                                    Description=t1.Description,
+                                                                }).AsQueryable());
+            return model;
         }
+        public async Task<bool> DeleteRecord(long id)
+        {
+            var result = await _iEntityRepository.GetByIdAsync(id);
+            result.IsActive = false;
+            await _iEntityRepository.UpdateAsync(result);
+            return true;
+        }
+
     }
 }

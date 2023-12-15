@@ -1,5 +1,6 @@
 ﻿using app.EntityModel.CoreModel;
 using app.Infrastructure.Repository;
+using Microsoft.EntityFrameworkCore;
 
 namespace app.Services.MainMenuServices
 {
@@ -10,15 +11,15 @@ namespace app.Services.MainMenuServices
         {
             _entityRepository = entityRepository;
         }
-        public async Task<bool> AddRecord(MainMenuViewModel model)
+        public async Task<bool> AddRecord(MainMenuViewModel vm)
         {
-            var getItem = _entityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name == model.Name.Trim());
+            var getItem = _entityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name == vm.Name.Trim());
             if (getItem == null)
             {
                 MainMenu menu = new MainMenu();
-                menu.Name = model.Name;
-                menu.Icon = model.Icon;
-                menu.OrderNo = model.OrderNo;
+                menu.Name = vm.Name;
+                menu.Icon = vm.Icon;
+                menu.OrderNo = vm.OrderNo;
                 var result = await _entityRepository.AddAsync(menu);
                 if (result.Id > 0)
                 {
@@ -30,6 +31,45 @@ namespace app.Services.MainMenuServices
                 }
             }
             return false;
+        }
+        public async Task<bool> UpdateRecord(MainMenuViewModel vm)
+        {
+            var checkMenu = _entityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name == vm.Name && f.Id != vm.Id);
+            if (checkMenu == null)
+            {
+                var menu = await _entityRepository.GetByIdAsync(vm.Id);
+                menu.Name = vm.Name;
+                menu.Icon = vm.Icon;
+                menu.OrderNo = vm.OrderNo;
+                menu.IsActive = vm.IsActive;
+                var result = await _entityRepository.UpdateAsync(menu);
+                if (result)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            return false;
+        }
+       
+        public async Task<MainMenuViewModel> GetRecordById(long id)
+        {
+            MainMenu menu = await _entityRepository.GetByIdAsync(id);
+            MainMenuViewModel model = new MainMenuViewModel();
+            model.Id = menu.Id;
+            model.Name = menu.Name;
+            model.OrderNo = menu.OrderNo;
+            model.Icon = menu.Icon;
+            model.IsActive = menu.IsActive;
+            return model;
+        }
+        public async Task<List<MainMenu>> GetAllRecord()
+        {
+            List<MainMenu> getItem = await _entityRepository.AllIQueryableAsync().OrderBy(d => d.OrderNo).ToListAsync();
+            return getItem;
         }
 
         public async Task<bool> DeleteRecord(long id)
@@ -48,45 +88,5 @@ namespace app.Services.MainMenuServices
             return false;
         }
 
-        public async Task<List<MainMenu>> GetAllRecord()
-        {
-            List<MainMenu> getItem = _entityRepository.AllIQueryableAsync().OrderBy(d => d.OrderNo).ToList();
-            return getItem;
-        }
-
-        public async Task<MainMenuViewModel> GetRecordById(long id)
-        {
-            MainMenu menu = await _entityRepository.GetByIdAsync(id);
-            MainMenuViewModel model = new MainMenuViewModel();
-            model.Id = menu.Id;
-            model.Name = menu.Name;
-            model.OrderNo = menu.OrderNo;
-            model.Icon = menu.Icon;
-            model.IsActive = menu.IsActive;
-            return model;
-        }
-
-        public async Task<bool> UpdateRecord(MainMenuViewModel model)
-        {
-            var checkMenu = _entityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name == model.Name && f.Id != model.Id);
-            if (checkMenu == null)
-            {
-                var menu = await _entityRepository.GetByIdAsync(model.Id);
-                menu.Name = model.Name;
-                menu.Icon = model.Icon;
-                menu.OrderNo = model.OrderNo;
-                menu.IsActive = model.IsActive;
-                var result = await _entityRepository.UpdateAsync(menu);
-                if (result)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-            return false;
-        }
     }
 }

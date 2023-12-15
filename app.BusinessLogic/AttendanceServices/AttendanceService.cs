@@ -1,5 +1,4 @@
 ﻿using app.EntityModel.AppModels;
-using app.EntityModel.CoreModel;
 using app.Infrastructure;
 using app.Infrastructure.Auth;
 using app.Infrastructure.Repository;
@@ -18,51 +17,43 @@ namespace app.Services.AttendanceServices
             _iWorkContext = iWorkContext;
         }
 
-        public async Task<int> AddRecord(AttendanceViewModel model)
+        public async Task<bool> AddRecord(AttendanceViewModel vm)
         {
             var user = await _iWorkContext.GetCurrentAdminUserAsync();
-            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id==model.Id && f.EmployeeId==model.EmployeeId);
+            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id==vm.Id && f.EmployeeId==vm.EmployeeId);
             if (checkName == null)
             {
-                Attendance com = new Attendance();
-                com.EmployeeId = model.EmployeeId;
-                //com.AttendanceLogId = model.AttendanceLogId;
-                com.AttendanceDate= model.AttendanceDate;
-                com.LoginTime = model.LoginTime;
-                com.LogoutTime = model.LogoutTime;
-                com.Remarks = model.Remarks;
-                var res = await _iEntityRepository.AddAsync(com);
-                return 2;
+                Attendance model = new Attendance();
+                model.EmployeeId = vm.EmployeeId;
+                //model.AttendanceLogId = model.AttendanceLogId;
+                model.AttendanceDate= vm.AttendanceDate;
+                model.LoginTime = vm.LoginTime;
+                model.LogoutTime = vm.LogoutTime;
+                model.Remarks = vm.Remarks;
+                var res = await _iEntityRepository.AddAsync(model);
+                vm.Id = res.Id;
+                return true;
             }
-            return 1;
+            return false;
         }
-
-        public async Task<bool> DeleteRecord(long id)
+        public async Task<bool> UpdateRecord(AttendanceViewModel vm)
         {
-            var result = await _iEntityRepository.GetByIdAsync(id);
-            result.IsActive = false;
-            await _iEntityRepository.UpdateAsync(result);
-            return true;
-        }
 
-        public async Task<AttendanceViewModel> GetAllRecord()
+            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id == vm.Id && f.EmployeeId == vm.EmployeeId);
+            if (checkName == null)
             {
-            AttendanceViewModel model = new AttendanceViewModel();
-            model.AttendanceList = await Task.Run(() => (from t1 in _dbContext.Attendance
-                                                                where t1.IsActive == true
-                                                                select new AttendanceViewModel
-                                                                {
-                                                                    Id = t1.Id,
-                                                                    AttendanceDate = t1.AttendanceDate,
-                                                                    LoginTime= t1.LoginTime,
-                                                                    LogoutTime= t1.LogoutTime,
-                                                                    Remarks= t1.Remarks,
-                                                                    EmployeeCode = _dbContext.Employee.FirstOrDefault(f => f.Id == t1.EmployeeId).Name,
-                                                                    //AttendanceLogId= t1.AttendanceLogId,
-                                                                }).AsQueryable());
-            return model;
+                var result = await _iEntityRepository.GetByIdAsync(vm.Id);
+                result.EmployeeId = vm.EmployeeId;
+                //result.AttendanceLogId = model.AttendanceLogId;
+                result.AttendanceDate = vm.AttendanceDate;
+                result.LoginTime = vm.LoginTime;
+                result.LogoutTime = vm.LogoutTime;
+                result.Remarks = vm.Remarks;
+                var res = await _iEntityRepository.UpdateAsync(result);
+                return true;
+            }
+            return false;
         }
-
         public async Task<AttendanceViewModel> GetRecordById(long id)
         {
             var result = await _iEntityRepository.GetByIdAsync(id);
@@ -76,24 +67,27 @@ namespace app.Services.AttendanceServices
             model.Remarks = result.Remarks;
             return model;
         }
-
-        public async Task<int> UpdateRecord(AttendanceViewModel model)
+        public async Task<AttendanceViewModel> GetAllRecord()
         {
-
-            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id==model.Id && f.EmployeeId==model.EmployeeId);
-            if (checkName == null)
-            {
-                var result = await _iEntityRepository.GetByIdAsync(model.Id);
-                result.EmployeeId = model.EmployeeId;
-                //result.AttendanceLogId = model.AttendanceLogId;
-                result.AttendanceDate= model.AttendanceDate;
-                result.LoginTime = model.LoginTime;
-                result.LogoutTime = model.LogoutTime;
-                result.Remarks = model.Remarks;
-                await _iEntityRepository.UpdateAsync(result);
-                return 2;
-            }
-            return 1;
+            AttendanceViewModel model = new AttendanceViewModel();
+            model.AttendanceList = await Task.Run(() => (from t1 in _dbContext.Attendance
+                where t1.IsActive == true
+                select new AttendanceViewModel
+                {
+                    Id = t1.Id,
+                    AttendanceDate = t1.AttendanceDate,
+                    LoginTime = t1.LoginTime,
+                    LogoutTime = t1.LogoutTime,
+                    Remarks = t1.Remarks,
+                }).AsQueryable());
+            return model;
+        }
+        public async Task<bool> DeleteRecord(long id)
+        {
+            var result = await _iEntityRepository.GetByIdAsync(id);
+            result.IsActive = false;
+            await _iEntityRepository.UpdateAsync(result);
+            return true;
         }
     }
 }

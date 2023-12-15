@@ -1,5 +1,4 @@
 ﻿using app.EntityModel.AppModels;
-using app.EntityModel.CoreModel;
 using app.Infrastructure;
 using app.Infrastructure.Auth;
 using app.Infrastructure.Repository;
@@ -18,28 +17,40 @@ namespace app.Services.EmployeeServiceTypeServices
             _iWorkContext = iWorkContext;
         }
 
-        public async Task<int> AddRecord(EmployeeServiceTypeViewModel model)
+        public async Task<bool> AddRecord(EmployeeServiceTypeViewModel vm)
         {
-            var user = await _iWorkContext.GetCurrentAdminUserAsync();
-            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == model.Name.Trim());
+            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim());
             if (checkName == null)
             {
                 EmployeeServiceType com = new EmployeeServiceType();
-                com.Name = model.Name;
+                com.Name = vm.Name;
                 var res = await _iEntityRepository.AddAsync(com);
-                return 2;
+                vm.Id=res.Id;
+                return true;
             }
-            return 1;
+            return false;
         }
+        public async Task<bool> UpdateRecord(EmployeeServiceTypeViewModel vm)
+        {
 
-        public async Task<bool> DeleteRecord(long id)
+            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim());
+            if (checkName == null)
+            {
+                var result = await _iEntityRepository.GetByIdAsync(vm.Id);
+                result.Name = vm.Name;
+                await _iEntityRepository.UpdateAsync(result);
+                return true;
+            }
+            return false;
+        }
+        public async Task<EmployeeServiceTypeViewModel> GetRecordById(long id)
         {
             var result = await _iEntityRepository.GetByIdAsync(id);
-            result.IsActive = false;
-            await _iEntityRepository.UpdateAsync(result);
-            return true;
+            EmployeeServiceTypeViewModel model = new EmployeeServiceTypeViewModel();
+            model.Id = result.Id;
+            model.Name = result.Name;
+            return model;
         }
-
         public async Task<EmployeeServiceTypeViewModel> GetAllRecord()
         {
             EmployeeServiceTypeViewModel model = new EmployeeServiceTypeViewModel();
@@ -52,28 +63,13 @@ namespace app.Services.EmployeeServiceTypeServices
                                                                 }).AsQueryable());
             return model;
         }
-
-        public async Task<EmployeeServiceTypeViewModel> GetRecordById(long id)
+        public async Task<bool> DeleteRecord(long id)
         {
             var result = await _iEntityRepository.GetByIdAsync(id);
-            EmployeeServiceTypeViewModel model = new EmployeeServiceTypeViewModel();
-            model.Id = result.Id;
-            model.Name = result.Name;
-            return model;
+            result.IsActive = false;
+            await _iEntityRepository.UpdateAsync(result);
+            return true;
         }
 
-        public async Task<int> UpdateRecord(EmployeeServiceTypeViewModel model)
-        {
-
-            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == model.Name.Trim());
-            if (checkName == null)
-            {
-                var result = await _iEntityRepository.GetByIdAsync(model.Id);
-                result.Name = model.Name;
-                await _iEntityRepository.UpdateAsync(result);
-                return 2;
-            }
-            return 1;
-        }
     }
 }

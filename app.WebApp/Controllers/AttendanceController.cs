@@ -1,5 +1,4 @@
-﻿using app.Services.CompanyServices;
-using app.Services.AttendanceServices;
+﻿using app.Services.AttendanceServices;
 using Microsoft.AspNetCore.Mvc;
 using app.Services.DropdownServices;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -10,11 +9,11 @@ namespace app.WebApp.Controllers
     {
 
         private readonly IAttendanceService _iService;
-        private readonly IDropdownService _dropdownService;
-        public AttendanceController(IAttendanceService iService , IDropdownService dropdownService)
+        private readonly IDropdownService _iDropdownService;
+        public AttendanceController(IAttendanceService iService , IDropdownService iDropdownService)
         {
             _iService = iService;
-            _dropdownService=dropdownService;
+            _iDropdownService=iDropdownService;
         }
 
         [HttpGet]
@@ -27,7 +26,7 @@ namespace app.WebApp.Controllers
         [HttpGet]
         public async Task<IActionResult> AddRecord()
         {
-            ViewBag.Employees = new SelectList((await _dropdownService.EmployeeSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
+            ViewBag.Employees = new SelectList((await _iDropdownService.EmployeeSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
 
             AttendanceViewModel viewModel = new AttendanceViewModel();
             return View(viewModel);
@@ -38,7 +37,7 @@ namespace app.WebApp.Controllers
         {
             var result = await _iService.AddRecord(viewModel);
 
-            if (result == 2)
+            if (result == true)
             {
                 return RedirectToAction("Index");
             }
@@ -49,7 +48,7 @@ namespace app.WebApp.Controllers
         [HttpGet]
         public async Task<IActionResult> UpdateRecord(long id)
         {
-            ViewBag.Employees = new SelectList((await _dropdownService.EmployeeSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
+            ViewBag.Employees = new SelectList((await _iDropdownService.EmployeeSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
 
             var result = await _iService.GetRecordById(id);
             return View(result);
@@ -59,7 +58,7 @@ namespace app.WebApp.Controllers
         public async Task<IActionResult> UpdateRecord(AttendanceViewModel model)
         {
             var result = await _iService.UpdateRecord(model);
-            if (result == 2)
+            if (result == true)
             {
                 return RedirectToAction("Index");
             }

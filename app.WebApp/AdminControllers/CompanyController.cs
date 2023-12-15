@@ -29,7 +29,7 @@ namespace app.WebApp.AdminControllers
         public async Task<IActionResult> AddRecord(CompanyViewModel viewModel)
         {
             var result = await _iService.AddRecord(viewModel);
-            if (result == 2)
+            if (result == true)
             {
                 return RedirectToAction("Index");
             }
@@ -48,7 +48,7 @@ namespace app.WebApp.AdminControllers
         public async Task<IActionResult> UpdateRecord(CompanyViewModel model)
         {
             var result= await _iService.UpdateRecord(model);
-            if (result == 2)
+            if (result == true)
             {
                 return RedirectToAction("Index");
             }

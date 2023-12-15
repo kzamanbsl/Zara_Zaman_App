@@ -2,10 +2,11 @@
 {
     public interface ICompanyService
     {
-        Task<CompanyViewModel> GetAllRecord();
-        Task<int> AddRecord(CompanyViewModel model);
-        Task<int> UpdateRecord(CompanyViewModel model);
-        Task<bool> DeleteRecord(long id);
+      
+        Task<bool> AddRecord(CompanyViewModel vm);
+        Task<bool> UpdateRecord(CompanyViewModel vm);
         Task<CompanyViewModel> GetRecordById(long id);
+        Task<CompanyViewModel> GetAllRecord();
+        Task<bool> DeleteRecord(long id);
     }
 }

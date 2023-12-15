@@ -3,12 +3,6 @@ using app.EntityModel.AppModels;
 using app.Infrastructure.Auth;
 using app.Infrastructure.Repository;
 using app.Infrastructure;
-using app.Services.DropdownItemServices;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace app.Services.DropdownItemServices
 {
@@ -24,21 +18,34 @@ namespace app.Services.DropdownItemServices
             _iWorkContext = iWorkContext;
         }
 
-        public async Task<int> AddRecord(DropdownItemViewModel model)
+        public async Task<bool> AddRecord(DropdownItemViewModel vm)
         {
-            var user = await _iWorkContext.GetCurrentAdminUserAsync();
-            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == model.Name.Trim());
+            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim());
             if (checkName == null)
             {
                 DropdownItem com = new DropdownItem();
-                com.Name = model.Name;
-                com.DropdownTypeId = model.DropdownTypeId;
+                com.Name = vm.Name;
+                com.DropdownTypeId = vm.DropdownTypeId;
                 var res = await _iEntityRepository.AddAsync(com);
-                return 2;
+                vm.Id=res.Id;
+                return true;
             }
-            return 1;
+            return false;
         }
+        public async Task<bool> UpdateRecord(DropdownItemViewModel vm)
+        {
 
+            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim());
+            if (checkName == null)
+            {
+                var result = await _iEntityRepository.GetByIdAsync(vm.Id);
+                result.Name = vm.Name;
+                result.DropdownTypeId = vm.DropdownTypeId;
+                await _iEntityRepository.UpdateAsync(result);
+                return true;
+            }
+            return false;
+        }
         public async Task<bool> DeleteRecord(long id)
         {
             var result = await _iEntityRepository.GetByIdAsync(id);
@@ -46,7 +53,15 @@ namespace app.Services.DropdownItemServices
             await _iEntityRepository.UpdateAsync(result);
             return true;
         }
-
+        public async Task<DropdownItemViewModel> GetRecordById(long id)
+        {
+            var result = await _iEntityRepository.GetByIdAsync(id);
+            DropdownItemViewModel model = new DropdownItemViewModel();
+            model.Id = result.Id;
+            model.Name = result.Name;
+            model.DropdownTypeId = result.DropdownTypeId;
+            return model;
+        }
         public async Task<DropdownItemViewModel> GetAllRecord()
         {
             DropdownItemViewModel model = new DropdownItemViewModel();
@@ -61,29 +76,5 @@ namespace app.Services.DropdownItemServices
             return model;
         }
 
-        public async Task<DropdownItemViewModel> GetRecordById(long id)
-        {
-            var result = await _iEntityRepository.GetByIdAsync(id);
-            DropdownItemViewModel model = new DropdownItemViewModel();
-            model.Id = result.Id;
-            model.Name = result.Name;
-            model.DropdownTypeId = result.DropdownTypeId;
-            return model;
-        }
-
-        public async Task<int> UpdateRecord(DropdownItemViewModel model)
-        {
-
-            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == model.Name.Trim());
-            if (checkName == null)
-            {
-                var result = await _iEntityRepository.GetByIdAsync(model.Id);
-                result.Name = model.Name;
-                result.DropdownTypeId = model.DropdownTypeId;
-                await _iEntityRepository.UpdateAsync(result);
-                return 2;
-            }
-            return 1;
-        }
     }
 }

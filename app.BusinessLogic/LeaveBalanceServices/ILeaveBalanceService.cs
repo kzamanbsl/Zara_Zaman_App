@@ -2,10 +2,12 @@
 {
     public interface ILeaveBalanceService
     {
-        Task<LeaveBalanceViewModel> GetAllRecord();
-        Task<int> AddRecord(LeaveBalanceViewModel model);
-        Task<int> UpdateRecord(LeaveBalanceViewModel model);
-        Task<bool> DeleteRecord(long id);
+       
+        Task<bool> AddRecord(LeaveBalanceViewModel vm);
+        Task<bool> UpdateRecord(LeaveBalanceViewModel vm);
         Task<LeaveBalanceViewModel> GetRecordById(long id);
+        Task<LeaveBalanceViewModel> GetAllRecord();
+        Task<bool> DeleteRecord(long id);
+
     }
 }

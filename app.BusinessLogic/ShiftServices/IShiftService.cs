@@ -2,10 +2,12 @@
 {
     public interface IShiftService
     {
-        Task<ShiftViewModel> GetAllRecord(); 
-        Task<int> AddRecord(ShiftViewModel model);
-        Task<int> UpdateRecord(ShiftViewModel model);
-        Task<bool> DeleteRecord(long id);
+       
+        Task<bool> AddRecord(ShiftViewModel vm);
+        Task<bool> UpdateRecord(ShiftViewModel vm);
+
         Task<ShiftViewModel> GetRecordById(long id);
+        Task<ShiftViewModel> GetAllRecord();
+        Task<bool> DeleteRecord(long id);
     }
 }

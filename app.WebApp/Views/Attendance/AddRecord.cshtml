@@ -53,33 +53,21 @@
                                         <span asp-validation-for="AttendanceDate" class="text-danger"></span>
                                     </div>
                                 </div>
-                                @if (Model.IsSave)
-                                {
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label asp-for="LogoutTime" class="control-label">Logout</label>
-                                            <input type="time" asp-for="LogoutTime" id="logout" class="form-control" required />
-                                            <span asp-validation-for="LogoutTime" class="text-danger"></span>
-                                        </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label asp-for="LoginTime" class="control-label">Login</label>
+                                        <input type="time" asp-for="LoginTime" id="login" class="form-control" required />
+                                        <span asp-validation-for="LoginTime" class="text-danger"></span>
                                     </div>
-                                }
-                                else
-                                {
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label asp-for="LoginTime" class="control-label">Login</label>
-                                            <input type="time" asp-for="LoginTime" id="login" class="form-control" required />
-                                            <span asp-validation-for="LoginTime" class="text-danger"></span>
-                                        </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label asp-for="LogoutTime" class="control-label">Logout</label>
+                                        <input type="time" asp-for="LogoutTime" class="form-control" required />
+                                        <span asp-validation-for="LogoutTime" class="text-danger"></span>
                                     </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label asp-for="LogoutTime" class="control-label">Logout</label>
-                                            <input type="time" asp-for="LogoutTime" class="form-control" required />
-                                            <span asp-validation-for="LogoutTime" class="text-danger"></span>
-                                        </div>
-                                    </div>
-                                }
+                                </div>
 
                                 <div class="col-md-4">
                                     <div class="form-group">
@@ -112,7 +100,7 @@
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-   @*  <script>
+    @*  <script>
         $(document).ready(function () {
             $("#login").click(function () {
                 $("p").hide();

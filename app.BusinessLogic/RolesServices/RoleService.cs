@@ -13,14 +13,14 @@ namespace app.Services.RolesServices
             _dbContext = dbContext;
         }
 
-        public async Task<bool> AddAsync(RoleViewModel model)
+        public async Task<bool> AddAsync(RoleViewModel vm)
         {
-            var exited = await _roleManager.FindByNameAsync(model.Name.Trim());
+            var exited = await _roleManager.FindByNameAsync(vm.Name.Trim());
             if (exited == null)
             {
                 IdentityRole role = new IdentityRole()
                 {
-                    Name = model.Name
+                    Name = vm.Name
                 };
                 var result = await _roleManager.CreateAsync(role);
                 if (result.Succeeded)
@@ -32,7 +32,31 @@ namespace app.Services.RolesServices
             return false;
 
         }
+        public async Task<bool> UpdateAsync(RoleViewModel vm)
+        {
+            var exited = _roleManager.FindByNameAsync(vm.Name).Result;
+            if (exited == null)
+            {
+                var role = _roleManager.FindByIdAsync(vm.Id).Result;
+                role.Id = vm.Id;
+                role.Name = vm.Name;
+                var result = await _roleManager.UpdateAsync(role);
+                return result.Succeeded;
 
+            }
+
+            return false;
+        }
+        public async Task<RoleViewModel> GetByIdAsync(string id)
+        {
+            var result = await _roleManager.FindByIdAsync(id);
+            RoleViewModel role = new RoleViewModel()
+            {
+                Id = result.Id,
+                Name = result.Name
+            };
+            return role;
+        }
         public List<RoleViewModel> GetAllAsync()
         {
             List<RoleViewModel> rolesList = new List<RoleViewModel>();
@@ -49,18 +73,10 @@ namespace app.Services.RolesServices
             }
             return rolesList.OrderBy(r => r.Name).ToList();
         }
-
-        public async Task<RoleViewModel> GetByIdAsync(string id)
+        public int TotalCount()
         {
-            var result = await _roleManager.FindByIdAsync(id);
-            RoleViewModel role = new RoleViewModel()
-            {
-                Id = result.Id,
-                Name = result.Name
-            };
-            return role;
+            return _roleManager.Roles.Count();
         }
-
         public async Task<bool> DeleteByIdAsync(string name)
         {
             var exited = await _roleManager.FindByNameAsync(name);
@@ -72,29 +88,6 @@ namespace app.Services.RolesServices
             return false;
 
         }
-
-        public int TotalCount()
-        {
-            return _roleManager.Roles.Count();
-        }
-
-        public async Task<bool> UpdateAsync(RoleViewModel model)
-        {
-            var exited = _roleManager.FindByNameAsync(model.Name).Result;
-            var exitedId = _roleManager.FindByIdAsync(model.Id).Result;
-            if (exited == null)
-            {
-                var role = _roleManager.FindByIdAsync(model.Id).Result;
-                role.Id = model.Id;
-                role.Name = model.Name;
-                var result = await _roleManager.UpdateAsync(role);
-                return result.Succeeded;
-
-            }
-
-            return false;
-        }
-
 
     }
 }

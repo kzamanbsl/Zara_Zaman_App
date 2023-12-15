@@ -19,8 +19,8 @@
         public JobStatus JobStatus { get; set; }
         public long? ShiftId { get; set; }
         public Shift Shift { get; set; }
-        public long? GradeId { get; set; }
-        public EmployeeGrade Grade { get; set; }
+        public long? EmployeeGradeId { get; set; }
+        public EmployeeGrade EmployeeGrade { get; set; }
         public long? EmployeeCategoryId { get; set; }
         public EmployeeCategory EmployeeCategory { get; set; }
         public long? ServiceTypeId { get; set; }
@@ -51,15 +51,15 @@
         public string FatherName { get; set; }
         public string MotherName { get; set; }
         public string SpouseName { get; set; }
-        public int? GenderId { get; set; }
+        public long? GenderId { get; set; }
         public DropdownItem Gender { get; set; }
-        public int? ReligionId { get; set; }
+        public long? ReligionId { get; set; }
         public DropdownItem Religion { get; set; }
-        public int? BloodGroupId { get; set; }
-
-        public int? MaritalTypeId { get; set; }
+        public long? BloodGroupId { get; set; }
+        public DropdownItem BloodGroup { get; set; }
+        public long? MaritalTypeId { get; set; }
         public DropdownItem MaritalType { get; set; }
-        public string NationalId { get; set; }
+        public string NationalIdNo { get; set; }
         public DateTime DateOfBirth { get; set; }
         public DateTime DateOfMarriage { get; set; }
         public string TinNo { get; set; }
