@@ -37,7 +37,7 @@ namespace app.Services.LeaveApplicationServices
         public string Reason { get; set; }
         public string Remarks { get; set; }
         [DisplayName("Application Date")]
-        public DateTime ApplicationDate { get; set; }
+        public DateTime ApplicationDate { get; set; }= DateTime.Now;
 
         public int StatusId { get; set; }
         [DisplayName("Status")]

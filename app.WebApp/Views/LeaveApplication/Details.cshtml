@@ -1,0 +1,42 @@
+﻿@model app.Services.LeaveApplicationServices.LeaveApplicationViewModel
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-10" style="margin:auto;padding-top:8px;">
+        <div style="background-color:#4CAF50;color:#FFFFFF;padding:2px;">
+            <h4><b>Employee Details</b></h4>
+        </div>
+        <table class="table table-striped table-bordered">
+            <tbody>
+                <tr>
+                    <td style="font-weight:bold">Employee</td>
+                    <td>@Model.EmployeeId</td>
+                    <td style="font-weight:bold">Category</td>
+                    <td>@Model.LeaveCategoryName</td>
+                </tr>
+                <tr>
+                    <td style="font-weight:bold">Application Date</td>
+                    <td>@Model.ApplicationDate</td>
+                    <td style="font-weight:bold">Start Date</td>
+                    <td>@Model.StartDate</td>
+                </tr>
+                <tr>
+                    <td style="font-weight:bold">End Date</td>
+                    <td>@Model.EndDate</td>
+                    <td style="font-weight:bold">Days</td>
+                    <td>@Model.LeaveDays</td>
+                </tr>
+                <tr>
+                    <td style="font-weight:bold">Stay During Leave</td>
+                    <td>@Model.StayDuringLeave</td>
+                    <td style="font-weight:bold">Reason</td>
+                    <td>@Model.Reason</td>
+                </tr>
+            </tbody>
+        </table>
+        <a asp-action="Index" class="fa fa-arrow-left">Back to List</a>
+    </div>
+</div>

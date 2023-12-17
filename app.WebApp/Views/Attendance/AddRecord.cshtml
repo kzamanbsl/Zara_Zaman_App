@@ -89,7 +89,7 @@
                                 </div>
                             </div>
                             <div class="form-group" style="float:right">
-                                <input type="submit" value="Save" id="saveButton" class="btn btn-primary" />
+                                <input type="submit" onclick="loadDoc()" value="Save" id="saveButton" class="btn btn-primary" />
                             </div>
                         </form>
                     </div>
@@ -103,7 +103,7 @@
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
+    } 
     <script>
         $(document).ready(function () {
             $('#Configuration').addClass('menu-open');
