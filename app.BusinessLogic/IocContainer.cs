@@ -10,7 +10,6 @@ using app.Services.UserPermissionsServices;
 using app.Services.DepartmentServices;
 using app.Services.DesignationServices;
 using app.Services.EmployeeCategoryServices;
-using app.Services.ServiceTypeServices;
 using app.Services.ShiftServices;
 using app.Services.EmployeeServiceTypeServices;
 using app.Services.OfficeTypeServices;
@@ -43,7 +42,6 @@ namespace app.Services
             services.AddTransient<IEmployeeGradeService, EmployeeGradeService>();
             services.AddTransient<IDesignationService, DesignationService>();
             services.AddTransient<IEmployeeCategoryService, EmployeeCategoryService>();
-            services.AddTransient<IServiceTypeService, ServiceTypeService>();
             services.AddTransient<IShiftService, ShiftService>();
             services.AddTransient<IEmployeeServiceTypeService,EmployeeServiceTypeService>();
             services.AddTransient<IOfficeTypeService, OfficeTypeService>();
