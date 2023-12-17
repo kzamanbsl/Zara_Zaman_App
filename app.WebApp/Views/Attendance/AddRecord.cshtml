@@ -1,4 +1,6 @@
-﻿@model app.Services.AttendanceServices.AttendanceViewModel
+﻿
+
+@model app.Services.AttendanceServices.AttendanceViewModel
 @{
     ViewData["Title"] = "AddRecord";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
@@ -83,7 +85,7 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label asp-for="LogoutTime" class="control-label">Logout</label>
-                                            <input type="time" asp-for="LogoutTime" class="form-control" required />
+                                            <input type="time" asp-for="LogoutTime" id="logout" class="form-control" required />
                                             <span asp-validation-for="LogoutTime" class="text-danger"></span>
                                         </div>
                                     </div>
@@ -100,7 +102,7 @@
                                 </div>
                             </div>
                             <div class="form-group" style="float:right">
-                                <input type="submit" value="Save" class="btn btn-primary" />
+                                <input type="submit" value="Save" id="saveButton" class="btn btn-primary" />
                             </div>
                         </form>
                     </div>
@@ -109,38 +111,40 @@
         </div>
     </div>
 </section>
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
 
 @section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
     <script>
         $(document).ready(function () {
             $('#Configuration').addClass('menu-open');
             $('#AttendanceAddRecord').addClass('active');
         });
-    </script>
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
 
-   @*  <script>
-        $(document).ready(function () {
-            $("#login").click(function () {
-                $("p").hide();
-            });
-
-            $("#logout").click(function () {
-                $("p").show();
-            });
+        $('#saveButton').click(function () {
+            var isSave = @Model.IsSave.ToString().ToLower();
+            if (isSave) {
+                $('#login').hide();
+                $('#logout').show();
+            } else {
+                $('#login').show();
+                $('#logout').show();
+            }
         });
+
     </script>
-    <system.web.extensions>
-        <scripting>
-            <webServices>
-                <authenticationService enabled="true" />
-            </webServices>
-        </scripting>
-    </system.web.extensions> *@
+    <script>
 
+        $(document).ready(function (event) {
+
+            $("#btnMark").prop('disabled', true);
+        });
+
+        $("#attendanceDate").change(function (event) {
+            $("#btnMark").removeProp('disabled');
+        });
+
+    </script>
 }
-
-
-

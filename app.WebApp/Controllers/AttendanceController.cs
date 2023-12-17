@@ -3,6 +3,7 @@ using app.Services.AttendanceServices;
 using Microsoft.AspNetCore.Mvc;
 using app.Services.DropdownServices;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using app.Services.AttendanceLogServices;
 
 namespace app.WebApp.Controllers
 {
@@ -11,10 +12,13 @@ namespace app.WebApp.Controllers
 
         private readonly IAttendanceService _iService;
         private readonly IDropdownService _dropdownService;
-        public AttendanceController(IAttendanceService iService , IDropdownService dropdownService)
+        private readonly IAttendanceLogService _attendanceLogService;
+
+        public AttendanceController(IAttendanceService iService , IDropdownService dropdownService, IAttendanceLogService attendanceLogService)
         {
             _iService = iService;
-            _dropdownService=dropdownService;
+            _dropdownService = dropdownService;
+            _attendanceLogService = attendanceLogService;
         }
 
         [HttpGet]
@@ -27,9 +31,11 @@ namespace app.WebApp.Controllers
         [HttpGet]
         public async Task<IActionResult> AddRecord()
         {
+
             ViewBag.Employees = new SelectList((await _dropdownService.EmployeeSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
             ViewBag.Shifts = new SelectList((await _dropdownService.ShiftSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
             AttendanceViewModel viewModel = new AttendanceViewModel();
+
             return View(viewModel);
         }
 
@@ -73,5 +79,7 @@ namespace app.WebApp.Controllers
             var res = await _iService.DeleteRecord(id);
             return RedirectToAction("Index");
         }
+        
+
     }
 }
