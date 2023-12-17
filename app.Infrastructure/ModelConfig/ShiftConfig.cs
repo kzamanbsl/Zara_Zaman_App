@@ -11,8 +11,6 @@ namespace app.Infrastructure.ModelConfig
         {
             builder.HasKey(c => c.Id);
             builder.Property(c => c.Name).HasMaxLength(100);
-            //builder.Property(c => c.StartAt).HasMaxLength(20);
-            //builder.Property(c => c.EndAt).HasMaxLength(20);
 
             builder.ToTable(TableNameEnum.Shift.ToString());
         }

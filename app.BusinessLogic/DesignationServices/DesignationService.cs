@@ -2,12 +2,6 @@
 using app.Infrastructure.Auth;
 using app.Infrastructure.Repository;
 using app.Infrastructure;
-using app.Services.DesignationServices;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace app.Services.DesignationServices
 {
@@ -23,20 +17,32 @@ namespace app.Services.DesignationServices
             _iWorkContext = iWorkContext;
         }
 
-        public async Task<int> AddRecord(DesignationViewModel model)
+        public async Task<bool> AddRecord(DesignationViewModel vm)
         {
-            var user = await _iWorkContext.GetCurrentAdminUserAsync();
-            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == model.Name.Trim());
+            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim());
             if (checkName == null)
             {
-                Designation com = new Designation();
-                com.Name = model.Name;
-                var res = await _iEntityRepository.AddAsync(com);
-                return 2;
+                Designation model = new Designation();
+                model.Name = vm.Name;
+                var res = await _iEntityRepository.AddAsync(model);
+                vm.Id=res.Id;
+                return true;
             }
-            return 1;
+            return false;
         }
+        public async Task<bool> UpdateRecord(DesignationViewModel vm)
+        {
 
+            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim());
+            if (checkName == null)
+            {
+                var result = await _iEntityRepository.GetByIdAsync(vm.Id);
+                result.Name = vm.Name;
+                await _iEntityRepository.UpdateAsync(result);
+                return true;
+            }
+            return false;
+        }
         public async Task<bool> DeleteRecord(long id)
         {
             var result = await _iEntityRepository.GetByIdAsync(id);
@@ -44,7 +50,14 @@ namespace app.Services.DesignationServices
             await _iEntityRepository.UpdateAsync(result);
             return true;
         }
-
+        public async Task<DesignationViewModel> GetRecordById(long id)
+        {
+            var result = await _iEntityRepository.GetByIdAsync(id);
+            DesignationViewModel model = new DesignationViewModel();
+            model.Id = result.Id;
+            model.Name = result.Name;
+            return model;
+        }
         public async Task<DesignationViewModel> GetAllRecord()
         {
             DesignationViewModel model = new DesignationViewModel();
@@ -57,28 +70,6 @@ namespace app.Services.DesignationServices
                                                          }).AsQueryable());
             return model;
         }
-
-        public async Task<DesignationViewModel> GetRecordById(long id)
-        {
-            var result = await _iEntityRepository.GetByIdAsync(id);
-            DesignationViewModel model = new DesignationViewModel();
-            model.Id = result.Id;
-            model.Name = result.Name;
-            return model;
-        }
-
-        public async Task<int> UpdateRecord(DesignationViewModel model)
-        {
-
-            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == model.Name.Trim());
-            if (checkName == null)
-            {
-                var result = await _iEntityRepository.GetByIdAsync(model.Id);
-                result.Name = model.Name;
-                await _iEntityRepository.UpdateAsync(result);
-                return 2;
-            }
-            return 1;
-        }
+        
     }
 }

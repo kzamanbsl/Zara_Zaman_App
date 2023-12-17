@@ -1,6 +1,4 @@
-﻿
-
-@model app.Services.AttendanceServices.AttendanceViewModel
+﻿@model app.Services.AttendanceServices.AttendanceViewModel
 @{
     ViewData["Title"] = "AddRecord";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
@@ -63,42 +61,30 @@
                                         <span asp-validation-for="AttendanceDate" class="text-danger"></span>
                                     </div>
                                 </div>
-                                @if (Model.IsSave)
-                                {
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label asp-for="LogoutTime" class="control-label">Logout</label>
-                                            <input type="time" asp-for="LogoutTime" id="logout" class="form-control" required />
-                                            <span asp-validation-for="LogoutTime" class="text-danger"></span>
-                                        </div>
-                                    </div>
-                                }
-                                else
-                                {
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label asp-for="LoginTime" class="control-label">Login</label>
-                                            <input type="time" asp-for="LoginTime" id="login" class="form-control" required />
-                                            <span asp-validation-for="LoginTime" class="text-danger"></span>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label asp-for="LogoutTime" class="control-label">Logout</label>
-                                            <input type="time" asp-for="LogoutTime" id="logout" class="form-control" required />
-                                            <span asp-validation-for="LogoutTime" class="text-danger"></span>
-                                        </div>
-                                    </div>
-                                }
 
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label asp-for="Remarks" class="control-label">Remarks</label>
-                                        <textarea asp-for="Remarks" class="form-control" required rows="1"></textarea>
-                                        <span asp-validation-for="LogoutTime" class="text-danger"></span>
+                                        <label asp-for="LoginTime" class="control-label">Login</label>
+                                        <input type="time" asp-for="LoginTime" id="login" class="form-control" required />
+                                        <span asp-validation-for="LoginTime" class="text-danger"></span>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label asp-for="LogoutTime" class="control-label">Logout</label>
+                                        <input type="time" asp-for="LogoutTime" class="form-control" required />
+                                        <span asp-validation-for="LogoutTime" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label asp-for="Remarks" class="control-label">Remarks</label>
+                                            <textarea asp-for="Remarks" class="form-control" required rows="1"></textarea>
+                                            <span asp-validation-for="LogoutTime" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group" style="float:right">
@@ -122,29 +108,5 @@
             $('#Configuration').addClass('menu-open');
             $('#AttendanceAddRecord').addClass('active');
         });
-
-        $('#saveButton').click(function () {
-            var isSave = @Model.IsSave.ToString().ToLower();
-            if (isSave) {
-                $('#login').hide();
-                $('#logout').show();
-            } else {
-                $('#login').show();
-                $('#logout').show();
-            }
-        });
-
-    </script>
-    <script>
-
-        $(document).ready(function (event) {
-
-            $("#btnMark").prop('disabled', true);
-        });
-
-        $("#attendanceDate").change(function (event) {
-            $("#btnMark").removeProp('disabled');
-        });
-
     </script>
 }

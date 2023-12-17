@@ -2,10 +2,12 @@
 {
     public interface IDepartmentService
     {
-        Task<DepartmentViewModel> GetAllRecord();
-        Task<int> AddRecord(DepartmentViewModel model);
-        Task<int> UpdateRecord(DepartmentViewModel model);
-        Task<bool> DeleteRecord(long id);
+       
+        Task<bool> AddRecord(DepartmentViewModel vm);
+        Task<bool> UpdateRecord(DepartmentViewModel vm);
         Task<DepartmentViewModel> GetRecordById(long id);
+        Task<DepartmentViewModel> GetAllRecord();
+        Task<bool> DeleteRecord(long id);
+       
     }
 }

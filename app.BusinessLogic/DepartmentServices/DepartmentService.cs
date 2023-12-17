@@ -1,5 +1,4 @@
 ﻿using app.EntityModel.AppModels;
-using app.EntityModel.CoreModel;
 using app.Infrastructure;
 using app.Infrastructure.Auth;
 using app.Infrastructure.Repository;
@@ -18,20 +17,32 @@ namespace app.Services.DepartmentServices
             _iWorkContext = iWorkContext;
         }
 
-        public async Task<int> AddRecord(DepartmentViewModel model)
+        public async Task<bool> AddRecord(DepartmentViewModel vm)
         {
-            var user = await _iWorkContext.GetCurrentAdminUserAsync();
-            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == model.Name.Trim());
+            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim());
             if (checkName == null)
             {
                 Department com = new Department();
-                com.Name = model.Name;
+                com.Name = vm.Name;
                 var res = await _iEntityRepository.AddAsync(com);
-                return 2;
+                vm.Id=res.Id;
+                return true;
             }
-            return 1;
+            return false;
         }
+        public async Task<bool> UpdateRecord(DepartmentViewModel vm)
+        {
 
+            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim());
+            if (checkName == null)
+            {
+                var result = await _iEntityRepository.GetByIdAsync(vm.Id);
+                result.Name = vm.Name;
+                await _iEntityRepository.UpdateAsync(result);
+                return true;
+            }
+            return false;
+        }
         public async Task<bool> DeleteRecord(long id)
         {
             var result = await _iEntityRepository.GetByIdAsync(id);
@@ -39,7 +50,14 @@ namespace app.Services.DepartmentServices
             await _iEntityRepository.UpdateAsync(result);
             return true;
         }
-
+        public async Task<DepartmentViewModel> GetRecordById(long id)
+        {
+            var result = await _iEntityRepository.GetByIdAsync(id);
+            DepartmentViewModel model = new DepartmentViewModel();
+            model.Id = result.Id;
+            model.Name = result.Name;
+            return model;
+        }
         public async Task<DepartmentViewModel> GetAllRecord()
         {
             DepartmentViewModel model = new DepartmentViewModel();
@@ -53,27 +71,5 @@ namespace app.Services.DepartmentServices
             return model;
         }
 
-        public async Task<DepartmentViewModel> GetRecordById(long id)
-        {
-            var result = await _iEntityRepository.GetByIdAsync(id);
-            DepartmentViewModel model = new DepartmentViewModel();
-            model.Id = result.Id;
-            model.Name = result.Name;
-            return model;
-        }
-
-        public async Task<int> UpdateRecord(DepartmentViewModel model)
-        {
-
-            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == model.Name.Trim());
-            if (checkName == null)
-            {
-                var result = await _iEntityRepository.GetByIdAsync(model.Id);
-                result.Name = model.Name;
-                await _iEntityRepository.UpdateAsync(result);
-                return 2;
-            }
-            return 1;
-        }
     }
 }

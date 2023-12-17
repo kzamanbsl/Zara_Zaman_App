@@ -1,74 +1,71 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace app.EntityModel.AppModels
+﻿namespace app.EntityModel.AppModels
 {
     public class Employee : BaseEntity
     {
-        public string EmployeeCode { get; set; }
-        [Required]
         public string Name { get; set; }
         public string ShortName { get; set; }
-        public string PresentAddress { get; set; }
-        public string FatherName { get; set; }
-        public string MotherName { get; set; }
-        public string SpouseName { get; set; }
+        public string EmployeeCode { get; set; }
+        public string Email { get; set; }
         public string MobileNo { get; set; }
 
-        [EmailAddress(ErrorMessage = "Invalid Email Address")]
-        [DisplayName("Personal Email")]
-        public string Email { get; set; }
-        public string PermanentAddress { get; set; }
-        public int DepartmentId { get; set; }
-        public int DesignationId { get; set; }
-        public int JobStatusId { get; set; }
+
+        public long? ManagerId { get; set; }
+        public Employee Manager { get; set; }
+        public long? DepartmentId { get; set; }
+        public Department Department { get; set; }
+        public long? DesignationId { get; set; }
+        public Designation Designation { get; set; }
+        public long? JobStatusId { get; set; }
+        public JobStatus JobStatus { get; set; }
+        public long? ShiftId { get; set; }
+        public Shift Shift { get; set; }
+        public long? EmployeeGradeId { get; set; }
+        public EmployeeGrade EmployeeGrade { get; set; }
+        public long? EmployeeCategoryId { get; set; }
+        public EmployeeCategory EmployeeCategory { get; set; }
+        public long? ServiceTypeId { get; set; }
+        public EmployeeServiceType ServiceType { get; set; }
+        public long? OfficeTypeId { get; set; }
+        public OfficeType OfficeType { get; set; }
         public DateTime JoiningDate { get; set; }
         public DateTime ProbationEndDate { get; set; }
         public DateTime PermanentDate { get; set; }
-        public int ShiftId { get; set; }
-        public DateTime DateOfBirth { get; set; }
-        public DateTime DateOfMarriage { get; set; }
-        public int GradeId { get; set; }
-        public int CountryId { get; set; }
-        public int GenderId { get; set; }
-        public int MaritalTypeId { get; set; }
-        public int DivisionId { get; set; }
-        public string Division { get; set; }
-        public int DistrictId { get; set; }
-        public string DistrictName { get; set; }
-        public string Upazila { get; set; }
-        public int UpazilaId { get; set; }
-        public string NationalId { get; set; }
-        public string TinNo { get; set; }
-        public string Religion { get; set; }
-        public int ReligionId { get; set; }
-        public int BloodGroupId { get; set; }
-        public int EmployeeCategoryId { get; set; }
-        public int ServiceTypeId { get; set; }
-        public int DesignationFlag { get; set; }
-        public string PhotoUrl { get; set; }
-        public string SignUrl { get; set; }
-        public string OfficeType { get; set; }
-        public int OfficeTypeId { get; set; }
-
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
+        public long EmployeeOrder { get; set; }
+        public string Remarks { get; set; }
+      
         public DateTime EndDate { get; set; }
         public string EndReason { get; set; }
-        public int EmployeeOrder { get; set; }
-        public string Remarks { get; set; }
-        public string SearchText { get; set; }
-        public string StrJoiningDate { get; set; }
-        public string DepartmentName { get; set; }
-        public string DesignationName { get; set; }
-        public string BloodGroupName { get; set; }
-        [Required]
-        public long ManagerId { get; set; }
 
+
+        public int? CountryId { get; set; }
+        public Country Country { get; set; }
+        public int? DivisionId { get; set; }
+        public Division Division { get; set; }
+        public int? DistrictId { get; set; }
+        public District District { get; set; }
+        public int UpazilaId { get; set; }
+        public Upazila Upazila { get; set; }
+        public string PresentAddress { get; set; }
+        public string PermanentAddress { get; set; }
+
+        public string FatherName { get; set; }
+        public string MotherName { get; set; }
+        public string SpouseName { get; set; }
+        public long? GenderId { get; set; }
+        public DropdownItem Gender { get; set; }
+        public long? ReligionId { get; set; }
+        public DropdownItem Religion { get; set; }
+        public long? BloodGroupId { get; set; }
+        public DropdownItem BloodGroup { get; set; }
+        public long? MaritalTypeId { get; set; }
+        public DropdownItem MaritalType { get; set; }
+        public string NationalIdNo { get; set; }
+        public DateTime DateOfBirth { get; set; }
+        public DateTime DateOfMarriage { get; set; }
+        public string TinNo { get; set; }
+
+        public string PhotoUrl { get; set; }
+        public string SignUrl { get; set; }
 
     }
 }

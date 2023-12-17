@@ -8,7 +8,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using app.Services.UserPermissionsServices;
 using app.Services.DepartmentServices;
-using app.Services.GradeServices;
 using app.Services.DesignationServices;
 using app.Services.EmployeeCategoryServices;
 using app.Services.ServiceTypeServices;
@@ -23,6 +22,8 @@ using app.Services.LeaveApplicationServices;
 using app.Services.EmployeeServices;
 using app.Services.AttendanceServices;
 using app.Services.AttendanceLogServices;
+using app.Services.EmployeeGradeServices;
+using app.Services.JobStatusServices;
 
 namespace app.Services
 {
@@ -39,7 +40,7 @@ namespace app.Services
             services.AddTransient<IDropdownService, DropdownService>();
             services.AddTransient<ICompanyService, CompanyService>();
             services.AddTransient<IDepartmentService, DepartmentService>();
-            services.AddTransient<IGradeService, GradeService>();
+            services.AddTransient<IEmployeeGradeService, EmployeeGradeService>();
             services.AddTransient<IDesignationService, DesignationService>();
             services.AddTransient<IEmployeeCategoryService, EmployeeCategoryService>();
             services.AddTransient<IServiceTypeService, ServiceTypeService>();
@@ -53,6 +54,7 @@ namespace app.Services
             services.AddTransient<IAttendanceService, AttendanceService>();
             services.AddTransient<IAttendanceLogService, AttendanceLogService>();
             services.AddTransient<IEmployeeService, EmployeeService>();
+            services.AddTransient<IJobStatusService, JobStatusService>();
 
             return services;
         }

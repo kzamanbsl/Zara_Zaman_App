@@ -50,7 +50,8 @@
                                 <th>Days </th>
                                 <th>Stay During Leave</th>
                                 <th>Reason</th>
-                                @* <th>Remarks </th> *@
+                               @*  <th>M Approval</th>
+                                <th>HR Approval</th> *@
 
                                 <th class="text-center">Action</th>
                             </tr>
@@ -85,8 +86,25 @@
                                     <td>
                                         @Html.DisplayFor(modelItem => item.Reason)
                                     </td>
-@*                                     <td>
-                                        @Html.DisplayFor(modelItem => item.Remarks)
+                                    @* <td>
+                                        @if (item.ManagerStatus == "Denied")
+                                        {
+                                            <span class="btn btn-sm btn-xs btn-danger">@item.ManagerStatus</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="btn btn-sm btn-xs btn-success">@item.ManagerStatus</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (item.HrAdminStatus == "Denied")
+                                        {
+                                            <span class="btn btn-sm btn-xs btn-danger">@item.HrAdminStatus</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="btn btn-sm btn-xs btn-success">@item.HrAdminStatus</span>
+                                        }
                                     </td> *@
                                     <td class="text-center">
                                         @Html.ActionLink("", "UpdateRecord", new {id=item.Id},new {@class = "text-danger fas fa-edit",  onclick = "return confirm('Are you sure you want to edit this?')" }) |

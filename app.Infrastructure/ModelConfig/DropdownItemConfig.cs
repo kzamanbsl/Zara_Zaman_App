@@ -16,7 +16,6 @@ namespace app.Infrastructure.ModelConfig
             builder.HasKey(c => c.Id);
             builder.Property(c => c.Name).HasMaxLength(100);
             builder.Property(c => c.Description).HasMaxLength(250);
-            builder.Property(c => c.DropdownTypeId);
 
             builder.ToTable(TableNameEnum.DropdownItem.ToString());
         }

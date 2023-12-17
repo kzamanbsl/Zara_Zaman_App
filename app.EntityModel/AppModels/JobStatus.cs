@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace app.EntityModel.AppModels
 {
-    public class Grade :BaseEntity
+    public class JobStatus : BaseEntity
     {
         public string Name { get; set; }
-        public string PayScale { get; set; }
     }
 }

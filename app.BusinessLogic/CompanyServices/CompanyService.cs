@@ -17,20 +17,33 @@ namespace app.Services.CompanyServices
             _iWorkContext = iWorkContext;
         }
 
-        public async Task<int> AddRecord(CompanyViewModel model)
+        public async Task<bool> AddRecord(CompanyViewModel vm)
         {
             var user = await _iWorkContext.GetCurrentAdminUserAsync();
-            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == model.Name.Trim());
+            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim());
             if (checkName == null)
             {
-                Company com = new Company();
-                com.Name = model.Name;
-                var res = await _iEntityRepository.AddAsync(com);
-                return 2;
+                Company model = new Company();
+                model.Name = vm.Name;
+                var res = await _iEntityRepository.AddAsync(model);
+                vm.Id=res.Id;
+                return true;
             }
-            return 1;
+            return false;
         }
+        public async Task<bool> UpdateRecord(CompanyViewModel vm)
+        {
 
+            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim());
+            if (checkName == null)
+            {
+                var result = await _iEntityRepository.GetByIdAsync(vm.Id);
+                result.Name = vm.Name;
+                await _iEntityRepository.UpdateAsync(result);
+                return true;
+            }
+            return false;
+        }
         public async Task<bool> DeleteRecord(long id)
         {
             var result = await _iEntityRepository.GetByIdAsync(id);
@@ -38,7 +51,14 @@ namespace app.Services.CompanyServices
             await _iEntityRepository.UpdateAsync(result);
             return true;
         }
-
+        public async Task<CompanyViewModel> GetRecordById(long id)
+        {
+            var result = await _iEntityRepository.GetByIdAsync(id);
+            CompanyViewModel model = new CompanyViewModel();
+            model.Id = result.Id;
+            model.Name = result.Name;
+            return model;
+        }
         public async Task<CompanyViewModel> GetAllRecord()
         {
             CompanyViewModel model = new CompanyViewModel();
@@ -51,28 +71,6 @@ namespace app.Services.CompanyServices
                                                                 }).AsQueryable());
             return model;
         }
-
-        public async Task<CompanyViewModel> GetRecordById(long id)
-        {
-            var result = await _iEntityRepository.GetByIdAsync(id);
-            CompanyViewModel model = new CompanyViewModel();
-            model.Id = result.Id;
-            model.Name = result.Name;
-            return model;
-        }
-
-        public async Task<int> UpdateRecord(CompanyViewModel model)
-        {
-
-            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == model.Name.Trim());
-            if (checkName == null)
-            {
-                var result = await _iEntityRepository.GetByIdAsync(model.Id);
-                result.Name = model.Name;
-                await _iEntityRepository.UpdateAsync(result);
-                return 2;
-            }
-            return 1;
-        }
+        
     }
 }

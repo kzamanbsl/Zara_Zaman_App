@@ -2,10 +2,11 @@
 {
     public interface IAttendanceService
     {
-        Task<AttendanceViewModel> GetAllRecord();
-        Task<int> AddRecord(AttendanceViewModel model);
-        Task<int> UpdateRecord(AttendanceViewModel model);
-        Task<bool> DeleteRecord(long id);
+        Task<bool> AddRecord(AttendanceViewModel vm);
+        Task<bool> UpdateRecord(AttendanceViewModel vm);
         Task<AttendanceViewModel> GetRecordById(long id);
+        Task<AttendanceViewModel> GetAllRecord();
+        Task<bool> DeleteRecord(long id);
+    
     }
 }

@@ -2,10 +2,12 @@
 {
     public interface IEmployeeServiceTypeService
     {
-        Task<EmployeeServiceTypeViewModel> GetAllRecord();
-        Task<int> AddRecord(EmployeeServiceTypeViewModel model);
-        Task<int> UpdateRecord(EmployeeServiceTypeViewModel model);
-        Task<bool> DeleteRecord(long id);
+       
+        Task<bool> AddRecord(EmployeeServiceTypeViewModel vm);
+        Task<bool> UpdateRecord(EmployeeServiceTypeViewModel vm);
         Task<EmployeeServiceTypeViewModel> GetRecordById(long id);
+        Task<EmployeeServiceTypeViewModel> GetAllRecord();
+        Task<bool> DeleteRecord(long id);
+        
     }
 }

@@ -1,5 +1,4 @@
-﻿
-@model app.Services.AttendanceServices.AttendanceViewModel
+﻿@model app.Services.AttendanceServices.AttendanceViewModel
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
@@ -57,7 +56,7 @@
                                 <th>
                                     Remarks
                                 </th>
-                                
+
                                 <th class="text-center">Action</th>
                             </tr>
                         </thead>
@@ -78,8 +77,8 @@
                                     <td>
                                         @Html.DisplayFor(modelItem => item.AttendanceDate)
                                     </td>
-                                    
-                                    
+
+
                                     <td>
                                         @Html.DisplayFor(modelItem => item.LoginTime)
                                     </td>
@@ -89,8 +88,8 @@
                                     <td>
                                         @Html.DisplayFor(modelItem => item.Remarks)
                                     </td>
-                                    
-               
+
+
                                     <td class="text-center">
                                         @Html.ActionLink("", "UpdateRecord", new { id = item.Id }, new { @class = "text-danger fas fa-edit", onclick = "return confirm('Are you sure you want to edit this?')" }) |
                                         @Html.ActionLink("", "Delete", new { id = item.Id }, new { @class = "text-danger fas fa-trash", onclick = "return confirm('Are you sure you want to delete this?')" })

@@ -20,56 +20,75 @@ namespace app.Services.UserServices
             _iWorkContext = iWorkContext;
         }
 
-        public async Task<int> AddUser(UserViewModel model)
+        public async Task<bool> AddUser(UserViewModel vm)
         {
-            var userCheck = _dbContext.Users.FirstOrDefault(f => f.Email == model.Email);
+            var userCheck = _dbContext.Users.FirstOrDefault(f => f.Email == vm.Email);
             var loginUser = await _iWorkContext.GetCurrentUserAsync();
-            if (userCheck != null) { return 1; }
+            if (userCheck != null) { return false; }
             ApplicationUser users = new ApplicationUser();
-            users.FullName = model.FullName;
-            users.UserName = model.Email;
-            users.PhoneNumber = model.Mobile;
-            users.Email = model.Email;
-            users.Address = model.Address;
-            users.Prefix = model.Password;
+            users.FullName = vm.FullName;
+            users.UserName = vm.Email;
+            users.PhoneNumber = vm.Mobile;
+            users.Email = vm.Email;
+            users.Address = vm.Address;
+            users.Prefix = vm.Password;
 
-            if (model.RoleName == "Admin")
-            { model.UserType = 1; }
+            if (vm.RoleName == "Admin")
+            { vm.UserType = 1; }
 
-            if (model.RoleName == "Customer")
-            { model.UserType = 2; }
+            if (vm.RoleName == "Customer")
+            { vm.UserType = 2; }
 
-            users.UserType = model.UserType;
+            users.UserType = vm.UserType;
             users.CreatedOn = DateTime.Now;
             users.CreatedBy = loginUser.FullName;
             users.IsActive = true;
-            var result = await _userManager.CreateAsync(users, model.Password);
+            var result = await _userManager.CreateAsync(users, vm.Password);
 
             if (result.Succeeded)
             {
-                var role = _roleManager.FindByIdAsync(model.RoleName).Result;
+                var role = _roleManager.FindByIdAsync(vm.RoleName).Result;
                 if (role != null)
                 {
                     await _userManager.AddToRoleAsync(users, role.Name);
                 }
             }
-            return 2;
+            return true;
         }
-
-        public async Task<UserViewModel> GetAllRecord()
+        public async Task<bool> UpdateUser(UserViewModel vm)
         {
-            UserViewModel model = new UserViewModel();
-            model.DataList = await Task.Run(() => (from t1 in _dbContext.Users
-                                                   select new UserViewModel
-                                                   {
-                                                       UserId = t1.Id,
-                                                       FullName = t1.FullName,
-                                                       UserName = t1.UserName,
-                                                       IsActive = t1.IsActive,
-                                                       Email = t1.Email,
-                                                       Mobile = t1.PhoneNumber,
-                                                   }).OrderByDescending(x => x.UserName).AsEnumerable());
-            return model;
+            var userCheck = _dbContext.Users.FirstOrDefault(f => f.Email == vm.Email && f.Id != vm.UserId);
+            if (userCheck != null) { return false; }
+
+            ApplicationUser user = _dbContext.Users.FirstOrDefault(f => f.Id == vm.UserId);
+            if (user == null) { return false; }
+
+            var currentName = _dbContext.UserRoles.FirstOrDefault(g => g.UserId == vm.UserId);
+            var oldRole = _dbContext.Roles.FirstOrDefault(g => g.Id == currentName.RoleId);
+            var loginUser = await _iWorkContext.GetCurrentUserAsync();
+            var role = _roleManager.FindByIdAsync(vm.RoleId).Result;
+            user.FullName = vm.FullName;
+            user.UserName = vm.Email;
+            user.PhoneNumber = vm.Mobile;
+            user.Email = vm.Email;
+            user.Address = vm.Address;
+            user.IsActive = vm.IsActive;
+            if (role.Name == "Admin") { user.UserType = 1; }
+            if (role.Name == "Customer") { user.UserType = 2; }
+            user.UpdatedOn = DateTime.Now;
+            user.UpdatedBy = loginUser.FullName;
+            var result = await _userManager.UpdateAsync(user);
+
+            if (result.Succeeded)
+            {
+                if (role != null)
+                {
+                    await _userManager.RemoveFromRoleAsync(user, oldRole.Name);
+                    await _userManager.AddToRoleAsync(user, role.Name);
+                }
+                return true;
+            }
+            return false;
         }
 
         public async Task<ApplicationUser> GetUserByEmail(string email)
@@ -93,6 +112,21 @@ namespace app.Services.UserServices
             users.RoleId = _dbContext.UserRoles.FirstOrDefault(g => g.UserId == model.Id)?.RoleId;
             return users;
         }
+        public async Task<UserViewModel> GetAllRecord()
+        {
+            UserViewModel model = new UserViewModel();
+            model.DataList = await Task.Run(() => (from t1 in _dbContext.Users
+                select new UserViewModel
+                {
+                    UserId = t1.Id,
+                    FullName = t1.FullName,
+                    UserName = t1.UserName,
+                    IsActive = t1.IsActive,
+                    Email = t1.Email,
+                    Mobile = t1.PhoneNumber,
+                }).OrderByDescending(x => x.UserName).AsEnumerable());
+            return model;
+        }
 
         public async Task<bool> SoftDelete(string userId)
         {
@@ -109,40 +143,6 @@ namespace app.Services.UserServices
             return false;
         }
 
-        public async Task<int> UpdateUser(UserViewModel model)
-        {
-            var userCheck = _dbContext.Users.FirstOrDefault(f => f.Email == model.Email && f.Id != model.UserId);
-            if (userCheck != null) { return 1; }
-
-            ApplicationUser user = _dbContext.Users.FirstOrDefault(f => f.Id == model.UserId);
-            if (user == null) { return 1; }
-
-            var currentName = _dbContext.UserRoles.FirstOrDefault(g => g.UserId == model.UserId);
-            var oldRole = _dbContext.Roles.FirstOrDefault(g => g.Id == currentName.RoleId);
-            var loginUser = await _iWorkContext.GetCurrentUserAsync();
-            var role = _roleManager.FindByIdAsync(model.RoleId).Result;
-            user.FullName = model.FullName;
-            user.UserName = model.Email;
-            user.PhoneNumber = model.Mobile;
-            user.Email = model.Email;
-            user.Address = model.Address;
-            user.IsActive = model.IsActive;
-            if (role.Name == "Admin") { user.UserType = 1; }
-            if (role.Name == "Customer") { user.UserType = 2; }
-            user.UpdatedOn = DateTime.Now;
-            user.UpdatedBy = loginUser.FullName;
-            var result = await _userManager.UpdateAsync(user);
-
-            if (result.Succeeded)
-            {
-                if (role != null)
-                {
-                    await _userManager.RemoveFromRoleAsync(user, oldRole.Name);
-                    await _userManager.AddToRoleAsync(user, role.Name);
-                }
-                return 2;
-            }
-            return 0;
-        }
+       
     }
 }

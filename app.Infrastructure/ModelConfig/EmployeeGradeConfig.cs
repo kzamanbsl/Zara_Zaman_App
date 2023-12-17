@@ -4,10 +4,10 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace app.Infrastructure.ModelConfig
 {
-    public class GradeConfig : IEntityTypeConfiguration<Grade>
+    public class EmployeeGradeConfig : IEntityTypeConfiguration<EmployeeGrade>
     {
 
-        public void Configure(EntityTypeBuilder<Grade> builder)
+        public void Configure(EntityTypeBuilder<EmployeeGrade> builder)
         {
             builder.HasKey(c => c.Id);
             builder.Property(c => c.Name).HasMaxLength(100);

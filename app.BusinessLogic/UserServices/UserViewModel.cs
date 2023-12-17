@@ -26,6 +26,7 @@ namespace app.Services.UserServices
         [DataType(DataType.Password)]
         [Compare("Password")]
         public string ConfirmPassword { get; set; }
+
         public IEnumerable<UserViewModel> DataList { get; set; }
     }
 }

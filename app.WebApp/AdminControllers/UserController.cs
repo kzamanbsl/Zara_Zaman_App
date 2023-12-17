@@ -36,7 +36,7 @@ namespace app.WebApp.AdminControllers
         public async Task<IActionResult> AddRecord(UserViewModel model)
         {
             var result = await _iUserService.AddUser(model);
-            if (result == 1)
+            if (result == false)
             {
                 UserViewModel model2 = new UserViewModel();
                 ViewBag.Record = new SelectList(_iRoleService.GetAllAsync().Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
@@ -60,7 +60,7 @@ namespace app.WebApp.AdminControllers
         public async Task<IActionResult> UpdateRecord(UserViewModel model)
         {
             var result = await _iUserService.UpdateUser(model);
-            if (result == 1)
+            if (result == false)
             {
                 UserViewModel model2 = new UserViewModel();
                 ViewBag.Record = new SelectList(_iRoleService.GetAllAsync().Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");

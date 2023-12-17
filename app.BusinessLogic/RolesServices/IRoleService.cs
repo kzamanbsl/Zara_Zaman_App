@@ -2,11 +2,13 @@
 {
     public interface IRoleService
     {
+      
+        Task<bool> AddAsync(RoleViewModel vm);
+        Task<bool> UpdateAsync(RoleViewModel vm);
         Task<RoleViewModel> GetByIdAsync(string id);
-        Task<bool> AddAsync(RoleViewModel model);
-        Task<bool> UpdateAsync(RoleViewModel model);
+        List<RoleViewModel> GetAllAsync();
         int TotalCount();
         Task<bool> DeleteByIdAsync(string id);
-        List<RoleViewModel> GetAllAsync();
+       
     }
 }

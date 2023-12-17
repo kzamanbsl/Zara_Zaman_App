@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace app.EntityModel.AppModels
+﻿namespace app.EntityModel.AppModels
 {
     public class LeaveApplication : BaseEntity
     {
@@ -23,7 +15,7 @@ namespace app.EntityModel.AppModels
         public virtual LeaveCategory LeaveCategory { get; set; }
         public long EmployeeId { get; set; }
         public virtual Employee Employee { get; set; }
-        public long ManagerId { get; set; }
+        public long? ManagerId { get; set; }
         public virtual Employee Manager { get; set; }
 
     }

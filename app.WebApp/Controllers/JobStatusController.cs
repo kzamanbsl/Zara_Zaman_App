@@ -1,14 +1,13 @@
-﻿using app.Services.CompanyServices;
-using app.Services.GradeServices;
+﻿using app.Services.JobStatusServices;
 using Microsoft.AspNetCore.Mvc;
 
 namespace app.WebApp.Controllers
 {
-    public class GradeController : Controller
+    public class JobStatusController : Controller
     {
 
-        private readonly IGradeService _iService;
-        public GradeController(IGradeService iService)
+        private readonly IJobStatusService _iService;
+        public JobStatusController(IJobStatusService iService)
         {
             _iService = iService;
         }
@@ -23,15 +22,15 @@ namespace app.WebApp.Controllers
         [HttpGet]
         public async Task<IActionResult> AddRecord()
         {
-            GradeViewModel viewModel = new GradeViewModel();
+            JobStatusViewModel viewModel = new JobStatusViewModel();
             return View(viewModel);
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddRecord(GradeViewModel viewModel)
+        public async Task<IActionResult> AddRecord(JobStatusViewModel viewModel)
         {
             var result = await _iService.AddRecord(viewModel);
-            if (result == 2)
+            if (result == true)
             {
                 return RedirectToAction("Index");
             }
@@ -47,10 +46,10 @@ namespace app.WebApp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> UpdateRecord(GradeViewModel model)
+        public async Task<IActionResult> UpdateRecord(JobStatusViewModel model)
         {
             var result = await _iService.UpdateRecord(model);
-            if (result == 2)
+            if (result == true)
             {
                 return RedirectToAction("Index");
             }

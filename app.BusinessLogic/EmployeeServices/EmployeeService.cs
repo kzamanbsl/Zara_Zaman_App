@@ -2,11 +2,6 @@
 using app.Infrastructure.Auth;
 using app.Infrastructure.Repository;
 using app.Infrastructure;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace app.Services.EmployeeServices
 {
@@ -22,59 +17,72 @@ namespace app.Services.EmployeeServices
             _dbContext = dbContext;
             _iWorkContext = iWorkContext;
         }
-        public async Task<int> AddRecord(EmployeeViewModel model)
+
+        public async Task<bool> AddRecord(EmployeeViewModel vm)
         {
-            var user = await _iWorkContext.GetCurrentAdminUserAsync();
-            var existingEmployee = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id == model.Id && f.EmployeeCode == model.EmployeeCode);
+            var existingEmployee = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id == vm.Id && f.EmployeeCode == vm.EmployeeCode);
             if (existingEmployee == null)
             {
                 Employee emp = new Employee();
-                emp.Name = model.Name;
-                emp.EmployeeCode = model.EmployeeCode;
-                emp.ShortName = model.ShortName;
-                emp.EmployeeOrder = model.EmployeeOrder;
-                emp.ManagerId = model.ManagerId;
-                emp.Remarks = model.Remarks;
+                emp.Name = vm.Name;
+                emp.EmployeeCode = vm.EmployeeCode;
+                emp.ShortName = vm.ShortName;
+                emp.EmployeeOrder = vm.EmployeeOrder;
+                emp.ManagerId = vm.ManagerId;
+                emp.Remarks = vm.Remarks;
 
 
-                emp.FatherName = model.FatherName;
-                emp.MotherName = model.MotherName;
-                emp.DateOfMarriage = model.DateOfMarriage;
-                emp.MaritalTypeId = model.MaritalTypeId;
-                emp.SpouseName = model.SpouseName;
-                emp.DateOfBirth = model.DateOfBirth;
-                emp.NationalId = model.NationalId;
-                emp.GenderId = model.GenderId;
-                emp.BloodGroupId = model.BloodGroupId;
-                emp.ReligionId = model.ReligionId;
-                emp.TinNo = model.TinNo;
+                emp.FatherName = vm.FatherName;
+                emp.MotherName = vm.MotherName;
+                emp.DateOfMarriage = vm.DateOfMarriage;
+                emp.MaritalTypeId = vm.MaritalTypeId;
+                emp.SpouseName = vm.SpouseName;
+                emp.DateOfBirth = vm.DateOfBirth;
+                emp.NationalIdNo = vm.NationalIdNo;
+                emp.GenderId = vm.GenderId;
+                emp.BloodGroupId = vm.BloodGroupId;
+                emp.ReligionId = vm.ReligionId;
+                emp.TinNo = vm.TinNo;
 
 
-                emp.JoiningDate = model.JoiningDate;
-                emp.ProbationEndDate = model.ProbationEndDate;
-                emp.DepartmentId = model.DepartmentId;
-                emp.DesignationId = model.DesignationId;
-                emp.EmployeeCategoryId = model.EmployeeCategoryId;
-                emp.JobStatusId = model.JobStatusId;
-                emp.ServiceTypeId = model.ServiceTypeId;
-                emp.OfficeTypeId = model.OfficeTypeId;
-                emp.ShiftId = model.ShiftId;
-                emp.GradeId = model.GradeId;
-                emp.PresentAddress = model.PresentAddress;
-                emp.PermanentAddress = model.PermanentAddress;
-                emp.CountryId = model.CountryId;
-                emp.DivisionId = model.DivisionId;
-                emp.DistrictId = model.DistrictId;
-                emp.UpazilaId = model.UpazilaId;
-                emp.MobileNo = model.MobileNo;
-                emp.Email = model.Email;
+                emp.JoiningDate = vm.JoiningDate;
+                emp.ProbationEndDate = vm.ProbationEndDate;
+                emp.DepartmentId = vm.DepartmentId;
+                emp.DesignationId = vm.DesignationId;
+                emp.EmployeeCategoryId = vm.EmployeeCategoryId;
+                emp.JobStatusId = vm.JobStatusId;
+                emp.ServiceTypeId = vm.ServiceTypeId;
+                emp.OfficeTypeId = vm.OfficeTypeId;
+                emp.ShiftId = vm.ShiftId;
+                emp.EmployeeGradeId = vm.EmployeeGradeId;
+                emp.PresentAddress = vm.PresentAddress;
+                emp.PermanentAddress = vm.PermanentAddress;
+                emp.CountryId = vm.CountryId;
+                emp.DivisionId = vm.DivisionId;
+                emp.DistrictId = vm.DistrictId;
+                emp.UpazilaId = vm.UpazilaId;
+                emp.MobileNo = vm.MobileNo;
+                emp.Email = vm.Email;
                 
-                emp.SignUrl = model.SignUrl;
-                emp.PhotoUrl = model.PhotoUrl;
+                emp.SignUrl = vm.SignUrl;
+                emp.PhotoUrl = vm.PhotoUrl;
                 var res = await _iEntityRepository.AddAsync(emp);
-                return 2;
+                vm.Id=res.Id;
+                return true;
             }
-            return 1;
+            return false;
+        }
+        public Task<bool> UpdateRecord(EmployeeViewModel model)
+        {
+            throw new NotImplementedException();
+        }
+        public Task<EmployeeViewModel> GetRecordById(long id)
+        {
+            throw new NotImplementedException();
+        }
+        public Task<EmployeeViewModel> GetAllRecord()
+        {
+            throw new NotImplementedException();
         }
 
         public Task<bool> DeleteRecord(long id)
@@ -82,19 +90,6 @@ namespace app.Services.EmployeeServices
             throw new NotImplementedException();
         }
 
-        public Task<EmployeeViewModel> GetAllRecord()
-        {
-            throw new NotImplementedException();
-        }
 
-        public Task<EmployeeViewModel> GetRecordById(long id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<int> UpdateRecord(EmployeeViewModel model)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

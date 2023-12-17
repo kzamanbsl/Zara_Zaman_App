@@ -1,5 +1,4 @@
-﻿using app.Services.CompanyServices;
-using app.Services.DepartmentServices;
+﻿using app.Services.DepartmentServices;
 using Microsoft.AspNetCore.Mvc;
 
 namespace app.WebApp.Controllers
@@ -31,7 +30,7 @@ namespace app.WebApp.Controllers
         public async Task<IActionResult> AddRecord(DepartmentViewModel viewModel)
         {
             var result = await _iService.AddRecord(viewModel);
-            if (result == 2)
+            if (result == true)
             {
                 return RedirectToAction("Index");
             }
@@ -50,7 +49,7 @@ namespace app.WebApp.Controllers
         public async Task<IActionResult> UpdateRecord(DepartmentViewModel model)
         {
             var result = await _iService.UpdateRecord(model);
-            if (result == 2)
+            if (result == true)
             {
                 return RedirectToAction("Index");
             }

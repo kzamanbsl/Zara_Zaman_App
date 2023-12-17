@@ -1,4 +1,4 @@
-﻿@model app.Services.GradeServices.GradeViewModel
+﻿@model app.Services.EmployeeGradeServices.EmployeeGradeViewModel
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
@@ -46,7 +46,7 @@
                         </thead>
 
                         <tbody>
-                            @foreach (var item in Model.GradeList)
+                            @foreach (var item in Model.EmployeeGradeList)
                             {
                                 <tr>
                                     <td>

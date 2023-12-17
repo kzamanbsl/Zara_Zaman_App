@@ -313,13 +313,10 @@ namespace app.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
 
-                    b.Property<int>("BloodGroupId")
-                        .HasColumnType("int");
+                    b.Property<long?>("BloodGroupId")
+                        .HasColumnType("bigint");
 
-                    b.Property<string>("BloodGroupName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("CountryId")
+                    b.Property<int?>("CountryId")
                         .HasColumnType("int");
 
                     b.Property<string>("CreatedBy")
@@ -334,44 +331,32 @@ namespace app.Infrastructure.Migrations
                     b.Property<DateTime>("DateOfMarriage")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("DepartmentId")
+                    b.Property<long?>("DepartmentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("DesignationId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int?>("DistrictId")
                         .HasColumnType("int");
 
-                    b.Property<string>("DepartmentName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("DesignationFlag")
-                        .HasColumnType("int");
-
-                    b.Property<int>("DesignationId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("DesignationName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("DistrictId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("DistrictName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Division")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("DivisionId")
+                    b.Property<int?>("DivisionId")
                         .HasColumnType("int");
 
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("EmployeeCategoryId")
-                        .HasColumnType("int");
+                    b.Property<long?>("EmployeeCategoryId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("EmployeeCode")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("EmployeeOrder")
-                        .HasColumnType("int");
+                    b.Property<long?>("EmployeeGradeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("EmployeeOrder")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
@@ -380,51 +365,44 @@ namespace app.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FatherName")
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
 
-                    b.Property<int>("GenderId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("GradeId")
-                        .HasColumnType("int");
+                    b.Property<long?>("GenderId")
+                        .HasColumnType("bigint");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
-                    b.Property<int>("JobStatusId")
-                        .HasColumnType("int");
+                    b.Property<long?>("JobStatusId")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTime>("JoiningDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<long>("ManagerId")
+                    b.Property<long?>("ManagerId")
                         .HasColumnType("bigint");
 
-                    b.Property<int>("MaritalTypeId")
-                        .HasColumnType("int");
+                    b.Property<long?>("MaritalTypeId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("MobileNo")
                         .HasMaxLength(11)
                         .HasColumnType("nvarchar(11)");
 
                     b.Property<string>("MotherName")
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
                         .HasMaxLength(250)
                         .HasColumnType("nvarchar(250)");
 
-                    b.Property<string>("NationalId")
+                    b.Property<string>("Name")
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.Property<string>("NationalIdNo")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("OfficeType")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("OfficeTypeId")
-                        .HasColumnType("int");
+                    b.Property<long?>("OfficeTypeId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("PermanentAddress")
                         .HasColumnType("nvarchar(max)");
@@ -441,23 +419,17 @@ namespace app.Infrastructure.Migrations
                     b.Property<DateTime>("ProbationEndDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Religion")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("ReligionId")
-                        .HasColumnType("int");
+                    b.Property<long?>("ReligionId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Remarks")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("SearchText")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<long?>("ServiceTypeId")
+                        .HasColumnType("bigint");
 
-                    b.Property<int>("ServiceTypeId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ShiftId")
-                        .HasColumnType("int");
+                    b.Property<long?>("ShiftId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("ShortName")
                         .HasMaxLength(100)
@@ -469,13 +441,7 @@ namespace app.Infrastructure.Migrations
                     b.Property<string>("SpouseName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("StrJoiningDate")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("TinNo")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Upazila")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("UpazilaId")
@@ -488,6 +454,40 @@ namespace app.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("BloodGroupId");
+
+                    b.HasIndex("CountryId");
+
+                    b.HasIndex("DepartmentId");
+
+                    b.HasIndex("DesignationId");
+
+                    b.HasIndex("DistrictId");
+
+                    b.HasIndex("DivisionId");
+
+                    b.HasIndex("EmployeeCategoryId");
+
+                    b.HasIndex("EmployeeGradeId");
+
+                    b.HasIndex("GenderId");
+
+                    b.HasIndex("JobStatusId");
+
+                    b.HasIndex("ManagerId");
+
+                    b.HasIndex("MaritalTypeId");
+
+                    b.HasIndex("OfficeTypeId");
+
+                    b.HasIndex("ReligionId");
+
+                    b.HasIndex("ServiceTypeId");
+
+                    b.HasIndex("ShiftId");
+
+                    b.HasIndex("UpazilaId");
 
                     b.ToTable("Employee", "dbo");
                 });
@@ -524,39 +524,7 @@ namespace app.Infrastructure.Migrations
                     b.ToTable("EmployeeCategory", "dbo");
                 });
 
-            modelBuilder.Entity("app.EntityModel.AppModels.EmployeeServiceType", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("UpdatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("EmployeeServiceType", "dbo");
-                });
-
-            modelBuilder.Entity("app.EntityModel.AppModels.Grade", b =>
+            modelBuilder.Entity("app.EntityModel.AppModels.EmployeeGrade", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -592,6 +560,70 @@ namespace app.Infrastructure.Migrations
                     b.ToTable("Grade", "dbo");
                 });
 
+            modelBuilder.Entity("app.EntityModel.AppModels.EmployeeServiceType", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("EmployeeServiceType", "dbo");
+                });
+
+            modelBuilder.Entity("app.EntityModel.AppModels.JobStatus", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("JobStatus", "dbo");
+                });
+
             modelBuilder.Entity("app.EntityModel.AppModels.LeaveApplication", b =>
                 {
                     b.Property<long>("Id")
@@ -624,7 +656,7 @@ namespace app.Infrastructure.Migrations
                     b.Property<int>("LeaveDays")
                         .HasColumnType("int");
 
-                    b.Property<long>("ManagerId")
+                    b.Property<long?>("ManagerId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("Reason")
@@ -642,8 +674,8 @@ namespace app.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("StayDuringLeave")
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
 
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
@@ -940,7 +972,7 @@ namespace app.Infrastructure.Migrations
                         {
                             Id = 1L,
                             CreatedBy = "System Admin",
-                            CreatedOn = new DateTime(2023, 12, 13, 16, 58, 6, 806, DateTimeKind.Local).AddTicks(3932),
+                            CreatedOn = new DateTime(2023, 11, 21, 9, 0, 0, 0, DateTimeKind.Unspecified),
                             Icon = "<i class=\"fas fa-user\"></i>",
                             IsActive = true,
                             Name = "User Management",
@@ -950,7 +982,7 @@ namespace app.Infrastructure.Migrations
                         {
                             Id = 2L,
                             CreatedBy = "System Admin",
-                            CreatedOn = new DateTime(2023, 12, 13, 16, 58, 6, 806, DateTimeKind.Local).AddTicks(3945),
+                            CreatedOn = new DateTime(2023, 11, 21, 9, 0, 0, 0, DateTimeKind.Unspecified),
                             Icon = "<i class=\"fas fa-cog\"></i>",
                             IsActive = true,
                             Name = "Configuration",
@@ -1018,7 +1050,7 @@ namespace app.Infrastructure.Migrations
                             Action = "AddRecord",
                             Controller = "MainMenu",
                             CreatedBy = "System Admin",
-                            CreatedOn = new DateTime(2023, 12, 13, 16, 58, 6, 806, DateTimeKind.Local).AddTicks(3965),
+                            CreatedOn = new DateTime(2023, 11, 21, 9, 0, 0, 0, DateTimeKind.Unspecified),
                             Icon = "<i class=\"fas fa-plus\"></i>",
                             IsActive = true,
                             IsMenuShow = true,
@@ -1033,7 +1065,7 @@ namespace app.Infrastructure.Migrations
                             Action = "Index",
                             Controller = "MainMenu",
                             CreatedBy = "System Admin",
-                            CreatedOn = new DateTime(2023, 12, 13, 16, 58, 6, 806, DateTimeKind.Local).AddTicks(3967),
+                            CreatedOn = new DateTime(2023, 11, 21, 9, 0, 0, 0, DateTimeKind.Unspecified),
                             Icon = "<i class=\"fas fa-list\"></i>",
                             IsActive = true,
                             IsMenuShow = true,
@@ -1048,7 +1080,7 @@ namespace app.Infrastructure.Migrations
                             Action = "AddRecord",
                             Controller = "MenuItem",
                             CreatedBy = "System Admin",
-                            CreatedOn = new DateTime(2023, 12, 13, 16, 58, 6, 806, DateTimeKind.Local).AddTicks(3968),
+                            CreatedOn = new DateTime(2023, 11, 21, 9, 0, 0, 0, DateTimeKind.Unspecified),
                             Icon = "<i class=\"fas fa-plus\"></i>",
                             IsActive = true,
                             IsMenuShow = true,
@@ -1063,7 +1095,7 @@ namespace app.Infrastructure.Migrations
                             Action = "Index",
                             Controller = "MenuItem",
                             CreatedBy = "System Admin",
-                            CreatedOn = new DateTime(2023, 12, 13, 16, 58, 6, 806, DateTimeKind.Local).AddTicks(3973),
+                            CreatedOn = new DateTime(2023, 11, 21, 9, 0, 0, 0, DateTimeKind.Unspecified),
                             Icon = "<i class=\"fas fa-list\"></i>",
                             IsActive = true,
                             IsMenuShow = true,
@@ -1078,7 +1110,7 @@ namespace app.Infrastructure.Migrations
                             Action = "AddPermission",
                             Controller = "UserPermission",
                             CreatedBy = "System Admin",
-                            CreatedOn = new DateTime(2023, 12, 13, 16, 58, 6, 806, DateTimeKind.Local).AddTicks(3975),
+                            CreatedOn = new DateTime(2023, 11, 21, 9, 0, 0, 0, DateTimeKind.Unspecified),
                             Icon = "<i class=\"fas fa-plus\"></i>",
                             IsActive = true,
                             IsMenuShow = true,
@@ -1093,7 +1125,7 @@ namespace app.Infrastructure.Migrations
                             Action = "AddRecord",
                             Controller = "Company",
                             CreatedBy = "System Admin",
-                            CreatedOn = new DateTime(2023, 12, 13, 16, 58, 6, 806, DateTimeKind.Local).AddTicks(3977),
+                            CreatedOn = new DateTime(2023, 11, 21, 9, 0, 0, 0, DateTimeKind.Unspecified),
                             Icon = "<i class=\"fas fa-plus\"></i>",
                             IsActive = true,
                             IsMenuShow = true,
@@ -1108,7 +1140,7 @@ namespace app.Infrastructure.Migrations
                             Action = "Index",
                             Controller = "Company",
                             CreatedBy = "System Admin",
-                            CreatedOn = new DateTime(2023, 12, 13, 16, 58, 6, 806, DateTimeKind.Local).AddTicks(3978),
+                            CreatedOn = new DateTime(2023, 11, 21, 9, 0, 0, 0, DateTimeKind.Unspecified),
                             Icon = "<i class=\"fas fa-list\"></i>",
                             IsActive = true,
                             IsMenuShow = true,
@@ -1160,7 +1192,7 @@ namespace app.Infrastructure.Migrations
                         {
                             Id = 1L,
                             CreatedBy = "System Admin",
-                            CreatedOn = new DateTime(2023, 12, 13, 16, 58, 6, 806, DateTimeKind.Local).AddTicks(4045),
+                            CreatedOn = new DateTime(2023, 11, 21, 9, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             MenuItemId = 1L,
                             OrderNo = 0,
@@ -1170,7 +1202,7 @@ namespace app.Infrastructure.Migrations
                         {
                             Id = 2L,
                             CreatedBy = "System Admin",
-                            CreatedOn = new DateTime(2023, 12, 13, 16, 58, 6, 806, DateTimeKind.Local).AddTicks(4046),
+                            CreatedOn = new DateTime(2023, 11, 21, 9, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             MenuItemId = 2L,
                             OrderNo = 0,
@@ -1180,7 +1212,7 @@ namespace app.Infrastructure.Migrations
                         {
                             Id = 3L,
                             CreatedBy = "System Admin",
-                            CreatedOn = new DateTime(2023, 12, 13, 16, 58, 6, 806, DateTimeKind.Local).AddTicks(4048),
+                            CreatedOn = new DateTime(2023, 11, 21, 9, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             MenuItemId = 3L,
                             OrderNo = 0,
@@ -1190,7 +1222,7 @@ namespace app.Infrastructure.Migrations
                         {
                             Id = 4L,
                             CreatedBy = "System Admin",
-                            CreatedOn = new DateTime(2023, 12, 13, 16, 58, 6, 806, DateTimeKind.Local).AddTicks(4049),
+                            CreatedOn = new DateTime(2023, 11, 21, 9, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             MenuItemId = 4L,
                             OrderNo = 0,
@@ -1200,7 +1232,7 @@ namespace app.Infrastructure.Migrations
                         {
                             Id = 5L,
                             CreatedBy = "System Admin",
-                            CreatedOn = new DateTime(2023, 12, 13, 16, 58, 6, 806, DateTimeKind.Local).AddTicks(4050),
+                            CreatedOn = new DateTime(2023, 11, 21, 9, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             MenuItemId = 5L,
                             OrderNo = 0,
@@ -1210,7 +1242,7 @@ namespace app.Infrastructure.Migrations
                         {
                             Id = 6L,
                             CreatedBy = "System Admin",
-                            CreatedOn = new DateTime(2023, 12, 13, 16, 58, 6, 806, DateTimeKind.Local).AddTicks(4051),
+                            CreatedOn = new DateTime(2023, 11, 21, 9, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             MenuItemId = 6L,
                             OrderNo = 0,
@@ -1220,7 +1252,7 @@ namespace app.Infrastructure.Migrations
                         {
                             Id = 7L,
                             CreatedBy = "System Admin",
-                            CreatedOn = new DateTime(2023, 12, 13, 16, 58, 6, 806, DateTimeKind.Local).AddTicks(4053),
+                            CreatedOn = new DateTime(2023, 11, 21, 9, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             MenuItemId = 7L,
                             OrderNo = 0,
@@ -1394,14 +1426,14 @@ namespace app.Infrastructure.Migrations
                         new
                         {
                             Id = "8e445865-a24d-4543-a6c6-9443d048cdb9",
-                            ConcurrencyStamp = "45c9e282-91ba-42dc-b5f7-0a9e1139924d",
+                            ConcurrencyStamp = "f0554ea6-745e-4b81-a2db-067079a093b6",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         },
                         new
                         {
                             Id = "2c5e174e-3b0e-446f-86af-483d56fd7210",
-                            ConcurrencyStamp = "2b287c35-114e-4440-8f52-28262dc717ae",
+                            ConcurrencyStamp = "042c434b-f6ec-4c2c-81eb-38fd2079dc90",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -1566,6 +1598,113 @@ namespace app.Infrastructure.Migrations
                     b.Navigation("Division");
                 });
 
+            modelBuilder.Entity("app.EntityModel.AppModels.Employee", b =>
+                {
+                    b.HasOne("app.EntityModel.AppModels.DropdownItem", "BloodGroup")
+                        .WithMany()
+                        .HasForeignKey("BloodGroupId");
+
+                    b.HasOne("app.EntityModel.AppModels.Country", "Country")
+                        .WithMany()
+                        .HasForeignKey("CountryId");
+
+                    b.HasOne("app.EntityModel.AppModels.Department", "Department")
+                        .WithMany()
+                        .HasForeignKey("DepartmentId");
+
+                    b.HasOne("app.EntityModel.AppModels.Designation", "Designation")
+                        .WithMany()
+                        .HasForeignKey("DesignationId");
+
+                    b.HasOne("app.EntityModel.AppModels.District", "District")
+                        .WithMany()
+                        .HasForeignKey("DistrictId");
+
+                    b.HasOne("app.EntityModel.AppModels.Division", "Division")
+                        .WithMany()
+                        .HasForeignKey("DivisionId");
+
+                    b.HasOne("app.EntityModel.AppModels.EmployeeCategory", "EmployeeCategory")
+                        .WithMany()
+                        .HasForeignKey("EmployeeCategoryId");
+
+                    b.HasOne("app.EntityModel.AppModels.EmployeeGrade", "EmployeeGrade")
+                        .WithMany()
+                        .HasForeignKey("EmployeeGradeId");
+
+                    b.HasOne("app.EntityModel.AppModels.DropdownItem", "Gender")
+                        .WithMany()
+                        .HasForeignKey("GenderId");
+
+                    b.HasOne("app.EntityModel.AppModels.JobStatus", "JobStatus")
+                        .WithMany()
+                        .HasForeignKey("JobStatusId");
+
+                    b.HasOne("app.EntityModel.AppModels.Employee", "Manager")
+                        .WithMany()
+                        .HasForeignKey("ManagerId");
+
+                    b.HasOne("app.EntityModel.AppModels.DropdownItem", "MaritalType")
+                        .WithMany()
+                        .HasForeignKey("MaritalTypeId");
+
+                    b.HasOne("app.EntityModel.AppModels.OfficeType", "OfficeType")
+                        .WithMany()
+                        .HasForeignKey("OfficeTypeId");
+
+                    b.HasOne("app.EntityModel.AppModels.DropdownItem", "Religion")
+                        .WithMany()
+                        .HasForeignKey("ReligionId");
+
+                    b.HasOne("app.EntityModel.AppModels.EmployeeServiceType", "ServiceType")
+                        .WithMany()
+                        .HasForeignKey("ServiceTypeId");
+
+                    b.HasOne("app.EntityModel.AppModels.Shift", "Shift")
+                        .WithMany()
+                        .HasForeignKey("ShiftId");
+
+                    b.HasOne("app.EntityModel.AppModels.Upazila", "Upazila")
+                        .WithMany()
+                        .HasForeignKey("UpazilaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("BloodGroup");
+
+                    b.Navigation("Country");
+
+                    b.Navigation("Department");
+
+                    b.Navigation("Designation");
+
+                    b.Navigation("District");
+
+                    b.Navigation("Division");
+
+                    b.Navigation("EmployeeCategory");
+
+                    b.Navigation("EmployeeGrade");
+
+                    b.Navigation("Gender");
+
+                    b.Navigation("JobStatus");
+
+                    b.Navigation("Manager");
+
+                    b.Navigation("MaritalType");
+
+                    b.Navigation("OfficeType");
+
+                    b.Navigation("Religion");
+
+                    b.Navigation("ServiceType");
+
+                    b.Navigation("Shift");
+
+                    b.Navigation("Upazila");
+                });
+
             modelBuilder.Entity("app.EntityModel.AppModels.LeaveApplication", b =>
                 {
                     b.HasOne("app.EntityModel.AppModels.Employee", "Employee")
@@ -1582,9 +1721,7 @@ namespace app.Infrastructure.Migrations
 
                     b.HasOne("app.EntityModel.AppModels.Employee", "Manager")
                         .WithMany()
-                        .HasForeignKey("ManagerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ManagerId");
 
                     b.Navigation("Employee");
 
@@ -1596,7 +1733,7 @@ namespace app.Infrastructure.Migrations
             modelBuilder.Entity("app.EntityModel.AppModels.LeaveBalance", b =>
                 {
                     b.HasOne("app.EntityModel.AppModels.LeaveCategory", "LeaveCategory")
-                        .WithMany("LeaveBalances")
+                        .WithMany()
                         .HasForeignKey("LeaveCategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1664,11 +1801,6 @@ namespace app.Infrastructure.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("app.EntityModel.AppModels.LeaveCategory", b =>
-                {
-                    b.Navigation("LeaveBalances");
                 });
 #pragma warning restore 612, 618
         }
