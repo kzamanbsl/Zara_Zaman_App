@@ -20,6 +20,7 @@ namespace app.Services.AttendanceLogServices
 
         public async Task<bool> AddRecord(AttendanceLogViewModel vm)
         {
+            
             var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id==vm.Id && f.AttendanceId==vm.AttendanceId);
             if (checkName == null)
             {

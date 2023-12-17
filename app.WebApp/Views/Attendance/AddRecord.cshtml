@@ -2,7 +2,9 @@
 @{
     ViewData["Title"] = "AddRecord";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
+
 }
+
 
 
 
@@ -40,7 +42,8 @@
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label>Employee Name</label>
+                                        @* <label>Employee Name</label> *@
+                                        <label asp-for="EmployeeName" class="control-label"></label>
                                         <select class="form-control" asp-for="EmployeeId" asp-items="ViewBag.Employees">
                                             <option value="0" selected>-- Select Employee --</option>
                                         </select>
@@ -48,7 +51,8 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label>Shift</label>
+                                        @* <label>Shift</label> *@
+                                        <label asp-for="ShiftName" class="control-label"></label>
                                         <select class="form-control" asp-for="ShiftId" asp-items="ViewBag.Shifts">
                                             <option value="0" selected>-- Select Shift --</option>
                                         </select>
@@ -64,26 +68,23 @@
 
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label asp-for="LoginTime" class="control-label">Login</label>
+                                        <label asp-for="LoginTime" class="control-label"></label>
                                         <input type="time" asp-for="LoginTime" id="login" class="form-control" required />
                                         <span asp-validation-for="LoginTime" class="text-danger"></span>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label asp-for="LogoutTime" class="control-label">Logout</label>
+                                        <label asp-for="LogoutTime" class="control-label"></label>
                                         <input type="time" asp-for="LogoutTime" class="form-control" required />
                                         <span asp-validation-for="LogoutTime" class="text-danger"></span>
-                                    </div>
-
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label asp-for="Remarks" class="control-label">Remarks</label>
-                                            <textarea asp-for="Remarks" class="form-control" required rows="1"></textarea>
-                                            <span asp-validation-for="LogoutTime" class="text-danger"></span>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
+                                    </div> 
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label asp-for="Remarks" class="control-label"></label>
+                                        <textarea asp-for="Remarks" class="form-control" required rows="1"></textarea>
+                                        <span asp-validation-for="Remarks" class="text-danger"></span>
                                     </div>
                                 </div>
                             </div>

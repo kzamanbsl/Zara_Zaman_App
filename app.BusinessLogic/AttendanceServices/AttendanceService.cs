@@ -26,6 +26,7 @@ namespace app.Services.AttendanceServices
                 Attendance model = new Attendance();
                 model.EmployeeId = vm.EmployeeId;
                 //model.AttendanceLogId = model.AttendanceLogId;
+                model.ShiftId = vm.ShiftId;
                 model.AttendanceDate = vm.AttendanceDate;
                 model.LoginTime = vm.LoginTime;
                 model.LogoutTime = vm.LogoutTime;
@@ -45,6 +46,7 @@ namespace app.Services.AttendanceServices
                 var result = await _iEntityRepository.GetByIdAsync(vm.Id);
                 result.EmployeeId = vm.EmployeeId;
                 //result.AttendanceLogId = model.AttendanceLogId;
+                result.ShiftId = vm.ShiftId;
                 result.AttendanceDate = vm.AttendanceDate;
                 result.LoginTime = vm.LoginTime;
                 result.LogoutTime = vm.LogoutTime;
@@ -61,6 +63,7 @@ namespace app.Services.AttendanceServices
             model.Id = result.Id;
             model.EmployeeId = result.EmployeeId;
             //model.AttendanceLogId = result.AttendanceLogId;
+            model.ShiftId = result.ShiftId;
             model.AttendanceDate = result.AttendanceDate;
             model.LoginTime = result.LoginTime;
             model.LogoutTime = result.LogoutTime;
@@ -75,6 +78,10 @@ namespace app.Services.AttendanceServices
                                                          select new AttendanceViewModel
                                                          {
                                                              Id = t1.Id,
+                                                             EmployeeId=t1.EmployeeId,
+                                                             EmployeeName=t1.Employee.Name,
+                                                             ShiftId=t1.ShiftId,
+                                                             ShiftName=t1.Shift.Name,
                                                              AttendanceDate = t1.AttendanceDate,
                                                              LoginTime = t1.LoginTime,
                                                              LogoutTime = t1.LogoutTime,
