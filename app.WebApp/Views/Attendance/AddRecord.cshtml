@@ -74,16 +74,15 @@
                                         <label asp-for="LogoutTime" class="control-label">Logout</label>
                                         <input type="time" asp-for="LogoutTime" class="form-control" required />
                                         <span asp-validation-for="LogoutTime" class="text-danger"></span>
-                                    </div>
-
+                                    </div> 
                                     <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label asp-for="Remarks" class="control-label">Remarks</label>
-                                            <textarea asp-for="Remarks" class="form-control" required rows="1"></textarea>
-                                            <span asp-validation-for="LogoutTime" class="text-danger"></span>
-                                        </div>
                                     </div>
-                                    <div class="col-md-4">
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label asp-for="Remarks" class="control-label">Remarks</label>
+                                        <textarea asp-for="Remarks" class="form-control" required rows="1"></textarea>
+                                        <span asp-validation-for="Remarks" class="text-danger"></span>
                                     </div>
                                 </div>
                             </div>

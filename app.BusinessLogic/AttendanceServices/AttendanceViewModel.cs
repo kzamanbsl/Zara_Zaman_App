@@ -25,7 +25,6 @@ namespace app.Services.AttendanceServices
         public long? ManagerId { get; set; }
         [DisplayName("Manager Name")]
         public string ManagerName { get; set; }
-
         public IEnumerable<AttendanceViewModel> AttendanceList { get; set; }
     }
 }

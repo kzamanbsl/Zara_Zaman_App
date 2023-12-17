@@ -29,7 +29,7 @@ namespace app.WebApp.Controllers
         {
             ViewBag.Employees = new SelectList((await _iDropdownService.EmployeeSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
 
-            ViewBag.Employees = new SelectList((await _iDropdownService.EmployeeSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
+            //ViewBag.Employees = new SelectList((await _iDropdownService.EmployeeSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
             ViewBag.Shifts = new SelectList((await _iDropdownService.ShiftSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
             AttendanceViewModel viewModel = new AttendanceViewModel();
 
@@ -52,8 +52,8 @@ namespace app.WebApp.Controllers
         [HttpGet]
         public async Task<IActionResult> UpdateRecord(long id)
         {
-            ViewBag.Shifts = new SelectList((await _iDropdownService.ShiftSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
             ViewBag.Employees = new SelectList((await _iDropdownService.EmployeeSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
+            ViewBag.Shifts = new SelectList((await _iDropdownService.ShiftSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
             var result = await _iService.GetRecordById(id);
             return View(result);
         }
