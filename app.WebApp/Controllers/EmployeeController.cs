@@ -1,6 +1,7 @@
 ﻿using app.Services.DropdownServices;
 using app.Services.EmployeeServices;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace app.WebApp.Controllers
@@ -31,7 +32,7 @@ namespace app.WebApp.Controllers
             ViewBag.DesignationList = new SelectList((await _iDropdownService.DesignationSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
             ViewBag.EmployeeCategoryList = new SelectList((await _iDropdownService.EmployeeCategorySelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
             ViewBag.JobStatusList = new SelectList((await _iDropdownService.JobStatusSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
-            ViewBag.ServiceTypeList = new SelectList((await _iDropdownService.ServiceTypeSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
+            ViewBag.ServiceTypeList = new SelectList((await _iDropdownService.EmployeeServiceTypeSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
             ViewBag.OfficeTypeList = new SelectList((await _iDropdownService.OfficeTypeSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
             ViewBag.ShiftList = new SelectList((await _iDropdownService.ShiftSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
             ViewBag.GradeList = new SelectList((await _iDropdownService.EmployeeGradeSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
@@ -51,9 +52,8 @@ namespace app.WebApp.Controllers
             {
                 return RedirectToAction("Index");
             }
-            ModelState.AddModelError(string.Empty, "Same Name already exists!");
+            ModelState.AddModelError(string.Empty, "Same Employee already exists!");
             return View(viewModel);
         }
-
     }
 }

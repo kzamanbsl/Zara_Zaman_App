@@ -29,11 +29,11 @@
         public OfficeType OfficeType { get; set; }
         public DateTime JoiningDate { get; set; }
         public DateTime ProbationEndDate { get; set; }
-        public DateTime PermanentDate { get; set; }
+        public DateTime? PermanentDate { get; set; }
         public long EmployeeOrder { get; set; }
         public string Remarks { get; set; }
       
-        public DateTime EndDate { get; set; }
+        public DateTime? EndDate { get; set; }
         public string EndReason { get; set; }
 
 
@@ -43,7 +43,7 @@
         public Division Division { get; set; }
         public int? DistrictId { get; set; }
         public District District { get; set; }
-        public int UpazilaId { get; set; }
+        public int? UpazilaId { get; set; }
         public Upazila Upazila { get; set; }
         public string PresentAddress { get; set; }
         public string PermanentAddress { get; set; }

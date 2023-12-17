@@ -31,7 +31,6 @@ namespace app.Infrastructure
         public virtual DbSet<Department> Department { get; set; }
         public virtual DbSet<EmployeeCategory> EmployeeCategory { get; set; }
         public virtual DbSet<EmployeeGrade> EmployeeGrade { get; set; }
-        public virtual DbSet<ServiceType> ServiceType { get; set; }
         public virtual DbSet<Shift> Shift { get; set; }
         public virtual DbSet<EmployeeServiceType> EmployeeServiceType { get; set; }
         public virtual DbSet<OfficeType> OfficeType { get; set; }

@@ -183,9 +183,9 @@ namespace app.Services.DropdownServices
                                                                                       }).AsQueryable());
             return dropDownViewModels;
         }
-        public async Task<IEnumerable<DropdownViewModel>> ServiceTypeSelectionList()
+        public async Task<IEnumerable<DropdownViewModel>> EmployeeServiceTypeSelectionList()
         {
-            IEnumerable<DropdownViewModel> dropDownViewModels = await Task.Run(() => (from t1 in _dbContext.ServiceType
+            IEnumerable<DropdownViewModel> dropDownViewModels = await Task.Run(() => (from t1 in _dbContext.EmployeeServiceType
                                                                                       where t1.IsActive == true
                                                                                       select new DropdownViewModel
                                                                                       {

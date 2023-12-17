@@ -90,7 +90,7 @@ namespace app.Services.EmployeeServices
         [DisplayName("District Name")]
         public string DistrictName { get; set; }
 
-        public int UpazilaId { get; set; }
+        public int? UpazilaId { get; set; }
         [DisplayName("Upazila Name")]
         public string UpazilaName { get; set; }
 
