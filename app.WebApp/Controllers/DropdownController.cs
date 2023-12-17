@@ -1,4 +1,5 @@
-﻿using app.Services.DropdownServices;
+﻿using app.EntityModel.AppModels;
+using app.Services.DropdownServices;
 using Microsoft.AspNetCore.Mvc;
 
 namespace app.WebApp.Controllers
@@ -11,7 +12,7 @@ namespace app.WebApp.Controllers
             _iService = iService;
         }
 
-        [HttpGet]
+        [HttpPost]
         public async Task<IEnumerable<DropdownViewModel>> GetCountrySelectionList()
         {
 
@@ -19,25 +20,25 @@ namespace app.WebApp.Controllers
             return res;
         }
 
-        [HttpGet]
-        public async Task<IEnumerable<DropdownViewModel>> GetDivisionSelectionList()
-        {
-            var res = await _iService.DivisionSelectionList();
-            return res;
-        }
-
-        [HttpGet]
-        public async Task<IEnumerable<DropdownViewModel>> GetDistrictSelectionList(int divisionId = 0)
+        [HttpPost]
+        public async Task<IActionResult> GetDistrictSelectionList(int divisionId = 0)
         {
             var res = await _iService.DistrictSelectionList(divisionId);
-            return res;
+            return Ok(res);
         }
 
-        [HttpGet]
-        public async Task<IEnumerable<DropdownViewModel>> GetUpazilaSelectionList(int divisionId = 0, int districtId = 0)
+        [HttpPost]
+        public async Task<IActionResult> GetDivisionSelectionList()
+        {
+            var res = await _iService.DivisionSelectionList();
+            return Ok(res);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> GetUpazilaSelectionList(int divisionId = 0, int districtId = 0)
         {
             var res = await _iService.UpazilaSelectionList(divisionId, districtId);
-            return res;
+            return Ok(res);
         }
 
     }

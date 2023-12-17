@@ -10,7 +10,6 @@ namespace app.Services.LeaveBalanceServices
         public long LeaveCategoryId { get; set; }
         [DisplayName("Leave Category Name")]
         public string LeaveCategoryName { get; set; }
-
         public IEnumerable<LeaveBalanceViewModel> LeaveBalanceList { get; set; }
     }
 }

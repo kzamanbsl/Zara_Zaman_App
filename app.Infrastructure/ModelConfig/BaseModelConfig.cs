@@ -23,7 +23,6 @@ namespace app.Infrastructure.ModelConfig
             new EmployeeGradeConfig()?.Configure(builder.Entity<EmployeeGrade>());
             new DesignationConfig()?.Configure(builder.Entity<Designation>());
             new EmployeeCategoryConfig()?.Configure(builder.Entity<EmployeeCategory>());
-            new ServiceTypeConfig()?.Configure(builder.Entity<ServiceType>());
             new ShiftConfig()?.Configure(builder.Entity<Shift>());
             new OfficeTypeConfig()?.Configure(builder.Entity<OfficeType>());
             new DropdownItemConfig()?.Configure(builder.Entity<DropdownItem>());
