@@ -15,9 +15,12 @@ namespace app.WebApp.Controllers
             _iService = iService;
             _iDropdownService = iDropdownService;
         }
-        public IActionResult Index()
+
+        [HttpGet]
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var result = await _iService.GetAllRecord();
+            return View(result);
         }
 
         [HttpGet]

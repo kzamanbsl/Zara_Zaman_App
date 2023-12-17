@@ -2,6 +2,8 @@
 using app.Infrastructure.Auth;
 using app.Infrastructure.Repository;
 using app.Infrastructure;
+using app.Services.LeaveBalanceServices;
+using Microsoft.EntityFrameworkCore;
 
 namespace app.Services.EmployeeServices
 {
@@ -90,9 +92,25 @@ namespace app.Services.EmployeeServices
         {
             throw new NotImplementedException();
         }
-        public Task<EmployeeViewModel> GetAllRecord()
+        public async Task<EmployeeViewModel> GetAllRecord()
         {
-            throw new NotImplementedException();
+            EmployeeViewModel model = new EmployeeViewModel();
+            model.EmployeeList = await Task.Run(() => (from t1 in _dbContext.Employee
+                                                       where t1.IsActive == true
+                                                       select new EmployeeViewModel
+                                                       {
+                                                           Id = t1.Id,
+                                                           EmployeeCode = t1.EmployeeCode,
+                                                           Name = t1.Name,
+                                                           DepartmentId = t1.DepartmentId,
+                                                           DepartmentName = t1.Department.Name,
+                                                           DesignationName = t1.Designation.Name,
+                                                           MobileNo = t1.MobileNo,
+                                                           JoiningDate = t1.JoiningDate,
+                                                           Email = t1.Email,
+
+                                                       }).AsQueryable()) ;
+            return model;
         }
 
         public Task<bool> DeleteRecord(long id)

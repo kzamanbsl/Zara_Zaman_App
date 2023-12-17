@@ -139,5 +139,7 @@ namespace app.Services.EmployeeServices
 
         public string PhotoUrl { get; set; }
         public string SignUrl { get; set; }
+
+        public IEnumerable<EmployeeViewModel> EmployeeList { get; set; }
     }
 }
