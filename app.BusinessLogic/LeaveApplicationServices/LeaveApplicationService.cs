@@ -34,6 +34,7 @@ namespace app.Services.LeaveApplicationServices
                 com.StayDuringLeave = vm.StayDuringLeave;
                 com.Reason = vm.Reason;
                 com.Remarks = vm.Remarks;
+                com.ApplicationDate = vm.ApplicationDate;
                 com.StatusId = (int)LeaveApplicationStatusEnum.Draft ;
                 var res = await _iEntityRepository.AddAsync(com);
                 vm.Id=res.Id;
@@ -63,6 +64,7 @@ namespace app.Services.LeaveApplicationServices
                 result.Remarks = vm.Remarks;
                 result.StatusId = vm.StatusId;
                 result.Employee.Name = vm.StatusName;
+                result.ApplicationDate = vm.ApplicationDate;
                 await _iEntityRepository.UpdateAsync(result);
                 return true;
             }
@@ -74,14 +76,19 @@ namespace app.Services.LeaveApplicationServices
             LeaveApplicationViewModel model = new LeaveApplicationViewModel();
             model.Id = result.Id;
             model.EmployeeId = result.EmployeeId;
+            model.EmployeeName = result.Employee?.Name;
             model.ManagerId = result.ManagerId;
+            model.ManagerName=result.Manager?.Name;
             model.LeaveCategoryId = result.LeaveCategoryId;
+            model.LeaveCategoryName = result.LeaveCategory?.Name;
             model.StartDate = result.StartDate;
             model.EndDate = result.EndDate;
             model.LeaveDays = result.LeaveDays;
             model.StayDuringLeave = result.StayDuringLeave;
             model.Reason = result.Reason;
             model.Remarks = result.Remarks;
+            model.ApplicationDate = result.ApplicationDate;
+            model.StatusId = result.StatusId;
             return model;
         }
         public async Task<LeaveApplicationViewModel> GetAllRecord()
@@ -96,7 +103,6 @@ namespace app.Services.LeaveApplicationServices
                         Id = t1.Id,
                         EmployeeId = t1.EmployeeId,
                         EmployeeName = t1.Employee.Name,
-                        ManagerId = t1.ManagerId,
                         ManagerName = t1.Manager.Name,
                         LeaveCategoryId = t1.LeaveCategoryId,
                         LeaveCategoryName = t1.LeaveCategory.Name,
@@ -107,6 +113,7 @@ namespace app.Services.LeaveApplicationServices
                         Reason = t1.Reason,
                         Remarks = t1.Remarks,
                         StatusId = t1.StatusId,
+                        ApplicationDate = t1.ApplicationDate,
                     };
 
                 return query.AsQueryable();
@@ -153,7 +160,6 @@ namespace app.Services.LeaveApplicationServices
             await _iEntityRepository.UpdateAsync(result);
             return true;
         }
-
         public async Task<bool> DeleteRecord(long id)
         {
             var result = await _iEntityRepository.GetByIdAsync(id);
