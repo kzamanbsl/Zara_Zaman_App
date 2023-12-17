@@ -9,7 +9,7 @@
         Company,
 
         Department,
-        Grade,
+        EmployeeGrade,
         Designation,
         EmployeeCategory,
         ServiceType,
