@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
 using app.Utility;
+using app.Services.LeaveBalanceServices;
 
 namespace app.Services.LeaveApplicationServices
 {
@@ -42,6 +43,8 @@ namespace app.Services.LeaveApplicationServices
         public int StatusId { get; set; }
         [DisplayName("Status")]
         public string StatusName => GlobalVariable.GetEnumDescription((LeaveApplicationStatusEnum)StatusId);
+
+        public IEnumerable<LeaveBalanceViewModel> LeaveBalanceList { get; set; }
 
         public IEnumerable<LeaveApplicationViewModel> LeaveApplicationList { get; set; }
 

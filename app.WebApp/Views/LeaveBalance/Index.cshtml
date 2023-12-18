@@ -39,10 +39,10 @@
                                     #
                                 </th>
                                 <th>
-                                    Leave Qty
+                                    Leave Category Name
                                 </th>
                                 <th>
-                                    Leave Category Name
+                                    Leave Qty
                                 </th>
                                 <th>
                                     Description
@@ -60,12 +60,11 @@
                                         @SN
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.LeaveQty)
-                                    </td>
-                                    <td>
                                         @Html.DisplayFor(modelItem => item.LeaveCategoryName)
                                     </td>
-                                    
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.LeaveQty)
+                                    </td>
                                     
                                     <td>
                                         @Html.DisplayFor(modelItem => item.Description)

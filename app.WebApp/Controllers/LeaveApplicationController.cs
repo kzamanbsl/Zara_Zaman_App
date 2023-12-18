@@ -29,7 +29,7 @@ namespace app.WebApp.Controllers
         [HttpGet]
         public async Task<IActionResult> Details(long id)
         {
-         
+            
             if (id == 0)
             {
                 return NotFound();

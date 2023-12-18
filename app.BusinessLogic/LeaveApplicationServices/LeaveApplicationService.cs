@@ -3,6 +3,9 @@ using app.Infrastructure.Auth;
 using app.Infrastructure.Repository;
 using app.Infrastructure;
 using app.Utility;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using app.Services.LeaveBalanceServices;
 
 namespace app.Services.LeaveApplicationServices
 {
@@ -17,7 +20,7 @@ namespace app.Services.LeaveApplicationServices
             _dbContext = dbContext;
             _iWorkContext = iWorkContext;
         }
-      
+
         public async Task<bool> AddRecord(LeaveApplicationViewModel vm)
         {
             var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id == vm.Id);
@@ -35,9 +38,9 @@ namespace app.Services.LeaveApplicationServices
                 com.Reason = vm.Reason;
                 com.Remarks = vm.Remarks;
                 com.ApplicationDate = vm.ApplicationDate;
-                com.StatusId = (int)LeaveApplicationStatusEnum.Draft ;
+                com.StatusId = (int)LeaveApplicationStatusEnum.Draft;
                 var res = await _iEntityRepository.AddAsync(com);
-                vm.Id=res.Id;
+                vm.Id = res.Id;
                 return true;
             }
             return false;
@@ -62,7 +65,7 @@ namespace app.Services.LeaveApplicationServices
                 result.StayDuringLeave = vm.StayDuringLeave;
                 result.Reason = vm.Reason;
                 result.Remarks = vm.Remarks;
-                result.StatusId = vm.StatusId;
+                result.StatusId = (int)LeaveApplicationStatusEnum.Draft;
                 result.Employee.Name = vm.StatusName;
                 result.ApplicationDate = vm.ApplicationDate;
                 await _iEntityRepository.UpdateAsync(result);
@@ -72,13 +75,14 @@ namespace app.Services.LeaveApplicationServices
         }
         public async Task<LeaveApplicationViewModel> GetRecordById(long id)
         {
-            var result = await _iEntityRepository.GetByIdAsync(id);
+            //var result = await _iEntityRepository.GetByIdAsync(id);
+            var result = await _dbContext.LeaveApplication.Include(c => c.Employee).Include(c => c.LeaveCategory).FirstOrDefaultAsync(c => c.Id == id);
             LeaveApplicationViewModel model = new LeaveApplicationViewModel();
             model.Id = result.Id;
             model.EmployeeId = result.EmployeeId;
             model.EmployeeName = result.Employee?.Name;
             model.ManagerId = result.ManagerId;
-            model.ManagerName=result.Manager?.Name;
+            model.ManagerName = result.Manager?.Name;
             model.LeaveCategoryId = result.LeaveCategoryId;
             model.LeaveCategoryName = result.LeaveCategory?.Name;
             model.StartDate = result.StartDate;
@@ -97,30 +101,37 @@ namespace app.Services.LeaveApplicationServices
             model.LeaveApplicationList = await Task.Run(() =>
             {
                 var query = from t1 in _dbContext.LeaveApplication
-                    where t1.IsActive == true
-                    select new LeaveApplicationViewModel
-                    {
-                        Id = t1.Id,
-                        EmployeeId = t1.EmployeeId,
-                        EmployeeName = t1.Employee.Name,
-                        ManagerName = t1.Manager.Name,
-                        LeaveCategoryId = t1.LeaveCategoryId,
-                        LeaveCategoryName = t1.LeaveCategory.Name,
-                        StartDate = t1.StartDate,
-                        EndDate = t1.EndDate,
-                        LeaveDays = t1.LeaveDays,
-                        StayDuringLeave = t1.StayDuringLeave,
-                        Reason = t1.Reason,
-                        Remarks = t1.Remarks,
-                        StatusId = t1.StatusId,
-                        ApplicationDate = t1.ApplicationDate,
-                    };
+                            where t1.IsActive == true
+                            select new LeaveApplicationViewModel
+                            {
+                                Id = t1.Id,
+                                EmployeeId = t1.EmployeeId,
+                                EmployeeName = t1.Employee.Name,
+                                ManagerName = t1.Manager.Name,
+                                LeaveCategoryId = t1.LeaveCategoryId,
+                                LeaveCategoryName = t1.LeaveCategory.Name,
+                                StartDate = t1.StartDate,
+                                EndDate = t1.EndDate,
+                                LeaveDays = t1.LeaveDays,
+                                StayDuringLeave = t1.StayDuringLeave,
+                                Reason = t1.Reason,
+                                Remarks = t1.Remarks,
+                                StatusId = t1.StatusId,
+                                ApplicationDate = t1.ApplicationDate,
+                            };
 
                 return query.AsQueryable();
             });
 
             return model;
         }
+
+        public async Task<IEnumerable<LeaveBalanceCountViewModel>> GetLeaveBalanceByEmployeeId(long employeeId)
+        {
+            var dataList = new List<LeaveBalanceCountViewModel>();
+            return dataList;
+        }
+
 
         public async Task<bool> ConfirmRecord(long id)
         {
@@ -147,7 +158,7 @@ namespace app.Services.LeaveApplicationServices
             await _iEntityRepository.UpdateAsync(result);
             return true;
         }
-       
+
         public async Task<bool> RejectRecord(long id)
         {
             var result = await _iEntityRepository.GetByIdAsync(id);
@@ -167,6 +178,7 @@ namespace app.Services.LeaveApplicationServices
             await _iEntityRepository.UpdateAsync(result);
             return true;
         }
+
 
     }
 }
