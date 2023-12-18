@@ -1,6 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
 using app.EntityModel.AppModels;
+using app.Services.DropdownItemServices;
+using app.Utility;
 
 namespace app.Services.EmployeeServices
 {
@@ -112,7 +114,6 @@ namespace app.Services.EmployeeServices
         public int? GenderId { get; set; }
         [DisplayName("Gender Name")]
         public string GenderName { get; set; }
-
         public int? ReligionId { get; set; }
         [DisplayName("Religion Name")]
         public string ReligionName { get; set; }
@@ -121,7 +122,7 @@ namespace app.Services.EmployeeServices
         [DisplayName("Blood Group Name")]
         public string BloodGroupName { get; set; }
 
-        public int? MaritalTypeId { get; set; }
+        public long? MaritalTypeId { get; set; }
         [DisplayName("Marital Type Name")]
         public string MaritalTypeName { get; set; }
 
@@ -138,8 +139,7 @@ namespace app.Services.EmployeeServices
         public string TinNo { get; set; }
 
         public string PhotoUrl { get; set; }
-        public string SignUrl { get; set; }
-
+        public string SignUrl { get; set; }    
         public IEnumerable<EmployeeViewModel> EmployeeList { get; set; }
     }
 }
