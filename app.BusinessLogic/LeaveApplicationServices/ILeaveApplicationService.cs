@@ -1,4 +1,6 @@
-﻿namespace app.Services.LeaveApplicationServices
+﻿using app.Services.LeaveBalanceServices;
+
+namespace app.Services.LeaveApplicationServices
 {
     public interface ILeaveApplicationService
     {
@@ -8,6 +10,7 @@
        
         Task<LeaveApplicationViewModel> GetRecordById(long id);
         Task<LeaveApplicationViewModel> GetAllRecord();
+        Task<IEnumerable<LeaveBalanceCountViewModel>> GetLeaveBalanceByEmployeeId(long employeeId);
         Task<bool> ConfirmRecord(long id);
         Task<bool> ApproveRecord(long id);
         Task<bool> RejectRecord(long id);
