@@ -1,10 +1,11 @@
-﻿<!DOCTYPE html>
-<html>
-<head>
-    <title>Your Page Title</title>
-    <!-- Add any necessary stylesheets or scripts here -->
+﻿@model app.Services.EmployeeServices.EmployeeViewModel
+@using app.Utility
+@{
+    ViewData["Title"] = "Employee Details";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
     <style>
-        /* Define your CSS styles here */
         .section {
             margin-bottom: 20px;
         }
@@ -14,6 +15,7 @@
             border-radius: 5px;
             padding: 10px;
             margin-bottom: 10px;
+            margin-top: 60px;
         }
 
         .card-header {
@@ -44,21 +46,33 @@
         .clear {
             clear: both;
         }
+
+        .header {
+            text-align: center; /* Center align content */
+        }
     </style>
-</head>
+
 <body>
     <div class="card">
         <div class="section">
-           <div class="row">
-                <div class="col-2">
-                    <img src="path/to/your/image.jpg" alt="Company Logo" width="100" height="100">
+            <div class="row">
+               <div class="col-md-3">
+                    <img src="~/kgfile/zarazamanlogo.jpeg" alt="Company Logo" width="100" height="100">
+               </div>
+                <div class="col-md-6">
+                    <div class="header">
+                        <h2>Zara Zaman Technology Limited</h2>
+                        <p>
+                            Venture Tower (7th Floor)
+                            3 Bir Uttam, A.K. Khandakar Road
+                            Mohakhali C/A, Dhaka-1212, Bangladesh
+                        </p>
+                        <h3 style="margin-top:-20px;">Employee Information</h3>
+                    </div>
                 </div>
-                <div class="col-10 align-content-center">
-                    <h2>CompanyName</h2>
-                    <p>Employee Information</p>
-                    <p>Employee Information</p>
-                </div>
-           </div>
+                <div class="col-md-3"></div>
+              
+            </div>
             <div class="clear"></div>
         </div>
 
@@ -66,16 +80,74 @@
         <div class="section">
             <div class="card-body">
                 <div class="row">
-                    <h2 class="card-header">Personal Information</h2>
-                    <div class="column">
-                        <!-- Add personal information fields here -->
-                        <p>Name: John Doe</p>
-                        <p>Email: john@example.com</p>
-                        <!-- Add more personal information fields as needed -->
-                    </div>
-                    <div class="column">
-                        <p>Name: John Doe</p>
-                        <p>Email: john@example.com</p>
+                    <h5 class="card-header" style="width: 100%;">Personal Information</h5>
+                    <div class="table-responsive">
+                        <table class="table" style="border-collapse: collapse; width: 100%;">
+                            <tbody>
+                                <tr>
+                                    <td style="border: 1px solid #ccc;  font-weight: bold; width: 150px;">Name</td>
+                                    <td style="border: 1px solid #ccc;">@Model.Name</td>
+                                    <td style="border: 1px solid #ccc;  font-weight: bold; width: 150px;">Short Name </td>
+                                    <td style="border: 1px solid #ccc;">@Model.ShortName</td>
+
+                                </tr>
+                                <tr>
+                                    <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold; width: 150px;">Father's Name </td>
+                                    <td style="border: 1px solid #ccc; padding: 8px;">@Model.FatherName</td>
+                                    <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold; width: 150px;">Mother's Name</td>
+                                    <td style="border: 1px solid #ccc; padding: 8px;">@Model.MotherName</td>
+                                </tr>
+                                <tr>
+                                    <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold; width: 150px;">Date of Birth </td>
+                                    <td style="border: 1px solid #ccc; padding: 8px;">@Model.DateOfBirth</td>
+                                    <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold; width: 150px;">Gender</td>
+                                    <td style="border: 1px solid #ccc; padding: 8px;">@Model.GenderName</td>
+                                </tr>
+
+                                <tr>
+                                    <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold; width: 150px;">Blood Group</td>
+                                    <td style="border: 1px solid #ccc; padding: 8px;">@Model.BloodGroupName</td>
+                                    <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold; width: 150px;">Religion</td>
+                                    <td style="border: 1px solid #ccc; padding: 8px;">@Model.ReligionName</td>
+                                </tr>
+                                <tr>
+                                    <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold; width: 150px;">Country</td>
+                                    <td style="border: 1px solid #ccc; padding: 8px;">@Model.CountryName</td>
+                                    <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold; width: 150px;">District</td>
+                                    <td style="border: 1px solid #ccc; padding: 8px;">@Model.DistrictName</td>
+                                </tr>
+                                <tr>
+                                    <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold; width: 150px;">Present Address </td>
+                                    <td style="border: 1px solid #ccc; padding: 8px;">@Model.PresentAddress</td>
+                                    <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold; width: 150px;">Permanent Address</td>
+                                    <td style="border: 1px solid #ccc; padding: 8px;">@Model.PermanentAddress</td>
+                                </tr>
+                                <tr>
+                                    <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold; width: 150px;">Marital Staus</td>
+                                    <td style="border: 1px solid #ccc; padding: 8px;">@Model.MaritalTypeName</td>
+                                    <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold; width: 150px;">Marriage Date</td>
+                                    <td style="border: 1px solid #ccc; padding: 8px;">@Model.DateOfMarriage</td>
+                                </tr>
+                                <tr>
+                                    <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold; width: 150px;">Spouse Name </td>
+                                    <td style="border: 1px solid #ccc; padding: 8px;">@Model.SpouseName</td>
+                                    <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold; width: 150px;">National ID</td>
+                                    <td style="border: 1px solid #ccc; padding: 8px;">@Model.NationalIdNo</td>
+                                </tr>
+                                <tr>
+                                    <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold; width: 150px;">Personal Contact</td>
+                                    <td style="border: 1px solid #ccc; padding: 8px;">@Model.MobileNo</td>
+                                    <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold; width: 150px;">Personal Email </td>
+                                    <td style="border: 1px solid #ccc; padding: 8px;">@Model.Email</td>
+                                </tr>
+                                 <tr>
+                                    <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold; width: 150px;">TIN No</td>
+                                    <td style="border: 1px solid #ccc; padding: 8px;">@Model.TinNo</td>
+                                    <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold; width: 150px;">Manager Name</td>
+                                    <td style="border: 1px solid #ccc; padding: 8px;">@Model.ManagerName</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
                 <div class="clear"></div>
@@ -85,17 +157,37 @@
         <div class="section">
             <div class="card-body">
                 <div class="row">
-                    <h2 class="card-header">Service Information</h2>
-                    <div class="column">
+                    <h5 class="card-header" style="width: 100%;">Service Information</h5>
 
-                        <!-- Add service-related information here -->
-                        <p>Service 1: Description of service 1</p>
-                        <p>Service 2: Description of service 2</p>
-                        <!-- Add more service-related information as needed -->
-                    </div>
-                    <div class="column">
-                        <p>Service 1: Description of service 1</p>
-                        <p>Service 2: Description of service 2</p>
+                    <div class="table-responsive">
+                        <table class="table" style="border-collapse: collapse; width: 100%;">
+                            <tbody>
+                                <tr>
+                                    <td style="border: 1px solid #ccc;  font-weight: bold; width: 150px;">Employee ID </td>
+                                    <td style="border: 1px solid #ccc;">@Model.EmployeeCode</td>
+                                    <td style="border: 1px solid #ccc;  font-weight: bold; width: 150px;">Joining Date</td>
+                                    <td style="border: 1px solid #ccc;">@Model.JoiningDate</td>
+                                </tr>
+                                <tr>
+                                    <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold; width: 150px;">Department </td>
+                                    <td style="border: 1px solid #ccc; padding: 8px;">@Model.DepartmentName</td>
+                                    <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold; width: 150px;">Designation</td>
+                                    <td style="border: 1px solid #ccc; padding: 8px;">@Model.DesignationName</td>
+                                </tr>
+                                  <tr>
+                                    <td style="border: 1px solid #ccc;  font-weight: bold; width: 150px;">Job Status</td>
+                                    <td style="border: 1px solid #ccc;">@Model.JobStatusName</td>
+                                    <td style="border: 1px solid #ccc;  font-weight: bold; width: 150px;">Service Type</td>
+                                    <td style="border: 1px solid #ccc;">@Model.ServiceTypeName</td>
+                                </tr>
+                                <tr>
+                                    <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold; width: 150px;">Office Type</td>
+                                    <td style="border: 1px solid #ccc; padding: 8px;">@Model.OfficeTypeName</td>
+                                    <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold; width: 150px;">Shift</td>
+                                    <td style="border: 1px solid #ccc; padding: 8px;">@Model.ShiftName</td>
+                                </tr>                                 
+                            </tbody>
+                        </table>
                     </div>
                 </div>
                 <div class="clear"></div>
@@ -103,7 +195,4 @@
         </div>
     </div>
 
-    <!-- Add any additional sections or content as necessary -->
-
 </body>
-</html>

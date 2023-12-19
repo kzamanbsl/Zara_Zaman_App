@@ -7,6 +7,7 @@
         Task<MenuItemViewModel> GetRecordById(long id);
         Task<MenuItemViewModel> GetAllRecord();
         Task<bool> DeleteRecord(long id);
+        Task<bool> MenuShowSideBar(long id);
        
     }
 }

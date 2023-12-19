@@ -11,8 +11,8 @@ namespace app.Infrastructure.ModelConfig
         public void Configure(EntityTypeBuilder<MenuItem> builder)
         {
             builder.HasKey(c => c.Id);
-            builder.Property(c => c.Name).HasMaxLength(200);
-            builder.Property(c => c.ShortName).HasMaxLength(20);
+            builder.Property(c => c.Name).HasMaxLength(250);
+            builder.Property(c => c.ShortName).HasMaxLength(250);
 
             builder.ToTable(TableNameEnum.MenuItem.ToString());
         }

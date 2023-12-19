@@ -103,7 +103,7 @@ namespace app.Services.UserPermissionsServices
                     vm.Id = menu.Id;
                     vm.Name = menu.Name;
                     if (res != null && res.IsActive == true)
-                    { vm.IsPermission = true; }
+                    { vm.IsPermission = true;}
 
                     else { vm.IsPermission = false; }
                     menuItemList.Add(vm);

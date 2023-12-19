@@ -84,6 +84,13 @@ namespace app.WebApp.AdminControllers
             }
         }
 
+        [HttpGet]
+        public async Task<IActionResult> MenuHide(long id)
+        {
+            var res = await _iService.MenuShowSideBar(id);
+            return RedirectToAction("Index");
+        }
+
     }
 }
 

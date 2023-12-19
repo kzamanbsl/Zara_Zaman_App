@@ -122,5 +122,20 @@ namespace app.Services.MenuItemServices
             return false;
         }
 
+        public async Task<bool> MenuShowSideBar(long id)
+        {
+            var getItem = await _iEntityRepository.GetByIdAsync(id);
+            if (getItem != null)
+            {
+                getItem.IsMenuShow = false;
+                var result = await _iEntityRepository.UpdateAsync(getItem);
+                if (result)
+                {
+                    return true;
+                }
+                return false;
+            }
+            return false;
+        }
     }
 }
