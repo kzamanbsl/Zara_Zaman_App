@@ -23,61 +23,41 @@
                         Leave Type
                     </th>
                     <th>
-                        Total Leave
+                        Leave Qty
                     </th>
                     <th>
-                        Leave Availed
+                        Leave Used Qty
                     </th>
                     <th>
-                        Leave Due
+                        Leave Remaining Qty
                     </th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                </tr>
+                @if (Model.LeaveBalanceCountList?.Count() > 0)
+                {
+                    @foreach (var item in Model.LeaveBalanceCountList)
+                    {
+                        <tr>
+                            <td>@item.LeaveCategoryName</td>
+                            <td><span class="badge" style="color:gray">@item.LeaveQty</span></td>
+                            <td><span class="badge" style="color:orange">@item.LeaveUsedQty</span></td>
+                            <td><span class="badge" style="color:green">@item.LeaveRemainingQty</span></td>
+                        </tr>
+                    }
+                }
+
+
             </tbody>
         </table>
     </div>
 </div>
 
-@* <div class="card-body">
-    <div class="table-responsive">
-        <div class="header">
-            <h4 class="card-header">Leave Balance</h4>
-            <hr style="border-color:#ff0000;padding:0px;margin-top:5px;margin-bottom:5px; border-width:2px;" />
-        </div>
-        <table class="table table-sm table-bordered">
-            <thead>
-                <tr style="background-color:#4CAF50;color:#FFFFFF;">
-                    <th>
-                        Leave Type
-                    </th>
-                    <th>
-                        Total Leave
-                    </th>
-                    <th>
-                        Leave Availed
-                    </th>
-                    <th>
-                        Leave Due
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
- *@
 
 <div class="card-body">
     <div class="table-responsive">
         <div style="background-color:#4CAF50;color:#FFFFFF;padding:2px;">
-            <h4><b>Employee Details</b></h4>
+            <h4><b>Leave Balance Details</b></h4>
         </div>
         <table class="table table-sm table-bordered">
             <tr>
@@ -108,7 +88,7 @@
         <div class="container-fluid">
             <button id="Manager" class="btn btn-outline-primary">Confirm</button>
             <button id="Manager" class="btn btn-outline-success">Approve</button>
-            <button id="Manager" class="btn btn-outline-danger">Reject</button>
+            <button id="Manager" class="btn btn-danger">Reject</button>
         </div>
     </div>
 </div>
