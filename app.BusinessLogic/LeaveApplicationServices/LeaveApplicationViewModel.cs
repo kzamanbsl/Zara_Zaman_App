@@ -44,7 +44,7 @@ namespace app.Services.LeaveApplicationServices
         [DisplayName("Status")]
         public string StatusName => GlobalVariable.GetEnumDescription((LeaveApplicationStatusEnum)StatusId);
 
-        public IEnumerable<LeaveBalanceViewModel> LeaveBalanceList { get; set; }
+        public IEnumerable<LeaveBalanceCountViewModel> LeaveBalanceCountList { get; set; }
 
         public IEnumerable<LeaveApplicationViewModel> LeaveApplicationList { get; set; }
 

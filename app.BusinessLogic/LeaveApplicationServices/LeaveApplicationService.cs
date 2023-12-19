@@ -128,10 +128,31 @@ namespace app.Services.LeaveApplicationServices
 
         public async Task<IEnumerable<LeaveBalanceCountViewModel>> GetLeaveBalanceByEmployeeId(long employeeId)
         {
-            var dataList = new List<LeaveBalanceCountViewModel>();
-            return dataList;
-        }
+            var result = new List<LeaveBalanceCountViewModel>();
 
+            var leaveBalanceList = await _dbContext.LeaveBalance.Include(c=>c.LeaveCategory).Where(c => c.IsActive == true).ToListAsync();
+
+            var leaveApplication = await _dbContext.LeaveApplication.Include(c => c.LeaveCategory).Where(c => c.EmployeeId == employeeId && c.StatusId == (int)LeaveApplicationStatusEnum.Approve).ToListAsync();
+
+            if (leaveBalanceList?.Count <= 0) { return result; }
+
+            foreach (var lb in leaveBalanceList)
+            {
+                int useLeaveQty = leaveApplication.Where(c => c.LeaveCategoryId == lb.LeaveCategoryId).Sum(s => s.LeaveDays);
+                var obj = new LeaveBalanceCountViewModel()
+                {
+                    LeaveCategoryId = lb.LeaveCategoryId,
+                    LeaveCategoryName = lb.LeaveCategory?.Name,
+                    Description = lb.Description,
+                    LeaveQty=lb.LeaveQty,
+                    LeaveUsedQty= useLeaveQty,
+                    LeaveRemainingQty=(lb.LeaveQty-useLeaveQty)
+                };
+                result.Add(obj);
+            }
+
+            return result;
+        }
 
         public async Task<bool> ConfirmRecord(long id)
         {

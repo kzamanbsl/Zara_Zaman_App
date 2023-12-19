@@ -1,6 +1,7 @@
 ﻿using app.EntityModel.AppModels;
 using app.Services.DropdownServices;
 using app.Services.LeaveApplicationServices;
+using app.Services.LeaveBalanceServices;
 using app.Utility;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -36,6 +37,8 @@ namespace app.WebApp.Controllers
             }
 
             var leaveApplicationVm = await _iService.GetRecordById(id);
+            var empLeaveBalanceList = await _iService.GetLeaveBalanceByEmployeeId(leaveApplicationVm.EmployeeId);
+            leaveApplicationVm.LeaveBalanceCountList = empLeaveBalanceList;
 
             return View(leaveApplicationVm);
         }
@@ -97,6 +100,7 @@ namespace app.WebApp.Controllers
             ModelState.AddModelError(string.Empty, "Same Name already exists!");
             return View(model);
         }
+        
 
         [HttpGet]
         public async Task <ActionResult> ConfirmRecord(long id)
