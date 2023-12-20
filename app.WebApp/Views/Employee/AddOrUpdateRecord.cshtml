@@ -63,7 +63,7 @@
                                             <div class="form-group">
                                                 <div class="col-md-8">
                                                     <label asp-for="EmployeeCode">Employee Code</label>
-                                                    <input asp-for="EmployeeCode" class="form-control" />
+                                                    <input asp-for="EmployeeCode" class="form-control" required />
                                                     <span asp-validation-for="EmployeeCode" class="text-danger"></span>
                                                 </div>
                                             </div>
@@ -72,7 +72,7 @@
                                             <div class="form-group">
                                                 <div class="col-md-8">
                                                     <label asp-for="Name"></label>
-                                                    <input asp-for="Name" class="form-control" />
+                                                    <input asp-for="Name" class="form-control" required />
                                                     <span asp-validation-for="Name" class="text-danger"></span>
                                                 </div>
                                             </div>
@@ -81,7 +81,7 @@
                                             <div class="form-group">
                                                 <div class="col-md-8">
                                                     <label asp-for="ManagerId">Manager</label>
-                                                    <select asp-for="ManagerId" class="form-control" required asp-items="ViewBag.ManagerList">
+                                                    <select asp-for="ManagerId" class="form-control"  asp-items="ViewBag.ManagerList">
                                                         <option value="">-- Select Manager --</option>
                                                     </select>
                                                     <span asp-validation-for="ManagerId" class="text-danger"></span>
@@ -133,7 +133,7 @@
                                             <div class="form-group">
                                                 <div class="col-md-8">
                                                     <label asp-for="FatherName">Father's Name</label>
-                                                    <input asp-for="FatherName" class="form-control" required />
+                                                    <input asp-for="FatherName" class="form-control"  />
                                                     <span asp-validation-for="FatherName" class="text-danger"></span>
                                                 </div>
                                             </div>
@@ -142,7 +142,7 @@
                                             <div class="form-group">
                                                 <div class="col-md-8">
                                                     <label asp-for="MotherName">Mother's Name</label>
-                                                    <input asp-for="MotherName" class="form-control" required />
+                                                    <input asp-for="MotherName" class="form-control"  />
                                                     <span asp-validation-for="MotherName" class="text-danger"></span>
                                                 </div>
                                             </div>
@@ -180,7 +180,7 @@
                                             <div class="form-group">
                                                 <div class="col-md-8">
                                                     <label asp-for="DateOfBirth">Date of Birth</label>
-                                                    <input asp-for="DateOfBirth" class="form-control" required />
+                                                    <input asp-for="DateOfBirth" class="form-control"  />
                                                     <span asp-validation-for="DateOfBirth" class="text-danger"></span>
                                                 </div>
                                             </div>
@@ -189,7 +189,7 @@
                                             <div class="form-group">
                                                 <div class="col-md-8">
                                                     <label asp-for="NationalIdNo">NID</label>
-                                                    <input asp-for="NationalIdNo" class="form-control" required />
+                                                    <input asp-for="NationalIdNo" class="form-control"  />
                                                     <span asp-validation-for="NationalIdNo" class="text-danger"></span>
                                                 </div>
                                             </div>
@@ -220,7 +220,7 @@
                                             <div class="form-group">
                                                 <div class="col-md-8">
                                                     <label asp-for="ReligionId">Religion</label>
-                                                    <select asp-for="ReligionId" class="form-control" required asp-items="ViewBag.ReligionList">
+                                                    <select asp-for="ReligionId" class="form-control"  asp-items="ViewBag.ReligionList">
                                                         <option value="">-- Select --</option>
                                                     </select>
                                                     <span asp-validation-for="ReligionId" class="text-danger"></span>
@@ -254,7 +254,7 @@
                                             <div class="form-group">
                                                 <div class="col-md-8">
                                                     <label asp-for="JoiningDate">Joining Date</label>
-                                                    <input asp-for="JoiningDate" class="form-control" required />
+                                                    <input asp-for="JoiningDate" class="form-control"  />
                                                     <span asp-validation-for="JoiningDate" class="text-danger"></span>
                                                 </div>
                                             </div>
@@ -263,7 +263,7 @@
                                             <div class="form-group">
                                                 <div class="col-md-8">
                                                     <label asp-for="ProbationEndDate">Probation End Date</label>
-                                                    <input asp-for="ProbationEndDate" class="form-control" required />
+                                                    <input asp-for="ProbationEndDate" class="form-control"  />
                                                     <span asp-validation-for="ProbationEndDate" class="text-danger"></span>
                                                 </div>
                                             </div>
@@ -305,7 +305,7 @@
                                             <div class="form-group">
                                                 <div class="col-md-8">
                                                     <label asp-for="JobStatusId">Job Status</label>
-                                                    <select asp-for="JobStatusId" class="form-control" required asp-items="ViewBag.JobStatusList">
+                                                    <select asp-for="JobStatusId" class="form-control"  asp-items="ViewBag.JobStatusList">
                                                         <option value="">-- Select --</option>
                                                     </select>
                                                     <span asp-validation-for="JobStatusId" class="text-danger"></span>
@@ -316,7 +316,7 @@
                                             <div class="form-group">
                                                 <div class="col-md-8">
                                                     <label asp-for="ServiceTypeId">Service Type</label>
-                                                    <select asp-for="ServiceTypeId" class="form-control" required asp-items="ViewBag.ServiceTypeList">
+                                                    <select asp-for="ServiceTypeId" class="form-control"  asp-items="ViewBag.ServiceTypeList">
                                                         <option value="">-- Select --</option>
                                                     </select>
                                                     <span asp-validation-for="ServiceTypeId" class="text-danger"></span>
@@ -327,7 +327,7 @@
                                             <div class="form-group">
                                                 <div class="col-md-8">
                                                     <label asp-for="OfficeTypeId">Office Type</label>
-                                                    <select asp-for="OfficeTypeId" class="form-control" required asp-items="ViewBag.OfficeTypeList">
+                                                    <select asp-for="OfficeTypeId" class="form-control"  asp-items="ViewBag.OfficeTypeList">
                                                         <option value="">-- Select --</option>
                                                     </select>
                                                     <span asp-validation-for="OfficeTypeId" class="text-danger"></span>
@@ -338,7 +338,7 @@
                                             <div class="form-group">
                                                 <div class="col-md-8">
                                                     <label asp-for="ShiftId">Shift</label>
-                                                    <select asp-for="ShiftId" class="form-control" required asp-items="ViewBag.ShiftList">
+                                                    <select asp-for="ShiftId" class="form-control"  asp-items="ViewBag.ShiftList">
                                                         <option value="">-- Select --</option>
                                                     </select>
                                                     <span asp-validation-for="ShiftId" class="text-danger"></span>
@@ -374,7 +374,7 @@
                                             <div class="form-group">
                                                 <div class="col-md-8">
                                                     <label asp-for="PresentAddress">Present Address</label>
-                                                    <input asp-for="PresentAddress" class="form-control" required />
+                                                    <input asp-for="PresentAddress" class="form-control"  />
                                                     <span asp-validation-for="PresentAddress" class="text-danger"></span>
                                                 </div>
                                             </div>
@@ -383,7 +383,7 @@
                                             <div class="form-group">
                                                 <div class="col-md-8">
                                                     <label asp-for="PermanentAddress">Permanent Address</label>
-                                                    <input asp-for="PermanentAddress" class="form-control" required />
+                                                    <input asp-for="PermanentAddress" class="form-control"  />
                                                     <span asp-validation-for="PermanentAddress" class="text-danger"></span>
                                                 </div>
                                             </div>
@@ -403,7 +403,7 @@
                                             <div class="form-group">
                                                 <div class="col-md-8">
                                                     <label asp-for="DivisionId">Division</label>
-                                                    <select asp-for="DivisionId" class="form-control" required id="divisionId" asp-items="ViewBag.DivisionList">
+                                                    <select asp-for="DivisionId" class="form-control"  id="divisionId" asp-items="ViewBag.DivisionList">
                                                         <option value="">-- Select --</option>
                                                     </select>
                                                     <span asp-validation-for="DivisionId" class="text-danger"></span>
@@ -425,7 +425,7 @@
                                             <div class="form-group">
                                                 <div class="col-md-8">
                                                     <label asp-for="UpazilaId">Upzilla</label>
-                                                    <select asp-for="UpazilaId" class="form-control" required id="upazilaId">
+                                                    <select asp-for="UpazilaId" class="form-control"  id="upazilaId">
                                                         <option value="">-- Select --</option>
                                                     </select>
                                                     <span asp-validation-for="UpazilaId" class="text-danger"></span>
@@ -436,7 +436,7 @@
                                             <div class="form-group">
                                                 <div class="col-md-8">
                                                     <label asp-for="MobileNo">Mobile No</label>
-                                                    <input asp-for="MobileNo" class="form-control" required />
+                                                    <input asp-for="MobileNo" class="form-control"  />
                                                     <span asp-validation-for="MobileNo" class="text-danger"></span>
                                                 </div>
                                             </div>
@@ -445,7 +445,7 @@
                                             <div class="form-group">
                                                 <div class="col-md-8">
                                                     <label asp-for="Email">Email</label>
-                                                    <input asp-for="Email" type="email" class="form-control" required />
+                                                    <input asp-for="Email" type="email" class="form-control"  />
                                                     <span asp-validation-for="Email" class="text-danger"></span>
                                                 </div>
                                             </div>
