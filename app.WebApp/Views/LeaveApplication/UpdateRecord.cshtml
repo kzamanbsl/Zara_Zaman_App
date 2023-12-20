@@ -45,15 +45,6 @@
                                         </select>
                                     </div>
                                 </div>
-                               @*  <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label>Manager</label>
-                                        <select class="form-control" asp-for="ManagerId" asp-items="ViewBag.Managers" required>
-                                            <option value="" selected>--Manager --</option>
-                                            <span asp-validation-for="ManagerId" class="text-danger"></span>
-                                        </select>
-                                    </div>
-                                </div> *@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Leave Category</label>
@@ -63,7 +54,8 @@
                                         </select>
                                     </div>
                                 </div>
-
+                            </div>
+                            <div class="row">
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label asp-for="StartDate" class="control-label"></label>
@@ -71,8 +63,6 @@
                                         <span asp-validation-for="StartDate" class="text-danger"></span>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label asp-for="EndDate" class="control-label"></label>
@@ -88,30 +78,20 @@
                                         <span asp-validation-for="LeaveDays" class="text-danger"></span>
                                     </div>
                                 </div>
-
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label asp-for="Reason " class="control-label"></label>
-                                        <textarea asp-for="Reason" class="form-control" required rows="2"></textarea>
-                                        <span asp-validation-for="Reason " class="text-danger"></span>
-                                    </div>
-                                </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <label asp-for="StayDuringLeave" class="control-label">Stay During Leave</label>
                                         <textarea asp-for="StayDuringLeave" class="form-control" required rows="2"></textarea>
                                         <span asp-validation-for="StayDuringLeave" class="text-danger"></span>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>Status</label>
-                                        <select class="form-control" asp-for="StatusId" asp-items="ViewBag.Status" required>
-                                            <option value="" selected>--Status --</option>
-                                            <span asp-validation-for="StatusId" class="text-danger"></span>
-                                        </select>
+                                        <label asp-for="Reason " class="control-label"></label>
+                                        <textarea asp-for="Reason" class="form-control" required rows="2"></textarea>
+                                        <span asp-validation-for="Reason " class="text-danger"></span>
                                     </div>
                                 </div>
                             </div>

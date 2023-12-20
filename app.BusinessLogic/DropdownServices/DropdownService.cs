@@ -220,6 +220,7 @@ namespace app.Services.DropdownServices
                                                                                       }).AsQueryable());
             return dropDownViewModels;
         }
+        
         public async Task<IEnumerable<DropdownViewModel>> JobStatusSelectionList()
         {
             IEnumerable<DropdownViewModel> dropDownViewModels = await Task.Run(() => (from t1 in _dbContext.JobStatus
@@ -233,6 +234,4 @@ namespace app.Services.DropdownServices
             return dropDownViewModels;
         }
     }
-
-
 }

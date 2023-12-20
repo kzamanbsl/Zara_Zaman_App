@@ -8,90 +8,147 @@
 
 
 
-<div class="content-header">
-    <div class="container-fluid ">
-        <div class="breadcrumb d-flex justify-content-between align-items-center  pl-3 pr-3">
-            <ol class="breadcrumb mb-0 p-0">
-                <li class="breadcrumb-item"><a href="/Admin/Index">Home</a></li>
-                <li class="breadcrumb-item active"> Leave Balance </li>
-            </ol>
-        </div>
-        <table class="table table-sm table-bordered">
-            <thead>
-                <tr style="background-color:#4CAF50;color:#FFFFFF;">
-                    <th>
-                        Leave Type
-                    </th>
-                    <th>
-                        Leave Qty
-                    </th>
-                    <th>
-                        Leave Used Qty
-                    </th>
-                    <th>
-                        Leave Remaining Qty
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                @if (Model.LeaveBalanceCountList?.Count() > 0)
-                {
-                    @foreach (var item in Model.LeaveBalanceCountList)
-                    {
-                        <tr>
-                            <td>@item.LeaveCategoryName</td>
-                            <td><span class="badge" style="color:gray">@item.LeaveQty</span></td>
-                            <td><span class="badge" style="color:orange">@item.LeaveUsedQty</span></td>
-                            <td><span class="badge" style="color:green">@item.LeaveRemainingQty</span></td>
+<div class="card">
+    <div class="content-header">
+        <div class="container-fluid ">
+            <div class="breadcrumb d-flex justify-content-between align-items-center  pl-3 pr-3">
+                <ol class="breadcrumb mb-0 p-0">
+                    <li class="breadcrumb-item"><a href="/Admin/Index">Home</a></li>
+                    <li class="breadcrumb-item active"> Leave Balance </li>
+                </ol>
+            </div>
+            <div style="border-radius: 5px; overflow: hidden;">
+                <table class="table table-sm table-bordered" style="border-radius: 5px;">
+                    <thead>
+                        <tr style="background-color:#4CAF50;color:#FFFFFF;">
+                            <th>
+                                Leave Type
+                            </th>
+                            <th>
+                                Leave Qty
+                            </th>
+                            <th>
+                                Leave Used Qty
+                            </th>
+                            <th>
+                                Leave Remaining Qty
+                            </th>
                         </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.LeaveBalanceCountList?.Count() > 0)
+                        {
+                            @foreach (var item in Model.LeaveBalanceCountList)
+                            {
+                                <tr>
+                                    <td>@item.LeaveCategoryName</td>
+                                    <td><span class="badge" style="color:gray">@item.LeaveQty</span></td>
+                                    <td><span class="badge" style="color:orange">@item.LeaveUsedQty</span></td>
+                                    <td><span class="badge" style="color:green">@item.LeaveRemainingQty</span></td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+        <div class="content-header">
+            <div class="container-fluid ">
+                <div class="card">
+                    <h4 style="background-color:#4CAF50;color:#FFFFFF;padding:2px;"><b>Leave Balance Details</b></h4>
+                    <table class="table table-sm table-bordered">
+                        <tr>
+                            <td style="font-weight:bold">Employee</td>
+                            <td>@Model.EmployeeName</td>
+                            <td style="font-weight:bold">Category</td>
+                            <td>@Model.LeaveCategoryName</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight:bold">Application Date</td>
+                            <td>@Model.ApplicationDate</td>
+                            <td style="font-weight:bold">Start Date</td>
+                            <td>@Model.StartDate</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight:bold">End Date</td>
+                            <td>@Model.EndDate</td>
+                            <td style="font-weight:bold">Leave Days</td>
+                            <td>@Model.LeaveDays</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight:bold">Stay During Leave</td>
+                            <td>@Model.StayDuringLeave</td>
+                            <td style="font-weight:bold">Reason</td>
+                            <td>@Model.Reason</td>
+                        </tr>
+                    </table>
+                <div class="text-right" style="padding-right:5px;padding-bottom:5px;">
+                        @if (Model.StatusId == 1)
+                        {
+                            <button id="confirmBtn" class="btn btn-outline-primary">Confirm</button>
+                            <button id="rejectBtn" class="btn btn-danger">Reject</button>
+                        }
+                        else if (Model.StatusId == 2)
+                        {
+                            <button id="approveBtn" class="btn btn-outline-success">Approve</button>
+                            <button id="rejectBtn" class="btn btn-danger">Reject</button>
+                        }
+                        else if (Model.StatusId == 3)
+                        {
+
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>
+
+
+
+
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#confirmBtn").click(function () {
+                handleButtonClick("Confirm");
+                alert("Confirm button clicked");
+            });
+
+            $("#approveBtn").click(function () {
+                handleButtonClick("Approved");
+                alert("Approve button clicked");
+            });
+
+            $("#rejectBtn").click(function () {
+                handleButtonClick("Reject");
+                alert("Reject button clicked");
+            });
+
+            function handleButtonClick(status) {
+                // Assuming you have an element with id="status" to store the status value
+                $("#status").val(status);
+
+                // Assuming you have an action method named ConfirmRecordAjax in your controller
+                $.ajax({
+                    type: "GET",
+                    url: "/LeaveApplication/ConfirmRecordAjax", // Change the URL as needed
+                    data: { id: @Model.Id, status: status },
+                    success: function (data) {
+                        // Handle success response if needed
+                        console.log(data);
+                        // You might want to refresh the page or update specific elements
+                    },
+                    error: function (error) {
+                        // Handle error response if needed
+                        console.error(error);
                     }
-                }
-
-
-            </tbody>
-        </table>
-    </div>
-</div>
-
-
-<div class="card-body">
-    <div class="table-responsive">
-        <div style="background-color:#4CAF50;color:#FFFFFF;padding:2px;">
-            <h4><b>Leave Balance Details</b></h4>
-        </div>
-        <table class="table table-sm table-bordered">
-            <tr>
-                <td style="font-weight:bold">Employee</td>
-                <td>@Model.EmployeeName</td>
-                <td style="font-weight:bold">Category</td>
-                <td>@Model.LeaveCategoryName</td>
-            </tr>
-            <tr>
-                <td style="font-weight:bold">Application Date</td>
-                <td>@Model.ApplicationDate</td>
-                <td style="font-weight:bold">Start Date</td>
-                <td>@Model.StartDate</td>
-            </tr>
-            <tr>
-                <td style="font-weight:bold">End Date</td>
-                <td>@Model.EndDate</td>
-                <td style="font-weight:bold">Days</td>
-                <td>@Model.LeaveDays</td>
-            </tr>
-            <tr>
-                <td style="font-weight:bold">Stay During Leave</td>
-                <td>@Model.StayDuringLeave</td>
-                <td style="font-weight:bold">Reason</td>
-                <td>@Model.Reason</td>
-            </tr>
-        </table>
-        <div class="container-fluid">
-            <button id="Manager" class="btn btn-outline-primary">Confirm</button>
-            <button id="Manager" class="btn btn-outline-success">Approve</button>
-            <button id="Manager" class="btn btn-danger">Reject</button>
-        </div>
-    </div>
-</div>
+                });
+            }
+        });
+    </script>
+}
 
 
 
