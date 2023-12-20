@@ -21,6 +21,6 @@
         Task<IEnumerable<DropdownViewModel>> EmployeeServiceTypeSelectionList();
         Task<IEnumerable<DropdownViewModel>> OfficeTypeSelectionList();
         Task<IEnumerable<DropdownViewModel>> EmployeeGradeSelectionList();
-        Task<IEnumerable<DropdownViewModel>> JobStatusSelectionList();        
+        Task<IEnumerable<DropdownViewModel>> JobStatusSelectionList();
     }
 }
