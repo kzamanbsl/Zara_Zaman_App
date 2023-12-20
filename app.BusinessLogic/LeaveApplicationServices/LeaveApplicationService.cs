@@ -65,7 +65,7 @@ namespace app.Services.LeaveApplicationServices
                 result.StayDuringLeave = vm.StayDuringLeave;
                 result.Reason = vm.Reason;
                 result.Remarks = vm.Remarks;
-                result.StatusId = (int)LeaveApplicationStatusEnum.Draft;
+                result.StatusId = vm.StatusId;
                 result.Employee.Name = vm.StatusName;
                 result.ApplicationDate = vm.ApplicationDate;
                 await _iEntityRepository.UpdateAsync(result);
@@ -156,16 +156,29 @@ namespace app.Services.LeaveApplicationServices
 
         public async Task<bool> ConfirmRecord(long id)
         {
-            var result = await _iEntityRepository.GetByIdAsync(id);
-            if (result == null)
+            var leaveApplication = await _iEntityRepository.GetByIdAsync(id);
+
+            if (leaveApplication == null)
             {
-                throw new Exception("Sorry! No Data Found.");
+                throw new Exception("Leave application not found.");
             }
 
-            result.StatusId = (int)LeaveApplicationStatusEnum.Confirm;
-            await _iEntityRepository.UpdateAsync(result);
+            // Check if the leave application is in a state where it can be confirmed
+            if (leaveApplication.StatusId != (int)LeaveApplicationStatusEnum.Draft)
+            {
+                throw new Exception("Leave application can't be confirmed in its current state.");
+            }
+
+            // Add your additional logic here if needed before confirming
+
+            // Update the status to "Confirm"
+            leaveApplication.StatusId = (int)LeaveApplicationStatusEnum.Confirm;
+            await _iEntityRepository.UpdateAsync(leaveApplication);
+
             return true;
         }
+
+
 
         public async Task<bool> ApproveRecord(long id)
         {

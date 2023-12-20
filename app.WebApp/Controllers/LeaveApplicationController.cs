@@ -73,7 +73,7 @@ namespace app.WebApp.Controllers
             var result = await _iService.AddRecord(viewModel);
             if (result == true)
             {
-                return RedirectToAction("Index");
+                return RedirectToAction(nameof(Index));
             }
             ModelState.AddModelError(string.Empty, "Same Name already exists!");
             return View(viewModel);
@@ -95,7 +95,7 @@ namespace app.WebApp.Controllers
             var result = await _iService.UpdateRecord(model);
             if (result ==true)
             {
-                return RedirectToAction("Index");
+                return RedirectToAction(nameof(Index));
             }
             ModelState.AddModelError(string.Empty, "Same Name already exists!");
             return View(model);
@@ -106,28 +106,28 @@ namespace app.WebApp.Controllers
         public async Task <ActionResult> ConfirmRecord(long id)
         {
             var res = await _iService.ConfirmRecord(id);
-            return RedirectToAction("Index");
+            return RedirectToAction(nameof(Index));
         }
 
         [HttpGet]
         public async Task<ActionResult> ApproveRecord(long id)
         {
             var res = await _iService.ApproveRecord(id);
-            return RedirectToAction("Index");
+            return RedirectToAction(nameof(Index));
         }
 
         [HttpGet]
         public async Task<ActionResult> RejectRecord(long id)
         {
             var res = await _iService.RejectRecord(id);
-            return RedirectToAction("Index");
+            return RedirectToAction(nameof(Index));
         }
 
         [HttpGet]
         public async Task<IActionResult> Delete(long id)
         {
             var res = await _iService.DeleteRecord(id);
-            return RedirectToAction("Index");
+            return RedirectToAction(nameof(Index));
         }
     }
 }
