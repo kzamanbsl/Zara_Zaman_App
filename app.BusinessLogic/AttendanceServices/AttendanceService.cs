@@ -2,6 +2,8 @@
 using app.Infrastructure;
 using app.Infrastructure.Auth;
 using app.Infrastructure.Repository;
+using app.Services.AttendanceLogServices;
+using Microsoft.EntityFrameworkCore;
 
 namespace app.Services.AttendanceServices
 {
@@ -10,15 +12,19 @@ namespace app.Services.AttendanceServices
         private readonly IEntityRepository<Attendance> _iEntityRepository;
         private readonly InventoryDbContext _dbContext;
         private readonly IWorkContext _iWorkContext;
-        public AttendanceService(IEntityRepository<Attendance> iEntityRepository, InventoryDbContext dbContext, IWorkContext iWorkContext)
+        private readonly IAttendanceLogService _attendanceLogService;
+        public AttendanceService(IEntityRepository<Attendance> iEntityRepository, InventoryDbContext dbContext, IWorkContext iWorkContext,IAttendanceLogService attendanceLogService)
         {
             _iEntityRepository = iEntityRepository;
             _dbContext = dbContext;
             _iWorkContext = iWorkContext;
+            _attendanceLogService = attendanceLogService;
         }
 
         public async Task<bool> AddRecord(AttendanceViewModel vm)
         {
+            //var attendances = _dbContext.Attendance.Include(a => a.Employee).Include(a => a.Shift);
+            //return View(attendances);
             var user = await _iWorkContext.GetCurrentAdminUserAsync();
             var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id == vm.Id && f.EmployeeId == vm.EmployeeId);
             if (checkName == null)
@@ -33,6 +39,17 @@ namespace app.Services.AttendanceServices
                 model.Remarks = vm.Remarks;
                 var res = await _iEntityRepository.AddAsync(model);
                 vm.Id = res.Id;
+                
+                if(vm.Id > 0)
+                {
+                    AttendanceLogViewModel models = new AttendanceLogViewModel();
+                    models.AttendanceId = vm.Id;
+                    model.LoginTime = vm.LoginTime;
+                    model.LogoutTime = vm.LogoutTime;
+                    model.Remarks = vm.Remarks;
+                    var atLog = await _attendanceLogService.AddRecord(models);
+                }
+
                 return true;
             }
             return false;
