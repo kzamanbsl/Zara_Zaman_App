@@ -31,8 +31,7 @@
         public DateTime ProbationEndDate { get; set; }
         public DateTime? PermanentDate { get; set; }
         public long EmployeeOrder { get; set; }
-        public string Remarks { get; set; }
-      
+        public string Remarks { get; set; }      
         public DateTime? EndDate { get; set; }
         public string EndReason { get; set; }
 
