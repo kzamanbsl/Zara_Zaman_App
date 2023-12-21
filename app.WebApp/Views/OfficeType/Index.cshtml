@@ -34,9 +34,9 @@
             </div>
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table table-sm table-bordered">
+                    <table id="officeTable" class="table table-sm table-bordered">
                         <thead>
-                            <tr>
+                            <tr>                               
                                 <th>
                                     #
                                 </th>
@@ -77,15 +77,27 @@
 </section>
 
 @section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
     <script>
         $(document).ready(function () {
             $('#Configuration').addClass('menu-open');
             $('#OfficeTypeIndex').addClass('active');
         });
     </script>
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
+    
+    <script>
+        $(document).ready(function () {
+
+            $('#officeTable').DataTable({
+                "paging": true,
+                "ordering": true,
+                "info": true,
+                order: [[0, 'desc']],
+            });
+        });
+    </script>
     }
 
 
