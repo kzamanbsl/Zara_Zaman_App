@@ -32,14 +32,14 @@
             <div class="card-body" id="myDIV">
                 <div class="row">
                     <div class="col-md-12">
-                        <form asp-action="AddRecord" method="post">
+                        <form asp-action="AddRecord" method="post" id="newsletter-form-result">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                            <div class="row">
+                            <div class="row" id="rowId">
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         @* <label>Employee Name</label> *@
                                         <label asp-for="EmployeeName" class="control-label"></label>
-                                        <select class="form-control" asp-for="EmployeeId" asp-items="ViewBag.Employees">
+                                        <select class="form-control" asp-for="EmployeeId" asp-items="ViewBag.Employees" id="inputEnployee" onchange="CheckAttandanceData()">
                                             <option value="0" selected>-- Select Employee --</option>
                                         </select>
                                     </div>
@@ -61,17 +61,18 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-4">
+                                <div class="col-md-4 d-block" id="inputLoginTime">
                                     <div class="form-group">
                                         <label asp-for="LoginTime" class="control-label"></label>
                                         <input type="time" asp-for="LoginTime" id="login" class="form-control" required />
                                         <span asp-validation-for="LoginTime" class="text-danger"></span>
                                     </div>
                                 </div>
+
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label asp-for="LogoutTime" class="control-label"></label>
-                                        <input type="time" asp-for="LogoutTime" class="form-control" required />
+                                        <input type="time" asp-for="LogoutTime" id="logout" class="form-control" required />
                                         <span asp-validation-for="LogoutTime" class="text-danger"></span>
                                     </div> 
                                 </div>
@@ -97,22 +98,39 @@
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    } 
+    }
+
     <script>
+
         $(document).ready(function () {
             $('#Configuration').addClass('menu-open');
             $('#AttendanceAddRecord').addClass('active');
         });
-    </script>
-    <script>
-        $(document).ready(function () {
-            $("#login").click(function () {
-                $("#login").hide();
+
+        function CheckAttandanceData() {
+            var getEmployeeId = $("#inputEnployee option:selected");
+            var dependentInput = document.getElementById("inputLoginTime");
+
+            $.ajax({
+                type: "GET",
+                url: "/Attendance/IsAttandanceDataExistByEmployeeId",
+                dataType: "json",
+                data: { id: getEmployeeId.val() },
+                success: function (data) {
+                    if (data) {
+                        dependentInput.classList.remove("d-block");
+                        dependentInput.classList.add("d-none");
+                    } else {
+                        dependentInput.classList.remove("d-none");
+                        dependentInput.classList.add("d-block");
+                    }
+                },
+                error: function (error) {
+                    console.error("Error in AJAX request:", error);
+                }
             });
-            $("#logout").click(function () {
-                $("#logout").show();
-            });
-        });
+        }
+        
     </script>
 
 }
