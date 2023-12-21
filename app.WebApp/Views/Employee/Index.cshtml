@@ -76,7 +76,7 @@
                                     <td>@item.DepartmentName</td>
                                     <td>@item.DesignationName</td>
                                     <td>@item.MobileNo</td>
-                                    <td>@item.JoiningDate</td>
+                                    <td>@item.JoiningDate.ToString("dd-MM-yyyy")</td>
                                     <td>@item.Email</td>
                                     <td class="text-center">
                                         @Html.ActionLink("", "Edit", new {id=item.Id},new {@class = "text-orange fas fa-edit",  onclick = "return confirm('Are you sure you want to edit this?')" }) |
