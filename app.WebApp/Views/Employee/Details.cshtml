@@ -5,194 +5,188 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-    <style>
-        .section {
-            margin-bottom: 20px;
-        }
+<style>
+    .section {
+        margin-bottom: 20px;
+    }
 
-        .card {
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            padding: 10px;
-            margin-bottom: 10px;
-            margin-top: 60px;
-        }
+    .card {
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 20px;
+        margin-bottom: 10px;
+        margin-top: 60px;
+    }
 
-        .card-header {
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
+    .card-header {
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
 
-        .card-body {
-            /* Define styles for the card body */
-        }
+    .card-body {
+        /* Define styles for the card body */
+    }
 
-        .left {
-            float: left;
-            width: 30%;
-        }
+    .left {
+        float: left;
+        width: 30%;
+    }
 
-        .right {
-            float: right;
-            width: 65%;
-        }
+    .right {
+        float: right;
+        width: 65%;
+    }
 
-        .column {
-            float: left;
-            width: 48%; /* Adjust this value to manage the width of columns */
-            margin-right: 2%; /* Margin between columns */
-        }
+    .column {
+        float: left;
+        width: 48%; /* Adjust this value to manage the width of columns */
+        margin-right: 2%; /* Margin between columns */
+    }
 
-        .clear {
-            clear: both;
-        }
+    .clear {
+        clear: both;
+    }
 
-        .header {
-            text-align: center; /* Center align content */
-        }
-    </style>
-
-<body>
-    <div class="card">
-        <div class="section">
-            <div class="row">
-               <div class="col-md-3">
-                    <img src="~/kgfile/zarazamanlogo.jpeg" alt="Company Logo" width="100" height="100">
-               </div>
-                <div class="col-md-6">
-                    <div class="header">
-                        <h2>Zara Zaman Technology Limited</h2>
-                        <p>
-                            Venture Tower (7th Floor)
-                            3 Bir Uttam, A.K. Khandakar Road
-                            Mohakhali C/A, Dhaka-1212, Bangladesh
-                        </p>
-                        <h3 style="margin-top:-20px;">Employee Information</h3>
-                    </div>
-                </div>
-                <div class="col-md-3"></div>
-              
-            </div>
-            <div class="clear"></div>
-        </div>
+    .header {
+        text-align: center; /* Center align content */
+    }
+</style>
 
 
-        <div class="section">
-            <div class="card-body">
+<section class="content">
+    <div class="container-fluid">
+        <div class="card">
+            <div class="section">
                 <div class="row">
-                    <h5 class="card-header" style="width: 100%;">Personal Information</h5>
-                    <div class="table-responsive">
-                        <table class="table" style="border-collapse: collapse; width: 100%;">
-                            <tbody>
-                                <tr>
-                                    <td style="border: 1px solid #ccc;  font-weight: bold; width: 150px;">Name</td>
-                                    <td style="border: 1px solid #ccc;">@Model.Name</td>
-                                    <td style="border: 1px solid #ccc;  font-weight: bold; width: 150px;">Short Name </td>
-                                    <td style="border: 1px solid #ccc;">@Model.ShortName</td>
-
-                                </tr>
-                                <tr>
-                                    <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold; width: 150px;">Father's Name </td>
-                                    <td style="border: 1px solid #ccc; padding: 8px;">@Model.FatherName</td>
-                                    <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold; width: 150px;">Mother's Name</td>
-                                    <td style="border: 1px solid #ccc; padding: 8px;">@Model.MotherName</td>
-                                </tr>
-                                <tr>
-                                    <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold; width: 150px;">Date of Birth </td>
-                                    <td style="border: 1px solid #ccc; padding: 8px;">@Model.DateOfBirth</td>
-                                    <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold; width: 150px;">Gender</td>
-                                    <td style="border: 1px solid #ccc; padding: 8px;">@Model.GenderName</td>
-                                </tr>
-
-                                <tr>
-                                    <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold; width: 150px;">Blood Group</td>
-                                    <td style="border: 1px solid #ccc; padding: 8px;">@Model.BloodGroupName</td>
-                                    <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold; width: 150px;">Religion</td>
-                                    <td style="border: 1px solid #ccc; padding: 8px;">@Model.ReligionName</td>
-                                </tr>
-                                <tr>
-                                    <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold; width: 150px;">Country</td>
-                                    <td style="border: 1px solid #ccc; padding: 8px;">@Model.CountryName</td>
-                                    <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold; width: 150px;">District</td>
-                                    <td style="border: 1px solid #ccc; padding: 8px;">@Model.DistrictName</td>
-                                </tr>
-                                <tr>
-                                    <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold; width: 150px;">Present Address </td>
-                                    <td style="border: 1px solid #ccc; padding: 8px;">@Model.PresentAddress</td>
-                                    <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold; width: 150px;">Permanent Address</td>
-                                    <td style="border: 1px solid #ccc; padding: 8px;">@Model.PermanentAddress</td>
-                                </tr>
-                                <tr>
-                                    <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold; width: 150px;">Marital Staus</td>
-                                    <td style="border: 1px solid #ccc; padding: 8px;">@Model.MaritalTypeName</td>
-                                    <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold; width: 150px;">Marriage Date</td>
-                                    <td style="border: 1px solid #ccc; padding: 8px;">@Model.DateOfMarriage</td>
-                                </tr>
-                                <tr>
-                                    <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold; width: 150px;">Spouse Name </td>
-                                    <td style="border: 1px solid #ccc; padding: 8px;">@Model.SpouseName</td>
-                                    <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold; width: 150px;">National ID</td>
-                                    <td style="border: 1px solid #ccc; padding: 8px;">@Model.NationalIdNo</td>
-                                </tr>
-                                <tr>
-                                    <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold; width: 150px;">Personal Contact</td>
-                                    <td style="border: 1px solid #ccc; padding: 8px;">@Model.MobileNo</td>
-                                    <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold; width: 150px;">Personal Email </td>
-                                    <td style="border: 1px solid #ccc; padding: 8px;">@Model.Email</td>
-                                </tr>
-                                 <tr>
-                                    <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold; width: 150px;">TIN No</td>
-                                    <td style="border: 1px solid #ccc; padding: 8px;">@Model.TinNo</td>
-                                    <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold; width: 150px;">Manager Name</td>
-                                    <td style="border: 1px solid #ccc; padding: 8px;">@Model.ManagerName</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                    <div class="col-md-3">
+                        <img src="~/kgfile/zarazamanlogo.jpeg" alt="Company Logo" width="100" height="100">
                     </div>
+                    <div class="col-md-6">
+                        <div class="header">
+                            <h2>Zara Zaman Technology Limited</h2>
+                            <p>
+                                Venture Tower (7th Floor)
+                                3 Bir Uttam, A.K. Khandakar Road
+                                Mohakhali C/A, Dhaka-1212, Bangladesh
+                            </p>
+                            <h3 style="margin-top:-20px;">Employee Information</h3>
+                        </div>
+                    </div>
+                    <div class="col-md-3"></div>
                 </div>
-                <div class="clear"></div>
             </div>
-        </div>
 
-        <div class="section">
-            <div class="card-body">
-                <div class="row">
-                    <h5 class="card-header" style="width: 100%;">Service Information</h5>
 
-                    <div class="table-responsive">
-                        <table class="table" style="border-collapse: collapse; width: 100%;">
-                            <tbody>
-                                <tr>
-                                    <td style="border: 1px solid #ccc;  font-weight: bold; width: 150px;">Employee ID </td>
-                                    <td style="border: 1px solid #ccc;">@Model.EmployeeCode</td>
-                                    <td style="border: 1px solid #ccc;  font-weight: bold; width: 150px;">Joining Date</td>
-                                    <td style="border: 1px solid #ccc;">@Model.JoiningDate</td>
-                                </tr>
-                                <tr>
-                                    <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold; width: 150px;">Department </td>
-                                    <td style="border: 1px solid #ccc; padding: 8px;">@Model.DepartmentName</td>
-                                    <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold; width: 150px;">Designation</td>
-                                    <td style="border: 1px solid #ccc; padding: 8px;">@Model.DesignationName</td>
-                                </tr>
-                                  <tr>
-                                    <td style="border: 1px solid #ccc;  font-weight: bold; width: 150px;">Job Status</td>
-                                    <td style="border: 1px solid #ccc;">@Model.JobStatusName</td>
-                                    <td style="border: 1px solid #ccc;  font-weight: bold; width: 150px;">Service Type</td>
-                                    <td style="border: 1px solid #ccc;">@Model.ServiceTypeName</td>
-                                </tr>
-                                <tr>
-                                    <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold; width: 150px;">Office Type</td>
-                                    <td style="border: 1px solid #ccc; padding: 8px;">@Model.OfficeTypeName</td>
-                                    <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold; width: 150px;">Shift</td>
-                                    <td style="border: 1px solid #ccc; padding: 8px;">@Model.ShiftName</td>
-                                </tr>                                 
-                            </tbody>
-                        </table>
+            <div class="section">
+                <div class="card-body">
+                    <div class="row">
+                        <h5 class="card-header" style="width: 100%;">Personal Information</h5>
+                        <div class="table-responsive">
+                            <table class="table" style="border-collapse: collapse; width: 100%;">
+                                <tbody>
+                                    <tr>
+                                        <td style="border: 1px solid #ccc;  font-weight: bold; width: 150px;">Name</td>
+                                        <td style="border: 1px solid #ccc;">@Model.Name</td>
+                                        <td style="border: 1px solid #ccc;  font-weight: bold; width: 150px;">Short Name </td>
+                                        <td style="border: 1px solid #ccc;">@Model.ShortName</td>
+
+                                    </tr>
+                                    <tr>
+                                        <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold; width: 150px;">Father's Name </td>
+                                        <td style="border: 1px solid #ccc; padding: 8px;">@Model.FatherName</td>
+                                        <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold; width: 150px;">Mother's Name</td>
+                                        <td style="border: 1px solid #ccc; padding: 8px;">@Model.MotherName</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold; width: 150px;">Date of Birth </td>
+                                        <td style="border: 1px solid #ccc; padding: 8px;">@Model.DateOfBirth.ToString("dd-MM-yyyy")</td>
+                                        <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold; width: 150px;">Gender</td>
+                                        <td style="border: 1px solid #ccc; padding: 8px;">@Model.GenderName</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold; width: 150px;">Blood Group</td>
+                                        <td style="border: 1px solid #ccc; padding: 8px;">@Model.BloodGroupName</td>
+                                        <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold; width: 150px;">Religion</td>
+                                        <td style="border: 1px solid #ccc; padding: 8px;">@Model.ReligionName</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold; width: 150px;">Country</td>
+                                        <td style="border: 1px solid #ccc; padding: 8px;">@Model.CountryName</td>
+                                        <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold; width: 150px;">District</td>
+                                        <td style="border: 1px solid #ccc; padding: 8px;">@Model.DistrictName</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold; width: 150px;">Present Address </td>
+                                        <td style="border: 1px solid #ccc; padding: 8px;">@Model.PresentAddress</td>
+                                        <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold; width: 150px;">Permanent Address</td>
+                                        <td style="border: 1px solid #ccc; padding: 8px;">@Model.PermanentAddress</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold; width: 150px;">Marital Staus</td>
+                                        <td style="border: 1px solid #ccc; padding: 8px;">@Model.MaritalTypeName</td>
+                                        <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold; width: 150px;">Marriage Date</td>
+                                        <td style="border: 1px solid #ccc; padding: 8px;">@Model.DateOfMarriage.ToString("dd-MM-yyyy")</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold; width: 150px;">Spouse Name </td>
+                                        <td style="border: 1px solid #ccc; padding: 8px;">@Model.SpouseName</td>
+                                        <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold; width: 150px;">National ID</td>
+                                        <td style="border: 1px solid #ccc; padding: 8px;">@Model.NationalIdNo</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold; width: 150px;">Personal Contact</td>
+                                        <td style="border: 1px solid #ccc; padding: 8px;">@Model.MobileNo</td>
+                                        <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold; width: 150px;">Personal Email </td>
+                                        <td style="border: 1px solid #ccc; padding: 8px;">@Model.Email</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold; width: 150px;">TIN No</td>
+                                        <td style="border: 1px solid #ccc; padding: 8px;">@Model.TinNo</td>
+                                        <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold; width: 150px;">Manager Name</td>
+                                        <td style="border: 1px solid #ccc; padding: 8px;">@Model.ManagerName</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <h5 class="card-header" style="width: 100%;">Service Information</h5>
+                        <div class="table-responsive">
+                            <table class="table" style="border-collapse: collapse; width: 100%;">
+                                <tbody>
+                                    <tr>
+                                        <td style="border: 1px solid #ccc;  font-weight: bold; width: 150px;">Employee ID</td>
+                                        <td style="border: 1px solid #ccc;">@Model.EmployeeCode</td>
+                                        <td style="border: 1px solid #ccc;  font-weight: bold; width: 150px;">Joining Date </td>
+                                        <td style="border: 1px solid #ccc;">@Model.JoiningDate.ToString("dd-MM-yyyy")</td>
+
+                                    </tr>
+                                    <tr>
+                                        <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold; width: 150px;">Department</td>
+                                        <td style="border: 1px solid #ccc; padding: 8px;">@Model.DepartmentName</td>
+                                        <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold; width: 150px;">Designation</td>
+                                        <td style="border: 1px solid #ccc; padding: 8px;">@Model.DesignationName</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold; width: 150px;">Job Status</td>
+                                        <td style="border: 1px solid #ccc; padding: 8px;">@Model.JobStatusName</td>
+                                        <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold; width: 150px;">Service Type</td>
+                                        <td style="border: 1px solid #ccc; padding: 8px;">@Model.ServiceTypeName</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold; width: 150px;">Office Type</td>
+                                        <td style="border: 1px solid #ccc; padding: 8px;">@Model.OfficeTypeName</td>
+                                        <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold; width: 150px;">Shift</td>
+                                        <td style="border: 1px solid #ccc; padding: 8px;">@Model.ShiftName</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
-                <div class="clear"></div>
             </div>
         </div>
     </div>
-
-</body>
+</section>

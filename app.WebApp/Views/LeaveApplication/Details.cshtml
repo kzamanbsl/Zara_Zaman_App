@@ -12,45 +12,49 @@
 <div class="card">
     <div class="content-header">
         <div class="container-fluid ">
-            <div class="breadcrumb d-flex justify-content-between align-items-center  pl-3 pr-3">
-                <ol class="breadcrumb mb-0 p-0">
-                    <li class="breadcrumb-item"><a href="/Admin/Index">Home</a></li>
-                    <li class="breadcrumb-item active"> Leave Balance </li>
-                </ol>
+            <div class="card">
+                <div class="breadcrumb d-flex justify-content-between align-items-center  pl-3 pr-3">
+                    <ol class="breadcrumb mb-0 p-0">
+                        <li class="breadcrumb-item"><a href="/Admin/Index">Home</a></li>
+                        <li class="breadcrumb-item active"> Leave Balance </li>
+                    </ol>
+                </div>
             </div>
-            <div style="border-radius: 5px; overflow: hidden;">
-                <table class="table table-sm table-bordered" style="border-radius: 5px;">
-                    <thead>
-                        <tr style="background-color:#4CAF50;color:#FFFFFF;">
-                            <th>
-                                Leave Type
-                            </th>
-                            <th>
-                                Leave Qty
-                            </th>
-                            <th>
-                                Leave Used Qty
-                            </th>
-                            <th>
-                                Leave Remaining Qty
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @if (Model.LeaveBalanceCountList?.Count() > 0)
-                        {
-                            @foreach (var item in Model.LeaveBalanceCountList)
+            <div class="card">
+                <div style="border-radius: 5px; overflow: hidden;">
+                    <table class="table table-sm table-bordered" style="border-radius: 5px;">
+                        <thead>
+                            <tr style="background-color:#4CAF50;color:#FFFFFF;">
+                                <th>
+                                    Leave Type
+                                </th>
+                                <th>
+                                    Leave Qty
+                                </th>
+                                <th>
+                                    Leave Used Qty
+                                </th>
+                                <th>
+                                    Leave Remaining Qty
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.LeaveBalanceCountList?.Count() > 0)
                             {
-                                <tr>
-                                    <td>@item.LeaveCategoryName</td>
-                                    <td><span class="badge" style="color:gray">@item.LeaveQty</span></td>
-                                    <td><span class="badge" style="color:orange">@item.LeaveUsedQty</span></td>
-                                    <td><span class="badge" style="color:green">@item.LeaveRemainingQty</span></td>
-                                </tr>
+                                @foreach (var item in Model.LeaveBalanceCountList)
+                                {
+                                    <tr>
+                                        <td>@item.LeaveCategoryName</td>
+                                        <td><span class="badge" style="color:gray">@item.LeaveQty</span></td>
+                                        <td><span class="badge" style="color:orange">@item.LeaveUsedQty</span></td>
+                                        <td><span class="badge" style="color:green">@item.LeaveRemainingQty</span></td>
+                                    </tr>
+                                }
                             }
-                        }
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
         </div>
@@ -113,7 +117,7 @@
     <script>
 
         $(document).ready(function () {
-            $('#Configuration').addClass('menu-open');
+            $('#Leave').addClass('menu-open');
             $('#LeaveApplicationIndex').addClass('active');
         });
 

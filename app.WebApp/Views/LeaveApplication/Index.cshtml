@@ -34,7 +34,7 @@
             </div>
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table table-sm table-bordered">
+                    <table id="leaveApplication" class="table table-sm table-bordered">
                         <thead>
                             <tr>
                                 <th>
@@ -52,8 +52,6 @@
                                 <th>Stay During Leave</th>
                                 <th>Reason</th>
                                 <th>Status</th>
-@*                                 <th>M Approval</th>
-                                <th>HR Approval</th> *@
 
                                 <th class="text-center">Action</th>
                             </tr>
@@ -116,11 +114,22 @@
     }
     <script>
         $(document).ready(function () {
-            $('#Configuration').addClass('menu-open');
+            $('#Leave').addClass('menu-open');
             $('#LeaveApplicationIndex').addClass('active');
         });
 
     </script>
 
+    <script>
+        $(document).ready(function () {
+
+            $('#leaveApplication').DataTable({
+                "paging": true,
+                "ordering": true,
+                "info": true,
+                order: [[0, 'desc']],
+            });
+        });
+    </script>
 }
 
