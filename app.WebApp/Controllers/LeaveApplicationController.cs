@@ -100,27 +100,30 @@ namespace app.WebApp.Controllers
             ModelState.AddModelError(string.Empty, "Same Name already exists!");
             return View(model);
         }
-        
 
-        [HttpGet]
-        public async Task <ActionResult> ConfirmRecord(long id)
+
+        [HttpPost]
+        public async Task<IActionResult> ConfirmRecord(long id)
         {
+
             var res = await _iService.ConfirmRecord(id);
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Details), new {id=id});
         }
 
-        [HttpGet]
+
+
+        [HttpPost]
         public async Task<ActionResult> ApproveRecord(long id)
         {
             var res = await _iService.ApproveRecord(id);
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Details), new { id = id });
         }
 
-        [HttpGet]
+        [HttpPost]
         public async Task<ActionResult> RejectRecord(long id)
         {
             var res = await _iService.RejectRecord(id);
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Details), new { id = id });
         }
 
         [HttpGet]
