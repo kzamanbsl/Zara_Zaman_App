@@ -1,4 +1,5 @@
-﻿@model app.Services.LeaveApplicationServices.LeaveApplicationViewModel
+﻿@using app.Utility;
+@model app.Services.LeaveApplicationServices.LeaveApplicationViewModel
 
 
 @{
@@ -54,101 +55,145 @@
 
         </div>
     </div>
-        <div class="content-header">
-            <div class="container-fluid ">
-                <div class="card">
-                    <h4 style="background-color:#4CAF50;color:#FFFFFF;padding:2px;"><b>Leave Balance Details</b></h4>
-                    <table class="table table-sm table-bordered">
-                        <tr>
-                            <td style="font-weight:bold">Employee</td>
-                            <td>@Model.EmployeeName</td>
-                            <td style="font-weight:bold">Category</td>
-                            <td>@Model.LeaveCategoryName</td>
-                        </tr>
-                        <tr>
-                            <td style="font-weight:bold">Application Date</td>
-                            <td>@Model.ApplicationDate</td>
-                            <td style="font-weight:bold">Start Date</td>
-                            <td>@Model.StartDate</td>
-                        </tr>
-                        <tr>
-                            <td style="font-weight:bold">End Date</td>
-                            <td>@Model.EndDate</td>
-                            <td style="font-weight:bold">Leave Days</td>
-                            <td>@Model.LeaveDays</td>
-                        </tr>
-                        <tr>
-                            <td style="font-weight:bold">Stay During Leave</td>
-                            <td>@Model.StayDuringLeave</td>
-                            <td style="font-weight:bold">Reason</td>
-                            <td>@Model.Reason</td>
-                        </tr>
-                    </table>
+    <div class="content-header">
+        <div class="container-fluid ">
+            <div class="card">
+                <h4 style="background-color:#4CAF50;color:#FFFFFF;padding:2px;"><b>Leave Balance Details</b></h4>
+                <table class="table table-sm table-bordered">
+                    <tr>
+                        <td style="font-weight:bold">Employee</td>
+                        <td>@Model.EmployeeName</td>
+                        <td style="font-weight:bold">Category</td>
+                        <td>@Model.LeaveCategoryName</td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight:bold">Application Date</td>
+                        <td>@Model.ApplicationDate</td>
+                        <td style="font-weight:bold">Start Date</td>
+                        <td>@Model.StartDate</td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight:bold">End Date</td>
+                        <td>@Model.EndDate</td>
+                        <td style="font-weight:bold">Leave Days</td>
+                        <td>@Model.LeaveDays</td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight:bold">Stay During Leave</td>
+                        <td>@Model.StayDuringLeave</td>
+                        <td style="font-weight:bold">Reason</td>
+                        <td>@Model.Reason</td>
+                    </tr>
+                </table>
                 <div class="text-right" style="padding-right:5px;padding-bottom:5px;">
-                        @if (Model.StatusId == 1)
-                        {
-                            <button id="confirmBtn" class="btn btn-outline-primary">Confirm</button>
-                            <button id="rejectBtn" class="btn btn-danger">Reject</button>
-                        }
-                        else if (Model.StatusId == 2)
-                        {
-                            <button id="approveBtn" class="btn btn-outline-success">Approve</button>
-                            <button id="rejectBtn" class="btn btn-danger">Reject</button>
-                        }
-                        else if (Model.StatusId == 3)
-                        {
+                    @if (Model.StatusId == (int)LeaveApplicationStatusEnum.Draft)
+                    {
+                        <button id="confirmButton" class="btn btn-outline-primary">Confirm</button>
+                        <button id="rejectButton" class="btn btn-outline-danger">Reject</button>
+                    }
+                    else if (Model.StatusId == (int)LeaveApplicationStatusEnum.Confirm)
+                    {
+                        <button id="approveButton" class="btn btn-outline-primary">Approve</button>
+                        <button id="rejectButton" class="btn btn-outline-danger">Reject</button>
+                    }
 
-                        }
-                    </div>
                 </div>
             </div>
         </div>
+    </div>
 </div>
 
 
 
 
 @section Scripts{
-    <script type="text/javascript">
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+
         $(document).ready(function () {
-            $("#confirmBtn").click(function () {
-                handleButtonClick("Confirm");
-                alert("Confirm button clicked");
-            });
+            $('#Configuration').addClass('menu-open');
+            $('#LeaveApplicationIndex').addClass('active');
+        });
 
-            $("#approveBtn").click(function () {
-                handleButtonClick("Approved");
-                alert("Approve button clicked");
-            });
+        $("#confirmButton").on("click", function () {
+            var id = @Model.Id;
+            $.ajax({
+                type: "POST",
+                url: "/LeaveApplication/ConfirmRecord",
+                data: { id: id },
+                success: function (result) {
+                    if (result) {
+                        alert("Record confirmed successfully");
+                        window.location.href = "/LeaveApplication/Details/" + id;
 
-            $("#rejectBtn").click(function () {
-                handleButtonClick("Reject");
-                alert("Reject button clicked");
-            });
-
-            function handleButtonClick(status) {
-                // Assuming you have an element with id="status" to store the status value
-                $("#status").val(status);
-
-                // Assuming you have an action method named ConfirmRecordAjax in your controller
-                $.ajax({
-                    type: "GET",
-                    url: "/LeaveApplication/ConfirmRecordAjax", // Change the URL as needed
-                    data: { id: @Model.Id, status: status },
-                    success: function (data) {
-                        // Handle success response if needed
-                        console.log(data);
-                        // You might want to refresh the page or update specific elements
-                    },
-                    error: function (error) {
-                        // Handle error response if needed
-                        console.error(error);
+                    } else {
+                        alert("Record confirmation failed");
                     }
-                });
-            }
+                },
+                error: function (error) {
+                    // Handle the error case here
+                    console.error("Error occurred during AJAX request:", error);
+                }
+            });
+        });
+
+        $("#approveButton").on("click", function () {
+            var id = @Model.Id;
+
+
+            $.ajax({
+                type: "POST",
+                url: "/LeaveApplication/ApproveRecord",
+                data: { id: id },
+                success: function (result) {
+                    if (result) {
+
+                        alert("Record approved successfully");
+
+                        window.location.href = "/LeaveApplication/Details/" + id;
+                    } else {
+
+                        alert("Record approval failed");
+                    }
+                },
+                error: function (error) {
+
+                    console.error("Error occurred during AJAX request:", error);
+                }
+            });
+        });
+
+        $("#rejectButton").on("click", function () {
+            var id = @Model.Id;
+
+
+            $.ajax({
+                type: "POST",
+                url: "/LeaveApplication/RejectRecord",
+                data: { id: id },
+                success: function (result) {
+                    if (result) {
+
+                        alert("Record rejected successfully");
+
+                        window.location.href = "/LeaveApplication/Details/" + id;
+                    } else {
+
+                        alert("Record rejection failed");
+                    }
+                },
+                error: function (error) {
+
+                    console.error("Error occurred during AJAX request:", error);
+                }
+            });
         });
     </script>
+
 }
+
 
 
 

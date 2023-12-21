@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="~/AdminLib/select2/css/select2.min.css">
     <link href="//cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css" rel="stylesheet" />
-    <link href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css" rel="stylesheet" />
 @*   <link rel="stylesheet" href="~/AdminLib/select2-bootstrap4-theme/select2-bootstrap4.min.css">
     <link href="~/css/adminCustomt.css" rel="stylesheet" />*@
     <link href="~/css/site.css" rel="stylesheet" />
@@ -59,24 +59,26 @@
     <script src="~/AdminLib/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
     <script src="~/AdminLib/summernote/summernote-bs4.min.js"></script>
     <script src="~/AdminLib/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
-    <script src="~/AdminLib/admin/js/adminlte.js"></script>
-    <script src="~/AdminLib/select2/js/select2.full.min.js"></script>
+    <script src="~/AdminLib/admin/js/adminlte.js"></script>    
     <script src="~/js/pagination.js"></script>
     <script src="~/js/notify.js"></script>
-    <script src="~/AdminLib/datatable/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <link href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+    <script src="~/AdminLib/select2/js/select2.full.min.js"></script>
 
     @await RenderSectionAsync("Scripts", required: false)
 
     <script>
-        //Initialize Select2 Elements
-        $('.select2').select2()
+        $(document).ready(function () {
+            //Initialize Select2 Elements
+            $('.select2').select2();
 
-        //Initialize Select2 Elements
-        $('.select2bs4').select2({
-            theme: 'bootstrap4'
-        })
+            //Initialize Select2 Elements with Bootstrap 4 theme
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            });
+        });
     </script>
 </body>
 </html>
