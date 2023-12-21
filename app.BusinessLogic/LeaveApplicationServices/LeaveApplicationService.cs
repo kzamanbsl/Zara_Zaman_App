@@ -156,54 +156,44 @@ namespace app.Services.LeaveApplicationServices
 
         public async Task<bool> ConfirmRecord(long id)
         {
-            var leaveApplication = await _iEntityRepository.GetByIdAsync(id);
+            var leaveApplication = await _dbContext.LeaveApplication.FirstOrDefaultAsync(c => c.Id == id);
 
-            if (leaveApplication == null)
+            if (leaveApplication != null && leaveApplication.StatusId == (int)LeaveApplicationStatusEnum.Draft)
             {
-                throw new Exception("Leave application not found.");
+                leaveApplication.StatusId = (int)LeaveApplicationStatusEnum.Confirm; 
+                await _iEntityRepository.UpdateAsync(leaveApplication);
+                return true;
             }
-
-            // Check if the leave application is in a state where it can be confirmed
-            if (leaveApplication.StatusId != (int)LeaveApplicationStatusEnum.Draft)
-            {
-                throw new Exception("Leave application can't be confirmed in its current state.");
-            }
-
-            // Add your additional logic here if needed before confirming
-
-            // Update the status to "Confirm"
-            leaveApplication.StatusId = (int)LeaveApplicationStatusEnum.Confirm;
-            await _iEntityRepository.UpdateAsync(leaveApplication);
-
-            return true;
+            return false;
         }
+
 
 
 
         public async Task<bool> ApproveRecord(long id)
         {
-            var result = await _iEntityRepository.GetByIdAsync(id);
-            if (result == null)
-            {
-                throw new Exception("Sorry! No Data Found.");
-            }
+            var leaveApplication = await _dbContext.LeaveApplication.FirstOrDefaultAsync(c => c.Id == id);
 
-            result.StatusId = (int)LeaveApplicationStatusEnum.Approve;
-            await _iEntityRepository.UpdateAsync(result);
-            return true;
+            if (leaveApplication != null && leaveApplication.StatusId == (int)LeaveApplicationStatusEnum.Confirm)
+            {
+                leaveApplication.StatusId = (int)LeaveApplicationStatusEnum.Approve;
+                await _iEntityRepository.UpdateAsync(leaveApplication);
+                return true;
+            }
+            return false;
         }
 
         public async Task<bool> RejectRecord(long id)
         {
-            var result = await _iEntityRepository.GetByIdAsync(id);
-            if (result == null)
-            {
-                throw new Exception("Sorry! No Data Found.");
-            }
+            var leaveApplication = await _dbContext.LeaveApplication.FirstOrDefaultAsync(c => c.Id == id);
 
-            result.StatusId = (int)LeaveApplicationStatusEnum.Reject;
-            await _iEntityRepository.UpdateAsync(result);
-            return true;
+            if (leaveApplication != null && (leaveApplication.StatusId != (int)LeaveApplicationStatusEnum.Approve|| leaveApplication.StatusId != (int)LeaveApplicationStatusEnum.Reject))
+            {
+                leaveApplication.StatusId = (int)LeaveApplicationStatusEnum.Reject;
+                await _iEntityRepository.UpdateAsync(leaveApplication);
+                return true;
+            }
+            return false;
         }
         public async Task<bool> DeleteRecord(long id)
         {
