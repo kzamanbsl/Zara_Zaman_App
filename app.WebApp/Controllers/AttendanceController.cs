@@ -17,6 +17,18 @@ namespace app.WebApp.Controllers
             _iService = iService;
             _iDropdownService = iDropdownService;
         }
+        [HttpGet]
+        public async Task<IActionResult> IsAttandanceDataExistByEmployeeId(int id)
+        {
+            bool IsExist = false;
+            var data = await _iService.IsExist(id);
+            if (data)
+            {
+                IsExist = true;
+               
+            }
+            return Json(IsExist);
+        }
 
         [HttpGet]
         public async Task<IActionResult> Index()

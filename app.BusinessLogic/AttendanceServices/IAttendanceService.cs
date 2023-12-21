@@ -7,6 +7,6 @@
         Task<AttendanceViewModel> GetRecordById(long id);
         Task<AttendanceViewModel> GetAllRecord();
         Task<bool> DeleteRecord(long id);
-    
+        Task<bool> IsExist(int id);
     }
 }

@@ -54,6 +54,20 @@ namespace app.Services.AttendanceServices
             }
             return false;
         }
+        public async Task<bool> IsExist(int id)
+        {
+            bool result = false;
+
+            if(id > 0)
+            {   
+                if(await _dbContext.Attendance.Where(c => c.EmployeeId == id && c.AttendanceDate.Date == DateTime.Today).AnyAsync())
+                {
+                    result = true;
+                }
+            }
+
+            return result;
+        }
         public async Task<bool> UpdateRecord(AttendanceViewModel vm)
         {
 
@@ -61,7 +75,8 @@ namespace app.Services.AttendanceServices
             if (checkName == null)
             {
                 var result = await _iEntityRepository.GetByIdAsync(vm.Id);
-                result.EmployeeId = vm.EmployeeId;
+                result
+                    .EmployeeId = vm.EmployeeId;
                 //result.AttendanceLogId = model.AttendanceLogId;
                 result.ShiftId = vm.ShiftId;
                 result.AttendanceDate = vm.AttendanceDate;
