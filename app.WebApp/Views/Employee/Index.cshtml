@@ -103,7 +103,10 @@
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
     <script>
+
         $(document).ready(function () {
+            $('#Employee').addClass('menu-open');
+            $('#EmployeeAddRecord').addClass('active');
 
             $('#employeetable').DataTable({
 
