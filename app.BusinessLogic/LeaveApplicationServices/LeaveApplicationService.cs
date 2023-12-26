@@ -50,23 +50,20 @@ namespace app.Services.LeaveApplicationServices
         {
 
             var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id == vm.Id);
-            if (checkName == null)
+            if (checkName != null)
             {
                 var result = await _iEntityRepository.GetByIdAsync(vm.Id);
                 result.EmployeeId = vm.EmployeeId;
-                result.Employee.Name = vm.EmployeeName;
                 result.ManagerId = vm.ManagerId;
-                result.Manager.Name = vm.ManagerName;
                 result.LeaveCategoryId = vm.LeaveCategoryId;
-                result.LeaveCategory.Name = vm.LeaveCategoryName;
                 result.StartDate = vm.StartDate;
                 result.EndDate = vm.EndDate;
                 result.LeaveDays = vm.LeaveDays;
                 result.StayDuringLeave = vm.StayDuringLeave;
                 result.Reason = vm.Reason;
                 result.Remarks = vm.Remarks;
-                result.StatusId = vm.StatusId;
-                result.Employee.Name = vm.StatusName;
+                result.StatusId = (int)LeaveApplicationStatusEnum.Draft;
+                //result.Employee.Name = vm.StatusName;
                 result.ApplicationDate = vm.ApplicationDate;
                 await _iEntityRepository.UpdateAsync(result);
                 return true;
@@ -125,7 +122,6 @@ namespace app.Services.LeaveApplicationServices
 
             return model;
         }
-
         public async Task<IEnumerable<LeaveBalanceCountViewModel>> GetLeaveBalanceByEmployeeId(long employeeId)
         {
             var result = new List<LeaveBalanceCountViewModel>();
@@ -153,7 +149,6 @@ namespace app.Services.LeaveApplicationServices
 
             return result;
         }
-
         public async Task<bool> ConfirmRecord(long id)
         {
             var leaveApplication = await _dbContext.LeaveApplication.FirstOrDefaultAsync(c => c.Id == id);
@@ -166,10 +161,6 @@ namespace app.Services.LeaveApplicationServices
             }
             return false;
         }
-
-
-
-
         public async Task<bool> ApproveRecord(long id)
         {
             var leaveApplication = await _dbContext.LeaveApplication.FirstOrDefaultAsync(c => c.Id == id);
@@ -182,7 +173,6 @@ namespace app.Services.LeaveApplicationServices
             }
             return false;
         }
-
         public async Task<bool> RejectRecord(long id)
         {
             var leaveApplication = await _dbContext.LeaveApplication.FirstOrDefaultAsync(c => c.Id == id);
