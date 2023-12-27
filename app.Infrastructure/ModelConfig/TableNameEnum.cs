@@ -29,5 +29,6 @@
         District,
         Upazila,
         JobStatus,
+        Unit,
     }
 }

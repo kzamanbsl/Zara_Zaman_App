@@ -34,6 +34,7 @@ namespace app.Infrastructure.ModelConfig
             new AttendanceConfig()?.Configure(builder.Entity<Attendance>());
             new AttendanceLogConfig()?.Configure(builder.Entity<AttendanceLog>());
             new JobStatusConfig()?.Configure(builder.Entity<JobStatus>());
+            new UnitConfig()?.Configure(builder.Entity<Unit>());
 
         }
     }
