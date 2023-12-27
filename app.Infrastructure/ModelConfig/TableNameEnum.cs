@@ -24,6 +24,7 @@
         Employee,
         Attendance,
         AttendanceLog,
+        ProductCategory,
         Country,
         Division,
         District,
