@@ -98,7 +98,7 @@ namespace app.Services.AttendanceServices
             model.ShiftId = result.ShiftId;
             model.AttendanceDate = result.AttendanceDate;
             model.LoginTime = result.LoginTime;
-            model.LogoutTime = result.LogoutTime;
+            //model.LogoutTime = result.LogoutTime;
             model.Remarks = result.Remarks;
             return model;
         }
@@ -116,7 +116,7 @@ namespace app.Services.AttendanceServices
                                                              ShiftName=t1.Shift.Name,
                                                              AttendanceDate = t1.AttendanceDate,
                                                              LoginTime = t1.LoginTime,
-                                                             LogoutTime = t1.LogoutTime,
+                                                             //LogoutTime = t1.LogoutTime,
                                                              Remarks = t1.Remarks,
                                                          }).AsQueryable());
             return model;

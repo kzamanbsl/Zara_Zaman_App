@@ -10,7 +10,7 @@ namespace app.EntityModel.AppModels
     {
         public DateTime AttendanceDate { get; set; }
         public DateTime LoginTime { get; set; }
-        public DateTime LogoutTime { get; set; }
+        public DateTime? LogoutTime { get; set; }
         public string Remarks { get; set; }
         public long EmployeeId { get; set; }
         public Employee Employee { get; set; }

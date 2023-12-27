@@ -66,8 +66,8 @@ namespace app.Services.AttendanceLogServices
             AttendanceLogViewModel model = new AttendanceLogViewModel();
             model.Id = result.Id;
             model.AttendanceId = result.AttendanceId;
-            model.LoginTime = result.LoginTime;
-            model.LogoutTime = result.LogoutTime;
+            //model.LoginTime = result.LoginTime;
+            //model.LogoutTime = result.LogoutTime;
             model.Remarks = result.Remarks;
             return model;
         }
@@ -83,8 +83,8 @@ namespace app.Services.AttendanceLogServices
                                                                     AttendanceDate = t1.Attendance.AttendanceDate,
                                                                     EmployeeId=t1.Attendance.EmployeeId,
                                                                     ShiftId= t1.Attendance.ShiftId,
-                                                                    LoginTime = t1.LoginTime,
-                                                                    LogoutTime= t1.LogoutTime,
+                                                                    //LoginTime = t1.LoginTime,
+                                                                    //LogoutTime= t1.LogoutTime,
                                                                     Remarks= t1.Remarks,
                                                                   
                                                                 }).AsQueryable());
