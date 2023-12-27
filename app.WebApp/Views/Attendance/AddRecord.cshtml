@@ -56,7 +56,7 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label asp-for="AttendanceDate" class="control-label"></label>
-                                        <input type="datetime-local" asp-for="AttendanceDate" class="form-control" required />
+                                        <input type="date" asp-for="AttendanceDate" class="form-control" required />
                                         <span asp-validation-for="AttendanceDate" class="text-danger"></span>
                                     </div>
                                 </div>
@@ -85,7 +85,7 @@
                                 </div>
                             </div>
                             <div class="form-group" style="float:right">
-                                <input type="submit" onclick="myFunction()" value="Save" id="saveButton" class="btn btn-primary" />
+                                <input type="submit" onclick="myFunction()" value="Create" id="saveButton" class="btn btn-primary" />
                             </div>
                         </form>
                     </div>
@@ -124,6 +124,7 @@
                         dependentInput.classList.remove("d-none");
                         dependentInput.classList.add("d-block");
                     }
+
                 },
                 error: function (error) {
                     console.error("Error in AJAX request:", error);

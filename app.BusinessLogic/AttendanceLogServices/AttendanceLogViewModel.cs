@@ -12,7 +12,7 @@ namespace app.Services.AttendanceLogServices
         public DateTime AttendanceDate { get; set; }= DateTime.Now;
 
         [DisplayName("Login Time")]
-        public DateTime LoginTime { get; set; }=DateTime.Now;
+        public DateTime? LoginTime { get; set; }=DateTime.Now;
 
         [DisplayName("Logout Time")]
         public DateTime LogoutTime { get; set; } = DateTime.Now;

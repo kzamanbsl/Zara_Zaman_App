@@ -47,6 +47,7 @@ namespace app.Infrastructure
         public virtual DbSet<Upazila> Upazila { get; set; }
         public virtual DbSet<JobStatus> JobStatus { get; set; }
         public virtual DbSet<Unit> Unit { get; set; }
+        public virtual DbSet<ProductCategory> ProductCategory { get; set; }
 
     }
 }
