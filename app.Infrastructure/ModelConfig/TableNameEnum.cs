@@ -31,5 +31,6 @@
         Upazila,
         JobStatus,
         Unit,
+        Product,
     }
 }
