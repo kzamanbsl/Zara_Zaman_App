@@ -1,4 +1,5 @@
-﻿@model app.Services.LeaveApplicationServices.LeaveApplicationViewModel
+﻿@using app.Utility;
+@model app.Services.LeaveApplicationServices.LeaveApplicationViewModel
 @{
     ViewData["Title"] = "AddRecord";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
@@ -28,9 +29,43 @@
                     <i class="fas fa-plus"></i>
                     Add Leave Application
                 </h3>
-
             </div>
             <div class="card-body">
+                <div class="card">
+                    <table id="leaveApplication" class="table table-sm table-bordered">
+                        <thead>
+                            <tr style="background-color:#4CAF50;color:#FFFFFF;">
+                                <th>
+                                    Leave Type
+                                </th>
+                                <th>
+                                    Leave Qty
+                                </th>
+                                <th>
+                                    Leave Used Qty
+                                </th>
+                                <th>
+                                    Leave Remaining Qty
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.LeaveBalanceCountList?.Count() > 0)
+                            {
+                                @foreach (var item in Model.LeaveBalanceCountList)
+                                {
+                                    <tr>
+                                        <td>@item.LeaveCategoryName</td>
+                                        <td><span class="badge" style="color:gray">@item.LeaveQty</span></td>
+                                        <td><span class="badge" style="color:orange">@item.LeaveUsedQty</span></td>
+                                        <td><span class="badge" style="color:green">@item.LeaveRemainingQty</span></td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+
+                    </table>
+                </div>
                 <div class="row">
                     <div class="col-md-12">
                         <form asp-action="AddRecord" method="post">
@@ -76,7 +111,7 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label asp-for="LeaveDays" class="control-label">Leave Days</label>
-                                        <input asp-for="LeaveDays" class="form-control" id="txtLeaveDays" required />
+                                        <input asp-for="LeaveDays" class="form-control" id="txtLeaveDays" readonly />
                                         <span asp-validation-for="LeaveDays" class="text-danger"></span>
                                     </div>
                                 </div>
@@ -97,7 +132,7 @@
                                         <span asp-validation-for="StayDuringLeave" class="text-danger"></span>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                               @*  <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Status</label>
                                         <select class="form-control" asp-for="StatusId" asp-items="ViewBag.Status" required>
@@ -105,7 +140,7 @@
                                             <span asp-validation-for="StatusId" class="text-danger"></span>
                                         </select>
                                     </div>
-                                </div>
+                                </div> *@
                             </div>
                             <div class="form-group">
                                 <input type="submit" value="Submit" class="btn btn-primary" />

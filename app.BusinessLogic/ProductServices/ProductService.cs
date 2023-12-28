@@ -33,7 +33,9 @@ namespace app.Services.ProductServices
             model.TP = result.TP;
             model.SalePrice = result.SalePrice;
             model.UnitId = result.UnitId;
+            model.UnitName = result.Unit?.Name;
             model.CategoryId = result.CategoryId;
+            model.CategoryName = result.Category?.Name;
             return model;
         }
         public async Task<ProductViewModel> GetAllRecord()
@@ -49,7 +51,9 @@ namespace app.Services.ProductServices
                                                           TP = t1.TP,
                                                           SalePrice = t1.SalePrice,
                                                           UnitId = t1.UnitId,
+                                                          UnitName = t1.Unit.Name,
                                                           CategoryId = t1.CategoryId,
+                                                          CategoryName = t1.Category.Name,
                                                       }).AsQueryable());
             return model;
         }
@@ -75,7 +79,7 @@ namespace app.Services.ProductServices
         {
 
             var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim());
-            if (checkName == null)
+            if (checkName != null)
             {
                 var result = await _iEntityRepository.GetByIdAsync(vm.Id);
                 result.Name = vm.Name;
