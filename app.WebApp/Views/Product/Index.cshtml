@@ -43,7 +43,7 @@
                                 <th>TP</th>
                                 <th>SalePrice</th>
                                 <th>Unit</th>
-                                <th>Category</th>
+                                <th>Product Category</th>
                                 <th class="text-center">Action</th>
                             </tr>
                         </thead>
@@ -68,10 +68,10 @@
                                         @Html.DisplayFor(modelItem => item.SalePrice)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.Unit)
+                                        @Html.DisplayFor(modelItem => item.UnitName)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.Category)
+                                        @Html.DisplayFor(modelItem => item.CategoryName)
                                     </td>
                                     <td class="text-center">
                                         @Html.ActionLink("", "UpdateRecord", new {id=item.Id},new {@class = "text-danger fas fa-edit",  onclick = "return confirm('Are you sure you want to edit this?')" }) |
