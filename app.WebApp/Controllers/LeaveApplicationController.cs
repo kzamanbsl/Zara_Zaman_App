@@ -1,4 +1,5 @@
 ﻿using app.EntityModel.AppModels;
+using app.Infrastructure.Migrations;
 using app.Services.DropdownServices;
 using app.Services.LeaveApplicationServices;
 using app.Services.LeaveBalanceServices;
@@ -46,6 +47,7 @@ namespace app.WebApp.Controllers
         [HttpGet]
         public async Task<IActionResult> AddRecord()
         {
+
             ViewBag.LeaveCategories = new SelectList((await _dropdownService.LeaveCategorySelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
             ViewBag.Employees = new SelectList((await _dropdownService.EmployeeSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
             ViewBag.Managers = new SelectList((await _dropdownService.EmployeeSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
@@ -56,10 +58,12 @@ namespace app.WebApp.Controllers
                                        Value = ((int)e).ToString(),
                                        Text = e.ToString()
                                    }), "Value", "Text");
-            LeaveApplicationViewModel viewModel = new LeaveApplicationViewModel();
-            return View(viewModel);
-        }
 
+            var leaveApplicationVm = new LeaveApplicationViewModel(); 
+            var empLeaveBalanceList = await _iService.GetLeaveBalanceByEmployeeId(leaveApplicationVm.EmployeeId);
+            leaveApplicationVm.LeaveBalanceCountList = empLeaveBalanceList;
+            return View(leaveApplicationVm);
+        }
         [HttpPost]
         public async Task<IActionResult> AddRecord(LeaveApplicationViewModel viewModel)
         {
