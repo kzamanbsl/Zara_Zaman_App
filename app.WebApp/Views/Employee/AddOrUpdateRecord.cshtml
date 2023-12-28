@@ -533,11 +533,13 @@
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-    <script type="text/javascript">
+    <script>
         $(document).ready(function () {
-            $('#Employee').addClass('menu-open');
-            $('#EmployeeAddRecord').addClass('active');
+            $('#HR-\\&-Admin-').addClass('menu-open');
+            $('#EmployeeAddOrUpdateRecord').addClass('active');
         });
+    </script>
+    <script type="text/javascript">       
         $('#divisionId').change(function () {
             $.ajax({
                 type: "post",

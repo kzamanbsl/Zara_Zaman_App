@@ -80,8 +80,8 @@
                                     <td>@item.Email</td>
                                     <td class="text-center">
                                         @Html.ActionLink("", "Edit", new {id=item.Id},new {@class = "text-orange fas fa-edit",  onclick = "return confirm('Are you sure you want to edit this?')" }) |
-                                        @Html.ActionLink("", "Details", new { id=item.Id }, new { @class = "text-blue fas fa-eye" }) 
-                                       @*  @Html.ActionLink("","Export", new {  id=item.Id},new {@class = "text-green fas fa-file-export" }) *@
+                                        @Html.ActionLink("", "Details", new { id=item.Id }, new { @class = "text-blue fas fa-eye" })
+                                        @*  @Html.ActionLink("","Export", new {  id=item.Id},new {@class = "text-green fas fa-file-export" }) *@
                                     </td>
                                 </tr>
                             }
@@ -105,8 +105,9 @@
     <script>
 
         $(document).ready(function () {
-            $('#Employee').addClass('menu-open');
-            $('#EmployeeAddRecord').addClass('active');
+            $('#HR-\\&-Admin-').addClass('menu-open');
+            $('#EmployeeIndex').addClass('active');
+
 
             $('#employeetable').DataTable({
 
