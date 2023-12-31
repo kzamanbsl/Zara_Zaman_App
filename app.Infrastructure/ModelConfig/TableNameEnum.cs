@@ -32,5 +32,6 @@
         JobStatus,
         Unit,
         Product,
+        Supplier,
     }
 }

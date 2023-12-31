@@ -37,6 +37,7 @@ namespace app.Infrastructure.ModelConfig
             new UnitConfig()?.Configure(builder.Entity<Unit>());
             new ProductCategoryConfig()?.Configure(builder.Entity<ProductCategory>());
             new ProductConfig()?.Configure(builder.Entity<Product>());
+            new SupplierConfig()?.Configure(builder.Entity<Supplier>());
 
         }
     }
