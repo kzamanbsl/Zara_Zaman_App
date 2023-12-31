@@ -8,11 +8,11 @@ namespace app.EntityModel.AppModels
 {
     public class Customer : BaseEntity
     {
-        public string Name { get; set; }    
-        public string Address { get; set; }
+        public string Name { get; set; }
         public string Phone { get; set; }
-        public string? Email { get; set; }
-
+        public string Email { get; set; }
+        public string Description { get; set; }
+        public string Address { get; set; }
         public int? DivisionId { get; set; }
         public Division Division { get; set; }
         public int? DistrictId { get; set; }
