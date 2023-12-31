@@ -52,15 +52,15 @@
 </section>
 
 @section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
     <script>
         $(document).ready(function () {
             $('#HR-\\&-Admin-').addClass('menu-open');
             $('#DesignationAddRecord').addClass('active');
         });
     </script>
-
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
+   
     }
 

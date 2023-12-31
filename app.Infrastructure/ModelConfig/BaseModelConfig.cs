@@ -36,6 +36,7 @@ namespace app.Infrastructure.ModelConfig
             new JobStatusConfig()?.Configure(builder.Entity<JobStatus>());
             new UnitConfig()?.Configure(builder.Entity<Unit>());
             new ProductCategoryConfig()?.Configure(builder.Entity<ProductCategory>());
+            new ProductConfig()?.Configure(builder.Entity<Product>());
 
         }
     }

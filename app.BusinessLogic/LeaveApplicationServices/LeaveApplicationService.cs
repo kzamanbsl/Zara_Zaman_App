@@ -38,7 +38,7 @@ namespace app.Services.LeaveApplicationServices
                 com.Reason = vm.Reason;
                 com.Remarks = vm.Remarks;
                 com.ApplicationDate = vm.ApplicationDate;
-                com.StatusId = (int)LeaveApplicationStatusEnum.Draft;
+                com.StatusId = (int)LeaveApplicationStatusEnum.Applied;
                 var res = await _iEntityRepository.AddAsync(com);
                 vm.Id = res.Id;
                 return true;
@@ -62,7 +62,7 @@ namespace app.Services.LeaveApplicationServices
                 result.StayDuringLeave = vm.StayDuringLeave;
                 result.Reason = vm.Reason;
                 result.Remarks = vm.Remarks;
-                result.StatusId = (int)LeaveApplicationStatusEnum.Draft;
+                result.StatusId = (int)LeaveApplicationStatusEnum.Applied;
                 //result.Employee.Name = vm.StatusName;
                 result.ApplicationDate = vm.ApplicationDate;
                 await _iEntityRepository.UpdateAsync(result);
@@ -153,7 +153,7 @@ namespace app.Services.LeaveApplicationServices
         {
             var leaveApplication = await _dbContext.LeaveApplication.FirstOrDefaultAsync(c => c.Id == id);
 
-            if (leaveApplication != null && leaveApplication.StatusId == (int)LeaveApplicationStatusEnum.Draft)
+            if (leaveApplication != null && leaveApplication.StatusId == (int)LeaveApplicationStatusEnum.Applied)
             {
                 leaveApplication.StatusId = (int)LeaveApplicationStatusEnum.Confirm; 
                 await _iEntityRepository.UpdateAsync(leaveApplication);

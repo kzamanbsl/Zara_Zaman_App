@@ -10,7 +10,7 @@
 
     public enum LeaveApplicationStatusEnum
     {
-        Draft = 1,
+        Applied = 1,
         Confirm,
         Approve,
         Reject

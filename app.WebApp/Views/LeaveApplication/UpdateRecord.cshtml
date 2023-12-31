@@ -74,7 +74,7 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label asp-for="LeaveDays" class="control-label">Leave Days</label>
-                                        <input asp-for="LeaveDays" class="form-control" id="txtLeaveDays" required />
+                                        <input asp-for="LeaveDays" class="form-control" id="txtLeaveDays" readonly />
                                         <span asp-validation-for="LeaveDays" class="text-danger"></span>
                                     </div>
                                 </div>
@@ -111,7 +111,7 @@
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-   <script>
+    <script>
         $(document).ready(function () {
             $('#Leave').addClass('menu-open');
             $('#LeaveApplicationAddRecord').addClass('active');
@@ -154,5 +154,5 @@
                 }
             });
         });
-</script>
+    </script>
     }

@@ -24,7 +24,6 @@ using app.Services.AttendanceLogServices;
 using app.Services.EmployeeGradeServices;
 using app.Services.JobStatusServices;
 using app.Services.UnitServices;
-using app.Services.ProductCategoryServices;
 
 namespace app.Services
 {
@@ -56,7 +55,6 @@ namespace app.Services
             services.AddTransient<IEmployeeService, EmployeeService>();
             services.AddTransient<IJobStatusService, JobStatusService>();
             services.AddTransient<IUnitService, UnitService>();
-            services.AddTransient<IProductCategoryService, ProductCategoryService>();
 
             return services;
         }
