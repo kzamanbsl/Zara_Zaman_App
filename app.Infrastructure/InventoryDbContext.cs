@@ -49,7 +49,11 @@ namespace app.Infrastructure
         public virtual DbSet<Unit> Unit { get; set; }
         public virtual DbSet<ProductCategory> ProductCategory { get; set; }
         public virtual DbSet<Product> Product { get; set; }
+<<<<<<< HEAD
         public virtual DbSet<Customer> Customer { get; set; }
+=======
+        public virtual DbSet<Supplier> Supplier { get; set; }
+>>>>>>> db02078999754e3834fea31c9ea1c95224d78f0e
 
     }
 }
