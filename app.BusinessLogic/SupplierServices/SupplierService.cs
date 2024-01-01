@@ -2,6 +2,8 @@
 using app.Infrastructure;
 using app.Infrastructure.Auth;
 using app.Infrastructure.Repository;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 
 namespace app.Services.SupplierServices
 {
@@ -10,11 +12,13 @@ namespace app.Services.SupplierServices
         private readonly IEntityRepository<Supplier> _iEntityRepository;
         private readonly InventoryDbContext _dbContext;
         private readonly IWorkContext _iWorkContext;
-        public SupplierService(IEntityRepository<Supplier> iEntityRepository, InventoryDbContext dbContext, IWorkContext iWorkContext)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        public SupplierService(IEntityRepository<Supplier> iEntityRepository, InventoryDbContext dbContext, IWorkContext iWorkContext, IHttpContextAccessor httpContextAccessor)
         {
             _iEntityRepository = iEntityRepository;
             _dbContext = dbContext;
             _iWorkContext = iWorkContext;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public async Task<bool> AddRecord(SupplierViewModel vm)
@@ -23,8 +27,6 @@ namespace app.Services.SupplierServices
             if (checkName == null)
             {
                 Supplier model = new Supplier();
-                //com.LeaveCategoryId = vm.LeaveCategoryId;
-                //com.LeaveQty = vm.LeaveQty;
                 model.Name=vm.Name;
                 model.Phone=vm.Phone;
                 model.Email=vm.Email;
@@ -34,9 +36,16 @@ namespace app.Services.SupplierServices
                 model.DivisionId=vm.DivisionId;
                 model.DistrictId=vm.DistrictId;
                 model.UpazilaId=vm.UpazilaId;
+                model.CreatedBy = _httpContextAccessor.HttpContext.User.Identity.Name;
+                model.CreatedOn = DateTime.Now;
+                model.IsActive = true;
                 var res = await _iEntityRepository.AddAsync(model);
-                vm.Id = res.Id;
-                return true;
+                if(res != null)
+                {
+                    vm.Id = res.Id;
+                    return true;
+                }
+                return false;
             }
 
             return false;
@@ -47,8 +56,6 @@ namespace app.Services.SupplierServices
             if (checkName == null)
             {
                 var result = await _iEntityRepository.GetByIdAsync(vm.Id);
-                //result.LeaveCategoryId = vm.LeaveCategoryId;
-                //result.LeaveQty = vm.LeaveQty;
                 result.Name = vm.Name;
                 result.Phone = vm.Phone;
                 result.Email = vm.Email;
@@ -58,7 +65,10 @@ namespace app.Services.SupplierServices
                 result.DivisionId = vm.DivisionId;
                 result.DistrictId = vm.DistrictId;
                 result.UpazilaId = vm.UpazilaId;
-                await _iEntityRepository.UpdateAsync(result);
+                result.UpdatedBy = _httpContextAccessor.HttpContext.User.Identity.Name;
+                result.UpdatedOn = DateTime.Now;
+                var res = await _iEntityRepository.UpdateAsync(result);
+                
                 return true;
             }
             return false;
