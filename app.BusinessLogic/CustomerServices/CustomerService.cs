@@ -51,13 +51,16 @@ namespace app.Services.CustomerServices
                                                       {
                                                           Id = t1.Id,
                                                           Name = t1.Name,
-                                                          Phone= t1.Phone,
+                                                          Phone = t1.Phone,
                                                           Email = t1.Email,
                                                           Description = t1.Description,
                                                           Address = t1.Address,
-                                                          DivisionId = t1.DivisionId,
                                                           DistrictId = t1.DistrictId,
+                                                          DistrictName = t1.District.Name,
+                                                          DivisionId = t1.DivisionId,
+                                                          DivisionName = t1.Division.Name, 
                                                           UpazilaId= t1.UpazilaId,
+                                                          UpazilaName= t1.Upazila.Name,
                                                       }).AsQueryable());
             return model;
         }
