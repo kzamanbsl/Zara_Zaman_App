@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using app.Infrastructure;
 
@@ -11,9 +12,10 @@ using app.Infrastructure;
 namespace app.Infrastructure.Migrations
 {
     [DbContext(typeof(InventoryDbContext))]
-    partial class InventoryDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240101044938_SupplierCustomerTableAdded")]
+    partial class SupplierCustomerTableAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -999,7 +1001,10 @@ namespace app.Infrastructure.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
-                    b.Property<int?>("CountryId")
+                    b.Property<long?>("CountryId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int?>("CountryId1")
                         .HasColumnType("int");
 
                     b.Property<string>("CreatedBy")
@@ -1012,10 +1017,16 @@ namespace app.Infrastructure.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
-                    b.Property<int?>("DistrictId")
+                    b.Property<long?>("DistrictId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int?>("DistrictId1")
                         .HasColumnType("int");
 
-                    b.Property<int?>("DivisionId")
+                    b.Property<long?>("DivisionId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int?>("DivisionId1")
                         .HasColumnType("int");
 
                     b.Property<string>("Email")
@@ -1033,7 +1044,10 @@ namespace app.Infrastructure.Migrations
                         .HasMaxLength(11)
                         .HasColumnType("nvarchar(11)");
 
-                    b.Property<int?>("UpazilaId")
+                    b.Property<long?>("UpazilaId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int?>("UpazilaId1")
                         .HasColumnType("int");
 
                     b.Property<string>("UpdatedBy")
@@ -1044,13 +1058,13 @@ namespace app.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CountryId");
+                    b.HasIndex("CountryId1");
 
-                    b.HasIndex("DistrictId");
+                    b.HasIndex("DistrictId1");
 
-                    b.HasIndex("DivisionId");
+                    b.HasIndex("DivisionId1");
 
-                    b.HasIndex("UpazilaId");
+                    b.HasIndex("UpazilaId1");
 
                     b.ToTable("Supplier", "dbo");
                 });
@@ -1649,14 +1663,14 @@ namespace app.Infrastructure.Migrations
                         new
                         {
                             Id = "8e445865-a24d-4543-a6c6-9443d048cdb9",
-                            ConcurrencyStamp = "c43dd446-f860-4474-aa83-4bdc08a2a8c7",
+                            ConcurrencyStamp = "259f844c-39c7-458c-88ca-550682c53d99",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         },
                         new
                         {
                             Id = "2c5e174e-3b0e-446f-86af-483d56fd7210",
-                            ConcurrencyStamp = "926e8f7f-4735-44ea-82fa-e7858a638ab7",
+                            ConcurrencyStamp = "23c535cc-4ea0-4a61-aa2d-ffa3b7e0fbba",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -2006,19 +2020,19 @@ namespace app.Infrastructure.Migrations
                 {
                     b.HasOne("app.EntityModel.AppModels.Country", "Country")
                         .WithMany()
-                        .HasForeignKey("CountryId");
+                        .HasForeignKey("CountryId1");
 
                     b.HasOne("app.EntityModel.AppModels.District", "District")
                         .WithMany()
-                        .HasForeignKey("DistrictId");
+                        .HasForeignKey("DistrictId1");
 
                     b.HasOne("app.EntityModel.AppModels.Division", "Division")
                         .WithMany()
-                        .HasForeignKey("DivisionId");
+                        .HasForeignKey("DivisionId1");
 
                     b.HasOne("app.EntityModel.AppModels.Upazila", "Upazila")
                         .WithMany()
-                        .HasForeignKey("UpazilaId");
+                        .HasForeignKey("UpazilaId1");
 
                     b.Navigation("Country");
 
