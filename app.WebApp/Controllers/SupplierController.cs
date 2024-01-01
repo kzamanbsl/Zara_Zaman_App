@@ -30,7 +30,7 @@ namespace app.WebApp.Controllers
         {
             ViewBag.Country = new SelectList((await _iDropdownService.CountrySelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
             ViewBag.Division = new SelectList((await _iDropdownService.DivisionSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
-            ViewBag.Country = new SelectList((await _iDropdownService.CountrySelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
+            ViewBag.District = new SelectList((await _iDropdownService.DistrictSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
             ViewBag.Country = new SelectList((await _iDropdownService.CountrySelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
             SupplierViewModel viewModel = new SupplierViewModel();
             return View(viewModel);
