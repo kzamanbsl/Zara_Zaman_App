@@ -16,14 +16,11 @@ namespace app.Services.CustomerServices
         public string Description { get; set; }
         public string Address { get; set; }
         public int? DivisionId { get; set; }
-        public Division Division { get; set; }
         public string DivisionName { get; set; }
         public int? DistrictId { get; set; }
-        public District District { get; set; }
         public string DistrictName { get; set; }
         public int? UpazilaId { get; set; }
         public string UpazilaName { get; set; }
-        public Upazila Upazila { get; set; }
         public IEnumerable<CustomerViewModel> CustomerList { get; set; }
     }
 }

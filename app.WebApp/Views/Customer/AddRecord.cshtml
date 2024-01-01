@@ -117,15 +117,57 @@
 </section>
 
 @section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
     <script>
         $(document).ready(function () {
             $('#Configuration').addClass('menu-open');
             $('#CustomerAddRecord').addClass('active');
         });
+
     </script>
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
+    <script type="text/javascript">
+        $('#divisionId').change(function () {
+            $.ajax({
+                type: "post",
+                url: "/Dropdown/GetDistrictSelectionList",
+                data: { divisionId: $('#divisionId').val() },
+                dataType: "json",
+                success: function (data) {
+                    var district = "<select>";
+                    district = district + '<option value="">--Select--</option>';
+                    for (var i = 0; i < data.length; i++) {
+                        district = district + '<option value=' + data[i].id + '>' + data[i].name + '</option>';
+                    }
+                    district = district + '</select>';
+                    $('#districtId').html(district);
+                }
+            });
+        });
+
+        //Bind Upzila base on District Selection
+        $('#districtId').change(function () {
+            $.ajax({
+                type: "post",
+                url: "/Dropdown/GetUpazilaSelectionList",
+                data: { districtId: $('#districtId').val() },
+
+                datatype: "json",
+                traditional: true,
+                success: function (data) {
+                    var upazila = "<select>";
+                    upazila = upazila + '<option value="">--Select--</option>';
+                    for (var i = 0; i < data.length; i++) {
+                        upazila = upazila + '<option value=' + data[i].id + '>' + data[i].name + '</option>';
+                    }
+                    upazila = upazila + '</select>';
+                    $('#upazilaId').html(upazila);
+                }
+            });
+        });
+    </script>
+}
     }
 
 
