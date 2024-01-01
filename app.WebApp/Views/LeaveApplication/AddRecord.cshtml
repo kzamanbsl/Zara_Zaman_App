@@ -93,7 +93,7 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label asp-for="StartDate" class="control-label"></label>
-                                        <input type="date" asp-for="StartDate" class="form-control" id="txtStartDate" autocomplete="off" onchange="getLeaveDays()" required />
+                                        <input asp-for="StartDate" class="form-control" type="date" id="txtStartDate" autocomplete="off" onchange="getLeaveDays()" required />
                                         <span asp-validation-for="StartDate" class="text-danger"></span>
                                     </div>
                                 </div>
