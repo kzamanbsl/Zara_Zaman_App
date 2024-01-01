@@ -37,11 +37,8 @@ namespace app.Infrastructure.ModelConfig
             new UnitConfig()?.Configure(builder.Entity<Unit>());
             new ProductCategoryConfig()?.Configure(builder.Entity<ProductCategory>());
             new ProductConfig()?.Configure(builder.Entity<Product>());
-<<<<<<< HEAD
             new CustomerConfig()?.Configure(builder.Entity<Customer>());
-=======
             new SupplierConfig()?.Configure(builder.Entity<Supplier>());
->>>>>>> db02078999754e3834fea31c9ea1c95224d78f0e
 
         }
     }

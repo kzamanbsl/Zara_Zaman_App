@@ -37,7 +37,7 @@ namespace app.Services.CustomerServices
             model.DivisionId = result.DivisionId;
             model.DivisionName = result.Division?.Name;
             model.DistrictId = result.DistrictId;
-            model.DistrictName = result?.District?.Name;
+            model.DistrictName = result.District?.Name;
             model.UpazilaId = result.UpazilaId;
             model.UpazilaName = result.Upazila?.Name;
             return model;

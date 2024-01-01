@@ -32,10 +32,7 @@
         JobStatus,
         Unit,
         Product,
-<<<<<<< HEAD
         Customer,
-=======
         Supplier,
->>>>>>> db02078999754e3834fea31c9ea1c95224d78f0e
     }
 }
