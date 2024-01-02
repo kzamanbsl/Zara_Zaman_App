@@ -6,6 +6,7 @@ using app.Infrastructure.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.AspNetCore.Http;
+using app.Services.AttendanceServices;
 namespace app.Services.AttendanceLogServices
 {
     public class AttendanceLogService : IAttendanceLogService
@@ -14,19 +15,21 @@ namespace app.Services.AttendanceLogServices
         private readonly InventoryDbContext _dbContext;
         private readonly IWorkContext _iWorkContext;
         private readonly IHttpContextAccessor _httpContextAccessor;
-        public AttendanceLogService(IEntityRepository<AttendanceLog> iEntityRepository, InventoryDbContext dbContext, IWorkContext iWorkContext, IHttpContextAccessor httpContextAccessor)
+        private readonly IAttendanceService _attendanceService;
+        public AttendanceLogService(IEntityRepository<AttendanceLog> iEntityRepository, InventoryDbContext dbContext, IWorkContext iWorkContext, IHttpContextAccessor httpContextAccessor,IAttendanceService attendanceService)
         {
             _iEntityRepository = iEntityRepository;
             _dbContext = dbContext;
             _iWorkContext = iWorkContext;
             _httpContextAccessor = httpContextAccessor;
+            _attendanceService = attendanceService;
         }
 
         public async Task<bool> AddRecord(AttendanceLogViewModel vm)
         {
 
             //var DataTranfer = _dbContext.AttendanceLog.Include(x => x.Attendance).ToListAsync();
-            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id==vm.Id && f.AttendanceId==vm.AttendanceId);
+            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id == vm.Id && f.AttendanceId == vm.AttendanceId);
             if (checkName == null)
             {
                 AttendanceLog model = new AttendanceLog();
@@ -38,10 +41,10 @@ namespace app.Services.AttendanceLogServices
                 model.CreatedOn = DateTime.Now;
                 model.IsActive = true;
                 var res = await _iEntityRepository.AddAsync(model);
-                vm.Id=res.Id;
+                vm.Id = res.Id;
                 return true;
             }
-            return false ;
+            return false;
         }
         public async Task<bool> UpdateRecord(AttendanceLogViewModel vm)
         {
