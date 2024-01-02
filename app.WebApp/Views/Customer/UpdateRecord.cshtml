@@ -77,7 +77,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Division</label>
-                                        <select class="form-control" asp-for="DivisionId" asp-items="ViewBag.Division" required>
+                                        <select class="form-control" asp-for="DivisionId" id="divisionId" asp-items="ViewBag.Division" required>
                                             <option value="0" selected>--Division--</option>
                                             <span asp-validation-for="DivisionId" class="text-danger"></span>
                                         </select>
@@ -88,7 +88,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>District</label>
-                                        <select class="form-control" asp-for="DistrictId" asp-items=" ViewBag.District" required>
+                                        <select class="form-control" asp-for="DistrictId" id="districtId" asp-items=" ViewBag.District" required>
                                             <option value="0" selected>--District--</option>
                                             <span asp-validation-for="DistrictId" class="text-danger"></span>
                                         </select>
@@ -97,7 +97,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Upazila</label>
-                                        <select class="form-control" asp-for="UpazilaId" asp-items="ViewBag.Upazila" required>
+                                        <select class="form-control" asp-for="UpazilaId" id="upazilaId" asp-items="ViewBag.Upazila" required>
                                             <option value="0" selected>--Upazila--</option>
                                             <span asp-validation-for="UpazilaId" class="text-danger"></span>
                                         </select>
@@ -116,14 +116,52 @@
 </section>
 
 @section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
     <script>
         $(document).ready(function () {
             $('#Configuration').addClass('menu-open');
 
         });
     </script>
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
+    <script type="text/javascript">
+        $('#divisionId').change(function () {
+            $.ajax({
+                type: "post",
+                url: "/Dropdown/GetDistrictSelectionList",
+                data: { divisionId: $('#divisionId').val() },
+                dataType: "json",
+                success: function (data) {
+                    var district = "<select>";
+                    district = district + '<option value="">--Select--</option>';
+                    for (var i = 0; i < data.length; i++) {
+                        district = district + '<option value=' + data[i].id + '>' + data[i].name + '</option>';
+                    }
+                    district = district + '</select>';
+                    $('#districtId').html(district);
+                }
+            });
+        });
+        $('#districtId').change(function () {
+            $.ajax({
+                type: "post",
+                url: "/Dropdown/GetUpazilaSelectionList",
+                data: { districtId: $('#districtId').val() },
+
+                datatype: "json",
+                traditional: true,
+                success: function (data) {
+                    var upazila = "<select>";
+                    upazila = upazila + '<option value="">--Select--</option>';
+                    for (var i = 0; i < data.length; i++) {
+                        upazila = upazila + '<option value=' + data[i].id + '>' + data[i].name + '</option>';
+                    }
+                    upazila = upazila + '</select>';
+                    $('#upazilaId').html(upazila);
+                }
+            });
+        });
+    </script>
     }
 
