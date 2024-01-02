@@ -34,5 +34,6 @@
         Product,
         Customer,
         Supplier,
+        Storehouse,
     }
 }

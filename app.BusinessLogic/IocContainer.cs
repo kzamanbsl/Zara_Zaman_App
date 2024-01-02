@@ -28,6 +28,7 @@ using app.Services.ProductCategoryServices;
 using app.Services.SupplierServices;
 using app.Services.ProductServices;
 using app.Services.CustomerServices;
+using app.Services.StorehouseServices;
 
 namespace app.Services
 {
@@ -63,6 +64,7 @@ namespace app.Services
             services.AddTransient<ISupplierService, SupplierService>(); 
             services.AddTransient<IProductService, ProductService>();
             services.AddTransient<ICustomerService, CustomerService>();
+            services.AddTransient<IStorehouseService, StorehouseService>();
 
             return services;
         }
