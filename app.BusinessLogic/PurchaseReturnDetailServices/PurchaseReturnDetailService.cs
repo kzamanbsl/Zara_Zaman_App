@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace app.EntityModel.AppModels
+namespace app.Services.PurchaseReturnDetailServices
 {
-    public class PurchaseReturnDetail : BaseEntity
+    public class PurchaseReturnDetailService
     {
-
     }
 }

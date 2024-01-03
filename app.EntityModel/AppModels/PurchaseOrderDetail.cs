@@ -8,5 +8,6 @@ namespace app.EntityModel.AppModels
 {
     public class PurchaseOrderDetail : BaseEntity
     {
+
     }
 }
