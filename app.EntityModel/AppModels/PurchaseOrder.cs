@@ -10,9 +10,13 @@ namespace app.EntityModel.AppModels
     {
         public DateTime PurchaseDate { get; set; }
         public string Description { get; set; }
-        public string PurchaseOrderNo { get; set; }
-        public string PurchaseOrderStatus { get; set; }
+        public string OrderNo { get; set; }
+        public int OrderStatusId { get; set; }
+        public  decimal OverallDiscount { get; set; }
         public long? SupplierId { get; set; }
         public Supplier Supplier { get; set; }
+        public long? StorehouseId { get; set;}
+        public Storehouse Storehouse { get; set; }
+
     }
 }

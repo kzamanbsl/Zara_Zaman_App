@@ -36,46 +36,44 @@
                         <form asp-action="AddRecord" method="post">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <label asp-for="Name" class="control-label"></label>
                                         <input asp-for="Name" class="form-control" required />
                                         <span asp-validation-for="Name" class="text-danger"></span>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <label asp-for="Phone" class="control-label"></label>
                                         <input asp-for="Phone" class="form-control" required></input>
                                         <span asp-validation-for="Phone" class="text-danger"></span>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <label asp-for="Email" class="control-label"></label>
                                         <input asp-for="Email" class="form-control" required></input>
                                         <span asp-validation-for="Email" class="text-danger"></span>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <label asp-for="Description" class="control-label"></label>
                                         <textarea asp-for="Description" class="form-control" required rows="2"></textarea>
                                         <span asp-validation-for="Description" class="text-danger"></span>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <label asp-for="Address" class="control-label"></label>
                                         <textarea asp-for="Address" class="form-control" required rows="2"></textarea>
                                         <span asp-validation-for="Address" class="text-danger"></span>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Division</label>
                                         <select class="form-control" asp-for="DivisionId" id="divisionId" asp-items="ViewBag.Division" required>
@@ -86,7 +84,7 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <label>District</label>
                                         <select class="form-control" asp-for="DistrictId" id="districtId" asp-items=" ViewBag.District" required>
@@ -95,7 +93,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Upazila</label>
                                         <select class="form-control" asp-for="UpazilaId" id="upazilaId" asp-items="ViewBag.Upazila" required>
@@ -105,7 +103,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group" style="float:right">
                                 <input type="submit" value="Create" class="btn btn-primary" />
                             </div>
                         </form>
