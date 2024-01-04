@@ -45,6 +45,7 @@ namespace app.Services.AttendanceServices
                     var atLog = await _dbContext.AttendanceLog.AddAsync(models);
                     await _dbContext.SaveChangesAsync();
                     result = true;
+                    
                 }
                 else
                 {

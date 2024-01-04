@@ -33,27 +33,27 @@
             <div class="card-body">
                 <div class="table-responsive">
                     <table id="attendanceTable" class="table table-sm table-bordered">
-                        <thead>
+                        <thead >
                             <tr>
                                 <th>
                                     #
                                 </th>
-                                <th>
+                                <th class="text-center">
                                     Employee Name
                                 </th>
-                                <th>
+                                <th class="text-center">
                                     Shift Name
                                 </th>
-                                <th>
+                                <th class="text-center">
                                     Attendance Date
                                 </th>
-                                <th>
+                                <th class="text-center">
                                     Login Time
                                 </th>
-                                <th>
+                                <th class="text-center">
                                     Logout Time
                                 </th>
-                                <th>
+                                <th class="text-center">
                                     Remarks
                                 </th>
 
@@ -90,9 +90,9 @@
                                     </td>
 
 
-                                    <td class="text-center">
-                                        @Html.ActionLink("", "UpdateRecord", new { id = item.Id }, new { @class = "text-danger fas fa-edit", onclick = "return confirm('Are you sure you want to edit this?')" }) |
-                                        @Html.ActionLink("", "Delete", new { id = item.Id }, new { @class = "text-danger fas fa-trash", onclick = "return confirm('Are you sure you want to delete this?')" })
+                                    <td class="text-left">
+                                        @Html.ActionLink("", "UpdateRecord", new { id = item.Id }, new {@title="Edit", @class = "text-warning fas fa-edit", onclick = "return confirm('Are you sure you want to edit this?')" }) |
+                                        @Html.ActionLink("", "Delete", new { id = item.Id }, new { @title = "Delete", @class = "text-danger fas fa-trash", onclick = "return confirm('Are you sure you want to delete this?')" })
                                     </td>
                                 </tr>
                                 SN++;
