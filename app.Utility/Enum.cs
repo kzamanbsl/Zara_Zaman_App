@@ -15,4 +15,21 @@
         Approve,
         Reject
     }
+
+    public enum PurchaseOrderStatusEnum
+    {
+        Draft = 1,
+        Confirm,
+        Approve,
+        Receive,
+        Hold,
+        Reject
+    }
+
+    public enum StoreTypeEnum
+    {
+        Purchase = 1,
+        Menufacture,
+       
+    }
 }

@@ -35,5 +35,7 @@
         Customer,
         Supplier,
         Storehouse,
+        PurchaseOrder,
+        PurchaseOrderDetail,
     }
 }
