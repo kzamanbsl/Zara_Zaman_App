@@ -15,14 +15,12 @@ namespace app.Services.AttendanceLogServices
         private readonly InventoryDbContext _dbContext;
         private readonly IWorkContext _iWorkContext;
         private readonly IHttpContextAccessor _httpContextAccessor;
-        private readonly IAttendanceService _attendanceService;
-        public AttendanceLogService(IEntityRepository<AttendanceLog> iEntityRepository, InventoryDbContext dbContext, IWorkContext iWorkContext, IHttpContextAccessor httpContextAccessor,IAttendanceService attendanceService)
+        public AttendanceLogService(IEntityRepository<AttendanceLog> iEntityRepository, InventoryDbContext dbContext, IWorkContext iWorkContext, IHttpContextAccessor httpContextAccessor)
         {
             _iEntityRepository = iEntityRepository;
             _dbContext = dbContext;
             _iWorkContext = iWorkContext;
             _httpContextAccessor = httpContextAccessor;
-            _attendanceService = attendanceService;
         }
 
         public async Task<bool> AddRecord(AttendanceLogViewModel vm)
