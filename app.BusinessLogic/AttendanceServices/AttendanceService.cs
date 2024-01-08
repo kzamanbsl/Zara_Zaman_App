@@ -45,7 +45,7 @@ namespace app.Services.AttendanceServices
                     var atLog = await _dbContext.AttendanceLog.AddAsync(models);
                     await _dbContext.SaveChangesAsync();
                     result = true;
-                    
+
                 }
                 else
                 {
@@ -59,11 +59,12 @@ namespace app.Services.AttendanceServices
                     var res = await _iEntityRepository.AddAsync(model);
                     vm.Id = res.Id;
 
-                    if(vm.Id > 0)
+                    if (vm.Id > 0)
                     {
                         AttendanceLogViewModel models = new AttendanceLogViewModel();
                         models.AttendanceId = vm.Id;
                         models.LoginTime = vm.LoginTime;
+                        //models.LoginTime = null;
                         models.LogoutTime = vm.LogoutTime;
                         models.Remarks = vm.Remarks;
                         var atLog = await _attendanceLogService.AddRecord(models);
