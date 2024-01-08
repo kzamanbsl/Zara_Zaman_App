@@ -64,12 +64,12 @@ namespace app.Services.AttendanceServices
                         AttendanceLogViewModel models = new AttendanceLogViewModel();
                         models.AttendanceId = vm.Id;
                         models.LoginTime = vm.LoginTime;
-                        //models.LoginTime = null;
                         models.LogoutTime = vm.LogoutTime;
                         models.Remarks = vm.Remarks;
                         var atLog = await _attendanceLogService.AddRecord(models);
                         result = true;
                     }
+                    
                 }
             }
             return result;

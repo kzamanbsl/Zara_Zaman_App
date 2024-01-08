@@ -77,8 +77,6 @@
                                     <td>
                                         @Html.DisplayFor(modelItem => item.AttendanceDate)
                                     </td>
-
-
                                     <td>
                                         @Html.DisplayFor(modelItem => item.LoginTime)
                                     </td>
@@ -88,7 +86,6 @@
                                     <td>
                                         @Html.DisplayFor(modelItem => item.Remarks)
                                     </td>
-
 
                                     <td class="text-left">
                                         @Html.ActionLink("", "UpdateRecord", new { id = item.Id }, new {@title="Edit", @class = "text-warning fas fa-edit", onclick = "return confirm('Are you sure you want to edit this?')" }) |
