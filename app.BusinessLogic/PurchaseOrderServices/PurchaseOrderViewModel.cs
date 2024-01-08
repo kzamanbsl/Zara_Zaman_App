@@ -1,4 +1,5 @@
 ﻿using app.EntityModel.AppModels;
+using app.Services.PurchaseOrderDetailServices;
 using System;
 using System.Buffers.Text;
 using System.Collections.Generic;
@@ -19,6 +20,7 @@ namespace app.Services.PurchaseOrderServices
         public Supplier Supplier { get; set; }
         public long? StorehouseId { get; set; }
         public Storehouse Storehouse { get; set; }
+        public PurchaseOrderDetailViewModel PurchaseOrderDetailVM { get; set; } 
         public IEnumerable<PurchaseOrderViewModel> PurchaseOrderList { get; set; }
     }
 }
