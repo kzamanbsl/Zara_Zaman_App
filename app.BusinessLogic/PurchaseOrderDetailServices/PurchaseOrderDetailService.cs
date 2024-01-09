@@ -37,6 +37,7 @@ namespace app.Services.PurchaseOrderDetailServices
                     Remarks = vm.PurchaseOrderDetailVM.Remarks
                     
 
+
                 };
 
                 var res = await _iEntityRepository.AddAsync(purchaseOrderDetail);

@@ -33,46 +33,66 @@
             </div>
             <div class="card-body">
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-12">
                         <form asp-action="UpdateRecord" method="post">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                             @Html.HiddenFor(model => model.Id)
-                            <div class="form-group">
-                                <label asp-for="Name" class="control-label"></label>
-                                <input asp-for="Name" class="form-control" required />
-                                <span asp-validation-for="Name" class="text-danger"></span>
-                            </div>  
-                            <div class="form-group">
-                                <label asp-for="ShortName" class="control-label"></label>
-                                <input asp-for="ShortName" class="form-control" required />
-                                <span asp-validation-for="ShortName" class="text-danger"></span>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label asp-for="Name" class="control-label"></label>
+                                        <input asp-for="Name" class="form-control" required />
+                                        <span asp-validation-for="Name" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label asp-for="ShortName" class="control-label"></label>
+                                        <input asp-for="ShortName" class="form-control" required />
+                                        <span asp-validation-for="ShortName" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label asp-for="MenuId" class="control-label">Menu</label>
+                                        <select asp-for="MenuId" class="form-control" required asp-items="ViewBag.Record">
+                                            <option value="">-- Select Menu --</option>
+                                        </select>
+                                        <span asp-validation-for="Name" class="text-danger"></span>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label asp-for="MenuId" class="control-label">Menu</label>
-                                <select asp-for="MenuId" class="form-control" required asp-items="ViewBag.Record">
-                                    <option value="">-- Select Menu --</option>
-                                </select>
-                                <span asp-validation-for="Name" class="text-danger"></span>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label asp-for="Icon" class="control-label"></label>
+                                        <input asp-for="Icon" class="form-control" required />
+                                        <span asp-validation-for="Icon" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label asp-for="Action" class="control-label"></label>
+                                        <input asp-for="Action" class="form-control" required />
+                                        <span asp-validation-for="Action" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label asp-for="Controller" class="control-label"></label>
+                                        <input asp-for="Controller" class="form-control" required />
+                                        <span asp-validation-for="Controller" class="text-danger"></span>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label asp-for="Icon" class="control-label"></label>
-                                <input asp-for="Icon" class="form-control" required />
-                                <span asp-validation-for="Icon" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="Action" class="control-label"></label>
-                                <input asp-for="Action" class="form-control" required />
-                                <span asp-validation-for="Action" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="Controller" class="control-label"></label>
-                                <input asp-for="Controller" class="form-control" required />
-                                <span asp-validation-for="Controller" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="OrderNo" class="control-label"> Order No</label>
-                                <input asp-for="OrderNo" class="form-control" required />
-                                <span asp-validation-for="OrderNo" class="text-danger"></span>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label asp-for="OrderNo" class="control-label"> Order No</label>
+                                        <input asp-for="OrderNo" class="form-control" required />
+                                        <span asp-validation-for="OrderNo" class="text-danger"></span>
+                                    </div>
+                                </div>
                             </div>
                             <div class="form-group form-check">
                                 <label class="form-check-label">
@@ -84,7 +104,7 @@
                                     <input class="form-check-input" asp-for="IsMenuShow" /> @Html.DisplayNameFor(model => model.IsMenuShow)
                                 </label>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group" style="float:right">
                                 <input type="submit" value="Update" class="btn btn-warning" />
                             </div>
                         </form>
