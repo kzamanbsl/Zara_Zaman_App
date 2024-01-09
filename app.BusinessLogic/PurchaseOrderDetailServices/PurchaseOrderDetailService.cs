@@ -35,6 +35,8 @@ namespace app.Services.PurchaseOrderDetailServices
                     SalePrice = vm.PurchaseOrderDetailVM.SalePrice,
                     Discount = vm.PurchaseOrderDetailVM.Discount,
                     Remarks = vm.PurchaseOrderDetailVM.Remarks
+                    
+
                 };
 
                 var res = await _iEntityRepository.AddAsync(purchaseOrderDetail);
