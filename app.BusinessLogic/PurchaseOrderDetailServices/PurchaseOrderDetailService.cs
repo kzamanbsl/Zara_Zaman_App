@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using app.Services.PurchaseOrderServices;
 
 namespace app.Services.PurchaseOrderDetailServices
 {
@@ -19,27 +20,31 @@ namespace app.Services.PurchaseOrderDetailServices
             _iEntityRepository = iEntityRepository;
             _dbContext = dbContext;
         }
-        public async Task<bool> AddRecord(PurchaseOrderDetailViewModel vm)
+        public async Task<bool> AddRecord(PurchaseOrderViewModel vm)
         {
-            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id == vm.Id);
-            if (checkName == null)
+            try
             {
-                PurchaseOrderDetail purchaseOrderDetail = new PurchaseOrderDetail();
-                purchaseOrderDetail.PurchaseOrderId = vm.PurchaseOrderId;
-                purchaseOrderDetail.ProductId = vm.ProductId;
-                purchaseOrderDetail.PurchaseQty = vm.PurchaseQty;
-                purchaseOrderDetail.Consumption = vm.Consumption;
-                purchaseOrderDetail.UnitId = vm.UnitId;
-                purchaseOrderDetail.CostPrice = vm.CostPrice;
-                purchaseOrderDetail.SalePrice = vm.SalePrice;
-                purchaseOrderDetail.Discount = vm.Discount;
-                purchaseOrderDetail.Remarks = vm.Remarks;
+                PurchaseOrderDetail purchaseOrderDetail = new PurchaseOrderDetail
+                {
+                    PurchaseOrderId = vm.Id,
+                    ProductId = vm.PurchaseOrderDetailVM.ProductId,
+                    PurchaseQty = vm.PurchaseOrderDetailVM.PurchaseQty,
+                    Consumption = vm.PurchaseOrderDetailVM.Consumption,
+                    UnitId = vm.PurchaseOrderDetailVM.UnitId,
+                    CostPrice = vm.PurchaseOrderDetailVM.CostPrice,
+                    SalePrice = vm.PurchaseOrderDetailVM.SalePrice,
+                    Discount = vm.PurchaseOrderDetailVM.Discount,
+                    Remarks = vm.PurchaseOrderDetailVM.Remarks
+                };
 
                 var res = await _iEntityRepository.AddAsync(purchaseOrderDetail);
-                vm.Id = res?.Id ?? 0;
+                purchaseOrderDetail.Id = res?.Id ?? 0;
                 return true;
             }
-            return false;
+            catch (Exception ex)
+            {
+                throw;
+            }
 
         }
 

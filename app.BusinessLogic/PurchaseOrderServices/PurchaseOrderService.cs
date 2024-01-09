@@ -24,10 +24,7 @@ namespace app.Services.PurchaseOrderServices
         }
         public async Task<bool> AddRecord(PurchaseOrderViewModel vm)
         {
-           var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id == vm.Id);
-           if (checkName == null)
-            {
-                var poMax = _dbContext.PurchaseOrder.Count(x => x.Id == vm.Id) + 1;
+                var poMax = _dbContext.PurchaseOrder.Count() + 1;
                 string poCid = @"PO-" +
                                DateTime.Now.ToString("yy") +
                                DateTime.Now.ToString("MM") +
@@ -44,9 +41,7 @@ namespace app.Services.PurchaseOrderServices
                 purchaseOrder.OrderStatusId = (int)PurchaseOrderStatusEnum.Draft;
                 var res = await _iEntityRepository.AddAsync(purchaseOrder);
                 vm.Id = res?.Id ?? 0;
-                return true;
-            }
-           return false;
+                return true;            
         }
 
         public Task<bool> UpdateRecord(PurchaseOrderViewModel vm)
