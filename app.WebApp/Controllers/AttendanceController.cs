@@ -17,17 +17,12 @@ namespace app.WebApp.Controllers
             _iService = iService;
             _iDropdownService = iDropdownService;
         }
-        [HttpGet]
-        public async Task<IActionResult> IsAttandanceDataExistByEmployeeId(int id)
-        {
-            bool IsExist = false;
-            var data = await _iService.IsExist(id);
-            if (data)
-            {
-                IsExist = true;
 
-            }
-            return Json(IsExist);
+        [HttpGet]
+        public async Task<JsonResult> CheckEmployeeTodaysAttendance(long employeeId, DateTime date)
+        {
+            var data = await _iService.CheckEmployeeTodaysAttendance(employeeId, date);
+            return Json(data);
         }
 
         [HttpGet]
@@ -53,7 +48,15 @@ namespace app.WebApp.Controllers
         [HttpPost]
         public async Task<IActionResult> AddRecord(AttendanceViewModel viewModel)
         {
-            var result = await _iService.AddRecord(viewModel);
+            bool result = false;
+            if(viewModel.Id > 0)
+            {
+                result = await _iService.UpdateRecord(viewModel);
+            }
+            else
+            {
+                result = await _iService.AddRecord(viewModel);
+            }
 
             if (result == true)
             {

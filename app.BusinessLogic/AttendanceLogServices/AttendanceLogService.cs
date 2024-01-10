@@ -1,12 +1,8 @@
 ﻿using app.EntityModel.AppModels;
-using app.EntityModel.CoreModel;
 using app.Infrastructure;
 using app.Infrastructure.Auth;
 using app.Infrastructure.Repository;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.AspNetCore.Http;
-using app.Services.AttendanceServices;
 namespace app.Services.AttendanceLogServices
 {
     public class AttendanceLogService : IAttendanceLogService
@@ -26,14 +22,13 @@ namespace app.Services.AttendanceLogServices
         public async Task<bool> AddRecord(AttendanceLogViewModel vm)
         {
 
-            //var DataTranfer = _dbContext.AttendanceLog.Include(x => x.Attendance).ToListAsync();
-            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id == vm.Id && f.AttendanceId == vm.AttendanceId);
-            if (checkName == null)
+            if (vm != null)
             {
+
                 AttendanceLog model = new AttendanceLog();
                 model.AttendanceId = vm.AttendanceId;
                 model.LoginTime = (DateTime)vm.LoginTime;
-                model.LogoutTime = vm.LogoutTime;
+                model.LogoutTime = null;
                 model.Remarks = vm.Remarks;
                 model.CreatedBy = _httpContextAccessor.HttpContext.User.Identity.Name;
                 model.CreatedOn = DateTime.Now;
@@ -44,9 +39,9 @@ namespace app.Services.AttendanceLogServices
             }
             return false;
         }
+
         public async Task<bool> UpdateRecord(AttendanceLogViewModel vm)
         {
-            //var DataTranfer = _dbContext.AttendanceLog.Include(x => x.Attendance).ToListAsync();
             var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id == vm.Id && f.AttendanceId == vm.AttendanceId);
             if (checkName == null)
             {
@@ -60,6 +55,7 @@ namespace app.Services.AttendanceLogServices
             }
             return false;
         }
+
         public async Task<AttendanceLogViewModel> GetRecordById(long id)
         {
             //var DataTranfer = _dbContext.AttendanceLog.Include(x => x.Attendance).ToListAsync();
@@ -76,19 +72,19 @@ namespace app.Services.AttendanceLogServices
         {
             AttendanceLogViewModel model = new AttendanceLogViewModel();
             model.AttendanceLogList = await Task.Run(() => (from t1 in _dbContext.AttendanceLog
-                                                                where t1.IsActive == true
-                                                                select new AttendanceLogViewModel
-                                                                {
-                                                                    Id = t1.Id,
-                                                                    AttendanceId = t1.AttendanceId,
-                                                                    AttendanceDate = t1.Attendance.AttendanceDate,
-                                                                    EmployeeId=t1.Attendance.EmployeeId,
-                                                                    ShiftId= t1.Attendance.ShiftId,
-                                                                    LoginTime = t1.LoginTime,
-                                                                    LogoutTime = (DateTime)t1.LogoutTime,
-                                                                    Remarks = t1.Remarks,
-                                                                  
-                                                                }).AsQueryable());
+                                                            where t1.IsActive == true
+                                                            select new AttendanceLogViewModel
+                                                            {
+                                                                Id = t1.Id,
+                                                                AttendanceId = t1.AttendanceId,
+                                                                AttendanceDate = t1.Attendance.AttendanceDate,
+                                                                EmployeeId = t1.Attendance.EmployeeId,
+                                                                ShiftId = t1.Attendance.ShiftId,
+                                                                LoginTime = t1.LoginTime,
+                                                                LogoutTime = (DateTime)t1.LogoutTime,
+                                                                Remarks = t1.Remarks,
+
+                                                            }).AsQueryable());
             return model;
         }
         public async Task<bool> DeleteRecord(long id)

@@ -12,103 +12,94 @@ namespace app.Services.AttendanceServices
         private readonly IEntityRepository<Attendance> _iEntityRepository;
         private readonly InventoryDbContext _dbContext;
         private readonly IWorkContext _iWorkContext;
-        private readonly IAttendanceLogService _attendanceLogService;
+        private readonly IAttendanceLogService _iAttendanceLogService;
 
-        public AttendanceService(IEntityRepository<Attendance> iEntityRepository, InventoryDbContext dbContext, IWorkContext iWorkContext,IAttendanceLogService attendanceLogService)
+        public AttendanceService(IEntityRepository<Attendance> iEntityRepository, InventoryDbContext dbContext, IWorkContext iWorkContext, IAttendanceLogService iAttendanceLogService)
         {
             _iEntityRepository = iEntityRepository;
             _dbContext = dbContext;
             _iWorkContext = iWorkContext;
-            _attendanceLogService = attendanceLogService;
+            _iAttendanceLogService = iAttendanceLogService;
         }
 
 
 
         public async Task<bool> AddRecord(AttendanceViewModel vm)
         {
-            var user = await _iWorkContext.GetCurrentAdminUserAsync();
-            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id == vm.Id && f.EmployeeId == vm.EmployeeId);
+            //var user = await _iWorkContext.GetCurrentAdminUserAsync();
+            //var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id == vm.Id && f.EmployeeId == vm.EmployeeId);
 
             bool result = false;
 
-            if (checkName == null)
+            Attendance model = new Attendance();
+            model.EmployeeId = vm.EmployeeId;
+            model.ShiftId = vm.ShiftId;
+            model.AttendanceDate = vm.AttendanceDate;
+            model.LoginTime = vm.LoginTime;
+            model.LogoutTime = null;
+            model.Remarks = vm.Remarks;
+            var res = await _iEntityRepository.AddAsync(model);
+            result = true;
+
+            if (res.Id > 0)
             {
-                bool IsPresentToday = await IsExist((int)vm.EmployeeId);
+                vm.Id = res.Id;
+                AttendanceLogViewModel models = new AttendanceLogViewModel();
+                models.AttendanceId = vm.Id;
+                models.LoginTime = vm.LoginTime;
+                models.Remarks = vm.Remarks;
+                var logRes = await _iAttendanceLogService.AddRecord(models);
+                result = true;
+            }
 
-                if (IsPresentToday)
+            return result;
+        }
+
+        public async Task<bool> UpdateRecord(AttendanceViewModel vm)
+        {
+            bool result = false;
+
+            if (vm.Id <= 0) { return false; }
+
+            var response = await _iEntityRepository.GetByIdAsync(vm.Id);
+            if (response == null || response.Id <= 0) { return false; }
+
+            response.EmployeeId = vm.EmployeeId;
+            response.ShiftId = vm.ShiftId;
+            response.AttendanceDate = vm.AttendanceDate;
+            if (vm.IsLogin)
+            {
+                response.LogoutTime = vm.LogoutTime;
+            }
+            else
+            {
+                response.LogoutTime = vm.LoginTime;
+            }
+
+            response.Remarks = vm.Remarks;
+            var res = await _iEntityRepository.UpdateAsync(response);
+
+            if (res==true)
+            {
+               
+                AttendanceLogViewModel models = new AttendanceLogViewModel();
+                models.AttendanceId = vm.Id;
+                if (vm.IsLogin)
                 {
-                    AttendanceLog models = new AttendanceLog();
-                    models.AttendanceId = _dbContext.Attendance
-                        .Where(c => c.LoginTime.Date == DateTime.Today && c.EmployeeId == vm.EmployeeId && c.IsActive).FirstOrDefault().Id;
                     models.LogoutTime = vm.LogoutTime;
-                    models.Remarks = vm.Remarks;
-                    var atLog = await _dbContext.AttendanceLog.AddAsync(models);
-                    await _dbContext.SaveChangesAsync();
-                    result = true;
-
                 }
                 else
                 {
-                    Attendance model = new Attendance();
-                    model.EmployeeId = vm.EmployeeId;
-                    model.ShiftId = vm.ShiftId;
-                    model.AttendanceDate = vm.AttendanceDate;
-                    model.LoginTime = vm.LoginTime;
-                    model.LogoutTime = vm.LogoutTime;
-                    model.Remarks = vm.Remarks;
-                    var res = await _iEntityRepository.AddAsync(model);
-                    vm.Id = res.Id;
-
-                    if (vm.Id > 0)
-                    {
-                        AttendanceLogViewModel models = new AttendanceLogViewModel();
-                        models.AttendanceId = vm.Id;
-                        models.LoginTime = vm.LoginTime;
-                        models.LogoutTime = vm.LogoutTime;
-                        models.Remarks = vm.Remarks;
-                        var atLog = await _attendanceLogService.AddRecord(models);
-                        result = true;
-                    }
-                    
+                    models.LogoutTime = vm.LoginTime;
                 }
+                models.Remarks = vm.Remarks;
+                var logRes = await _iAttendanceLogService.AddRecord(models);
+                result = true;
             }
             return result;
+
         }
 
-        public async Task<bool> IsExist(int id)
-        {
-            bool result = false;
-
-            if(id > 0)
-            {   
-                if(await _dbContext.Attendance.Where(c => c.EmployeeId == id && c.AttendanceDate.Date == DateTime.Today).AnyAsync())
-                {
-                    result = true;
-                }
-            }
-
-            return result;
-        }
-        public async Task<bool> UpdateRecord(AttendanceViewModel vm)
-        {
-
-            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id == vm.Id && f.EmployeeId == vm.EmployeeId);
-            if (checkName == null)
-            {
-                var result = await _iEntityRepository.GetByIdAsync(vm.Id);
-                result
-                    .EmployeeId = vm.EmployeeId;
-                //result.AttendanceLogId = model.AttendanceLogId;
-                result.ShiftId = vm.ShiftId;
-                result.AttendanceDate = vm.AttendanceDate;
-                result.LoginTime = vm.LoginTime;
-                result.LogoutTime = vm.LogoutTime;
-                result.Remarks = vm.Remarks;
-                var res = await _iEntityRepository.UpdateAsync(result);
-                return true;
-            }
-            return false;
-        }
         public async Task<AttendanceViewModel> GetRecordById(long id)
         {
             var result = await _iEntityRepository.GetByIdAsync(id);
@@ -123,6 +114,33 @@ namespace app.Services.AttendanceServices
             model.Remarks = result.Remarks;
             return model;
         }
+
+        public async Task<AttendanceViewModel> CheckEmployeeTodaysAttendance(long employeeId, DateTime date)
+        {
+            AttendanceViewModel vm = new AttendanceViewModel();
+
+            if (employeeId < 0)
+            {
+                return vm;
+            }
+
+            var result = await _dbContext.Attendance.FirstOrDefaultAsync(c => c.EmployeeId == employeeId && c.AttendanceDate.Date == date.Date);
+
+            if (result != null && result.Id > 0)
+            {
+                var logResult = await _dbContext.AttendanceLog.LastOrDefaultAsync(c => c.AttendanceId == result.Id && c.IsActive == true);
+
+                vm.EmployeeId = result.EmployeeId;
+                vm.ShiftId = result.ShiftId;
+                vm.AttendanceDate = result.AttendanceDate;
+                vm.LoginTime = result.LoginTime;
+                vm.LogoutTime = (DateTime)result.LogoutTime;
+                vm.Remarks = result.Remarks;
+                vm.IsLogin = logResult.LogoutTime != null ? true : false;
+            }
+
+            return vm;
+        }
         public async Task<AttendanceViewModel> GetAllRecord()
         {
             AttendanceViewModel model = new AttendanceViewModel();
@@ -131,10 +149,10 @@ namespace app.Services.AttendanceServices
                                                          select new AttendanceViewModel
                                                          {
                                                              Id = t1.Id,
-                                                             EmployeeId=t1.EmployeeId,
-                                                             EmployeeName=t1.Employee.Name,
-                                                             ShiftId=t1.ShiftId,
-                                                             ShiftName=t1.Shift.Name,
+                                                             EmployeeId = t1.EmployeeId,
+                                                             EmployeeName = t1.Employee.Name,
+                                                             ShiftId = t1.ShiftId,
+                                                             ShiftName = t1.Shift.Name,
                                                              AttendanceDate = t1.AttendanceDate,
                                                              LoginTime = t1.LoginTime,
                                                              LogoutTime = (DateTime)t1.LogoutTime,

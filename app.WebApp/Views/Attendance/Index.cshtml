@@ -33,7 +33,7 @@
             <div class="card-body">
                 <div class="table-responsive">
                     <table id="attendanceTable" class="table table-sm table-bordered">
-                        <thead >
+                        <thead>
                             <tr>
                                 <th>
                                     #
@@ -64,35 +64,42 @@
                         <tbody>
                             @foreach (var item in Model.AttendanceList)
                             {
-                                <tr>
-                                    <td>
-                                        @SN
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.EmployeeName)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.ShiftName)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.AttendanceDate)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.LoginTime)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.LogoutTime)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Remarks)
-                                    </td>
+                            <tr>
+                                <td>
+                                    @SN
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.EmployeeName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ShiftName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.AttendanceDate)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.LoginTime)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.LogoutTime)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Remarks)
+                                </td>
 
-                                    <td class="text-left">
-                                        @Html.ActionLink("", "UpdateRecord", new { id = item.Id }, new {@title="Edit", @class = "text-warning fas fa-edit" }) |
-                                        @Html.ActionLink("", "Delete", new { id = item.Id }, new { @title = "Delete", @class = "text-danger fas fa-trash", onclick = "return confirm('Are you sure you want to delete this?')" })
-                                    </td>
-                                </tr>
-                                SN++;
+                                <td class="text-left">
+                                    @Html.ActionLink("", "UpdateRecord", new { id = item.Id },
+                                             new { @title = "Edit", @class = "text-warning fas fa-edit" }) |
+                                    @Html.ActionLink("", "Delete", new { id = item.Id },
+                                             new
+                                             {
+                                                 @title = "Delete",
+                                                 @class = "text-danger fas fa-trash",
+                                                 onclick = "return confirm('Are you sure you want to delete this?')"
+                                             })
+                                </td>
+                            </tr>
+                            SN++;
                             }
                         </tbody>
 
