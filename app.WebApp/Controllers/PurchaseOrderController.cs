@@ -51,13 +51,7 @@ namespace app.WebApp.Controllers
                 }
                 await _ipurchaseOrderDetailService.AddRecord(vm);
             }
-            //var purchaseOrderDetailAdded = await _ipurchaseOrderDetailService.AddRecord(vm);
-            //if (!purchaseOrderDetailAdded)
-            //{
-            //    return View("Purchase Order Detail Failed");
-            //}
-
-            return RedirectToAction("Index");
+            return RedirectToAction(nameof(AddPurchaseOrderAndDetail));
         }
 
 
