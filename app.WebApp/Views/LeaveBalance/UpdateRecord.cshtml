@@ -71,15 +71,16 @@
 </section>
 
 @section Scripts {
-    <script>
-        $(document).ready(function () {
-            $('#Leave').addClass('menu-open');
-           
-        });
-    </script>
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
+    <script>
+        $(document).ready(function () {
+            $('#Leave').addClass('menu-open');
+            $('#LeaveBalanceIndex').addClass('active');
+
+        });
+    </script>
     }
 
 

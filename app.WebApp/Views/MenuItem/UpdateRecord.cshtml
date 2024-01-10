@@ -120,6 +120,12 @@
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
+    <script>
+        $(document).ready(function () {
+            $('#User-Management').addClass('menu-open');
+            $('#MenuItemIndex').addClass('active');
+        });
+    </script>
     }
 
 
