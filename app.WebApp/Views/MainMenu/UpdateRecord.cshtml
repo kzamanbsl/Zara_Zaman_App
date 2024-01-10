@@ -79,6 +79,13 @@
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
+
+    <script>
+        $(document).ready(function () {
+            $('#User-Management').addClass('menu-open');
+            $('#MainMenuIndex').addClass('active');
+        });
+    </script>
     }
 
 

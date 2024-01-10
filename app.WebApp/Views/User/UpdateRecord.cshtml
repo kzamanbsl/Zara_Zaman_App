@@ -106,15 +106,16 @@
 
 
 @section Scripts {
-    <script>
-        $(document).ready(function () {
-            $('#User-Managment').addClass('menu-open');
-            $('#LogUserIndex').addClass('active');
-        });
-    </script>
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
+    <script>
+        $(document).ready(function () {
+            $('#User-Managment').addClass('menu-open');
+            $('#UserIndex').addClass('active');
+            
+        });
+    </script>
     }
 
 

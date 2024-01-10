@@ -32,7 +32,7 @@
             </div>
             <div class="card-body">
                 <div class="table-responsive">
-                    <table id="dropDownItemTable" class="table table-sm table-bordered">
+                    <table id="dropDownItem" class="table table-sm table-bordered">
                         <thead>
                             <tr>
                                 <th>
@@ -87,9 +87,18 @@
     <script>
         $(document).ready(function () {
             $('#Configuration').addClass('menu-open');
+<<<<<<< HEAD
+            $('#DropdownItemIndex').addClass('active');
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('#dropDownItem').DataTable({
+=======
             $('#DropDownItemIndex').addClass('active');
 
             $('#dropDownItemTable').DataTable({
+>>>>>>> 65dd34d77794cb8088aa4c59ee7f083c7fcba048
                 "paging": true,
                 "ordering": true,
                 "info": true,
