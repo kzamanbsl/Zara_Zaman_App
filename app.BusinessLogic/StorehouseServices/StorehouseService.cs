@@ -35,7 +35,7 @@ namespace app.Services.StorehouseServices
         public async Task<bool> UpdateRecord(StorehouseViewModel vm)
         {
 
-            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim());
+            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id == vm.Id);
             if (checkName == null)
             {
                 var storehouse = await _iEntityRepository.GetByIdAsync(vm.Id);

@@ -257,5 +257,44 @@ namespace app.Services.DropdownServices
                                                                                       }).AsQueryable());
             return dropDownViewModels;
         }
+
+        public async Task<IEnumerable<DropdownViewModel>> SupplierSelectionList()
+        {
+            IEnumerable<DropdownViewModel> dropDownViewModels = await Task.Run(() => (from t1 in _dbContext.Supplier
+                                                                                      where t1.IsActive == true
+                                                                                      select new DropdownViewModel
+                                                                                      {
+                                                                                          Id = t1.Id,
+                                                                                          Name = t1.Name
+
+                                                                                      }).AsQueryable());
+            return dropDownViewModels;
+        }
+        public async Task<IEnumerable<DropdownViewModel>> StorehouseSelectionList()
+        {
+            IEnumerable<DropdownViewModel> dropDownViewModels = await Task.Run(() => (from t1 in _dbContext.Storehouse
+                                                                                      where t1.IsActive == true
+                                                                                      select new DropdownViewModel
+                                                                                      {
+                                                                                          Id = t1.Id,
+                                                                                          Name = t1.Name
+
+                                                                                      }).AsQueryable());
+            return dropDownViewModels;
+        }
+
+        public async Task<IEnumerable<DropdownViewModel>> ProductSelectionList()
+        {
+            IEnumerable<DropdownViewModel> dropDownViewModels = await Task.Run(() => (from t1 in _dbContext.Product
+                                                                                      where t1.IsActive == true
+                                                                                      select new DropdownViewModel
+                                                                                      {
+                                                                                          Id = t1.Id,
+                                                                                          Name = t1.Name
+
+                                                                                      }).AsQueryable());
+            return dropDownViewModels;
+        }
+
     }
 }

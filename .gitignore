@@ -328,3 +328,6 @@ ASALocalRun/
 
 # MFractors (Xamarin productivity tool) working folder 
 .mfractor/
+/app.WebApp/Views/DropdownItem/AddRecord.cshtml
+/app.WebApp/Views/DropdownItem/Index.cshtml
+/app.WebApp/Views/DropdownItem/UpdateRecord.cshtml

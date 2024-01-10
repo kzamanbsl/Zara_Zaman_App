@@ -24,6 +24,9 @@
         Task<IEnumerable<DropdownViewModel>> JobStatusSelectionList();
         Task<IEnumerable<DropdownViewModel>> UnitSelectionList();
         Task<IEnumerable<DropdownViewModel>> ProductCategorySelectionList();
+        Task<IEnumerable<DropdownViewModel>> SupplierSelectionList();
+        Task<IEnumerable<DropdownViewModel>> StorehouseSelectionList();
+        Task<IEnumerable<DropdownViewModel>> ProductSelectionList();
 
     }
 }

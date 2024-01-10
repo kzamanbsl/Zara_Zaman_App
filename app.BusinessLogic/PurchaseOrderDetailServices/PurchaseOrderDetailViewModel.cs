@@ -2,6 +2,7 @@
 using app.Services.PurchaseOrderServices;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,7 +13,9 @@ namespace app.Services.PurchaseOrderDetailServices
     {
         public long PurchaseOrderId { get; set; }
         public PurchaseOrder PurchaseOrder { get; set; }
-        public long ProductId { get; set; }
+
+        [Required(ErrorMessage = "Select Product")]
+        public long ProductId { get; set; }        
         public Product Product { get; set; }
         public long UnitId { get; set; }
         public Unit Unit { get; set; }

@@ -29,7 +29,6 @@
     public enum StoreTypeEnum
     {
         Purchase = 1,
-        Menufacture,
-       
+        Menufacture,       
     }
 }

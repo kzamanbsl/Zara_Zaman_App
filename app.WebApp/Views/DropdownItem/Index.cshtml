@@ -63,7 +63,7 @@
                                     </td>
 
                                     <td class="text-left">
-                                        @Html.ActionLink("", "UpdateRecord", new {id=item.Id},new {@title="Edit",@class = "text-warning fas fa-edit",  onclick = "return confirm('Are you sure you want to edit this?')" }) |
+                                        @Html.ActionLink("", "UpdateRecord", new {id=item.Id},new {@title="Edit",@class = "text-warning fas fa-edit"}) |
                                         @Html.ActionLink("","Delete", new {  id=item.Id},new {@title="Delete",@class = "text-danger fas fa-trash",  onclick = "return confirm('Are you sure you want to delete this?')" })
                                     </td>
                                 </tr>
@@ -87,16 +87,22 @@
     <script>
         $(document).ready(function () {
             $('#Configuration').addClass('menu-open');
+<<<<<<< HEAD
             $('#DropdownItemIndex').addClass('active');
         });
     </script>
     <script>
         $(document).ready(function () {
             $('#dropDownItem').DataTable({
+=======
+            $('#DropDownItemIndex').addClass('active');
+
+            $('#dropDownItemTable').DataTable({
+>>>>>>> 65dd34d77794cb8088aa4c59ee7f083c7fcba048
                 "paging": true,
                 "ordering": true,
                 "info": true,
-                order: [[0, 'desc']],
+                order: [[0, 'asc']],
             });
         });
     </script>

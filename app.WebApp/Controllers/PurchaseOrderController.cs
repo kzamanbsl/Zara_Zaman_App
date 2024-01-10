@@ -1,8 +1,10 @@
 ﻿using app.Services.AttendanceServices;
 using app.Services.DropdownServices;
+using app.Services.EmployeeServices;
 using app.Services.PurchaseOrderDetailServices;
 using app.Services.PurchaseOrderServices;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace app.WebApp.Controllers
 {
@@ -25,8 +27,20 @@ namespace app.WebApp.Controllers
             return View();
         }
 
+        [HttpGet]
+        public async Task<IActionResult> AddPurchaseOrderAndDetail()
+        {
+            ViewBag.SupplierList = new SelectList((await _iDropdownService.SupplierSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
+            ViewBag.StorehouseList = new SelectList((await _iDropdownService.StorehouseSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
+            ViewBag.ProductList = new SelectList((await _iDropdownService.ProductSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
+            ViewBag.UnitList = new SelectList((await _iDropdownService.UnitSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
+            PurchaseOrderViewModel viewModel = new PurchaseOrderViewModel();
+            return View(viewModel);
+        }
+
+
         [HttpPost]
-        public async Task<IActionResult> AddPurchaseOrderAndDetail(PurchaseOrderViewModel vm, PurchaseOrderDetailViewModel purchaseOrderDetail)
+        public async Task<IActionResult> AddPurchaseOrderAndDetail(PurchaseOrderViewModel vm)
         {
             if (vm.Id == 0)
             {
@@ -35,12 +49,13 @@ namespace app.WebApp.Controllers
                 { 
                     return View("Purchase Order Failed");
                 }
+                await _ipurchaseOrderDetailService.AddRecord(vm);
             }
-            var purchaseOrderDetailAdded = await _ipurchaseOrderDetailService.AddRecord(purchaseOrderDetail);
-            if (!purchaseOrderDetailAdded)
-            {
-                return View("Purchase Order Detail Failed");
-            }
+            //var purchaseOrderDetailAdded = await _ipurchaseOrderDetailService.AddRecord(vm);
+            //if (!purchaseOrderDetailAdded)
+            //{
+            //    return View("Purchase Order Detail Failed");
+            //}
 
             return RedirectToAction("Index");
         }

@@ -1,0 +1,192 @@
+﻿@model app.Services.PurchaseOrderServices.PurchaseOrderViewModel
+@using app.Utility
+@{
+    ViewData["Title"] = "AddPurchaseOrderAndDetail";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="content-header">
+    <div class="container-fluid ">
+        <div class="breadcrumb d-flex justify-content-between align-items-center  pl-3 pr-3">
+            <ol class="breadcrumb mb-0 p-0">
+                <li class="breadcrumb-item"><a href="/Admin/Index">Home</a></li>
+                <li class="breadcrumb-item active"> Purchase Order List </li>
+            </ol>
+            <div>
+                <a asp-action="Index"><i class="fa fa-list"></i> Purchase Order List </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title text-info">
+                    <i class="fas fa-plus"></i>
+                    Purchase Order
+                </h3>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form asp-action="AddPurchaseOrderAndDetail" method="post">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <input asp-for="Id" class="form-control" hidden/>
+                            <input asp-for="PurchaseOrderDetailVM.Id" class="form-control" hidden/>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>Purchase Date </label>
+                                        <input asp-for="PurchaseDate" value="@DateTime.Today.ToString("yyyy-MM-dd")" class="form-control" type="date" autocomplete="off" required />
+                                        <span asp-validation-for="PurchaseDate" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>Storehouse</label>
+                                        <select class="form-control" asp-for="StorehouseId" asp-items="ViewBag.StorehouseList" required>
+                                            <option value="0" selected>-- Select Storehouse --</option>
+                                            <span asp-validation-for="StorehouseId" class="text-danger"></span>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Supplier</label>
+                                        <select class="form-control" asp-for="SupplierId" asp-items="ViewBag.SupplierList" required>
+                                            <option value="0" selected>-- Select Supplier --</option>
+                                            <span asp-validation-for="SupplierId" class="text-danger"></span>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label>OverAll Discount </label>                                       
+                                        <input asp-for="OverallDiscount" class="form-control"/>
+                                        <span asp-validation-for="OverallDiscount" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row"> 
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label asp-for="Description " class="control-label"></label>
+                                        <textarea asp-for="Description" class="form-control" required rows="2"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+
+                            <div class="" style="padding-top:30px;">
+                                <div class="row">
+                                    <div class="col-md-5">
+                                        <div class="form-group">
+                                            <label>Product</label>
+                                            <select class="form-control" asp-for="PurchaseOrderDetailVM.ProductId" asp-items="ViewBag.ProductList" required>
+                                                <option value="0" selected>-- Select Product --</option>
+                                                <span asp-validation-for="PurchaseOrderDetailVM.ProductId" class="text-danger"></span>
+                                            </select>
+                                        </div>
+                                    </div>
+                                   
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label>Purchase Qty</label>
+                                            <input asp-for="PurchaseOrderDetailVM.PurchaseQty" class="form-control" required/>
+                                            <span asp-validation-for="PurchaseOrderDetailVM.PurchaseQty" class="text-danger"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>Unit</label>
+                                            <select class="form-control" asp-for="PurchaseOrderDetailVM.UnitId" asp-items="ViewBag.UnitList" required>
+                                                <option value="0" selected>-- Select Unit --</option>
+                                                <span asp-validation-for="PurchaseOrderDetailVM.UnitId" class="text-danger"></span>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label>Consumption</label>
+                                            <input asp-for="PurchaseOrderDetailVM.Consumption" class="form-control" />
+                                         </div>
+                                    </div>
+
+                                </div>                               
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>Cost Price</label>
+                                        <input asp-for="PurchaseOrderDetailVM.CostPrice" value="0.00" class="form-control" required />
+                                        <span asp-validation-for="PurchaseOrderDetailVM.CostPrice" class="text-danger"></span>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>Sale Price</label>
+                                        <input asp-for="PurchaseOrderDetailVM.SalePrice" value="0.00" class="form-control" required />
+                                        <span asp-validation-for="PurchaseOrderDetailVM.SalePrice" class="text-danger"></span>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>Discount</label>
+                                        <input asp-for="PurchaseOrderDetailVM.Discount" value="0.00" class="form-control" />
+                                        <span asp-validation-for="PurchaseOrderDetailVM.Discount" class="text-danger"></span>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>Remarks</label>
+                                        <input asp-for="PurchaseOrderDetailVM.Remarks" class="form-control" />
+                                        <span asp-validation-for="PurchaseOrderDetailVM.Remarks" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group" style="float:right">
+                                <input type="submit" value="Create" class="btn btn-primary" />
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+
+
+
+
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        $(document).ready(function () {
+            $('#Leave').addClass('menu-open');
+            $('#LeaveApplicationAddRecord').addClass('active');
+        });      
+    </script>
+
+    }
