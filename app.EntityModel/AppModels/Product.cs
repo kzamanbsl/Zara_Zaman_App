@@ -12,6 +12,7 @@ namespace app.EntityModel.AppModels
         public string Description { get; set; }
         public decimal TP { get; set; }
         public decimal SalePrice { get; set; }
+        public int ProductTypeId { get; set; }
         public Unit Unit { get; set; }
         public long UnitId { get; set; }
         public ProductCategory Category { get; set; }

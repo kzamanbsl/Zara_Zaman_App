@@ -29,6 +29,20 @@
     public enum StoreTypeEnum
     {
         Purchase = 1,
-        Menufacture,       
+        Menufacture       
     }
+
+    public enum ProductcategoryTypeEnum
+    {
+        ProductCategory = 1,
+        AssetCategory
+    }
+
+    public enum ProductTypeEnum
+    {
+        Product = 1,
+        Asset
+    }
+
+
 }
