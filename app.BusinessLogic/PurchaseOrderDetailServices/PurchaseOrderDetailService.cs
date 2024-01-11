@@ -34,6 +34,7 @@ namespace app.Services.PurchaseOrderDetailServices
                     CostPrice = vm.PurchaseOrderDetailVM.CostPrice,
                     SalePrice = vm.PurchaseOrderDetailVM.SalePrice,
                     Discount = vm.PurchaseOrderDetailVM.Discount,
+                    TotalAmount = vm.PurchaseOrderDetailVM.CostPrice * (decimal)vm.PurchaseOrderDetailVM.PurchaseQty,
                     Remarks = vm.PurchaseOrderDetailVM.Remarks
                 };
 
@@ -48,9 +49,5 @@ namespace app.Services.PurchaseOrderDetailServices
 
         }
 
-        public Task<bool> UpdateRecord(PurchaseOrderDetailViewModel vm)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
