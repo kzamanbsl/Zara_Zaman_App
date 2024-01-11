@@ -37,5 +37,6 @@
         Storehouse,
         PurchaseOrder,
         PurchaseOrderDetail,
+        AssetInventory,
     }
 }
