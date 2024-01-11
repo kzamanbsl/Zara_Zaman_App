@@ -24,6 +24,7 @@ namespace app.Services.ProductCategoryServices
             {
                 ProductCategory com = new ProductCategory();
                 com.Name = vm.Name;
+                com.ProductCategoryTypeId = vm.ProductCategoryTypeId;
                 var res = await _iEntityRepository.AddAsync(com);
                 vm.Id=res.Id;
                 return true;
@@ -38,6 +39,7 @@ namespace app.Services.ProductCategoryServices
             {
                 var result = await _iEntityRepository.GetByIdAsync(vm.Id);
                 result.Name = vm.Name;
+                result.ProductCategoryTypeId=vm.ProductCategoryTypeId;
                 await _iEntityRepository.UpdateAsync(result);
                 return true;
             }
@@ -56,6 +58,7 @@ namespace app.Services.ProductCategoryServices
             ProductCategoryViewModel model = new ProductCategoryViewModel();
             model.Id = result.Id;
             model.Name = result.Name;
+            model.ProductCategoryTypeId = result.ProductCategoryTypeId;
             return model;
         }
         public async Task<ProductCategoryViewModel> GetAllRecord()
@@ -67,6 +70,7 @@ namespace app.Services.ProductCategoryServices
                                                                 {
                                                                     Id = t1.Id,
                                                                     Name = t1.Name,
+                                                                    ProductCategoryTypeId = t1.ProductCategoryTypeId,
                                                                 }).AsQueryable());
             return model;
         }

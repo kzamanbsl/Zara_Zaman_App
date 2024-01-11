@@ -36,6 +36,7 @@ namespace app.Services.ProductServices
             model.UnitName = result.Unit?.Name;
             model.CategoryId = result.CategoryId;
             model.CategoryName = result.Category?.Name;
+            model.ProductTypeId = result.ProductTypeId;
             return model;
         }
         public async Task<ProductViewModel> GetAllRecord()
@@ -54,6 +55,7 @@ namespace app.Services.ProductServices
                                                           UnitName = t1.Unit.Name,
                                                           CategoryId = t1.CategoryId,
                                                           CategoryName = t1.Category.Name,
+                                                          ProductTypeId = t1.ProductTypeId,
                                                       }).AsQueryable());
             return model;
         }
@@ -69,6 +71,7 @@ namespace app.Services.ProductServices
                 com.SalePrice = vm.SalePrice;
                 com.UnitId = vm.UnitId;
                 com.CategoryId = vm.CategoryId;
+                com.ProductTypeId = vm.ProductTypeId;           
                 var res = await _iEntityRepository.AddAsync(com);
                 vm.Id = res.Id;
                 return true;
@@ -88,6 +91,7 @@ namespace app.Services.ProductServices
                 result.SalePrice = vm.SalePrice;
                 result.UnitId = vm.UnitId;
                 result.CategoryId = vm.CategoryId;
+                result.ProductTypeId = vm.ProductTypeId;
                 await _iEntityRepository.UpdateAsync(result);
                 return true;
             }

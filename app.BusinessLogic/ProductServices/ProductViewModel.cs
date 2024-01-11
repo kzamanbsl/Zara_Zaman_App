@@ -20,6 +20,7 @@ namespace app.Services.ProductServices
         public ProductCategory Category { get; set; }
         public string CategoryName { get; set; }
         public long CategoryId { get; set; }
+        public int ProductTypeId { get; set; }
         public IEnumerable<ProductViewModel> ProductList { get; set; }
 
     }
