@@ -113,7 +113,8 @@
 
             $.ajax({
                 type: "GET",
-                url: "/Attendance/IsAttandanceDataExistByEmployeeId",
+                // url: "/Attendance/IsAttandanceDataExistByEmployeeId",
+                url: "/Attendance/CheckEmployeeTodaysAttendance",
                 dataType: "json",
                 data: { id: getEmployeeId.val() },
                 success: function (data) {
