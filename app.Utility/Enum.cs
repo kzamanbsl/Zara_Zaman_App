@@ -31,6 +31,12 @@
         Purchase = 1,
         Menufacture       
     }
+    public enum PurchaseTypeEnum
+    {
+        Purchase = 1,
+        AssetPurchase
+    }
+
 
     public enum ProductcategoryTypeEnum
     {

@@ -19,6 +19,7 @@ namespace app.EntityModel.AppModels
         public decimal CostPrice { get; set; }
         public decimal SalePrice { get; set; }
         public decimal Discount { get; set; }
+        public decimal TotalAmount { get; set; }
         public string Remarks { get; set; }
     }
 }

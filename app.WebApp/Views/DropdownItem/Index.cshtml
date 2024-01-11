@@ -84,26 +84,17 @@
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
+
     <script>
         $(document).ready(function () {
             $('#Configuration').addClass('menu-open');
-<<<<<<< HEAD
             $('#DropdownItemIndex').addClass('active');
-        });
-    </script>
-    <script>
-        $(document).ready(function () {
-            $('#dropDownItem').DataTable({
-=======
-            $('#DropDownItemIndex').addClass('active');
 
-            $('#dropDownItemTable').DataTable({
->>>>>>> 65dd34d77794cb8088aa4c59ee7f083c7fcba048
+            $('#dropDownItem').DataTable({
                 "paging": true,
                 "ordering": true,
                 "info": true,
                 order: [[0, 'asc']],
             });
-        });
     </script>
  }
