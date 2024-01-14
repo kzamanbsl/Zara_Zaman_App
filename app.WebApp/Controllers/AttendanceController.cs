@@ -4,6 +4,7 @@ using app.Services.DropdownServices;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using app.Services.AttendanceLogServices;
 using app.EntityModel.AppModels;
+using app.WebApp.Models;
 
 namespace app.WebApp.Controllers
 {
@@ -28,7 +29,7 @@ namespace app.WebApp.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            
+
             var result = await _iService.GetAllRecord();
             return View(result);
         }
@@ -48,6 +49,7 @@ namespace app.WebApp.Controllers
         [HttpPost]
         public async Task<IActionResult> AddRecord(AttendanceViewModel viewModel)
         {
+
             bool result = false;
             if(viewModel.Id > 0)
             {
