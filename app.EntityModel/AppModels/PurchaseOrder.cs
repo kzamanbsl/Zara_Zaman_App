@@ -13,6 +13,7 @@ namespace app.EntityModel.AppModels
         public string OrderNo { get; set; }
         public int OrderStatusId { get; set; }
         public  decimal OverallDiscount { get; set; }
+        public int PurchaseTypeId { get;set; }
         public bool IsOpening { get; set; } = false;
         public long? SupplierId { get; set; }
         public Supplier Supplier { get; set; }

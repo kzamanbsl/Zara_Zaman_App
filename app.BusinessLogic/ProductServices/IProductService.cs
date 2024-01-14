@@ -1,4 +1,5 @@
-﻿using app.Services.ProductServices;
+﻿using app.Services.AssetInventoryServices;
+using app.Services.ProductServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;

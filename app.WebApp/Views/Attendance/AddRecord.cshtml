@@ -69,7 +69,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-4 d-none"  id="inputLogoutTime">
+                                <div class="col-md-4 d-none "  id="inputLogoutTime">
                                     <div class="form-group">
                                         <label asp-for="LogoutTime" class="control-label"></label>
                                         <input type="time" asp-for="LogoutTime" id="logout" class="form-control" required />
@@ -127,13 +127,13 @@
                     }
 
                 },
-                success: function (result) {
-                    if (result == 0)
-                        $('#inputLogoutTime').hide();
-                    else
-                        $('#inputLogoutTime').html(result).show();
+                // success: function (result) {
+                //     if (result == 0)
+                //         $('#inputLogoutTime').hide();
+                //     else
+                //         $('#inputLogoutTime').html(result).show();
 
-                }
+                // }
                 error: function (error) {
                     console.error("Error in AJAX request:", error);
                 }

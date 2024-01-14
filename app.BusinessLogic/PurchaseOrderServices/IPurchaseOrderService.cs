@@ -10,6 +10,6 @@ namespace app.Services.PurchaseOrderServices
     public interface IPurchaseOrderService
     {
         Task<bool> AddRecord(PurchaseOrderViewModel vm);
-        Task<bool> UpdateRecord(PurchaseOrderViewModel vm);
+        Task<PurchaseOrderViewModel>GetPurchaseOrder(long purchaseOrderId);
     }
 }
