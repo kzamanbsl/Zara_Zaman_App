@@ -20,6 +20,7 @@
     {
         Draft = 1,
         Confirm,
+        Submitted,
         Approve,
         Receive,
         Hold,
@@ -50,5 +51,10 @@
         Asset
     }
 
-
+    public enum ActionEnum
+    {
+        Add = 1,
+        Edit,
+        Delete
+    }
 }

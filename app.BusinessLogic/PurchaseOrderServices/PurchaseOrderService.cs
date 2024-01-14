@@ -62,7 +62,7 @@ namespace app.Services.PurchaseOrderServices
                                                                                          OverallDiscount = t1.OverallDiscount,
                                                                                          Description = t1.Description,
                                                                                          PurchaseTypeId = t1.PurchaseTypeId,
-                                                                                         OrderStatusId = t1.OrderStatusId
+                                                                                         OrderStatusId = (PurchaseOrderStatusEnum)t1.OrderStatusId
                                                                                      }).FirstOrDefaultAsync()));
 
             purchaseOrderDetailVM.PurchaseOrderList = await Task.Run(async () => await Task.Run(() => (from t1 in _dbContext.PurchaseOrderDetail.Where(x => x.IsActive && x.PurchaseOrderId == purchaseOrderId)
