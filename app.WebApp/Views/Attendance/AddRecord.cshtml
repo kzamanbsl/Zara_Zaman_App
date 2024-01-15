@@ -39,7 +39,7 @@
                                     <div class="form-group">
                                         @* <label>Employee Name</label> *@
                                         <label asp-for="EmployeeName" class="control-label"></label>
-                                        <select class="form-control" asp-for="EmployeeId" asp-items="ViewBag.Employees" id="inputEnployee" onchange="CheckAttandanceData()">
+                                        <select id="txtName" class="form-control" asp-for="EmployeeId" asp-items="ViewBag.Employees" id="inputEnployee" onchange="CheckAttandanceData()">
                                             <option value="0" selected>-- Select Employee --</option>
                                         </select>
                                     </div>
@@ -48,7 +48,7 @@
                                     <div class="form-group">
                                         @* <label>Shift</label> *@
                                         <label asp-for="ShiftName" class="control-label"></label>
-                                        <select class="form-control" asp-for="ShiftId" asp-items="ViewBag.Shifts">
+                                        <select id="shiftName" class="form-control" asp-for="ShiftId" asp-items="ViewBag.Shifts">
                                             <option value="0" selected>-- Select Shift --</option>
                                         </select>
                                     </div>
@@ -69,7 +69,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-4 d-none "  id="inputLogoutTime">
+                                <div class="col-md-4"  id="inputLogoutTime">
                                     <div class="form-group">
                                         <label asp-for="LogoutTime" class="control-label"></label>
                                         <input type="time" asp-for="LogoutTime" id="logout" class="form-control" required />
@@ -79,7 +79,7 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label asp-for="Remarks" class="control-label"></label>
-                                        <textarea asp-for="Remarks" class="form-control" required rows="1"></textarea>
+                                        <textarea id="Remarks" asp-for="Remarks" class="form-control" required rows="1"></textarea>
                                         <span asp-validation-for="Remarks" class="text-danger"></span>
                                     </div>
                                 </div>
@@ -105,6 +105,7 @@
         $(document).ready(function () {
             $('#Attendance').addClass('menu-open');
             $('#AttendanceAddRecord').addClass('active');
+
         });
 
         function CheckAttandanceData() {
@@ -125,19 +126,15 @@
                         dependentInput.classList.remove("d-none");
                         dependentInput.classList.add("d-block");
                     }
-
+                    
                 },
-                // success: function (result) {
-                //     if (result == 0)
-                //         $('#inputLogoutTime').hide();
-                //     else
-                //         $('#inputLogoutTime').html(result).show();
-
-                // }
+                
                 error: function (error) {
                     console.error("Error in AJAX request:", error);
                 }
             });
+
+            
         }
         // $("#LogoutTime").change(function)
 

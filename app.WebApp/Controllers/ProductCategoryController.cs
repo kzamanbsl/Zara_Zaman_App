@@ -1,4 +1,5 @@
-﻿using app.Services.ProductCategoryServices;
+﻿using app.Services.DropdownServices;
+using app.Services.ProductCategoryServices;
 using Microsoft.AspNetCore.Mvc;
 
 namespace app.WebApp.Controllers
@@ -7,9 +8,11 @@ namespace app.WebApp.Controllers
     {
 
         private readonly IProductCategoryService _iService;
-        public ProductCategoryController(IProductCategoryService iService)
+        private readonly IDropdownService _dropdownService;
+        public ProductCategoryController(IProductCategoryService iService, IDropdownService dropdownService)
         {
             _iService = iService;
+            _dropdownService = dropdownService;
         }
 
         [HttpGet]
