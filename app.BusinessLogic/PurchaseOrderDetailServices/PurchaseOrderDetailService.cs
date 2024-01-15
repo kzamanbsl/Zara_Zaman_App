@@ -26,7 +26,9 @@ namespace app.Services.PurchaseOrderDetailServices
             {
                 PurchaseOrderDetail purchaseOrderDetail = new PurchaseOrderDetail
                 {
+
                     PurchaseOrderId = vm.Id,
+                    Id = vm.PurchaseOrderDetailVM.Id,
                     ProductId = vm.PurchaseOrderDetailVM.ProductId,
                     PurchaseQty = vm.PurchaseOrderDetailVM.PurchaseQty,
                     Consumption = vm.PurchaseOrderDetailVM.Consumption,
