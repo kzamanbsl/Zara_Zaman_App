@@ -1,4 +1,5 @@
 ﻿using app.Services.ProductServices;
+using app.Services.PurchaseOrderDetailServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,5 +12,8 @@ namespace app.Services.PurchaseOrderServices
     {
         Task<bool> AddRecord(PurchaseOrderViewModel vm);
         Task<PurchaseOrderViewModel>GetPurchaseOrder(long purchaseOrderId);
+        Task<ProductViewModel> GetAllRecord();
+        Task<PurchaseOrderDetailViewModel> SingleOrderDetails(long id);
+
     }
 }

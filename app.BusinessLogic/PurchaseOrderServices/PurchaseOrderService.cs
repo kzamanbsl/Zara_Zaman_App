@@ -11,6 +11,7 @@ using app.Utility;
 using app.Services.PurchaseOrderDetailServices;
 using app.Services.DropdownServices;
 using Microsoft.EntityFrameworkCore;
+using app.Services.ProductServices;
 
 namespace app.Services.PurchaseOrderServices
 {
@@ -54,7 +55,6 @@ namespace app.Services.PurchaseOrderServices
             return true;
         }
 
-   
         public async Task<PurchaseOrderViewModel> GetPurchaseOrder(long purchaseOrderId = 0)
         {
             PurchaseOrderViewModel purchaseOrderModel = new PurchaseOrderViewModel();
@@ -78,14 +78,13 @@ namespace app.Services.PurchaseOrderServices
                                                                    Description = t1.Description,                                                                   
                                                                }).FirstOrDefault());
 
-            purchaseOrderModel.PurchaseOrderDetailsList = await Task.Run(() => (from t1 in _dbContext.PurchaseOrderDetail.Where(x => x.IsActive && x.Id == purchaseOrderId)
-                                                                          join t2 in _dbContext.PurchaseOrder.Where(x => x.IsActive) on t1.Id equals t2.Id into t2_Join
-                                                                          from t2 in t2_Join.DefaultIfEmpty()
+            purchaseOrderModel.PurchaseOrderDetailsList = await Task.Run(() => (from t1 in _dbContext.PurchaseOrderDetail.Where(x => x.IsActive && x.PurchaseOrder.Id == purchaseOrderId)                                                                         
                                                                           select new PurchaseOrderDetailViewModel
                                                                           {
                                                                               Id = t1.Id,
                                                                               PurchaseOrderId = t1.PurchaseOrderId,
                                                                               ProductId = t1.ProductId,
+                                                                              ProductName = t1.Product.Name,
                                                                               PurchaseQty = t1.PurchaseQty,
                                                                               Consumption = t1.Consumption,
                                                                               UnitId = t1.UnitId,
@@ -99,6 +98,16 @@ namespace app.Services.PurchaseOrderServices
 
 
             return purchaseOrderModel;
+        }
+
+        public Task<ProductViewModel> GetAllRecord()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<PurchaseOrderDetailViewModel> SingleOrderDetails(long id)
+        {
+            throw new NotImplementedException();
         }
     }
 }
