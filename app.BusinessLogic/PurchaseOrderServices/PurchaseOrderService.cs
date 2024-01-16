@@ -11,6 +11,7 @@ using app.Utility;
 using app.Services.PurchaseOrderDetailServices;
 using app.Services.DropdownServices;
 using Microsoft.EntityFrameworkCore;
+using app.Services.ProductServices;
 
 namespace app.Services.PurchaseOrderServices
 {
@@ -54,7 +55,6 @@ namespace app.Services.PurchaseOrderServices
             return true;
         }
 
-   
         public async Task<PurchaseOrderViewModel> GetPurchaseOrder(long purchaseOrderId = 0)
         {
             PurchaseOrderViewModel purchaseOrderModel = new PurchaseOrderViewModel();
@@ -99,6 +99,11 @@ namespace app.Services.PurchaseOrderServices
 
 
             return purchaseOrderModel;
+        }
+
+        public Task<ProductViewModel> GetAllRecord()
+        {
+            throw new NotImplementedException();
         }
     }
 }

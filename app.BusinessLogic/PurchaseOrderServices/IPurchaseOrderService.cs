@@ -11,5 +11,6 @@ namespace app.Services.PurchaseOrderServices
     {
         Task<bool> AddRecord(PurchaseOrderViewModel vm);
         Task<PurchaseOrderViewModel>GetPurchaseOrder(long purchaseOrderId);
+        Task<ProductViewModel> GetAllRecord();
     }
 }
