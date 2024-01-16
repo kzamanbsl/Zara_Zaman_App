@@ -42,7 +42,7 @@ namespace app.Services.AttendanceServices
             result = true;
 
             if (res.Id > 0)
-            {
+            { 
                 vm.Id = res.Id;
                 AttendanceLogViewModel models = new AttendanceLogViewModel();
                 models.AttendanceId = vm.Id;
@@ -142,7 +142,7 @@ namespace app.Services.AttendanceServices
             return vm;
         }
         public async Task<AttendanceViewModel> GetAllRecord()
-        {
+        { 
             AttendanceViewModel model = new AttendanceViewModel();
             model.AttendanceList = await Task.Run(() => (from t1 in _dbContext.Attendance
                                                          where t1.IsActive == true

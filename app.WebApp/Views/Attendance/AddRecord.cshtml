@@ -36,7 +36,7 @@
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                             <div class="row" id="rowId">
                                 <div class="col-md-4">
-                                    <div class="form-group">
+                                    <div class="form-group" id="txtName">
                                         @* <label>Employee Name</label> *@
                                         <label asp-for="EmployeeName" class="control-label"></label>
                                         <select id="txtName" class="form-control" asp-for="EmployeeId" asp-items="ViewBag.Employees" id="inputEnployee" onchange="CheckAttandanceData()">
@@ -45,16 +45,16 @@
                                     </div>
                                 </div>
                                 <div class="col-md-4">
-                                    <div class="form-group">
+                                    <div class="form-group" id="shiftName">
                                         @* <label>Shift</label> *@
                                         <label asp-for="ShiftName" class="control-label"></label>
                                         <select id="shiftName" class="form-control" asp-for="ShiftId" asp-items="ViewBag.Shifts">
-                                            <option value="0" selected>-- Select Shift --</option>
+                                            <option value="0" selected="selected" selected>-- Select Shift --</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
-                                    <div class="form-group">
+                                    <div class="form-group" id="attendanceDate">
                                         <label asp-for="AttendanceDate" class="control-label"></label>
                                         <input type="date" asp-for="AttendanceDate" class="form-control" required />
                                         <span asp-validation-for="AttendanceDate" class="text-danger"></span>
@@ -77,7 +77,7 @@
                                     </div> 
                                 </div>
                                 <div class="col-md-4">
-                                    <div class="form-group">
+                                    <div class="form-group" id="Remarks">
                                         <label asp-for="Remarks" class="control-label"></label>
                                         <textarea id="Remarks" asp-for="Remarks" class="form-control" required rows="1"></textarea>
                                         <span asp-validation-for="Remarks" class="text-danger"></span>
@@ -94,6 +94,7 @@
         </div>
     </div>
 </section>
+
 
 @section Scripts {
     @{
@@ -112,6 +113,7 @@
             var dependentInput = document.getElementById("inputLoginTime");
             var logoutInput = document.getElementById("inputLogoutTime");
             var submitButton = $("#saveButton");
+
 
             $.ajax({
                 type: "GET",
@@ -138,5 +140,20 @@
                 }
             });
         }
+        function myFunction() {
+            document.getElementById("shiftName").readOnly = true;
+        }
+    </script>
+    <script>
+        $("select")
+            .on("change", function () {
+                var str = "";
+                $("select option:selected").each(function () {
+                    str += $(this).text() + " ";
+                });
+                $("div").text(str);
+            })
+            .trigger("change");
     </script>
 }
+
