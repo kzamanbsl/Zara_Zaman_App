@@ -15,7 +15,8 @@ namespace app.Services.PurchaseOrderDetailServices
         public PurchaseOrder PurchaseOrder { get; set; }
 
         [Required(ErrorMessage = "Select Product")]
-        public long ProductId { get; set; }        
+        public long ProductId { get; set; }   
+        public string ProductName { get; set; } 
         public Product Product { get; set; }
         public long UnitId { get; set; }
         public Unit Unit { get; set; }
