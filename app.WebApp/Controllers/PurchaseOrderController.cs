@@ -37,6 +37,10 @@ namespace app.WebApp.Controllers
             {
                 viewModel.OrderStatusId = PurchaseOrderStatusEnum.Draft;
             }
+            else
+            {
+                viewModel = await _ipurchaseOrderService.GetPurchaseOrder(purchaseOrderId);
+            }
             ViewBag.SupplierList = new SelectList((await _iDropdownService.SupplierSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
             ViewBag.StorehouseList = new SelectList((await _iDropdownService.StorehouseSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
             ViewBag.ProductList = new SelectList((await _iDropdownService.ProductSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
@@ -59,22 +63,7 @@ namespace app.WebApp.Controllers
                 await _ipurchaseOrderDetailService.AddRecord(vm);
             }
             
-            return RedirectToAction(nameof(vm), new { purchaseOrderId = vm.Id });
-
-
-
-            //if (vm.Id == 0)
-            //{
-            //    var purchaseOrderAdded = await _ipurchaseOrderService.AddRecord(vm);
-            //    if (!purchaseOrderAdded)
-            //    { 
-            //        return View("Purchase Order Failed");
-            //    }
-            //    await _ipurchaseOrderDetailService.AddRecord(vm);
-            //}
-            //return RedirectToAction(nameof(AddPurchaseOrderAndDetail));
+            return RedirectToAction(nameof(AddPurchaseOrderAndDetail), new { purchaseOrderId = vm.Id });
         }
-
-
     }
 }

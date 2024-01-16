@@ -1,4 +1,4 @@
-﻿@model app.Services.PurchaseOrderServices.PurchaseOrderViewModel
+﻿@* @model app.Services.PurchaseOrderServices.PurchaseOrderViewModel
 @using app.Utility
 @{
     ViewData["Title"] = "AddPurchaseOrderAndDetail";
@@ -266,9 +266,9 @@
     </div>
 </section>
 
+ *@
 
 
-@*
 
 
 @model app.Services.PurchaseOrderServices.PurchaseOrderViewModel
@@ -307,133 +307,191 @@
                     <div class="col-md-12">
                         <form asp-action="AddPurchaseOrderAndDetail" method="post">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                            <input asp-for="Id" class="form-control" hidden/>
-                            <input asp-for="PurchaseOrderDetailVM.Id" class="form-control" hidden/>
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label>Purchase Date </label>
-                                        <input asp-for="PurchaseDate" value="@DateTime.Today.ToString("yyyy-MM-dd")" class="form-control" type="date" autocomplete="off" required />
-                                        <span asp-validation-for="PurchaseDate" class="text-danger"></span>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label>Storehouse</label>
-                                        <select class="form-control" asp-for="StorehouseId" asp-items="ViewBag.StorehouseList" required>
-                                            <option value="0" selected>-- Select Storehouse --</option>
-                                            <span asp-validation-for="StorehouseId" class="text-danger"></span>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label>Supplier</label>
-                                        <select class="form-control" asp-for="SupplierId" asp-items="ViewBag.SupplierList" required>
-                                            <option value="0" selected>-- Select Supplier --</option>
-                                            <span asp-validation-for="SupplierId" class="text-danger"></span>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-2">
-                                    <div class="form-group">
-                                        <label>OverAll Discount </label>
-                                        <input asp-for="OverallDiscount" class="form-control"/>
-                                        <span asp-validation-for="OverallDiscount" class="text-danger"></span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label asp-for="Description " class="control-label"></label>
-                                        <textarea asp-for="Description" class="form-control" required rows="2"></textarea>
-                                    </div>
-                                </div>
-                            </div>
+                            <input asp-for="Id" class="form-control" hidden />
+                            <input asp-for="ActionId" hidden />
+                            <input asp-for="PurchaseOrderDetailVM.Id" class="form-control" hidden />
 
 
+                            @if (Model.Id > 0)
+                            {
+                                <div class="col-md-1"> </div>
+                                <div class="col-md-10">
+                                    <table class="table">
+                                        <tr>
+                                            <th style="width:18%">
+                                                Purchase No
+                                            </th>
+                                            <th style="width:2%">:</th>
+                                            <td style="width:30%">@Model.OrderNo</td>
+
+                                            <th style="width:18%"> Purchase Date</th>
+                                            <th style="width:2%">:</th>
+                                            <td style="width:30%">@Model.PurchaseDate.ToString("dd-MM-yyyy")</td>
+                                        </tr>
+                                        <tr>
+                                            <th style="width:18%">Order Status</th>
+                                            <th style="width:2%">:</th>
+                                            <td style="width:30%">@Model.OrderStatusId</td>
+
+                                            <th style="width:18%">Store Info</th>
+                                            <th style="width:2%">:</th>
+                                            <td style="width:30%">@Model.StoreName</td>
+                                        </tr>
+                                        <tr>
+
+                                            <th>OverAll Discount</th>
+                                            <th>:</th>
+                                            <td>@Model.OverallDiscount</td>
+
+                                            <th>Supplier Name</th>
+                                            <th>:</th>
+                                            <td>@Model.SupplierName</td>
+                                        </tr>
+
+                                    </table>
+                                </div>
+                                <div class="col-md-1"> </div>
+                            }
 
 
-                            <div class="" style="padding-top:30px;">
+                            @if (Model.Id == 0)
+                            {
                                 <div class="row">
-                                    <div class="col-md-5">
+                                    <div class="col-md-3">
                                         <div class="form-group">
-                                            <label>Product</label>
-                                            <select class="form-control" asp-for="PurchaseOrderDetailVM.ProductId" asp-items="ViewBag.ProductList" required>
-                                                <option value="0" selected>-- Select Product --</option>
-                                                <span asp-validation-for="PurchaseOrderDetailVM.ProductId" class="text-danger"></span>
+                                            <label>Purchase Date </label>
+                                            <input asp-for="PurchaseDate" value="@DateTime.Today.ToString("yyyy-MM-dd")" class="form-control" type="date" autocomplete="off" required />
+                                            <span asp-validation-for="PurchaseDate" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>Storehouse</label>
+                                            <select class="form-control" asp-for="StorehouseId" asp-items="ViewBag.StorehouseList" required>
+                                                <option value="0" selected>-- Select Storehouse --</option>
+                                                <span asp-validation-for="StorehouseId" class="text-danger"></span>
                                             </select>
                                         </div>
                                     </div>
 
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Supplier</label>
+                                            <select class="form-control" asp-for="SupplierId" asp-items="ViewBag.SupplierList" required>
+                                                <option value="0" selected>-- Select Supplier --</option>
+                                                <span asp-validation-for="SupplierId" class="text-danger"></span>
+                                            </select>
+                                        </div>
+                                    </div>
                                     <div class="col-md-2">
                                         <div class="form-group">
-                                            <label>Purchase Qty</label>
-                                            <input asp-for="PurchaseOrderDetailVM.PurchaseQty" class="form-control" required/>
-                                            <span asp-validation-for="PurchaseOrderDetailVM.PurchaseQty" class="text-danger"></span>
+                                            <label>OverAll Discount </label>
+                                            <input asp-for="OverallDiscount" class="form-control" />
+                                            <span asp-validation-for="OverallDiscount" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label asp-for="Description " class="control-label"></label>
+                                            <textarea asp-for="Description" class="form-control" required rows="2"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+
+                            @if (Model.OrderStatusId == PurchaseOrderStatusEnum.Draft)
+                            {
+                                <div class="" style="padding-top:30px;">
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            <div class="form-group">
+                                                <label>Product</label>
+                                                <select class="form-control" asp-for="PurchaseOrderDetailVM.ProductId" asp-items="ViewBag.ProductList" required>
+                                                    <option value="0" selected>-- Select Product --</option>
+                                                    <span asp-validation-for="PurchaseOrderDetailVM.ProductId" class="text-danger"></span>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label>Purchase Qty</label>
+                                                <input asp-for="PurchaseOrderDetailVM.PurchaseQty" class="form-control" required />
+                                                <span asp-validation-for="PurchaseOrderDetailVM.PurchaseQty" class="text-danger"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label>Unit</label>
+                                                <select class="form-control" asp-for="PurchaseOrderDetailVM.UnitId" asp-items="ViewBag.UnitList" required>
+                                                    <option value="0" selected>-- Select Unit --</option>
+                                                    <span asp-validation-for="PurchaseOrderDetailVM.UnitId" class="text-danger"></span>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label>Consumption</label>
+                                                <input asp-for="PurchaseOrderDetailVM.Consumption" class="form-control" />
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>Cost Price</label>
+                                            <input asp-for="PurchaseOrderDetailVM.CostPrice" value="0.00" class="form-control" required />
+                                            <span asp-validation-for="PurchaseOrderDetailVM.CostPrice" class="text-danger"></span>
                                         </div>
                                     </div>
 
                                     <div class="col-md-3">
                                         <div class="form-group">
-                                            <label>Unit</label>
-                                            <select class="form-control" asp-for="PurchaseOrderDetailVM.UnitId" asp-items="ViewBag.UnitList" required>
-                                                <option value="0" selected>-- Select Unit --</option>
-                                                <span asp-validation-for="PurchaseOrderDetailVM.UnitId" class="text-danger"></span>
-                                            </select>
+                                            <label>Sale Price</label>
+                                            <input asp-for="PurchaseOrderDetailVM.SalePrice" value="0.00" class="form-control" required />
+                                            <span asp-validation-for="PurchaseOrderDetailVM.SalePrice" class="text-danger"></span>
                                         </div>
                                     </div>
 
-                                    <div class="col-md-2">
+                                    <div class="col-md-3">
                                         <div class="form-group">
-                                            <label>Consumption</label>
-                                            <input asp-for="PurchaseOrderDetailVM.Consumption" class="form-control" />
-                                         </div>
+                                            <label>Discount</label>
+                                            <input asp-for="PurchaseOrderDetailVM.Discount" value="0.00" class="form-control" />
+                                            <span asp-validation-for="PurchaseOrderDetailVM.Discount" class="text-danger"></span>
+                                        </div>
                                     </div>
 
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label>Cost Price</label>
-                                        <input asp-for="PurchaseOrderDetailVM.CostPrice" value="0.00" class="form-control" required />
-                                        <span asp-validation-for="PurchaseOrderDetailVM.CostPrice" class="text-danger"></span>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>Remarks</label>
+                                            <input asp-for="PurchaseOrderDetailVM.Remarks" class="form-control" />
+                                            <span asp-validation-for="PurchaseOrderDetailVM.Remarks" class="text-danger"></span>
+                                        </div>
                                     </div>
                                 </div>
-
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label>Sale Price</label>
-                                        <input asp-for="PurchaseOrderDetailVM.SalePrice" value="0.00" class="form-control" required />
-                                        <span asp-validation-for="PurchaseOrderDetailVM.SalePrice" class="text-danger"></span>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label>Discount</label>
-                                        <input asp-for="PurchaseOrderDetailVM.Discount" value="0.00" class="form-control" />
-                                        <span asp-validation-for="PurchaseOrderDetailVM.Discount" class="text-danger"></span>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label>Remarks</label>
-                                        <input asp-for="PurchaseOrderDetailVM.Remarks" class="form-control" />
-                                        <span asp-validation-for="PurchaseOrderDetailVM.Remarks" class="text-danger"></span>
-                                    </div>
-                                </div>
-                            </div>
-
+                            }
 
                             <div class="form-group" style="float:right">
-                                <input type="submit" value="Create" class="btn btn-primary" />
+                                <button type="submit" id="poCreateBtn" class="btn btn-primary btn-block">
+                                    <i class='fa fa-plus'></i>
+                                    @if (Model.Id > 0)
+                                    {
+                                        <span>Add Another</span>
+                                    }
+                                    else
+                                    {
+                                        <span>Create</span>
+                                    }
+                                </button>
                             </div>
+
                         </form>
                     </div>
                 </div>
@@ -448,18 +506,8 @@
 
 
 
-
-
-
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-    <script>
-        $(document).ready(function () {
-            $('#Leave').addClass('menu-open');
-            $('#LeaveApplicationAddRecord').addClass('active');
-        });
-    </script>
-
-    }  *@
+    }  

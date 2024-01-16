@@ -21,11 +21,14 @@ namespace app.Services.PurchaseOrderServices
         public bool IsOpening { get; set; } = false;
         public long? SupplierId { get; set; }
         public Supplier Supplier { get; set; }
+        public string SupplierName { get; set; } 
         public long? StorehouseId { get; set; }
         public Storehouse Storehouse { get; set; }
+        public string StoreName { get; set; }
         public ActionEnum ActionEum { get { return (ActionEnum)this.ActionId; } }
         public int ActionId { get; set; } = 1;
         public PurchaseOrderDetailViewModel PurchaseOrderDetailVM { get; set; } 
         public IEnumerable<PurchaseOrderViewModel> PurchaseOrderList { get; set; }
+        public IEnumerable<PurchaseOrderDetailViewModel> PurchaseOrderDetailsList { get; set; }
     }
 }
