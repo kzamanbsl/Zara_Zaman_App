@@ -105,16 +105,16 @@
         $(document).ready(function () {
             $('#Attendance').addClass('menu-open');
             $('#AttendanceAddRecord').addClass('active');
-
         });
 
         function CheckAttandanceData() {
             var getEmployeeId = $("#inputEnployee option:selected");
             var dependentInput = document.getElementById("inputLoginTime");
+            var logoutInput = document.getElementById("inputLogoutTime");
+            var submitButton = $("#saveButton");
 
             $.ajax({
                 type: "GET",
-                // url: "/Attendance/IsAttandanceDataExistByEmployeeId",
                 url: "/Attendance/CheckEmployeeTodaysAttendance",
                 dataType: "json",
                 data: { id: getEmployeeId.val() },
@@ -122,22 +122,21 @@
                     if (data) {
                         dependentInput.classList.remove("d-block");
                         dependentInput.classList.add("d-none");
+                        logoutInput.classList.remove("d-none");
+                        logoutInput.classList.add("d-block");
+                        submitButton.val("Logout");
                     } else {
                         dependentInput.classList.remove("d-none");
                         dependentInput.classList.add("d-block");
+                        logoutInput.classList.remove("d-block");
+                        logoutInput.classList.add("d-none");
+                        submitButton.val("Login");
                     }
-                    
                 },
-                
                 error: function (error) {
                     console.error("Error in AJAX request:", error);
                 }
             });
-
-            
         }
-        // $("#LogoutTime").change(function)
-
     </script>
-
 }
