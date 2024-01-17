@@ -100,14 +100,62 @@ namespace app.Services.PurchaseOrderServices
             return purchaseOrderModel;
         }
 
-        public Task<ProductViewModel> GetAllRecord()
+
+        public async Task<PurchaseOrderViewModel> GetAllRecord()
         {
-            throw new NotImplementedException();
+            var result = _dbContext.PurchaseOrder
+        .Include(po => po.Supplier)
+        .Select(po => new PurchaseOrderViewModel
+        {
+            PurchaseDate = po.PurchaseDate,
+            Description = po.Description,
+            OrderNo = po.OrderNo,
+            OverallDiscount = po.OverallDiscount,
+            //OrderStatusName = Enum.GetName(typeof(PurchaseOrderStatusEnum), po.OrderStatusId),
+            SupplierId = po.SupplierId,
+            SupplierName = po.Supplier != null ? po.Supplier.Name : null,
+            StorehouseId = po.StorehouseId,
+            StoreName = po.Storehouse != null ? po.Storehouse.Name : null,
+            CreatedBy = po.CreatedBy,
+            CreatedOn = po.CreatedOn
+        }).AsQueryable();
+
+            var purchaseOrderViewModel = new PurchaseOrderViewModel
+            {
+                PurchaseOrderList = result
+            };
+
+            return purchaseOrderViewModel;
         }
+
 
         public Task<PurchaseOrderDetailViewModel> SingleOrderDetails(long id)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<bool> UpdateRecord(PurchaseOrderViewModel vm)
+        {
+            if (vm.Id == 0)
+            {
+                vm.OrderStatusId = PurchaseOrderStatusEnum.Draft;
+                return false;
+            }
+
+            var existingPurchaseOrder = await _iEntityRepository.GetByIdAsync(vm.Id);
+            if (existingPurchaseOrder == null)
+            {
+                vm.OrderStatusId = PurchaseOrderStatusEnum.Draft;
+                return false;
+            }
+            existingPurchaseOrder.PurchaseDate = vm.PurchaseDate;
+            existingPurchaseOrder.SupplierId = vm.SupplierId;
+            existingPurchaseOrder.StorehouseId = vm.StorehouseId;
+            existingPurchaseOrder.OverallDiscount = vm.OverallDiscount;
+            existingPurchaseOrder.Description = vm.Description;
+            await _dbContext.SaveChangesAsync();
+
+            return true;
         }
     }
 }
