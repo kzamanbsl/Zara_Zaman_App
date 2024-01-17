@@ -23,9 +23,18 @@ namespace app.WebApp.Controllers
         }
 
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            try
+            {
+                PurchaseOrderViewModel viewModel = await _ipurchaseOrderService.GetAllRecord();
+                return View(viewModel);
+            }
+            catch (Exception ex)
+            {
+                //return View("Error");
+                throw new Exception(ex.Message, ex);
+            }
         }
 
         [HttpGet]
@@ -65,5 +74,30 @@ namespace app.WebApp.Controllers
             
             return RedirectToAction(nameof(AddPurchaseOrderAndDetail), new { purchaseOrderId = vm.Id });
         }
+        [HttpGet]
+        public async Task<IActionResult> UpdatePurchaseOrder(long purchaseOrderId)
+        {
+            PurchaseOrderViewModel viewModel = await _ipurchaseOrderService.GetPurchaseOrder(purchaseOrderId);
+            if (purchaseOrderId == 0)
+            {
+                viewModel.OrderStatusId = PurchaseOrderStatusEnum.Draft;
+            }
+            ViewBag.ProductList = new SelectList((await _iDropdownService.ProductSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
+            ViewBag.UnitList = new SelectList((await _iDropdownService.UnitSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
+
+            return View(nameof(UpdatePurchaseOrder), viewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdatePurchaseOrder(PurchaseOrderViewModel vm)
+        {
+            if (vm.ActionEum == ActionEnum.Edit)
+            {
+                await _ipurchaseOrderService.UpdateRecord(vm);
+            }
+            return RedirectToAction(nameof(UpdatePurchaseOrder), new { purchaseOrderId = vm.Id });
+        }
+
     }
 }
+
