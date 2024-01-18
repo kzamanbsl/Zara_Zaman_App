@@ -104,14 +104,14 @@ namespace app.Services.PurchaseOrderServices
         public async Task<PurchaseOrderViewModel> GetAllRecord()
         {
             var result = _dbContext.PurchaseOrder
-        .Include(po => po.Supplier)
+        .Include(po => po.Supplier).ToList()
         .Select(po => new PurchaseOrderViewModel
         {
             PurchaseDate = po.PurchaseDate,
             Description = po.Description,
             OrderNo = po.OrderNo,
             OverallDiscount = po.OverallDiscount,
-            //OrderStatusName = Enum.GetName(typeof(PurchaseOrderStatusEnum), po.OrderStatusId),
+            OrderStatusName = Enum.GetName(typeof(PurchaseOrderStatusEnum), po.OrderStatusId),
             SupplierId = po.SupplierId,
             SupplierName = po.Supplier != null ? po.Supplier.Name : null,
             StorehouseId = po.StorehouseId,
@@ -155,6 +155,14 @@ namespace app.Services.PurchaseOrderServices
             existingPurchaseOrder.Description = vm.Description;
             await _dbContext.SaveChangesAsync();
 
+            return true;
+        }
+
+        public async Task<bool> DeleteRecord(PurchaseOrderViewModel vm)
+        {
+            var result = await _iEntityRepository.GetByIdAsync(vm.Id);
+            result.IsActive = false;
+            await _iEntityRepository.UpdateAsync(result);
             return true;
         }
     }
