@@ -31,6 +31,7 @@ using app.Services.CustomerServices;
 using app.Services.StorehouseServices;
 using app.Services.PurchaseOrderServices;
 using app.Services.PurchaseOrderDetailServices;
+using app.Services.AssetCategoryServices;
 
 namespace app.Services
 {
@@ -69,6 +70,7 @@ namespace app.Services
             services.AddTransient<IStorehouseService, StorehouseService>();
             services.AddTransient<IPurchaseOrderService, PurchaseOrderService>();
             services.AddTransient<IPurchaseOrderDetailService, PurchaseOrderDetailService>();
+            services.AddTransient<IAssetCategoryService, AssetCategoryService>();
 
             return services;
         }
