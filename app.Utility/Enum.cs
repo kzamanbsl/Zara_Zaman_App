@@ -39,7 +39,7 @@
     }
 
 
-    public enum ProductcategoryTypeEnum
+    public enum ProductCategoryTypeEnum
     {
         ProductCategory = 1,
         AssetCategory
