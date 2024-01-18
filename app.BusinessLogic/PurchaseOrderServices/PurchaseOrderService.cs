@@ -129,9 +129,27 @@ namespace app.Services.PurchaseOrderServices
         }
 
 
-        public Task<PurchaseOrderDetailViewModel> SingleOrderDetails(long id)
+        public async Task<PurchaseOrderDetailViewModel> SingleOrderDetails(long id)
         {
-            throw new NotImplementedException();
+            var v = await Task.Run(() => (from t1 in _dbContext.PurchaseOrderDetail.Where(x => x.IsActive && x.Id == id)
+                                         
+                                          select new PurchaseOrderDetailViewModel
+                                          {
+                                              Id = t1.Id,
+                                              PurchaseOrderId = t1.PurchaseOrderId,
+                                              ProductId = t1.ProductId,
+                                              ProductName = t1.Product.Name,
+                                              PurchaseQty = t1.PurchaseQty,
+                                              Consumption = t1.Consumption,
+                                              UnitId = t1.UnitId,
+                                              UnitName = t1.Unit.Name,
+                                              CostPrice = t1.CostPrice,
+                                              SalePrice = t1.SalePrice,
+                                              Discount = t1.Discount,
+                                              TotalAmount = t1.TotalAmount,
+                                              Remarks = t1.Remarks,
+                                          }).FirstOrDefault());
+            return v;
         }
 
         public async Task<bool> UpdateRecord(PurchaseOrderViewModel vm)

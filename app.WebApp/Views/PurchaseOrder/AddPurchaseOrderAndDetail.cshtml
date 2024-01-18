@@ -135,7 +135,7 @@
                                         <div class="col-md-5">
                                             <div class="form-group">
                                                 <label>Product</label>
-                                                <select class="form-control" asp-for="PurchaseOrderDetailVM.ProductId" asp-items="ViewBag.ProductList" required>
+                                                <select class="form-control" asp-for="PurchaseOrderDetailVM.ProductId" id="productId" asp-items="ViewBag.ProductList" required>
                                                     <option value="0" selected>-- Select Product --</option>
                                                     <span asp-validation-for="PurchaseOrderDetailVM.ProductId" class="text-danger"></span>
                                                 </select>
@@ -198,7 +198,7 @@
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label>Remarks</label>
-                                            <input asp-for="PurchaseOrderDetailVM.Remarks" class="form-control" id="txtRemarks"/>
+                                            <input asp-for="PurchaseOrderDetailVM.Remarks" id="txtRemarks" class="form-control" />
                                             <span asp-validation-for="PurchaseOrderDetailVM.Remarks" class="text-danger"></span>
                                         </div>
                                     </div>
@@ -321,20 +321,16 @@
                 datatype: "Json",
                 data: { id: rowId },
                 success: function (data) {
-                    unitPrice = data.UnitPrice;
 
                     $('#poCreateBtn').val("Update");
                     $("#orderId").val(data.Id);
                     $('#actionId').val(2);
                     $("#purchaseOrderDetailsId").val(data.Id);
-
-                    $("#purchaseOrderDetailsId").val(data.Id);
-                    $("#purchaseOrderDetailsId").val(data.Id);
-                    $("#purchaseOrderDetailsId").val(data.Id);
-                    $("#purchaseOrderDetailsId").val(data.Id);
-                    $("#purchaseOrderDetailsId").val(data.Id);
-                    $("#purchaseOrderDetailsId").val(data.Id);
-
+                    $("#productId").val(data.ProductId);
+                    $("#purchaseQty").val(data.PurchaseQty);
+                    $("#costPrice").val(data.CostPrice);
+                    $("#salePrice").val(data.SalePrice);
+                    $("#discount").val(data.Discount);
                     $("#txtRemarks").val(data.Remarks);
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                 }

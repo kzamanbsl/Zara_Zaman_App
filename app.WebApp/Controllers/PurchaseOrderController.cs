@@ -37,6 +37,7 @@ namespace app.WebApp.Controllers
             }
         }
 
+
         [HttpGet]
         public async Task<IActionResult> AddPurchaseOrderAndDetail(long purchaseOrderId = 0)
         {
@@ -97,12 +98,16 @@ namespace app.WebApp.Controllers
             }
             return RedirectToAction(nameof(UpdatePurchaseOrder), new { purchaseOrderId = vm.Id });
         }
+
         [HttpGet]
         public async Task<IActionResult> DeletePurchaseOrder(PurchaseOrderViewModel vm)
         {
             var res = await _ipurchaseOrderService.DeleteRecord(vm);
             return RedirectToAction("Index");
         }
+
+
+
     }
 }
 

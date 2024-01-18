@@ -1,4 +1,5 @@
-﻿using app.Services.PurchaseOrderServices;
+﻿using app.Services.ProductServices;
+using app.Services.PurchaseOrderServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,7 @@ namespace app.Services.PurchaseOrderDetailServices
 {
     public interface IPurchaseOrderDetailService
     {
-        Task<bool> AddRecord(PurchaseOrderViewModel vm);       
+        Task<bool> AddRecord(PurchaseOrderViewModel vm);
+        Task<bool> UpdateRecord(PurchaseOrderViewModel vm);
     }
 }

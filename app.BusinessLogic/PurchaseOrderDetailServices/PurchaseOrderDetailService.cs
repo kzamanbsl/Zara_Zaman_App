@@ -51,5 +51,9 @@ namespace app.Services.PurchaseOrderDetailServices
 
         }
 
+        public Task<bool> UpdateRecord(PurchaseOrderViewModel vm)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
