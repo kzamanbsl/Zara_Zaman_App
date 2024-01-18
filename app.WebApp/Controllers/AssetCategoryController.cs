@@ -1,15 +1,15 @@
 ﻿using app.Services.DropdownServices;
-using app.Services.ProductCategoryServices;
+using app.Services.AssetCategoryServices;
 using Microsoft.AspNetCore.Mvc;
 
 namespace app.WebApp.Controllers
 {
-    public class ProductCategoryController : Controller
+    public class AssetCategoryController : Controller
     {
 
-        private readonly IProductCategoryService _iService;
+        private readonly IAssetCategoryService _iService;
         private readonly IDropdownService _dropdownService;
-        public ProductCategoryController(IProductCategoryService iService, IDropdownService dropdownService)
+        public AssetCategoryController(IAssetCategoryService iService, IDropdownService dropdownService)
         {
             _iService = iService;
             _dropdownService = dropdownService;
@@ -25,12 +25,12 @@ namespace app.WebApp.Controllers
         [HttpGet]
         public async Task<IActionResult> AddRecord()
         {
-            ProductCategoryViewModel viewModel = new ProductCategoryViewModel();
+            AssetCategoryViewModel viewModel = new AssetCategoryViewModel();
             return View(viewModel);
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddRecord(ProductCategoryViewModel viewModel)
+        public async Task<IActionResult> AddRecord(AssetCategoryViewModel viewModel)
         {
             var result = await _iService.AddRecord(viewModel);
             if (result == true)
@@ -49,7 +49,7 @@ namespace app.WebApp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> UpdateRecord(ProductCategoryViewModel model)
+        public async Task<IActionResult> UpdateRecord(AssetCategoryViewModel model)
         {
             var result = await _iService.UpdateRecord(model);
             if (result == true)

@@ -295,6 +295,5 @@ namespace app.Services.DropdownServices
                                                                                       }).AsQueryable());
             return dropDownViewModels;
         }
-
     }
 }

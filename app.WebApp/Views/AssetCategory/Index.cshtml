@@ -1,69 +1,72 @@
-﻿@using app.Utility
-@model app.Services.PurchaseOrderServices.PurchaseOrderViewModel
+﻿@model app.Services.AssetCategoryServices.AssetCategoryViewModel
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
     int SN = 1;
 }
 
-
-<h1>Purchase Order List</h1>
 <div class="content-header">
     <div class="container-fluid ">
         <div class="breadcrumb d-flex justify-content-between align-items-center  pl-3 pr-3">
             <ol class="breadcrumb mb-0 p-0">
                 <li class="breadcrumb-item"><a href="/Admin/Index">Home</a></li>
-                <li class="breadcrumb-item active"> Purchase Order List </li>
+                <li class="breadcrumb-item active"> Asset Category List </li>
             </ol>
             <div>
-                <a asp-action="AddPurchaseOrderAndDetail"><i class="fa fa-plus"></i>Add PurchaseOrder</a>
+                <a asp-action="AddRecord"><i class="fa fa-plus"></i>  Add Asset Category </a>
             </div>
         </div>
     </div>
 </div>
+
+
 <section class="content">
     <div class="container-fluid">
         <div class="card">
             <div class="card-header">
                 <div class="row w-100">
-                    <div class="card-header">
-                        <h3>
-                            <i class="fas fa-list"></i>
-                            All PurchaseOrder
-                        </h3>
+                    <div class="col-sm-3">
+                        <h5> <i class="fas fa-list"></i>  All Asset Category </h5>
                     </div>
                 </div>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
-                    <table id="PurchaseOrdertable" class="table table-sm table-bordered">
+                    <table id="productCategoryTable" class="table table-sm table-bordered">
                         <thead>
                             <tr>
-                                <th>SL</th>
-                                <th class="text-center">Purchase Order No</th>
-                                <th class="text-center">Purchase Date</th>
-                                <th class="text-center">Supplier Name</th>
-                                <th class="text-center">Status</th>
+                                <th>
+                                    #
+                                </th>
+                                <th class="text-center">
+                                    Name
+                                </th>
+                                <th class="text-center">
+                                    AssetCategoryType
+                                </th>
                                 <th class="text-center">Action</th>
                             </tr>
                         </thead>
 
                         <tbody>
-                            @foreach (var item in Model.PurchaseOrderList)
+                            @foreach (var item in Model.AssetCategoryList)
                             {
                                 <tr>
-                                    <td style="width:10px;">
-                                        @(++SN)
+                                    <td>
+                                        @SN
                                     </td>
-                                    <td >@item.OrderNo</td>
-                                    <td>@item.PurchaseDate.ToString("dd-MM-yyyy")</td>
-                                    <td>@item.SupplierName</td>
-                                    <td>@item.OrderStatusName</td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Name)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.AssetCategoryTypeId)
+                                    </td>
                                     <td class="text-left">
                                         @Html.ActionLink("", "UpdateRecord", new {id=item.Id},new {@title="Edit",@class = "text-warning fas fa-edit" }) |
                                         @Html.ActionLink("","Delete", new {  id=item.Id},new {@title="Delete",@class = "text-danger fas fa-trash",  onclick = "return confirm('Are you sure you want to delete this?')" })
                                     </td>
                                 </tr>
+                                SN++;
                             }
                         </tbody>
 
@@ -76,17 +79,16 @@
 
 </section>
 
-
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
     <script>
-
         $(document).ready(function () {
             $('#Configuration').addClass('menu-open');
-            $('#PurchaseOrderIndex').addClass('active');
-            $('#PurchaseOrdertable').DataTable({
+            $('#AssetCategoryIndex').addClass('active');
+
+            $('#productCategoryTable').DataTable({
                 "paging": true,
                 "ordering": true,
                 "info": true,
@@ -94,4 +96,4 @@
             });
         });
     </script>
-}
+    }

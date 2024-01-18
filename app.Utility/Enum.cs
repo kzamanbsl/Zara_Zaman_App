@@ -20,6 +20,7 @@
     {
         Draft = 1,
         Confirm,
+        Submitted,
         Approve,
         Receive,
         Hold,
@@ -31,8 +32,14 @@
         Purchase = 1,
         Menufacture       
     }
+    public enum PurchaseTypeEnum
+    {
+        Purchase = 1,
+        AssetPurchase
+    }
 
-    public enum ProductcategoryTypeEnum
+
+    public enum ProductCategoryTypeEnum
     {
         ProductCategory = 1,
         AssetCategory
@@ -44,5 +51,10 @@
         Asset
     }
 
-
+    public enum ActionEnum
+    {
+        Add = 1,
+        Edit,
+        Delete
+    }
 }

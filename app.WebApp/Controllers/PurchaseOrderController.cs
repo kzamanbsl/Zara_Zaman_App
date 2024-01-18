@@ -3,6 +3,7 @@ using app.Services.DropdownServices;
 using app.Services.EmployeeServices;
 using app.Services.PurchaseOrderDetailServices;
 using app.Services.PurchaseOrderServices;
+using app.Utility;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -22,19 +23,38 @@ namespace app.WebApp.Controllers
         }
 
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            try
+            {
+                PurchaseOrderViewModel viewModel = await _ipurchaseOrderService.GetAllRecord();
+                return View(viewModel);
+            }
+            catch (Exception ex)
+            {
+                //return View("Error");
+                throw new Exception(ex.Message, ex);
+            }
         }
 
         [HttpGet]
-        public async Task<IActionResult> AddPurchaseOrderAndDetail()
+        public async Task<IActionResult> AddPurchaseOrderAndDetail(long purchaseOrderId = 0)
         {
+            PurchaseOrderViewModel viewModel = new PurchaseOrderViewModel();
+
+            if (purchaseOrderId == 0)
+            {
+                viewModel.OrderStatusId = PurchaseOrderStatusEnum.Draft;
+            }
+            else
+            {
+                viewModel = await _ipurchaseOrderService.GetPurchaseOrder(purchaseOrderId);
+            }
             ViewBag.SupplierList = new SelectList((await _iDropdownService.SupplierSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
             ViewBag.StorehouseList = new SelectList((await _iDropdownService.StorehouseSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
             ViewBag.ProductList = new SelectList((await _iDropdownService.ProductSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
             ViewBag.UnitList = new SelectList((await _iDropdownService.UnitSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
-            PurchaseOrderViewModel viewModel = new PurchaseOrderViewModel();
+            
             return View(viewModel);
         }
 
@@ -42,18 +62,47 @@ namespace app.WebApp.Controllers
         [HttpPost]
         public async Task<IActionResult> AddPurchaseOrderAndDetail(PurchaseOrderViewModel vm)
         {
-            if (vm.Id == 0)
+
+            if (vm.ActionEum == ActionEnum.Add)
             {
-                var purchaseOrderAdded = await _ipurchaseOrderService.AddRecord(vm);
-                if (!purchaseOrderAdded)
-                { 
-                    return View("Purchase Order Failed");
+                if (vm.Id == 0)
+                {
+                    await _ipurchaseOrderService.AddRecord(vm);
                 }
                 await _ipurchaseOrderDetailService.AddRecord(vm);
             }
-            return RedirectToAction(nameof(AddPurchaseOrderAndDetail));
+            
+            return RedirectToAction(nameof(AddPurchaseOrderAndDetail), new { purchaseOrderId = vm.Id });
+        }
+        [HttpGet]
+        public async Task<IActionResult> UpdatePurchaseOrder(long purchaseOrderId)
+        {
+            PurchaseOrderViewModel viewModel = await _ipurchaseOrderService.GetPurchaseOrder(purchaseOrderId);
+            if (purchaseOrderId == 0)
+            {
+                viewModel.OrderStatusId = PurchaseOrderStatusEnum.Draft;
+            }
+            ViewBag.ProductList = new SelectList((await _iDropdownService.ProductSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
+            ViewBag.UnitList = new SelectList((await _iDropdownService.UnitSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
+
+            return View(nameof(UpdatePurchaseOrder), viewModel);
         }
 
-
+        [HttpPost]
+        public async Task<IActionResult> UpdatePurchaseOrder(PurchaseOrderViewModel vm)
+        {
+            if (vm.ActionEum == ActionEnum.Edit)
+            {
+                await _ipurchaseOrderService.UpdateRecord(vm);
+            }
+            return RedirectToAction(nameof(UpdatePurchaseOrder), new { purchaseOrderId = vm.Id });
+        }
+        [HttpGet]
+        public async Task<IActionResult> DeletePurchaseOrder(PurchaseOrderViewModel vm)
+        {
+            var res = await _ipurchaseOrderService.DeleteRecord(vm);
+            return RedirectToAction("Index");
+        }
     }
 }
+
