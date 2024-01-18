@@ -104,14 +104,14 @@ namespace app.Services.PurchaseOrderServices
         public async Task<PurchaseOrderViewModel> GetAllRecord()
         {
             var result = _dbContext.PurchaseOrder
-        .Include(po => po.Supplier)
+        .Include(po => po.Supplier).ToList()
         .Select(po => new PurchaseOrderViewModel
         {
             PurchaseDate = po.PurchaseDate,
             Description = po.Description,
             OrderNo = po.OrderNo,
             OverallDiscount = po.OverallDiscount,
-            //OrderStatusName = Enum.GetName(typeof(PurchaseOrderStatusEnum), po.OrderStatusId),
+            OrderStatusName = Enum.GetName(typeof(PurchaseOrderStatusEnum), po.OrderStatusId),
             SupplierId = po.SupplierId,
             SupplierName = po.Supplier != null ? po.Supplier.Name : null,
             StorehouseId = po.StorehouseId,
@@ -129,9 +129,27 @@ namespace app.Services.PurchaseOrderServices
         }
 
 
-        public Task<PurchaseOrderDetailViewModel> SingleOrderDetails(long id)
+        public async Task<PurchaseOrderDetailViewModel> SingleOrderDetails(long id)
         {
-            throw new NotImplementedException();
+            var v = await Task.Run(() => (from t1 in _dbContext.PurchaseOrderDetail.Where(x => x.IsActive && x.Id == id)
+                                         
+                                          select new PurchaseOrderDetailViewModel
+                                          {
+                                              Id = t1.Id,
+                                              PurchaseOrderId = t1.PurchaseOrderId,
+                                              ProductId = t1.ProductId,
+                                              ProductName = t1.Product.Name,
+                                              PurchaseQty = t1.PurchaseQty,
+                                              Consumption = t1.Consumption,
+                                              UnitId = t1.UnitId,
+                                              UnitName = t1.Unit.Name,
+                                              CostPrice = t1.CostPrice,
+                                              SalePrice = t1.SalePrice,
+                                              Discount = t1.Discount,
+                                              TotalAmount = t1.TotalAmount,
+                                              Remarks = t1.Remarks,
+                                          }).FirstOrDefault());
+            return v;
         }
 
         public async Task<bool> UpdateRecord(PurchaseOrderViewModel vm)
@@ -155,6 +173,14 @@ namespace app.Services.PurchaseOrderServices
             existingPurchaseOrder.Description = vm.Description;
             await _dbContext.SaveChangesAsync();
 
+            return true;
+        }
+
+        public async Task<bool> DeleteRecord(PurchaseOrderViewModel vm)
+        {
+            var result = await _iEntityRepository.GetByIdAsync(vm.Id);
+            result.IsActive = false;
+            await _iEntityRepository.UpdateAsync(result);
             return true;
         }
     }

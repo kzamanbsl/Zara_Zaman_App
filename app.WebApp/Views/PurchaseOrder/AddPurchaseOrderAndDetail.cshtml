@@ -135,7 +135,7 @@
                                         <div class="col-md-5">
                                             <div class="form-group">
                                                 <label>Product</label>
-                                                <select class="form-control" asp-for="PurchaseOrderDetailVM.ProductId" asp-items="ViewBag.ProductList" required>
+                                                <select class="form-control" asp-for="PurchaseOrderDetailVM.ProductId" id="productId" asp-items="ViewBag.ProductList" required>
                                                     <option value="0" selected>-- Select Product --</option>
                                                     <span asp-validation-for="PurchaseOrderDetailVM.ProductId" class="text-danger"></span>
                                                 </select>
@@ -145,7 +145,7 @@
                                         <div class="col-md-2">
                                             <div class="form-group">
                                                 <label>Purchase Qty</label>
-                                                <input asp-for="PurchaseOrderDetailVM.PurchaseQty" class="form-control" required />
+                                                <input asp-for="PurchaseOrderDetailVM.PurchaseQty" id="purchaseQty" class="form-control" required  />
                                                 <span asp-validation-for="PurchaseOrderDetailVM.PurchaseQty" class="text-danger"></span>
                                             </div>
                                         </div>
@@ -153,7 +153,7 @@
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <label>Unit</label>
-                                                <select class="form-control" asp-for="PurchaseOrderDetailVM.UnitId" asp-items="ViewBag.UnitList" required>
+                                                <select class="form-control" asp-for="PurchaseOrderDetailVM.UnitId" id="unitId" asp-items="ViewBag.UnitList" required>
                                                     <option value="0" selected>-- Select Unit --</option>
                                                     <span asp-validation-for="PurchaseOrderDetailVM.UnitId" class="text-danger"></span>
                                                 </select>
@@ -163,7 +163,7 @@
                                         <div class="col-md-2">
                                             <div class="form-group">
                                                 <label>Consumption</label>
-                                                <input asp-for="PurchaseOrderDetailVM.Consumption" class="form-control" />
+                                                <input asp-for="PurchaseOrderDetailVM.Consumption" id="consumption" class="form-control" />
                                             </div>
                                         </div>
 
@@ -174,7 +174,7 @@
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label>Cost Price</label>
-                                            <input asp-for="PurchaseOrderDetailVM.CostPrice" class="form-control" required />
+                                            <input asp-for="PurchaseOrderDetailVM.CostPrice" id="costPrice" class="form-control" required />
                                             <span asp-validation-for="PurchaseOrderDetailVM.CostPrice" class="text-danger"></span>
                                         </div>
                                     </div>
@@ -182,7 +182,7 @@
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label>Sale Price</label>
-                                            <input asp-for="PurchaseOrderDetailVM.SalePrice" class="form-control" required />
+                                            <input asp-for="PurchaseOrderDetailVM.SalePrice" id="salePrice" class="form-control" required />
                                             <span asp-validation-for="PurchaseOrderDetailVM.SalePrice" class="text-danger"></span>
                                         </div>
                                     </div>
@@ -190,7 +190,7 @@
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label>Discount</label>
-                                            <input asp-for="PurchaseOrderDetailVM.Discount" class="form-control" />
+                                            <input asp-for="PurchaseOrderDetailVM.Discount" id="discount" class="form-control" />
                                             <span asp-validation-for="PurchaseOrderDetailVM.Discount" class="text-danger"></span>
                                         </div>
                                     </div>
@@ -198,7 +198,7 @@
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label>Remarks</label>
-                                            <input asp-for="PurchaseOrderDetailVM.Remarks" class="form-control" id="txtRemarks"/>
+                                            <input asp-for="PurchaseOrderDetailVM.Remarks" id="txtRemarks" class="form-control" />
                                             <span asp-validation-for="PurchaseOrderDetailVM.Remarks" class="text-danger"></span>
                                         </div>
                                     </div>
@@ -258,11 +258,8 @@
                                                         if (Model.OrderStatusId == PurchaseOrderStatusEnum.Draft)
                                                         {
                                                             <td style="padding:5px;text-align:center;">
-
-
                                                                 <a id="@item.Id" onclick=" makeEditble(@item.Id);" class="linkPointer" title="Edit"><i class="text-warning fas fa-edit" aria-hidden="true"></i></a>
                                                                 <a id="@item.Id" onclick="makeDeletale(@item.Id)" class="linkPointer" data-toggle="modal" data-target="#deleteDamageSlaveModal" title="Delete" data-placement="top"><i class="text-danger fas fa-trash" aria-hidden="true"></i></a>
-
                                                             </td>
                                                         }
                                                     }
@@ -324,14 +321,17 @@
                 datatype: "Json",
                 data: { id: rowId },
                 success: function (data) {
-                    unitPrice = data.UnitPrice;
 
                     $('#poCreateBtn').val("Update");
                     $("#orderId").val(data.Id);
                     $('#actionId').val(2);
                     $("#purchaseOrderDetailsId").val(data.Id);
-
-                    $("#txtitemDescription").val(data.Remarks);
+                    $("#productId").val(data.ProductId);
+                    $("#purchaseQty").val(data.PurchaseQty);
+                    $("#costPrice").val(data.CostPrice);
+                    $("#salePrice").val(data.SalePrice);
+                    $("#discount").val(data.Discount);
+                    $("#txtRemarks").val(data.Remarks);
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                 }
             });

@@ -1,24 +1,30 @@
 ﻿using app.EntityModel.AppModels;
-using app.Infrastructure;
 using app.Infrastructure.Auth;
 using app.Infrastructure.Repository;
+using app.Infrastructure;
+using app.Services.AssetCategoryServices;
 using app.Utility;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace app.Services.ProductCategoryServices
+namespace app.Services.AssetCategoryServices
 {
-    public class ProductCategoryService : IProductCategoryService
+    public class AssetCategoryService : IAssetCategoryService
     {
         private readonly IEntityRepository<ProductCategory> _iEntityRepository;
         private readonly InventoryDbContext _dbContext;
         private readonly IWorkContext _iWorkContext;
-        public ProductCategoryService(IEntityRepository<ProductCategory> iEntityRepository, InventoryDbContext dbContext, IWorkContext iWorkContext)
+        public AssetCategoryService(IEntityRepository<ProductCategory> iEntityRepository, InventoryDbContext dbContext, IWorkContext iWorkContext)
         {
             _iEntityRepository = iEntityRepository;
             _dbContext = dbContext;
             _iWorkContext = iWorkContext;
         }
 
-        public async Task<bool> AddRecord(ProductCategoryViewModel vm)
+        public async Task<bool> AddRecord(AssetCategoryViewModel vm)
         {
             var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim());
             if (checkName == null)
@@ -27,12 +33,12 @@ namespace app.Services.ProductCategoryServices
                 com.Name = vm.Name;
                 com.ProductCategoryTypeId = (int)ProductCategoryTypeEnum.AssetCategory;
                 var res = await _iEntityRepository.AddAsync(com);
-                vm.Id=res.Id;
+                vm.Id = res.Id;
                 return true;
             }
             return false;
         }
-        public async Task<bool> UpdateRecord(ProductCategoryViewModel vm)
+        public async Task<bool> UpdateRecord(AssetCategoryViewModel vm)
         {
 
             var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim());
@@ -53,29 +59,27 @@ namespace app.Services.ProductCategoryServices
             await _iEntityRepository.UpdateAsync(result);
             return true;
         }
-        public async Task<ProductCategoryViewModel> GetRecordById(long id)
+        public async Task<AssetCategoryViewModel> GetRecordById(long id)
         {
             var result = await _iEntityRepository.GetByIdAsync(id);
-            ProductCategoryViewModel model = new ProductCategoryViewModel();
+            AssetCategoryViewModel model = new AssetCategoryViewModel();
             model.Id = result.Id;
             model.Name = result.Name;
-            model.ProductCategoryTypeId = result.ProductCategoryTypeId;
+            model.AssetCategoryTypeId = result.ProductCategoryTypeId;
             return model;
         }
-        public async Task<ProductCategoryViewModel> GetAllRecord()
+        public async Task<AssetCategoryViewModel> GetAllRecord()
         {
-            ProductCategoryViewModel model = new ProductCategoryViewModel();
-            model.ProductCategoryList = await Task.Run(() => (from t1 in _dbContext.ProductCategory
-                                                                where t1.ProductCategoryTypeId == (int)ProductCategoryTypeEnum.AssetCategory 
-                                                                && t1.IsActive == true
-                                                                select new ProductCategoryViewModel
-                                                                {
-                                                                    Id = t1.Id,
-                                                                    Name = t1.Name,
-                                                                    ProductCategoryTypeId = t1.ProductCategoryTypeId,
-                                                                }).AsQueryable());
+            AssetCategoryViewModel model = new AssetCategoryViewModel();
+            model.AssetCategoryList = await Task.Run(() => (from t1 in _dbContext.ProductCategory
+                                                              where t1.ProductCategoryTypeId == (int)ProductCategoryTypeEnum.AssetCategory && t1.IsActive == true
+                                                              select new AssetCategoryViewModel
+                                                              {
+                                                                  Id = t1.Id,
+                                                                  Name = t1.Name,
+                                                                  AssetCategoryTypeId = t1.ProductCategoryTypeId,
+                                                              }).AsQueryable());
             return model;
         }
-
     }
 }
