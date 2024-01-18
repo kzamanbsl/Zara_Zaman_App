@@ -26,7 +26,6 @@ namespace app.Services.ProductCategoryServices
                 ProductCategory com = new ProductCategory();
                 com.Name = vm.Name;
                 com.ProductCategoryTypeId = (int)ProductcategoryTypeEnum.AssetCategory;
-
                 var res = await _iEntityRepository.AddAsync(com);
                 vm.Id=res.Id;
                 return true;
