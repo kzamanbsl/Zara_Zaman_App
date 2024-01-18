@@ -32,6 +32,7 @@ namespace app.Services.AttendanceServices
             bool result = false;
 
             Attendance model = new Attendance();
+            model.Id = vm.Id;
             model.EmployeeId = vm.EmployeeId;
             model.ShiftId = vm.ShiftId;
             model.AttendanceDate = vm.AttendanceDate;
@@ -123,18 +124,20 @@ namespace app.Services.AttendanceServices
             {
                 return vm;
             }
+            vm.EmployeeId = employeeId;
+            vm.AttendanceDate = date;
 
             var result = await _dbContext.Attendance.FirstOrDefaultAsync(c => c.EmployeeId == employeeId && c.AttendanceDate.Date == date.Date);
 
             if (result != null && result.Id > 0)
             {
-                var logResult = await _dbContext.AttendanceLog.LastOrDefaultAsync(c => c.AttendanceId == result.Id && c.IsActive == true);
-
+                var logResult = await _dbContext.AttendanceLog.Where(c => c.AttendanceId == result.Id && c.IsActive == true).OrderByDescending(c=>c.AttendanceId).FirstOrDefaultAsync();
+                vm.Id = result.Id;
                 vm.EmployeeId = result.EmployeeId;
                 vm.ShiftId = result.ShiftId;
                 vm.AttendanceDate = result.AttendanceDate;
                 vm.LoginTime = result.LoginTime;
-                vm.LogoutTime = (DateTime)result.LogoutTime;
+                vm.LogoutTime = result.LogoutTime;
                 vm.Remarks = result.Remarks;
                 vm.IsLogin = logResult.LogoutTime != null ? true : false;
             }
@@ -155,7 +158,7 @@ namespace app.Services.AttendanceServices
                                                              ShiftName = t1.Shift.Name,
                                                              AttendanceDate = t1.AttendanceDate,
                                                              LoginTime = t1.LoginTime,
-                                                             LogoutTime = (DateTime)t1.LogoutTime,
+                                                             LogoutTime = t1.LogoutTime,
                                                              Remarks = t1.Remarks,
                                                          }).AsQueryable());
             return model;

@@ -27,7 +27,8 @@ namespace app.Services.AttendanceLogServices
 
                 AttendanceLog model = new AttendanceLog();
                 model.AttendanceId = vm.AttendanceId;
-                model.LoginTime = (DateTime)vm.LoginTime;
+                //model.LoginTime = (DateTime)vm.LoginTime;
+                model.LoginTime = vm.LoginTime;
                 model.LogoutTime = null;
                 model.Remarks = vm.Remarks;
                 model.CreatedBy = _httpContextAccessor.HttpContext.User.Identity.Name;
@@ -47,7 +48,8 @@ namespace app.Services.AttendanceLogServices
             {
                 var result = await _iEntityRepository.GetByIdAsync(vm.Id);
                 result.AttendanceId = vm.AttendanceId;
-                result.LoginTime = (DateTime)vm.LoginTime;
+                //result.LoginTime = (DateTime)vm.LoginTime;
+                result.LoginTime = vm.LoginTime;
                 result.LogoutTime = vm.LogoutTime;
                 result.Remarks = vm.Remarks;
                 await _iEntityRepository.UpdateAsync(result);
@@ -64,7 +66,8 @@ namespace app.Services.AttendanceLogServices
             model.Id = result.Id;
             model.AttendanceId = result.AttendanceId;
             model.LoginTime = result.LoginTime;
-            model.LogoutTime = (DateTime)result.LogoutTime;
+            //model.LogoutTime = (DateTime)result.LogoutTime;
+            model.LogoutTime = result.LogoutTime;
             model.Remarks = result.Remarks;
             return model;
         }
@@ -81,7 +84,8 @@ namespace app.Services.AttendanceLogServices
                                                                 EmployeeId = t1.Attendance.EmployeeId,
                                                                 ShiftId = t1.Attendance.ShiftId,
                                                                 LoginTime = t1.LoginTime,
-                                                                LogoutTime = (DateTime)t1.LogoutTime,
+                                                                //LogoutTime = (DateTime)t1.LogoutTime,
+                                                                LogoutTime = t1.LogoutTime,
                                                                 Remarks = t1.Remarks,
 
                                                             }).AsQueryable());

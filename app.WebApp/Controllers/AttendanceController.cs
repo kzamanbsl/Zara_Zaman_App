@@ -42,7 +42,7 @@ namespace app.WebApp.Controllers
             //ViewBag.Employees = new SelectList((await _iDropdownService.EmployeeSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
             ViewBag.Shifts = new SelectList((await _iDropdownService.ShiftSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
             AttendanceViewModel viewModel = new AttendanceViewModel();
-
+            viewModel.AttendanceDate = DateTime.Now;
             return View(viewModel);
         }
 
