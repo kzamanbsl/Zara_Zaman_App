@@ -1,4 +1,4 @@
-﻿@model app.Services.AssetTypeServices.AssetTypeViewModel
+﻿@model app.Services.AssetItemServices.AssetItemViewModel
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
@@ -10,10 +10,10 @@
         <div class="breadcrumb d-flex justify-content-between align-items-center  pl-3 pr-3">
             <ol class="breadcrumb mb-0 p-0">
                 <li class="breadcrumb-item"><a href="/Admin/Index">Home</a></li>
-                <li class="breadcrumb-item active"> AssetType List </li>
+                <li class="breadcrumb-item active"> AssetItem List </li>
             </ol>
             <div>
-                <a asp-action="AddRecord"><i class="fa fa-plus"></i>  Add AssetType </a>
+                <a asp-action="AddRecord"><i class="fa fa-plus"></i>  Add AssetItem </a>
             </div>
         </div>
     </div>
@@ -26,13 +26,13 @@
             <div class="card-header">
                 <div class="row w-100">
                     <div class="col-sm-3">
-                        <h5> <i class="fas fa-list"></i>  All AssetType </h5>
+                        <h5> <i class="fas fa-list"></i>  All AssetItem </h5>
                     </div>
                 </div>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
-                    <table id="AssetType" class="table table-sm table-bordered">
+                    <table id="AssetItem" class="table table-sm table-bordered">
                         <thead>
                             <tr>
                                 <th>
@@ -50,7 +50,7 @@
                         </thead>
 
                         <tbody>
-                            @foreach (var item in Model.AssetTypeList)
+                            @foreach (var item in Model.AssetItemList)
                             {
                                 <tr>
                                     <td>
@@ -102,9 +102,9 @@
     <script>
         $(document).ready(function () {
             $('#Asset Management').addClass('menu-open');
-            $('#AssetTypeIndex').addClass('active');
+            $('#AssetItemIndex').addClass('active');
 
-            $('#AssetType').DataTable({
+            $('#AssetItem').DataTable({
                 "paging": true,
                 "ordering": true,
                 "info": true,

@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace app.Services.AssetTypeServices
+namespace app.Services.AssetItemServices
 {
-    public class AssetTypeViewModel : BaseViewModel
+    public class AssetItemViewModel : BaseViewModel
     {
         public string Name { get; set; }
         public string Description { get; set; }
@@ -19,6 +19,6 @@ namespace app.Services.AssetTypeServices
         public long UnitId { get; set; }
         public ProductCategory Category { get; set; }
         public long CategoryId { get; set; }
-        public IEnumerable<AssetTypeViewModel> AssetTypeList { get; set; }
+        public IEnumerable<AssetItemViewModel> AssetItemList { get; set; }
     }
 }

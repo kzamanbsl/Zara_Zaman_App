@@ -1,17 +1,16 @@
 ﻿using app.Services.DropdownServices;
-using app.Services.AssetTypeServices;
 using Microsoft.AspNetCore.Mvc;
-using app.Services.AssetTypeServices;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using app.Services.AssetItemServices;
 
 namespace app.WebApp.Controllers
 {
-    public class AssetTypeController : Controller
+    public class AssetItemController : Controller
     {
 
-        private readonly IAssetTypeService _iService;
+        private readonly IAssetItemService _iService;
         private readonly IDropdownService _dropdownService;
-        public AssetTypeController(IAssetTypeService iService, IDropdownService dropdownService)
+        public AssetItemController(IAssetItemService iService, IDropdownService dropdownService)
         {
             _iService = iService;
             _dropdownService = dropdownService;
@@ -29,12 +28,12 @@ namespace app.WebApp.Controllers
         {
             ViewBag.Unit = new SelectList((await _dropdownService.UnitSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
             ViewBag.ProductCategories = new SelectList((await _dropdownService.ProductCategorySelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
-            AssetTypeViewModel viewModel = new AssetTypeViewModel();
+            AssetItemViewModel viewModel = new AssetItemViewModel();
             return View(viewModel);
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddRecord(AssetTypeViewModel viewModel)
+        public async Task<IActionResult> AddRecord(AssetItemViewModel viewModel)
         {
             var result = await _iService.AddRecord(viewModel);
             if (result == true)
@@ -55,7 +54,7 @@ namespace app.WebApp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> UpdateRecord(AssetTypeViewModel model)
+        public async Task<IActionResult> UpdateRecord(AssetItemViewModel model)
         {
             var result = await _iService.UpdateRecord(model);
             if (result == true)

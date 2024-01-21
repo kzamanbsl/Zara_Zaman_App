@@ -2,32 +2,32 @@
 using app.Infrastructure.Auth;
 using app.Infrastructure.Repository;
 using app.Infrastructure;
-using app.Services.AssetTypeServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using app.Utility;
+using app.Services.AssetItemServices;
 
-namespace app.Services.AssetTypeServices
+namespace app.Services.AssetItemServices
 {
-    public class AssetTypeService : IAssetTypeService
+    public class AssetItemService : IAssetItemService
     {
         private readonly IEntityRepository<Product> _iEntityRepository;
         private readonly InventoryDbContext _dbContext;
         private readonly IWorkContext _iWorkContext;
-        public AssetTypeService(IEntityRepository<Product> iEntityRepository, InventoryDbContext dbContext, IWorkContext iWorkContext)
+        public AssetItemService(IEntityRepository<Product> iEntityRepository, InventoryDbContext dbContext, IWorkContext iWorkContext)
         {
             _iEntityRepository = iEntityRepository;
             _dbContext = dbContext;
             _iWorkContext = iWorkContext;
         }
 
-        public async Task<AssetTypeViewModel> GetRecordById(long id)
+        public async Task<AssetItemViewModel> GetRecordById(long id)
         {
             var result = await _iEntityRepository.GetByIdAsync(id);
-            AssetTypeViewModel model = new AssetTypeViewModel();
+            AssetItemViewModel model = new AssetItemViewModel();
             model.ProductTypeId = result.ProductTypeId;
             model.Name = result.Name;
             model.Description = result.Description;
@@ -37,12 +37,12 @@ namespace app.Services.AssetTypeServices
             model.CategoryId = result.CategoryId;
             return model;
         }
-        public async Task<AssetTypeViewModel> GetAllRecord()
+        public async Task<AssetItemViewModel> GetAllRecord()
         {
-            AssetTypeViewModel model = new AssetTypeViewModel();
-            model.AssetTypeList = await Task.Run(() => (from t1 in _dbContext.Product
+            AssetItemViewModel model = new AssetItemViewModel();
+            model.AssetItemList = await Task.Run(() => (from t1 in _dbContext.Product
                                                       where t1.ProductTypeId == (int)ProductTypeEnum.Product && t1.IsActive == true
-                                                      select new AssetTypeViewModel
+                                                      select new AssetItemViewModel
                                                       {
                                                           ProductTypeId = t1.ProductTypeId,
                                                           Name = t1.Name,
@@ -54,7 +54,7 @@ namespace app.Services.AssetTypeServices
                                                       }).AsQueryable());
             return model;
         }
-        public async Task<bool> AddRecord(AssetTypeViewModel vm)
+        public async Task<bool> AddRecord(AssetItemViewModel vm)
         {
             var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim());
             if (checkName == null)
@@ -72,7 +72,7 @@ namespace app.Services.AssetTypeServices
             }
             return false;
         }
-        public async Task<bool> UpdateRecord(AssetTypeViewModel vm)
+        public async Task<bool> UpdateRecord(AssetItemViewModel vm)
         {
 
             var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim());
