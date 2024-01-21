@@ -1,16 +1,17 @@
 ﻿using app.Services.DropdownServices;
-using app.Services.ProductServices;
+using app.Services.AssetTypeServices;
 using Microsoft.AspNetCore.Mvc;
+using app.Services.AssetTypeServices;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace app.WebApp.Controllers
 {
-    public class ProductController : Controller
+    public class AssetTypeController : Controller
     {
-        
-        private readonly IProductService _iService;
+
+        private readonly IAssetTypeService _iService;
         private readonly IDropdownService _dropdownService;
-        public ProductController(IProductService iService, IDropdownService dropdownService)
+        public AssetTypeController(IAssetTypeService iService, IDropdownService dropdownService)
         {
             _iService = iService;
             _dropdownService = dropdownService;
@@ -28,12 +29,12 @@ namespace app.WebApp.Controllers
         {
             ViewBag.Unit = new SelectList((await _dropdownService.UnitSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
             ViewBag.ProductCategories = new SelectList((await _dropdownService.ProductCategorySelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
-            ProductViewModel viewModel = new ProductViewModel();
+            AssetTypeViewModel viewModel = new AssetTypeViewModel();
             return View(viewModel);
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddRecord(ProductViewModel viewModel)
+        public async Task<IActionResult> AddRecord(AssetTypeViewModel viewModel)
         {
             var result = await _iService.AddRecord(viewModel);
             if (result == true)
@@ -54,7 +55,7 @@ namespace app.WebApp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> UpdateRecord(ProductViewModel model)
+        public async Task<IActionResult> UpdateRecord(AssetTypeViewModel model)
         {
             var result = await _iService.UpdateRecord(model);
             if (result == true)
