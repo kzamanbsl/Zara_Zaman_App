@@ -23,6 +23,7 @@ namespace app.WebApp.Controllers
         public async Task<JsonResult> CheckEmployeeTodaysAttendance(long employeeId, DateTime date)
         {
             var data = await _iService.CheckEmployeeTodaysAttendance(employeeId, date);
+            
             return Json(data);
         }
 

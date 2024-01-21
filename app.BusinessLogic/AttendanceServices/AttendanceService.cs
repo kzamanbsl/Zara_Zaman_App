@@ -43,7 +43,7 @@ namespace app.Services.AttendanceServices
             result = true;
 
             if (res.Id > 0)
-            { 
+            {
                 vm.Id = res.Id;
                 AttendanceLogViewModel models = new AttendanceLogViewModel();
                 models.AttendanceId = vm.Id;
@@ -80,9 +80,9 @@ namespace app.Services.AttendanceServices
             response.Remarks = vm.Remarks;
             var res = await _iEntityRepository.UpdateAsync(response);
 
-            if (res==true)
+            if (res == true)
             {
-               
+
                 AttendanceLogViewModel models = new AttendanceLogViewModel();
                 models.AttendanceId = vm.Id;
                 if (vm.IsLogin)
@@ -103,7 +103,8 @@ namespace app.Services.AttendanceServices
 
         public async Task<AttendanceViewModel> GetRecordById(long id)
         {
-            var result = await _iEntityRepository.GetByIdAsync(id);
+            var result = await _iEntityRepository.GetByIdAsync(id)
+;
             AttendanceViewModel model = new AttendanceViewModel();
             model.Id = result.Id;
             model.EmployeeId = result.EmployeeId;
@@ -131,7 +132,7 @@ namespace app.Services.AttendanceServices
 
             if (result != null && result.Id > 0)
             {
-                var logResult = await _dbContext.AttendanceLog.Where(c => c.AttendanceId == result.Id && c.IsActive == true).OrderByDescending(c=>c.AttendanceId).FirstOrDefaultAsync();
+                var logResult = await _dbContext.AttendanceLog.Where(c => c.AttendanceId == result.Id && c.IsActive == true).OrderByDescending(c => c.AttendanceId).FirstOrDefaultAsync();
                 vm.Id = result.Id;
                 vm.EmployeeId = result.EmployeeId;
                 vm.ShiftId = result.ShiftId;
@@ -145,7 +146,7 @@ namespace app.Services.AttendanceServices
             return vm;
         }
         public async Task<AttendanceViewModel> GetAllRecord()
-        { 
+        {
             AttendanceViewModel model = new AttendanceViewModel();
             model.AttendanceList = await Task.Run(() => (from t1 in _dbContext.Attendance
                                                          where t1.IsActive == true
@@ -165,7 +166,8 @@ namespace app.Services.AttendanceServices
         }
         public async Task<bool> DeleteRecord(long id)
         {
-            var result = await _iEntityRepository.GetByIdAsync(id);
+            var result = await _iEntityRepository.GetByIdAsync(id)
+;
             result.IsActive = false;
             await _iEntityRepository.UpdateAsync(result);
             return true;

@@ -114,6 +114,7 @@
             var attendanceDate = $("#AttendanceDate").val();
             var loginTimeDiv = document.getElementById("LoginTimeDiv");
             var logoutTimeDiv = document.getElementById("LogoutTimeDiv");
+            // var formattedDate = moment(data.attendanceDate).format("YYYY-MM-DD");
             var submitButton = $("#saveButton");
 
             $.ajax({
@@ -126,9 +127,14 @@
                         $("#Id").val(data.id);
                         $("#EmployeeId").val(data.employeeId).trigger();
                         $("#AttendanceDate").val(data.attendanceDate);
+                        // $("#AttendanceDate").val(formattedDate);
                         if (data.shiftId > 0) {
                             $("#ShiftId").val(data.shiftId).trigger();
                         }
+                        // if (data.shiftId > 0) {
+                        //     $("#ShiftId").val(data.shiftId).trigger("change");
+                        // }
+
                         if (data.isLogin == true) {
                             loginTimeDiv.classList.remove("d-block");
                             loginTimeDiv.classList.add("d-none");
