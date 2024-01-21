@@ -34,21 +34,22 @@
                     <div class="col-md-12">
                         <form asp-action="AddRecord" method="post" id="newsletter-form-result">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <input type="hidden" asp-for="Id" />
                             <div class="row" id="rowId">
                                 <div class="col-md-4" id="employeeName">
                                     <div class="form-group">
                                         @* <label>Employee Name</label> *@
                                         <label asp-for="EmployeeName" class="control-label"></label>
-                                        <select id="txtName" class="form-control" asp-for="EmployeeId" asp-items="ViewBag.Employees" id="inputEnployee" onchange="CheckAttandanceData()">
+                                        <select class="form-control" asp-for="EmployeeId" asp-items="ViewBag.Employees" onchange="CheckAttandanceData()">
                                             <option value="0" selected>-- Select Employee --</option>
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-md-4" id="shiftName">
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         @* <label>Shift</label> *@
                                         <label asp-for="ShiftName" class="control-label"></label>
-                                        <select id="shiftName" class="form-control" asp-for="ShiftId" asp-items="ViewBag.Shifts">
+                                        <select class="form-control" asp-for="ShiftId" asp-items="ViewBag.Shifts">
                                             <option id="ddlChannel" value="0" selected>-- Select Shift --</option>
                                         </select>
                                     </div>
@@ -61,7 +62,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-4 d-block" id="inputLoginTime">
+                                <div class="col-md-4 d-block" id="LoginTimeDiv">
                                     <div class="form-group">
                                         <label asp-for="LoginTime" class="control-label"></label>
                                         <input type="time" asp-for="LoginTime" id="login" class="form-control" required />
@@ -69,12 +70,12 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-4 d-none" id="inputLogoutTime">
+                                <div class="col-md-4 d-none" id="LogoutTimeDiv">
                                     <div class="form-group">
                                         <label asp-for="LogoutTime" class="control-label"></label>
                                         <input type="time" asp-for="LogoutTime" id="logout" class="form-control" required />
                                         <span asp-validation-for="LogoutTime" class="text-danger"></span>
-                                    </div> 
+                                    </div>
                                 </div>
                                 <div class="col-md-4" id="Remarks">
                                     <div class="form-group">
@@ -109,44 +110,55 @@
         });
 
         function CheckAttandanceData() {
-            var getEmployeeId = $("#inputEnployee option:selected");
-            var dependentInput = document.getElementById("inputLoginTime");
-            var logoutInput = document.getElementById("inputLogoutTime");
-            var shiftName = document.getElementById("shiftName");
+            var employeeId = $("#EmployeeId").val();
+            var attendanceDate = $("#AttendanceDate").val();
+            var loginTimeDiv = document.getElementById("LoginTimeDiv");
+            var logoutTimeDiv = document.getElementById("LogoutTimeDiv");
+            // var formattedDate = moment(data.attendanceDate).format("YYYY-MM-DD");
             var submitButton = $("#saveButton");
 
             $.ajax({
                 type: "GET",
                 url: "/Attendance/CheckEmployeeTodaysAttendance",
                 dataType: "json",
-                data: { id: getEmployeeId.val() },
+                data: { employeeId: employeeId, date: attendanceDate },
                 success: function (data) {
                     if (data) {
-                        dependentInput.classList.remove("d-block");
-                        dependentInput.classList.add("d-none");
-                        logoutInput.classList.remove("d-none");
-                        logoutInput.classList.add("d-block");
-                        $("#shiftName").click(function () {
-                            shiftName.val(shiftName).trigger();
-                        });
-                        submitButton.val("Logout");
-                    } else {
-                        dependentInput.classList.remove("d-none");
-                        dependentInput.classList.add("d-block");
-                        logoutInput.classList.remove("d-block");
-                        logoutInput.classList.add("d-none");
-                        submitButton.val("Login");
-                    }
-                    if (data) {
-                        
+                        $("#Id").val(data.id);
+                        $("#EmployeeId").val(data.employeeId).trigger();
+                        $("#AttendanceDate").val(data.attendanceDate);
+                        // $("#AttendanceDate").val(formattedDate);
+                        if (data.shiftId > 0) {
+                            $("#ShiftId").val(data.shiftId).trigger();
+                        }
+                        // if (data.shiftId > 0) {
+                        //     $("#ShiftId").val(data.shiftId).trigger("change");
+                        // }
+
+                        if (data.isLogin == true) {
+                            loginTimeDiv.classList.remove("d-block");
+                            loginTimeDiv.classList.add("d-none");
+                            logoutTimeDiv.classList.remove("d-none");
+                            logoutTimeDiv.classList.add("d-block");
+                            $("#LoginTime").val(new Date());
+                            submitButton.val("Logout");
+                        } 
+                        else {
+                            loginTimeDiv.classList.remove("d-none");
+                            loginTimeDiv.classList.add("d-block");
+                            logoutTimeDiv.classList.remove("d-block");
+                            logoutTimeDiv.classList.add("d-none");
+                            $("#LogoutTime").val(new Date());
+                            submitButton.val("Login");
+                        }
                     }
                 },
-                
                 error: function (error) {
                     console.error("Error in AJAX request:", error);
                 }
             });
-        }
+         }
+
     </script>
 }
 

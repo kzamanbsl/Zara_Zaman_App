@@ -9,13 +9,13 @@ namespace app.Services.AttendanceLogServices
         public long AttendanceId { get; set; }
 
         [DisplayName("Attendance Date")]
-        public DateTime AttendanceDate { get; set; }= DateTime.Now;
+        public DateTime AttendanceDate { get; set; }
 
         [DisplayName("Login Time")]
-        public DateTime? LoginTime { get; set; }=DateTime.Now;
+        public DateTime? LoginTime { get; set; }
 
         [DisplayName("Logout Time")]
-        public DateTime LogoutTime { get; set; } = DateTime.Now;
+        public DateTime? LogoutTime { get; set; }
 
         public string Remarks { get; set; }
         public long EmployeeId { get; set; }

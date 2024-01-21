@@ -5,13 +5,13 @@ namespace app.Services.AttendanceServices
     public class AttendanceViewModel : BaseViewModel
     {
         [DisplayName("Attendance Date")]
-        public DateTime AttendanceDate { get; set; } = DateTime.Now;
+        public DateTime AttendanceDate { get; set; }
 
         [DisplayName("Login Time")]
-        public DateTime LoginTime { get; set; } = DateTime.Now;
+        public DateTime LoginTime { get; set; }
 
         [DisplayName("Logout Time")]
-        public DateTime LogoutTime { get; set; } = DateTime.Now;
+        public DateTime? LogoutTime { get; set; }
         public bool IsLogin { get; set; }
         public string Remarks { get; set; }
 

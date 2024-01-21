@@ -23,6 +23,7 @@ namespace app.WebApp.Controllers
         public async Task<JsonResult> CheckEmployeeTodaysAttendance(long employeeId, DateTime date)
         {
             var data = await _iService.CheckEmployeeTodaysAttendance(employeeId, date);
+            
             return Json(data);
         }
 
@@ -42,7 +43,7 @@ namespace app.WebApp.Controllers
             //ViewBag.Employees = new SelectList((await _iDropdownService.EmployeeSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
             ViewBag.Shifts = new SelectList((await _iDropdownService.ShiftSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
             AttendanceViewModel viewModel = new AttendanceViewModel();
-
+            viewModel.AttendanceDate = DateTime.Now;
             return View(viewModel);
         }
 
