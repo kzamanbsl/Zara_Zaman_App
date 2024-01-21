@@ -42,7 +42,7 @@
                     <div class="col-md-12">
                         <form asp-action="AddPurchaseOrderAndDetail" method="post">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                            <input asp-for="Id" class="form-control" hidden  id="orderId"/>
+                            <input asp-for="Id" class="form-control" hidden id="orderId" />
                             <input asp-for="ActionId" hidden id="actionId" />
                             <input asp-for="PurchaseOrderDetailVM.Id" class="form-control" id="purchaseOrderDetailsId" hidden />
 
@@ -145,7 +145,7 @@
                                         <div class="col-md-2">
                                             <div class="form-group">
                                                 <label>Purchase Qty</label>
-                                                <input asp-for="PurchaseOrderDetailVM.PurchaseQty" id="purchaseQty" class="form-control" required  />
+                                                <input asp-for="PurchaseOrderDetailVM.PurchaseQty" id="purchaseQty" class="form-control" required />
                                                 <span asp-validation-for="PurchaseOrderDetailVM.PurchaseQty" class="text-danger"></span>
                                             </div>
                                         </div>
@@ -308,34 +308,44 @@
         $(document).ready(function () {
             $('#Configuration').addClass('menu-open');
             $('#PurchaseOrderAddPurchaseOrderAndDetail').addClass('active');
-        });
-    </script>
 
-    <script type="text/javascript">
-        var isMakeEditable = false;
-        // Make editable form
+
+        });
+
+
         function makeEditble(rowId) {
             $.ajax({
                 type: "POST",
-                url: "@Url.Action("", "PurchaseOrder")",
+                url: "@Url.Action("UpdateSinglePurchaseOrderDetails", "PurchaseOrder")",
                 datatype: "Json",
                 data: { id: rowId },
                 success: function (data) {
-
-                    $('#poCreateBtn').val("Update");
-                    $("#orderId").val(data.Id);
-                    $('#actionId').val(2);
+                    $('#poCreateBtn').html("<i class='fas fa-edit'></i>&nbsp;Update");
                     $("#purchaseOrderDetailsId").val(data.Id);
+                    $('#actionId').val(2);
                     $("#productId").val(data.ProductId);
-                    $("#purchaseQty").val(data.PurchaseQty);
-                    $("#costPrice").val(data.CostPrice);
-                    $("#salePrice").val(data.SalePrice);
-                    $("#discount").val(data.Discount);
-                    $("#txtRemarks").val(data.Remarks);
+                    $("#unitId").val(data.UnitId);
+                    $('#consumption').val(data.Consumption);
+                    $('#costPrice').val(data.CostPrice);
+
+
+                    console.log("productId", data.ProductId)
+                    console.log("UnitId", data.UnitId)
+                    console.log("Consumption", data.Consumption)
+                    console.log("CostPrice", data.CostPrice)
+
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                 }
             });
             isMakeEditable = true;
         }
     </script>
-}  
+
+    <script type="text/javascript">
+     
+    </script>
+
+}
+
+
+

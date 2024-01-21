@@ -1,6 +1,4 @@
-﻿using app.Services.AttendanceServices;
-using app.Services.DropdownServices;
-using app.Services.EmployeeServices;
+﻿using app.Services.DropdownServices;
 using app.Services.PurchaseOrderDetailServices;
 using app.Services.PurchaseOrderServices;
 using app.Utility;
@@ -106,8 +104,10 @@ namespace app.WebApp.Controllers
             return RedirectToAction("Index");
         }
 
-
-
+        public async Task<IActionResult> UpdateSinglePurchaseOrderDetails(long id)
+        {
+            var model = await _ipurchaseOrderService.SingleOrderDetails(id);
+            return Json(model);
+        }
     }
 }
-
