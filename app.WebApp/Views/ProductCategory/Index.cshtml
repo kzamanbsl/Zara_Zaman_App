@@ -41,9 +41,6 @@
                                 <th class="text-center">
                                     Name
                                 </th>
-                                <th class="text-center">
-                                    ProductCategoryType
-                                </th>
                                 <th class="text-center">Action</th>
                             </tr>
                         </thead>
@@ -57,9 +54,6 @@
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.Name)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.ProductCategoryTypeId)
                                     </td>
                                     <td class="text-left">
                                         @Html.ActionLink("", "UpdateRecord", new {id=item.Id},new {@title="Edit",@class = "text-warning fas fa-edit" }) |
