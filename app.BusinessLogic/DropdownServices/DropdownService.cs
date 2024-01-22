@@ -248,7 +248,19 @@ namespace app.Services.DropdownServices
         public async Task<IEnumerable<DropdownViewModel>> ProductCategorySelectionList()
         {
             IEnumerable<DropdownViewModel> dropDownViewModels = await Task.Run(() => (from t1 in _dbContext.ProductCategory
-                                                                                      where t1.IsActive == true
+                                                                                      where t1.ProductCategoryTypeId == (int)ProductCategoryTypeEnum.ProductCategory && t1.IsActive == true
+                                                                                      select new DropdownViewModel
+                                                                                      {
+                                                                                          Id = t1.Id,
+                                                                                          Name = t1.Name
+
+                                                                                      }).AsQueryable());
+            return dropDownViewModels;
+        }
+        public async Task<IEnumerable<DropdownViewModel>> AssetCategorySelectionList()
+        {
+            IEnumerable<DropdownViewModel> dropDownViewModels = await Task.Run(() => (from t1 in _dbContext.ProductCategory
+                                                                                      where t1.ProductCategoryTypeId == (int)ProductCategoryTypeEnum.AssetCategory && t1.IsActive == true
                                                                                       select new DropdownViewModel
                                                                                       {
                                                                                           Id = t1.Id,

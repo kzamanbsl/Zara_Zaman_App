@@ -38,13 +38,11 @@
                                 <th>
                                     #
                                 </th>
-                                <th class="text-center">Name</th>
-                                <th class="text-center">Description</th>
-                                <th class="text-center">TP</th>
-                                <th class="text-center">Product Type</th>
-                                <th class="text-center">SalePrice</th>
-                                <th class="text-center">Unit</th>
                                 <th class="text-center">Category</th>
+                                <th class="text-center">Name</th>
+                                <th class="text-center">Unit</th>
+                                <th class="text-center">TP</th>
+                                <th class="text-center">Description</th>
                                 <th class="text-center">Action</th>
                             </tr>
                         </thead>
@@ -57,25 +55,19 @@
                                         @SN
                                     </td>
                                     <td>
+                                        @Html.DisplayFor(modelItem => item.CategoryId)
+                                    </td>
+                                    <td>
                                         @Html.DisplayFor(modelItem => item.Name)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Description)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.TP)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.ProductTypeId)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.SalePrice)
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.UnitId)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.CategoryId)
+                                        @Html.DisplayFor(modelItem => item.TP)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Description)
                                     </td>
                                     <td class="text-left">
                                         @Html.ActionLink("", "UpdateRecord", new { id = item.ProductTypeId}, new { @title = "Edit", @class = "text-warning fas fa-edit" }) |
