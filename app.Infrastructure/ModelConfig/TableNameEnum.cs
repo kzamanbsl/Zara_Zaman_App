@@ -34,7 +34,7 @@
         Product,
         Customer,
         Supplier,
-        Storehouse,
+        BusinessCenter,
         PurchaseOrder,
         PurchaseOrderDetail,
         AssetInventory,
