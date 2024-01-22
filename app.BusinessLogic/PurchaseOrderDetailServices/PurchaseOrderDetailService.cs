@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using app.Services.PurchaseOrderServices;
+using Microsoft.EntityFrameworkCore;
 
 namespace app.Services.PurchaseOrderDetailServices
 {
@@ -51,9 +52,24 @@ namespace app.Services.PurchaseOrderDetailServices
 
         }
 
-        public Task<bool> UpdateRecord(PurchaseOrderViewModel vm)
+        public async Task<bool> UpdateRecord(PurchaseOrderViewModel model)
         {
-            throw new NotImplementedException();
+            var purchaseOrderDetail = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id == model.PurchaseOrderDetailVM.Id);
+            if (purchaseOrderDetail != null)
+            {
+                model.Id = purchaseOrderDetail.PurchaseOrderId;
+                purchaseOrderDetail.ProductId = model.PurchaseOrderDetailVM.ProductId;
+                purchaseOrderDetail.UnitId = model.PurchaseOrderDetailVM.UnitId;
+                purchaseOrderDetail.Consumption = model.PurchaseOrderDetailVM.Consumption;
+                purchaseOrderDetail.Discount = model.PurchaseOrderDetailVM.Discount;
+                purchaseOrderDetail.PurchaseQty = model.PurchaseOrderDetailVM.PurchaseQty;
+                purchaseOrderDetail.SalePrice = model.PurchaseOrderDetailVM.SalePrice;
+                purchaseOrderDetail.CostPrice = model.PurchaseOrderDetailVM.CostPrice;
+                purchaseOrderDetail.Remarks = model.PurchaseOrderDetailVM.Remarks;
+                await _iEntityRepository.UpdateAsync(purchaseOrderDetail);
+                return true;
+            }
+            return false;
         }
     }
 }
