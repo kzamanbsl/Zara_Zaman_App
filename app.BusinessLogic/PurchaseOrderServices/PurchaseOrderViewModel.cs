@@ -24,7 +24,7 @@ namespace app.Services.PurchaseOrderServices
         public Supplier Supplier { get; set; }
         public string SupplierName { get; set; } 
         public long? StorehouseId { get; set; }
-        public Storehouse Storehouse { get; set; }
+        public BusinessCenter Storehouse { get; set; }
         public string StoreName { get; set; }
         public ActionEnum ActionEum { get { return (ActionEnum)this.ActionId; } }
         public int ActionId { get; set; } = 1;

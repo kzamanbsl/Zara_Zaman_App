@@ -18,7 +18,7 @@ namespace app.EntityModel.AppModels
         public long? SupplierId { get; set; }
         public Supplier Supplier { get; set; }
         public long? StorehouseId { get; set;}
-        public Storehouse Storehouse { get; set; }
+        public BusinessCenter Storehouse { get; set; }
 
     }
 }

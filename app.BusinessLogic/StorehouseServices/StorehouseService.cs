@@ -2,15 +2,16 @@
 using app.Infrastructure;
 using app.Infrastructure.Auth;
 using app.Infrastructure.Repository;
+using app.Utility;
 
 namespace app.Services.StorehouseServices
 {
     public class StorehouseService : IStorehouseService
     {
-        private readonly IEntityRepository<Storehouse> _iEntityRepository;
+        private readonly IEntityRepository<BusinessCenter> _iEntityRepository;
         private readonly InventoryDbContext _dbContext;
         private readonly IWorkContext _iWorkContext;
-        public StorehouseService(IEntityRepository<Storehouse> iEntityRepository, InventoryDbContext dbContext, IWorkContext iWorkContext)
+        public StorehouseService(IEntityRepository<BusinessCenter> iEntityRepository, InventoryDbContext dbContext, IWorkContext iWorkContext)
         {
             _iEntityRepository = iEntityRepository;
             _dbContext = dbContext;
@@ -22,10 +23,12 @@ namespace app.Services.StorehouseServices
             var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim());
             if (checkName == null)
             {
-                Storehouse storehouse = new Storehouse();
+                BusinessCenter storehouse = new BusinessCenter();
                 storehouse.Name = vm.Name;
+                storehouse.Code = vm.Code;
                 storehouse.Location = vm.Location;
                 storehouse.Description = vm.Description;
+                storehouse.BusinessCenterTypeId=(int)BusinessCenterEnum.Storehouse;
                 var res = await _iEntityRepository.AddAsync(storehouse);
                 vm.Id = res.Id;
                 return true;
@@ -40,8 +43,10 @@ namespace app.Services.StorehouseServices
             {
                 var storehouse = await _iEntityRepository.GetByIdAsync(vm.Id);
                 storehouse.Name = vm.Name;
+                storehouse.Code = vm.Code;
                 storehouse.Location = vm.Location;
                 storehouse.Description = vm.Description;
+                storehouse.BusinessCenterTypeId = (int)BusinessCenterEnum.Storehouse;
                 await _iEntityRepository.UpdateAsync(storehouse);
                 return true;
             }
@@ -52,6 +57,7 @@ namespace app.Services.StorehouseServices
             var result = await _iEntityRepository.GetByIdAsync(id);
             StorehouseViewModel model = new StorehouseViewModel();
             model.Id = result.Id;
+            model.Code = result.Code;
             model.Name = result.Name;
             model.Location = result.Location;
             model.Description = result.Description;
@@ -60,17 +66,19 @@ namespace app.Services.StorehouseServices
         public async Task<StorehouseViewModel> GetAllRecord()
         {
             StorehouseViewModel model = new StorehouseViewModel();
-            model.StorehouseList = await Task.Run(() => (from t1 in _dbContext.Storehouse
-                                                                where t1.IsActive == true
+            model.StorehouseList = await Task.Run(() => (from t1 in _dbContext.BusinessCenter
+                                                                where t1.BusinessCenterTypeId == (int)BusinessCenterEnum.Storehouse && t1.IsActive == true
                                                                 select new StorehouseViewModel
                                                                 {
                                                                     Id = t1.Id,
                                                                     Name = t1.Name,
+                                                                    Code = t1.Code,
                                                                     Location = t1.Location,
                                                                     Description = t1.Description,
                                                                 }).AsQueryable());
             return model;
         }
+
         public async Task<bool> DeleteRecord(long id)
         {
             var result = await _iEntityRepository.GetByIdAsync(id);

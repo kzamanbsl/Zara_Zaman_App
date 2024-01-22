@@ -9,15 +9,16 @@ using System.Threading.Tasks;
 
 namespace app.Infrastructure.ModelConfig
 {
-    public class StorehouseConfig : IEntityTypeConfiguration<Storehouse>
+    public class BusinessCenterConfig : IEntityTypeConfiguration<BusinessCenter>
     {
-        public void Configure(EntityTypeBuilder<Storehouse> builder)
+        public void Configure(EntityTypeBuilder<BusinessCenter> builder)
         {
             builder.HasKey(c => c.Id);
             builder.Property(c => c.Name).HasMaxLength(200);
+            builder.Property(c => c.Location).HasMaxLength(250);
             builder.Property(c => c.Description).HasMaxLength(250);
 
-            builder.ToTable(TableNameEnum.Storehouse.ToString());
+            builder.ToTable(TableNameEnum.BusinessCenter.ToString());
         }
     }
 }
