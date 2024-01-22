@@ -169,7 +169,6 @@
 
                                     </div>
                                 </div>
-
                                 <div class="row">
                                     <div class="col-md-3">
                                         <div class="form-group">
@@ -321,6 +320,7 @@
                 data: { id: rowId },
                 success: function (data) {
                     $('#poCreateBtn').html("<i class='fas fa-edit'></i>&nbsp;Update");
+                    $("#orderId").val(data.Id);
                     $("#purchaseOrderDetailsId").val(data.Id);
                     $('#actionId').val(2);
                     $("#productId").val(data.ProductId);

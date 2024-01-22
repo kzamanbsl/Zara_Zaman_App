@@ -51,7 +51,7 @@ namespace app.Infrastructure
         public virtual DbSet<Product> Product { get; set; }
         public virtual DbSet<Customer> Customer { get; set; }
         public virtual DbSet<Supplier> Supplier { get; set; }
-        public virtual DbSet<Storehouse> Storehouse { get; set; }
+        public virtual DbSet<BusinessCenter> BusinessCenter { get; set; }
         public virtual DbSet<PurchaseOrder> PurchaseOrder { get; set; }
         public virtual DbSet<PurchaseOrderDetail> PurchaseOrderDetail { get; set; }
         public virtual DbSet<Inventory> Inventory { get; set; }
