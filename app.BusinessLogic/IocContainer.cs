@@ -33,6 +33,8 @@ using app.Services.PurchaseOrderServices;
 using app.Services.PurchaseOrderDetailServices;
 using app.Services.AssetCategoryServices;
 using app.Services.AssetItemServices;
+using app.Services.ServiceCenterServices;
+using app.Services.SaleCenterServices;
 
 namespace app.Services
 {
@@ -73,6 +75,8 @@ namespace app.Services
             services.AddTransient<IPurchaseOrderDetailService, PurchaseOrderDetailService>();
             services.AddTransient<IAssetCategoryService, AssetCategoryService>();
             services.AddTransient<IAssetItemService, AssetItemService>();
+            services.AddTransient<IServiceCenterService, ServiceCenterService>();
+            services.AddTransient<ISaleCenterService, SaleCenterService>();
 
             return services;
         }
