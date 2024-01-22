@@ -17,8 +17,11 @@ namespace app.Services.AssetItemServices
         public int ProductTypeId { get; set; }
         public Unit Unit { get; set; }
         public long UnitId { get; set; }
+        public string UnitName { get; set; }
         public ProductCategory Category { get; set; }
         public long CategoryId { get; set; }
+        public string CategoryName { get; set; }
+
         public IEnumerable<AssetItemViewModel> AssetItemList { get; set; }
     }
 }

@@ -60,8 +60,7 @@ namespace app.Services.PurchaseOrderServices
             PurchaseOrderViewModel purchaseOrderModel = new PurchaseOrderViewModel();
 
 
-            purchaseOrderModel = await Task.Run(() => (from t1 in _dbContext.PurchaseOrder.Where(x => x.IsActive && x.Id == purchaseOrderId)
-                                                                                                                   
+            purchaseOrderModel = await Task.Run(() => (from t1 in _dbContext.PurchaseOrder.Where(x => x.IsActive && x.Id == purchaseOrderId)                                                                                                                  
                                                           
                                                                select new PurchaseOrderViewModel
                                                                {

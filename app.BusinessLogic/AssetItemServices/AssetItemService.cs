@@ -28,11 +28,10 @@ namespace app.Services.AssetItemServices
         {
             var result = await _iEntityRepository.GetByIdAsync(id);
             AssetItemViewModel model = new AssetItemViewModel();
-            model.ProductTypeId = result.ProductTypeId;
+            model.Id = result.Id;
             model.Name = result.Name;
             model.Description = result.Description;
             model.TP = result.TP;
-            model.SalePrice = result.SalePrice;
             model.UnitId = result.UnitId;
             model.CategoryId = result.CategoryId;
             return model;
@@ -40,17 +39,17 @@ namespace app.Services.AssetItemServices
         public async Task<AssetItemViewModel> GetAllRecord()
         {
             AssetItemViewModel model = new AssetItemViewModel();
-            model.AssetItemList = await Task.Run(() => (from t1 in _dbContext.Product
-                                                      where t1.ProductTypeId == (int)ProductTypeEnum.Product && t1.IsActive == true
-                                                      select new AssetItemViewModel
+            model.AssetItemList = await Task.Run(() => (from t1 in _dbContext.Product.Where(x => x.IsActive)
+                                                        select new AssetItemViewModel
                                                       {
                                                           ProductTypeId = t1.ProductTypeId,
                                                           Name = t1.Name,
                                                           Description = t1.Description,
                                                           TP = t1.TP,
-                                                          SalePrice = t1.SalePrice,
                                                           UnitId = t1.UnitId,
+                                                          UnitName =t1.Unit.Name,
                                                           CategoryId = t1.CategoryId,
+                                                          CategoryName = t1.Category.Name,
                                                       }).AsQueryable());
             return model;
         }
@@ -63,10 +62,9 @@ namespace app.Services.AssetItemServices
                 com.Name = vm.Name;
                 com.Description = vm.Description;
                 com.TP = vm.TP;
-                com.SalePrice = vm.SalePrice;
                 com.UnitId = vm.UnitId;
                 com.CategoryId = vm.CategoryId;
-                com.ProductTypeId = (int)ProductTypeEnum.Product;
+                com.ProductTypeId = (int)ProductTypeEnum.Asset;
                 var res = await _iEntityRepository.AddAsync(com);
                 return true;
             }
@@ -82,10 +80,9 @@ namespace app.Services.AssetItemServices
                 result.Name = vm.Name;
                 result.Description = vm.Description;
                 result.TP = vm.TP;
-                result.SalePrice = vm.SalePrice;
                 result.UnitId = vm.UnitId;
                 result.CategoryId = vm.CategoryId;
-                result.ProductTypeId = (int)ProductTypeEnum.Product;
+                result.ProductTypeId = (int)ProductTypeEnum.Asset;
                 await _iEntityRepository.UpdateAsync(result);
                 return true;
             }

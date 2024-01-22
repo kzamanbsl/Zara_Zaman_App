@@ -35,36 +35,21 @@
                     <div class="col-md-12">
                         <form asp-action="AddRecord" method="post">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                           <div class="row">
-                               <div class="col-md-4">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Category</label>
+                                        <select class="form-control" asp-for="CategoryId" asp-items="ViewBag.ProductCategories" required>
+                                            <option value="0" selected>--Category--</option>
+                                            <span asp-validation-for="CategoryId" class="text-danger"></span>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <label asp-for="Name" class="control-label"></label>
                                         <input asp-for="Name" class="form-control" required />
                                         <span asp-validation-for="Name" class="text-danger"></span>
-                                    </div>
-                               </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label asp-for="Description" class="control-label"></label>
-                                        <textarea asp-for="Description" class="form-control" required rows="2"></textarea>
-                                        <span asp-validation-for="Description" class="text-danger"></span>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label asp-for="TP" class="control-label"></label>
-                                        <input asp-for="TP" class="form-control" required />
-                                        <span asp-validation-for="TP" class="text-danger"></span>
-                                    </div>
-                                </div>
-                           </div>
-                            <div class="row">
-
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label asp-for="SalePrice" class="control-label"></label>
-                                        <input asp-for="SalePrice" class="form-control" required />
-                                        <span asp-validation-for="SalePrice" class="text-danger"></span>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
@@ -76,13 +61,29 @@
                                         </select>
                                     </div>
                                 </div>
+
+                            </div>
+                            <div class="row">
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label>Category</label>
-                                        <select class="form-control" asp-for="CategoryId" asp-items="ViewBag.ProductCategories" required>
-                                            <option value="0" selected>--Category--</option>
-                                            <span asp-validation-for="CategoryId" class="text-danger"></span>
-                                        </select>
+                                        <label asp-for="TP" class="control-label"></label>
+                                        <input asp-for="TP" class="form-control" required />
+                                        <span asp-validation-for="TP" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label asp-for="SalePrice" class="control-label"></label>
+                                        <input asp-for="SalePrice" class="form-control" required />
+                                        <span asp-validation-for="SalePrice" class="text-danger"></span>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label asp-for="Description" class="control-label"></label>
+                                        <textarea asp-for="Description" class="form-control" required rows="1"></textarea>
+                                        <span asp-validation-for="Description" class="text-danger"></span>
                                     </div>
                                 </div>
                             </div>

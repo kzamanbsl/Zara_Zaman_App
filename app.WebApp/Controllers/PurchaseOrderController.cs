@@ -61,7 +61,6 @@ namespace app.WebApp.Controllers
         [HttpPost]
         public async Task<IActionResult> AddPurchaseOrderAndDetail(PurchaseOrderViewModel vm)
         {
-
             if (vm.ActionEum == ActionEnum.Add)
             {
                 if (vm.Id == 0)
@@ -70,7 +69,11 @@ namespace app.WebApp.Controllers
                 }
                 await _ipurchaseOrderDetailService.AddRecord(vm);
             }
-            
+            else if (vm.ActionEum == ActionEnum.Edit)
+            {
+                await _ipurchaseOrderDetailService.UpdateRecord(vm);
+            }
+
             return RedirectToAction(nameof(AddPurchaseOrderAndDetail), new { purchaseOrderId = vm.Id });
         }
         [HttpGet]
@@ -87,15 +90,15 @@ namespace app.WebApp.Controllers
             return View(nameof(UpdatePurchaseOrder), viewModel);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> UpdatePurchaseOrder(PurchaseOrderViewModel vm)
-        {
-            if (vm.ActionEum == ActionEnum.Edit)
-            {
-                await _ipurchaseOrderService.UpdateRecord(vm);
-            }
-            return RedirectToAction(nameof(UpdatePurchaseOrder), new { purchaseOrderId = vm.Id });
-        }
+        //[HttpPost]
+        //public async Task<IActionResult> UpdatePurchaseOrder(PurchaseOrderViewModel vm)
+        //{
+        //    if (vm.ActionEum == ActionEnum.Edit)
+        //    {
+        //        await _ipurchaseOrderService.UpdateRecord(vm);
+        //    }
+        //    return RedirectToAction(nameof(UpdatePurchaseOrder), new { purchaseOrderId = vm.Id });
+        //}
 
         [HttpGet]
         public async Task<IActionResult> DeletePurchaseOrder(PurchaseOrderViewModel vm)
@@ -104,7 +107,7 @@ namespace app.WebApp.Controllers
             return RedirectToAction("Index");
         }
 
-        public async Task<IActionResult> UpdateSinglePurchaseOrderDetails(long id)
+        public async Task<JsonResult> UpdateSinglePurchaseOrderDetails(long id)
         {
             var model = await _ipurchaseOrderService.SingleOrderDetails(id);
             return Json(model);

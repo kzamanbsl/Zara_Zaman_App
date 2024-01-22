@@ -42,7 +42,7 @@
                     <div class="col-md-12">
                         <form asp-action="AddPurchaseOrderAndDetail" method="post">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                            <input asp-for="Id" class="form-control" hidden id="orderId" />
+                            <input asp-for="Id" class="form-control" hidden id="purchaseorderId" />
                             <input asp-for="ActionId" hidden id="actionId" />
                             <input asp-for="PurchaseOrderDetailVM.Id" class="form-control" id="purchaseOrderDetailsId" hidden />
 
@@ -270,23 +270,20 @@
                             }
                             @if (Model.Id > 0 && Model.OrderStatusId == PurchaseOrderStatusEnum.Draft)
                             {
-                                <div class="box-footer">
-                                    <div class="row">
-                                        <div class="col-md-6"></div>
-                                        <div class="col-md-6">
-                                            <a id="@Model.Id" onclick="makeSubmitble(@Model.Id)" class="linkPointer btn btn-success" data-toggle="modal" style="width:100%" data-target="#submitDamageModal" data-placement="top">
-                                                @if (Model.OrderStatusId == PurchaseOrderStatusEnum.Submitted)
-                                                {
-                                                    <i>Undo Submit</i>
-                                                }
-                                                else
-                                                {
-                                                    <i>Submit</i>
-                                                }
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
+
+
+                                <div class="form-group" style="float:right">
+                                    <button type="submit" id="@Model.Id" onclick="makeSubmitble(@Model.Id)" class="linkPointer btn btn-success  btn-block">
+                                        @if (Model.OrderStatusId == PurchaseOrderStatusEnum.Submitted)
+                                        {
+                                            <i>Undo Submit</i>
+                                        }
+                                        else
+                                        {
+                                            <i>Submit</i>
+                                        }
+                                    </button>
+                                </div>                      
                             }
                         </form>
                     </div>
@@ -311,7 +308,7 @@
 
         });
 
-
+        var isMakeEditable = false;
         function makeEditble(rowId) {
             $.ajax({
                 type: "POST",
@@ -320,20 +317,17 @@
                 data: { id: rowId },
                 success: function (data) {
                     $('#poCreateBtn').html("<i class='fas fa-edit'></i>&nbsp;Update");
-                    $("#orderId").val(data.Id);
-                    $("#purchaseOrderDetailsId").val(data.Id);
+                    $("#purchaseorderId").val(data.id);
+                    $("#purchaseOrderDetailsId").val(data.id);
                     $('#actionId').val(2);
-                    $("#productId").val(data.ProductId);
-                    $("#unitId").val(data.UnitId);
-                    $('#consumption').val(data.Consumption);
-                    $('#costPrice').val(data.CostPrice);
-
-
-                    console.log("productId", data.ProductId)
-                    console.log("UnitId", data.UnitId)
-                    console.log("Consumption", data.Consumption)
-                    console.log("CostPrice", data.CostPrice)
-
+                    $("#productId").val(data.productId);
+                    $("#unitId").val(data.unitId);
+                    $("#purchaseQty").val(data.purchaseQty);
+                    $("#consumption").val(data.consumption);
+                    $("#costPrice").val(data.costPrice);
+                    $("#salePrice").val(data.salePrice);
+                    $("#discount").val(data.discount);
+                    $("#txtRemarks").val(data.remarks);
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                 }
             });
