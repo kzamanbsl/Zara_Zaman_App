@@ -25,7 +25,7 @@ namespace app.Services.ProductCategoryServices
             {
                 ProductCategory com = new ProductCategory();
                 com.Name = vm.Name;
-                com.ProductCategoryTypeId = (int)ProductCategoryTypeEnum.AssetCategory;
+                com.ProductCategoryTypeId = (int)ProductCategoryTypeEnum.ProductCategory;
                 var res = await _iEntityRepository.AddAsync(com);
                 vm.Id=res.Id;
                 return true;
@@ -40,7 +40,7 @@ namespace app.Services.ProductCategoryServices
             {
                 var result = await _iEntityRepository.GetByIdAsync(vm.Id);
                 result.Name = vm.Name;
-                result.ProductCategoryTypeId = (int)ProductCategoryTypeEnum.AssetCategory;
+                result.ProductCategoryTypeId = (int)ProductCategoryTypeEnum.ProductCategory;
                 await _iEntityRepository.UpdateAsync(result);
                 return true;
             }

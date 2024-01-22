@@ -38,7 +38,7 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Category</label>
-                                        <select class="form-control" asp-for="CategoryId" asp-items="ViewBag.ProductCategories" required>
+                                        <select class="form-control" asp-for="CategoryId" asp-items="ViewBag.AssetCategories" required>
                                             <option value="0" selected>--Category--</option>
                                             <span asp-validation-for="CategoryId" class="text-danger"></span>
                                         </select>
@@ -91,7 +91,7 @@
 @section Scripts {
     <script>
         $(document).ready(function () {
-            $('#Asset Management').addClass('menu-open');
+            $('#Asset-Management').addClass('menu-open');
             $('#AssetItemIndex').addClass('active');
 
         });

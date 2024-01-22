@@ -27,7 +27,7 @@ namespace app.WebApp.Controllers
         public async Task<IActionResult> AddRecord()
         {
             ViewBag.Unit = new SelectList((await _dropdownService.UnitSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
-            ViewBag.ProductCategories = new SelectList((await _dropdownService.AssetCategorySelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
+            ViewBag.AssetCategories = new SelectList((await _dropdownService.AssetCategorySelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
             AssetItemViewModel viewModel = new AssetItemViewModel();
             return View(viewModel);
         }
@@ -48,7 +48,7 @@ namespace app.WebApp.Controllers
         public async Task<IActionResult> UpdateRecord(long id)
         {
             ViewBag.Unit = new SelectList((await _dropdownService.UnitSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
-            ViewBag.ProductCategories = new SelectList((await _dropdownService.AssetCategorySelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
+            ViewBag.AssetCategories = new SelectList((await _dropdownService.AssetCategorySelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
             var result = await _iService.GetRecordById(id);
             return View(result);
         }

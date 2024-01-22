@@ -55,13 +55,13 @@
                                         @SN
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.CategoryId)
+                                        @Html.DisplayFor(modelItem => item.CategoryName)
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.Name)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.UnitId)
+                                        @Html.DisplayFor(modelItem => item.UnitName)
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.TP)
@@ -70,8 +70,8 @@
                                         @Html.DisplayFor(modelItem => item.Description)
                                     </td>
                                     <td class="text-left">
-                                        @Html.ActionLink("", "UpdateRecord", new { id = item.ProductTypeId}, new { @title = "Edit", @class = "text-warning fas fa-edit" }) |
-                                        @Html.ActionLink("", "Delete", new { id = item.ProductTypeId}, new { @title = "Delete", @class = "text-danger fas fa-trash", onclick = "return confirm('Are you sure you want to delete this?')" })
+                                        @Html.ActionLink("", "UpdateRecord", new { id = item.Id}, new { @title = "Edit", @class = "text-warning fas fa-edit" }) |
+                                        @Html.ActionLink("", "Delete", new { id = item.Id}, new { @title = "Delete", @class = "text-danger fas fa-trash", onclick = "return confirm('Are you sure you want to delete this?')" })
                                     </td>
                                 </tr>
                                 SN++;
@@ -93,7 +93,7 @@
     }
     <script>
         $(document).ready(function () {
-            $('#Asset Management').addClass('menu-open');
+            $('#Asset-Management').addClass('menu-open');
             $('#AssetItemIndex').addClass('active');
 
             $('#AssetItem').DataTable({
