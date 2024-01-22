@@ -57,4 +57,11 @@
         Edit,
         Delete
     }
+
+    public enum BusinessCenterEnum
+    {
+        Storehouse = 1,
+        SaleCenter,
+        ServiceCenter
+    }
 }
