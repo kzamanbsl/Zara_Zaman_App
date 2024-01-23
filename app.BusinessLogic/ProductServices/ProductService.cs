@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using app.Utility;
 
 namespace app.Services.ProductServices
 {
@@ -61,7 +62,8 @@ namespace app.Services.ProductServices
         }
         public async Task<bool> AddRecord(ProductViewModel vm)
         {
-            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim());
+            // var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim());
+            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id == vm.Id && f.IsActive == true);
             if (checkName == null)
             {
                 Product com = new Product();
@@ -81,7 +83,8 @@ namespace app.Services.ProductServices
         public async Task<bool> UpdateRecord(ProductViewModel vm)
         {
 
-            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim());
+            //var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim());
+            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim() && f.Id != vm.Id  && f.IsActive == true);
             if (checkName != null)
             {
                 var result = await _iEntityRepository.GetByIdAsync(vm.Id);

@@ -19,7 +19,8 @@ namespace app.Services.JobStatusServices
 
         public async Task<bool> AddRecord(JobStatusViewModel vm)
         {
-            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim());
+            //var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim());
+            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim() && f.IsActive == true);
             if (checkName == null)
             {
                 JobStatus com = new JobStatus();
@@ -33,7 +34,8 @@ namespace app.Services.JobStatusServices
         public async Task<bool> UpdateRecord(JobStatusViewModel vm)
         {
 
-            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim());
+            //var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim());
+            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim() && f.Id != vm.Id && f.IsActive == true);
             if (checkName == null)
             {
                 var result = await _iEntityRepository.GetByIdAsync(vm.Id);

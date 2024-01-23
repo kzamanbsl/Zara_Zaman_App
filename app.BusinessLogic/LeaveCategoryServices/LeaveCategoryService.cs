@@ -2,6 +2,7 @@
 using app.Infrastructure.Auth;
 using app.Infrastructure.Repository;
 using app.Infrastructure;
+using app.Utility;
 
 namespace app.Services.LeaveCategoryServices
 {
@@ -21,8 +22,8 @@ namespace app.Services.LeaveCategoryServices
 
         public async Task<bool> AddRecord(LeaveCategoryViewModel vm)
         {
-            var checkName = _iEntityRepository.AllIQueryableAsync()
-                .FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim());
+            //var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim());
+            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id == vm.Id && f.IsActive == true);
             if (checkName == null)
             {
                 LeaveCategory com = new LeaveCategory();
@@ -37,8 +38,8 @@ namespace app.Services.LeaveCategoryServices
         public async Task<bool> UpdateRecord(LeaveCategoryViewModel vm)
         {
 
-            var checkName = _iEntityRepository.AllIQueryableAsync()
-                .FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim());
+            //var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim());
+            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim() && f.Id != vm.Id && f.IsActive == true);
             if (checkName == null)
             {
                 var result = await _iEntityRepository.GetByIdAsync(vm.Id);
