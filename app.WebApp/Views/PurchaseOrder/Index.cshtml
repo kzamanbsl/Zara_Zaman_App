@@ -7,7 +7,7 @@
 }
 
 
-<h1>Purchase Order List</h1>
+@* <h1>Purchase Order List</h1> *@
 <div class="content-header">
     <div class="container-fluid ">
         <div class="breadcrumb d-flex justify-content-between align-items-center  pl-3 pr-3">
@@ -42,6 +42,7 @@
                                 <th>SL</th>
                                 <th class="text-center">Purchase Order No</th>
                                 <th class="text-center">Purchase Date</th>
+                                <th class="text-center">Storehouse</th>
                                 <th class="text-center">Supplier Name</th>
                                 <th class="text-center">Status</th>
                                 <th class="text-center">Action</th>
@@ -57,6 +58,7 @@
                                     </td>
                                     <td >@item.OrderNo</td>
                                     <td>@item.PurchaseDate.ToString("dd-MM-yyyy")</td>
+                                    <td>@item.Storehouse</td>
                                     <td>@item.SupplierName</td>
                                     <td>@item.OrderStatusName</td>
                                     <td class="text-left">

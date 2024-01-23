@@ -38,7 +38,9 @@ namespace app.Services.SaleCenterServices
         public async Task<bool> UpdateRecord(SaleCenterViewModel vm)
         {
 
-            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id == vm.Id);
+            //var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id == vm.Id);
+            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim());
+
             if (checkName == null)
             {
                 var saleCenter = await _iEntityRepository.GetByIdAsync(vm.Id);
