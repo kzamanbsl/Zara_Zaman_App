@@ -125,11 +125,11 @@
                 success: function (data) {
                     if (data) {
                         $("#Id").val(data.id);
-                        $("#EmployeeId").val(data.employeeId).trigger();
+                        $("#EmployeeId").val(data.employeeId)/* .trigger() */;
                         $("#AttendanceDate").val(data.attendanceDate);
                         // $("#AttendanceDate").val(formattedDate);
                         if (data.shiftId > 0) {
-                            $("#ShiftId").val(data.shiftId).trigger();
+                            $("#ShiftId").val(data.shiftId)/* .trigger() */;
                         }
                         // if (data.shiftId > 0) {
                         //     $("#ShiftId").val(data.shiftId).trigger("change");
