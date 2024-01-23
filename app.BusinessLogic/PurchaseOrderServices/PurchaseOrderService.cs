@@ -91,13 +91,52 @@ namespace app.Services.PurchaseOrderServices
                                                                               CostPrice = t1.CostPrice,
                                                                               SalePrice = t1.SalePrice,
                                                                               Discount = t1.Discount,
-                                                                              TotalAmount = t1.TotalAmount,                                                                           
+                                                                              TotalAmount = ((decimal)t1.PurchaseQty * t1.CostPrice) - t1.Discount,                                                                           
                                                                               Remarks = t1.Remarks,
                                                                           }).OrderByDescending(x => x.Id).AsEnumerable());
 
 
             return purchaseOrderModel;
         }
+
+
+
+        //public async Task<PurchaseOrderViewModel> GetAllRecord()
+        //{
+        //    PurchaseOrderViewModel purchaseOrder = new PurchaseOrderViewModel();
+        //    var dataQuery = (from t1 in _dbContext.PurchaseOrder
+        //                     where t1.IsActive 
+        //                     select new PurchaseOrderViewModel
+        //                     {
+        //                         Id = t1.Id,
+        //                         OrderNo = t1.OrderNo,
+        //                         PurchaseDate = t1.PurchaseDate,
+        //                         OrderStatusId = (PurchaseOrderStatusEnum)t1.OrderStatusId,
+        //                         OverallDiscount = t1.OverallDiscount,
+        //                         StorehouseId = (int)BusinessCenterEnum.Storehouse,
+
+        //                     }).OrderByDescending(x => x.Id).AsEnumerable();
+
+
+        //    //purchaseOrder.PurchaseOrderList = await Task.Run(() => dataQuery.ToList());
+
+        //    //var masterIds = purchaseOrder.PurchaseOrderList.Select(x => x.Id);
+
+        //    //var matchingDetails = await _dbContext.PurchaseOrderDetail
+        //    //                            .Where(detail => masterIds.Contains(detail.Id))
+        //    //                            .ToListAsync();
+
+        //    //foreach (var master in purchaseOrder.PurchaseOrderList)
+        //    //{
+        //    //    var detailsForMaster = matchingDetails.Where(detail => detail.Id == master.Id);
+        //    //    double? total = detailsForMaster.Sum(detail =>(double)detail.CostPrice + detail.PurchaseQty);
+        //    //    master.TotalAmount = (double)total;
+        //    //}
+
+        //    return purchaseOrder;
+        //}
+
+
 
 
         public async Task<PurchaseOrderViewModel> GetAllRecord()
@@ -115,8 +154,6 @@ namespace app.Services.PurchaseOrderServices
             SupplierName = po.Supplier != null ? po.Supplier.Name : null,
             StorehouseId = po.StorehouseId,
             StoreName = po.Storehouse != null ? po.Storehouse.Name : null,
-            CreatedBy = po.CreatedBy,
-            CreatedOn = po.CreatedOn
         }).AsQueryable();
 
             var purchaseOrderViewModel = new PurchaseOrderViewModel
@@ -145,7 +182,7 @@ namespace app.Services.PurchaseOrderServices
                                               CostPrice = t1.CostPrice,
                                               SalePrice = t1.SalePrice,
                                               Discount = t1.Discount,
-                                              TotalAmount = t1.TotalAmount,
+                                              TotalAmount = ((decimal)t1.PurchaseQty * t1.CostPrice) - t1.Discount,
                                               Remarks = t1.Remarks,
                                           }).FirstOrDefault());
             return v;

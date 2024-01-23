@@ -76,6 +76,7 @@ namespace app.WebApp.Controllers
 
             return RedirectToAction(nameof(AddPurchaseOrderAndDetail), new { purchaseOrderId = vm.Id });
         }
+
         [HttpGet]
         public async Task<IActionResult> UpdatePurchaseOrder(long purchaseOrderId)
         {
