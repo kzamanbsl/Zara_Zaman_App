@@ -18,6 +18,7 @@ namespace app.Services.PurchaseOrderServices
         public PurchaseOrderStatusEnum OrderStatusId { get; set; }
         public string OrderStatusName { get; set; }
         public decimal OverallDiscount { get; set; }
+        public double TotalAmount { get; set; }
         public int PurchaseTypeId { get; set; }
         public bool IsOpening { get; set; } = false;
         public long? SupplierId { get; set; }

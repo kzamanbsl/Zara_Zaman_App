@@ -37,7 +37,7 @@ namespace app.Services.PurchaseOrderDetailServices
                     CostPrice = vm.PurchaseOrderDetailVM.CostPrice,
                     SalePrice = vm.PurchaseOrderDetailVM.SalePrice,
                     Discount = vm.PurchaseOrderDetailVM.Discount,
-                    TotalAmount = vm.PurchaseOrderDetailVM.CostPrice * (decimal)vm.PurchaseOrderDetailVM.PurchaseQty,
+                    TotalAmount = (vm.PurchaseOrderDetailVM.CostPrice * (decimal)vm.PurchaseOrderDetailVM.PurchaseQty) - vm.PurchaseOrderDetailVM.Discount,
                     Remarks = vm.PurchaseOrderDetailVM.Remarks
                 };
 
