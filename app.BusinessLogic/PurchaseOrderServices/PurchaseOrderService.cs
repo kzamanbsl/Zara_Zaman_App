@@ -153,6 +153,8 @@ namespace app.Services.PurchaseOrderServices
 
         public async Task<bool> UpdateRecord(PurchaseOrderViewModel vm)
         {
+            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id == vm.Id && f.IsActive == true);
+
             if (vm.Id == 0)
             {
                 vm.OrderStatusId = PurchaseOrderStatusEnum.Draft;

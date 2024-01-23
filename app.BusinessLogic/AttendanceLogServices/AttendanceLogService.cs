@@ -43,8 +43,9 @@ namespace app.Services.AttendanceLogServices
 
         public async Task<bool> UpdateRecord(AttendanceLogViewModel vm)
         {
-            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id == vm.Id && f.AttendanceId == vm.AttendanceId);
-            if (checkName == null)
+            //var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id == vm.Id && f.AttendanceId == vm.AttendanceId);
+            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id == vm.Id && f.IsActive == true);
+            if (checkName != null)
             {
                 var result = await _iEntityRepository.GetByIdAsync(vm.Id);
                 result.AttendanceId = vm.AttendanceId;

@@ -20,7 +20,7 @@ namespace app.Services.SaleCenterServices
 
         public async Task<bool> AddRecord(SaleCenterViewModel vm)
         {
-            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim());
+            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim() && f.IsActive == true);
             if (checkName == null)
             {
                 BusinessCenter saleCenter = new BusinessCenter();
@@ -38,22 +38,24 @@ namespace app.Services.SaleCenterServices
         public async Task<bool> UpdateRecord(SaleCenterViewModel vm)
         {
 
-            //var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id == vm.Id);
-            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim());
+            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id == vm.Id && f.IsActive == true);
+            //var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim());
 
-            if (checkName == null)
+            if (checkName != null)
             {
-                var saleCenter = await _iEntityRepository.GetByIdAsync(vm.Id);
-                saleCenter.Name = vm.Name;
-                saleCenter.Code = vm.Code;
-                saleCenter.Location = vm.Location;
-                saleCenter.Description = vm.Description;
-                saleCenter.BusinessCenterTypeId = (int)BusinessCenterEnum.SaleCenter;
-                await _iEntityRepository.UpdateAsync(saleCenter);
+                // var saleCenter = await _iEntityRepository.GetByIdAsync(vm.Id);
+                checkName.Id = vm.Id;
+                checkName.Name = vm.Name;
+                checkName.Code = vm.Code;
+                checkName.Location = vm.Location;
+                checkName.Description = vm.Description;
+                checkName.BusinessCenterTypeId = (int)BusinessCenterEnum.SaleCenter;
+                await _iEntityRepository.UpdateAsync(checkName);
                 return true;
             }
             return false;
         }
+
         public async Task<SaleCenterViewModel> GetRecordById(long id)
         {
             var result = await _iEntityRepository.GetByIdAsync(id);

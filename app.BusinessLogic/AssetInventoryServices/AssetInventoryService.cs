@@ -62,6 +62,7 @@ namespace app.Services.AssetInventoryServices
         public async Task<bool> AddRecord(AssetInventoryViewModel vm)
         {
             var checkName = _iEntityRepository.AllIQueryableAsync();
+
             if (checkName == null)
             {
                 AssetInventory com = new AssetInventory();
