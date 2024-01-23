@@ -60,20 +60,21 @@
                                                 <td style="width:30%">@Model.PurchaseDate.ToString("dd-MM-yyyy")</td>
                                             </tr>
                                             <tr>
-                                                <th style="width:18%">Order Status</th>
-                                                <td style="width:30%">@Model.OrderStatusId</td>
+                                                <th>Supplier Name</th>
+                                                <td>@Model.SupplierName</td>
+
 
                                                 <th style="width:18%">Store Information</th>
                                                 <td style="width:30%">@Model.StoreName</td>
                                             </tr>
-                                            <tr>
+                                           @*  <tr>
 
                                                 <th>OverAll Discount</th>
                                                 <td>@Model.OverallDiscount</td>
+                                                <th style="width:18%">Order Status</th>
+                                                <td style="width:30%">@Model.OrderStatusId</td>
 
-                                                <th>Supplier Name</th>
-                                                <td>@Model.SupplierName</td>
-                                            </tr>
+                                            </tr> *@
 
                                         </table>
                                     </div>
@@ -112,7 +113,7 @@
                                     </div>
                                     <div class="col-md-2">
                                         <div class="form-group">
-                                            <label>OverAll Discount </label>
+                                            <label>OverAll Discount (Taka)</label>
                                             <input asp-for="OverallDiscount" class="form-control" />
                                             <span asp-validation-for="OverallDiscount" class="text-danger"></span>
                                         </div>
@@ -188,7 +189,7 @@
 
                                     <div class="col-md-3">
                                         <div class="form-group">
-                                            <label>Discount</label>
+                                            <label>Discount (Taka)</label>
                                             <input asp-for="PurchaseOrderDetailVM.Discount" id="discount" class="form-control" />
                                             <span asp-validation-for="PurchaseOrderDetailVM.Discount" class="text-danger"></span>
                                         </div>
@@ -228,11 +229,12 @@
                                             <tr>
                                                 <th style="padding:5px;text-align:center;">SL</th>
                                                 <th style="padding: 5px; text-align: left;">Product</th>
-                                                <th style="padding: 5px; text-align: left;">Purchase Qt</th>
+                                                <th style="padding: 5px; text-align: left;">Purchase Qty</th>
                                                 <th style="padding: 5px; text-align: left;">Unit</th>
                                                 <th style="padding: 5px; text-align: right; ">Consumption</th>
                                                 <th style="padding: 5px; text-align: right; ">Cost Price</th>
                                                 <th style="padding: 5px; text-align: right; ">Sale Price</th>
+                                                <th style="padding: 5px; text-align: right; ">Total Price</th>
                                                 @if (Model.OrderStatusId == PurchaseOrderStatusEnum.Draft)
                                                 {
                                                     <th style="padding:5px;text-align:center;">Action</th>
@@ -252,6 +254,7 @@
                                                     <td style="padding: 5px; text-align: right;">@String.Format("{0:0.00}", item.Consumption)</td>
                                                     <td style="padding: 5px; text-align: right;">@String.Format("{0:0.00}", item.CostPrice)</td>
                                                     <td style="padding: 5px; text-align: right;">@String.Format("{0:0.00}", item.SalePrice)</td>
+                                                    <td style="padding: 5px; text-align: right;">@String.Format("{0:0.00}", item.TotalAmount)</td>
 
                                                     @{
                                                         if (Model.OrderStatusId == PurchaseOrderStatusEnum.Draft)
@@ -270,20 +273,11 @@
                             }
                             @if (Model.Id > 0 && Model.OrderStatusId == PurchaseOrderStatusEnum.Draft)
                             {
-
-
                                 <div class="form-group" style="float:right">
                                     <button type="submit" id="@Model.Id" onclick="makeSubmitble(@Model.Id)" class="linkPointer btn btn-success  btn-block">
-                                        @if (Model.OrderStatusId == PurchaseOrderStatusEnum.Submitted)
-                                        {
-                                            <i>Undo Submit</i>
-                                        }
-                                        else
-                                        {
-                                            <i>Submit</i>
-                                        }
+                                        <span>Confirm</span>
                                     </button>
-                                </div>                      
+                                </div>
                             }
                         </form>
                     </div>
@@ -336,7 +330,7 @@
     </script>
 
     <script type="text/javascript">
-     
+
     </script>
 
 }

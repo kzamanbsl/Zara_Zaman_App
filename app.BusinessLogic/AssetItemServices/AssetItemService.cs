@@ -41,7 +41,8 @@ namespace app.Services.AssetItemServices
             AssetItemViewModel model = new AssetItemViewModel();
             model.AssetItemList = await Task.Run(() => (from t1 in _dbContext.Product.Where(x => x.IsActive)
                                                         select new AssetItemViewModel
-                                                      {
+                                                        {
+                                                          Id = t1.Id,
                                                           ProductTypeId = t1.ProductTypeId,
                                                           Name = t1.Name,
                                                           Description = t1.Description,
@@ -55,10 +56,12 @@ namespace app.Services.AssetItemServices
         }
         public async Task<bool> AddRecord(AssetItemViewModel vm)
         {
-            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim());
+            //var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim());
+            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim() && f.IsActive == true);
             if (checkName == null)
             {
                 Product com = new Product();
+                com.Id = vm.Id;
                 com.Name = vm.Name;
                 com.Description = vm.Description;
                 com.TP = vm.TP;
@@ -73,10 +76,12 @@ namespace app.Services.AssetItemServices
         public async Task<bool> UpdateRecord(AssetItemViewModel vm)
         {
 
-            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim());
-            if (checkName != null)
+            //var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim());
+            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim() && f.Id != vm.Id && f.IsActive == true);
+            if (checkName == null)
             {
-                var result = await _iEntityRepository.GetByIdAsync(vm.ProductTypeId);
+                var result = await _iEntityRepository.GetByIdAsync(vm.Id);
+                result.Id = vm.Id;
                 result.Name = vm.Name;
                 result.Description = vm.Description;
                 result.TP = vm.TP;

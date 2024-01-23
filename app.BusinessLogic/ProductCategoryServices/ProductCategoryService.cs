@@ -20,7 +20,8 @@ namespace app.Services.ProductCategoryServices
 
         public async Task<bool> AddRecord(ProductCategoryViewModel vm)
         {
-            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim());
+            //var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim());
+            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id == vm.Id && f.IsActive == true);
             if (checkName == null)
             {
                 ProductCategory com = new ProductCategory();
@@ -35,7 +36,8 @@ namespace app.Services.ProductCategoryServices
         public async Task<bool> UpdateRecord(ProductCategoryViewModel vm)
         {
 
-            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim());
+            //var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim());
+            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim() && f.Id != vm.Id && f.ProductCategoryTypeId == (int)ProductCategoryTypeEnum.AssetCategory && f.IsActive == true);
             if (checkName == null)
             {
                 var result = await _iEntityRepository.GetByIdAsync(vm.Id);
