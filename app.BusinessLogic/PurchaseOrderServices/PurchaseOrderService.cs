@@ -55,6 +55,21 @@ namespace app.Services.PurchaseOrderServices
             return true;
         }
 
+        public async Task<bool> PurchaseMasterUpdateRecord(PurchaseOrderViewModel vm)
+        {
+            //var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id == vm.Id && f.Id != vm.Id && f.IsActive == true);
+            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id == vm.Id);
+            if (checkName != null)
+            {
+                var result=await _iEntityRepository.GetByIdAsync(vm.Id);
+                result.PurchaseDate = vm.PurchaseDate;
+                result.SupplierId = vm.SupplierId;
+                result.StorehouseId = vm.StorehouseId;
+                await _iEntityRepository.UpdateAsync(result);
+                return true;
+            }
+            return false;
+        }
         public async Task<PurchaseOrderViewModel> GetPurchaseOrder(long purchaseOrderId = 0)
         {
             PurchaseOrderViewModel purchaseOrderModel = new PurchaseOrderViewModel();
@@ -145,6 +160,7 @@ namespace app.Services.PurchaseOrderServices
         .Include(po => po.Supplier).ToList()
         .Select(po => new PurchaseOrderViewModel
         {
+            
             PurchaseDate = po.PurchaseDate,
             Description = po.Description,
             OrderNo = po.OrderNo,
@@ -191,7 +207,6 @@ namespace app.Services.PurchaseOrderServices
         public async Task<bool> UpdateRecord(PurchaseOrderViewModel vm)
         {
             var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id == vm.Id && f.IsActive == true);
-
             if (vm.Id == 0)
             {
                 vm.OrderStatusId = PurchaseOrderStatusEnum.Draft;
@@ -210,7 +225,6 @@ namespace app.Services.PurchaseOrderServices
             existingPurchaseOrder.OverallDiscount = vm.OverallDiscount;
             existingPurchaseOrder.Description = vm.Description;
             await _dbContext.SaveChangesAsync();
-
             return true;
         }
 
@@ -221,5 +235,6 @@ namespace app.Services.PurchaseOrderServices
             await _iEntityRepository.UpdateAsync(result);
             return true;
         }
+
     }
 }
