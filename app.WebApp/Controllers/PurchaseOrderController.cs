@@ -71,7 +71,7 @@ namespace app.WebApp.Controllers
             }
             else if (vm.ActionEum == ActionEnum.Edit)
             {
-                await _ipurchaseOrderDetailService.UpdateRecord(vm);
+                await _ipurchaseOrderDetailService.UpdatePurchaseDetailsRecord(vm);
             }
 
             return RedirectToAction(nameof(AddPurchaseOrderAndDetail), new { purchaseOrderId = vm.Id });
@@ -91,16 +91,6 @@ namespace app.WebApp.Controllers
             return View(nameof(UpdatePurchaseOrder), viewModel);
         }
 
-        //[HttpPost]
-        //public async Task<IActionResult> UpdatePurchaseOrder(PurchaseOrderViewModel vm)
-        //{
-        //    if (vm.ActionEum == ActionEnum.Edit)
-        //    {
-        //        await _ipurchaseOrderService.UpdateRecord(vm);
-        //    }
-        //    return RedirectToAction(nameof(UpdatePurchaseOrder), new { purchaseOrderId = vm.Id });
-        //}
-
         [HttpGet]
         public async Task<IActionResult> DeletePurchaseOrder(PurchaseOrderViewModel vm)
         {
@@ -110,7 +100,7 @@ namespace app.WebApp.Controllers
 
         public async Task<JsonResult> UpdateSinglePurchaseOrderDetails(long id)
         {
-            var model = await _ipurchaseOrderService.SingleOrderDetails(id);
+            var model = await _ipurchaseOrderService.SinglePurchaseOrderDetails(id);
             return Json(model);
         }
     }

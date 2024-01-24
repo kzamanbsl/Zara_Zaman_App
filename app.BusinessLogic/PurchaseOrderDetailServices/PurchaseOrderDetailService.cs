@@ -52,7 +52,7 @@ namespace app.Services.PurchaseOrderDetailServices
 
         }
 
-        public async Task<bool> UpdateRecord(PurchaseOrderViewModel model)
+        public async Task<bool> UpdatePurchaseDetailsRecord(PurchaseOrderViewModel model)
         {
             var purchaseOrderDetail = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id == model.PurchaseOrderDetailVM.Id);
             if (purchaseOrderDetail != null)
@@ -65,6 +65,7 @@ namespace app.Services.PurchaseOrderDetailServices
                 purchaseOrderDetail.PurchaseQty = model.PurchaseOrderDetailVM.PurchaseQty;
                 purchaseOrderDetail.SalePrice = model.PurchaseOrderDetailVM.SalePrice;
                 purchaseOrderDetail.CostPrice = model.PurchaseOrderDetailVM.CostPrice;
+                purchaseOrderDetail.TotalAmount = ((decimal)model.PurchaseOrderDetailVM.PurchaseQty * model.PurchaseOrderDetailVM.CostPrice) - model.PurchaseOrderDetailVM.Discount;
                 purchaseOrderDetail.Remarks = model.PurchaseOrderDetailVM.Remarks;
                 await _iEntityRepository.UpdateAsync(purchaseOrderDetail);
                 return true;
