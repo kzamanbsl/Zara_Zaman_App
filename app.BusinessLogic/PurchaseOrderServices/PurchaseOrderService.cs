@@ -55,6 +55,21 @@ namespace app.Services.PurchaseOrderServices
             return true;
         }
 
+        public async Task<bool> PurchaseMasterUpdateRecord(PurchaseOrderViewModel vm)
+        {
+            //var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id == vm.Id && f.Id != vm.Id && f.IsActive == true);
+            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id == vm.Id);
+            if (checkName != null)
+            {
+                var result=await _iEntityRepository.GetByIdAsync(vm.Id);
+                result.PurchaseDate = vm.PurchaseDate;
+                result.SupplierId = vm.SupplierId;
+                result.StorehouseId = vm.StorehouseId;
+                await _iEntityRepository.UpdateAsync(result);
+                return true;
+            }
+            return false;
+        }
         public async Task<PurchaseOrderViewModel> GetPurchaseOrder(long purchaseOrderId = 0)
         {
             PurchaseOrderViewModel purchaseOrderModel = new PurchaseOrderViewModel();
@@ -100,48 +115,7 @@ namespace app.Services.PurchaseOrderServices
         }
 
 
-
-        //public async Task<PurchaseOrderViewModel> GetAllRecord()
-        //{
-        //    var result = _dbContext.PurchaseOrder
-        //.Include(po => po.Supplier).ToList()
-        //.Select(po => new PurchaseOrderViewModel
-        //{
-        //    Id = po.Id,
-        //    PurchaseDate = po.PurchaseDate,
-        //    Description = po.Description,
-        //    OrderNo = po.OrderNo,
-        //    OverallDiscount = po.OverallDiscount,
-        //    OrderStatusName = Enum.GetName(typeof(PurchaseOrderStatusEnum), po.OrderStatusId),
-        //    SupplierId = po.SupplierId,
-        //    SupplierName = po.Supplier != null ? po.Supplier.Name : null,
-        //    StorehouseId = po.StorehouseId,
-        //    StoreName = po.Storehouse != null ? po.Storehouse.Name : null,
-
-        //}).AsQueryable();
-
-        //    var purchaseOrderViewModel = new PurchaseOrderViewModel
-        //    {
-        //        PurchaseOrderList = result
-        //    };
-
-        //    purchaseOrderViewModel.PurchaseOrderList = await Task.Run(() => result.ToList());
-
-        //    var masterIds = purchaseOrderViewModel.PurchaseOrderList.Select(x => x.Id).ToList();
-
-        //    var matchingDetails = await _dbContext.PurchaseOrderDetail
-        //        .Where(detail => masterIds.Contains(detail.PurchaseOrderId))
-        //        .ToListAsync();
-
-
-        //    foreach (var master in purchaseOrderViewModel.PurchaseOrderList)
-        //    {
-        //        var detailsForMaster = matchingDetails.Where(detail => detail.Id == master.Id);
-        //        double? total = detailsForMaster.Sum(detail => (double)detail.CostPrice * detail.PurchaseQty);
-        //        master.TotalAmount = (double)total;
-        //    }
-        //    return purchaseOrderViewModel;
-        //}
+       
 
 
         public async Task<PurchaseOrderDetailViewModel> SinglePurchaseOrderDetails(long id)
@@ -170,7 +144,6 @@ namespace app.Services.PurchaseOrderServices
         public async Task<bool> UpdateRecord(PurchaseOrderViewModel vm)
         {
             var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id == vm.Id && f.IsActive == true);
-
             if (vm.Id == 0)
             {
                 vm.OrderStatusId = PurchaseOrderStatusEnum.Draft;
@@ -189,7 +162,6 @@ namespace app.Services.PurchaseOrderServices
             existingPurchaseOrder.OverallDiscount = vm.OverallDiscount;
             existingPurchaseOrder.Description = vm.Description;
             await _dbContext.SaveChangesAsync();
-
             return true;
         }
 
