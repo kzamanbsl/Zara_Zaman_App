@@ -12,6 +12,8 @@ using app.Services.PurchaseOrderDetailServices;
 using app.Services.DropdownServices;
 using Microsoft.EntityFrameworkCore;
 using app.Services.ProductServices;
+using app.Services.LeaveBalanceServices;
+using app.Services.JobStatusServices;
 
 namespace app.Services.PurchaseOrderServices
 {
@@ -54,8 +56,17 @@ namespace app.Services.PurchaseOrderServices
             vm.Id = res?.Id ?? 0;
             return true;
         }
-
-        public async Task<bool> PurchaseMasterUpdateRecord(PurchaseOrderViewModel vm)
+        public async Task<PurchaseOrderViewModel> GetRecordById(long id)
+        {
+            var result = await _iEntityRepository.GetByIdAsync(id);
+            PurchaseOrderViewModel model = new PurchaseOrderViewModel();
+            model.Id = result.Id;
+            model.PurchaseDate = result.PurchaseDate;
+            model.SupplierId = result.SupplierId;
+            model.StorehouseId = result.StorehouseId;
+            return model;
+        }
+        public async Task<bool> PurchaseOrderMasterUpdateRecord(PurchaseOrderViewModel vm)
         {
             //var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id == vm.Id && f.Id != vm.Id && f.IsActive == true);
             var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id == vm.Id);

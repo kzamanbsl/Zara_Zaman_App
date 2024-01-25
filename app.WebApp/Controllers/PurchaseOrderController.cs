@@ -90,7 +90,25 @@ namespace app.WebApp.Controllers
 
             return View(nameof(UpdatePurchaseOrder), viewModel);
         }
-
+        [HttpGet]
+        public async Task<IActionResult> PurchaseOrderMasterUpdateRecord(long id)
+        {
+            ViewBag.SupplierList = new SelectList((await _iDropdownService.SupplierSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
+            ViewBag.StorehouseList = new SelectList((await _iDropdownService.StorehouseSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
+            var result = await _ipurchaseOrderService.GetRecordById(id);
+            return View(result);
+        }
+        [HttpPost]
+        public async Task<IActionResult> PurchaseOrderMasterUpdateRecord(PurchaseOrderViewModel model)
+        {
+            var result = await _ipurchaseOrderService.PurchaseOrderMasterUpdateRecord(model);
+            if (result == true)
+            {
+                return RedirectToAction("Index");
+            }
+            ModelState.AddModelError(string.Empty, "Same Name already exists!");
+            return View(model);
+        }
         [HttpGet]
         public async Task<IActionResult> DeletePurchaseOrder(PurchaseOrderViewModel vm)
         {
