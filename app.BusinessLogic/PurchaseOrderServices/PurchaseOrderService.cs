@@ -123,10 +123,7 @@ namespace app.Services.PurchaseOrderServices
 
 
             return purchaseOrderModel;
-        }
-
-
-       
+        }       
 
 
         public async Task<PurchaseOrderDetailViewModel> SinglePurchaseOrderDetails(long id)
@@ -217,6 +214,26 @@ namespace app.Services.PurchaseOrderServices
                 master.TotalAmount = (double)(total ?? 0); 
             }
             return purchaseMasterModel;
+        }
+
+        public async Task<bool> ConfirmPurchaseOrder(long id)
+        {
+            var checkPurchaseOrder = await _dbContext.PurchaseOrder.FirstOrDefaultAsync(c => c.Id == id);
+            if (checkPurchaseOrder != null && checkPurchaseOrder.OrderStatusId == (int)PurchaseOrderStatusEnum.Draft)
+            {
+                checkPurchaseOrder.OrderStatusId = (int)PurchaseOrderStatusEnum.Confirm;
+                await _iEntityRepository.UpdateAsync(checkPurchaseOrder);
+                return true;
+            }
+            return false;
+        }
+
+        public async Task<bool> DeletePurchaseOrderDetailsById(long id)
+        {
+            var result = await _iEntityRepository.GetByIdAsync(id);
+            result.IsActive = false;
+            await _iEntityRepository.UpdateAsync(result);
+            return true;
         }
     }
 }

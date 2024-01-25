@@ -121,5 +121,20 @@ namespace app.WebApp.Controllers
             var model = await _ipurchaseOrderService.SinglePurchaseOrderDetails(id);
             return Json(model);
         }
+
+
+        [HttpPost]
+        public async Task<IActionResult> ConfirmPurchaseOrder(long id)
+        {
+            var res = await _ipurchaseOrderService.ConfirmPurchaseOrder(id);
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> DeletePurchaseOrderDetail(long id)
+        {
+            var res = await _ipurchaseOrderService.DeletePurchaseOrderDetailsById(id);
+            return RedirectToAction(nameof(Index));
+        }
     }
 }

@@ -17,9 +17,10 @@ namespace app.Services.PurchaseOrderServices
         Task<bool> PurchaseOrderMasterUpdateRecord(PurchaseOrderViewModel vm);
         Task<bool> DeleteRecord(PurchaseOrderViewModel vm);
         Task<PurchaseOrderViewModel>GetPurchaseOrder(long purchaseOrderId);
-        Task<PurchaseOrderViewModel> GetAllRecord();
-        //Task<PurchaseOrderViewModel> GetAllRecordTest();
+        Task<PurchaseOrderViewModel> GetAllRecord();       
         Task<PurchaseOrderDetailViewModel> SinglePurchaseOrderDetails(long id);
+        Task<bool> ConfirmPurchaseOrder(long id);
+        Task<bool> DeletePurchaseOrderDetailsById(long id);
 
     }
 }
