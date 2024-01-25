@@ -63,7 +63,8 @@
                                     <td>@item.TotalAmount</td>
                                     <td class="text-left">
                                         <a href="#" data-toggle="modal" data-target="#editModal@(item.Id)" title="Edit" class="text-warning fas fa-edit"></a> |
-                                        @Html.ActionLink("", "Delete", new { id = item.Id }, new { @title = "Delete", @class = "text-danger fas fa-trash", onclick = "return confirm('Are you sure you want to delete this?')" })
+                                        @Html.ActionLink("", "DeletePurchaseOrderDetail", new { id = item.Id }, new { @title = "Delete", @class = "text-danger fas fa-trash", onclick = "return confirm('Are you sure you want to delete this?')" })
+                                      
                                     </td>
                                 </tr>
 
@@ -113,10 +114,7 @@
                                 </div>
                             }
                         </tbody>
-
-
                     </table>
-
                 </div>
             </div>
         </div>
@@ -138,7 +136,8 @@
                 "ordering": true,
                 "info": true,
                 order: [[0, 'asc']],
-            });
+            });         
+
         });
     </script>
 }
