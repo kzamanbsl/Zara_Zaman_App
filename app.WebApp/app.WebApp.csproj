@@ -7,14 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Properties\**" />
-    <Content Remove="Properties\**" />
-    <EmbeddedResource Remove="Properties\**" />
-    <None Remove="Properties\**" />
-    <_WebToolingArtifacts Remove="Properties\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Remove="Views\Sales\wiobhmcp.ech~" />
   </ItemGroup>
 
@@ -81,6 +73,10 @@
 
   <ItemGroup>
     <Folder Include="Views\LeaveBalance\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Views\PublicError\PublicError.cshtml" />
   </ItemGroup>
 
 </Project>
