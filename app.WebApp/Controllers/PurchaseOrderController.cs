@@ -34,6 +34,15 @@ namespace app.WebApp.Controllers
                 throw new Exception(ex.Message, ex);
             }
         }
+        public async Task<IActionResult> Details(long id)
+        {
+            var viewModel = await _ipurchaseOrderService.GetPurchaseOrder(id);
+            if (viewModel == null)
+            {
+                return NotFound();
+            }
+            return RedirectToAction(nameof(Index));
+        }
 
 
         [HttpGet]

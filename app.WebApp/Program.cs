@@ -57,9 +57,19 @@ namespace app.WebApp
             builder.Services.AddRazorPages();
             builder.Services.AddMemoryCache();
             var app = builder.Build();
-            if (!app.Environment.IsDevelopment())
+            //if (!app.Environment.IsDevelopment())
+            //{
+            //    app.UseExceptionHandler("/Home/Error");            
+            //    app.UseHsts();
+            //}
+            if (app.Environment.IsDevelopment())
             {
-                app.UseExceptionHandler("/Home/Error");            
+                app.UseExceptionHandler("/Home/Error");
+                app.UseHsts();
+            }
+            else
+            {
+                app.UseExceptionHandler("/PublicError");
                 app.UseHsts();
             }
             app.UseHttpsRedirection();
