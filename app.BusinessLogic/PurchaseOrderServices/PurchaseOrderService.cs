@@ -77,6 +77,7 @@ namespace app.Services.PurchaseOrderServices
                 result.SupplierId = vm.SupplierId;
                 result.StorehouseId = vm.StorehouseId;
                 await _iEntityRepository.UpdateAsync(result);
+                await _dbContext.SaveChangesAsync();
                 return true;
             }
             return false;
