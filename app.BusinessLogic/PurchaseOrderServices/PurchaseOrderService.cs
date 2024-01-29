@@ -228,12 +228,19 @@ namespace app.Services.PurchaseOrderServices
             return false;
         }
 
-        public async Task<bool> DeletePurchaseOrderDetailsById(long id)
+        public async Task<bool> DeletePurchaseOrderMasterById(long id)
         {
             var result = await _iEntityRepository.GetByIdAsync(id);
             result.IsActive = false;
             await _iEntityRepository.UpdateAsync(result);
             return true;
         }
+
+        //public Task<long> PurchaseOrderDetailDeleteById(long id)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+       
     }
 }
