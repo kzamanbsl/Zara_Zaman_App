@@ -232,7 +232,7 @@ namespace app.Services.PurchaseOrderServices
             return false;
         }
 
-        public async Task<bool> DeletePurchaseOrderDetailsById(long id)
+        public async Task<bool> DeletePurchaseOrderMasterById(long id)
         {
             var result = await _iEntityRepository.GetByIdAsync(id);
             result.IsActive = false;
@@ -261,6 +261,11 @@ namespace app.Services.PurchaseOrderServices
                                               Remarks = t1.Remarks,
                                           }).FirstOrDefault());
             return true;
+        }
+
+        public Task<bool> DeletePurchaseOrderDetailsById(long id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

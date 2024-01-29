@@ -120,12 +120,20 @@ namespace app.WebApp.Controllers
             ModelState.AddModelError(string.Empty, "Same Name already exists!");
             return View(model);
         }
-        [HttpGet]
-        public async Task<IActionResult> DeletePurchaseOrder(PurchaseOrderViewModel vm)
-        {
-            var res = await _ipurchaseOrderService.DeleteRecord(vm);
-            return RedirectToAction(nameof(Index));
-        }
+
+        //[HttpGet]
+        //public async Task<IActionResult> DeletePurchaseOrder(PurchaseOrderViewModel vm)
+        //{
+        //    var res = await _ipurchaseOrderService.DeleteRecord(vm);
+        //    return RedirectToAction(nameof(Index));
+        //}
+
+        //[HttpGet]
+        //public async Task<IActionResult> DeletePurchaseOrder(PurchaseOrderViewModel vm)
+        //{
+        //    var res = await _ipurchaseOrderService.DeleteRecord(vm);
+        //    return RedirectToAction("Index");
+        //}
 
         public async Task<JsonResult> UpdateSinglePurchaseOrderDetails(long id)
         {
@@ -142,10 +150,20 @@ namespace app.WebApp.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> DeletePurchaseOrderDetail(long id)
+        public async Task<IActionResult> DeletePurchaseOrder(long id)
         {
-            var res = await _ipurchaseOrderService.DeletePurchaseOrderDetailsById(id);
+            var res = await _ipurchaseOrderService.DeletePurchaseOrderMasterById(id);
             return RedirectToAction(nameof(Index));
         }
+
+        //[HttpGet]
+        //public async Task<IActionResult> DeletePurchaseOrderDetailsById(long id , PurchaseOrderViewModel vm)
+        //{
+        //    var res = await _ipurchaseOrderDetailService.PurchaseOrderDetailDeleteById(id);
+        //    return RedirectToAction(nameof(AddPurchaseOrderAndDetail), new { id = vm.Id });
+        //}
+
+
+
     }
 }

@@ -254,7 +254,7 @@
                                                         {
                                                             <td style="padding:5px;text-align:center;">
                                                                 <a id="@item.Id" onclick="makeEditble(@item.Id);" class="linkPointer" title="Edit"><i class="text-warning fas fa-edit" aria-hidden="true"></i></a>
-                                                                // <a id="deleteButton" class="linkPointer" title="Delete"><i class="text-danger fas fa-trash" aria-hidden="true"></i></a>
+                                                                @Html.ActionLink("", "DeletePurchaseOrderDetailsById", new { id = item.Id }, new { @title = "Delete", @class = "text-danger fas fa-trash", onclick = "return confirm('Are you sure you want to delete this?')" })
                                                             </td>
                                                         }
                                                     }
@@ -296,6 +296,7 @@
         </div>
     </div>
 </section>
+
 
 
 
@@ -359,6 +360,7 @@
             });
         });
 
+               
 
     </script>
 }

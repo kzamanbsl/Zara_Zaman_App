@@ -12,5 +12,6 @@ namespace app.Services.PurchaseOrderDetailServices
     {
         Task<bool> AddRecord(PurchaseOrderViewModel vm);
         Task<bool> UpdatePurchaseDetailsRecord(PurchaseOrderViewModel vm);
+        Task<bool> PurchaseOrderDetailDeleteById(long id);
     }
 }

@@ -72,5 +72,13 @@ namespace app.Services.PurchaseOrderDetailServices
             }
             return false;
         }
+
+        public async Task<bool> PurchaseOrderDetailDeleteById(long id)
+        {
+            var result = await _iEntityRepository.GetByIdAsync(id);
+            result.IsActive = false;
+            await _iEntityRepository.UpdateAsync(result);
+            return true;
+        }
     }
 }
