@@ -254,7 +254,7 @@
                                                         {
                                                             <td style="padding:5px;text-align:center;">
                                                                 <a id="@item.Id" onclick="makeEditble(@item.Id);" class="linkPointer" title="Edit"><i class="text-warning fas fa-edit" aria-hidden="true"></i></a>
-                                                                @Html.ActionLink("", "DeletePurchaseOrderDetailsById", new { id = item.Id }, new { @title = "Delete", @class = "text-danger fas fa-trash", onclick = "return confirm('Are you sure you want to delete this?')" })
+                                                                <a id="@item.Id" onclick="makeDeletable(@item.Id)" class="linkPointer"><i class="text-warning fas fa-edit" aria-hidden="true"></i></a>
                                                             </td>
                                                         }
                                                     }
@@ -296,7 +296,6 @@
         </div>
     </div>
 </section>
-
 
 
 
@@ -360,7 +359,24 @@
             });
         });
 
-               
+
+        function makeDeletable(itemId) {
+            $.ajax({
+                type: 'DELETE',
+                url: '/PurchaseOrder/DeletePurchaseOrderDetailsById?id=' + itemId, // Replace with the actual URL for the controller action
+                success: function (response) {
+                    // Handle the success response, if needed
+                    console.log('Item deleted successfully');
+                    // Optionally, you can refresh the page or update the UI
+                    location.reload();
+                },
+                error: function (error) {
+                    // Handle the error response, if needed
+                    console.error('Error deleting item:', error);
+                }
+            });
+        }
+
 
     </script>
 }

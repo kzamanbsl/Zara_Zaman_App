@@ -258,10 +258,5 @@ namespace app.Services.PurchaseOrderServices
                                           }).FirstOrDefault());
             return true;
         }
-
-        public Task<bool> DeletePurchaseOrderDetailsById(long id)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

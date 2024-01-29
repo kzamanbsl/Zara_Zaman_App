@@ -1,4 +1,5 @@
-﻿using app.Services.DropdownServices;
+﻿using app.EntityModel.AppModels;
+using app.Services.DropdownServices;
 using app.Services.PurchaseOrderDetailServices;
 using app.Services.PurchaseOrderServices;
 using app.Utility;
@@ -147,11 +148,22 @@ namespace app.WebApp.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        //[HttpGet]
-        //public async Task<IActionResult> DeletePurchaseOrderDetailsById(long id , PurchaseOrderViewModel vm)
+        [HttpGet]
+        public async Task<IActionResult> DeletePurchaseOrderDetailsById(long id, PurchaseOrderViewModel vm)
+        {
+            var res = await _ipurchaseOrderDetailService.PurchaseOrderDetailDeleteById(id);
+            return RedirectToAction(nameof(AddPurchaseOrderAndDetail), new { id = vm.Id });
+        }
+
+
+        //[HttpPost]
+        //public async Task<ActionResult> PurchaseOrderDetailDeleteById(PurchaseOrderViewModel purchaseOrdervm)
         //{
-        //    var res = await _ipurchaseOrderDetailService.PurchaseOrderDetailDeleteById(id);
-        //    return RedirectToAction(nameof(AddPurchaseOrderAndDetail), new { id = vm.Id });
+        //    if (purchaseOrdervm.ActionEum == ActionEnum.Delete)
+        //    {
+        //        await _ipurchaseOrderDetailService.PurchaseOrderDetailDeleteById(purchaseOrdervm.PurchaseOrderDetailVM.Id);
+        //    }
+        //    return RedirectToAction(nameof(AddPurchaseOrderAndDetail), new { id = purchaseOrdervm.Id });
         //}
 
 

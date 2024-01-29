@@ -75,6 +75,12 @@ namespace app.Services.PurchaseOrderDetailServices
 
         public async Task<bool> PurchaseOrderDetailDeleteById(long id)
         {
+
+            PurchaseOrderDetail purchaseDetails = await _dbContext.PurchaseOrderDetail.FindAsync(id);
+            if (purchaseDetails == null)
+            {
+                throw new Exception("Sorry! Order not found!");
+            }
             var result = await _iEntityRepository.GetByIdAsync(id);
             result.IsActive = false;
             await _iEntityRepository.UpdateAsync(result);
