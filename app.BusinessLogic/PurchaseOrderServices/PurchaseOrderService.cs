@@ -64,6 +64,7 @@ namespace app.Services.PurchaseOrderServices
             model.PurchaseDate = result.PurchaseDate;
             model.SupplierId = result.SupplierId;
             model.StorehouseId = result.StorehouseId;
+            model.OrderNo = result.OrderNo;
             return model;
         }
         public async Task<bool> PurchaseOrderMasterUpdateRecord(PurchaseOrderViewModel vm)
@@ -76,7 +77,9 @@ namespace app.Services.PurchaseOrderServices
                 result.PurchaseDate = vm.PurchaseDate;
                 result.SupplierId = vm.SupplierId;
                 result.StorehouseId = vm.StorehouseId;
+                result.OrderNo = vm.OrderNo;
                 await _iEntityRepository.UpdateAsync(result);
+                
                 await _dbContext.SaveChangesAsync();
                 return true;
             }
@@ -234,6 +237,29 @@ namespace app.Services.PurchaseOrderServices
             var result = await _iEntityRepository.GetByIdAsync(id);
             result.IsActive = false;
             await _iEntityRepository.UpdateAsync(result);
+            return true;
+        }
+
+        public async Task<bool> PurchaseOrderDetails(long id)
+        {
+            var v = await Task.Run(() => (from t1 in _dbContext.PurchaseOrderDetail.Where(x => x.IsActive && x.Id == id)
+
+                                          select new PurchaseOrderDetailViewModel
+                                          {
+                                              Id = t1.Id,
+                                              PurchaseOrderId = t1.PurchaseOrderId,
+                                              ProductId = t1.ProductId,
+                                              ProductName = t1.Product.Name,
+                                              PurchaseQty = t1.PurchaseQty,
+                                              Consumption = t1.Consumption,
+                                              UnitId = t1.UnitId,
+                                              UnitName = t1.Unit.Name,
+                                              CostPrice = t1.CostPrice,
+                                              SalePrice = t1.SalePrice,
+                                              Discount = t1.Discount,
+                                              TotalAmount = ((decimal)t1.PurchaseQty * t1.CostPrice) - t1.Discount,
+                                              Remarks = t1.Remarks,
+                                          }).FirstOrDefault());
             return true;
         }
     }

@@ -21,6 +21,7 @@ namespace app.Services.PurchaseOrderServices
         Task<PurchaseOrderDetailViewModel> SinglePurchaseOrderDetails(long id);
         Task<bool> ConfirmPurchaseOrder(long id);
         Task<bool> DeletePurchaseOrderDetailsById(long id);
+        Task<bool> PurchaseOrderDetails(long id);
 
     }
 }

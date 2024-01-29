@@ -25,6 +25,8 @@ namespace app.WebApp.Controllers
         {
             try
             {
+                ViewBag.StorehouseList = new SelectList((await _iDropdownService.StorehouseSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
+                ViewBag.SupplierList = new SelectList((await _iDropdownService.SupplierSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
                 PurchaseOrderViewModel viewModel = await _ipurchaseOrderService.GetAllRecord();
                 return View(viewModel);
             }
@@ -33,6 +35,15 @@ namespace app.WebApp.Controllers
                 //return View("Error");
                 throw new Exception(ex.Message, ex);
             }
+        }
+        public async Task<IActionResult> Details(long id)
+        {
+            var viewModel = await _ipurchaseOrderService.GetPurchaseOrder(id);
+            if (viewModel == null)
+            {
+                return NotFound();
+            }
+            return RedirectToAction(nameof(Index));
         }
 
 
@@ -93,8 +104,8 @@ namespace app.WebApp.Controllers
         [HttpGet]
         public async Task<IActionResult> PurchaseOrderMasterUpdateRecord(long id)
         {
-            ViewBag.SupplierList = new SelectList((await _iDropdownService.SupplierSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
-            ViewBag.StorehouseList = new SelectList((await _iDropdownService.StorehouseSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
+           
+        
             var result = await _ipurchaseOrderService.GetRecordById(id);
             return View(result);
         }
@@ -104,7 +115,7 @@ namespace app.WebApp.Controllers
             var result = await _ipurchaseOrderService.PurchaseOrderMasterUpdateRecord(model);
             if (result == true)
             {
-                return RedirectToAction("Index");
+                return RedirectToAction(nameof(Index));
             }
             ModelState.AddModelError(string.Empty, "Same Name already exists!");
             return View(model);
@@ -113,7 +124,7 @@ namespace app.WebApp.Controllers
         public async Task<IActionResult> DeletePurchaseOrder(PurchaseOrderViewModel vm)
         {
             var res = await _ipurchaseOrderService.DeleteRecord(vm);
-            return RedirectToAction("Index");
+            return RedirectToAction(nameof(Index));
         }
 
         public async Task<JsonResult> UpdateSinglePurchaseOrderDetails(long id)
