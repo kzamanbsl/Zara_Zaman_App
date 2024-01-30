@@ -331,3 +331,4 @@ ASALocalRun/
 /app.WebApp/Views/DropdownItem/AddRecord.cshtml
 /app.WebApp/Views/DropdownItem/Index.cshtml
 /app.WebApp/Views/DropdownItem/UpdateRecord.cshtml
+/app.WebApp/Views/PurchaseOrder/Index.cshtml
