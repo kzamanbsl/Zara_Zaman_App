@@ -1,0 +1,140 @@
+﻿@using app.Utility
+@model app.Services.PurchaseOrderServices.PurchaseOrderViewModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    int SN = 1;
+}
+
+<div class="content-header">
+    <div class="container-fluid ">
+        <div class="breadcrumb d-flex justify-content-between align-items-center  pl-3 pr-3">
+            <ol class="breadcrumb mb-0 p-0">
+                <li class="breadcrumb-item"><a href="/Admin/Index">Home </a></li>
+                <li class="breadcrumb-item active"> Purchase Order List </li>
+            </ol>
+            <div>
+                <a asp-action="AddPurchaseOrderAndDetail"><i class="fa fa-plus"></i>Add PurchaseOrder </a>
+            </div>
+        </div>
+    </div>
+</div>
+<section class="content">
+    <div class="container-fluid">
+        <div class="card">
+            <div class="card-header">
+                <div class="row w-100">
+                    <div class="card-header">
+                        <h3>
+                            <i class="fas fa-list"></i>
+                            All Purchase Order
+                        </h3>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table id="PurchaseOrdertable" class="table table-sm table-bordered">
+                        <thead>
+                            <tr>
+                                <th>SL</th>
+                                <th class="text-center">Purchase Order No</th>
+                                <th class="text-center">Purchase Date</th>
+                                <th class="text-center">Storehouse</th>
+                                <th class="text-center">Supplier Name</th>
+                                <th class="text-center">Status</th>
+                                <th class="text-center">Total Amount</th>
+                                <th class="text-center">Action</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            @foreach (var item in Model.PurchaseOrderList)
+                            {
+                                <tr>
+                                    <td style="width:10px;">@(++SN)</td>
+                                    <td>@item.OrderNo</td>
+                                    <td>@item.PurchaseDate.ToString("dd-MM-yyyy")</td>
+                                    <td>@item.Storehouse</td>
+                                    <td>@item.SupplierName</td>
+                                    <td>@item.OrderStatusName</td>
+                                    <td>@item.TotalAmount</td>
+
+                                </tr> 
+
+                                <!-- Edit Modal -->
+                                <div class="modal fade" id="editModal@(item.Id)" tabindex="-1" role="dialog" aria-labelledby="editModalLabel@(item.Id)" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="editModalLabel@(item.Id)">Update Purchase Order</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <!-- Add your form or content for editing here -->
+                                                <!-- Example: -->
+                                                <form id="form1" asp-controller="PurchaseOrder" asp-action="PurchaseOrderMasterUpdateRecord" method="post">
+                                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                                    <input type="hidden" id="Id" asp-for="Id" name="Id" value="@item.Id" />
+                                                    <div class="form-group">
+                                                        <label>Purchase Date </label>
+                                                        <input asp-for="PurchaseDate" value="@DateTime.Today.ToString("yyyy-MM-dd")" class="form-control" type="date" autocomplete="off" required />
+                                                        <span asp-validation-for="PurchaseDate" class="text-danger"></span>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label>Storehouse</label>
+                                                        <select class="form-control" asp-for="StorehouseId" asp-items="ViewBag.StorehouseList" required>
+                                                            <option value="0" selected>-- Select Storehouse --</option>
+                                                            <span asp-validation-for="StorehouseId" class="text-danger"></span>
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label>Supplier</label>
+                                                        <select class="form-control" asp-for="SupplierId" asp-items="ViewBag.SupplierList" required>
+                                                            <option value="0" selected>-- Select Supplier --</option>
+                                                            <span asp-validation-for="SupplierId" class="text-danger"></span>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group" style="float:right">
+                                                        <button type="submit" class="btn btn-primary">Save changes</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+
+        $(document).ready(function () {
+            $('#Configuration').addClass('menu-open');
+            $('#PurchaseOrderIndex').addClass('active');
+            $('#PurchaseOrdertable').DataTable({
+                "paging": true,
+                "ordering": true,
+                "info": true,
+                order: [[0, 'asc']],
+            });
+
+        });
+    </script>
+
+
+}
