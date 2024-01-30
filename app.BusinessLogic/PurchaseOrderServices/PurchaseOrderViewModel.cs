@@ -32,5 +32,6 @@ namespace app.Services.PurchaseOrderServices
         public PurchaseOrderDetailViewModel PurchaseOrderDetailVM { get; set; } 
         public IEnumerable<PurchaseOrderViewModel> PurchaseOrderList { get; set; }
         public IEnumerable<PurchaseOrderDetailViewModel> PurchaseOrderDetailsList { get; set; }
+        public int test { get;set; }
     }
 }
