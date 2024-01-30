@@ -157,12 +157,20 @@ namespace app.WebApp.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        [HttpGet]
+
         public async Task<IActionResult> DeletePurchaseOrderDetailsById(long id, PurchaseOrderViewModel vm)
         {
             var res = await _ipurchaseOrderDetailService.PurchaseOrderDetailDeleteById(id);
             return RedirectToAction(nameof(AddPurchaseOrderAndDetail), new { id = vm.Id });
         }
+
+
+
+        //public async Task<JsonResult> DeletePurchaseOrderDetailsById(long id)
+        //{
+        //    var res = await _ipurchaseOrderDetailService.PurchaseOrderDetailDeleteById(id);
+        //    return Json(res);
+        //}
 
 
         //[HttpPost]

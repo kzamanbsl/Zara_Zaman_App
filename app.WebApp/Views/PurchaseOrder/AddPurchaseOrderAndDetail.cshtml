@@ -254,7 +254,7 @@
                                                         {
                                                             <td style="padding:5px;text-align:center;">
                                                                 <a id="@item.Id" onclick="makeEditble(@item.Id);" class="linkPointer" title="Edit"><i class="text-warning fas fa-edit" aria-hidden="true"></i></a>
-                                                                <a id="@item.Id" onclick="makeDeletable(@item.Id)" class="linkPointer"><i class="text-warning fas fa-edit" aria-hidden="true"></i></a>
+                                                                <a id="@item.Id" onclick="makeDeletable(@item.Id)" class="linkPointer"><i class="text-danger fas fa-trash" aria-hidden="true"></i></a>
                                                             </td>
                                                         }
                                                     }
@@ -287,6 +287,19 @@
                                     <button id="confirmButton" class="linkPointer btn btn-success  btn-block">Confirm</button>
                                 </div>
                             }
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form asp-action="DeletePurchaseOrderDetailsById" method="post">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <input asp-for="ActionId" hidden id="actionId" />
+                            <input asp-for="PurchaseOrderDetailVM.Id" class="form-control" id="purchaseOrderDetailsId" hidden />
+
                         </form>
                     </div>
                 </div>
@@ -360,22 +373,40 @@
         });
 
 
-        function makeDeletable(itemId) {
+
+
+
+        function makeDeletable(rowId) {
             $.ajax({
-                type: 'DELETE',
-                url: '/PurchaseOrder/DeletePurchaseOrderDetailsById?id=' + itemId, // Replace with the actual URL for the controller action
-                success: function (response) {
-                    // Handle the success response, if needed
-                    console.log('Item deleted successfully');
-                    // Optionally, you can refresh the page or update the UI
-                    location.reload();
-                },
-                error: function (error) {
-                    // Handle the error response, if needed
-                    console.error('Error deleting item:', error);
+                type: "GET",
+                url: "@Url.Action("DeletePurchaseOrderDetailsById", "PurchaseOrder")",
+                data: { id: rowId },
+                success: function (data) {
+                    $("#purchaseOrderDetailsId").val(data.id);
+                    $('#actionId').val(3);
+                    window.scrollTo({ top: 0, behavior: 'smooth' });                   
                 }
             });
         }
+
+
+
+        // function makeDeletable(itemId) {
+        //     $.ajax({
+        //         type: 'DELETE',
+        //         url: '/PurchaseOrder/DeletePurchaseOrderDetailsById?id=' + itemId, // Replace with the actual URL for the controller action
+        //         success: function (response) {
+        //             // Handle the success response, if needed
+        //             console.log('Item deleted successfully');
+        //             // Optionally, you can refresh the page or update the UI
+        //             location.reload();
+        //         },
+        //         error: function (error) {
+        //             // Handle the error response, if needed
+        //             console.error('Error deleting item:', error);
+        //         }
+        //     });
+        // }
 
 
     </script>
