@@ -59,7 +59,11 @@
                                     <td>@item.SupplierName</td>
                                     <td>@item.OrderStatusName</td>
                                     <td>@item.TotalAmount</td>
+                                    <td class="text-left">
+                                        <a asp-action="Edit" asp-controller="PurchaseOrderMasterUpdateRecord" asp-route-id="@item.Id" data-toggle="modal" data-target="#editModal@(item.Id)" title="Edit" class="text-warning fas fa-edit"></a> |
+                                        @Html.ActionLink("", "DeletePurchaseOrder", new { id = item.Id }, new { @title = "Delete", @class = "text-danger fas fa-trash", onclick = "return confirm('Are you sure you want to delete this?')" })
 
+                                    </td>
                                 </tr> 
 
                                 <!-- Edit Modal -->
