@@ -64,7 +64,6 @@ namespace app.Services.PurchaseOrderServices
             model.PurchaseDate = result.PurchaseDate;
             model.SupplierId = result.SupplierId;
             model.StorehouseId = result.StorehouseId;
-            model.OrderNo = result.OrderNo;
             return model;
         }
         public async Task<bool> PurchaseOrderMasterUpdateRecord(PurchaseOrderViewModel vm)
@@ -77,7 +76,6 @@ namespace app.Services.PurchaseOrderServices
                 result.PurchaseDate = vm.PurchaseDate;
                 result.SupplierId = vm.SupplierId;
                 result.StorehouseId = vm.StorehouseId;
-                result.OrderNo = vm.OrderNo;
                 await _iEntityRepository.UpdateAsync(result);
                 
                 await _dbContext.SaveChangesAsync();
