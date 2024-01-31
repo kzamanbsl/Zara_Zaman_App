@@ -246,27 +246,47 @@ namespace app.Services.PurchaseOrderServices
             return true;
         }
 
-        public async Task<bool> PurchaseOrderDetails(long id)
+        public async Task<PurchaseOrderViewModel> PurchaseOrderDetails(long purchaseOrderId)
         {
-            var v = await Task.Run(() => (from t1 in _dbContext.PurchaseOrderDetail.Where(x => x.IsActive && x.Id == id)
+            PurchaseOrderViewModel purchaseOrderModel = new PurchaseOrderViewModel();
 
-                                          select new PurchaseOrderDetailViewModel
-                                          {
-                                              Id = t1.Id,
-                                              PurchaseOrderId = t1.PurchaseOrderId,
-                                              ProductId = t1.ProductId,
-                                              ProductName = t1.Product.Name,
-                                              PurchaseQty = t1.PurchaseQty,
-                                              Consumption = t1.Consumption,
-                                              UnitId = t1.UnitId,
-                                              UnitName = t1.Unit.Name,
-                                              CostPrice = t1.CostPrice,
-                                              SalePrice = t1.SalePrice,
-                                              Discount = t1.Discount,
-                                              TotalAmount = ((decimal)t1.PurchaseQty * t1.CostPrice) - t1.Discount,
-                                              Remarks = t1.Remarks,
-                                          }).FirstOrDefault());
-            return true;
+
+            purchaseOrderModel = await Task.Run(() => (from t1 in _dbContext.PurchaseOrder.Where(x => x.IsActive && x.Id == purchaseOrderId)
+                                                       select new PurchaseOrderViewModel
+                                                       {
+                                                           Id = t1.Id,
+                                                           PurchaseDate = t1.PurchaseDate,
+                                                           OrderNo = t1.OrderNo,
+                                                           OrderStatusId = PurchaseOrderStatusEnum.Draft,
+                                                           SupplierId = t1.SupplierId,
+                                                           SupplierName = t1.Supplier.Name,
+                                                           StorehouseId = t1.StorehouseId,
+                                                           StoreName = t1.Storehouse.Name,
+                                                           OverallDiscount = t1.OverallDiscount,
+                                                           PurchaseTypeId = t1.PurchaseTypeId,
+                                                           Description = t1.Description,
+                                                       }).FirstOrDefault());
+
+
+            PurchaseOrderViewModel purchaseOrderViewModel = new PurchaseOrderViewModel();
+            purchaseOrderModel.PurchaseOrderDetailsList = await Task.Run(() => (from t1 in _dbContext.PurchaseOrderDetail.Where(x => x.IsActive && x.PurchaseOrder.Id == purchaseOrderId)
+                                                                                select new PurchaseOrderDetailViewModel
+                                                                                {
+                                                                                    Id = t1.Id,
+                                                                                    PurchaseOrderId = t1.PurchaseOrderId,
+                                                                                    ProductId = t1.ProductId,
+                                                                                    ProductName = t1.Product.Name,
+                                                                                    PurchaseQty = t1.PurchaseQty,
+                                                                                    Consumption = t1.Consumption,
+                                                                                    UnitId = t1.UnitId,
+                                                                                    UnitName = t1.Unit.Name,
+                                                                                    CostPrice = t1.CostPrice,
+                                                                                    SalePrice = t1.SalePrice,
+                                                                                    Discount = t1.Discount,
+                                                                                    TotalAmount = ((decimal)t1.PurchaseQty * t1.CostPrice) - t1.Discount,
+                                                                                    Remarks = t1.Remarks,
+                                                                                }).OrderByDescending(x => x.Id).AsEnumerable());
+            return purchaseOrderModel;
         }
     }
 }
