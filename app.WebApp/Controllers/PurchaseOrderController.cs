@@ -167,7 +167,7 @@ namespace app.WebApp.Controllers
         public async Task<IActionResult> PurchaseOrderDetails(long id)
         {
             var res = await _ipurchaseOrderService.PurchaseOrderDetails(id);
-            return RedirectToAction(nameof(Details));
+            return RedirectToAction(nameof(PurchaseOrderDetails));
         }
     }
 
@@ -187,8 +187,5 @@ namespace app.WebApp.Controllers
         //    }
         //    return RedirectToAction(nameof(AddPurchaseOrderAndDetail), new { id = purchaseOrdervm.Id });
         //}
-
-
-
 }
 
