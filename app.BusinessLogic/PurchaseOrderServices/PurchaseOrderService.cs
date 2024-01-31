@@ -262,6 +262,9 @@ namespace app.Services.PurchaseOrderServices
                                                            PurchaseTypeId = t1.PurchaseTypeId,
                                                            Description = t1.Description,
                                                        }).FirstOrDefault());
+
+
+            PurchaseOrderViewModel purchaseOrderViewModel = new PurchaseOrderViewModel();
             purchaseOrderModel.PurchaseOrderDetailsList = await Task.Run(() => (from t1 in _dbContext.PurchaseOrderDetail.Where(x => x.IsActive && x.PurchaseOrder.Id == purchaseOrderId)
                                                                                 select new PurchaseOrderDetailViewModel
                                                                                 {
