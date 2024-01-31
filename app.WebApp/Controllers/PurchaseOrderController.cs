@@ -163,11 +163,12 @@ namespace app.WebApp.Controllers
             var res = await _ipurchaseOrderDetailService.PurchaseOrderDetailDeleteById(id);
             return RedirectToAction(nameof(AddPurchaseOrderAndDetail), new { id = vm.Id });
         }
+
         [HttpGet]
         public async Task<IActionResult> PurchaseOrderDetails(long id)
         {
             var res = await _ipurchaseOrderService.PurchaseOrderDetails(id);
-            return RedirectToAction(nameof(PurchaseOrderDetails));
+            return View(res);
         }
     }
 
