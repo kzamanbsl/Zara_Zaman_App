@@ -163,8 +163,13 @@ namespace app.WebApp.Controllers
             var res = await _ipurchaseOrderDetailService.PurchaseOrderDetailDeleteById(id);
             return RedirectToAction(nameof(AddPurchaseOrderAndDetail), new { id = vm.Id });
         }
-
-
+        [HttpGet]
+        public async Task<IActionResult> PurchaseOrderDetails(long id)
+        {
+            var res = await _ipurchaseOrderService.PurchaseOrderDetails(id);
+            return RedirectToAction(nameof(Details));
+        }
+    }
 
         //public async Task<JsonResult> DeletePurchaseOrderDetailsById(long id)
         //{
@@ -185,5 +190,5 @@ namespace app.WebApp.Controllers
 
 
 
-    }
 }
+
