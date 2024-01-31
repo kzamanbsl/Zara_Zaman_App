@@ -14,6 +14,7 @@ using Microsoft.EntityFrameworkCore;
 using app.Services.ProductServices;
 using app.Services.LeaveBalanceServices;
 using app.Services.JobStatusServices;
+using app.Services.StorehouseServices;
 
 namespace app.Services.PurchaseOrderServices
 {
@@ -89,6 +90,9 @@ namespace app.Services.PurchaseOrderServices
 
 
             purchaseOrderModel = await Task.Run(() => (from t1 in _dbContext.PurchaseOrder.Where(x => x.IsActive && x.Id == purchaseOrderId)
+                                                           //PurchaseOrderViewModel model = new PurchaseOrderViewModel();
+                                                           //model.PurchaseOrderList = await Task.Run(() => (from t1 in _dbContext.BusinessCenter
+                                                           //                                             where t1.OrderStatusId == (int)PurchaseOrderStatusEnum.Draft && t1.IsActive == true
 
                                                        select new PurchaseOrderViewModel
                                                        {
