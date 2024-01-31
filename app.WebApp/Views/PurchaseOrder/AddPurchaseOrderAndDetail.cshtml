@@ -109,13 +109,13 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-md-2">
+                                  @*   <div class="col-md-2">
                                         <div class="form-group">
                                             <label>OverAll Discount (Taka)</label>
                                             <input asp-for="OverallDiscount" class="form-control" />
                                             <span asp-validation-for="OverallDiscount" class="text-danger"></span>
                                         </div>
-                                    </div>
+                                    </div> *@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12">
@@ -384,29 +384,11 @@
                 success: function (data) {
                     $("#purchaseOrderDetailsId").val(data.id);
                     $('#actionId').val(3);
-                    window.scrollTo({ top: 0, behavior: 'smooth' });                   
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    location.reload(); // Reload the page
                 }
             });
         }
-
-
-
-        // function makeDeletable(itemId) {
-        //     $.ajax({
-        //         type: 'DELETE',
-        //         url: '/PurchaseOrder/DeletePurchaseOrderDetailsById?id=' + itemId, // Replace with the actual URL for the controller action
-        //         success: function (response) {
-        //             // Handle the success response, if needed
-        //             console.log('Item deleted successfully');
-        //             // Optionally, you can refresh the page or update the UI
-        //             location.reload();
-        //         },
-        //         error: function (error) {
-        //             // Handle the error response, if needed
-        //             console.error('Error deleting item:', error);
-        //         }
-        //     });
-        // }
 
 
     </script>
