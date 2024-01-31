@@ -73,12 +73,12 @@ namespace app.Services.PurchaseOrderServices
             var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id == vm.Id);
             if (checkName != null)
             {
-                var result=await _iEntityRepository.GetByIdAsync(vm.Id);
+                var result = await _iEntityRepository.GetByIdAsync(vm.Id);
                 result.PurchaseDate = vm.PurchaseDate;
                 result.SupplierId = vm.SupplierId;
                 result.StorehouseId = vm.StorehouseId;
                 await _iEntityRepository.UpdateAsync(result);
-                
+
                 await _dbContext.SaveChangesAsync();
                 return true;
             }
@@ -129,7 +129,7 @@ namespace app.Services.PurchaseOrderServices
 
 
             return purchaseOrderModel;
-        }       
+        }
 
 
         public async Task<PurchaseOrderDetailViewModel> SinglePurchaseOrderDetails(long id)
@@ -192,8 +192,9 @@ namespace app.Services.PurchaseOrderServices
         public async Task<PurchaseOrderViewModel> GetAllRecord()
         {
             PurchaseOrderViewModel purchaseMasterModel = new PurchaseOrderViewModel();
-            var dataQuery = (from t1 in _dbContext.PurchaseOrder
+            var dataQuery = await Task.Run(()=>(from t1 in _dbContext.PurchaseOrder
                              where t1.IsActive
+                             let orderStatus = (PurchaseOrderStatusEnum)t1.OrderStatusId
                              select new PurchaseOrderViewModel
                              {
                                  Id = t1.Id,
@@ -204,9 +205,12 @@ namespace app.Services.PurchaseOrderServices
                                  StorehouseId = t1.StorehouseId,
                                  StoreName = t1.Storehouse.Name,
                                  OrderStatusId = (PurchaseOrderStatusEnum)t1.OrderStatusId,
-                             }).OrderByDescending(x => x.Id).AsEnumerable();
+                                
 
-            purchaseMasterModel.PurchaseOrderList = await Task.Run(() => dataQuery.ToList());
+                             }).OrderByDescending(x => x.Id).AsEnumerable());
+
+            purchaseMasterModel.PurchaseOrderList = await Task.Run(()=> dataQuery.ToList());
+            purchaseMasterModel.PurchaseOrderList.ToList().ForEach((c => c.OrderStatusName = Enum.GetName(typeof(PurchaseOrderStatusEnum), c.OrderStatusId)));
 
             var masterIds = purchaseMasterModel.PurchaseOrderList.Select(x => x.Id);
 
@@ -217,7 +221,7 @@ namespace app.Services.PurchaseOrderServices
             {
                 var detailsForMaster = matchingDetails.Where(detail => detail.PurchaseOrderId == master.Id);
                 decimal? total = detailsForMaster.Sum(detail => (detail.CostPrice * (decimal)detail.PurchaseQty) - detail.Discount);
-                master.TotalAmount = (double)(total ?? 0); 
+                master.TotalAmount = (double)(total ?? 0);
             }
             return purchaseMasterModel;
         }
