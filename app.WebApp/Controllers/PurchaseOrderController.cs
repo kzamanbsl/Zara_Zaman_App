@@ -122,20 +122,6 @@ namespace app.WebApp.Controllers
             return View(model);
         }
 
-        //[HttpGet]
-        //public async Task<IActionResult> DeletePurchaseOrder(PurchaseOrderViewModel vm)
-        //{
-        //    var res = await _ipurchaseOrderService.DeleteRecord(vm);
-        //    return RedirectToAction(nameof(Index));
-        //}
-
-        //[HttpGet]
-        //public async Task<IActionResult> DeletePurchaseOrder(PurchaseOrderViewModel vm)
-        //{
-        //    var res = await _ipurchaseOrderService.DeleteRecord(vm);
-        //    return RedirectToAction("Index");
-        //}
-
         public async Task<JsonResult> UpdateSinglePurchaseOrderDetails(long id)
         {
             var model = await _ipurchaseOrderService.SinglePurchaseOrderDetails(id);
@@ -171,22 +157,5 @@ namespace app.WebApp.Controllers
             return View(res);
         }
     }
-
-        //public async Task<JsonResult> DeletePurchaseOrderDetailsById(long id)
-        //{
-        //    var res = await _ipurchaseOrderDetailService.PurchaseOrderDetailDeleteById(id);
-        //    return Json(res);
-        //}
-
-
-        //[HttpPost]
-        //public async Task<ActionResult> PurchaseOrderDetailDeleteById(PurchaseOrderViewModel purchaseOrdervm)
-        //{
-        //    if (purchaseOrdervm.ActionEum == ActionEnum.Delete)
-        //    {
-        //        await _ipurchaseOrderDetailService.PurchaseOrderDetailDeleteById(purchaseOrdervm.PurchaseOrderDetailVM.Id);
-        //    }
-        //    return RedirectToAction(nameof(AddPurchaseOrderAndDetail), new { id = purchaseOrdervm.Id });
-        //}
 }
 
