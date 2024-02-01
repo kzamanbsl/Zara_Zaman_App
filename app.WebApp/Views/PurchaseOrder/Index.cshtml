@@ -55,7 +55,7 @@
                                     <td style="width:10px;">@(++SN)</td>
                                     <td>@item.OrderNo</td>
                                     <td>@item.PurchaseDate.ToString("dd-MM-yyyy")</td>
-                                    <td>@item.Storehouse</td>
+                                    <td>@item.StoreName</td>
                                     <td>@item.SupplierName</td>
                                     <td>@item.OrderStatusName</td>
                                     <td>@item.TotalAmount</td>
@@ -90,18 +90,20 @@
 
                                                     <div class="form-group">
                                                         <label>Storehouse</label>
-                                                        <select class="form-control" asp-for="StorehouseId" asp-items="ViewBag.StorehouseList" required>
-                                                            <option value="0" selected>-- Select Storehouse --</option>
+                                                        <select class="form-control" value="@item.StorehouseId" asp-for="StorehouseId" asp-items="ViewBag.StorehouseList" required>
+                                                            <option selected>-- Select Storehouse --</option>
                                                             <span asp-validation-for="StorehouseId" class="text-danger"></span>
                                                         </select>
                                                     </div>
 
                                                     <div class="form-group">
                                                         <label>Supplier</label>
-                                                        <select class="form-control" asp-for="SupplierId" asp-items="ViewBag.SupplierList" required>
-                                                            <option value="0" selected>-- Select Supplier --</option>
-                                                            <span asp-validation-for="SupplierId" class="text-danger"></span>
-                                                        </select>
+                                                    <select class="form-control" asp-for="SupplierId" asp-items="ViewBag.SupplierList" required>
+                                                    <option value="0" selected>-- Select Supplier --</option>
+                                                    <span asp-validation-for="SupplierId" class="text-danger"></span>
+                                                    </select>
+
+
                                                     </div>
                                                     <div class="form-group" style="float:right">
                                                         <button type="submit" class="btn btn-primary">Save changes</button>
@@ -138,6 +140,12 @@
             });
 
         });
+        $(".js-programmatic-enable").on("click", function () {
+            // $(".js-example-disabled").prop("disabled", false);
+            // $(".js-example-disabled-multi").prop("disabled", false);
+        });
+        // document.getElementById("#StorehouseId").value = "2";
+
     </script>
 
 
