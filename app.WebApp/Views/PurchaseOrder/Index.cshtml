@@ -62,7 +62,11 @@
                                     <td>
                                         <a asp-controller="PurchaseOrder" asp-action="PurchaseOrderMasterUpdateRecord" asp-route-id="@item.Id" data-toggle="modal" data-target="#editModal@(item.Id)" title="Edit" class="text-warning fas fa-edit"></a> |
                                         @Html.ActionLink("", "DeletePurchaseOrder", new { id = item.Id }, new { @title = "Delete", @class = "text-danger fas fa-trash", onclick = "return confirm('Are you sure you want to delete this?')" }) |
+<<<<<<< HEAD
                                         @Html.ActionLink("", "AddPurchaseOrderAndDetail", new { id = item.Id }, new { @title = "Details", @class = "text-primary fas fa-eye" })
+=======
+                                        @Html.ActionLink("", "GetPurchaseOrderAndDetailsById", new { id = item.Id }, new { @title = "Details", @class = "text-primary fas fa-eye"})
+>>>>>>> e9322317a500d4469d9bcb1a7e94e1fa14688a7a
                                     </td>
                                 </tr>
 
