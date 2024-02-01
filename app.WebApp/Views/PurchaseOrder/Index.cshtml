@@ -55,14 +55,14 @@
                                     <td style="width:10px;">@(++SN)</td>
                                     <td>@item.OrderNo</td>
                                     <td>@item.PurchaseDate.ToString("dd-MM-yyyy")</td>
-                                    <td>@item.Storehouse</td>
+                                    <td>@item.StoreName</td>
                                     <td>@item.SupplierName</td>
                                     <td>@item.OrderStatusName</td>
                                     <td>@item.TotalAmount</td>
                                     <td>
                                         <a asp-controller="PurchaseOrder" asp-action="PurchaseOrderMasterUpdateRecord" asp-route-id="@item.Id" data-toggle="modal" data-target="#editModal@(item.Id)" title="Edit" class="text-warning fas fa-edit"></a> |
                                         @Html.ActionLink("", "DeletePurchaseOrder", new { id = item.Id }, new { @title = "Delete", @class = "text-danger fas fa-trash", onclick = "return confirm('Are you sure you want to delete this?')" }) |
-                                        @Html.ActionLink("", "AddPurchaseOrderAndDetail", new { id = item.Id }, new { @title = "Details", @class = "text-primary fas fa-eye"})
+                                        @Html.ActionLink("", "GetPurchaseOrderAndDetailsById", new { id = item.Id }, new { @title = "Details", @class = "text-primary fas fa-eye"})
                                     </td>
                                 </tr>
 

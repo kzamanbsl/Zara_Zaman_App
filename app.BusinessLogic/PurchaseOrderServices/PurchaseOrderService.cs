@@ -87,13 +87,7 @@ namespace app.Services.PurchaseOrderServices
         public async Task<PurchaseOrderViewModel> GetPurchaseOrder(long purchaseOrderId = 0)
         {
             PurchaseOrderViewModel purchaseOrderModel = new PurchaseOrderViewModel();
-
-
             purchaseOrderModel = await Task.Run(() => (from t1 in _dbContext.PurchaseOrder.Where(x => x.IsActive && x.Id == purchaseOrderId)
-                                                           //PurchaseOrderViewModel model = new PurchaseOrderViewModel();
-                                                           //model.PurchaseOrderList = await Task.Run(() => (from t1 in _dbContext.BusinessCenter
-                                                           //                                             where t1.OrderStatusId == (int)PurchaseOrderStatusEnum.Draft && t1.IsActive == true
-
                                                        select new PurchaseOrderViewModel
                                                        {
                                                            Id = t1.Id,
@@ -187,29 +181,27 @@ namespace app.Services.PurchaseOrderServices
             return true;
         }
 
-
-
         public async Task<PurchaseOrderViewModel> GetAllRecord()
         {
             PurchaseOrderViewModel purchaseMasterModel = new PurchaseOrderViewModel();
-            var dataQuery = await Task.Run(()=>(from t1 in _dbContext.PurchaseOrder
-                             where t1.IsActive
-                             let orderStatus = (PurchaseOrderStatusEnum)t1.OrderStatusId
-                             select new PurchaseOrderViewModel
-                             {
-                                 Id = t1.Id,
-                                 OrderNo = t1.OrderNo,
-                                 PurchaseDate = t1.PurchaseDate,
-                                 SupplierId = t1.SupplierId,
-                                 SupplierName = t1.Supplier.Name,
-                                 StorehouseId = t1.StorehouseId,
-                                 StoreName = t1.Storehouse.Name,
-                                 OrderStatusId = (PurchaseOrderStatusEnum)t1.OrderStatusId,
-                                
+            var dataQuery = await Task.Run(() => (from t1 in _dbContext.PurchaseOrder
+                                                  where t1.IsActive
+                                                  let orderStatus = (PurchaseOrderStatusEnum)t1.OrderStatusId
+                                                  select new PurchaseOrderViewModel
+                                                  {
+                                                      Id = t1.Id,
+                                                      OrderNo = t1.OrderNo,
+                                                      PurchaseDate = t1.PurchaseDate,
+                                                      SupplierId = t1.SupplierId,
+                                                      SupplierName = t1.Supplier.Name,
+                                                      StorehouseId = t1.StorehouseId,
+                                                      StoreName = t1.Storehouse.Name,
+                                                      OrderStatusId = (PurchaseOrderStatusEnum)t1.OrderStatusId,
 
-                             }).OrderByDescending(x => x.Id).AsEnumerable());
 
-            purchaseMasterModel.PurchaseOrderList = await Task.Run(()=> dataQuery.ToList());
+                                                  }).OrderByDescending(x => x.Id).AsEnumerable());
+
+            purchaseMasterModel.PurchaseOrderList = await Task.Run(() => dataQuery.ToList());
             purchaseMasterModel.PurchaseOrderList.ToList().ForEach((c => c.OrderStatusName = Enum.GetName(typeof(PurchaseOrderStatusEnum), c.OrderStatusId)));
 
             var masterIds = purchaseMasterModel.PurchaseOrderList.Select(x => x.Id);
@@ -246,12 +238,10 @@ namespace app.Services.PurchaseOrderServices
             return true;
         }
 
-        public async Task<PurchaseOrderViewModel> PurchaseOrderDetails(long purchaseOrderId)
+        public async Task<PurchaseOrderViewModel> GetPurchaseOrderDetails(long id = 0)
         {
             PurchaseOrderViewModel purchaseOrderModel = new PurchaseOrderViewModel();
-
-
-            purchaseOrderModel = await Task.Run(() => (from t1 in _dbContext.PurchaseOrder.Where(x => x.IsActive && x.Id == purchaseOrderId)
+            purchaseOrderModel = await Task.Run(() => (from t1 in _dbContext.PurchaseOrder.Where(x => x.IsActive && x.Id == id)
                                                        select new PurchaseOrderViewModel
                                                        {
                                                            Id = t1.Id,
@@ -267,9 +257,7 @@ namespace app.Services.PurchaseOrderServices
                                                            Description = t1.Description,
                                                        }).FirstOrDefault());
 
-
-            PurchaseOrderViewModel purchaseOrderViewModel = new PurchaseOrderViewModel();
-            purchaseOrderModel.PurchaseOrderDetailsList = await Task.Run(() => (from t1 in _dbContext.PurchaseOrderDetail.Where(x => x.IsActive && x.PurchaseOrder.Id == purchaseOrderId)
+            purchaseOrderModel.PurchaseOrderDetailsList = await Task.Run(() => (from t1 in _dbContext.PurchaseOrderDetail.Where(x => x.IsActive && x.PurchaseOrder.Id == id)
                                                                                 select new PurchaseOrderDetailViewModel
                                                                                 {
                                                                                     Id = t1.Id,
@@ -286,6 +274,8 @@ namespace app.Services.PurchaseOrderServices
                                                                                     TotalAmount = ((decimal)t1.PurchaseQty * t1.CostPrice) - t1.Discount,
                                                                                     Remarks = t1.Remarks,
                                                                                 }).OrderByDescending(x => x.Id).AsEnumerable());
+
+
             return purchaseOrderModel;
         }
     }

@@ -65,7 +65,7 @@ namespace app.WebApp.Controllers
             ViewBag.StorehouseList = new SelectList((await _iDropdownService.StorehouseSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
             ViewBag.ProductList = new SelectList((await _iDropdownService.ProductSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
             ViewBag.UnitList = new SelectList((await _iDropdownService.UnitSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
-            
+
             return View(viewModel);
         }
 
@@ -105,8 +105,8 @@ namespace app.WebApp.Controllers
         [HttpGet]
         public async Task<IActionResult> PurchaseOrderMasterUpdateRecord(long id)
         {
-           
-        
+
+
             var result = await _ipurchaseOrderService.GetRecordById(id);
             return View(result);
         }
@@ -151,10 +151,10 @@ namespace app.WebApp.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> PurchaseOrderDetails(long id)
+        public async Task<IActionResult> GetPurchaseOrderAndDetailsById(long id = 0)
         {
-            var res = await _ipurchaseOrderService.PurchaseOrderDetails(id);
-            return View(res);
+            PurchaseOrderViewModel viewModel = await _ipurchaseOrderService.GetPurchaseOrderDetails(id);
+            return View(viewModel);
         }
     }
 }
