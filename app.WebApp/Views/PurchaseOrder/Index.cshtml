@@ -62,7 +62,7 @@
                                     <td>
                                         <a asp-controller="PurchaseOrder" asp-action="PurchaseOrderMasterUpdateRecord" asp-route-id="@item.Id" data-toggle="modal" data-target="#editModal@(item.Id)" title="Edit" class="text-warning fas fa-edit"></a> |
                                         @Html.ActionLink("", "DeletePurchaseOrder", new { id = item.Id }, new { @title = "Delete", @class = "text-danger fas fa-trash", onclick = "return confirm('Are you sure you want to delete this?')" }) |
-                                        @Html.ActionLink("", "AddPurchaseOrderAndDetail", new { id = item.Id }, new { @title = "Details", @class = "text-primary fas fa-eye"})
+                                        @Html.ActionLink("", "AddPurchaseOrderAndDetail", new { id = item.Id }, new { @title = "Details", @class = "text-primary fas fa-eye" })
                                     </td>
                                 </tr>
 
@@ -98,12 +98,10 @@
 
                                                     <div class="form-group">
                                                         <label>Supplier</label>
-                                                    <select class="form-control" asp-for="SupplierId" asp-items="ViewBag.SupplierList" required>
-                                                    <option value="0" selected>-- Select Supplier --</option>
-                                                    <span asp-validation-for="SupplierId" class="text-danger"></span>
-                                                    </select>
-
-
+                                                        <select class="form-control" asp-for="SupplierId" asp-items="ViewBag.SupplierList" required>
+                                                            <option value="0" selected>-- Select Supplier --</option>
+                                                            <span asp-validation-for="SupplierId" class="text-danger"></span>
+                                                        </select>
                                                     </div>
                                                     <div class="form-group" style="float:right">
                                                         <button type="submit" class="btn btn-primary">Save changes</button>
@@ -140,13 +138,35 @@
             });
 
         });
-        $(".js-programmatic-enable").on("click", function () {
-            // $(".js-example-disabled").prop("disabled", false);
-            // $(".js-example-disabled-multi").prop("disabled", false);
-        });
-        // document.getElementById("#StorehouseId").value = "2";
+
 
     </script>
 
+    @*
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#storehouseDropdown').change(function () {
+                var storehouseId = $(this).val();
+                var url = "/PurchaseOrder/GetSuppliers?storehouseId=" + storehouseId;
+
+                $.ajax({
+                    type: 'GET',
+                    url: url,
+                    success: function (data) {
+                        $('#supplierDropdown').empty();
+                        $('#supplierDropdown').append($('<option>').text('-- Select Supplier --').val('0'));
+
+                        $.each(data, function (index, supplier) {
+                            $('#supplierDropdown').append($('<option>').text(supplier.name).val(supplier.id));
+                        });
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                        console.error('Error:', errorThrown);
+                    }
+                });
+            });
+        });
+    </script> *@
 
 }

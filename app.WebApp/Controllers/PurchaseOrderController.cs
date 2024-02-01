@@ -21,7 +21,6 @@ namespace app.WebApp.Controllers
             _iDropdownService = iDropdownService;
         }
 
-
         public async Task<IActionResult> Index()
         {
             try
