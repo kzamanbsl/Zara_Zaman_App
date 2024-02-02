@@ -56,6 +56,9 @@ namespace app.Infrastructure
         public virtual DbSet<PurchaseOrderDetail> PurchaseOrderDetail { get; set; }
         public virtual DbSet<Inventory> Inventory { get; set; }
         public virtual DbSet<AssetInventory> AssetInventory{ get; set; }
+        public virtual DbSet<AssembleWorkCategory> AssembleWorkCategory{ get; set; }
+        public virtual DbSet<AssembleWorkStep> AssembleWorkStep{ get; set; }
+        public virtual DbSet<AssembleWorkStepItem> AssembleWorkStepItem{ get; set; }
 
 
     }

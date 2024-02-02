@@ -38,5 +38,8 @@
         PurchaseOrder,
         PurchaseOrderDetail,
         AssetInventory,
+        AssembleWorkCategory,
+        AssembleWorkStep,
+        AssembleWorkStepItem
     }
 }

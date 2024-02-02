@@ -1,4 +1,7 @@
-﻿using app.Services.CompanyServices;
+﻿using app.Services.AssembleWorkCategoryServices;
+using app.Services.AssembleWorkStepItemServices;
+using app.Services.AssembleWorkStepServices;
+using app.Services.CompanyServices;
 using app.Services.DropdownServices;
 using app.Services.MainMenuServices;
 using app.Services.MenuItemServices;
@@ -77,6 +80,9 @@ namespace app.Services
             services.AddTransient<IAssetItemService, AssetItemService>();
             services.AddTransient<IServiceCenterService, ServiceCenterService>();
             services.AddTransient<ISaleCenterService, SaleCenterService>();
+            services.AddTransient<IAssembleWorkCategoryService, AssembleWorkCategoryService>();
+            services.AddTransient<IAssembleWorkStepService, AssembleWorkStepService>();
+            services.AddTransient<IAssembleWorkStepItemService, AssembleWorkStepItemService>();
 
             return services;
         }
