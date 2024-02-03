@@ -1,5 +1,8 @@
-﻿using app.Services.AssembleWorkStepServices;
+﻿using app.Services.AssembleWorkCategoryServices;
+using app.Services.AssembleWorkStepServices;
+using app.Services.DropdownServices;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace app.WebApp.Controllers
 {
@@ -7,9 +10,11 @@ namespace app.WebApp.Controllers
     {
 
         private readonly IAssembleWorkStepService _iService;
-        public AssembleWorkStepController(IAssembleWorkStepService iService)
+        private readonly IDropdownService _iDropdownService;
+        public AssembleWorkStepController(IAssembleWorkStepService iService, IDropdownService iDropdownService)
         {
             _iService = iService;
+            _iDropdownService = iDropdownService;
         }
 
         [HttpGet]
@@ -22,6 +27,7 @@ namespace app.WebApp.Controllers
         [HttpGet]
         public async Task<IActionResult> AddRecord()
         {
+            ViewBag.AssembleWorkCategoryList = new SelectList((await _iDropdownService.AssembleWorkCategorySelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
             AssembleWorkStepViewModel viewModel = new AssembleWorkStepViewModel();
             return View(viewModel);
         }

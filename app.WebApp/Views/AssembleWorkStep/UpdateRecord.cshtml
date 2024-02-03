@@ -5,29 +5,25 @@
 }
 <div class="content-header">
     <div class="container-fluid ">
-        <div class="breadcrumb d-flex justify-content-between align-items-center  pl-3 pr-3">
+        <div class="breadcrumb d-flex justify-content-between align-items-center pl-3 pr-3">
             <ol class="breadcrumb mb-0 p-0">
                 <li class="breadcrumb-item"><a href="/Admin/Index">Home</a></li>
                 <li class="breadcrumb-item active"> Assemble Work Step List </li>
             </ol>
             <div>
-                <a asp-action="Index"><i class="fa fa-list"></i>  Assemble Work Step List </a>
+                <a asp-action="Index"><i class="fa fa-list"></i> Assemble Work Step List</a>
             </div>
         </div>
     </div>
 </div>
 
-
-
 <section class="content">
     <div class="container-fluid">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title text-info">
-                    <i class="fas fa-plus"></i>
-                    Update Assemble Work Step
+                <h3 class="text-secondary">
+                    <i class="fas fa-plus"></i> Update Assemble Work Step
                 </h3>
-
             </div>
             <div class="card-body">
                 <div class="row">
@@ -37,19 +33,34 @@
                             @Html.HiddenFor(model => model.Id)
                             <div class="container">
                                 <div class="row align-items-start">
-                                    <div class="col">
+                                    <div class="col-3">
+                                        <div class="form-group">
+                                            <label asp-for="AssembleWorkCategoryList" class="form-label"></label>
+                                            <select asp-for="AssembleWorkCategoryId" asp-items="ViewBag.AssembleWorkCategoryList" class="form-control" required>
+                                                <option selected disabled>==Assemble Work==</option>
+                                            </select>
+                                            <span asp-validation-for="AssembleWorkCategoryId" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-3">
                                         <div class="form-group">
                                             <label asp-for="Name" class="form-label"></label>
                                             <input asp-for="Name" class="form-control" required />
                                             <span asp-validation-for="Name" class="text-danger"></span>
                                         </div>
                                     </div>
-                                    <div class="col">
+                                    <div class="col-3">
                                         <div class="form-group">
-                                            <input type="submit" value="Update" class="btn btn-warning d-block " style="margin-top: 30px" />
+                                            <label asp-for="Description" class="form-label"></label>
+                                            <textarea asp-for="Description" class="form-control" rows="1"></textarea>
+                                            <span asp-validation-for="Description" class="text-danger"></span>
                                         </div>
                                     </div>
-                                    <div class="col"></div>
+                                    <div class="col-3">
+                                        <div class="form-group">
+                                            <input type="submit" value="Update" class="btn btn-warning d-block w-100" style="margin-top: 30px" />
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </form>
@@ -61,19 +72,15 @@
 </section>
 
 @section Scripts {
-    <script>
-        $(document).ready(function () {
-            $('#HR-\\&-Admin-').addClass('menu-open');
-            $('#AssembleWorkStepIndex').addClass('active');
-
-        });
-    </script>
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-    }
+    <script>
+        $(document).ready(function () {
+            "use strict"
 
-
-
-
-
+            $('#HR-\\&-Admin-').addClass('menu-open');
+            $('#AssembleWorkStepIndex').addClass('active');
+        });
+    </script>
+}
