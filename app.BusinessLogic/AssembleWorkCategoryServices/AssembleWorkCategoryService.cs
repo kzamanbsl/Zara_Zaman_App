@@ -17,19 +17,22 @@ namespace app.Services.AssembleWorkCategoryServices
             _iWorkContext = iWorkContext;
         }
 
-        public async Task<bool> AddRecord(AssembleWorkCategoryViewModel vm)
+        public async Task<bool> AddRecord(AssembleWorkCategoryViewModel viewModel)
         {
-            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim() && f.IsActive == true);
+            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == viewModel.Name.Trim() && f.IsActive == true);
             if (checkName == null)
             {
-                AssembleWorkCategory com = new AssembleWorkCategory();
-                com.Name = vm.Name;
-                com.Description = vm.Description;
-                var res = await _iEntityRepository.AddAsync(com);
-                vm.Id=res.Id;
+                AssembleWorkCategory data = new AssembleWorkCategory();
+                data.Name = viewModel.Name;
+                data.Description = viewModel.Description;
+                var response = await _iEntityRepository.AddAsync(data);
+                viewModel.Id = response.Id;
                 return true;
             }
-            return false;
+            else
+            {
+                return false;
+            }
         }
         public async Task<bool> UpdateRecord(AssembleWorkCategoryViewModel vm)
         {
