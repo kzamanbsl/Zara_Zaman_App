@@ -6,6 +6,7 @@ using System.Reflection;
 using app.Infrastructure.ModelConfig;
 using app.Infrastructure.SeedData;
 using app.EntityModel.AppModels;
+using app.EntityModel.AppModels.ATMAssemble;
 
 namespace app.Infrastructure
 {
@@ -55,10 +56,19 @@ namespace app.Infrastructure
         public virtual DbSet<PurchaseOrder> PurchaseOrder { get; set; }
         public virtual DbSet<PurchaseOrderDetail> PurchaseOrderDetail { get; set; }
         public virtual DbSet<Inventory> Inventory { get; set; }
-        public virtual DbSet<AssetInventory> AssetInventory{ get; set; }
-        public virtual DbSet<AssembleWorkCategory> AssembleWorkCategory{ get; set; }
-        public virtual DbSet<AssembleWorkStep> AssembleWorkStep{ get; set; }
-        public virtual DbSet<AssembleWorkStepItem> AssembleWorkStepItem{ get; set; }
+
+        #region ATMAssemble
+        public virtual DbSet<AssetInventory> AssetInventory { get; set; }
+        public virtual DbSet<AssembleWorkCategory> AssembleWorkCategory { get; set; }
+        public virtual DbSet<AssembleWorkStep> AssembleWorkStep { get; set; }
+        public virtual DbSet<AssembleWorkStepItem> AssembleWorkStepItem { get; set; }
+        public virtual DbSet<AssembleWork> AssembleWork { get; set; }
+        public virtual DbSet<AssembleWorkEmployee> AssembleWorkEmployee { get; set; }
+        public virtual DbSet<AssembleWorkDetail> AssembleWorkDetail { get; set; }
+
+
+        #endregion
+
 
 
     }

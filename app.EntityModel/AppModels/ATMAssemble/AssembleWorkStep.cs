@@ -1,4 +1,4 @@
-﻿namespace app.EntityModel.AppModels
+﻿namespace app.EntityModel.AppModels.ATMAssemble
 {
     public class AssembleWorkStep : BaseEntity
     {

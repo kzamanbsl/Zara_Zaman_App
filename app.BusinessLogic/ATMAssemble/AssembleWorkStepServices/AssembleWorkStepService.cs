@@ -1,9 +1,9 @@
-﻿using app.EntityModel.AppModels;
+﻿using app.EntityModel.AppModels.ATMAssemble;
 using app.Infrastructure;
 using app.Infrastructure.Auth;
 using app.Infrastructure.Repository;
 
-namespace app.Services.AssembleWorkStepServices
+namespace app.Services.ATMAssemble.AssembleWorkStepServices
 {
     public class AssembleWorkStepService : IAssembleWorkStepService
     {
@@ -27,7 +27,7 @@ namespace app.Services.AssembleWorkStepServices
                 data.Description = viewModel.Description;
                 data.AssembleWorkCategoryId = viewModel.AssembleWorkCategoryId;
                 var res = await _iEntityRepository.AddAsync(data);
-                viewModel.Id=res.Id;
+                viewModel.Id = res.Id;
                 return true;
             }
             else
@@ -79,15 +79,15 @@ namespace app.Services.AssembleWorkStepServices
         {
             AssembleWorkStepViewModel model = new AssembleWorkStepViewModel();
             model.AssembleWorkStepList = await Task.Run(() => (from t1 in _dbContext.AssembleWorkStep
-                                                                where t1.IsActive == true
-                                                                select new AssembleWorkStepViewModel
-                                                                {
-                                                                    Id = t1.Id,
-                                                                    Name = t1.Name,
-                                                                    Description = t1.Description,
-                                                                    AssembleWorkCategoryId = t1.AssembleWorkCategoryId,
-                                                                    AssembleWorkCategoryName = t1.AssembleWorkCategory.Name,
-                                                                }).AsQueryable());
+                                                               where t1.IsActive == true
+                                                               select new AssembleWorkStepViewModel
+                                                               {
+                                                                   Id = t1.Id,
+                                                                   Name = t1.Name,
+                                                                   Description = t1.Description,
+                                                                   AssembleWorkCategoryId = t1.AssembleWorkCategoryId,
+                                                                   AssembleWorkCategoryName = t1.AssembleWorkCategory.Name,
+                                                               }).AsQueryable());
             return model;
         }
 

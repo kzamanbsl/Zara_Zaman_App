@@ -1,28 +1,29 @@
 ﻿using app.EntityModel.AppModels;
+using app.EntityModel.AppModels.ATMAssemble;
 using app.Infrastructure;
 using app.Infrastructure.Auth;
 using app.Infrastructure.Repository;
 
-namespace app.Services.AssembleWorkStepItemServices
+namespace app.Services.ATMAssemble.AssembleWorkCategoryServices
 {
-    public class AssembleWorkStepItemService : IAssembleWorkStepItemService
+    public class AssembleWorkCategoryService : IAssembleWorkCategoryService
     {
-        private readonly IEntityRepository<AssembleWorkStepItem> _iEntityRepository;
+        private readonly IEntityRepository<AssembleWorkCategory> _iEntityRepository;
         private readonly InventoryDbContext _dbContext;
         private readonly IWorkContext _iWorkContext;
-        public AssembleWorkStepItemService(IEntityRepository<AssembleWorkStepItem> iEntityRepository, InventoryDbContext dbContext, IWorkContext iWorkContext)
+        public AssembleWorkCategoryService(IEntityRepository<AssembleWorkCategory> iEntityRepository, InventoryDbContext dbContext, IWorkContext iWorkContext)
         {
             _iEntityRepository = iEntityRepository;
             _dbContext = dbContext;
             _iWorkContext = iWorkContext;
         }
 
-        public async Task<bool> AddRecord(AssembleWorkStepItemViewModel viewModel)
+        public async Task<bool> AddRecord(AssembleWorkCategoryViewModel viewModel)
         {
             var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == viewModel.Name.Trim() && f.IsActive == true);
             if (checkName == null)
             {
-                AssembleWorkStepItem data = new AssembleWorkStepItem();
+                AssembleWorkCategory data = new AssembleWorkCategory();
                 data.Name = viewModel.Name;
                 data.Description = viewModel.Description;
                 var response = await _iEntityRepository.AddAsync(data);
@@ -35,7 +36,7 @@ namespace app.Services.AssembleWorkStepItemServices
             }
         }
 
-        public async Task<bool> UpdateRecord(AssembleWorkStepItemViewModel viewModel)
+        public async Task<bool> UpdateRecord(AssembleWorkCategoryViewModel viewModel)
         {
             var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == viewModel.Name.Trim() && f.Id != viewModel.Id && f.IsActive == true);
 
@@ -61,27 +62,27 @@ namespace app.Services.AssembleWorkStepItemServices
             return true;
         }
 
-        public async Task<AssembleWorkStepItemViewModel> GetRecordById(long id)
+        public async Task<AssembleWorkCategoryViewModel> GetRecordById(long id)
         {
             var result = await _iEntityRepository.GetByIdAsync(id);
-            AssembleWorkStepItemViewModel model = new AssembleWorkStepItemViewModel();
+            AssembleWorkCategoryViewModel model = new AssembleWorkCategoryViewModel();
             model.Id = result.Id;
             model.Name = result.Name;
             model.Description = result.Description;
             return model;
         }
 
-        public async Task<AssembleWorkStepItemViewModel> GetAllRecord()
+        public async Task<AssembleWorkCategoryViewModel> GetAllRecord()
         {
-            AssembleWorkStepItemViewModel model = new AssembleWorkStepItemViewModel();
-            model.AssembleWorkStepItemList = await Task.Run(() => (from t1 in _dbContext.AssembleWorkStepItem
-                                                                where t1.IsActive == true
-                                                                select new AssembleWorkStepItemViewModel
-                                                                {
-                                                                    Id = t1.Id,
-                                                                    Name = t1.Name,
-                                                                    Description = t1.Description,
-                                                                }).AsQueryable());
+            AssembleWorkCategoryViewModel model = new AssembleWorkCategoryViewModel();
+            model.AssembleWorkCategoryList = await Task.Run(() => (from t1 in _dbContext.AssembleWorkCategory
+                                                                   where t1.IsActive == true
+                                                                   select new AssembleWorkCategoryViewModel
+                                                                   {
+                                                                       Id = t1.Id,
+                                                                       Name = t1.Name,
+                                                                       Description = t1.Description,
+                                                                   }).AsQueryable());
             return model;
         }
 

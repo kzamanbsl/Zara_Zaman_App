@@ -1,5 +1,7 @@
 ﻿using app.EntityModel.AppModels;
+using app.EntityModel.AppModels.ATMAssemble;
 using app.EntityModel.CoreModel;
+using app.Infrastructure.ModelConfig.ATMAssemble;
 using Microsoft.EntityFrameworkCore;
 
 namespace app.Infrastructure.ModelConfig
@@ -39,6 +41,17 @@ namespace app.Infrastructure.ModelConfig
             new ProductConfig()?.Configure(builder.Entity<Product>());
             new CustomerConfig()?.Configure(builder.Entity<Customer>());
             new SupplierConfig()?.Configure(builder.Entity<Supplier>());
+
+            #region   AssembleWorkCategory,
+
+            new AssembleWorkCategoryConfig()?.Configure(builder.Entity<AssembleWorkCategory>());
+            new AssembleWorkStepConfig()?.Configure(builder.Entity<AssembleWorkStep>());
+            new AssembleWorkStepItemConfig()?.Configure(builder.Entity<AssembleWorkStepItem>());
+            new AssembleWorkConfig()?.Configure(builder.Entity<AssembleWork>());
+            new AssembleWorkEmployeeConfig()?.Configure(builder.Entity<AssembleWorkEmployee>());
+            new AssembleWorkDetailConfig()?.Configure(builder.Entity<AssembleWorkDetail>());
+
+            #endregion
 
         }
     }

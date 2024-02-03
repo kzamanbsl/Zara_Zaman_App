@@ -1,0 +1,27 @@
+
+=========================================
+-- Git Branch Delete
+--git push -d <remote_name> <branchname>
+--git branch -d <branchname>
+
+--Delete Table Data and Reset Identity
+--DELETE FROM 'TableName'
+--DBCC CHECKIDENT ([TableName], RESEED, 0);
+
+-- Schema name change
+--ALTER SCHEMA NewSchema TRANSFER [OldSchema].[TableName]
+
+--Duplicate Row Check
+SELECT ProductName, COUNT(*) FROM Erp.Product
+GROUP BY ProductName
+HAVING COUNT(*) > 1
+
+--Duplicate Row Delete
+DELETE FROM Erp.Product
+WHERE ProductId NOT IN (
+    SELECT MIN(ProductId)
+    FROM Erp.Product
+    GROUP BY ProductName
+);
+=====================================
+

@@ -1,6 +1,6 @@
-﻿namespace app.Services.AssembleWorkCategoryServices
+﻿namespace app.Services.ATMAssemble.AssembleWorkCategoryServices
 {
-    public class AssembleWorkCategoryViewModel:BaseViewModel
+    public class AssembleWorkCategoryViewModel : BaseViewModel
     {
         public string Name { get; set; }
         public string Description { get; set; }

@@ -1,8 +1,8 @@
-﻿using app.EntityModel.AppModels;
+﻿using app.EntityModel.AppModels.ATMAssemble;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace app.Infrastructure.ModelConfig
+namespace app.Infrastructure.ModelConfig.ATMAssemble
 {
     public class AssembleWorkStepItemConfig : IEntityTypeConfiguration<AssembleWorkStepItem>
     {

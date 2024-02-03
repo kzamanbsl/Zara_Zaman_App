@@ -1,6 +1,6 @@
-﻿namespace app.EntityModel.AppModels
+﻿namespace app.EntityModel.AppModels.ATMAssemble
 {
-    public class AssembleWorkStepItem : BaseEntity
+    public class AssembleWorkCategory : BaseEntity
     {
         public string Name { get; set; }
         public string Description { get; set; }
