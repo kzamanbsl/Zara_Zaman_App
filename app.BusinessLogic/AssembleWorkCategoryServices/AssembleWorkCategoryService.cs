@@ -34,22 +34,25 @@ namespace app.Services.AssembleWorkCategoryServices
                 return false;
             }
         }
-        public async Task<bool> UpdateRecord(AssembleWorkCategoryViewModel vm)
-        {
 
-            //var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim());
-            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim() && f.Id != vm.Id && f.IsActive == true);
+        public async Task<bool> UpdateRecord(AssembleWorkCategoryViewModel viewModel)
+        {
+            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == viewModel.Name.Trim() && f.Id != viewModel.Id && f.IsActive == true);
 
             if (checkName == null)
             {
-                var result = await _iEntityRepository.GetByIdAsync(vm.Id);
-                result.Name = vm.Name;
-                result.Description = vm.Description;
+                var result = await _iEntityRepository.GetByIdAsync(viewModel.Id);
+                result.Name = viewModel.Name;
+                result.Description = viewModel.Description;
                 await _iEntityRepository.UpdateAsync(result);
                 return true;
             }
-            return false;
+            else
+            {
+                return false;
+            }
         }
+
         public async Task<bool> DeleteRecord(long id)
         {
             var result = await _iEntityRepository.GetByIdAsync(id);
@@ -57,6 +60,7 @@ namespace app.Services.AssembleWorkCategoryServices
             await _iEntityRepository.UpdateAsync(result);
             return true;
         }
+
         public async Task<AssembleWorkCategoryViewModel> GetRecordById(long id)
         {
             var result = await _iEntityRepository.GetByIdAsync(id);
@@ -66,6 +70,7 @@ namespace app.Services.AssembleWorkCategoryServices
             model.Description = result.Description;
             return model;
         }
+
         public async Task<AssembleWorkCategoryViewModel> GetAllRecord()
         {
             AssembleWorkCategoryViewModel model = new AssembleWorkCategoryViewModel();

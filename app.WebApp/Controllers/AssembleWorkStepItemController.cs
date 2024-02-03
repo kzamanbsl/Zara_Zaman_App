@@ -34,7 +34,7 @@ namespace app.WebApp.Controllers
             {
                 return RedirectToAction("Index");
             }
-            ModelState.AddModelError(string.Empty, "Same Name already exists!");
+            ModelState.AddModelError(string.Empty, "This name is already used!");
             return View(viewModel);
         }
 
@@ -53,7 +53,7 @@ namespace app.WebApp.Controllers
             {
                 return RedirectToAction("Index");
             }
-            ModelState.AddModelError(string.Empty, "Same Name already exists!");
+            ModelState.AddModelError(string.Empty, "This name is already used!");
             return View(model);
         }
 
