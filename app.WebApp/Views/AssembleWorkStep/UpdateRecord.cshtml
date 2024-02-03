@@ -36,8 +36,8 @@
                                     <div class="col-3">
                                         <div class="form-group">
                                             <label asp-for="AssembleWorkCategoryList" class="form-label"></label>
-                                            <select asp-for="AssembleWorkCategoryId" asp-items="ViewBag.AssembleWorkCategoryList" class="form-control" required>
-                                                <option selected disabled>==Assemble Work==</option>
+                                            <select asp-for="AssembleWorkCategoryId" asp-items="ViewBag.AssembleWorkCategoryList" class="form-control" id="ddlAssembleId" required>
+                                                <option selected disabled>==Select Assemble==</option>
                                             </select>
                                             <span asp-validation-for="AssembleWorkCategoryId" class="text-danger"></span>
                                         </div>
@@ -79,6 +79,7 @@
         $(document).ready(function () {
             "use strict"
 
+            $('#ddlAssembleId').val(@(Model.AssembleWorkCategoryId)).trigger('change');
             $('#HR-\\&-Admin-').addClass('menu-open');
             $('#AssembleWorkStepIndex').addClass('active');
         });

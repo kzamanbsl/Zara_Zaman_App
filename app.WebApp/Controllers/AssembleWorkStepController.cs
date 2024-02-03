@@ -27,7 +27,8 @@ namespace app.WebApp.Controllers
         [HttpGet]
         public async Task<IActionResult> AddRecord()
         {
-            ViewBag.AssembleWorkCategoryList = new SelectList((await _iDropdownService.AssembleWorkCategorySelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
+            ViewBag.AssembleWorkCategoryList = new SelectList((await _iDropdownService.AssembleWorkCategorySelectionList())
+                .Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
             AssembleWorkStepViewModel viewModel = new AssembleWorkStepViewModel();
             return View(viewModel);
         }
@@ -40,13 +41,15 @@ namespace app.WebApp.Controllers
             {
                 return RedirectToAction("Index");
             }
-            ModelState.AddModelError(string.Empty, "Same Name already exists!");
+            ModelState.AddModelError(string.Empty, "This name is already used!");
             return View(viewModel);
         }
 
         [HttpGet]
         public async Task<IActionResult> UpdateRecord(long id)
         {
+            ViewBag.AssembleWorkCategoryList = new SelectList((await _iDropdownService.AssembleWorkCategorySelectionList())
+                .Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
             var result = await _iService.GetRecordById(id);
             return View(result);
         }
@@ -59,7 +62,7 @@ namespace app.WebApp.Controllers
             {
                 return RedirectToAction("Index");
             }
-            ModelState.AddModelError(string.Empty, "Same Name already exists!");
+            ModelState.AddModelError(string.Empty, "This name is already used!");
             return View(model);
         }
 

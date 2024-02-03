@@ -17,38 +17,44 @@ namespace app.Services.AssembleWorkStepServices
             _iWorkContext = iWorkContext;
         }
 
-        public async Task<bool> AddRecord(AssembleWorkStepViewModel vm)
+        public async Task<bool> AddRecord(AssembleWorkStepViewModel viewModel)
         {
-            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim() && f.IsActive == true);
+            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == viewModel.Name.Trim() && f.IsActive == true);
             if (checkName == null)
             {
-                AssembleWorkStep com = new AssembleWorkStep();
-                com.Name = vm.Name;
-                com.Description = vm.Description;
-                com.AssembleWorkCategoryId = vm.AssembleWorkCategoryId;
-                var res = await _iEntityRepository.AddAsync(com);
-                vm.Id=res.Id;
+                AssembleWorkStep data = new AssembleWorkStep();
+                data.Name = viewModel.Name;
+                data.Description = viewModel.Description;
+                data.AssembleWorkCategoryId = viewModel.AssembleWorkCategoryId;
+                var res = await _iEntityRepository.AddAsync(data);
+                viewModel.Id=res.Id;
                 return true;
             }
-            return false;
+            else
+            {
+                return false;
+            }
         }
-        public async Task<bool> UpdateRecord(AssembleWorkStepViewModel vm)
-        {
 
-            //var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim());
-            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim() && f.Id != vm.Id && f.IsActive == true);
+        public async Task<bool> UpdateRecord(AssembleWorkStepViewModel viewModel)
+        {
+            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == viewModel.Name.Trim() && f.Id != viewModel.Id && f.IsActive == true);
 
             if (checkName == null)
             {
-                var result = await _iEntityRepository.GetByIdAsync(vm.Id);
-                result.Name = vm.Name;
-                result.Description = vm.Description;
-                result.AssembleWorkCategoryId = vm.AssembleWorkCategoryId;
+                var result = await _iEntityRepository.GetByIdAsync(viewModel.Id);
+                result.Name = viewModel.Name;
+                result.Description = viewModel.Description;
+                result.AssembleWorkCategoryId = viewModel.AssembleWorkCategoryId;
                 await _iEntityRepository.UpdateAsync(result);
                 return true;
             }
-            return false;
+            else
+            {
+                return false;
+            }
         }
+
         public async Task<bool> DeleteRecord(long id)
         {
             var result = await _iEntityRepository.GetByIdAsync(id);
@@ -56,6 +62,7 @@ namespace app.Services.AssembleWorkStepServices
             await _iEntityRepository.UpdateAsync(result);
             return true;
         }
+
         public async Task<AssembleWorkStepViewModel> GetRecordById(long id)
         {
             var result = await _iEntityRepository.GetByIdAsync(id);
@@ -67,6 +74,7 @@ namespace app.Services.AssembleWorkStepServices
             model.AssembleWorkCategoryName = result.AssembleWorkCategory?.Name;
             return model;
         }
+
         public async Task<AssembleWorkStepViewModel> GetAllRecord()
         {
             AssembleWorkStepViewModel model = new AssembleWorkStepViewModel();
