@@ -102,6 +102,20 @@ namespace app.WebApp.Controllers
             return View(nameof(UpdatePurchaseOrder), viewModel);
         }
         [HttpGet]
+        public async Task<JsonResult> IsPurchaseOrderMasterUpdateRecord(int id)
+        {
+            var data = await _ipurchaseOrderService.GetRecordById(id);
+            return Json(data);
+
+            //bool IsExist = false;
+            //var data = await _ipurchaseOrderService.IsPurchaseOrderMasterUpdateRecord(id);
+            //if (data)
+            //{
+            //    IsExist = true;
+            //}
+            //return Json(IsExist);
+        }
+        [HttpGet]
         public async Task<IActionResult> PurchaseOrderMasterUpdateRecord(long id)
         {
 
