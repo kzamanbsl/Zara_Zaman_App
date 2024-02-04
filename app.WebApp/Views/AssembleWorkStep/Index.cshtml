@@ -1,5 +1,4 @@
-﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
-@model app.Services.ATMAssemble.AssembleWorkStepServices.AssembleWorkStepViewModel
+﻿@model app.Services.ATMAssemble.AssembleWorkStepServices.AssembleWorkStepViewModel
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
@@ -78,7 +77,7 @@
         $(document).ready(function () {
             "use strict"
 
-            $('#HR-\\&-Admin-').addClass('menu-open');
+            $('#ATM-Assemble').addClass('menu-open');
             $('#AssembleWorkStepIndex').addClass('active');
 
             $('#assembleWorkStepTable').DataTable({
