@@ -155,6 +155,14 @@ namespace app.WebApp.Controllers
             PurchaseOrderViewModel viewModel = await _ipurchaseOrderService.GetPurchaseOrderDetails(id);
             return View(viewModel);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> RejectPurchaseOrder(long id)
+        {
+            var res = await _ipurchaseOrderService.RejectPurchaseOrder(id);
+            return RedirectToAction("Index");
+        }
+
     }
 }
 
