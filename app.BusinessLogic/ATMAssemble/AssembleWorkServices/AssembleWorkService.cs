@@ -2,7 +2,8 @@
 using app.Infrastructure;
 using app.Infrastructure.Auth;
 using app.Infrastructure.Repository;
-using app.Services.ATMAssemble.AssembleWorkStepServices;
+using app.Services.ATMAssemble.AssembleWorkServices;
+using Microsoft.EntityFrameworkCore.Scaffolding.Metadata;
 
 namespace app.Services.ATMAssemble.AssembleWorkServices
 {
@@ -20,21 +21,13 @@ namespace app.Services.ATMAssemble.AssembleWorkServices
 
         public async Task<bool> AddRecord(AssembleWorkViewModel viewModel)
         {
-            //var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == viewModel.Name.Trim() && f.IsActive == true);
-            //if (checkName == null)
-            //{
-                AssembleWork data = new AssembleWork();
-                //data.Name = viewModel.Name;
-                data.Description = viewModel.Description;
-                data.AssembleWorkCategoryId = viewModel.AssembleWorkCategoryId;
-                var res = await _iEntityRepository.AddAsync(data);
-                viewModel.Id = res.Id;
-                return true;
-            //}
-            //else
-            //{
-            //    return false;
-            //}
+            AssembleWork data = new AssembleWork();
+            data.AssembleDate = viewModel.AssembleDate;
+            data.AssembleWorkCategoryId = viewModel.AssembleWorkCategoryId;
+            data.Description = viewModel.Description;
+            var response = await _iEntityRepository.AddAsync(data);
+            viewModel.Id = response.Id;
+            return true;
         }
 
         public async Task<bool> UpdateRecord(AssembleWorkViewModel viewModel)
@@ -43,12 +36,12 @@ namespace app.Services.ATMAssemble.AssembleWorkServices
 
             //if (checkName == null)
             //{
-                var result = await _iEntityRepository.GetByIdAsync(viewModel.Id);
-                //result.Name = viewModel.Name;
-                result.Description = viewModel.Description;
-                result.AssembleWorkCategoryId = viewModel.AssembleWorkCategoryId;
-                await _iEntityRepository.UpdateAsync(result);
-                return true;
+            var result = await _iEntityRepository.GetByIdAsync(viewModel.Id);
+            //result.Name = viewModel.Name;
+            result.Description = viewModel.Description;
+            result.AssembleWorkCategoryId = viewModel.AssembleWorkCategoryId;
+            await _iEntityRepository.UpdateAsync(result);
+            return true;
             //}
             //else
             //{
@@ -80,15 +73,15 @@ namespace app.Services.ATMAssemble.AssembleWorkServices
         {
             AssembleWorkViewModel model = new AssembleWorkViewModel();
             model.AssembleWorkList = await Task.Run(() => (from t1 in _dbContext.AssembleWork
-                                                               where t1.IsActive == true
-                                                               select new AssembleWorkViewModel
-                                                               {
-                                                                   Id = t1.Id,
-                                                                   //Name = t1.Name,
-                                                                   Description = t1.Description,
-                                                                   AssembleWorkCategoryId = t1.AssembleWorkCategoryId,
-                                                                   AssembleWorkCategoryName = t1.AssembleWorkCategory.Name,
-                                                               }).AsQueryable());
+                                                           where t1.IsActive == true
+                                                           select new AssembleWorkViewModel
+                                                           {
+                                                               Id = t1.Id,
+                                                               //Name = t1.Name,
+                                                               Description = t1.Description,
+                                                               AssembleWorkCategoryId = t1.AssembleWorkCategoryId,
+                                                               AssembleWorkCategoryName = t1.AssembleWorkCategory.Name,
+                                                           }).AsQueryable());
             return model;
         }
 
