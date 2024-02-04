@@ -142,6 +142,40 @@
 
 
     </script>
+
+    <script>
+        $(document).ready(function () {
+            $('#form1').submit(function (event) {
+                event.preventDefault(); // Prevent default form submission
+
+                // Serialize form data
+                var formData = $(this).serialize();
+
+                // Send AJAX request
+                $.ajax({
+                    type: 'POST',
+                    url: '/PurchaseOrder/checkPurchaseOrderMasterUpdateRecord', // Update the URL with your controller action
+                    data: formData,
+                    success: function (response) {
+                        if (response.success) {
+                            // Close the modal
+                            $('#editModal').modal('hide');
+
+                            // Optionally, update the table or s+how a success message
+                        } else {
+                            // Handle errors or display error message
+                            console.error('Error:', response.message);
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Error:', error);
+                    }
+                });
+            });
+        });
+    </script>
+
+@* 
     <script>
 
         $(document).ready(function () {
@@ -182,7 +216,9 @@
         }
         // $("#LogoutTime").change(function)
 
-    </script>
+    </script> *@
+
+
     @*
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>

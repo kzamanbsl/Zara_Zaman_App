@@ -30,7 +30,7 @@
     public enum StoreTypeEnum
     {
         Purchase = 1,
-        Menufacture       
+        Manufacture       
     }
     public enum PurchaseTypeEnum
     {
@@ -63,5 +63,15 @@
         Storehouse = 1,
         SaleCenter,
         ServiceCenter
+    }
+    
+    public enum AssembleWorkStatusEnum
+    {
+        Draft = 1,
+        Confirm,
+        Complete,
+        Fault,
+        Hold,
+        Reject
     }
 }

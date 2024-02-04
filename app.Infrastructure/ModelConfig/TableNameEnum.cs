@@ -38,5 +38,15 @@
         PurchaseOrder,
         PurchaseOrderDetail,
         AssetInventory,
+
+        #region ATMAssemble
+        AssembleWorkCategory,
+        AssembleWorkStep,
+        AssembleWorkStepItem,
+        AssembleWork,
+        AssembleWorkEmployee,
+        AssembleWorkDetail
+        #endregion
+
     }
 }

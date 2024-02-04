@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using app.Infrastructure;
 
@@ -11,9 +12,10 @@ using app.Infrastructure;
 namespace app.Infrastructure.Migrations
 {
     [DbContext(typeof(InventoryDbContext))]
-    partial class InventoryDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240202181231_AssembleModelsAdded")]
+    partial class AssembleModelsAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -22,6 +24,119 @@ namespace app.Infrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("app.EntityModel.AppModels.AssembleWorkCategory", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AssembleWorkCategory", "dbo");
+                });
+
+            modelBuilder.Entity("app.EntityModel.AppModels.AssembleWorkStep", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<long>("AssembleWorkCategoryId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AssembleWorkCategoryId");
+
+                    b.ToTable("AssembleWorkStep", "dbo");
+                });
+
+            modelBuilder.Entity("app.EntityModel.AppModels.AssembleWorkStepItem", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AssembleWorkStepItem", "dbo");
+                });
 
             modelBuilder.Entity("app.EntityModel.AppModels.AssetInventory", b =>
                 {
@@ -81,253 +196,6 @@ namespace app.Infrastructure.Migrations
                     b.HasIndex("UnitId");
 
                     b.ToTable("AssetInventory", "dbo");
-                });
-
-            modelBuilder.Entity("app.EntityModel.AppModels.ATMAssemble.AssembleWork", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
-
-                    b.Property<DateTime>("AssembleDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<long>("AssembleWorkCategoryId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("StatusId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("UpdatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AssembleWorkCategoryId");
-
-                    b.ToTable("AssembleWork", "dbo");
-                });
-
-            modelBuilder.Entity("app.EntityModel.AppModels.ATMAssemble.AssembleWorkCategory", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("UpdatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("AssembleWorkCategory", "dbo");
-                });
-
-            modelBuilder.Entity("app.EntityModel.AppModels.ATMAssemble.AssembleWorkDetail", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
-
-                    b.Property<long>("AssembleWorkId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("AssembleWorkItemId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long?>("AssembleWorkStepItemId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsComplete")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Remarks")
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("UpdatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AssembleWorkId");
-
-                    b.HasIndex("AssembleWorkStepItemId");
-
-                    b.ToTable("AssembleWorkDetail", "dbo");
-                });
-
-            modelBuilder.Entity("app.EntityModel.AppModels.ATMAssemble.AssembleWorkEmployee", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
-
-                    b.Property<long>("AssembleWorkId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<long>("EmployeeId")
-                        .HasColumnType("bigint");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("UpdatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AssembleWorkId");
-
-                    b.HasIndex("EmployeeId");
-
-                    b.ToTable("AssembleWorkEmployee", "dbo");
-                });
-
-            modelBuilder.Entity("app.EntityModel.AppModels.ATMAssemble.AssembleWorkStep", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
-
-                    b.Property<long>("AssembleWorkCategoryId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("UpdatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AssembleWorkCategoryId");
-
-                    b.ToTable("AssembleWorkStep", "dbo");
-                });
-
-            modelBuilder.Entity("app.EntityModel.AppModels.ATMAssemble.AssembleWorkStepItem", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
-
-                    b.Property<long>("AssembleWorkStepId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("UpdatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AssembleWorkStepId");
-
-                    b.ToTable("AssembleWorkStepItem", "dbo");
                 });
 
             modelBuilder.Entity("app.EntityModel.AppModels.Attendance", b =>
@@ -2192,14 +2060,14 @@ namespace app.Infrastructure.Migrations
                         new
                         {
                             Id = "8e445865-a24d-4543-a6c6-9443d048cdb9",
-                            ConcurrencyStamp = "6d028fd4-619e-46d2-83cd-6b822009727a",
+                            ConcurrencyStamp = "64c0ae67-ea18-47b0-b4c5-385f9eb3befb",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         },
                         new
                         {
                             Id = "2c5e174e-3b0e-446f-86af-483d56fd7210",
-                            ConcurrencyStamp = "d2bda2fd-ce5c-496d-b599-59959c18a395",
+                            ConcurrencyStamp = "5f772d1f-5c82-4414-8850-1965134404e3",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -2323,6 +2191,17 @@ namespace app.Infrastructure.Migrations
                     b.ToTable("AspNetUserTokens", "dbo");
                 });
 
+            modelBuilder.Entity("app.EntityModel.AppModels.AssembleWorkStep", b =>
+                {
+                    b.HasOne("app.EntityModel.AppModels.AssembleWorkCategory", "AssembleWorkCategory")
+                        .WithMany()
+                        .HasForeignKey("AssembleWorkCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AssembleWorkCategory");
+                });
+
             modelBuilder.Entity("app.EntityModel.AppModels.AssetInventory", b =>
                 {
                     b.HasOne("app.EntityModel.AppModels.Product", "Product")
@@ -2340,75 +2219,6 @@ namespace app.Infrastructure.Migrations
                     b.Navigation("Product");
 
                     b.Navigation("Unit");
-                });
-
-            modelBuilder.Entity("app.EntityModel.AppModels.ATMAssemble.AssembleWork", b =>
-                {
-                    b.HasOne("app.EntityModel.AppModels.ATMAssemble.AssembleWorkCategory", "AssembleWorkCategory")
-                        .WithMany()
-                        .HasForeignKey("AssembleWorkCategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("AssembleWorkCategory");
-                });
-
-            modelBuilder.Entity("app.EntityModel.AppModels.ATMAssemble.AssembleWorkDetail", b =>
-                {
-                    b.HasOne("app.EntityModel.AppModels.ATMAssemble.AssembleWork", "AssembleWork")
-                        .WithMany()
-                        .HasForeignKey("AssembleWorkId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("app.EntityModel.AppModels.ATMAssemble.AssembleWorkStepItem", "AssembleWorkStepItem")
-                        .WithMany()
-                        .HasForeignKey("AssembleWorkStepItemId");
-
-                    b.Navigation("AssembleWork");
-
-                    b.Navigation("AssembleWorkStepItem");
-                });
-
-            modelBuilder.Entity("app.EntityModel.AppModels.ATMAssemble.AssembleWorkEmployee", b =>
-                {
-                    b.HasOne("app.EntityModel.AppModels.ATMAssemble.AssembleWork", "AssembleWork")
-                        .WithMany()
-                        .HasForeignKey("AssembleWorkId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("app.EntityModel.AppModels.Employee", "Employee")
-                        .WithMany()
-                        .HasForeignKey("EmployeeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("AssembleWork");
-
-                    b.Navigation("Employee");
-                });
-
-            modelBuilder.Entity("app.EntityModel.AppModels.ATMAssemble.AssembleWorkStep", b =>
-                {
-                    b.HasOne("app.EntityModel.AppModels.ATMAssemble.AssembleWorkCategory", "AssembleWorkCategory")
-                        .WithMany()
-                        .HasForeignKey("AssembleWorkCategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("AssembleWorkCategory");
-                });
-
-            modelBuilder.Entity("app.EntityModel.AppModels.ATMAssemble.AssembleWorkStepItem", b =>
-                {
-                    b.HasOne("app.EntityModel.AppModels.ATMAssemble.AssembleWorkStep", "AssembleWorkStep")
-                        .WithMany()
-                        .HasForeignKey("AssembleWorkStepId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("AssembleWorkStep");
                 });
 
             modelBuilder.Entity("app.EntityModel.AppModels.Attendance", b =>

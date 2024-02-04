@@ -35,6 +35,9 @@ using app.Services.AssetCategoryServices;
 using app.Services.AssetItemServices;
 using app.Services.ServiceCenterServices;
 using app.Services.SaleCenterServices;
+using app.Services.ATMAssemble.AssembleWorkStepServices;
+using app.Services.ATMAssemble.AssembleWorkCategoryServices;
+using app.Services.ATMAssemble.AssembleWorkStepItemServices;
 
 namespace app.Services
 {
@@ -77,6 +80,13 @@ namespace app.Services
             services.AddTransient<IAssetItemService, AssetItemService>();
             services.AddTransient<IServiceCenterService, ServiceCenterService>();
             services.AddTransient<ISaleCenterService, SaleCenterService>();
+
+            #region ATM Assemble
+            services.AddTransient<IAssembleWorkCategoryService, AssembleWorkCategoryService>();
+            services.AddTransient<IAssembleWorkStepService, AssembleWorkStepService>();
+            services.AddTransient<IAssembleWorkStepItemService, AssembleWorkStepItemService>();
+            #endregion
+
 
             return services;
         }

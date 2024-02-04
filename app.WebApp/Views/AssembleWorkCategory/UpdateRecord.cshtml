@@ -1,0 +1,79 @@
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model app.Services.ATMAssemble.AssembleWorkCategoryServices.AssembleWorkCategoryViewModel
+@{
+    ViewData["Title"] = "UpdateRecord";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="content-header">
+    <div class="container-fluid ">
+        <div class="breadcrumb d-flex justify-content-between align-items-center pl-3 pr-3">
+            <ol class="breadcrumb mb-0 p-0">
+                <li class="breadcrumb-item"><a href="/Admin/Index">Home</a></li>
+                <li class="breadcrumb-item active"> Assemble Work Category List</li>
+            </ol>
+            <div>
+                <a asp-action="Index"><i class="fa fa-list"></i> Assemble Work Category List</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="text-secondary">
+                    <i class="fas fa-plus"></i> Update Assemble Work Category
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form asp-action="UpdateRecord" method="post">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            @Html.HiddenFor(model => model.Id)
+                            <div class="container">
+                                <div class="row align-items-start">
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label asp-for="Name" class="form-label"></label>
+                                            <input asp-for="Name" class="form-control" required />
+                                            <span asp-validation-for="Name" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label asp-for="Description" class="form-label"></label>
+                                            <textarea asp-for="Description" class="form-control" rows="1"></textarea>
+                                            <span asp-validation-for="Description" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <input type="submit" value="Update" class="btn btn-warning d-block w-100" style="margin-top: 30px" />
+                                        </div>
+                                    </div>
+                                    <div class="col"></div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        $(document).ready(function () {
+            "use strict"
+
+            $('#HR-\\&-Admin-').addClass('menu-open');
+            $('#AssembleWorkCategoryIndex').addClass('active');
+        });
+    </script>
+}
