@@ -1,5 +1,4 @@
-﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
-@model app.Services.ATMAssemble.AssembleWorkStepServices.AssembleWorkStepViewModel
+﻿@model app.Services.ATMAssemble.AssembleWorkStepServices.AssembleWorkStepViewModel
 @{
     ViewData["Title"] = "UpdateRecord";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
@@ -38,7 +37,7 @@
                                         <div class="form-group">
                                             <label class="form-label">Select Assemble</label>
                                             <select asp-for="AssembleWorkCategoryId" asp-items="ViewBag.AssembleWorkCategoryList" class="form-control" id="ddlAssembleId" required>
-                                                <option selected disabled>==Select Assemble==</option>
+                                                <option selected disabled>=Select Assemble=</option>
                                             </select>
                                             <span asp-validation-for="AssembleWorkCategoryId" class="text-danger"></span>
                                         </div>
@@ -81,7 +80,7 @@
             "use strict"
 
             $('#ddlAssembleId').val(@(Model.AssembleWorkCategoryId)).trigger('change');
-            $('#HR-\\&-Admin-').addClass('menu-open');
+            $('#ATM-Assemble').addClass('menu-open');
             $('#AssembleWorkStepIndex').addClass('active');
         });
     </script>

@@ -1,5 +1,4 @@
-﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
-@model app.Services.ATMAssemble.AssembleWorkStepItemServices.AssembleWorkStepItemViewModel
+﻿@model app.Services.ATMAssemble.AssembleWorkStepItemServices.AssembleWorkStepItemViewModel
 @{
     ViewData["Title"] = "AddRecord";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
@@ -34,21 +33,30 @@
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                             <div class="container">
                                 <div class="row align-items-start">
-                                    <div class="col-4">
+                                    <div class="col-3">
+                                        <div class="form-group">
+                                            <label class="form-label">Select Assemble Step</label>
+                                            <select asp-for="AssembleWorkStepId" asp-items="ViewBag.AssembleWorkStepList" class="form-control" required>
+                                                <option selected disabled>=Select Assemble Step=</option>
+                                            </select>
+                                            <span asp-validation-for="AssembleWorkStepId" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-3">
                                         <div class="form-group">
                                             <label asp-for="Name" class="form-label"></label>
                                             <input asp-for="Name" class="form-control" required />
                                             <span asp-validation-for="Name" class="text-danger"></span>
                                         </div>
                                     </div>
-                                    <div class="col-4">
+                                    <div class="col-3">
                                         <div class="form-group">
                                             <label asp-for="Description" class="form-label"></label>
                                             <textarea asp-for="Description" class="form-control" rows="1"></textarea>
                                             <span asp-validation-for="Description" class="text-danger"></span>
                                         </div>
                                     </div>
-                                    <div class="col-4">
+                                    <div class="col-3">
                                         <div class="form-group">
                                             <input type="submit" value="Create" class="btn btn-primary d-block w-100" style="margin-top: 30px" />
                                         </div>
@@ -71,7 +79,7 @@
         $(document).ready(function () {
             "use strict"
 
-            $('#HR-\\&-Admin-').addClass('menu-open');
+            $('#ATM-Assemble').addClass('menu-open');
             $('#AssembleWorkStepItemAddRecord').addClass('active');
         });
     </script>
