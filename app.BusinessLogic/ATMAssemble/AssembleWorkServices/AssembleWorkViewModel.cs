@@ -1,5 +1,5 @@
 ﻿
-namespace app.Services.ATMAssemble.AssembleWorkStepServices
+namespace app.Services.ATMAssemble.AssembleWorkServices
 {
     public class AssembleWorkViewModel : BaseViewModel
     {
@@ -9,7 +9,12 @@ namespace app.Services.ATMAssemble.AssembleWorkStepServices
         public int AssembleTarget { get; set; } // False Prop
         public string Description { get; set; }
         public int StatusId { get; set; }
-
+        private long[] EmployeeId;
+        public long[] EmployeeIds
+        {
+            get { return EmployeeId; }
+            set { EmployeeId = value; }
+        }
         public IEnumerable<AssembleWorkViewModel> AssembleWorkList { get; set; }
     }
 }
