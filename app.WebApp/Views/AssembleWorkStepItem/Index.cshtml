@@ -1,5 +1,4 @@
-﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
-@model app.Services.ATMAssemble.AssembleWorkStepItemServices.AssembleWorkStepItemViewModel
+﻿@model app.Services.ATMAssemble.AssembleWorkStepItemServices.AssembleWorkStepItemViewModel
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
@@ -48,7 +47,7 @@
                                 <tr>
                                     <td class="text-center">@SN</td>
                                     <td class="text-left">
-                                        -
+                                        @Html.DisplayFor(modelItem => item.AssembleWorkStepName)
                                     </td>
                                     <td class="text-left">
                                         @Html.DisplayFor(modelItem => item.Name)
@@ -80,7 +79,7 @@
         $(document).ready(function () {
             "use strict"
 
-            $('#HR-\\&-Admin-').addClass('menu-open');
+            $('#ATM-Assemble').addClass('menu-open');
             $('#AssembleWorkStepItemIndex').addClass('active');
 
             $('#assembleWorkStepItemTable').DataTable({

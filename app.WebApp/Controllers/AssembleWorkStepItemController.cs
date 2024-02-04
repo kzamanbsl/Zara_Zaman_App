@@ -1,5 +1,7 @@
 ﻿using app.Services.ATMAssemble.AssembleWorkStepItemServices;
+using app.Services.DropdownServices;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace app.WebApp.Controllers
 {
@@ -7,9 +9,11 @@ namespace app.WebApp.Controllers
     {
 
         private readonly IAssembleWorkStepItemService _iService;
-        public AssembleWorkStepItemController(IAssembleWorkStepItemService iService)
+        private readonly IDropdownService _iDropdownService;
+        public AssembleWorkStepItemController(IAssembleWorkStepItemService iService, IDropdownService iDropdownService)
         {
             _iService = iService;
+            _iDropdownService = iDropdownService;
         }
 
         [HttpGet]
@@ -22,6 +26,8 @@ namespace app.WebApp.Controllers
         [HttpGet]
         public async Task<IActionResult> AddRecord()
         {
+            ViewBag.AssembleWorkStepList = new SelectList((await _iDropdownService.AssembleWorkStepSelectionList())
+                .Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
             AssembleWorkStepItemViewModel viewModel = new AssembleWorkStepItemViewModel();
             return View(viewModel);
         }
@@ -41,6 +47,8 @@ namespace app.WebApp.Controllers
         [HttpGet]
         public async Task<IActionResult> UpdateRecord(long id)
         {
+            ViewBag.AssembleWorkStepList = new SelectList((await _iDropdownService.AssembleWorkStepSelectionList())
+                .Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
             var result = await _iService.GetRecordById(id);
             return View(result);
         }
