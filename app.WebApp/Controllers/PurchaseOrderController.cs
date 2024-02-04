@@ -102,7 +102,7 @@ namespace app.WebApp.Controllers
             return View(nameof(UpdatePurchaseOrder), viewModel);
         }
 
-        //
+        //[HttpGet]
         //public async Task<JsonResult> IsPurchaseOrderMasterUpdateRecord(int id)
         //{
         //    var data = await _ipurchaseOrderService.GetRecordById(id);
@@ -116,23 +116,24 @@ namespace app.WebApp.Controllers
         //    //}
         //    //return Json(IsExist);
         //}
-        [HttpPost]
-        public async Task<JsonResult> checkPurchaseOrderMasterUpdateRecord(PurchaseOrderViewModel model)
-        {
-            try
-            {
-                // Perform the necessary operations to update the purchase order record
-                // Example: _purchaseOrderService.UpdatePurchaseOrder(model);
 
-                // Return a success response
-                return Json(new { success = true });
-            }
-            catch (Exception ex)
-            {
-                // Return an error response
-                return Json(new { success = false, message = ex.Message });
-            }
-        }
+        //[HttpPost]
+        //public async Task<JsonResult> checkPurchaseOrderMasterUpdateRecord(PurchaseOrderViewModel model)
+        //{
+        //    try
+        //    {
+        //        // Perform the necessary operations to update the purchase order record
+        //        // Example: _purchaseOrderService.UpdatePurchaseOrder(model);
+
+        //        // Return a success response
+        //        return Json(new { success = true });
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        // Return an error response
+        //        return Json(new { success = false, message = ex.Message });
+        //    }
+        //}
 
 
         [HttpGet]

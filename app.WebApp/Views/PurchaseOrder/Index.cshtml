@@ -91,7 +91,7 @@
 
                                                     <div class="form-group">
                                                         <label>Storehouse</label>
-                                                        <select class="form-control" value="@item.StorehouseId" asp-for="StorehouseId" asp-items="ViewBag.StorehouseList" required>
+                                                        <select class="form-control" value="@item.StorehouseId" id="StorehouseId" asp-for="StorehouseId" asp-items="ViewBag.StorehouseList" required>
                                                             <option selected>-- Select Storehouse --</option>
                                                             <span asp-validation-for="StorehouseId" class="text-danger"></span>
                                                         </select>
@@ -99,7 +99,7 @@
 
                                                     <div class="form-group">
                                                         <label>Supplier</label>
-                                                        <select class="form-control" asp-for="SupplierId" asp-items="ViewBag.SupplierList" required>
+                                                        <select class="form-control" id="SupplierId" asp-for="SupplierId" asp-items="ViewBag.SupplierList" required>
                                                             <option value="0" selected>-- Select Supplier --</option>
                                                             <span asp-validation-for="SupplierId" class="text-danger"></span>
                                                         </select>
@@ -142,7 +142,42 @@
 
 
     </script>
+   @*  <script>
+        $(document).ready(function () {
+            // Function to fetch and update the dropdown options
+            function updateDropdown() {
+                $.ajax({
+                    url: '/PurchaseOrder/IsPurchaseOrderMasterUpdateRecord', // Replace this with your actual endpoint for fetching storehouses
+                    type: 'GET',
+                    success: function (data) {
+                        // Assuming data is an array of objects with id and name properties
+                        var dropdown = $('#StorehouseId');
+                        dropdown.empty();
+                        dropdown.append($('<option selected>-- Select Storehouse --</option>'));
+                        $.each(data, function (index, item) {
+                            dropdown.append($('<option></option>').attr('value', item.id).text(item.name));
+                        });
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(xhr.responseText);
+                        // Handle error appropriately
+                    }
+                });
+            }
 
+            // Call the function initially to populate the dropdown
+            updateDropdown();
+
+            // Event handler for when Storehouse selection changes
+            $('#StorehouseId').change(function () {
+                var selectedStorehouseId = $(this).val(StorehouseId);
+                // Perform any action you need with the selected storehouse id
+                console.log('StorehouseId:', StorehouseId);
+            });
+        });
+    </script> *@
+
+@* 
     <script>
         $(document).ready(function () {
             $('#form1').submit(function (event) {
@@ -173,7 +208,7 @@
                 });
             });
         });
-    </script>
+    </script> *@
 
 @* 
     <script>
