@@ -153,7 +153,7 @@
             $('#PurchaseOrderAddPurchaseOrderAndDetail').addClass('active');
         });
 
-        //Confirm Purchase Order
+        //Reject Purchase Order
         $("#orderReject").on("click", function () {
             var id = @Model.Id;
             $.ajax({
@@ -177,33 +177,9 @@
         });
 
 
-                        // $("#orderReject").on("click", function () {
-                        //     var id = @Model.Id;
-                        //     $.ajax({
-                        //         type: "POST",
-                        //         url: "/PurchaseOrder/RejectPurchaseOrder",
-                        //         data: { id: id },
-                        //         success: function (result) {
-                        //             if (result) {
-                        //                 alert("Order Rejected");
-
-                        //                 // Redirect first
-                        //                 window.location.href = "/PurchaseOrder/Index/";
-
-                        //                 // Reload after a short delay (e.g., 1000 milliseconds or 1 second)
-                        //                 setTimeout(function () {
-                        //                     location.reload(true);
-                        //                 }, 100);
-                        //             } else {
-                        //                 alert("Rejection failed");
-                        //             }
-                        //         },
-                        //         error: function (error) {
-                        //             // Handle the error case here
-                        //             console.error("Error occurred during AJAX request:", error);
-                        //         }
-                        //     });
-                        // });
+        $("#orderReceived").on("click", function () {
+            alert("Received button clicked"); 
+        });
 
 
     </script>
