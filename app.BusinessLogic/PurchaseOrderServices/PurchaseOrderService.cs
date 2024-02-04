@@ -93,7 +93,7 @@ namespace app.Services.PurchaseOrderServices
                                                            Id = t1.Id,
                                                            PurchaseDate = t1.PurchaseDate,
                                                            OrderNo = t1.OrderNo,
-                                                           OrderStatusId = PurchaseOrderStatusEnum.Draft,
+                                                           OrderStatusId = (PurchaseOrderStatusEnum)t1.OrderStatusId,
                                                            SupplierId = t1.SupplierId,
                                                            SupplierName = t1.Supplier.Name,
                                                            StorehouseId = t1.StorehouseId,
@@ -247,7 +247,7 @@ namespace app.Services.PurchaseOrderServices
                                                            Id = t1.Id,
                                                            PurchaseDate = t1.PurchaseDate,
                                                            OrderNo = t1.OrderNo,
-                                                           OrderStatusId = PurchaseOrderStatusEnum.Draft,
+                                                           OrderStatusId = (PurchaseOrderStatusEnum)t1.OrderStatusId,
                                                            SupplierId = t1.SupplierId,
                                                            SupplierName = t1.Supplier.Name,
                                                            StorehouseId = t1.StorehouseId,
@@ -277,6 +277,18 @@ namespace app.Services.PurchaseOrderServices
 
 
             return purchaseOrderModel;
+        }
+
+        public async Task<bool> RejectPurchaseOrder(long id)
+        {
+            var checkPurchaseOrder = await _dbContext.PurchaseOrder.FirstOrDefaultAsync(c => c.Id == id);
+            if (checkPurchaseOrder != null || checkPurchaseOrder.OrderStatusId == (int)PurchaseOrderStatusEnum.Draft || checkPurchaseOrder.OrderStatusId == (int)PurchaseOrderStatusEnum.Confirm)
+            {
+                checkPurchaseOrder.OrderStatusId = (int)PurchaseOrderStatusEnum.Reject;
+                await _iEntityRepository.UpdateAsync(checkPurchaseOrder);
+                return true;
+            }
+            return false;
         }
     }
 }

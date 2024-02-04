@@ -33,7 +33,7 @@
                 else
                 {
                     <h3 class="card-title text-info">
-                       Nothig Found 
+                        Nothig Found
                     </h3>
                 }
             </div>
@@ -83,7 +83,7 @@
                                                 <th style="padding: 5px; text-align: right; ">Consumption</th>
                                                 <th style="padding: 5px; text-align: right; ">Cost Price</th>
                                                 <th style="padding: 5px; text-align: right; ">Sale Price</th>
-                                                <th style="padding: 5px; text-align: right; ">Total Price</th>                                            
+                                                <th style="padding: 5px; text-align: right; ">Total Price</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -113,7 +113,7 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-12">
-                        <form asp-action="ConfirmPurchaseOrder" method="post">
+                        <form asp-action="RejectPurchaseOrder" method="post">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                             <input asp-for="Id" class="form-control" hidden id="purchaseorderId" />
                             <input asp-for="ActionId" hidden id="actionId" />
@@ -124,6 +124,12 @@
                                 <div class="form-group" style="float:right">
                                     <button id="orderReceived" class="linkPointer btn btn-success btn-sm">Received</button>
                                     <button id="orderReject" class="linkPointer btn btn-danger btn-sm">Reject</button>
+                                </div>
+                            }
+                            @if (Model.Id > 0 && Model.OrderStatusId == PurchaseOrderStatusEnum.Reject)
+                            {
+                                <div class="form-group" style="float:right">
+                                    <h3><span style="color:red">Order Rejected</span></h3>
                                 </div>
                             }
                         </form>
@@ -146,6 +152,35 @@
             $('#Configuration').addClass('menu-open');
             $('#PurchaseOrderAddPurchaseOrderAndDetail').addClass('active');
         });
+
+        //Reject Purchase Order
+        $("#orderReject").on("click", function () {
+            var id = @Model.Id;
+            $.ajax({
+                type: "POST",
+                url: "/PurchaseOrder/RejectPurchaseOrder",
+                data: { id: id },
+                success: function (result) {
+                    if (result) {
+                        alert("Rejected successfully");
+                        window.location.href = "/PurchaseOrder/Index/";
+
+                    } else {
+                        alert("Reject failed");
+                    }
+                },
+                error: function (error) {
+                    // Handle the error case here
+                    console.error("Error occurred during AJAX request:", error);
+                }
+            });
+        });
+
+
+        $("#orderReceived").on("click", function () {
+            alert("Received button clicked"); 
+        });
+
 
     </script>
 }
