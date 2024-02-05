@@ -113,17 +113,11 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-12">
-                        <form asp-action="RejectPurchaseOrder" method="post">
-                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                            <input asp-for="Id" class="form-control" hidden id="purchaseorderId" />
-                            <input asp-for="ActionId" hidden id="actionId" />
-                            <input asp-for="PurchaseOrderDetailVM.Id" class="form-control" id="purchaseOrderDetailsId" hidden />
-
                             @if (Model.Id > 0 && Model.OrderStatusId == PurchaseOrderStatusEnum.Draft || Model.Id > 0 && Model.OrderStatusId == PurchaseOrderStatusEnum.Confirm)
                             {
                                 <div class="form-group" style="float:right">
                                     <button id="orderReceived" class="linkPointer btn btn-success btn-sm">Received</button>
-                                    <button id="orderReject" class="linkPointer btn btn-danger btn-sm">Reject</button>
+                                    <button asp-action="RejectPurchaseOrder" method="post" id="orderReject" class="linkPointer btn btn-danger btn-sm">Reject</button>
                                 </div>
                             }
                             @if (Model.Id > 0 && Model.OrderStatusId == PurchaseOrderStatusEnum.Reject)
@@ -132,7 +126,6 @@
                                     <h3><span style="color:red">Order Rejected</span></h3>
                                 </div>
                             }
-                        </form>
                     </div>
                 </div>
             </div>
@@ -178,7 +171,7 @@
 
 
         $("#orderReceived").on("click", function () {
-            alert("Received button clicked"); 
+            console.log("Received button clicked"); 
         });
 
 
