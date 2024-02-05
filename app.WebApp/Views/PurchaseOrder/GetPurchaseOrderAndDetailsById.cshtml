@@ -171,7 +171,25 @@
 
 
         $("#orderReceived").on("click", function () {
-            console.log("Received button clicked"); 
+            var id = @Model.Id;
+            $.ajax({
+                type: "POST",
+                url: "/PurchaseOrder/AddInventory",
+                data: { id: id },
+                success: function (result) {
+                    if (result) {
+                        alert("Purchase Store In successfully");
+                        window.location.href = "/PurchaseOrder/Index/";
+
+                    } else {
+                        alert("Store In failed");
+                    }
+                },
+                error: function (error) {
+                    // Handle the error case here
+                    console.error("Error occurred during Stock In:", error);
+                }
+            });
         });
 
 

@@ -1,5 +1,6 @@
 ﻿using app.EntityModel.AppModels;
 using app.Services.DropdownServices;
+using app.Services.InventoryServices;
 using app.Services.PurchaseOrderDetailServices;
 using app.Services.PurchaseOrderServices;
 using app.Utility;
@@ -12,13 +13,15 @@ namespace app.WebApp.Controllers
     {
         private readonly IPurchaseOrderService _ipurchaseOrderService;
         private readonly IPurchaseOrderDetailService _ipurchaseOrderDetailService;
+        private readonly IInventoryService _inventoryService;
         private readonly IDropdownService _iDropdownService;
 
-        public PurchaseOrderController(IPurchaseOrderService ipurchaseOrderService, IPurchaseOrderDetailService ipurchaseOrderDetailService, IDropdownService iDropdownService)
+        public PurchaseOrderController(IPurchaseOrderService ipurchaseOrderService, IPurchaseOrderDetailService ipurchaseOrderDetailService, IDropdownService iDropdownService,IInventoryService inventoryService)
         {
             _ipurchaseOrderService = ipurchaseOrderService;
             _ipurchaseOrderDetailService = ipurchaseOrderDetailService;
             _iDropdownService = iDropdownService;
+            _inventoryService = inventoryService;
         }
 
         public async Task<IActionResult> Index()
@@ -198,6 +201,14 @@ namespace app.WebApp.Controllers
             var res = await _ipurchaseOrderService.RejectPurchaseOrder(id);
             return RedirectToAction("Index");
         }
+
+        [HttpPost]
+        public async Task<IActionResult> AddInventory(long id)
+        {
+            var res = await _inventoryService.AddInventory(id);
+            return RedirectToAction("Index");
+        }
+
 
     }
 }

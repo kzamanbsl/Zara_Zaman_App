@@ -1,4 +1,5 @@
 ﻿using app.Services.AssetInventoryServices;
+using app.Services.PurchaseOrderServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,6 @@ namespace app.Services.InventoryServices
 {
     public interface IInventoryService
     {
-        Task<bool> AddRecord(InventoryViewModel vm);
+        Task<bool> AddInventory(long id);
     }
 }
