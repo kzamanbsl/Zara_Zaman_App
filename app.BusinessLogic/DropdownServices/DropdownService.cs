@@ -68,9 +68,7 @@ namespace app.Services.DropdownServices
         }
         public async Task<IEnumerable<DropdownViewModel>> EmployeeSelectionList(long managerId = 0)
         {
-            IEnumerable<DropdownViewModel> dropDownViewModels = await Task.Run(() => (from t1 in _dbContext.Employee
-                                                                                      where (managerId > 0) ? t1.ManagerId == managerId && t1.IsActive == true : t1.IsActive == true
-
+            IEnumerable<DropdownViewModel> dropDownViewModels = await Task.Run(() => (from t1 in _dbContext.Employee.Where(e => e.IsActive)
                                                                                       select new DropdownViewModel
                                                                                       {
                                                                                           Id = t1.Id,

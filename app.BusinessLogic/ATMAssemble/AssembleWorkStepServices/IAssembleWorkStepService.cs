@@ -2,7 +2,6 @@
 {
     public interface IAssembleWorkStepService
     {
-
         Task<bool> AddRecord(AssembleWorkStepViewModel vm);
         Task<bool> UpdateRecord(AssembleWorkStepViewModel vm);
         Task<AssembleWorkStepViewModel> GetRecordById(long id);
