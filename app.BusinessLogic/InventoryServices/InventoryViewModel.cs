@@ -1,4 +1,6 @@
 ﻿using app.EntityModel.AppModels;
+using app.Services.PurchaseOrderDetailServices;
+using app.Services.PurchaseOrderServices;
 
 namespace app.Services.InventoryServices
 {
@@ -16,6 +18,12 @@ namespace app.Services.InventoryServices
         public decimal CostPrice { get; set; }
         public decimal SalePrice { get; set; }
         public string Remarks { get; set; }
+        public PurchaseOrderDetailViewModel PurchaseOrderDetailVM { get; set; }
+        public PurchaseOrderViewModel PurchaseOrderVM { get; set; }
+        public InventoryViewModel InventoryVM{ get; set; }
         public IEnumerable<InventoryViewModel> InventoryList { get; set; }
+        public IEnumerable<PurchaseOrderViewModel> PurchaseOrderList { get; set; }
+        public IEnumerable<PurchaseOrderDetailViewModel> PurchaseOrderDetailsList { get; set; }
+
     }
 }
