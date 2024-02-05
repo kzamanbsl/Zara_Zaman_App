@@ -31,6 +31,6 @@ namespace app.Services.PurchaseOrderDetailServices
         public string Remarks { get; set; }
         public ActionEnum ActionEum { get { return (ActionEnum)this.ActionId; } }
         public int ActionId { get; set; } = 1;
-        public IEnumerable<PurchaseOrderDetailViewModel> PurchaseOrderDetailList { get; set; }
+        public PurchaseOrderViewModel PurchaseOrderVM { get; set; }
     }
 }

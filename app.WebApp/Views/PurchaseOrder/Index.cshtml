@@ -84,27 +84,27 @@
                                                     <input type="hidden" id="Id" asp-for="Id" name="Id" value="@item.Id" />
                                                     <div class="form-group">
                                                         <label>Purchase Date </label>
-                                                        <input asp-for="PurchaseDate" value="@DateTime.Today.ToString("yyyy-MM-dd")" class="form-control" type="date" autocomplete="off" required />
+                                                        <input asp-for="PurchaseDate" id="PurchaseDate" value="@DateTime.Today.ToString("yyyy-MM-dd")" class="form-control" type="date" autocomplete="off" required />
                                                         <span asp-validation-for="PurchaseDate" class="text-danger"></span>
                                                     </div>
 
                                                     <div class="form-group">
                                                         <label>Storehouse</label>
                                                         <select class="form-control" value="@item.StorehouseId" id="StorehouseId" asp-for="StorehouseId" asp-items="ViewBag.StorehouseList" required>
-                                                            <option selected>-- Select Storehouse --</option>
+                                                            <option value="0" selected>-- Select Storehouse --</option>
                                                             <span asp-validation-for="StorehouseId" class="text-danger"></span>
                                                         </select>
                                                     </div>
 
                                                     <div class="form-group">
                                                         <label>Supplier</label>
-                                                        <select class="form-control" id="SupplierId" asp-for="SupplierId" asp-items="ViewBag.SupplierList" required>
+                                                        <select class="form-control" value="@item.SupplierId" id="SupplierId" asp-for="SupplierId" asp-items="ViewBag.SupplierList" required>
                                                             <option value="0" selected>-- Select Supplier --</option>
                                                             <span asp-validation-for="SupplierId" class="text-danger"></span>
                                                         </select>
                                                     </div>
                                                     <div class="form-group" style="float:right">
-                                                        <button type="submit" class="btn btn-primary">Save changes</button>
+                                                        <button type="submit" class="btn btn-primary" id="saveButton" onchange="myFunction()">Save changes</button>
                                                     </div>
                                                 </form>
                                             </div>
@@ -141,143 +141,41 @@
 
 
     </script>
-   @*  <script>
-        $(document).ready(function () {
-            // Function to fetch and update the dropdown options
-            function updateDropdown() {
-                $.ajax({
-                    url: '/PurchaseOrder/IsPurchaseOrderMasterUpdateRecord', // Replace this with your actual endpoint for fetching storehouses
-                    type: 'GET',
-                    success: function (data) {
-                        // Assuming data is an array of objects with id and name properties
-                        var dropdown = $('#StorehouseId');
-                        dropdown.empty();
-                        dropdown.append($('<option selected>-- Select Storehouse --</option>'));
-                        $.each(data, function (index, item) {
-                            dropdown.append($('<option></option>').attr('value', item.id).text(item.name));
-                        });
-                    },
-                    error: function (xhr, status, error) {
-                        console.error(xhr.responseText);
-                        // Handle error appropriately
-                    }
-                });
-            }
-
-            // Call the function initially to populate the dropdown
-            updateDropdown();
-
-            // Event handler for when Storehouse selection changes
-            $('#StorehouseId').change(function () {
-                var selectedStorehouseId = $(this).val(StorehouseId);
-                // Perform any action you need with the selected storehouse id
-                console.log('StorehouseId:', StorehouseId);
-            });
-        });
-    </script> *@
-
-@* 
     <script>
-        $(document).ready(function () {
-            $('#form1').submit(function (event) {
-                event.preventDefault(); // Prevent default form submission
-
-                // Serialize form data
-                var formData = $(this).serialize();
-
-                // Send AJAX request
-                $.ajax({
-                    type: 'POST',
-                    url: '/PurchaseOrder/checkPurchaseOrderMasterUpdateRecord', // Update the URL with your controller action
-                    data: formData,
-                    success: function (response) {
-                        if (response.success) {
-                            // Close the modal
-                            $('#editModal').modal('hide');
-
-                            // Optionally, update the table or s+how a success message
-                        } else {
-                            // Handle errors or display error message
-                            console.error('Error:', response.message);
-                        }
-                    },
-                    error: function (xhr, status, error) {
-                        console.error('Error:', error);
-                    }
-                });
-            });
-        });
-    </script> *@
-
-@* 
-    <script>
-
-        $(document).ready(function () {
-            $('#Configuration').addClass('menu-open');
-            $('#PurchaseOrderIndex').addClass('active');
-            $('#PurchaseOrdertable').DataTable({
-                "paging": true,
-                "ordering": true,
-                "info": true,
-                order: [[0, 'asc']],
-            });
-
-        });
-
-        function CheckAttandanceData() {
-            var getEmployeeId = $("#inputEnployee option:selected");
-            var dependentInput = document.getElementById("inputLoginTime");
+        function myFunction() {
+            var id = $("#Id").val(); // Fetch the id of the current purchase order
+            var purchaseDate = $("#PurchaseDate").val();
+            var storehouseId = $("#StorehouseId");
+            var supplierId = $("#SupplierId");
+            var submitButton = $("#saveButton");
 
             $.ajax({
                 type: "GET",
-                url: "/PurchaseOrder/IsPurchaseOrderMasterUpdateRecord",
+                url: "/PurchaseOrder/IsPurchaseOrderMasterUpdateRecord/" + id, // Adjust the URL according to your endpoint
                 dataType: "json",
-                data: { id: getEmployeeId.val() },
                 success: function (data) {
-                    if (data) {
-                        dependentInput.classList.remove("d-block");
-                        dependentInput.classList.add("d-none");
-                    } else {
-                        dependentInput.classList.remove("d-none");
-                        dependentInput.classList.add("d-block");
-                    }
+                    // Populate the dropdowns with the received data
+                    storehouseId.empty(); // Clear existing options
+                    supplierId.empty(); // Clear existing options
 
+                    $.each(data.storehouseList, function (index, item) {
+                        storehouseId.append($('<option></option>').attr('value', item.id).text(item.name));
+                    });
+
+                    $.each(data.supplierList, function (index, item) {
+                        supplierId.append($('<option></option>').attr('value', item.id).text(item.name));
+                    });
+
+                    // Set selected values and trigger change event
+                    storehouseId.val(data.storehouseList).trigger('change');
+                    supplierId.val(data.supplierList).trigger('change');
                 },
                 error: function (error) {
                     console.error("Error in AJAX request:", error);
                 }
             });
         }
-        // $("#LogoutTime").change(function)
+    </script>
 
-    </script> *@
-
-
-    @*
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            $('#storehouseDropdown').change(function () {
-                var storehouseId = $(this).val();
-                var url = "/PurchaseOrder/GetSuppliers?storehouseId=" + storehouseId;
-
-                $.ajax({
-                    type: 'GET',
-                    url: url,
-                    success: function (data) {
-                        $('#supplierDropdown').empty();
-                        $('#supplierDropdown').append($('<option>').text('-- Select Supplier --').val('0'));
-
-                        $.each(data, function (index, supplier) {
-                            $('#supplierDropdown').append($('<option>').text(supplier.name).val(supplier.id));
-                        });
-                    },
-                    error: function (xhr, textStatus, errorThrown) {
-                        console.error('Error:', errorThrown);
-                    }
-                });
-            });
-        });
-    </script> *@
 
 }

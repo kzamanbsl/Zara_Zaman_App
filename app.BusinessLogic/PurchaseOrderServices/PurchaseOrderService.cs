@@ -198,7 +198,6 @@ namespace app.Services.PurchaseOrderServices
                                                       StoreName = t1.Storehouse.Name,
                                                       OrderStatusId = (PurchaseOrderStatusEnum)t1.OrderStatusId,
 
-
                                                   }).OrderByDescending(x => x.Id).AsEnumerable());
 
             purchaseMasterModel.PurchaseOrderList = await Task.Run(() => dataQuery.ToList());
