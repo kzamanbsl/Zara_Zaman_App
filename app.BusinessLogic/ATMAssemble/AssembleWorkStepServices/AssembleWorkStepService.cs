@@ -19,7 +19,7 @@ namespace app.Services.ATMAssemble.AssembleWorkStepServices
 
         public async Task<bool> AddRecord(AssembleWorkStepViewModel viewModel)
         {
-            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == viewModel.Name.Trim() && f.IsActive == true);
+            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == viewModel.Name.Trim() && f.AssembleWorkCategoryId==viewModel.AssembleWorkCategoryId && f.IsActive == true);
             if (checkName == null)
             {
                 AssembleWorkStep data = new AssembleWorkStep();
@@ -38,7 +38,7 @@ namespace app.Services.ATMAssemble.AssembleWorkStepServices
 
         public async Task<bool> UpdateRecord(AssembleWorkStepViewModel viewModel)
         {
-            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == viewModel.Name.Trim() && f.Id != viewModel.Id && f.IsActive == true);
+            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == viewModel.Name.Trim() && f.AssembleWorkCategoryId == viewModel.AssembleWorkCategoryId && f.Id != viewModel.Id && f.IsActive == true);
 
             if (checkName == null)
             {

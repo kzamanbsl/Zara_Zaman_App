@@ -34,8 +34,9 @@
                         <thead>
                             <tr>
                                 <th class="text-center">#</th>
+                                <th class="text-center">Work Category</th>
                                 <th class="text-center">Step Name</th>
-                                <th class="text-center">Step Item Name</th>
+                                <th class="text-center">Step Work Name</th>
                                 <th class="text-center">Description</th>
                                 <th class="text-center">Action</th>
                             </tr>
@@ -46,6 +47,9 @@
                             {
                                 <tr>
                                     <td class="text-center">@SN</td>
+                                    <td class="text-left">
+                                        @Html.DisplayFor(modelItem => item.AssembleWorkCategoryName)
+                                    </td>
                                     <td class="text-left">
                                         @Html.DisplayFor(modelItem => item.AssembleWorkStepName)
                                     </td>

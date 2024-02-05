@@ -326,7 +326,7 @@ namespace app.Services.DropdownServices
                                                                                       select new DropdownViewModel
                                                                                       {
                                                                                           Id = t1.Id,
-                                                                                          Name = t1.Name
+                                                                                          Name = t1.Name + " (" + t1.AssembleWorkCategory.Name + ")",
 
                                                                                       }).AsQueryable());
             return dropDownViewModels;
