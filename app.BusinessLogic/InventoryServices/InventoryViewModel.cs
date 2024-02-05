@@ -1,17 +1,12 @@
 ﻿using app.EntityModel.AppModels;
-using app.Services.AssetInventoryServices;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace app.Services.InventoryServices
 {
     public class InventoryViewModel : BaseViewModel
     {
         public DateTime StockDate { get; set; }
-        public int StoreTypeId { get; set; }
+        public int StoreTypeId { get; set; } //Purchase Or Manufecture Enum Value
+        public long StoreFromId { get; set; } //Purchase Or Manufecture
         public long StorehouseId { get; set; }
         public long ProductId { get; set; }
         public Product Product { get; set; }
