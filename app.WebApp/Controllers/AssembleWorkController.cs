@@ -75,5 +75,20 @@ namespace app.WebApp.Controllers
             var res = await _iService.DeleteRecord(id);
             return RedirectToAction("Index");
         }
+
+
+        [HttpGet]
+        public async Task<IActionResult> LiveDashboard()
+        {
+            var result = await _iService.LiveDashboard();
+            return View(result);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> EmployeeDashboard()
+        {
+            var result = await _iService.EmployeeDashboard();
+            return View(result);
+        }
     }
 }
