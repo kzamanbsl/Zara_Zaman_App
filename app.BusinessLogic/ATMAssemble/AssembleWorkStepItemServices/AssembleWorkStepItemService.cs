@@ -87,6 +87,8 @@ namespace app.Services.ATMAssemble.AssembleWorkStepItemServices
                                                                        Description = t1.Description,
                                                                        AssembleWorkStepId = t1.AssembleWorkStepId,
                                                                        AssembleWorkStepName = t1.AssembleWorkStep.Name,
+                                                                       AssembleWorkCategoryId = t1.AssembleWorkStep.AssembleWorkCategory.Id,
+                                                                       AssembleWorkCategoryName = t1.AssembleWorkStep.AssembleWorkCategory.Name,
                                                                    }).AsQueryable());
             return model;
         }
