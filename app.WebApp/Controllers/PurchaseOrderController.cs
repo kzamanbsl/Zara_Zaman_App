@@ -103,7 +103,7 @@ namespace app.WebApp.Controllers
         }
 
         [HttpGet]
-        public async Task<JsonResult> IsPurchaseOrderMasterUpdateRecord(int id)
+        public async Task<JsonResult> IsPurchaseOrderMasterUpdateRecord(long id)
         {
             var data = await _ipurchaseOrderService.GetRecordById(id);
             return Json(data);
