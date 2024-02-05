@@ -145,18 +145,22 @@
 
 
     </script>
-   @*  <script>
+
+    <script>
         $(document).ready(function () {
             // Function to fetch and update the dropdown options
             function updateDropdown() {
                 $.ajax({
-                    url: '/PurchaseOrder/IsPurchaseOrderMasterUpdateRecord', // Replace this with your actual endpoint for fetching storehouses
+                    url: '/PurchaseOrder/IsPurchaseOrderMasterUpdateRecord'+id, // Replace this with your actual endpoint for fetching storehouses
                     type: 'GET',
                     success: function (data) {
                         // Assuming data is an array of objects with id and name properties
                         var dropdown = $('#StorehouseId');
                         dropdown.empty();
                         dropdown.append($('<option selected>-- Select Storehouse --</option>'));
+                        if (data==0) {
+                            StorehouseList()
+                        }
                         $.each(data, function (index, item) {
                             dropdown.append($('<option></option>').attr('value', item.id).text(item.name));
                         });
@@ -178,7 +182,7 @@
                 console.log('StorehouseId:', StorehouseId);
             });
         });
-    </script> *@
+    </script>
 
 @* 
     <script>
@@ -257,7 +261,7 @@
     </script> *@
 
 
-    @*
+    @* 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function () {
