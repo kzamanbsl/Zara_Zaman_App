@@ -109,13 +109,13 @@
                                             </select>
                                         </div>
                                     </div>
-                                  @*   <div class="col-md-2">
-                                        <div class="form-group">
-                                            <label>OverAll Discount (Taka)</label>
-                                            <input asp-for="OverallDiscount" class="form-control" />
-                                            <span asp-validation-for="OverallDiscount" class="text-danger"></span>
-                                        </div>
-                                    </div> *@
+                                    @*   <div class="col-md-2">
+                                <div class="form-group">
+                                <label>OverAll Discount (Taka)</label>
+                                <input asp-for="OverallDiscount" class="form-control" />
+                                <span asp-validation-for="OverallDiscount" class="text-danger"></span>
+                                </div>
+                                </div> *@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12">
@@ -272,36 +272,15 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-12">
-                        <form asp-action="ConfirmPurchaseOrder" method="post">
-                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                            <input asp-for="Id" class="form-control" hidden id="purchaseorderId" />
-                            <input asp-for="ActionId" hidden id="actionId" />
-                            <input asp-for="PurchaseOrderDetailVM.Id" class="form-control" id="purchaseOrderDetailsId" hidden />
-
-                            @if (Model.Id > 0 && Model.OrderStatusId == PurchaseOrderStatusEnum.Draft)
-                            {
-                                <div class="form-group" style="float:right">
-                                    <button id="confirmButton" class="linkPointer btn btn-success  btn-block">Confirm</button>
-                                </div>
-                            }
-                        </form>
+                        @if (Model.Id > 0 && Model.OrderStatusId == PurchaseOrderStatusEnum.Draft)
+                        {
+                            <div class="form-group" style="float:right">
+                                <button asp-action="ConfirmPurchaseOrder" method="post" id="confirmButton" class="linkPointer btn btn-success  btn-block">Confirm</button>
+                            </div>
+                        }
                     </div>
                 </div>
             </div>
-
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-md-12">
-                        <form asp-action="DeletePurchaseOrderDetailsById" method="post">
-                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                            <input asp-for="ActionId" hidden id="actionId" />
-                            <input asp-for="PurchaseOrderDetailVM.Id" class="form-control" id="purchaseOrderDetailsId" hidden />
-
-                        </form>
-                    </div>
-                </div>
-            </div>
-
         </div>
     </div>
 </section>
@@ -369,17 +348,19 @@
         });
 
 
-
-
-
         function makeDeletable(rowId) {
             $.ajax({
                 type: "GET",
                 url: "@Url.Action("DeletePurchaseOrderDetailsById", "PurchaseOrder")",
                 data: { id: rowId },
                 success: function (data) {
-                    $("#purchaseOrderDetailsId").val(data.id);
-                    $('#actionId').val(3);
+                    if (data) {
+                        alert("Delete successfully");
+                        window.location.href = "/PurchaseOrder/Index/";
+
+                    } else {
+                        alert("Delete failed");
+                    }
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                     location.reload(); // Reload the page
                 }
