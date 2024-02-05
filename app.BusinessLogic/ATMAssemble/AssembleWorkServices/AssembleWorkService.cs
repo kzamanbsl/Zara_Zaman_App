@@ -2,8 +2,8 @@
 using app.Infrastructure;
 using app.Infrastructure.Auth;
 using app.Infrastructure.Repository;
-using app.Services.ATMAssemble.AssembleWorkServices;
-using Microsoft.EntityFrameworkCore.Scaffolding.Metadata;
+using app.Services.ATMAssemble.AssembleWorkCategoryServices;
+using app.Services.ATMAssemble.AssembleWorkStepItemServices;
 
 namespace app.Services.ATMAssemble.AssembleWorkServices
 {
@@ -12,15 +12,51 @@ namespace app.Services.ATMAssemble.AssembleWorkServices
         private readonly IEntityRepository<AssembleWork> _iEntityRepository;
         private readonly InventoryDbContext _dbContext;
         private readonly IWorkContext _iWorkContext;
-        public AssembleWorkService(IEntityRepository<AssembleWork> iEntityRepository, InventoryDbContext dbContext, IWorkContext iWorkContext)
+        private readonly IAssembleWorkCategoryService _iAssembleWorkCategoryService;
+        public AssembleWorkService(IEntityRepository<AssembleWork> iEntityRepository, IAssembleWorkCategoryService iAssembleWorkCategoryService, InventoryDbContext dbContext, IWorkContext iWorkContext)
         {
             _iEntityRepository = iEntityRepository;
             _dbContext = dbContext;
             _iWorkContext = iWorkContext;
+            _iAssembleWorkCategoryService = iAssembleWorkCategoryService;
         }
 
         public async Task<bool> AddRecord(AssembleWorkViewModel viewModel)
         {
+            if (viewModel == null || viewModel.AssembleTarget <= 0)
+            {
+                throw new Exception("Sorry, Assemble target is not found!");
+            }
+
+            if (viewModel.EmployeeIds.Length <= 0)
+            {
+                throw new Exception("Sorry, Technician is not found!");
+            }
+
+            var assembleWorkItem = await Task.Run(() => (from t1 in _dbContext.AssembleWorkStepItem
+                                                         join t2 in _dbContext.AssembleWorkStep on t1.AssembleWorkStepId equals t2.Id
+                                                         where t2.AssembleWorkCategoryId == viewModel.AssembleWorkCategoryId && t1.IsActive == true
+                                                         select new AssembleWorkStepItemViewModel
+                                                         {
+                                                             Id = t1.AssembleWorkStepId,
+                                                             Name = t1.Name,
+                                                             Description = t1.Description,
+                                                             AssembleWorkStepId=t1.AssembleWorkStepId,
+                                                             AssembleWorkStepName=t1.AssembleWorkStep.Name,
+                                                             AssembleWorkCategoryId=t1.AssembleWorkStep.AssembleWorkCategoryId,
+                                                             AssembleWorkCategoryName=t1.AssembleWorkStep.AssembleWorkCategory.Name,
+
+                                                         }).ToList());
+            if (assembleWorkItem.Count <= 0)
+            {
+                throw new Exception("Sorry, Assemble work item is not found!");
+            }
+
+            foreach ( var item in assembleWorkItem )
+            {
+
+            }
+
             AssembleWork data = new AssembleWork();
             data.AssembleDate = viewModel.AssembleDate;
             data.AssembleWorkCategoryId = viewModel.AssembleWorkCategoryId;

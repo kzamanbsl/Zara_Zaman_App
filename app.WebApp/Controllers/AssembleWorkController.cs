@@ -22,7 +22,7 @@ namespace app.WebApp.Controllers
             ViewBag.AssembleWorkCategoryList = new SelectList((await _iDropdownService.AssembleWorkCategorySelectionList())
                 .Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
             ViewBag.EmployeeList = new MultiSelectList((await _iDropdownService.EmployeeSelectionList())
-                .Select(s => new {Id = s.Id, Name = s.Name}), "Id", "Name");
+                .Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
             AssembleWorkViewModel viewModel = new AssembleWorkViewModel();
             return View(viewModel);
         }
