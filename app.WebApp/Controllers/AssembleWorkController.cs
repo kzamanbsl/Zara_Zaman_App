@@ -17,6 +17,13 @@ namespace app.WebApp.Controllers
         }
 
         [HttpGet]
+        public async Task<IActionResult> Index()
+        {
+            var result = await _iService.GetAllRecord();
+            return View(result);
+        }
+
+        [HttpGet]
         public async Task<IActionResult> AddRecord()
         {
             ViewBag.AssembleWorkCategoryList = new SelectList((await _iDropdownService.AssembleWorkCategorySelectionList())
@@ -36,6 +43,37 @@ namespace app.WebApp.Controllers
                 return RedirectToAction("AddRecord");
             }
             return View(viewModel);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> UpdateRecord(long id)
+        {
+            ViewBag.AssembleWorkCategoryList = new SelectList((await _iDropdownService.AssembleWorkCategorySelectionList())
+                .Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
+            ViewBag.EmployeeList = new MultiSelectList((await _iDropdownService.EmployeeSelectionList())
+               .Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
+           // AssembleWorkViewModel viewModel = new AssembleWorkViewModel();
+            var result = await _iService.GetRecordById(id);
+            return View(result);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateRecord(AssembleWorkViewModel model)
+        {
+            var result = await _iService.UpdateRecord(model);
+            if (result == true)
+            {
+                return RedirectToAction("Index");
+            }
+            ModelState.AddModelError(string.Empty, "This name is already used!");
+            return View(model);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(long id)
+        {
+            var res = await _iService.DeleteRecord(id);
+            return RedirectToAction("Index");
         }
     }
 }

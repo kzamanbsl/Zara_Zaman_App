@@ -27,7 +27,7 @@ namespace app.WebApp
             builder.Services.AddScoped<IAuthorizationHandler, PermissionHandler>();
             builder.Services.AddSingleton<IAuthorizationPolicyProvider, AuthorizationPolicyProvider>();
             builder.Services.AddDbContext<InventoryDbContext>(options =>
-            options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+            options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")),ServiceLifetime.Scoped);
             builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
             {
                 options.Password.RequireDigit = false;

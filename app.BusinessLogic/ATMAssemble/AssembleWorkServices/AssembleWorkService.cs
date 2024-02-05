@@ -5,7 +5,6 @@ using app.Infrastructure.Repository;
 using app.Services.ATMAssemble.AssembleWorkCategoryServices;
 using app.Services.ATMAssemble.AssembleWorkStepItemServices;
 using app.Utility;
-using System;
 
 namespace app.Services.ATMAssemble.AssembleWorkServices
 {
@@ -60,7 +59,7 @@ namespace app.Services.ATMAssemble.AssembleWorkServices
             var createdBy = _iWorkContext.GetCurrentUserAsync().Result.FullName;
 
             #region AssembleWorkEmployees
-            List<AssembleWorkEmployee> assembleWorkEmployees = new List<AssembleWorkEmployee>();
+            ICollection<AssembleWorkEmployee> assembleWorkEmployees = new List<AssembleWorkEmployee>();
             List<long> empIds = viewModel.EmployeeIds.ToList();
             foreach (var empId in empIds)
             {
@@ -76,7 +75,7 @@ namespace app.Services.ATMAssemble.AssembleWorkServices
             #endregion
 
             #region AssembleWorkDetails
-            List<AssembleWorkDetail> assembleWorkDetails = new List<AssembleWorkDetail>();
+            ICollection<AssembleWorkDetail> assembleWorkDetails = new List<AssembleWorkDetail>();
             foreach (var item in assembleWorkItem)
             {
                 AssembleWorkDetail obj = new AssembleWorkDetail()
@@ -91,7 +90,7 @@ namespace app.Services.ATMAssemble.AssembleWorkServices
             #endregion
 
             #region AssembleWorks
-            List<AssembleWork> assembleWorks = new List<AssembleWork>();
+            ICollection<AssembleWork> assembleWorks = new List<AssembleWork>();
             for (int i = 0; i < viewModel.AssembleTarget; i++)
             {
                 AssembleWork obj = new AssembleWork()
@@ -100,24 +99,49 @@ namespace app.Services.ATMAssemble.AssembleWorkServices
                     AssembleDate = viewModel.AssembleDate,
                     Description = viewModel.Description,
                     StatusId = (int)AssembleWorkStatusEnum.Draft,
-                    WorkDetails = assembleWorkDetails,
-                    WorkEmployees = assembleWorkEmployees,
+                    //  WorkDetails = assembleWorkDetails,
+                    // WorkEmployees = assembleWorkEmployees,
                     CreatedOn = baTime,
                     CreatedBy = createdBy,
                     IsActive = true,
 
                 };
+                foreach (var item in assembleWorkDetails)
+                {
+                    obj.WorkDetails.Add(new AssembleWorkDetail
+                    {
+                        AssembleWorkStepItemId = item.AssembleWorkStepItemId,
+                        CreatedOn = baTime,
+                        CreatedBy = createdBy,
+                        IsActive = true,
+                    });
+                }
+
+                foreach (var item in assembleWorkEmployees)
+                {
+                    obj.WorkEmployees.Add(new AssembleWorkEmployee
+                    {
+                        EmployeeId = item.EmployeeId,
+                        CreatedOn = baTime,
+                        CreatedBy = createdBy,
+                        IsActive = true,
+                    });
+                }
                 assembleWorks.Add(obj);
             }
 
             #endregion
 
             bool result = false;
-            foreach (var assembleWork in assembleWorks)
-            {
-                var response = await _iEntityRepository.AddAsync(assembleWork);
-                if (response != null) { result = true; }
-            }
+
+            _dbContext.AssembleWork.AddRange(assembleWorks);
+            result = _dbContext.SaveChanges() > 0;
+
+            //foreach (var assembleWork in assembleWorks)
+            //{
+            //    var response = await _iEntityRepository.AddAsync(assembleWork);
+            //    if (response != null) { result = true; }
+            //}
 
             return result;
         }
@@ -169,10 +193,11 @@ namespace app.Services.ATMAssemble.AssembleWorkServices
                                                            select new AssembleWorkViewModel
                                                            {
                                                                Id = t1.Id,
-                                                               //Name = t1.Name,
+                                                               AssembleDate = t1.AssembleDate,
                                                                Description = t1.Description,
                                                                AssembleWorkCategoryId = t1.AssembleWorkCategoryId,
                                                                AssembleWorkCategoryName = t1.AssembleWorkCategory.Name,
+                                                               StatusId = t1.StatusId,
                                                            }).AsQueryable());
             return model;
         }

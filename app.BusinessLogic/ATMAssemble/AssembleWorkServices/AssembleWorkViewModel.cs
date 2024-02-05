@@ -1,4 +1,6 @@
 ﻿
+using app.Utility;
+
 namespace app.Services.ATMAssemble.AssembleWorkServices
 {
     public class AssembleWorkViewModel : BaseViewModel
@@ -9,6 +11,8 @@ namespace app.Services.ATMAssemble.AssembleWorkServices
         public int AssembleTarget { get; set; } // False Prop
         public string Description { get; set; }
         public int StatusId { get; set; }
+        public string StatusName => GlobalVariable.GetEnumDescription((AssembleWorkStatusEnum)StatusId);
+
         private long[] EmployeeId;
         public long[] EmployeeIds
         {
