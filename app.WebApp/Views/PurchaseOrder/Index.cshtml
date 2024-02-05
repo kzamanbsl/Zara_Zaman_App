@@ -91,7 +91,7 @@
                                                     <div class="form-group">
                                                         <label>Storehouse</label>
                                                         <select class="form-control" value="@item.StorehouseId" id="StorehouseId" asp-for="StorehouseId" asp-items="ViewBag.StorehouseList" required>
-                                                            <option selected>-- Select Storehouse --</option>
+                                                            <option value="0" selected>-- Select Storehouse --</option>
                                                             <span asp-validation-for="StorehouseId" class="text-danger"></span>
                                                         </select>
                                                     </div>
