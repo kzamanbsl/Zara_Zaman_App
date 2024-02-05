@@ -30,6 +30,30 @@ namespace app.Infrastructure.Repository
             }
         }
 
+        public async Task<List<T>> AddRangeAsync(List<T> entities, CancellationToken cancellationToken = default)
+        {
+            List<T> entityList = new List<T>();
+            foreach (var entity in entities)
+            {
+                var obj = await GetAddAsyncProperties(entity);
+                entityList.Add(obj);
+            }
+
+            try
+            {
+
+                await Db.Set<T>().AddRangeAsync(entityList);
+                await Db.SaveChangesAsync(cancellationToken);
+
+                return entityList;
+            }
+            catch (Exception ex)
+            {
+                entityList = null;
+                return entityList;
+            }
+        }
+
         public IQueryable<T> AllIQueryableAsync(CancellationToken cancellationToken = default)
         {
             return Db.Set<T>().AsQueryable();

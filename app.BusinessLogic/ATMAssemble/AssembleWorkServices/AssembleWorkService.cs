@@ -4,6 +4,7 @@ using app.Infrastructure.Auth;
 using app.Infrastructure.Repository;
 using app.Services.ATMAssemble.AssembleWorkCategoryServices;
 using app.Services.ATMAssemble.AssembleWorkStepItemServices;
+using app.Utility;
 
 namespace app.Services.ATMAssemble.AssembleWorkServices
 {
@@ -41,28 +42,67 @@ namespace app.Services.ATMAssemble.AssembleWorkServices
                                                              Id = t1.AssembleWorkStepId,
                                                              Name = t1.Name,
                                                              Description = t1.Description,
-                                                             AssembleWorkStepId=t1.AssembleWorkStepId,
-                                                             AssembleWorkStepName=t1.AssembleWorkStep.Name,
-                                                             AssembleWorkCategoryId=t1.AssembleWorkStep.AssembleWorkCategoryId,
-                                                             AssembleWorkCategoryName=t1.AssembleWorkStep.AssembleWorkCategory.Name,
+                                                             AssembleWorkStepId = t1.AssembleWorkStepId,
+                                                             AssembleWorkStepName = t1.AssembleWorkStep.Name,
+                                                             AssembleWorkCategoryId = t1.AssembleWorkStep.AssembleWorkCategoryId,
+                                                             AssembleWorkCategoryName = t1.AssembleWorkStep.AssembleWorkCategory.Name,
 
                                                          }).ToList());
+
             if (assembleWorkItem.Count <= 0)
             {
                 throw new Exception("Sorry, Assemble work item is not found!");
             }
 
-            foreach ( var item in assembleWorkItem )
+            #region AssembleWorkEmployees
+            List<AssembleWorkEmployee> assembleWorkEmployees = new List<AssembleWorkEmployee>();
+            List<long> empIds = viewModel.EmployeeIds.ToList();
+            foreach (var item in empIds)
             {
+                AssembleWorkEmployee obj = new AssembleWorkEmployee()
+                {
+                    EmployeeId = item
 
+                };
+                assembleWorkEmployees.Add(obj);
+            }
+            #endregion
+
+            #region AssembleWorkDetails
+            List<AssembleWorkDetail> assembleWorkDetails = new List<AssembleWorkDetail>();
+            foreach (var item in assembleWorkItem)
+            {
+                AssembleWorkDetail obj = new AssembleWorkDetail()
+                {
+                    AssembleWorkItemId = item.Id
+
+                };
+                assembleWorkDetails.Add(obj);
+            }
+            #endregion
+
+            #region AssembleWorks
+            List<AssembleWork> assembleWorks = new List<AssembleWork>();
+            for (int i = 0; i < viewModel.AssembleTarget; i++)
+            {
+                AssembleWork obj = new AssembleWork()
+                {
+                    AssembleWorkCategoryId = viewModel.AssembleWorkCategoryId,
+                    AssembleDate = viewModel.AssembleDate,
+                    Description = viewModel.Description,
+                    StatusId = (int)AssembleWorkStatusEnum.Draft,
+                    WorkDetails = assembleWorkDetails,
+                    WorkEmployees = assembleWorkEmployees,
+
+
+                };
+                assembleWorks.Add(obj);
             }
 
-            AssembleWork data = new AssembleWork();
-            data.AssembleDate = viewModel.AssembleDate;
-            data.AssembleWorkCategoryId = viewModel.AssembleWorkCategoryId;
-            data.Description = viewModel.Description;
-            var response = await _iEntityRepository.AddAsync(data);
-            viewModel.Id = response.Id;
+            #endregion
+
+            var response = await _iEntityRepository.AddRangeAsync(assembleWorks);
+
             return true;
         }
 

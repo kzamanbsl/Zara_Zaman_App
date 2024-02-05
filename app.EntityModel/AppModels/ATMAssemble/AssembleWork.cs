@@ -9,5 +9,8 @@
         public int StatusId { get; set; }
 
         public AssembleWorkCategory AssembleWorkCategory { get; set; }
+
+        public List<AssembleWorkDetail> WorkDetails { get; set; } = new List<AssembleWorkDetail>();
+        public List<AssembleWorkEmployee> WorkEmployees { get; set; } = new List<AssembleWorkEmployee>();
     }
 }
