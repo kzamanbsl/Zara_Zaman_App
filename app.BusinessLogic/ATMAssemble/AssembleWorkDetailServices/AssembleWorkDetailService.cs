@@ -24,7 +24,7 @@ namespace app.Services.ATMAssemble.AssembleWorkDetailServices
             //{
             AssembleWorkDetail data = new AssembleWorkDetail();
             data.AssembleWorkId = viewModel.AssembleWorkId;
-            data.AssembleWorkItemId = viewModel.AssembleWorkStepItemId;
+            data.AssembleWorkStepItemId = viewModel.AssembleWorkStepItemId;
             data.Remarks = viewModel.Remarks;
             data.IsComplete = viewModel.IsComplete;
             data.IsActive = viewModel.IsActive;
@@ -47,7 +47,7 @@ namespace app.Services.ATMAssemble.AssembleWorkDetailServices
             //{
             var result = await _iEntityRepository.GetByIdAsync(viewModel.Id);
             result.AssembleWorkId = viewModel.AssembleWorkId;
-            result.AssembleWorkItemId = viewModel.AssembleWorkStepItemId;
+            result.AssembleWorkStepItemId = viewModel.AssembleWorkStepItemId;
             result.Remarks = viewModel.Remarks;
             result.IsComplete = viewModel.IsComplete;
             await _iEntityRepository.UpdateAsync(result);
@@ -73,7 +73,7 @@ namespace app.Services.ATMAssemble.AssembleWorkDetailServices
             AssembleWorkDetailViewModel model = new AssembleWorkDetailViewModel();
             model.Id = result.Id;
             model.AssembleWorkId = result.AssembleWorkId;
-            model.AssembleWorkStepItemId = result.AssembleWorkItemId;
+            model.AssembleWorkStepItemId = result.AssembleWorkStepItemId;
             model.Remarks = result.Remarks;
             model.IsComplete = result.IsComplete;
             return model;
@@ -88,7 +88,7 @@ namespace app.Services.ATMAssemble.AssembleWorkDetailServices
                                                                  {
                                                                      Id = t1.Id,
                                                                      AssembleWorkId = t1.AssembleWorkId,
-                                                                     AssembleWorkStepItemId = t1.AssembleWorkItemId,
+                                                                     AssembleWorkStepItemId = t1.AssembleWorkStepItemId,
                                                                      AssembleWorkStepItemName = t1.AssembleWorkStepItem.Name,
                                                                  }).AsQueryable());
             return model;

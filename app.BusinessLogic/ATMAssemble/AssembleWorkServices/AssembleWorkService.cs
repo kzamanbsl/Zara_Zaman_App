@@ -5,6 +5,7 @@ using app.Infrastructure.Repository;
 using app.Services.ATMAssemble.AssembleWorkCategoryServices;
 using app.Services.ATMAssemble.AssembleWorkStepItemServices;
 using app.Utility;
+using System;
 
 namespace app.Services.ATMAssemble.AssembleWorkServices
 {
@@ -34,35 +35,41 @@ namespace app.Services.ATMAssemble.AssembleWorkServices
                 throw new Exception("Sorry, Technician is not found!");
             }
 
-            var assembleWorkItem = await Task.Run(() => (from t1 in _dbContext.AssembleWorkStepItem
-                                                         join t2 in _dbContext.AssembleWorkStep on t1.AssembleWorkStepId equals t2.Id
-                                                         where t2.AssembleWorkCategoryId == viewModel.AssembleWorkCategoryId && t1.IsActive == true
-                                                         select new AssembleWorkStepItemViewModel
-                                                         {
-                                                             Id = t1.AssembleWorkStepId,
-                                                             Name = t1.Name,
-                                                             Description = t1.Description,
-                                                             AssembleWorkStepId = t1.AssembleWorkStepId,
-                                                             AssembleWorkStepName = t1.AssembleWorkStep.Name,
-                                                             AssembleWorkCategoryId = t1.AssembleWorkStep.AssembleWorkCategoryId,
-                                                             AssembleWorkCategoryName = t1.AssembleWorkStep.AssembleWorkCategory.Name,
+            List<AssembleWorkStepItemViewModel> assembleWorkItem = await Task.Run(() => (from t1 in _dbContext.AssembleWorkStepItem
+                                                                                         join t2 in _dbContext.AssembleWorkStep on t1.AssembleWorkStepId equals t2.Id
+                                                                                         where t2.AssembleWorkCategoryId == viewModel.AssembleWorkCategoryId && t1.IsActive == true
+                                                                                         select new AssembleWorkStepItemViewModel
+                                                                                         {
+                                                                                             Id = t1.Id,
+                                                                                             Name = t1.Name,
+                                                                                             Description = t1.Description,
+                                                                                             AssembleWorkStepId = t1.AssembleWorkStepId,
+                                                                                             AssembleWorkStepName = t1.AssembleWorkStep.Name,
+                                                                                             AssembleWorkCategoryId = t1.AssembleWorkStep.AssembleWorkCategoryId,
+                                                                                             AssembleWorkCategoryName = t1.AssembleWorkStep.AssembleWorkCategory.Name,
 
-                                                         }).ToList());
+                                                                                         }).ToList());
 
             if (assembleWorkItem.Count <= 0)
             {
                 throw new Exception("Sorry, Assemble work item is not found!");
             }
 
+            var bnTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Bangladesh Standard Time");
+            DateTime baTime = TimeZoneInfo.ConvertTime(DateTime.Now, TimeZoneInfo.Local, bnTimeZone);
+            var createdBy = _iWorkContext.GetCurrentUserAsync().Result.FullName;
+
             #region AssembleWorkEmployees
             List<AssembleWorkEmployee> assembleWorkEmployees = new List<AssembleWorkEmployee>();
             List<long> empIds = viewModel.EmployeeIds.ToList();
-            foreach (var item in empIds)
+            foreach (var empId in empIds)
             {
                 AssembleWorkEmployee obj = new AssembleWorkEmployee()
                 {
-                    EmployeeId = item
-
+                    EmployeeId = empId,
+                    CreatedOn = baTime,
+                    CreatedBy = createdBy,
+                    IsActive = true,
                 };
                 assembleWorkEmployees.Add(obj);
             }
@@ -74,8 +81,10 @@ namespace app.Services.ATMAssemble.AssembleWorkServices
             {
                 AssembleWorkDetail obj = new AssembleWorkDetail()
                 {
-                    AssembleWorkItemId = item.Id
-
+                    AssembleWorkStepItemId = item.Id,
+                    CreatedOn = baTime,
+                    CreatedBy = createdBy,
+                    IsActive = true,
                 };
                 assembleWorkDetails.Add(obj);
             }
@@ -93,7 +102,9 @@ namespace app.Services.ATMAssemble.AssembleWorkServices
                     StatusId = (int)AssembleWorkStatusEnum.Draft,
                     WorkDetails = assembleWorkDetails,
                     WorkEmployees = assembleWorkEmployees,
-
+                    CreatedOn = baTime,
+                    CreatedBy = createdBy,
+                    IsActive = true,
 
                 };
                 assembleWorks.Add(obj);
@@ -101,9 +112,14 @@ namespace app.Services.ATMAssemble.AssembleWorkServices
 
             #endregion
 
-            var response = await _iEntityRepository.AddRangeAsync(assembleWorks);
+            bool result = false;
+            foreach (var assembleWork in assembleWorks)
+            {
+                var response = await _iEntityRepository.AddAsync(assembleWork);
+                if (response != null) { result = true; }
+            }
 
-            return true;
+            return result;
         }
 
         public async Task<bool> UpdateRecord(AssembleWorkViewModel viewModel)

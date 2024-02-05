@@ -3,7 +3,7 @@
     public class AssembleWorkDetail : BaseEntity
     {
         public long AssembleWorkId { get; set; }
-        public long AssembleWorkItemId { get; set; }
+        public long AssembleWorkStepItemId { get; set; }
         public string Remarks { get; set; }
         public bool IsComplete { get; set; }
 

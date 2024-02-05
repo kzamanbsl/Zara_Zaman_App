@@ -11,7 +11,6 @@ namespace app.Infrastructure.Repository
         Task<IReadOnlyList<T>> GetAllPagedAsync(int recSkip, int recTake, CancellationToken cancellationToken = default);
         Task<IReadOnlyList<T>> GetDeletedPagedAsync(int recSkip, int recTake, CancellationToken cancellationToken = default);
         Task<T> AddAsync(T entity, CancellationToken cancellationToken = default);
-        Task<List<T>> AddRangeAsync(List<T> entities, CancellationToken cancellationToken = default);
         Task<bool> UpdateAsync(T entity, CancellationToken cancellationToken = default);
         Task<bool> PermanentDeleteAsync(T entity, CancellationToken cancellationToken = default);
         Task<bool> PermanentDeleteByIdAsync(long id, CancellationToken cancellationToken = default);
