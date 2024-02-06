@@ -1,0 +1,108 @@
+﻿@model app.Services.ATMAssemble.AssembleWorkServices.AssembleWorkViewModel
+@{
+    ViewData["Title"] = "Employee Dashboard";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="content-header">
+    <div class="container-fluid ">
+        <div class="breadcrumb d-flex justify-content-between align-items-center pl-3 pr-3">
+            <ol class="breadcrumb mb-0 p-0">
+                <li class="breadcrumb-item"><a href="/Admin/Index">Home</a></li>
+                <li class="breadcrumb-item active"> Assemble Work List</li>
+            </ol>
+            <div>
+                <a asp-action="AddRecord"><i class="fa fa-plus"></i> Add Assemble Work</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="card">
+            <div class="card-header">
+                <h5>
+                    <i class="fas fa-list"></i> Assemble Work
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <form asp-action="AssembleWorkSave" method="post">
+                        <table id="assembleWorkTable" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Assemble Work - IPC</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    var list = Model.AssembleWorkList;
+                                    var test = "asdfg";
+                                }
+
+
+                                <tr>
+                                    <td>
+                                        <b>Name</b>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="custom-control custom-checkbox mb-3">
+                                            <input type="checkbox" class="custom-control-input" id="checkBox_i.Id">
+                                            <label class="custom-control-label" for="checkBox_i.Id">Name</label>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td>
+                                        <input type="submit" value="Submit" class="btn btn-primary" />
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        $(document).ready(function () {
+            "use strict"
+
+            $('#ATM-Assemble').addClass('menu-open');
+            $('#AssembleWorkEmployeeDashboard').addClass('active');
+
+
+            // function GetAssembleWork() {
+            //     $.ajax({
+            //         url: 'your-api-endpoint-url',
+            //         type: 'GET',
+            //         dataType: "json",
+            //         success: function (data) {
+            //             $('#assembleWorkTable tbody').empty();
+            //             $.each(data, function (index, employee) {
+            //                 $('#assembleWorkTable tbody').append('<tr><td>' + employee.ID + '</td><td>' + employee.Name + '</td><td>' + employee.Email + '</td></tr>');
+            //             });
+            //         },
+            //         error: function (xhr, status, error) {
+            //             console.error('Error fetching data:', error);
+            //         }
+            //     });
+            // }
+
+            // GetAssembleWork();
+            // setInterval(GetAssembleWork, 5000);
+        });
+    </script>
+}

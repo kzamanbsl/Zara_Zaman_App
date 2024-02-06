@@ -8,7 +8,7 @@
         Task<AssembleWorkViewModel> GetRecordById(long id);
         Task<AssembleWorkViewModel> GetAllRecord();
         Task<AssembleWorkMainDashboardViewModel> MainDashboard();
-        Task<AssembleWorkViewModel> EmployeeDashboard();
+        Task<List<AssembleWorkViewModel>> EmployeeDashboard();
         Task<bool> DeleteRecord(long id);
         
 

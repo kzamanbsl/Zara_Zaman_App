@@ -8,6 +8,7 @@ using app.Services.ATMAssemble.AssembleWorkStepItemServices;
 using app.Services.EmployeeServices;
 using app.Utility;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 
 namespace app.Services.ATMAssemble.AssembleWorkServices
 {
@@ -272,7 +273,57 @@ namespace app.Services.ATMAssemble.AssembleWorkServices
             return model;
         }
 
-        public async Task<AssembleWorkViewModel> EmployeeDashboard()
+        public async Task<List<AssembleWorkViewModel>> EmployeeDashboard()
+        {
+            List<AssembleWorkViewModel> models = new List<AssembleWorkViewModel>();
+
+            var dataList = await _dbContext.AssembleWork.Where(x => x.AssembleDate.Date == DateTime.Now.Date && x.IsActive == true).ToListAsync();
+            if (dataList.Count <= 0)
+            {
+                return models;
+            }
+
+            foreach (var data in dataList)
+            {
+                AssembleWorkViewModel model = new AssembleWorkViewModel();
+                model.Id = data.Id;
+                model.AssembleDate = data.AssembleDate;
+                model.Description = data.Description;
+                model.StatusId = data.StatusId;
+                model.AssembleWorkCategoryId = data.AssembleWorkCategoryId;
+                model.AssembleWorkCategoryName = _dbContext.AssembleWorkCategory.FirstOrDefault(c => c.Id == data.AssembleWorkCategoryId)?.Name;
+                model.EmployeeList = (from t1 in _dbContext.AssembleWorkEmployee
+                                      where t1.AssembleWorkId == data.Id && t1.IsActive == true
+                                      select new EmployeeViewModel
+                                      {
+                                          Id = t1.EmployeeId,
+                                          Name = t1.Employee.Name,
+                                          DesignationId = t1.Employee.DesignationId,
+                                          DesignationName = t1.Employee.Designation.Name,
+                                          DepartmentId = t1.Employee.DepartmentId,
+                                          DepartmentName = t1.Employee.Department.Name,
+                                      }).ToList();
+
+                model.DetailList = (from t1 in _dbContext.AssembleWorkDetail
+                                    where t1.AssembleWorkId == data.Id && t1.IsActive == true
+                                    select new AssembleWorkDetailViewModel
+                                    {
+                                        Id = t1.Id,
+                                        AssembleWorkId = t1.AssembleWorkId,
+                                        AssembleWorkStepId = t1.AssembleWorkStepItem.AssembleWorkStepId,
+                                        AssembleWorkStepName = t1.AssembleWorkStepItem.AssembleWorkStep.Name,
+                                        AssembleWorkStepItemId = t1.AssembleWorkStepItemId,
+                                        AssembleWorkStepItemName = t1.AssembleWorkStepItem.Name,
+                                        Remarks = t1.Remarks,
+                                    }).ToList();
+
+                models.Add(model);
+            }
+
+            return models;
+        }
+
+        public async Task<AssembleWorkViewModel> EmployeeDashboardOld()
         {
             //var loggedInUserId = _iHttpContextAccessor.HttpContext.User.Identity.Name;
             var loggedInUserId = 3;

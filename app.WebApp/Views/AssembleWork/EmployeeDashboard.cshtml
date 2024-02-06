@@ -1,7 +1,8 @@
-﻿@model app.Services.ATMAssemble.AssembleWorkServices.AssembleWorkViewModel
+﻿@model List<app.Services.ATMAssemble.AssembleWorkServices.AssembleWorkViewModel>
 @{
-    ViewData["Title"] = "Employee Dashboard";
+    ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    int sn = 1;
 }
 
 <div class="content-header">
@@ -9,68 +10,154 @@
         <div class="breadcrumb d-flex justify-content-between align-items-center pl-3 pr-3">
             <ol class="breadcrumb mb-0 p-0">
                 <li class="breadcrumb-item"><a href="/Admin/Index">Home</a></li>
-                <li class="breadcrumb-item active"> Assemble Work List</li>
+                <li class="breadcrumb-item active"> Assemble Work Employee Dashboard</li>
             </ol>
             <div>
-                <a asp-action="AddRecord"><i class="fa fa-plus"></i> Add Assemble Work</a>
+                <a asp-action="EmployeeDashboard"><i class="fa fa-plus"></i> Assemble Work Employee Dashboard</a>
             </div>
         </div>
     </div>
 </div>
 
-<section class="content">
-    <div class="container-fluid">
-        <div class="card">
-            <div class="card-header">
-                <h5>
-                    <i class="fas fa-list"></i> Assemble Work
-                </h5>
-            </div>
-            <div class="card-body">
-                <div class="table-responsive">
-                    <form asp-action="AssembleWorkSave" method="post">
-                        <table id="assembleWorkTable" class="table table-bordered table-striped">
-                            <thead>
+@if (Model?.Count > 0)
+{
+    foreach (var data in Model)
+    {
+        <section class="content">
+            <div class="container-fluid">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>
+                            <i class="fas fa-list"></i> Assemble Work Details
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table">
                                 <tr>
-                                    <th>Assemble Work - IPC</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @{
-                                    var list = Model.AssembleWorkList;
-                                    var test = "asdfg";
-                                }
+                                    <th style="width:18%">Assemble Work Name</th>
+                                    <th style="width:2%">:</th>
+                                    <td style="width:30%">@data.AssembleWorkCategoryName</td>
 
+                                    <th style="width:18%">Assemble Date</th>
+                                    <th style="width:2%">:</th>
+                                    <td style="width:30%">@data.AssembleDate.ToString("dd-MM-yyyy")</td>
+                                </tr>
+                                <tr>
+                                    <th style="width:18%">Description</th>
+                                    <th style="width:2%">:</th>
+                                    <td style="width:30%">@data.Description</td>
 
-                                <tr>
-                                    <td>
-                                        <b>Name</b>
-                                    </td>
+                                    <th style="width:18%">Status</th>
+                                    <th style="width:2%">:</th>
+                                    <td style="width:30%">@data.StatusName</td>
                                 </tr>
-                                <tr>
-                                    <td>
-                                        <div class="custom-control custom-checkbox mb-3">
-                                            <input type="checkbox" class="custom-control-input" id="checkBox_i.Id">
-                                            <label class="custom-control-label" for="checkBox_i.Id">Name</label>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                    <td>
-                                        <input type="submit" value="Submit" class="btn btn-primary" />
-                                    </td>
-                                </tr>
-                            </tfoot>
-                        </table>
-                    </form>
+                            </table>
+                        </div>
+
+                        <div>
+                            <h6 class="card-title text-info">
+                                <i class="fas fa-list"></i> Assemble Work Employees
+                            </h6>
+                            <div class="table-responsive">
+                                <table id="aaa" class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center">#</th>
+                                            <th class="text-center">Employee Name</th>
+                                            <th class="text-center">Designation</th>
+                                            <th class="text-center">Department</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        @{
+                                            var empSl = 1;
+
+                                            foreach (var item in data.EmployeeList)
+                                            {
+                                                <tr>
+                                                    <td class="text-center">@empSl</td>
+                                                    <td class="text-left">
+                                                        @Html.DisplayFor(modelItem => item.Name)
+                                                    </td>
+                                                    <td class="text-left">
+                                                        @Html.DisplayFor(modelItem => item.DesignationName)
+                                                    </td>
+                                                    <td class="text-left">
+                                                        @Html.DisplayFor(modelItem => item.DepartmentName)
+                                                    </td>
+                                                </tr>
+                                                empSl++;
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h6 class="card-title text-info">
+                                <i class="fas fa-list"></i> Assemble Work Items
+                            </h6>
+                            <div class="table-responsive">
+                                <table id="bbb" class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center">#</th>
+                                            <th class="text-center">Assemble Work Step</th>
+                                            <th class="text-center">Assemble Work Step Item</th>
+                                            <th class="text-center">Remarks</th>
+                                            <th class="text-center">Is Complete</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        @{
+                                            var itemSl = 1;
+
+                                            foreach (var item in data.DetailList)
+                                            {
+                                                <tr>
+                                                    <td class="text-center">@itemSl</td>
+                                                    <td class="text-left">
+                                                        @Html.DisplayFor(modelItem => item.AssembleWorkStepName)
+                                                    </td>
+                                                    <td class="text-left">
+                                                        @Html.DisplayFor(modelItem => item.AssembleWorkStepItemName)
+                                                    </td>
+                                                    <td class="text-left">
+                                                        @Html.DisplayFor(modelItem => item.Remarks)
+                                                    </td>
+                                                    <td class="text-center">
+                                                        @if (@item.IsComplete)
+                                                        {
+                                                            <strong>Yes</strong>
+                                                        }
+                                                        else
+                                                        {
+                                                            <a id="assign_@data.Id" style="cursor:pointer;" onClick="menuAssign(@item.AssembleWorkId, @item.Id,@data.AssembleWorkCategoryId, @item.AssembleWorkStepId,@item.AssembleWorkStepItemId,true);" title="Make Complete"
+                                                               data-placement="top">
+                                                                <i class="fa fa-check-square text-info" aria-hidden="true"></i>
+                                                            </a>
+                                                        }
+                                                    </td>
+                                                </tr>
+                                                itemSl++;
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
 
-</section>
+        </section>
+    }
+}
+
 
 @section Scripts {
     @{
@@ -83,26 +170,12 @@
             $('#ATM-Assemble').addClass('menu-open');
             $('#AssembleWorkEmployeeDashboard').addClass('active');
 
-
-            // function GetAssembleWork() {
-            //     $.ajax({
-            //         url: 'your-api-endpoint-url',
-            //         type: 'GET',
-            //         dataType: "json",
-            //         success: function (data) {
-            //             $('#assembleWorkTable tbody').empty();
-            //             $.each(data, function (index, employee) {
-            //                 $('#assembleWorkTable tbody').append('<tr><td>' + employee.ID + '</td><td>' + employee.Name + '</td><td>' + employee.Email + '</td></tr>');
-            //             });
-            //         },
-            //         error: function (xhr, status, error) {
-            //             console.error('Error fetching data:', error);
-            //         }
-            //     });
-            // }
-
-            // GetAssembleWork();
-            // setInterval(GetAssembleWork, 5000);
+            // $('#assembleWorkTable').DataTable({
+            //     "paging": true,
+            //     "ordering": true,
+            //     "info": true,
+            //     order: [[0, 'asc']],
+            // });
         });
     </script>
 }
