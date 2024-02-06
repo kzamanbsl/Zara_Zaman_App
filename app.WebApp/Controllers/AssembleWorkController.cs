@@ -24,6 +24,13 @@ namespace app.WebApp.Controllers
         }
 
         [HttpGet]
+        public async Task<IActionResult> Details(long id)
+        {
+            var result = await _iService.GetRecordById(id);
+            return View(result);
+        }
+
+        [HttpGet]
         public async Task<IActionResult> AddRecord()
         {
             ViewBag.AssembleWorkCategoryList = new SelectList((await _iDropdownService.AssembleWorkCategorySelectionList())
@@ -40,7 +47,7 @@ namespace app.WebApp.Controllers
             var result = await _iService.AddRecord(viewModel);
             if (result == true)
             {
-                return RedirectToAction("AddRecord");
+                return RedirectToAction("Index");
             }
             return View(viewModel);
         }

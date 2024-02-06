@@ -1,4 +1,4 @@
-﻿namespace app.Services.ATMAssemble.AssembleWorkStepServices
+﻿namespace app.Services.ATMAssemble.AssembleWorkDetailServices
 {
     public interface IAssembleWorkDetailService
     {

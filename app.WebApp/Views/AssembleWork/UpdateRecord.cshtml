@@ -1,4 +1,4 @@
-﻿@model app.Services.ATMAssemble.AssembleWorkCategoryServices.AssembleWorkCategoryViewModel
+﻿@model app.Services.ATMAssemble.AssembleWorkServices.AssembleWorkViewModel
 @{
     ViewData["Title"] = "UpdateRecord";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
@@ -8,10 +8,10 @@
         <div class="breadcrumb d-flex justify-content-between align-items-center pl-3 pr-3">
             <ol class="breadcrumb mb-0 p-0">
                 <li class="breadcrumb-item"><a href="/Admin/Index">Home</a></li>
-                <li class="breadcrumb-item active"> Assemble Work Category List</li>
+                <li class="breadcrumb-item active"> Assemble Work List</li>
             </ol>
             <div>
-                <a asp-action="Index"><i class="fa fa-list"></i> Assemble Work Category List</a>
+                <a asp-action="Index"><i class="fa fa-list"></i> Assemble Work List</a>
             </div>
         </div>
     </div>
@@ -22,42 +22,67 @@
         <div class="card">
             <div class="card-header">
                 <h5 class="card-title text-info">
-                    <i class="fas fa-plus"></i> Update Assemble Work Category
+                    <i class="fas fa-plus"></i> Update Assemble Work
                 </h5>
             </div>
             <div class="card-body">
-                <div class="row">
-                    <div class="col-md-12">
-                        <form asp-action="UpdateRecord" method="post">
-                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                            @Html.HiddenFor(model => model.Id)
-                            <div class="container">
-                                <div class="row align-items-start">
-                                    <div class="col-4">
-                                        <div class="form-group">
-                                            <label asp-for="Name" class="form-label"></label>
-                                            <input asp-for="Name" class="form-control" required />
-                                            <span asp-validation-for="Name" class="text-danger"></span>
-                                        </div>
-                                    </div>
-                                    <div class="col-4">
-                                        <div class="form-group">
-                                            <label asp-for="Description" class="form-label"></label>
-                                            <textarea asp-for="Description" class="form-control" rows="1"></textarea>
-                                            <span asp-validation-for="Description" class="text-danger"></span>
-                                        </div>
-                                    </div>
-                                    <div class="col-4">
-                                        <div class="form-group">
-                                            <input type="submit" value="Update" class="btn btn-warning d-block w-100" style="margin-top: 30px" />
-                                        </div>
-                                    </div>
-                                    <div class="col"></div>
-                                </div>
+                <form asp-action="UpdateRecord" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    @Html.HiddenFor(model => model.Id)
+
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label class="form-label">Assemble Date</label>
+                                <input asp-for="AssembleDate" type="date" value="@DateTime.Now.ToString("dddd-MM-yyyy")" class="form-control" required />
+                                <span asp-validation-for="AssembleDate" class="text-danger"></span>
                             </div>
-                        </form>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label class="form-label">Select Assemble</label>
+                                <select asp-for="AssembleWorkCategoryId" asp-items="ViewBag.AssembleWorkCategoryList" class="form-control" required>
+                                    <option selected disabled>=Select Assemble=</option>
+                                </select>
+                                <span asp-validation-for="AssembleWorkCategoryId" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label asp-for="AssembleTarget" class="form-label">Assemble Target</label>
+                                <input asp-for="AssembleTarget" class="form-control" required />
+                                <span asp-validation-for="AssembleTarget" class="text-danger"></span>
+                            </div>
+                        </div>
                     </div>
-                </div>
+
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label class="form-label">Select Assemble</label>
+                                <select asp-for="EmployeeIds" asp-items="ViewBag.EmployeeList" class="form-control" required>
+                                    <option selected disabled>=Select Employee=</option>
+                                </select>
+                                <span asp-validation-for="EmployeeIds" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label asp-for="Description" class="form-label"></label>
+                                <textarea asp-for="Description" class="form-control" rows="2"></textarea>
+                                <span asp-validation-for="Description" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="float:right">
+                        <input type="submit" value="Update" class="btn btn-warning d-block w-100" style="margin-top: 30px" />
+                    </div>
+
+                </form>
+
             </div>
         </div>
     </div>
@@ -72,7 +97,7 @@
             "use strict"
 
             $('#ATM-Assemble').addClass('menu-open');
-            $('#AssembleWorkCategoryIndex').addClass('active');
+            $('#AssembleWorkIndex').addClass('active');
         });
     </script>
 }
