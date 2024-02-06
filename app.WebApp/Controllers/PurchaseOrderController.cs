@@ -57,7 +57,7 @@ namespace app.WebApp.Controllers
 
             if (purchaseOrderId == 0)
             {
-                viewModel.OrderStatusId = PurchaseOrderStatusEnum.Draft;
+                viewModel.OrderStatusId = (int)PurchaseOrderStatusEnum.Draft;
             }
             else
             {
@@ -79,10 +79,11 @@ namespace app.WebApp.Controllers
             {
                 if (vm.Id == 0)
                 {
-                    await _ipurchaseOrderService.AddRecord(vm);
+                    await _ipurchaseOrderService.AddRecord(vm); //Adding Purchase Master
                 }
-                await _ipurchaseOrderDetailService.AddRecord(vm);
+                await _ipurchaseOrderDetailService.AddRecord(vm); //Adding Purchase Details
             }
+            //This is for Purchase Details single Edit
             else if (vm.ActionEum == ActionEnum.Edit)
             {
                 await _ipurchaseOrderDetailService.UpdatePurchaseDetailsRecord(vm);
@@ -97,7 +98,7 @@ namespace app.WebApp.Controllers
             PurchaseOrderViewModel viewModel = await _ipurchaseOrderService.GetPurchaseOrder(purchaseOrderId);
             if (purchaseOrderId == 0)
             {
-                viewModel.OrderStatusId = PurchaseOrderStatusEnum.Draft;
+                viewModel.OrderStatusId = (int)PurchaseOrderStatusEnum.Draft;
             }
             ViewBag.ProductList = new SelectList((await _iDropdownService.ProductSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
             ViewBag.UnitList = new SelectList((await _iDropdownService.UnitSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
@@ -189,7 +190,7 @@ namespace app.WebApp.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetPurchaseOrderAndDetailsById(long id = 0)
+        public async Task<IActionResult> PurchaseDetails(long id = 0)
         {
             PurchaseOrderViewModel viewModel = await _ipurchaseOrderService.GetPurchaseOrderDetails(id);
             return View(viewModel);

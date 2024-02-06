@@ -15,7 +15,7 @@ namespace app.Services.PurchaseOrderServices
         public DateTime PurchaseDate { get; set; }
         public string Description { get; set; }
         public string OrderNo { get; set; }
-        public PurchaseOrderStatusEnum OrderStatusId { get; set; }
+        public int OrderStatusId { get; set; }
         public string OrderStatusName { get; set; }
         public decimal OverallDiscount { get; set; }
         public double TotalAmount { get; set; }

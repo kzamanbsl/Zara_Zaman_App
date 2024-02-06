@@ -26,6 +26,7 @@ namespace app.Services.InventoryServices
             _dbContext = dbContext;
             _iWorkContext = iWorkContext;
         }
+   
 
         public async Task<bool> AddInventory(long id = 0)
         {
@@ -37,7 +38,7 @@ namespace app.Services.InventoryServices
                      Id = t1.Id,
                      PurchaseDate = t1.PurchaseDate,
                      OrderNo = t1.OrderNo,
-                     OrderStatusId = (PurchaseOrderStatusEnum)t1.OrderStatusId,
+                     OrderStatusId = (int)(PurchaseOrderStatusEnum)t1.OrderStatusId,
                      SupplierId = t1.SupplierId,
                      SupplierName = t1.Supplier.Name,
                      StorehouseId = t1.StorehouseId,
@@ -72,6 +73,7 @@ namespace app.Services.InventoryServices
                 Inventory inventory = new Inventory
                 {
                     StoreFromId = detail.PurchaseOrderId,
+                    StoreTypeId = (int)StoreTypeEnum.Purchase,
                     StockDate = purchaseOrderModel.PurchaseDate,
                     StorehouseId = purchaseOrderModel.StorehouseId ?? 0,
                     ProductId = detail?.ProductId ?? 0,
@@ -79,23 +81,20 @@ namespace app.Services.InventoryServices
                     CostPrice = detail?.CostPrice ?? 0,
                     SalePrice = detail?.SalePrice ?? 0,
                     Consumption = detail?.Consumption ?? 0,
-
+                    Remarks = detail.Remarks,
                 };
                 var res = await _iEntityRepository.AddAsync(inventory);
                 detail.Id = res?.Id ?? 0;
             }
+            var purchaseOrder = await _dbContext.PurchaseOrder.FirstOrDefaultAsync(x => x.Id == id && x.IsActive); ;
+            if (purchaseOrder != null)
+            {
+                purchaseOrder.OrderStatusId = (int)PurchaseOrderStatusEnum.Receive;
+                await _dbContext.SaveChangesAsync();
+                return true;
+            }
+
             return false;
         }
-
-
-
-
-
-
-
-
-
-
-
     }
 }
