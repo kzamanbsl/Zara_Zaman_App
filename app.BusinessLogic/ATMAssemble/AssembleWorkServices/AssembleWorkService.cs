@@ -267,6 +267,7 @@ namespace app.Services.ATMAssemble.AssembleWorkServices
             }
 
             model.MainDashboardList = mainDashboardData;
+            model.AssembleDate = DateTime.Now.Date;
             return model;
         }
 
