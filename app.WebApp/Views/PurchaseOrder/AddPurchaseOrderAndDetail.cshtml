@@ -126,7 +126,7 @@
                                     </div>
                                 </div>
                             }
-                            @if (Model.OrderStatusId == PurchaseOrderStatusEnum.Draft)
+                            @if (Model.OrderStatusId == (int)PurchaseOrderStatusEnum.Draft)
                             {
                                 <div class="" style="padding-top:30px;">
                                     <div class="row">
@@ -228,7 +228,7 @@
                                                 <th style="padding: 5px; text-align: right; ">Cost Price</th>
                                                 <th style="padding: 5px; text-align: right; ">Sale Price</th>
                                                 <th style="padding: 5px; text-align: right; ">Total Price</th>
-                                                @if (Model.OrderStatusId == PurchaseOrderStatusEnum.Draft)
+                                                @if (Model.OrderStatusId == (int)PurchaseOrderStatusEnum.Draft)
                                                 {
                                                     <th style="padding:5px;text-align:center;">Action</th>
                                                 }
@@ -250,7 +250,7 @@
                                                     <td style="padding: 5px; text-align: right;">@String.Format("{0:0.00}", item.TotalAmount)</td>
 
                                                     @{
-                                                        if (Model.OrderStatusId == PurchaseOrderStatusEnum.Draft)
+                                                        if (Model.OrderStatusId == (int)PurchaseOrderStatusEnum.Draft)
                                                         {
                                                             <td style="padding:5px;text-align:center;">
                                                                 <a id="@item.Id" onclick="makeEditble(@item.Id);" class="linkPointer" title="Edit"><i class="text-warning fas fa-edit" aria-hidden="true"></i></a>
@@ -272,7 +272,7 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-12">
-                        @if (Model.Id > 0 && Model.OrderStatusId == PurchaseOrderStatusEnum.Draft)
+                        @if (Model.Id > 0 && Model.OrderStatusId == (int)PurchaseOrderStatusEnum.Draft)
                         {
                             <div class="form-group" style="float:right">
                                 <button asp-action="ConfirmPurchaseOrder" method="post" id="confirmButton" class="linkPointer btn btn-success  btn-block">Confirm</button>
@@ -371,7 +371,7 @@
                         alert("Delete failed");
                     }
                     window.scrollTo({ top: 0, behavior: 'smooth' });
-                    location.reload(); // Reload the page
+                    location.reload(); 
                 }
             });
         }
