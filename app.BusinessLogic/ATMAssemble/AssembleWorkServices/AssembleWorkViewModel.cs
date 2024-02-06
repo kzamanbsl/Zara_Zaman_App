@@ -1,4 +1,6 @@
 ﻿
+using app.Services.ATMAssemble.AssembleWorkDetailServices;
+using app.Services.EmployeeServices;
 using app.Utility;
 
 namespace app.Services.ATMAssemble.AssembleWorkServices
@@ -13,12 +15,10 @@ namespace app.Services.ATMAssemble.AssembleWorkServices
         public int StatusId { get; set; }
         public string StatusName => GlobalVariable.GetEnumDescription((AssembleWorkStatusEnum)StatusId);
 
-        private long[] EmployeeId;
-        public long[] EmployeeIds
-        {
-            get { return EmployeeId; }
-            set { EmployeeId = value; }
-        }
+        public long[] EmployeeIds { get; set; }
+
         public IEnumerable<AssembleWorkViewModel> AssembleWorkList { get; set; }
+        public List<AssembleWorkDetailViewModel> DetailList { get; set; }
+        public List<EmployeeViewModel> EmployeeList { get; set; }
     }
 }

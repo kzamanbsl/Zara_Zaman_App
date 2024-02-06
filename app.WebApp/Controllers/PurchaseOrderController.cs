@@ -35,19 +35,9 @@ namespace app.WebApp.Controllers
             }
             catch (Exception ex)
             {
-                //return View("Error");
                 throw new Exception(ex.Message, ex);
             }
-        }
-        public async Task<IActionResult> Details(long id)
-        {
-            var viewModel = await _ipurchaseOrderService.GetPurchaseOrder(id);
-            if (viewModel == null)
-            {
-                return NotFound();
-            }
-            return RedirectToAction(nameof(Index));
-        }
+        }      
 
 
         [HttpGet]
@@ -57,7 +47,7 @@ namespace app.WebApp.Controllers
 
             if (purchaseOrderId == 0)
             {
-                viewModel.OrderStatusId = PurchaseOrderStatusEnum.Draft;
+                viewModel.OrderStatusId = (int)PurchaseOrderStatusEnum.Draft;
             }
             else
             {
@@ -79,10 +69,11 @@ namespace app.WebApp.Controllers
             {
                 if (vm.Id == 0)
                 {
-                    await _ipurchaseOrderService.AddRecord(vm);
+                    await _ipurchaseOrderService.AddRecord(vm); //Adding Purchase Master
                 }
-                await _ipurchaseOrderDetailService.AddRecord(vm);
+                await _ipurchaseOrderDetailService.AddRecord(vm); //Adding Purchase Details
             }
+            //This is for Purchase Details single Edit
             else if (vm.ActionEum == ActionEnum.Edit)
             {
                 await _ipurchaseOrderDetailService.UpdatePurchaseDetailsRecord(vm);
@@ -91,19 +82,6 @@ namespace app.WebApp.Controllers
             return RedirectToAction(nameof(AddPurchaseOrderAndDetail), new { purchaseOrderId = vm.Id });
         }
 
-        [HttpGet]
-        public async Task<IActionResult> UpdatePurchaseOrder(long purchaseOrderId)
-        {
-            PurchaseOrderViewModel viewModel = await _ipurchaseOrderService.GetPurchaseOrder(purchaseOrderId);
-            if (purchaseOrderId == 0)
-            {
-                viewModel.OrderStatusId = PurchaseOrderStatusEnum.Draft;
-            }
-            ViewBag.ProductList = new SelectList((await _iDropdownService.ProductSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
-            ViewBag.UnitList = new SelectList((await _iDropdownService.UnitSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
-
-            return View(nameof(UpdatePurchaseOrder), viewModel);
-        }
 
         [HttpGet]
         public async Task<JsonResult> IsPurchaseOrderMasterUpdateRecord(long id)
@@ -119,26 +97,6 @@ namespace app.WebApp.Controllers
             //}
             //return Json(IsExist);
         }
-
-
-        //[HttpPost]
-        //public async Task<JsonResult> checkPurchaseOrderMasterUpdateRecord(PurchaseOrderViewModel model)
-        //{
-        //    try
-        //    {
-        //        // Perform the necessary operations to update the purchase order record
-        //        // Example: _purchaseOrderService.UpdatePurchaseOrder(model);
-
-        //        // Return a success response
-        //        return Json(new { success = true });
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        // Return an error response
-        //        return Json(new { success = false, message = ex.Message });
-        //    }
-        //}
-
 
         [HttpGet]
         public async Task<IActionResult> PurchaseOrderMasterUpdateRecord(long id)
@@ -189,7 +147,7 @@ namespace app.WebApp.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetPurchaseOrderAndDetailsById(long id = 0)
+        public async Task<IActionResult> PurchaseDetails(long id = 0)
         {
             PurchaseOrderViewModel viewModel = await _ipurchaseOrderService.GetPurchaseOrderDetails(id);
             return View(viewModel);
@@ -208,8 +166,6 @@ namespace app.WebApp.Controllers
             var res = await _inventoryService.AddInventory(id);
             return RedirectToAction("Index");
         }
-
-
     }
 }
 

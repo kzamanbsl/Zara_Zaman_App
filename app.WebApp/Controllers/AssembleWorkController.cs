@@ -47,7 +47,7 @@ namespace app.WebApp.Controllers
             var result = await _iService.AddRecord(viewModel);
             if (result == true)
             {
-                return RedirectToAction("AddRecord");
+                return RedirectToAction("Index");
             }
             return View(viewModel);
         }
@@ -85,9 +85,9 @@ namespace app.WebApp.Controllers
 
 
         [HttpGet]
-        public async Task<IActionResult> LiveDashboard()
+        public async Task<IActionResult> MainDashboard()
         {
-            var result = await _iService.LiveDashboard();
+            var result = await _iService.MainDashboard();
             return View(result);
         }
 

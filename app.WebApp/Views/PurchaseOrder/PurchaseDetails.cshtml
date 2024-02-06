@@ -5,6 +5,7 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
     int sl = 0;
 }
+
 <div class="content-header">
     <div class="container-fluid ">
         <div class="breadcrumb d-flex justify-content-between align-items-center  pl-3 pr-3">
@@ -33,14 +34,14 @@
                 else
                 {
                     <h3 class="card-title text-info">
-                        Nothing Found
+                        Nothig Found
                     </h3>
                 }
             </div>
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-12">
-                        <form asp-action="GetPurchaseOrderAndDetailsById" method="get">
+                        <form asp-action="PurchaseDetails" method="get">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                             <input asp-for="Id" class="form-control" hidden id="purchaseorderId" />
                             <input asp-for="ActionId" hidden id="actionId" />
@@ -72,9 +73,11 @@
                             @if (Model.Id > 0)
                             {
                                 <input asp-for="Id" class="form-control" hidden />
-                                <div class="table-responsive col-md-12  text-nowrap">
+                                <div class="table-responsive col-md-12 text-nowrap table-bordered">
+                                    <p style="margin-top:20px;" class="card-title text-info"><span>Purchase Details</span></p>
+
                                     <table id="KgErpDataTable" class="table caption-top">
-                                        <thead class="table-light table-bordered border-primary">
+                                        <thead class="table-light border-primary">
                                             <tr>
                                                 <th style="padding:5px;text-align:center;">SL</th>
                                                 <th style="padding: 5px; text-align: left;">Product</th>
@@ -114,18 +117,18 @@
                 <div class="row">
                     <div class="col-md-12">
                         @if (Model.Id > 0 && Model.OrderStatusId == (int)PurchaseOrderStatusEnum.Draft || Model.Id > 0 && Model.OrderStatusId == (int)PurchaseOrderStatusEnum.Confirm)
-                            {
-                                <div class="form-group" style="float:right">
-                                    <button id="orderReceived" class="linkPointer btn btn-success btn-sm">Received</button>
-                                    <button asp-action="RejectPurchaseOrder" method="post" id="orderReject" class="linkPointer btn btn-danger btn-sm">Reject</button>
-                                </div>
-                            }
+                        {
+                            <div class="form-group" style="float:right">
+                                <button id="orderReceived" class="linkPointer btn btn-success btn-sm">Received</button>
+                                <button asp-action="RejectPurchaseOrder" method="post" id="orderReject" class="linkPointer btn btn-danger btn-sm">Reject</button>
+                            </div>
+                        }
                         @if (Model.Id > 0 && Model.OrderStatusId == (int)PurchaseOrderStatusEnum.Reject)
-                            {
-                                <div class="form-group" style="float:right">
-                                    <h3><span style="color:red">Order Rejected</span></h3>
-                                </div>
-                            }
+                        {
+                            <div class="form-group" style="float:right">
+                                <h3><span style="color:red">Order Rejected</span></h3>
+                            </div>
+                        }
                     </div>
                 </div>
             </div>
