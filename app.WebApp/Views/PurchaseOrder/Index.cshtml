@@ -104,7 +104,7 @@
                                                         </select>
                                                     </div>
                                                     <div class="form-group" style="float:right">
-                                                        <button type="submit" class="btn btn-primary" id="saveButton" onchange="myFunction()">Save changes</button>
+                                                        <button type="submit" class="btn btn-primary" id="saveButton" onclick="myFunction()">Save changes</button>
                                                     </div>
                                                 </form>
                                             </div>
@@ -128,6 +128,8 @@
     <script>
 
         $(document).ready(function () {
+            $('#StorehouseId').val(@(Model.Storehouse)).trigger('change');
+
             $('#Purchases').addClass('menu-open');
             $('#PurchaseOrderIndex').addClass('active');
             $('#PurchaseOrdertable').DataTable({
@@ -137,17 +139,20 @@
                 order: [[0, 'asc']],
             });
 
-        });
-
-
     </script>
+
     <script>
         function myFunction() {
+            alert('okk');
             var id = $("#Id").val(); // Fetch the id of the current purchase order
-            var purchaseDate = $("#PurchaseDate").val();
-            var storehouseId = $("#StorehouseId");
-            var supplierId = $("#SupplierId");
-            var submitButton = $("#saveButton");
+            // var purchaseDate = $("#PurchaseDate").val();
+            var purchaseDate = document.getElementById("#PurchaseDate");
+            // var storehouseId = $("#StorehouseId");
+            var storehouseId = document.getElementById("#StorehouseId");
+            // var supplierId = $("#SupplierId");
+            var supplierId = document.getElementById("#SupplierId");
+            // var submitButton = $("#saveButton");
+            var submitButton = document.getElementById("#saveButton");
 
             $.ajax({
                 type: "GET",
