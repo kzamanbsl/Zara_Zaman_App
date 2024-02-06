@@ -47,7 +47,7 @@ namespace app.WebApp.Controllers
             var result = await _iService.AddRecord(viewModel);
             if (result == true)
             {
-                return RedirectToAction("AddRecord");
+                return RedirectToAction("Index");
             }
             return View(viewModel);
         }

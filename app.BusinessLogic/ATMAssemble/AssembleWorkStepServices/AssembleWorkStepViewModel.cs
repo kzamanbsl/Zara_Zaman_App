@@ -1,4 +1,6 @@
 ﻿
+using app.Services.ATMAssemble.AssembleWorkStepItemServices;
+
 namespace app.Services.ATMAssemble.AssembleWorkStepServices
 {
     public class AssembleWorkStepViewModel : BaseViewModel
@@ -8,5 +10,6 @@ namespace app.Services.ATMAssemble.AssembleWorkStepServices
         public long AssembleWorkCategoryId { get; set; }
         public string AssembleWorkCategoryName { get; set; }
         public IEnumerable<AssembleWorkStepViewModel> AssembleWorkStepList { get; set; }
+        public IEnumerable<AssembleWorkStepItemViewModel> AssembleWorkStepItemList { get; set; }
     }
 }
