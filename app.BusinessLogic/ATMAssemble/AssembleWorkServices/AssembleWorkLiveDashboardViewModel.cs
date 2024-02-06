@@ -9,7 +9,7 @@
         public int TodayTarget { get; set; }
         public int WorkCompleted { get; set; }
         public int FaultQty { get; set; }
-        public decimal Achievement => ((100 * WorkCompleted) / TodayTarget);
+        public decimal Achievement => ((100 * WorkCompleted) / (TodayTarget>0? TodayTarget:1));
 
         public IEnumerable<AssembleWorkMainDashboardViewModel> MainDashboardList { get; set; }
     }
