@@ -1,7 +1,6 @@
 ﻿using app.EntityModel.AppModels.ATMAssemble;
 using app.Infrastructure;
 using app.Infrastructure.Auth;
-using app.Infrastructure.Migrations;
 using app.Infrastructure.Repository;
 using app.Services.ATMAssemble.AssembleWorkCategoryServices;
 using app.Services.ATMAssemble.AssembleWorkDetailServices;
@@ -9,7 +8,6 @@ using app.Services.ATMAssemble.AssembleWorkStepItemServices;
 using app.Services.EmployeeServices;
 using app.Utility;
 using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
 
 namespace app.Services.ATMAssemble.AssembleWorkServices
 {
@@ -274,7 +272,7 @@ namespace app.Services.ATMAssemble.AssembleWorkServices
             return model;
         }
 
- public async Task<AssembleWorkViewModel> EmployeeDashboard()
+        public async Task<AssembleWorkViewModel> EmployeeDashboard()
         {
             //var loggedInUserId = _iHttpContextAccessor.HttpContext.User.Identity.Name;
             var loggedInUserId = 3;
