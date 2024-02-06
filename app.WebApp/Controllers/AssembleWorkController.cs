@@ -1,4 +1,5 @@
-﻿using app.Services.ATMAssemble.AssembleWorkServices;
+﻿using app.EntityModel.AppModels.ATMAssemble;
+using app.Services.ATMAssemble.AssembleWorkServices;
 using app.Services.DropdownServices;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -59,7 +60,7 @@ namespace app.WebApp.Controllers
                 .Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
             ViewBag.EmployeeList = new MultiSelectList((await _iDropdownService.EmployeeSelectionList())
                .Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
-           // AssembleWorkViewModel viewModel = new AssembleWorkViewModel();
+            // AssembleWorkViewModel viewModel = new AssembleWorkViewModel();
             var result = await _iService.GetRecordById(id);
             return View(result);
         }
@@ -96,6 +97,24 @@ namespace app.WebApp.Controllers
         {
             var dataList = await _iService.EmployeeDashboard();
             return View(dataList);
+        }
+        [HttpPost]
+        public async Task<JsonResult> MakeStepItemComplete(long assembleWorkId, long assembleWorkDetailId, long assembleWorkCategoryId, long assembleWorkStepId, long assembleWorkStepItemId)
+        {
+            var result = await _iService.MakeStepItemComplete(assembleWorkId, assembleWorkDetailId, assembleWorkCategoryId, assembleWorkStepId, assembleWorkStepItemId);
+            return Json(result);
+        }
+        [HttpPost]
+        public async Task<JsonResult> MakeStatusComplete(long assembleWorkId)
+        {
+            var result = await _iService.MakeStatusComplete(assembleWorkId);
+            return Json(result);
+        }
+        [HttpPost]
+        public async Task<JsonResult> MakeStatusFault(long assembleWorkId)
+        {
+            var result = await _iService.MakeStatusFault(assembleWorkId);
+            return Json(result);
         }
     }
 }

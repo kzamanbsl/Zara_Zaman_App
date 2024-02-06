@@ -1,4 +1,5 @@
-﻿@model List<app.Services.ATMAssemble.AssembleWorkServices.AssembleWorkViewModel>
+﻿@using app.Utility
+@model List<app.Services.ATMAssemble.AssembleWorkServices.AssembleWorkViewModel>
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
@@ -50,7 +51,7 @@
 
                                     <th style="width:18%">Status</th>
                                     <th style="width:2%">:</th>
-                                    <td style="width:30%">@data.StatusName</td>
+                                    <td style="width:30%" id="statusName_@data.Id">@data.StatusName</td>
                                 </tr>
                             </table>
                         </div>
@@ -132,14 +133,15 @@
                                                     <td class="text-center">
                                                         @if (@item.IsComplete)
                                                         {
-                                                            <strong>Yes</strong>
+                                                            <strong class="text-success">Yes</strong>
                                                         }
                                                         else
                                                         {
-                                                            <a id="assign_@data.Id" style="cursor:pointer;" onClick="menuAssign(@item.AssembleWorkId, @item.Id,@data.AssembleWorkCategoryId, @item.AssembleWorkStepId,@item.AssembleWorkStepItemId,true);" title="Make Complete"
+                                                            <a id="makeComplete_@item.Id" style="cursor:pointer;" onClick="makeComplete(@item.AssembleWorkId, @item.Id,@data.AssembleWorkCategoryId, @item.AssembleWorkStepId,@item.AssembleWorkStepItemId);" title="Make Complete"
                                                                data-placement="top">
                                                                 <i class="fa fa-check-square text-info" aria-hidden="true"></i>
                                                             </a>
+                                                            <strong id="completed_@item.Id" style="display: none;" class="text-success">Yes</strong>
                                                         }
                                                     </td>
                                                 </tr>
@@ -150,6 +152,22 @@
                                 </table>
                             </div>
                         </div>
+                        
+                        @if (data.StatusId == (int)AssembleWorkStatusEnum.Confirm)
+                        {
+                            <div class="row mr-1" style="float:right">
+                                <a id="statusFault_@data.Id" style="cursor:pointer;" onClick="statusFault(@data.Id);" title="Make Fault"
+                                   data-placement="top">
+                                    <input type="button" value="Fault" class="btn btn-warning" />
+                                </a>
+                                <a id="statusComplete_@data.Id" style="cursor:pointer;" onClick="statusComplete(@data.Id);" title="Make Complete"
+                                   data-placement="top">
+                                    <input type="button" value="Complete" class="btn btn-primary ml-1" />
+                                </a>
+
+                            </div>
+                        }
+                        
                     </div>
                 </div>
             </div>
@@ -177,5 +195,69 @@
             //     order: [[0, 'asc']],
             // });
         });
+
+        function makeComplete(assembleWorkId, id, assembleWorkCategoryId, assembleWorkStepId, assembleWorkStepItemId) {
+
+            $.ajax({
+                type: "post",
+                url: "@Url.Action("MakeStepItemComplete", "AssembleWork")",
+                data: { assembleWorkId: assembleWorkId, assembleWorkDetailId: id, assembleWorkCategoryId: assembleWorkCategoryId, assembleWorkStepId: assembleWorkStepId, assembleWorkStepItemId: assembleWorkStepItemId },
+                datatype: "json",
+                traditional: true,
+                success: function (data) {
+                    if (data.isSuccess) {
+                        $('#makeComplete_' + data.assembleWorkDetailId).hide();
+                        $('#completed_' + data.assembleWorkDetailId).show();
+
+                    } else {
+                        $('#makeComplete_' + data.assembleWorkDetailId).show();
+                        $('#completed_' + data.assembleWorkDetailId).hide();
+                    }
+                }
+            });
+        }
+
+        function statusComplete(assembleWorkId) {
+
+            $.ajax({
+                type: "post",
+                url: "@Url.Action("MakeStatusComplete", "AssembleWork")",
+                data: { assembleWorkId: assembleWorkId },
+                datatype: "json",
+                traditional: true,
+                success: function (data) {
+                    if (data.isSuccess) {
+                        $('#statusComplete_' + data.assembleWorkId).hide();
+                        $('#statusFault_' + data.assembleWorkId).hide();
+                        $('#statusName_' + data.assembleWorkId).text("Complete");
+
+                    } else {
+                        $('#statusComplete_' + data.assembleWorkId).show();
+                        $('#statusFault_' + data.assembleWorkId).show();
+                    }
+                }
+            });
+        }
+
+        function statusFault(assembleWorkId) {
+
+            $.ajax({
+                type: "post",
+                url: "@Url.Action("MakeStatusFault", "AssembleWork")",
+                data: { assembleWorkId: assembleWorkId },
+                datatype: "json",
+                traditional: true,
+                success: function (data) {
+                    if (data.isSuccess) {
+                        $('#statusComplete_' + data.assembleWorkId).hide();
+                        $('#statusFault_' + data.assembleWorkId).hide();
+                        $('#statusName_' + data.assembleWorkId).text("Fault");
+                    } else {
+                        $('#statusComplete_' + data.assembleWorkId).show();
+                        $('#statusFault_' + data.assembleWorkId).show();
+                    }
+                }
+            });
+        }
     </script>
 }

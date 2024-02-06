@@ -19,13 +19,16 @@ namespace app.Services.ATMAssemble.AssembleWorkServices
         private readonly IWorkContext _iWorkContext;
         private readonly IAssembleWorkCategoryService _iAssembleWorkCategoryService;
         private readonly IHttpContextAccessor _iHttpContextAccessor;
-        public AssembleWorkService(IEntityRepository<AssembleWork> iEntityRepository, IAssembleWorkCategoryService iAssembleWorkCategoryService, InventoryDbContext dbContext, IWorkContext iWorkContext, IHttpContextAccessor iHttpContextAccessor)
+        private readonly IAssembleWorkDetailService _iAssembleWorkDetailService;
+        public AssembleWorkService(IEntityRepository<AssembleWork> iEntityRepository, IAssembleWorkCategoryService iAssembleWorkCategoryService, InventoryDbContext dbContext, IWorkContext iWorkContext, IHttpContextAccessor iHttpContextAccessor, IAssembleWorkDetailService iAssembleWorkDetailService)
         {
             _iEntityRepository = iEntityRepository;
             _dbContext = dbContext;
             _iWorkContext = iWorkContext;
             _iAssembleWorkCategoryService = iAssembleWorkCategoryService;
-            _iHttpContextAccessor = iHttpContextAccessor; ;
+            _iHttpContextAccessor = iHttpContextAccessor;
+            _iAssembleWorkDetailService = iAssembleWorkDetailService;
+            ;
         }
 
         public async Task<bool> AddRecord(AssembleWorkViewModel viewModel)
@@ -104,7 +107,7 @@ namespace app.Services.ATMAssemble.AssembleWorkServices
                     AssembleWorkCategoryId = viewModel.AssembleWorkCategoryId,
                     AssembleDate = viewModel.AssembleDate,
                     Description = viewModel.Description,
-                    StatusId = (int)AssembleWorkStatusEnum.Draft,
+                    StatusId = (int)AssembleWorkStatusEnum.Confirm,
                     //  WorkDetails = assembleWorkDetails,
                     // WorkEmployees = assembleWorkEmployees,
                     CreatedOn = baTime,
@@ -141,7 +144,7 @@ namespace app.Services.ATMAssemble.AssembleWorkServices
             bool result = false;
 
             _dbContext.AssembleWork.AddRange(assembleWorks);
-            result = _dbContext.SaveChanges() > 0;
+            result = await _dbContext.SaveChangesAsync() > 0;
 
             //foreach (var assembleWork in assembleWorks)
             //{
@@ -211,6 +214,7 @@ namespace app.Services.ATMAssemble.AssembleWorkServices
                                     AssembleWorkStepItemId = t1.AssembleWorkStepItemId,
                                     AssembleWorkStepItemName = t1.AssembleWorkStepItem.Name,
                                     Remarks = t1.Remarks,
+                                    IsComplete = t1.IsComplete,
                                 }).ToList();
             return model;
         }
@@ -315,12 +319,106 @@ namespace app.Services.ATMAssemble.AssembleWorkServices
                                         AssembleWorkStepItemId = t1.AssembleWorkStepItemId,
                                         AssembleWorkStepItemName = t1.AssembleWorkStepItem.Name,
                                         Remarks = t1.Remarks,
+                                        IsComplete = t1.IsComplete,
                                     }).ToList();
 
                 models.Add(model);
             }
 
             return models;
+        }
+
+        public async Task<object> MakeStepItemComplete(long assembleWorkId, long assembleWorkDetailId, long assembleWorkCategoryId, long assembleWorkStepId, long assembleWorkStepItemId)
+        {
+            var unSuccessResult = new { IsSuccess = false, AssembleWorkId = assembleWorkId, AssembleWorkDetailId = assembleWorkDetailId, AssembleWorkCategoryId = assembleWorkCategoryId, AssembleWorkStepId = assembleWorkStepId, AssembleWorkStepItemId = assembleWorkStepItemId };
+
+            var model = await _dbContext.AssembleWorkDetail.FirstOrDefaultAsync(x => x.Id == assembleWorkDetailId && x.AssembleWorkStepItemId == assembleWorkStepItemId && x.IsActive == true);
+            if (model == null)
+            {
+                return unSuccessResult;
+            }
+            model.IsComplete = true;
+            var detail = new AssembleWorkDetailViewModel()
+            {
+                Id = model.Id,
+                AssembleWorkId = model.AssembleWorkId,
+                AssembleWorkStepItemId = model.AssembleWorkStepItemId,
+                IsComplete = true,
+                Remarks = model.Remarks,
+                IsActive = model.IsActive,
+                CreatedBy = model.CreatedBy,
+                CreatedOn = model.CreatedOn,
+                UpdatedBy = model.UpdatedBy,
+                UpdatedOn = model.UpdatedOn,
+            };
+            var updateResult = await _iAssembleWorkDetailService.UpdateRecord(detail);
+            if (updateResult == true)
+            {
+                var result = new { IsSuccess = true, AssembleWorkId = assembleWorkId, AssembleWorkDetailId = assembleWorkDetailId, AssembleWorkCategoryId = assembleWorkCategoryId, AssembleWorkStepId = assembleWorkStepId, AssembleWorkStepItemId = assembleWorkStepItemId };
+                return result;
+            }
+            return unSuccessResult;
+        }
+
+        public async Task<object> MakeStatusComplete(long assembleWorkId)
+        {
+            var bnTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Bangladesh Standard Time");
+            DateTime baTime = TimeZoneInfo.ConvertTime(DateTime.Now, TimeZoneInfo.Local, bnTimeZone);
+            var updatedBy = _iWorkContext.GetCurrentUserAsync().Result.FullName;
+            var unSuccessResult = new { IsSuccess = false, AssembleWorkId = assembleWorkId };
+
+            var model = await _dbContext.AssembleWork.FirstOrDefaultAsync(x => x.Id == assembleWorkId && x.IsActive == true);
+            if (model == null)
+            {
+                return unSuccessResult;
+            }
+
+            var details = await _dbContext.AssembleWorkDetail.Where(c => c.AssembleWorkId == assembleWorkId && c.IsActive == true).ToListAsync();
+            if (details.Count <= 0)
+            {
+                throw new Exception("Sorry, No works found!");
+            }
+
+            foreach (var detail in details)
+            {
+                detail.IsComplete = true;
+                detail.UpdatedBy = updatedBy;
+                detail.UpdatedOn = baTime;
+            }
+            _dbContext.AssembleWorkDetail.UpdateRange(details);
+            var detailUpdateResult = await _dbContext.SaveChangesAsync() > 0;
+            if (detailUpdateResult == false)
+            {
+                return unSuccessResult;
+            }
+
+            model.StatusId = (int)AssembleWorkStatusEnum.Complete;
+            var updateResult = await _iEntityRepository.UpdateAsync(model);
+            if (updateResult == true)
+            {
+                var result = new { IsSuccess = true, AssembleWorkId = assembleWorkId };
+                return result;
+            }
+            return unSuccessResult;
+        }
+
+        public async Task<object> MakeStatusFault(long assembleWorkId)
+        {
+            var unSuccessResult = new { IsSuccess = false, AssembleWorkId = assembleWorkId };
+
+            var model = await _dbContext.AssembleWork.FirstOrDefaultAsync(x => x.Id == assembleWorkId && x.IsActive == true);
+            if (model == null)
+            {
+                return unSuccessResult;
+            }
+            model.StatusId = (int)AssembleWorkStatusEnum.Fault;
+            var updateResult = await _iEntityRepository.UpdateAsync(model);
+            if (updateResult == true)
+            {
+                var result = new { IsSuccess = true, AssembleWorkId = assembleWorkId };
+                return result;
+            }
+            return unSuccessResult;
         }
 
         public async Task<AssembleWorkViewModel> EmployeeDashboardOld()

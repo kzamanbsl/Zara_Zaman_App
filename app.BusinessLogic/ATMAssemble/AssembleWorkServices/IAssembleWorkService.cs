@@ -1,4 +1,6 @@
-﻿namespace app.Services.ATMAssemble.AssembleWorkServices
+﻿using app.EntityModel.AppModels.ATMAssemble;
+
+namespace app.Services.ATMAssemble.AssembleWorkServices
 {
     public interface IAssembleWorkService
     {
@@ -9,6 +11,9 @@
         Task<AssembleWorkViewModel> GetAllRecord();
         Task<AssembleWorkMainDashboardViewModel> MainDashboard();
         Task<List<AssembleWorkViewModel>> EmployeeDashboard();
+        Task<object> MakeStepItemComplete(long assembleWorkId, long assembleWorkDetailId, long assembleWorkCategoryId, long assembleWorkStepId, long assembleWorkStepItemId);
+        Task<object> MakeStatusComplete(long assembleWorkId);
+        Task<object> MakeStatusFault(long assembleWorkId);
         Task<bool> DeleteRecord(long id);
         
 
