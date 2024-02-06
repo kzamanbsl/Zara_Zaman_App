@@ -240,11 +240,33 @@ namespace app.Services.ATMAssemble.AssembleWorkServices
                                                                 AssembleWorkCategoryId = t1.Id,
                                                                 AssembleWorkCategoryName = t1.Name,
                                                                 AssembleDate = DateTime.Now.Date,
-                                                                EmployeesName ="I'm Employee", //String.Join(", ", _dbContext.AssembleWork.Where(c => c.AssembleWorkCategoryId == t1.Id && c.AssembleDate.Date == DateTime.Now.Date && c.IsActive == true).Include(c => c.WorkEmployees).SelectMany(s => s.WorkEmployees).DistinctBy(d=>d.EmployeeId).Select(e => e.Employee.Name)).ToString(),
+                                                                EmployeeList =
+                                                                (from j1 in _dbContext.AssembleWork.Where(x => x.AssembleWorkCategoryId == t1.Id && x.AssembleDate.Date == DateTime.Now.Date && x.IsActive == true)
+                                                                 join j2 in _dbContext.AssembleWorkEmployee on j1.Id equals j2.AssembleWorkId into t2_Join
+                                                                 from j2 in t2_Join.DefaultIfEmpty()
+                                                                 select new EmployeeViewModel()
+                                                                 {
+                                                                     Id = j2.EmployeeId,
+                                                                     Name = j2.Employee.Name
+                                                                 }).ToList(),
+
                                                                 TodayTarget = _dbContext.AssembleWork.Count(c => c.AssembleWorkCategoryId == t1.Id && c.AssembleDate.Date == DateTime.Now.Date && c.IsActive == true),
                                                                 WorkCompleted = _dbContext.AssembleWork.Count(c => c.AssembleWorkCategoryId == t1.Id && c.AssembleDate.Date == DateTime.Now.Date && c.StatusId == (int)AssembleWorkStatusEnum.Complete && c.IsActive == true),
                                                                 FaultQty = _dbContext.AssembleWork.Count(c => c.AssembleWorkCategoryId == t1.Id && c.AssembleDate.Date == DateTime.Now.Date && c.StatusId == (int)AssembleWorkStatusEnum.Fault && c.IsActive == true),
                                                             }).AsEnumerable());
+
+            var mainDashboardData = model.MainDashboardList.ToList();
+            if (mainDashboardData?.ToList()?.Count() > 0)
+            {
+                foreach (var dt in mainDashboardData)
+                {
+                    if (!(dt.EmployeeList?.Count > 0)) continue;
+                    var empNames = dt.EmployeeList.DistinctBy(c => c.Id).Select(s => s.Name).ToList();
+                    dt.EmployeesName = String.Join(", ", empNames.ToArray());
+                }
+            }
+
+            model.MainDashboardList = mainDashboardData;
             return model;
         }
 

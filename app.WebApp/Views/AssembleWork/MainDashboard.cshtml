@@ -13,7 +13,7 @@
                 <li class="breadcrumb-item active"> Assembly Work (Main Dashboard)</li>
             </ol>
             <div>
-                <a asp-action="LiveDashboard"><i class="fa fa-plus"></i> Assembly Work (Main Dashboard)</a>
+                <a asp-action="MainDashboard"><i class="fa fa-plus"></i> Assembly Work (Main Dashboard)</a>
             </div>
         </div>
     </div>
@@ -53,6 +53,10 @@
                                             @Html.DisplayFor(modelItem => item.AssembleWorkCategoryName)
                                         </td>
                                         <td class="text-left">
+                                           @*  @if (item.EmployeeList.Count() > 0)
+                                            {
+                                                String.Join(", ", item.EmployeeList.Select(s=>s.Name));
+                                            } *@
                                             @Html.DisplayFor(modelItem => item.EmployeesName)
                                         </td>
                                         <td class="text-right">
