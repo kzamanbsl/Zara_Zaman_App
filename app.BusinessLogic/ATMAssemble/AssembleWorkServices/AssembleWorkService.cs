@@ -182,8 +182,9 @@ namespace app.Services.ATMAssemble.AssembleWorkServices
             model.Id = result.Id;
             model.AssembleDate = result.AssembleDate;
             model.Description = result.Description;
+            model.StatusId = result.StatusId;
             model.AssembleWorkCategoryId = result.AssembleWorkCategoryId;
-            model.AssembleWorkCategoryName = result.AssembleWorkCategory?.Name;
+            model.AssembleWorkCategoryName = _dbContext.AssembleWorkCategory.FirstOrDefault(c=>c.Id==result.AssembleWorkCategoryId)?.Name;
             model.EmployeeList = (from t1 in _dbContext.AssembleWorkEmployee
                 where t1.AssembleWorkId == result.Id && t1.IsActive == true
                 select new EmployeeViewModel
