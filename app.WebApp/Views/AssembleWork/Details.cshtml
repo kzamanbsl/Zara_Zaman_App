@@ -13,7 +13,7 @@
                 <li class="breadcrumb-item active"> Assemble Work List</li>
             </ol>
             <div>
-                <a asp-action="AddRecord"><i class="fa fa-plus"></i> Add Assemble Work</a>
+                <a asp-action="Index"><i class="fa fa-plus"></i> Assemble Work List</a>
             </div>
         </div>
     </div>
@@ -42,7 +42,7 @@
                         </thead>
 
                         <tbody>
-                            @foreach (var item in Model.AssembleWorkList)
+                           @*  @foreach (var item in Model.AssembleWorkList)
                             {
                                 <tr>
                                     <td class="text-center">@sn</td>
@@ -65,7 +65,7 @@
                                     </td>
                                 </tr>
                                 sn++;
-                            }
+                            } *@
                         </tbody>
                     </table>
                 </div>
