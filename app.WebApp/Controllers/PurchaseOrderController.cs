@@ -208,8 +208,6 @@ namespace app.WebApp.Controllers
             var res = await _inventoryService.AddInventory(id);
             return RedirectToAction("Index");
         }
-
-
     }
 }
 
