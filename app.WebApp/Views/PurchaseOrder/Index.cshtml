@@ -95,7 +95,7 @@
                                                         <span asp-validation-for="PurchaseDate" class="text-danger"></span>
                                                     </div>
 
-                                                    <div class="form-group">
+                                                    <div class="form-group select-wrapper">
                                                         <label>Storehouse</label>
                                                         <select class="form-control" value="@item.StorehouseId" id="StorehouseId" asp-for="StorehouseId" asp-items="ViewBag.StorehouseList" required>
                                                             <option value="0" selected>-- Select Storehouse --</option>
@@ -135,7 +135,6 @@
     <script>
 
         $(document).ready(function () {
-            $('#StorehouseId').val(@(Model.Storehouse)).trigger('change');
 
             $('#Purchases').addClass('menu-open');
             $('#PurchaseOrderIndex').addClass('active');
@@ -147,6 +146,7 @@
             });
 
     </script>
+
 
     <script>
         function myFunction() {
