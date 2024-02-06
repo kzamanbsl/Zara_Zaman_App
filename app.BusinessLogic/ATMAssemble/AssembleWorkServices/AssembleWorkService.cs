@@ -274,7 +274,7 @@ namespace app.Services.ATMAssemble.AssembleWorkServices
             return model;
         }
 
- g       public async Task<AssembleWorkViewModel> EmployeeDashboard()
+ public async Task<AssembleWorkViewModel> EmployeeDashboard()
         {
             //var loggedInUserId = _iHttpContextAccessor.HttpContext.User.Identity.Name;
             var loggedInUserId = 3;
