@@ -228,20 +228,20 @@ namespace app.Services.ATMAssemble.AssembleWorkServices
             return model;
         }
 
-        public async Task<AssembleWorkViewModel> LiveDashboard()
+        public async Task<AssembleWorkMainDashboardViewModel> MainDashboard()
         {
-            AssembleWorkViewModel model = new AssembleWorkViewModel();
-            model.AssembleWorkList = await Task.Run(() => (from t1 in _dbContext.AssembleWork
-                                                           where t1.IsActive == true
-                                                           select new AssembleWorkViewModel
-                                                           {
-                                                               Id = t1.Id,
-                                                               AssembleDate = t1.AssembleDate,
-                                                               Description = t1.Description,
-                                                               AssembleWorkCategoryId = t1.AssembleWorkCategoryId,
-                                                               AssembleWorkCategoryName = t1.AssembleWorkCategory.Name,
-                                                               StatusId = t1.StatusId,
-                                                           }).AsQueryable());
+            AssembleWorkMainDashboardViewModel model = new AssembleWorkMainDashboardViewModel();
+            //model.AssembleWorkList = await Task.Run(() => (from t1 in _dbContext.AssembleWork
+            //                                               where t1.IsActive == true
+            //                                               select new AssembleWorkViewModel
+            //                                               {
+            //                                                   Id = t1.Id,
+            //                                                   AssembleDate = t1.AssembleDate,
+            //                                                   Description = t1.Description,
+            //                                                   AssembleWorkCategoryId = t1.AssembleWorkCategoryId,
+            //                                                   AssembleWorkCategoryName = t1.AssembleWorkCategory.Name,
+            //                                                   StatusId = t1.StatusId,
+            //                                               }).AsQueryable());
             return model;
         }
 
