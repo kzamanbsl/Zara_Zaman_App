@@ -24,6 +24,13 @@ namespace app.WebApp.Controllers
         }
 
         [HttpGet]
+        public async Task<IActionResult> Details(long id)
+        {
+            var result = await _iService.GetRecordById(id);
+            return View(result);
+        }
+
+        [HttpGet]
         public async Task<IActionResult> AddRecord()
         {
             ViewBag.AssembleWorkCategoryList = new SelectList((await _iDropdownService.AssembleWorkCategorySelectionList())
