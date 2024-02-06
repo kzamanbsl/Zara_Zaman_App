@@ -1,8 +1,7 @@
 ﻿@model app.Services.ATMAssemble.AssembleWorkServices.AssembleWorkViewModel
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Employee Dashboard";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
-    int sn = 1;
 }
 
 <div class="content-header">
@@ -10,10 +9,10 @@
         <div class="breadcrumb d-flex justify-content-between align-items-center pl-3 pr-3">
             <ol class="breadcrumb mb-0 p-0">
                 <li class="breadcrumb-item"><a href="/Admin/Index">Home</a></li>
-                <li class="breadcrumb-item active"> Employee Work Dashboard</li>
+                <li class="breadcrumb-item active"> Assemble Work List</li>
             </ol>
             <div>
-                <a asp-action="Index"><i class="fa fa-plus"></i> Employee Work Dashboard</a>
+                <a asp-action="AddRecord"><i class="fa fa-plus"></i> Add Assemble Work</a>
             </div>
         </div>
     </div>
@@ -24,137 +23,67 @@
         <div class="card">
             <div class="card-header">
                 <h5>
-                    <i class="fas fa-list"></i> Assemble Work Details
+                    <i class="fas fa-list"></i> Assemble Work
                 </h5>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table">
-                        <tr>
-                            <th style="width:18%">Assemble Work Name</th>
-                            <th style="width:2%">:</th>
-                            <td style="width:30%">@Model.AssembleWorkCategoryName</td>
-
-                            <th style="width:18%">Assemble Date</th>
-                            <th style="width:2%">:</th>
-                            <td style="width:30%">@Model.AssembleDate.ToString("dd-MM-yyyy")</td>
-                        </tr>
-                        <tr>
-                            <th style="width:18%">Description</th>
-                            <th style="width:2%">:</th>
-                            <td style="width:30%">@Model.Description</td>
-
-                            <th style="width:18%">Status</th>
-                            <th style="width:2%">:</th>
-                            <td style="width:30%">@Model.StatusName</td>
-                        </tr>
-                    </table>
-                </div>
-
-                <div>
-                    <h6 class="card-title text-info">
-                        <i class="fas fa-list"></i> Assemble Work Employees
-                    </h6>
-                    <div class="table-responsive">
-                        <table id="aaa" class="table table-bordered">
+                    <form asp-action="AssembleWorkSave" method="post">
+                        <table id="assembleWorkTable" class="table table-bordered table-striped">
                             <thead>
                                 <tr>
-                                    <th class="text-center">#</th>
-                                    <th class="text-center">Employee Name</th>
-                                    <th class="text-center">Designation</th>
-                                    <th class="text-center">Department</th>
+                                    <th>Assemble Work - IPC</th>
                                 </tr>
                             </thead>
-
-                            @* <tbody>
-                                @{
-                                    var empSl = 1;
-
-                                    foreach (var item in Model.EmployeeList)
-                                    {
-                                        <tr>
-                                            <td class="text-center">@empSl</td>
-                                            <td class="text-left">
-                                                @Html.DisplayFor(modelItem => item.Name)
-                                            </td>
-                                            <td class="text-left">
-                                                @Html.DisplayFor(modelItem => item.DesignationName)
-                                            </td>
-                                            <td class="text-left">
-                                                @Html.DisplayFor(modelItem => item.DepartmentName)
-                                            </td>
-                                        </tr>
-                                        empSl++;
-                                    }
-                                }
-                            </tbody> *@
-                        </table>
-                    </div>
-                </div>
-
-                <div class="">
-                    <div class="row">
-                        <div class="col-sm-6 text-left">
-                            <h6 class="card-title text-info">
-                                <i class="fas fa-list"></i> Assemble Work Items
-                            </h6>
-                        </div>
-                        <div class="col-sm-6 text-right">
-                            <a href="#ExceptionStackTrack" data-toggle="collapse"><i class="fa fa-angle-down fa-2x alert-info" aria-hidden="true"></i></a>
-                        </div>
-                    </div>
-                
-                    <hr/>
-                    <p id="ExceptionStackTrack" class="collapse">
-                        sfadfsdfsdf
-                        <div >
-                            <table id="bbb" class="table table-bordered">
-                                <thead>
+                            <tbody>
                                 <tr>
-                                    <th class="text-center">#</th>
-                                    <th class="text-center">Assemble Work Step</th>
-                                    <th class="text-center">Assemble Work Step Item</th>
-                                    <th class="text-center">Remarks</th>
-                                    <th class="text-center">Is Complete</th>
+                                    <td>
+                                        <b>Step 1</b>
+                                    </td>
                                 </tr>
-                                </thead>
-
-                                @*  <tbody>
-                                @{
-                                    var itemSl = 1;
-
-                                    foreach (var item in Model.DetailList)
-                                    {
-                                        <tr>
-                                            <td class="text-center">@itemSl</td>
-                                            <td class="text-left">
-                                                @Html.DisplayFor(modelItem => item.AssembleWorkStepName)
-                                            </td>
-                                            <td class="text-left">
-                                                @Html.DisplayFor(modelItem => item.AssembleWorkStepItemName)
-                                            </td>
-                                            <td class="text-left">
-                                                @Html.DisplayFor(modelItem => item.Remarks)
-                                            </td>
-                                            <td class="text-left">
-                                                @if (@item.IsComplete)
-                                                {
-                                                    <strong>Yes</strong>
-                                                }
-                                                else
-                                                {
-                                                    <strong>No</strong>
-                                                }
-                                            </td>
-                                        </tr>
-                                        itemSl++;
-                                    }
-                                }
-                                </tbody> *@
-                            </table>
-                        </div>
-                    </p>
-
+                                <tr>
+                                    <td>
+                                        <div class="custom-control custom-checkbox mb-3">
+                                            <input type="checkbox" class="custom-control-input" id="checkBox_">
+                                            <label class="custom-control-label" for="checkBox_">Check this custom checkbox</label>
+                                        </div>
+                                        <div class="custom-control custom-checkbox mb-3">
+                                            <input type="checkbox" class="custom-control-input" id="checkBox_">
+                                            <label class="custom-control-label" for="checkBox_">Check this custom checkbox</label>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <b>Step 2</b>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="custom-control custom-checkbox mb-3">
+                                            <input type="checkbox" class="custom-control-input" id="checkBox_">
+                                            <label class="custom-control-label" for="checkBox_">Check this custom checkbox</label>
+                                        </div>
+                                        <div class="custom-control custom-checkbox mb-3">
+                                            <input type="checkbox" class="custom-control-input" id="checkBox_">
+                                            <label class="custom-control-label" for="checkBox_">Check this custom checkbox</label>
+                                        </div>
+                                        <div class="custom-control custom-checkbox mb-3">
+                                            <input type="checkbox" class="custom-control-input" id="checkBox_">
+                                            <label class="custom-control-label" for="checkBox_">Check this custom checkbox</label>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td>
+                                        <input type="submit" value="Submit" class="btn btn-primary d-block text-left" />
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </form>
                 </div>
             </div>
         </div>
@@ -171,14 +100,28 @@
             "use strict"
 
             $('#ATM-Assemble').addClass('menu-open');
-            $('#AssembleWorkEmployeeDashboard').addClass('active');
+            $('#AssembleWorkIndex').addClass('active');
 
-            // $('#assembleWorkTable').DataTable({
-            //     "paging": true,
-            //     "ordering": true,
-            //     "info": true,
-            //     order: [[0, 'asc']],
-            // });
+
+            // function GetAssembleWork() {
+            //     $.ajax({
+            //         url: 'your-api-endpoint-url',
+            //         type: 'GET',
+            //         dataType: "json",
+            //         success: function (data) {
+            //             $('#assembleWorkTable tbody').empty();
+            //             $.each(data, function (index, employee) {
+            //                 $('#assembleWorkTable tbody').append('<tr><td>' + employee.ID + '</td><td>' + employee.Name + '</td><td>' + employee.Email + '</td></tr>');
+            //             });
+            //         },
+            //         error: function (xhr, status, error) {
+            //             console.error('Error fetching data:', error);
+            //         }
+            //     });
+            // }
+
+            // GetAssembleWork();
+            // setInterval(GetAssembleWork, 5000);
         });
     </script>
 }
