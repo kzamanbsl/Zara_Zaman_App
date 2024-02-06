@@ -34,7 +34,7 @@ namespace app.Services.PurchaseOrderServices
 
             if (vm.OrderStatusId == 0)
             {
-                vm.OrderStatusId = PurchaseOrderStatusEnum.Draft;
+                vm.OrderStatusId = (int)PurchaseOrderStatusEnum.Draft;
             }
 
             var poMax = _dbContext.PurchaseOrder.Count() + 1;
@@ -93,7 +93,7 @@ namespace app.Services.PurchaseOrderServices
                                                            Id = t1.Id,
                                                            PurchaseDate = t1.PurchaseDate,
                                                            OrderNo = t1.OrderNo,
-                                                           OrderStatusId = (PurchaseOrderStatusEnum)t1.OrderStatusId,
+                                                           OrderStatusId = (int)(PurchaseOrderStatusEnum)t1.OrderStatusId,
                                                            SupplierId = t1.SupplierId,
                                                            SupplierName = t1.Supplier.Name,
                                                            StorehouseId = t1.StorehouseId,
@@ -154,14 +154,14 @@ namespace app.Services.PurchaseOrderServices
             var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id == vm.Id && f.IsActive == true);
             if (vm.Id == 0)
             {
-                vm.OrderStatusId = PurchaseOrderStatusEnum.Draft;
+                vm.OrderStatusId = (int)PurchaseOrderStatusEnum.Draft;
                 return false;
             }
 
             var existingPurchaseOrder = await _iEntityRepository.GetByIdAsync(vm.Id);
             if (existingPurchaseOrder == null)
             {
-                vm.OrderStatusId = PurchaseOrderStatusEnum.Draft;
+                vm.OrderStatusId = (int)PurchaseOrderStatusEnum.Draft;
                 return false;
             }
             existingPurchaseOrder.PurchaseDate = vm.PurchaseDate;
@@ -196,7 +196,7 @@ namespace app.Services.PurchaseOrderServices
                                                       SupplierName = t1.Supplier.Name,
                                                       StorehouseId = t1.StorehouseId,
                                                       StoreName = t1.Storehouse.Name,
-                                                      OrderStatusId = (PurchaseOrderStatusEnum)t1.OrderStatusId,
+                                                      OrderStatusId = (int)(PurchaseOrderStatusEnum)t1.OrderStatusId,
 
                                                   }).OrderByDescending(x => x.Id).AsEnumerable());
 
@@ -246,7 +246,7 @@ namespace app.Services.PurchaseOrderServices
                                                            Id = t1.Id,
                                                            PurchaseDate = t1.PurchaseDate,
                                                            OrderNo = t1.OrderNo,
-                                                           OrderStatusId = (PurchaseOrderStatusEnum)t1.OrderStatusId,
+                                                           OrderStatusId = (int)(PurchaseOrderStatusEnum)t1.OrderStatusId,
                                                            SupplierId = t1.SupplierId,
                                                            SupplierName = t1.Supplier.Name,
                                                            StorehouseId = t1.StorehouseId,

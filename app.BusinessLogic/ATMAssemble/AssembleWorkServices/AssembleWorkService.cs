@@ -1,6 +1,7 @@
 ﻿using app.EntityModel.AppModels.ATMAssemble;
 using app.Infrastructure;
 using app.Infrastructure.Auth;
+using app.Infrastructure.Migrations;
 using app.Infrastructure.Repository;
 using app.Services.ATMAssemble.AssembleWorkCategoryServices;
 using app.Services.ATMAssemble.AssembleWorkDetailServices;
@@ -8,6 +9,7 @@ using app.Services.ATMAssemble.AssembleWorkStepItemServices;
 using app.Services.EmployeeServices;
 using app.Utility;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 
 namespace app.Services.ATMAssemble.AssembleWorkServices
 {
@@ -231,24 +233,48 @@ namespace app.Services.ATMAssemble.AssembleWorkServices
             return model;
         }
 
-        public async Task<AssembleWorkViewModel> LiveDashboard()
+        public async Task<AssembleWorkMainDashboardViewModel> MainDashboard()
         {
-            AssembleWorkViewModel model = new AssembleWorkViewModel();
-            model.AssembleWorkList = await Task.Run(() => (from t1 in _dbContext.AssembleWork
-                                                           where t1.IsActive == true
-                                                           select new AssembleWorkViewModel
-                                                           {
-                                                               Id = t1.Id,
-                                                               AssembleDate = t1.AssembleDate,
-                                                               Description = t1.Description,
-                                                               AssembleWorkCategoryId = t1.AssembleWorkCategoryId,
-                                                               AssembleWorkCategoryName = t1.AssembleWorkCategory.Name,
-                                                               StatusId = t1.StatusId,
-                                                           }).AsQueryable());
+            AssembleWorkMainDashboardViewModel model = new AssembleWorkMainDashboardViewModel();
+            model.MainDashboardList = await Task.Run(() => (from t1 in _dbContext.AssembleWorkCategory
+                                                            where t1.IsActive == true
+                                                            select new AssembleWorkMainDashboardViewModel
+                                                            {
+                                                                AssembleWorkCategoryId = t1.Id,
+                                                                AssembleWorkCategoryName = t1.Name,
+                                                                AssembleDate = DateTime.Now.Date,
+                                                                EmployeeList =
+                                                                (from j1 in _dbContext.AssembleWork.Where(x => x.AssembleWorkCategoryId == t1.Id && x.AssembleDate.Date == DateTime.Now.Date && x.IsActive == true)
+                                                                 join j2 in _dbContext.AssembleWorkEmployee on j1.Id equals j2.AssembleWorkId into t2_Join
+                                                                 from j2 in t2_Join.DefaultIfEmpty()
+                                                                 select new EmployeeViewModel()
+                                                                 {
+                                                                     Id = j2.EmployeeId,
+                                                                     Name = j2.Employee.Name
+                                                                 }).ToList(),
+
+                                                                TodayTarget = _dbContext.AssembleWork.Count(c => c.AssembleWorkCategoryId == t1.Id && c.AssembleDate.Date == DateTime.Now.Date && c.IsActive == true),
+                                                                WorkCompleted = _dbContext.AssembleWork.Count(c => c.AssembleWorkCategoryId == t1.Id && c.AssembleDate.Date == DateTime.Now.Date && c.StatusId == (int)AssembleWorkStatusEnum.Complete && c.IsActive == true),
+                                                                FaultQty = _dbContext.AssembleWork.Count(c => c.AssembleWorkCategoryId == t1.Id && c.AssembleDate.Date == DateTime.Now.Date && c.StatusId == (int)AssembleWorkStatusEnum.Fault && c.IsActive == true),
+                                                            }).AsEnumerable());
+
+            var mainDashboardData = model.MainDashboardList.ToList();
+            if (mainDashboardData?.ToList()?.Count() > 0)
+            {
+                foreach (var dt in mainDashboardData)
+                {
+                    if (!(dt.EmployeeList?.Count > 0)) continue;
+                    var empNames = dt.EmployeeList.DistinctBy(c => c.Id).Select(s => s.Name).ToList();
+                    dt.EmployeesName = String.Join(", ", empNames.ToArray());
+                }
+            }
+
+            model.MainDashboardList = mainDashboardData;
+            model.AssembleDate = DateTime.Now.Date;
             return model;
         }
 
-        public async Task<AssembleWorkViewModel> EmployeeDashboard()
+ g       public async Task<AssembleWorkViewModel> EmployeeDashboard()
         {
             //var loggedInUserId = _iHttpContextAccessor.HttpContext.User.Identity.Name;
             var loggedInUserId = 3;

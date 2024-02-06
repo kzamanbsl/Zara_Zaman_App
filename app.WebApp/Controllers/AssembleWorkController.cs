@@ -85,9 +85,9 @@ namespace app.WebApp.Controllers
 
 
         [HttpGet]
-        public async Task<IActionResult> LiveDashboard()
+        public async Task<IActionResult> MainDashboard()
         {
-            var result = await _iService.LiveDashboard();
+            var result = await _iService.MainDashboard();
             return View(result);
         }
 
