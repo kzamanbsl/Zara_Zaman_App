@@ -7,6 +7,7 @@ using app.Services.ATMAssemble.AssembleWorkDetailServices;
 using app.Services.ATMAssemble.AssembleWorkStepItemServices;
 using app.Services.EmployeeServices;
 using app.Utility;
+using Microsoft.AspNetCore.Http;
 
 namespace app.Services.ATMAssemble.AssembleWorkServices
 {
@@ -16,12 +17,14 @@ namespace app.Services.ATMAssemble.AssembleWorkServices
         private readonly InventoryDbContext _dbContext;
         private readonly IWorkContext _iWorkContext;
         private readonly IAssembleWorkCategoryService _iAssembleWorkCategoryService;
-        public AssembleWorkService(IEntityRepository<AssembleWork> iEntityRepository, IAssembleWorkCategoryService iAssembleWorkCategoryService, InventoryDbContext dbContext, IWorkContext iWorkContext)
+        private readonly IHttpContextAccessor _iHttpContextAccessor;
+        public AssembleWorkService(IEntityRepository<AssembleWork> iEntityRepository, IAssembleWorkCategoryService iAssembleWorkCategoryService, InventoryDbContext dbContext, IWorkContext iWorkContext, IHttpContextAccessor iHttpContextAccessor)
         {
             _iEntityRepository = iEntityRepository;
             _dbContext = dbContext;
             _iWorkContext = iWorkContext;
             _iAssembleWorkCategoryService = iAssembleWorkCategoryService;
+            _iHttpContextAccessor = iHttpContextAccessor; ;
         }
 
         public async Task<bool> AddRecord(AssembleWorkViewModel viewModel)
@@ -184,30 +187,30 @@ namespace app.Services.ATMAssemble.AssembleWorkServices
             model.Description = result.Description;
             model.StatusId = result.StatusId;
             model.AssembleWorkCategoryId = result.AssembleWorkCategoryId;
-            model.AssembleWorkCategoryName = _dbContext.AssembleWorkCategory.FirstOrDefault(c=>c.Id==result.AssembleWorkCategoryId)?.Name;
+            model.AssembleWorkCategoryName = _dbContext.AssembleWorkCategory.FirstOrDefault(c => c.Id == result.AssembleWorkCategoryId)?.Name;
             model.EmployeeList = (from t1 in _dbContext.AssembleWorkEmployee
-                where t1.AssembleWorkId == result.Id && t1.IsActive == true
-                select new EmployeeViewModel
-                {
-                    Id = t1.EmployeeId,
-                    Name = t1.Employee.Name,
-                    DesignationId = t1.Employee.DesignationId,
-                    DesignationName = t1.Employee.Designation.Name,
-                    DepartmentId = t1.Employee.DepartmentId,
-                    DepartmentName = t1.Employee.Department.Name,
-                }).ToList();
+                                  where t1.AssembleWorkId == result.Id && t1.IsActive == true
+                                  select new EmployeeViewModel
+                                  {
+                                      Id = t1.EmployeeId,
+                                      Name = t1.Employee.Name,
+                                      DesignationId = t1.Employee.DesignationId,
+                                      DesignationName = t1.Employee.Designation.Name,
+                                      DepartmentId = t1.Employee.DepartmentId,
+                                      DepartmentName = t1.Employee.Department.Name,
+                                  }).ToList();
 
             model.DetailList = (from t1 in _dbContext.AssembleWorkDetail
-                where t1.AssembleWorkId == result.Id && t1.IsActive == true
-                select new AssembleWorkDetailViewModel
-                {
-                    Id = t1.Id,
-                    AssembleWorkStepId = t1.AssembleWorkStepItem.AssembleWorkStepId,
-                    AssembleWorkStepName = t1.AssembleWorkStepItem.AssembleWorkStep.Name,
-                    AssembleWorkStepItemId = t1.AssembleWorkStepItemId,
-                    AssembleWorkStepItemName = t1.AssembleWorkStepItem.Name,
-                    Remarks = t1.Remarks,
-                }).ToList();
+                                where t1.AssembleWorkId == result.Id && t1.IsActive == true
+                                select new AssembleWorkDetailViewModel
+                                {
+                                    Id = t1.Id,
+                                    AssembleWorkStepId = t1.AssembleWorkStepItem.AssembleWorkStepId,
+                                    AssembleWorkStepName = t1.AssembleWorkStepItem.AssembleWorkStep.Name,
+                                    AssembleWorkStepItemId = t1.AssembleWorkStepItemId,
+                                    AssembleWorkStepItemName = t1.AssembleWorkStepItem.Name,
+                                    Remarks = t1.Remarks,
+                                }).ToList();
             return model;
         }
 
@@ -247,22 +250,31 @@ namespace app.Services.ATMAssemble.AssembleWorkServices
 
         public async Task<AssembleWorkViewModel> EmployeeDashboard()
         {
+            //var loggedInUserId = _iHttpContextAccessor.HttpContext.User.Identity.Name;
+            var loggedInUserId = 3;
             AssembleWorkViewModel model = new AssembleWorkViewModel();
-            model.AssembleWorkList = await Task.Run(() => (from t1 in _dbContext.AssembleWork.Where(x => x.AssembleDate == DateTime.Today.Date && x.IsActive)
-                                                           join t2 in _dbContext.AssembleWorkDetail
-                                                           on t1.Id equals t2.AssembleWorkId into t2_Join
+            model.AssembleWorkList = await Task.Run(() => (from t1 in _dbContext.AssembleWorkEmployee.Where(x => x.EmployeeId == loggedInUserId && x.IsActive)
+                                                           join t2 in _dbContext.AssembleWork on t1.AssembleWorkId equals t2.Id into t2_Join
                                                            from t2 in t2_Join.DefaultIfEmpty()
+                                                           join t3 in _dbContext.AssembleWorkDetail on t2.Id equals t3.Id into t3_Join
+                                                           from t3 in t3_Join.DefaultIfEmpty()
+                                                           where t2.AssembleDate.Date == DateTime.Now.Date && t2.IsActive
                                                            select new AssembleWorkViewModel
                                                            {
-                                                               Id = t1.Id,
-                                                               AssembleDate = t1.AssembleDate,
-                                                               Description = t1.Description,
-                                                               AssembleWorkCategoryId = t1.AssembleWorkCategoryId,
-                                                               AssembleWorkCategoryName = t1.AssembleWorkCategory.Name,
-                                                               StatusId = t1.StatusId,
+                                                               Id = t2.Id,
+                                                               AssembleDate = t2.AssembleDate,
+                                                               StatusId = t2.StatusId,
+                                                               DetailList = (new AssembleWorkDetailViewModel
+                                                               {
+                                                                   Id = t3.Id,
+                                                                   AssembleWorkStepId = t3.AssembleWorkStepItem.AssembleWorkStepId,
+                                                                   AssembleWorkStepName = t3.AssembleWorkStepItem.AssembleWorkStep.Name,
+                                                                   AssembleWorkStepItemId = t3.AssembleWorkStepItemId,
+                                                                   AssembleWorkStepItemName = t3.AssembleWorkStepItem.Name,
+                                                                   Remarks = t3.Remarks,
+                                                               }).AssembleWorkDetailList.ToList(),
                                                            }).AsQueryable());
             return model;
         }
-
     }
 }

@@ -95,6 +95,7 @@ namespace app.WebApp.Controllers
         public async Task<IActionResult> EmployeeDashboard()
         {
             var result = await _iService.EmployeeDashboard();
+            //var rss = result.AssembleWorkList.ToList();
             return View(result);
         }
     }

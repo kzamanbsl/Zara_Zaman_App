@@ -1,4 +1,5 @@
 ﻿
+
 namespace app.Services.ATMAssemble.AssembleWorkDetailServices
 {
     public class AssembleWorkDetailViewModel : BaseViewModel
@@ -13,5 +14,10 @@ namespace app.Services.ATMAssemble.AssembleWorkDetailServices
 
 
         public IEnumerable<AssembleWorkDetailViewModel> AssembleWorkDetailList { get; set; }
+
+        public static implicit operator List<object>(AssembleWorkDetailViewModel v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
