@@ -1,6 +1,4 @@
-﻿using app.EntityModel.AppModels.ATMAssemble;
-
-namespace app.Services.ATMAssemble.AssembleWorkServices
+﻿namespace app.Services.ATMAssemble.AssembleWorkServices
 {
     public interface IAssembleWorkService
     {
@@ -15,7 +13,7 @@ namespace app.Services.ATMAssemble.AssembleWorkServices
         Task<object> MakeStatusComplete(long assembleWorkId);
         Task<object> MakeStatusFault(long assembleWorkId);
         Task<bool> DeleteRecord(long id);
-        
+
 
     }
 }
