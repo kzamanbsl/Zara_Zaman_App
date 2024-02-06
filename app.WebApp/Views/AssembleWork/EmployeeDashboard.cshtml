@@ -1,8 +1,7 @@
 ﻿@model app.Services.ATMAssemble.AssembleWorkServices.AssembleWorkViewModel
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Employee Dashboard";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
-    int SN = 1;
 }
 
 <div class="content-header">
@@ -24,49 +23,67 @@
         <div class="card">
             <div class="card-header">
                 <h5>
-                    <i class="fas fa-list"></i> Assemble Work List
+                    <i class="fas fa-list"></i> Assemble Work
                 </h5>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
-                    <table id="assembleWorkTable" class="table table-bordered table-striped">
-                        <thead>
-                            <tr>
-                                <th class="text-center">#</th>
-                                <th class="text-center">Assemble Date</th>
-                                <th class="text-center">Assemble Work Category</th>
-                                <th class="text-center">Description</th>
-                                <th class="text-center">Status</th>
-                                <th class="text-center">Action</th>
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            @foreach (var item in Model.AssembleWorkList)
-                            {
+                    <form asp-action="AssembleWorkSave" method="post">
+                        <table id="assembleWorkTable" class="table table-bordered table-striped">
+                            <thead>
                                 <tr>
-                                    <td class="text-center">@SN</td>
-                                    <td class="text-left">
-                                        @Html.DisplayFor(modelItem => item.AssembleDate)
-                                    </td>
-                                    <td class="text-left">
-                                        @Html.DisplayFor(modelItem => item.AssembleWorkCategoryName)
-                                    </td>
-                                    <td class="text-left">
-                                        @(item.Description != null ? Html.DisplayFor(modelItem => item.Description) : "N/A")
-                                    </td>
-                                    <td class="text-left">
-                                        @Html.DisplayFor(modelItem => item.StatusName)
-                                    </td>
-                                    <td class="text-center">
-                                        @Html.ActionLink("", "UpdateRecord", new { id = item.Id }, new { @title = "Edit", @class = "text-warning fas fa-edit" }) |
-                                        @Html.ActionLink("", "Delete", new { id = item.Id }, new { @title = "Delete", @class = "text-danger fas fa-trash", onclick = "return confirm('Are you sure you want to delete this?')" })
+                                    <th>Assemble Work - IPC</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <b>Step 1</b>
                                     </td>
                                 </tr>
-                                SN++;
-                            }
-                        </tbody>
-                    </table>
+                                <tr>
+                                    <td>
+                                        <div class="custom-control custom-checkbox mb-3">
+                                            <input type="checkbox" class="custom-control-input" id="checkBox_">
+                                            <label class="custom-control-label" for="checkBox_">Check this custom checkbox</label>
+                                        </div>
+                                        <div class="custom-control custom-checkbox mb-3">
+                                            <input type="checkbox" class="custom-control-input" id="checkBox_">
+                                            <label class="custom-control-label" for="checkBox_">Check this custom checkbox</label>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <b>Step 2</b>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="custom-control custom-checkbox mb-3">
+                                            <input type="checkbox" class="custom-control-input" id="checkBox_">
+                                            <label class="custom-control-label" for="checkBox_">Check this custom checkbox</label>
+                                        </div>
+                                        <div class="custom-control custom-checkbox mb-3">
+                                            <input type="checkbox" class="custom-control-input" id="checkBox_">
+                                            <label class="custom-control-label" for="checkBox_">Check this custom checkbox</label>
+                                        </div>
+                                        <div class="custom-control custom-checkbox mb-3">
+                                            <input type="checkbox" class="custom-control-input" id="checkBox_">
+                                            <label class="custom-control-label" for="checkBox_">Check this custom checkbox</label>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td>
+                                        <input type="submit" value="Submit" class="btn btn-primary d-block text-left" />
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </form>
                 </div>
             </div>
         </div>
@@ -85,12 +102,26 @@
             $('#ATM-Assemble').addClass('menu-open');
             $('#AssembleWorkIndex').addClass('active');
 
-            $('#assembleWorkTable').DataTable({
-                "paging": true,
-                "ordering": true,
-                "info": true,
-                order: [[0, 'asc']],
-            });
+
+            // function GetAssembleWork() {
+            //     $.ajax({
+            //         url: 'your-api-endpoint-url',
+            //         type: 'GET',
+            //         dataType: "json",
+            //         success: function (data) {
+            //             $('#assembleWorkTable tbody').empty();
+            //             $.each(data, function (index, employee) {
+            //                 $('#assembleWorkTable tbody').append('<tr><td>' + employee.ID + '</td><td>' + employee.Name + '</td><td>' + employee.Email + '</td></tr>');
+            //             });
+            //         },
+            //         error: function (xhr, status, error) {
+            //             console.error('Error fetching data:', error);
+            //         }
+            //     });
+            // }
+
+            // GetAssembleWork();
+            // setInterval(GetAssembleWork, 5000);
         });
     </script>
 }
