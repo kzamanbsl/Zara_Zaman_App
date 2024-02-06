@@ -248,8 +248,10 @@ namespace app.Services.ATMAssemble.AssembleWorkServices
         public async Task<AssembleWorkViewModel> EmployeeDashboard()
         {
             AssembleWorkViewModel model = new AssembleWorkViewModel();
-            model.AssembleWorkList = await Task.Run(() => (from t1 in _dbContext.AssembleWork
-                                                           where t1.IsActive == true
+            model.AssembleWorkList = await Task.Run(() => (from t1 in _dbContext.AssembleWork.Where(x => x.AssembleDate == DateTime.Today.Date && x.IsActive)
+                                                           join t2 in _dbContext.AssembleWorkDetail
+                                                           on t1.Id equals t2.AssembleWorkId into t2_Join
+                                                           from t2 in t2_Join.DefaultIfEmpty()
                                                            select new AssembleWorkViewModel
                                                            {
                                                                Id = t1.Id,
