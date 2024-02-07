@@ -73,9 +73,12 @@
                             @if (Model.Id > 0)
                             {
                                 <input asp-for="Id" class="form-control" hidden />
+                                <div class="row">
+                                <div class="col-md-5"></div>
+                                <div class="col-md-2"> <p style="margin-top:20px;" class="card-title text-info text-center"><span>Purchase Details</span></p></div>
+                                <div class="col-md-5"></div>
+                                </div>
                                 <div class="table-responsive col-md-12 text-nowrap table-bordered">
-                                    <p style="margin-top:20px;" class="card-title text-info"><span>Purchase Details</span></p>
-
                                     <table id="KgErpDataTable" class="table caption-top">
                                         <thead class="table-light border-primary">
                                             <tr>
@@ -149,7 +152,7 @@
             $('#PurchaseOrderAddPurchaseOrderAndDetail').addClass('active');
         });
 
-        //Reject Purchase Order
+        // Reject Purchase Order
         $("#orderReject").on("click", function () {
             var id = @Model.Id;
             $.ajax({
@@ -172,7 +175,7 @@
             });
         });
 
-
+        // Purchase Order Received
         $("#orderReceived").on("click", function () {
             var id = @Model.Id;
             $.ajax({
@@ -189,7 +192,6 @@
                     }
                 },
                 error: function (error) {
-                    // Handle the error case here
                     console.error("Error occurred during Stock In:", error);
                 }
             });
