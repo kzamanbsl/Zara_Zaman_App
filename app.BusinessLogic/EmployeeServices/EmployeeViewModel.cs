@@ -1,8 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
-using app.EntityModel.AppModels;
-using app.Services.DropdownItemServices;
-using app.Utility;
 
 namespace app.Services.EmployeeServices
 {
@@ -21,7 +18,6 @@ namespace app.Services.EmployeeServices
 
         [DisplayName("Mobile No")]
         public string MobileNo { get; set; }
-
 
         public long? ManagerId { get; set; }
         [DisplayName("Manager Name")]

@@ -2,8 +2,9 @@
 @{
     ViewBag.Title = "Employee List";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
-    int SN = 1;
+    int sn = 1;
 }
+
 <style>
     .text-blue {
         color: blue;
@@ -53,13 +54,14 @@
                         <thead>
                             <tr>
                                 <th>SL</th>
-                                <th>Employee Code</th>
+                                <th>Emp Code</th>
                                 <th>Name</th>
                                 <th>Department</th>
                                 <th>Designation</th>
-                                <th>Mobile No</th>
+                                <th>Mob No</th>
                                 <th>Joining Date</th>
                                 <th>Email</th>
+                                <th>User Name</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -69,7 +71,7 @@
                             {
                                 <tr>
                                     <td style="width:10px;">
-                                        @(++SN)
+                                        @(++sn)
                                     </td>
                                     <td>@item.EmployeeCode</td>
                                     <td>@item.Name</td>
@@ -78,9 +80,10 @@
                                     <td>@item.MobileNo</td>
                                     <td>@item.JoiningDate.ToString("dd-MM-yyyy")</td>
                                     <td>@item.Email</td>
+                                    <td>@item.UserName</td>
                                     <td class="text-center">
-                                        @Html.ActionLink("", "Edit", new {id=item.Id},new {@class = "text-orange fas fa-edit" }) |
-                                        @Html.ActionLink("", "Details", new { id=item.Id }, new { @class = "text-blue fas fa-eye" })
+                                        @Html.ActionLink("", "Edit", new { id = item.Id }, new { @class = "text-orange fas fa-edit" }) |
+                                        @Html.ActionLink("", "Details", new { id = item.Id }, new { @class = "text-blue fas fa-eye" })
                                         @*  @Html.ActionLink("","Export", new {  id=item.Id},new {@class = "text-green fas fa-file-export" }) *@
                                     </td>
                                 </tr>
@@ -118,6 +121,6 @@
             });
         });
     </script>
-  }
+}
 
 
