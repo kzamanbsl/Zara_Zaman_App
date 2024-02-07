@@ -115,7 +115,7 @@
 
             @foreach (var item in Model.MainDashboardList)
             {
-                @:dataPoints.push({ label: "@item.AssembleWorkCategoryName", y: @item.Achievement });
+                @:dataPoints.push({ label: "@item.AssembleWorkCategoryName", y: @(item.Achievement > 0 ? item.Achievement : 1)});
             }
 
                 window.onload = function () {
