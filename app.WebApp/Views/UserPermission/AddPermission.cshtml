@@ -15,7 +15,6 @@
     </div>
 </div>
 
-
 <section class="content">
     <div class="container-fluid">
         <div class="card">
@@ -28,7 +27,6 @@
             </div>
             <div class="card-body">
                 <div class="row">
-
                     <div class="col-md-5">
                         <div class="form-group">
                             <label asp-for="UserId" class="control-label"> User Name </label>
@@ -46,6 +44,7 @@
                     <div class="col-md-3"></div>
                     <div class="col-md-4"></div>
                 </div>
+
                 @foreach (var item in Model.DataList)
                 {
                     <div class="row">
@@ -60,11 +59,11 @@
                                     <div class="col-md-3 mb-3">
                                         @if (menu.IsPermission == true)
                                         {
-                                            <a id="cust+@menu.Id" style="cursor:pointer" onclick="actives(@menu.Id)">   <b class="text-success"> <i class="fa fa-check-square"> </i>  @menu.Name </b></a>
+                                            <a id="cust_@menu.Id" style="cursor:pointer" onclick="activePermission(@menu.Id)"> <b class="text-success"> <i class="fa fa-check-square"> </i> @menu.Name </b></a>
                                         }
                                         else
                                         {
-                                            <a id="cust+@menu.Id" style="cursor:pointer" onclick="inactives(@menu.Id)">   <b class="text-primary"> <i class="fa fa-square"> </i>  @menu.Name </b></a>
+                                            <a id="cust_@menu.Id" style="cursor:pointer" onclick="inactivePermission(@menu.Id)"> <b class="text-primary"> <i class="fa fa-square"> </i> @menu.Name </b></a>
                                         }
 
                                     </div>
@@ -94,40 +93,42 @@
             var userid = $("#UserId option:selected").val();
             window.location.href = "/UserPermission/AddPermission?id=" + userid + "";
         })
-        function actives(id) {
+
+        function activePermission(id) {
             var userid = $("#UserId option:selected").val();
             if (userid == "") {
-                $.notify("please select user first !", "error");
+                //$.notify("Please select user first!", "error");
+                alert("Please select user first!");
                 return;
             }
-            console.log(userid);
+
             if (confirm("Are you sure you went to change  Permission?")) {
                 $.ajax({
                     url: "/UserPermission/ChangePermission?id=" + id + "&&userid=" + userid + "",
                     typr: "GET",
                     success: function (data) {
-                        console.log("111", data);
                         if (data) {
-                            $.notify("Update successfully", "success");
+                            //$.notify("Update successfully", "success");
                             setTimeout(function () {
                                 var userid = $("#UserId option:selected").val();
                                 window.location.href = "/UserPermission/AddPermission?id=" + userid + "";
-                            }, 1000);
+                            }, 500);
                         } else {
-                            $.notify("Sommething went wrong!", "error");
+                            //$.notify("Sommething went wrong!", "error");
+                            alert("Sommething went wrong!", "error");
                         }
                     },
                 });
             }
         }
-        function inactives(id) {
+
+        function inactivePermission(id) {
             var userid = $("#UserId option:selected").val();
-            console.log(userid);
             if (userid == "") {
-                $.notify("please select user first !", "error");
+                //$.notify("Please select user first!", "error");
+                alert("Please select user first!");
                 return;
             }
-
 
             if (confirm("Are you sure you went to change Permission?")) {
                 $.ajax({
@@ -135,17 +136,19 @@
                     typr: "GET",
                     success: function (data) {
                         if (data) {
-                            $.notify("Update successfully", "success");
+                            //$.notify("Update successfully", "success");
                             setTimeout(function () {
                                 var userid = $("#UserId option:selected").val();
                                 window.location.href = "/UserPermission/AddPermission?id=" + userid + "";
-                            }, 1000);
+                            }, 500);
                         } else {
-                            $.notify("Sommething went wrong!", "error");
+                            //$.notify("Sommething went wrong!", "error");
+                            alert("Sommething went wrong!", "error");
                         }
                     },
                 });
             }
         }
+
     </script>
 }
