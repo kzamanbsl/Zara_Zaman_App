@@ -57,33 +57,6 @@ namespace app.Services.PurchaseOrderServices
             vm.Id = res?.Id ?? 0;
             return true;
         }
-        public async Task<PurchaseOrderViewModel> GetRecordById(long id)
-        {
-            var result = await _iEntityRepository.GetByIdAsync(id);
-            PurchaseOrderViewModel model = new PurchaseOrderViewModel();
-            model.Id = result.Id;
-            model.PurchaseDate = result.PurchaseDate;
-            model.SupplierId = result.SupplierId;
-            model.StorehouseId = result.StorehouseId;
-            return model;
-        }
-        public async Task<bool> PurchaseOrderMasterUpdateRecord(PurchaseOrderViewModel vm)
-        {
-            //var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id == vm.Id && f.Id != vm.Id && f.IsActive == true);
-            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id == vm.Id);
-            if (checkName != null)
-            {
-                var result = await _iEntityRepository.GetByIdAsync(vm.Id);
-                result.PurchaseDate = vm.PurchaseDate;
-                result.SupplierId = vm.SupplierId;
-                result.StorehouseId = vm.StorehouseId;
-                await _iEntityRepository.UpdateAsync(result);
-
-                await _dbContext.SaveChangesAsync();
-                return true;
-            }
-            return false;
-        }
         public async Task<PurchaseOrderViewModel> GetPurchaseOrder(long purchaseOrderId = 0)
         {
             PurchaseOrderViewModel purchaseOrderModel = new PurchaseOrderViewModel();
@@ -149,38 +122,7 @@ namespace app.Services.PurchaseOrderServices
             return v;
         }
 
-        public async Task<bool> UpdateRecord(PurchaseOrderViewModel vm)
-        {
-            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id == vm.Id && f.IsActive == true);
-            if (vm.Id == 0)
-            {
-                vm.OrderStatusId = (int)PurchaseOrderStatusEnum.Draft;
-                return false;
-            }
-
-            var existingPurchaseOrder = await _iEntityRepository.GetByIdAsync(vm.Id);
-            if (existingPurchaseOrder == null)
-            {
-                vm.OrderStatusId = (int)PurchaseOrderStatusEnum.Draft;
-                return false;
-            }
-            existingPurchaseOrder.PurchaseDate = vm.PurchaseDate;
-            existingPurchaseOrder.SupplierId = vm.SupplierId;
-            existingPurchaseOrder.StorehouseId = vm.StorehouseId;
-            existingPurchaseOrder.OverallDiscount = vm.OverallDiscount;
-            existingPurchaseOrder.Description = vm.Description;
-            await _dbContext.SaveChangesAsync();
-            return true;
-        }
-
-        public async Task<bool> DeleteRecord(PurchaseOrderViewModel vm)
-        {
-            var result = await _iEntityRepository.GetByIdAsync(vm.Id);
-            result.IsActive = false;
-            await _iEntityRepository.UpdateAsync(result);
-            return true;
-        }
-
+        
         public async Task<PurchaseOrderViewModel> GetAllRecord()
         {
             PurchaseOrderViewModel purchaseMasterModel = new PurchaseOrderViewModel();
@@ -229,7 +171,7 @@ namespace app.Services.PurchaseOrderServices
             return false;
         }
 
-        public async Task<bool> DeletePurchaseOrderMasterById(long id)
+        public async Task<bool> DeletePurchaseMaster(long id)
         {
             var result = await _iEntityRepository.GetByIdAsync(id);
             result.IsActive = false;
@@ -285,6 +227,21 @@ namespace app.Services.PurchaseOrderServices
             {
                 checkPurchaseOrder.OrderStatusId = (int)PurchaseOrderStatusEnum.Reject;
                 await _iEntityRepository.UpdateAsync(checkPurchaseOrder);
+                return true;
+            }
+            return false;
+        }
+
+        public async Task<bool> UpdatePurchaseOrder(PurchaseOrderViewModel vm)
+        {
+            var purchaseOrder = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id == vm.Id);
+            if (purchaseOrder != null)
+            {
+                purchaseOrder.Id = vm.Id;
+                purchaseOrder.PurchaseDate = vm.PurchaseDate;
+                purchaseOrder.SupplierId = vm.SupplierId;
+                purchaseOrder.StorehouseId = vm.StorehouseId;
+                await _iEntityRepository.UpdateAsync(purchaseOrder);
                 return true;
             }
             return false;

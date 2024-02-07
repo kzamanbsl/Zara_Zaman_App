@@ -24,109 +24,116 @@
         <div class="card">
             <div class="card-header">
                 <div class="row w-100">
-                    <div class="card-header">
-                        <h3>
-                            <i class="fas fa-list"></i>
-                            All Purchase Order
-                        </h3>
+                    <div class="col-sm-3">
+                        <h5> <i class="fas fa-list"></i> All Purchase Order </h5>
                     </div>
                 </div>
             </div>
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table id="PurchaseOrdertable" class="table table-sm table-bordered">
-                        <thead>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table id="PurchaseOrdertable" class="table table-sm table-bordered">
+                    <thead>
+                        <tr>
+                            <th>SL</th>
+                            <th class="text-center">Purchase Order No</th>
+                            <th class="text-center">Purchase Date</th>
+                            <th class="text-center">Storehouse</th>
+                            <th class="text-center">Supplier Name</th>
+                            <th class="text-center">Status</th>
+                            <th class="text-center">Total Amount</th>
+                            <th class="text-center">Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var item in Model.PurchaseOrderList)
+                        {
                             <tr>
-                                <th>SL</th>
-                                <th class="text-center">Purchase Order No</th>
-                                <th class="text-center">Purchase Date</th>
-                                <th class="text-center">Storehouse</th>
-                                <th class="text-center">Supplier Name</th>
-                                <th class="text-center">Status</th>
-                                <th class="text-center">Total Amount</th>
-                                <th class="text-center">Action</th>
+                                <td style="width:10px;">@(++SN)</td>
+                                <td>@item.OrderNo</td>
+                                <td>@item.PurchaseDate.ToString("dd-MM-yyyy")</td>
+                                <td>@item.StoreName</td>
+                                <td>@item.SupplierName</td>
+                                <td>@item.OrderStatusName</td>
+                                <td>@item.TotalAmount</td>
+                                @if (@item.OrderStatusId == (int)PurchaseOrderStatusEnum.Receive || @item.OrderStatusId == (int)PurchaseOrderStatusEnum.Reject)
+                                {
+                                    <td class="text-center"> @Html.ActionLink("", "PurchaseDetails", new { id = item.Id }, new { @title = "Details", @class = "text-primary fas fa-eye"})</td>
+                                }
+                                @if (@item.OrderStatusId == (int)PurchaseOrderStatusEnum.Draft || @item.OrderStatusId == (int)PurchaseOrderStatusEnum.Confirm)
+                                {
+                                    <td class="text-center">
+
+                                        <a id="@item.Id" onclick=" makeEditble(@item.Id);" class="linkPointer" data-toggle="modal" data-target="#editPurchaseOrderModal" title="Edit" data-placement="top"><i class="text-warning fas fa-edit" aria-hidden="true"></i></a> |
+                                        @Html.ActionLink("", "DeletePurchaseOrder", new { id = item.Id }, new { @title = "Delete", @class = "text-danger fas fa-trash", onclick = "return confirm('Are you sure you want to delete this?')" }) |
+                                        @Html.ActionLink("", "PurchaseDetails", new { id = item.Id }, new { @title = "Details", @class = "text-primary fas fa-eye"})
+                                    </td>
+                                }
                             </tr>
-                        </thead>
-
-                        <tbody>
-                            @foreach (var item in Model.PurchaseOrderList)
-                            {
-                                <tr>
-                                    <td style="width:10px;">@(++SN)</td>
-                                    <td>@item.OrderNo</td>
-                                    <td>@item.PurchaseDate.ToString("dd-MM-yyyy")</td>
-                                    <td>@item.StoreName</td>
-                                    <td>@item.SupplierName</td>
-                                    <td>@item.OrderStatusName</td>
-                                    <td>@item.TotalAmount</td>
-                                    @if (@item.OrderStatusId == (int)PurchaseOrderStatusEnum.Receive || @item.OrderStatusId == (int)PurchaseOrderStatusEnum.Reject)
-                                    {
-                                        <td class="text-center"> @Html.ActionLink("", "PurchaseDetails", new { id = item.Id }, new { @title = "Details", @class = "text-primary fas fa-eye"})</td>
-                                    }
-                                    @if (@item.OrderStatusId == (int)PurchaseOrderStatusEnum.Draft || @item.OrderStatusId == (int)PurchaseOrderStatusEnum.Confirm)
-                                    {
-                                        <td class="text-center">
-                                            <a asp-controller="PurchaseOrder" asp-action="PurchaseOrderMasterUpdateRecord" asp-route-id="@item.Id" data-toggle="modal" data-target="#editModal@(item.Id)" title="Edit" class="text-warning fas fa-edit"></a> |
-                                            @Html.ActionLink("", "DeletePurchaseOrder", new { id = item.Id }, new { @title = "Delete", @class = "text-danger fas fa-trash", onclick = "return confirm('Are you sure you want to delete this?')" }) |
-                                            @Html.ActionLink("", "PurchaseDetails", new { id = item.Id }, new { @title = "Details", @class = "text-primary fas fa-eye"})
-                                        </td>
-                                    }
-                                </tr>
-
-                                <!-- Edit Modal -->
-                                <div class="modal fade" id="editModal@(item.Id)" tabindex="-1" role="dialog" aria-labelledby="editModalLabel@(item.Id)" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="editModalLabel@(item.Id)">Update Purchase Order</h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <!-- Add your form or content for editing here -->
-                                                <!-- Example: -->
-                                                <form id="form1" asp-controller="PurchaseOrder" asp-action="PurchaseOrderMasterUpdateRecord" method="post">
-                                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                                                    <input type="hidden" id="Id" asp-for="Id" name="Id" value="@item.Id" />
-                                                    <div class="form-group">
-                                                        <label>Purchase Date </label>
-                                                        <input asp-for="PurchaseDate" id="PurchaseDate" value="@DateTime.Today.ToString("yyyy-MM-dd")" class="form-control" type="date" autocomplete="off" required />
-                                                        <span asp-validation-for="PurchaseDate" class="text-danger"></span>
-                                                    </div>
-
-                                                    <div class="form-group select-wrapper">
-                                                        <label>Storehouse</label>
-                                                        <select class="form-control" value="@item.StorehouseId" id="StorehouseId" asp-for="StorehouseId" asp-items="ViewBag.StorehouseList" required>
-                                                            <option value="0" selected>-- Select Storehouse --</option>
-                                                            <span asp-validation-for="StorehouseId" class="text-danger"></span>
-                                                        </select>
-                                                    </div>
-
-                                                    <div class="form-group">
-                                                        <label>Supplier</label>
-                                                        <select class="form-control" value="@item.SupplierId" id="SupplierId" asp-for="SupplierId" asp-items="ViewBag.SupplierList" required>
-                                                            <option value="0" selected>-- Select Supplier --</option>
-                                                            <span asp-validation-for="SupplierId" class="text-danger"></span>
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group" style="float:right">
-                                                        <button type="submit" class="btn btn-primary" id="saveButton" onclick="myFunction()">Save changes</button>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            }
-                        </tbody>
-                    </table>
-                </div>
+                        }
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
-
 </section>
+
+
+<div class="modal fade" tabindex="-1" id="editPurchaseOrderModal" data-toggle="modal" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form asp-action="UpdatePurchaseMaster" method="post">
+
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Update Purchase Order</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+
+                    @Html.HiddenFor(model => model.Id, new { id = "hidPOID" })
+
+                    <div class="form-group">
+                        <label>Purchase Date </label>
+                        <input asp-for="PurchaseDate" id="purchaseDate" class="form-control" type="date" autocomplete="off" required />
+                        <span asp-validation-for="PurchaseDate" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Storehouse</label>
+                        <select class="form-control" id="storehouseId" asp-for="StorehouseId" asp-items="ViewBag.StorehouseList" required>
+                            <option value="0" selected>-- Select Storehouse --</option>
+                            <span asp-validation-for="StorehouseId" class="text-danger"></span>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Supplier</label>
+                        <select class="form-control" id="supplierId" asp-for="SupplierId" asp-items="ViewBag.SupplierList" required>
+                            <option value="0" selected>-- Select Supplier --</option>
+                            <span asp-validation-for="SupplierId" class="text-danger"></span>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Update</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
 
 @section Scripts {
     @{
@@ -144,50 +151,33 @@
                 "info": true,
                 order: [[0, 'asc']],
             });
+        });
 
-    </script>
-
-
-    <script>
-        function myFunction() {
-            alert('okk');
-            var id = $("#Id").val(); // Fetch the id of the current purchase order
-            // var purchaseDate = $("#PurchaseDate").val();
-            var purchaseDate = document.getElementById("#PurchaseDate");
-            // var storehouseId = $("#StorehouseId");
-            var storehouseId = document.getElementById("#StorehouseId");
-            // var supplierId = $("#SupplierId");
-            var supplierId = document.getElementById("#SupplierId");
-            // var submitButton = $("#saveButton");
-            var submitButton = document.getElementById("#saveButton");
-
+        function makeEditble(rowId) {
             $.ajax({
-                type: "GET",
-                url: "/PurchaseOrder/IsPurchaseOrderMasterUpdateRecord/" + id, // Adjust the URL according to your endpoint
-                dataType: "json",
+                type: "POST",
+                url: "@Url.Action("UpdatePurchaseOrder", "PurchaseOrder")",
+                datatype: "Json",
+                data: { id: rowId },
                 success: function (data) {
-                    // Populate the dropdowns with the received data
-                    storehouseId.empty(); // Clear existing options
-                    supplierId.empty(); // Clear existing options
+                    $("#hidPOID").val(data.id);
 
-                    $.each(data.storehouseList, function (index, item) {
-                        storehouseId.append($('<option></option>').attr('value', item.id).text(item.name));
-                    });
+                    // Parse date if needed and adjust for timezone
+                    var purchaseDate = new Date(data.purchaseDate);
+                    var offset = purchaseDate.getTimezoneOffset();
+                    purchaseDate = new Date(purchaseDate.getTime() - (offset * 60 * 1000));
 
-                    $.each(data.supplierList, function (index, item) {
-                        supplierId.append($('<option></option>').attr('value', item.id).text(item.name));
-                    });
+                    // Format date as YYYY-MM-DD
+                    var formattedDate = purchaseDate.toISOString().split('T')[0];
 
-                    // Set selected values and trigger change event
-                    storehouseId.val(data.storehouseList).trigger('change');
-                    supplierId.val(data.supplierList).trigger('change');
-                },
-                error: function (error) {
-                    console.error("Error in AJAX request:", error);
+                    // Set value
+                    $("#purchaseDate").val(formattedDate);
+                    $("#storehouseId").val(data.storehouseId);
+                    $("#supplierId").val(data.supplierId);
                 }
             });
         }
+
     </script>
 
-
-}
+    }
