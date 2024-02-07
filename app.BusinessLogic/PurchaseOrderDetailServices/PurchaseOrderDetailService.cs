@@ -52,7 +52,7 @@ namespace app.Services.PurchaseOrderDetailServices
 
         }
 
-        public async Task<bool> UpdatePurchaseDetailsRecord(PurchaseOrderViewModel model)
+        public async Task<bool> UpdatePurchaseDetail(PurchaseOrderViewModel model)
         {
             var purchaseOrderDetail = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id == model.PurchaseOrderDetailVM.Id);
             if (purchaseOrderDetail != null)
@@ -73,7 +73,7 @@ namespace app.Services.PurchaseOrderDetailServices
             return false;
         }
 
-        public async Task<bool> PurchaseOrderDetailDeleteById(long id)
+        public async Task<bool> DeletePurchaseDetail(long id)
         {
 
             PurchaseOrderDetail purchaseDetails = await _dbContext.PurchaseOrderDetail.FindAsync(id);

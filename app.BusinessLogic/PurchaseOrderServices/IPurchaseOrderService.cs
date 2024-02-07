@@ -11,17 +11,14 @@ namespace app.Services.PurchaseOrderServices
 {
     public interface IPurchaseOrderService
     {
-        Task<bool> AddRecord(PurchaseOrderViewModel vm);
-        Task<bool> UpdateRecord(PurchaseOrderViewModel vm);
-        Task<PurchaseOrderViewModel> GetRecordById(long id);
-        Task<bool> PurchaseOrderMasterUpdateRecord(PurchaseOrderViewModel vm);
-        //Task<bool> DeleteRecord(PurchaseOrderViewModel vm);
+        Task<bool> AddRecord(PurchaseOrderViewModel vm);      
         Task<PurchaseOrderViewModel>GetPurchaseOrder(long purchaseOrderId);
         Task<PurchaseOrderViewModel> GetAllRecord();       
         Task<PurchaseOrderDetailViewModel> SinglePurchaseOrderDetails(long id);
         Task<bool> ConfirmPurchaseOrder(long id);
-        Task<bool> DeletePurchaseOrderMasterById(long id);
+        Task<bool> DeletePurchaseMaster(long id);
         Task<PurchaseOrderViewModel> GetPurchaseOrderDetails(long id);
         Task<bool> RejectPurchaseOrder(long id);
+        Task<bool> UpdatePurchaseOrder(PurchaseOrderViewModel vm);
     }
 }

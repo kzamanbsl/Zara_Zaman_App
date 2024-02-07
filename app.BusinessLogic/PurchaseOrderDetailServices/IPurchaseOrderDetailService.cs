@@ -10,7 +10,7 @@ namespace app.Services.PurchaseOrderDetailServices
     public interface IPurchaseOrderDetailService
     {
         Task<bool> AddRecord(PurchaseOrderViewModel vm);
-        Task<bool> UpdatePurchaseDetailsRecord(PurchaseOrderViewModel vm);
-        Task<bool> PurchaseOrderDetailDeleteById(long id);
+        Task<bool> UpdatePurchaseDetail(PurchaseOrderViewModel vm);
+        Task<bool> DeletePurchaseDetail(long id);
     }
 }
