@@ -135,7 +135,7 @@
                                                         {
                                                             <strong class="text-success">Yes</strong>
                                                         }
-                                                        else
+                                                        else if(data.StatusId!=(int)AssembleWorkStatusEnum.Fault)
                                                         {
                                                             <a id="makeComplete_@item.Id" style="cursor:pointer;" onClick="makeComplete(@item.AssembleWorkId, @item.Id,@data.AssembleWorkCategoryId, @item.AssembleWorkStepId,@item.AssembleWorkStepItemId);" title="Make Complete"
                                                                data-placement="top">
@@ -213,6 +213,7 @@
                         $('#makeComplete_' + data.assembleWorkDetailId).show();
                         $('#completed_' + data.assembleWorkDetailId).hide();
                     }
+                    location.reload();
                 }
             });
         }
@@ -235,6 +236,7 @@
                         $('#statusComplete_' + data.assembleWorkId).show();
                         $('#statusFault_' + data.assembleWorkId).show();
                     }
+                    location.reload();
                 }
             });
         }
@@ -256,6 +258,7 @@
                         $('#statusComplete_' + data.assembleWorkId).show();
                         $('#statusFault_' + data.assembleWorkId).show();
                     }
+                    location.reload();
                 }
             });
         }
