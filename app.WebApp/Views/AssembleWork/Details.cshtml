@@ -1,4 +1,6 @@
-﻿@model app.Services.ATMAssemble.AssembleWorkServices.AssembleWorkViewModel
+﻿@using app.Utility
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model app.Services.ATMAssemble.AssembleWorkServices.AssembleWorkViewModel
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
@@ -46,7 +48,7 @@
 
                             <th style="width:18%">Status</th>
                             <th style="width:2%">:</th>
-                            <td style="width:30%">@Model.StatusName</td>
+                            <td style="width:30%" id="statusName_@Model.Id">@Model.StatusName</td>
                         </tr>
                     </table>
                 </div>
@@ -58,40 +60,40 @@
                     <div class="table-responsive">
                         <table id="aaa" class="table table-bordered">
                             <thead>
-                            <tr>
-                                <th class="text-center">#</th>
-                                <th class="text-center">Employee Name</th>
-                                <th class="text-center">Designation</th>
-                                <th class="text-center">Department</th>
-                            </tr>
+                                <tr>
+                                    <th class="text-center">#</th>
+                                    <th class="text-center">Employee Name</th>
+                                    <th class="text-center">Designation</th>
+                                    <th class="text-center">Department</th>
+                                </tr>
                             </thead>
 
                             <tbody>
-                            @{
-                                var empSl = 1;
+                                @{
+                                    var empSl = 1;
 
-                                foreach (var item in Model.EmployeeList)
-                                {
-                                    <tr>
-                                        <td class="text-center">@empSl</td>
-                                        <td class="text-left">
-                                            @Html.DisplayFor(modelItem => item.Name)
-                                        </td>
-                                        <td class="text-left">
-                                            @Html.DisplayFor(modelItem => item.DesignationName)
-                                        </td>
-                                        <td class="text-left">
-                                            @Html.DisplayFor(modelItem => item.DepartmentName)
-                                        </td>
-                                    </tr>
-                                    empSl++;
+                                    foreach (var item in Model.EmployeeList)
+                                    {
+                                        <tr>
+                                            <td class="text-center">@empSl</td>
+                                            <td class="text-left">
+                                                @Html.DisplayFor(modelItem => item.Name)
+                                            </td>
+                                            <td class="text-left">
+                                                @Html.DisplayFor(modelItem => item.DesignationName)
+                                            </td>
+                                            <td class="text-left">
+                                                @Html.DisplayFor(modelItem => item.DepartmentName)
+                                            </td>
+                                        </tr>
+                                        empSl++;
+                                    }
                                 }
-                            }
                             </tbody>
                         </table>
                     </div>
                 </div>
-                
+
                 <div>
                     <h6 class="card-title text-info">
                         <i class="fas fa-list"></i> Assemble Work Items
@@ -101,10 +103,10 @@
                             <thead>
                             <tr>
                                 <th class="text-center">#</th>
-                                    <th class="text-center">Assemble Work Step</th>
-                                    <th class="text-center">Assemble Work Step Item</th>
-                                    <th class="text-center">Remarks</th>
-                                    <th class="text-center">Is Complete</th>
+                                <th class="text-center">Assemble Work Step</th>
+                                <th class="text-center">Assemble Work Step Item</th>
+                                <th class="text-center">Remarks</th>
+                                <th class="text-center">Is Complete</th>
                             </tr>
                             </thead>
 
@@ -115,34 +117,53 @@
                                 foreach (var item in Model.DetailList)
                                 {
                                     <tr>
-                                            <td class="text-center">@itemSl</td>
+                                        <td class="text-center">@itemSl</td>
                                         <td class="text-left">
-                                                @Html.DisplayFor(modelItem => item.AssembleWorkStepName)
+                                            @Html.DisplayFor(modelItem => item.AssembleWorkStepName)
                                         </td>
                                         <td class="text-left">
-                                                @Html.DisplayFor(modelItem => item.AssembleWorkStepItemName)
+                                            @Html.DisplayFor(modelItem => item.AssembleWorkStepItemName)
                                         </td>
                                         <td class="text-left">
                                             @Html.DisplayFor(modelItem => item.Remarks)
                                         </td>
-                                        <td class="text-left">
+                                        <td class="text-center">
                                             @if (@item.IsComplete)
                                             {
-                                                <strong>Yes</strong>
+                                                <strong class="text-success">Yes</strong>
                                             }
                                             else
                                             {
-                                                    <strong>No</strong>
+                                                <a id="makeComplete_@item.Id" style="cursor:pointer;" onClick="makeComplete(@item.AssembleWorkId, @item.Id,@Model.AssembleWorkCategoryId, @item.AssembleWorkStepId,@item.AssembleWorkStepItemId);" title="Make Complete"
+                                                   data-placement="top">
+                                                    <i class="fa fa-check-square text-info" aria-hidden="true"></i>
+                                                </a>
+                                                <strong id="completed_@item.Id" style="display: none;" class="text-success">Yes</strong>
                                             }
                                         </td>
                                     </tr>
-                                        itemSl++;
+                                    itemSl++;
                                 }
                             }
                             </tbody>
                         </table>
                     </div>
                 </div>
+                
+                @if (Model.StatusId == (int)AssembleWorkStatusEnum.Confirm)
+                {
+                    <div class="row mr-1" style="float:right">
+                        <a id="statusFault_@Model.Id" style="cursor:pointer;" onClick="statusFault(@Model.Id);" title="Make Fault"
+                           data-placement="top">
+                            <input type="button" value="Fault" class="btn btn-warning" />
+                        </a>
+                        <a id="statusComplete_@Model.Id" style="cursor:pointer;" onClick="statusComplete(@Model.Id);" title="Make Complete"
+                           data-placement="top">
+                            <input type="button" value="Complete" class="btn btn-primary ml-1" />
+                        </a>
+
+                    </div>
+                }
             </div>
         </div>
     </div>
@@ -167,5 +188,70 @@
             //     order: [[0, 'asc']],
             // });
         });
+
+        function makeComplete(assembleWorkId, id, assembleWorkCategoryId, assembleWorkStepId, assembleWorkStepItemId) {
+
+            $.ajax({
+                type: "post",
+                url: "@Url.Action("MakeStepItemComplete", "AssembleWork")",
+                data: { assembleWorkId: assembleWorkId, assembleWorkDetailId: id, assembleWorkCategoryId: assembleWorkCategoryId, assembleWorkStepId: assembleWorkStepId, assembleWorkStepItemId: assembleWorkStepItemId },
+                datatype: "json",
+                traditional: true,
+                success: function (data) {
+                    if (data.isSuccess) {
+                        $('#makeComplete_' + data.assembleWorkDetailId).hide();
+                        $('#completed_' + data.assembleWorkDetailId).show();
+
+                    } else {
+                        $('#makeComplete_' + data.assembleWorkDetailId).show();
+                        $('#completed_' + data.assembleWorkDetailId).hide();
+                    }
+                }
+            });
+        }
+
+        function statusComplete(assembleWorkId) {
+
+            $.ajax({
+                type: "post",
+                url: "@Url.Action("MakeStatusComplete", "AssembleWork")",
+                data: { assembleWorkId: assembleWorkId },
+                datatype: "json",
+                traditional: true,
+                success: function (data) {
+                    if (data.isSuccess) {
+                        $('#statusComplete_' + data.assembleWorkId).hide();
+                        $('#statusFault_' + data.assembleWorkId).hide();
+                        $('#statusName_' + data.assembleWorkId).text("Complete");
+
+                    } else {
+                        $('#statusComplete_' + data.assembleWorkId).show();
+                        $('#statusFault_' + data.assembleWorkId).show();
+                    }
+                }
+            });
+        }
+
+        function statusFault(assembleWorkId) {
+
+            $.ajax({
+                type: "post",
+                url: "@Url.Action("MakeStatusFault", "AssembleWork")",
+                data: { assembleWorkId: assembleWorkId },
+                datatype: "json",
+                traditional: true,
+                success: function (data) {
+                    if (data.isSuccess) {
+                        $('#statusComplete_' + data.assembleWorkId).hide();
+                        $('#statusFault_' + data.assembleWorkId).hide();
+                        $('#statusName_' + data.assembleWorkId).text("Fault");
+                    } else {
+                        $('#statusComplete_' + data.assembleWorkId).show();
+                        $('#statusFault_' + data.assembleWorkId).show();
+                    }
+                }
+            });
+        }
+
     </script>
 }
