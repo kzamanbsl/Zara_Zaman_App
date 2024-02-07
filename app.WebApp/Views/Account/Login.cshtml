@@ -6,7 +6,8 @@
 <style>
     @@media (max-width:768px) {
         .d-ui-card {
-            padding: 20px 6px 30px 6px;
+            /* padding: 20px 6px 30px 6px; */
+            padding: 30px;
             border: none;
             border-radius: 30px;
         }
@@ -14,7 +15,8 @@
 
     @@media (min-width:768px) {
         .d-ui-card {
-            padding: 55px 100px 60px 100px;
+            /* padding: 55px 100px 60px 100px; */
+            padding: 30px;
             border: none;
             border-radius: 30px;
         }
@@ -95,11 +97,12 @@
 <div class=" mt-5 mb-5 ">
     <div class="container">
         <div class=" row justify-content-center">
-            <div class="col-12 col-sm-10 col-lg-6 col-md-7 ">
+            @* <div class="col-12 col-sm-10 col-lg-6 col-md-7 "> *@
+            <div class="col-10 col-sm-8 col-lg-4 col-md-5">
                 <div class="card d-ui-card shadow">
                     <div class="di-logo">
-                        <img src="~/kgfile/ZaraZaman.png"  style="width:50%;height:auto"/>
-                      @*  <span style="font-weight:700;color:#2196f3;font-size:40px">L</span>og<span style="font-weight: 700; color: #2196f3; font-size: 40px">i</span>n*@
+                        <img src="~/kgfile/ZaraZaman.png" style="width:50%;height:auto" />
+                        @*  <span style="font-weight:700;color:#2196f3;font-size:40px">L</span>og<span style="font-weight: 700; color: #2196f3; font-size: 40px">i</span>n*@
                     </div>
                     <form class="d-ui" asp-action="Login">
                         @Html.HiddenFor(s => s.ReturnUrl)
