@@ -87,6 +87,7 @@ namespace app.Services.EmployeeServices
                 throw;
             }
         }
+
         public async Task<bool> UpdateRecord(EmployeeViewModel vm)
         {
             var existingEmployee = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.EmployeeCode == vm.EmployeeCode && f.IsActive == true);
@@ -145,6 +146,7 @@ namespace app.Services.EmployeeServices
             var emp = await _iEntityRepository.GetByIdAsync(id);
             EmployeeViewModel vm = new EmployeeViewModel();
             vm.Name = emp.Name;
+            vm.UserName = emp.UserName;
             vm.EmployeeCode = emp.EmployeeCode;
             vm.ShortName = emp.ShortName;
             vm.EmployeeOrder = emp.EmployeeOrder;
@@ -189,6 +191,7 @@ namespace app.Services.EmployeeServices
             vm.PhotoUrl = emp.PhotoUrl;
             return vm;
         }
+
         public async Task<EmployeeViewModel> GetAllRecord()
         {
             EmployeeViewModel model = new EmployeeViewModel();
@@ -199,6 +202,7 @@ namespace app.Services.EmployeeServices
                                                            Id = t1.Id,
                                                            EmployeeCode = t1.EmployeeCode,
                                                            Name = t1.Name,
+                                                           UserName = t1.UserName,
                                                            DepartmentId = t1.DepartmentId,
                                                            DepartmentName = t1.Department.Name,
                                                            DesignationName = t1.Designation.Name,
@@ -214,23 +218,12 @@ namespace app.Services.EmployeeServices
         {
 
             //var result = await _iEntityRepository.GetByIdAsync(id);
-            var result = await _dbContext.Employee
-                .Include(c => c.Manager)
-                .Include(c => c.MaritalType)
-                .Include(c => c.Gender)
-                .Include(c => c.BloodGroup)
-                .Include(c => c.Religion)
-                .Include(c => c.Department)
-                .Include(c => c.Designation)
-                .Include(c => c.EmployeeCategory)
-                .Include(c => c.EmployeeGrade)
-                .Include(c => c.OfficeType)
-                .Include(c => c.ServiceType)
-                .Include(c => c.Country)
-                .Include(c => c.Division)
-                .Include(c => c.District)
-                .Include(c => c.Upazila)
-                .FirstOrDefaultAsync(c => c.Id == id);
+            var result = await _dbContext.Employee.Include(c => c.Manager).Include(c => c.MaritalType)
+                .Include(c => c.Gender).Include(c => c.BloodGroup).Include(c => c.Religion).Include(c => c.Department)
+                .Include(c => c.Designation).Include(c => c.EmployeeCategory).Include(c => c.EmployeeGrade)
+                .Include(c => c.OfficeType).Include(c => c.ServiceType).Include(c => c.Country).Include(c => c.Division)
+                .Include(c => c.District).Include(c => c.Upazila).Include(employee => employee.JobStatus)
+                .Include(employee => employee.Shift).FirstOrDefaultAsync(c => c.Id == id);
 
             EmployeeViewModel model = new EmployeeViewModel();
             model.Id = result.Id;

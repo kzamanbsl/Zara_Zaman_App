@@ -7,6 +7,7 @@
         public string EmployeeCode { get; set; }
         public string Email { get; set; }
         public string MobileNo { get; set; }
+        public string UserName { get; set; } //Application login User
 
 
         public long? ManagerId { get; set; }
