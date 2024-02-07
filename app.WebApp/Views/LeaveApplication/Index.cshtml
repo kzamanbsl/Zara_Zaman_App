@@ -70,15 +70,21 @@
                                     </td>
                                     <td>
                                         @{
-                                            var strDate = item.ApplicationDate;
+                                            var appDate = item.ApplicationDate;
+                                            <span>@appDate.ToString("dd/MM/yyyy")</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        @{
+                                            var strDate = item.StartDate;
                                             <span>@strDate.ToString("dd/MM/yyyy")</span>
                                         }
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.StartDate)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.EndDate)
+                                        @{
+                                            var endDate = item.EndDate;
+                                            <span>@endDate.ToString("dd/MM/yyyy")</span>
+                                        }
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.LeaveDays)
