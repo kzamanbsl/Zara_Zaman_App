@@ -95,11 +95,11 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label>Upazila</label>
-                                        <select class="form-control" asp-for="UpazilaId" id="upazilaId" asp-items="ViewBag.Upazila" required>
-                                            <option value="0" selected>--Upazila--</option>
-                                            <span asp-validation-for="UpazilaId" class="text-danger"></span>
+                                        <label asp-for="UpazilaId">Upzilla</label>
+                                        <select asp-for="UpazilaId" class="form-control" id="upazilaId">
+                                            <option value="">-- Upzilla --</option>
                                         </select>
+                                        <span asp-validation-for="UpazilaId" class="text-danger"></span>
                                     </div>
                                 </div>
                             </div>

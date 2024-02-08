@@ -2,21 +2,25 @@
 @{
     ViewData["Title"] = "Login";
 }
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
 <style>
     @@media (max-width:768px) {
         .d-ui-card {
-            padding: 20px 6px 30px 6px;
+            /* padding: 20px 6px 30px 6px; */
+            padding: 30px;
             border: none;
-            border-radius: 30px;
+            /* border-radius: 30px; */
+            border-radius: 10px;
         }
     }
 
     @@media (min-width:768px) {
         .d-ui-card {
-            padding: 55px 100px 60px 100px;
+            /* padding: 55px 100px 60px 100px; */
+            padding: 30px;
             border: none;
-            border-radius: 30px;
+            /* border-radius: 30px; */
+            border-radius: 10px;
         }
     }
 
@@ -35,9 +39,10 @@
         border: 0px;
         height: 45px;
         display: inline-block;
-        border-radius: 20px;
+        /* border-radius: 20px; */
         -webkit-font-smoothing: antialiased;
-        padding: 0px 18px;
+        /* padding: 0px 18px; */
+        padding: 0px 10px;
         font-size: 15px;
         font-weight: bold;
         cursor: pointer;
@@ -51,7 +56,8 @@
         display: block;
         width: 100%;
         height: calc(1.6em + 1.4rem + 2px );
-        padding: 0.875rem 2rem;
+        /* padding: 0.875rem 2rem; */
+        padding: 0px 10px;
         font-size: 1rem;
         font-weight: 400;
         line-height: 1.5;
@@ -59,12 +65,12 @@
         background-color: #fff;
         background-clip: padding-box;
         border: 1px solid #ced4da;
-        border-radius: 1.75rem;
+        /* border-radius: 1.75rem; */
         transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
     }
 
     .d-action .btn {
-        border-radius: 30px;
+        /* border-radius: 30px; */
     }
 
     .d-action i {
@@ -89,17 +95,24 @@
             color: rgb(0 0 0 / 90%);
             font-size: 26px;
         }
+
+
+    input::-ms-reveal, input::-ms-clear {
+        display: none;
+    }
+
 </style>
 <br />
 
 <div class=" mt-5 mb-5 ">
     <div class="container">
         <div class=" row justify-content-center">
-            <div class="col-12 col-sm-10 col-lg-6 col-md-7 ">
+            @* <div class="col-12 col-sm-10 col-lg-6 col-md-7 "> *@
+            <div class="col-10 col-sm-8 col-lg-4 col-md-5">
                 <div class="card d-ui-card shadow">
                     <div class="di-logo">
-                        <img src="~/kgfile/ZaraZaman.png"  style="width:50%;height:auto"/>
-                      @*  <span style="font-weight:700;color:#2196f3;font-size:40px">L</span>og<span style="font-weight: 700; color: #2196f3; font-size: 40px">i</span>n*@
+                        <img src="~/kgfile/ZaraZaman.png" style="width:50%;height:auto" />
+                        @*  <span style="font-weight:700;color:#2196f3;font-size:40px">L</span>og<span style="font-weight: 700; color: #2196f3; font-size: 40px">i</span>n*@
                     </div>
                     <form class="d-ui" asp-action="Login">
                         @Html.HiddenFor(s => s.ReturnUrl)
@@ -110,7 +123,10 @@
                             <span></span>
                         </div>
                         <div class="form-group mb-3">
-                            <input type="password" class="form-control" placeholder="******" required asp-for="Password" />
+                            <div style="display:flex;">
+                                <input id="id_password" type="password" class="form-control" placeholder="******" required asp-for="Password" />
+                                <i style="margin-left: -30px;cursor: pointer; padding-top:15px;" class="far fa-eye" id="togglePassword"></i>
+                            </div>
                             <span asp-validation-for="Password" class="text-danger"></span>
                         </div>
                         <span asp-validation-for="IncorrectInput" class="text-danger"></span>
@@ -132,6 +148,20 @@
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
+    <script>
+        const togglePassword = document.querySelector('#togglePassword');
+        const password = document.querySelector('#id_password');
+
+        togglePassword.addEventListener('click', function (e) {
+            // toggle the type attribute
+            const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+            password.setAttribute('type', type);
+
+            // toggle the eye slash icon
+            this.classList.toggle('fa-eye-slash');
+        });
+    </script>
+
 }
 
 

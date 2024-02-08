@@ -217,6 +217,11 @@ namespace app.Services.ATMAssemble.AssembleWorkServices
                                     Remarks = t1.Remarks,
                                     IsComplete = t1.IsComplete,
                                 }).ToList();
+
+            var target = model.DetailList.Count;
+            model.AssembleTarget = target;
+            var empIds = model.EmployeeList.Select(s => s.Id).ToArray();
+            model.EmployeeIds = empIds;
             return model;
         }
 
