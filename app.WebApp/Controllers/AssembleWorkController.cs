@@ -39,7 +39,6 @@ namespace app.WebApp.Controllers
             ViewBag.EmployeeList = new MultiSelectList((await _iDropdownService.EmployeeSelectionList())
                 .Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
             AssembleWorkViewModel viewModel = new AssembleWorkViewModel();
-            viewModel.AssembleDate=DateTime.Now;
             return View(viewModel);
         }
 

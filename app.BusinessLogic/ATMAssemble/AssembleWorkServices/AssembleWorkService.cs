@@ -158,21 +158,19 @@ namespace app.Services.ATMAssemble.AssembleWorkServices
 
         public async Task<bool> UpdateRecord(AssembleWorkViewModel viewModel)
         {
-            //var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == viewModel.Name.Trim() && f.Id != viewModel.Id && f.IsActive == true);
 
-            //if (checkName == null)
-            //{
+            if (viewModel == null)
+            {
+                throw new Exception("Sorry! No record found.");
+            }
+
             var result = await _iEntityRepository.GetByIdAsync(viewModel.Id);
             //result.Name = viewModel.Name;
             result.Description = viewModel.Description;
             result.AssembleWorkCategoryId = viewModel.AssembleWorkCategoryId;
             await _iEntityRepository.UpdateAsync(result);
             return true;
-            //}
-            //else
-            //{
-            //    return false;
-            //}
+
         }
 
         public async Task<bool> DeleteRecord(long id)
