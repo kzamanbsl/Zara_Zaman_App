@@ -83,7 +83,7 @@ namespace app.WebApp.Controllers
 
         public async Task<JsonResult> UpdateSinglePurchaseOrderDetails(long id)
         {
-            var model = await _ipurchaseOrderService.SinglePurchaseOrderDetails(id);
+            var model = await _ipurchaseOrderDetailService.SinglePurchaseOrderDetails(id);
             return Json(model);
         }
 
@@ -98,7 +98,7 @@ namespace app.WebApp.Controllers
         [HttpGet]
         public async Task<IActionResult> DeletePurchaseOrder(long id)
         {
-            var res = await _ipurchaseOrderService.DeletePurchaseMaster(id);
+            var res = await _ipurchaseOrderService.DeletePurchaseOrder(id);
             return RedirectToAction(nameof(Index));
         }
 

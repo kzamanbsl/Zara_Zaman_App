@@ -140,8 +140,6 @@
 </section>
 
 
-
-
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
@@ -151,7 +149,7 @@
             $('#Purchases').addClass('menu-open');
             $('#PurchaseOrderAddPurchaseOrderAndDetail').addClass('active');
         });
-
+        
         // Reject Purchase Order
         $("#orderReject").on("click", function () {
             var id = @Model.Id;
@@ -161,11 +159,11 @@
                 data: { id: id },
                 success: function (result) {
                     if (result) {
-                        alert("Rejected successfully");
+                        showAlert("Order Rejected");
                         window.location.href = "/PurchaseOrder/Index/";
 
                     } else {
-                        alert("Reject failed");
+                        showAlert("Reject failed");
                     }
                 },
                 error: function (error) {
