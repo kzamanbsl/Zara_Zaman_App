@@ -33,7 +33,7 @@
                         <div class="col-4">
                             <div class="form-group">
                                 <label class="form-label">Assemble Date</label>
-                                <input asp-for="AssembleDate" type="date" value="@DateTime.Now.ToString("dddd-MM-yyyy")" class="form-control" required />
+                                <input asp-for="AssembleDate" type="date" value="@DateTime.Now.ToString("mm/dd/yyyy")" class="form-control datepicker" data-date-format="mm/dd/yyyy" required />
                                 <span asp-validation-for="AssembleDate" class="text-danger"></span>
                             </div>
                         </div>
@@ -49,7 +49,7 @@
                         <div class="col-4">
                             <div class="form-group">
                                 <label asp-for="AssembleTarget" class="form-label">Assemble Target</label>
-                                <input asp-for="AssembleTarget" class="form-control" required />
+                                <input asp-for="AssembleTarget" min="1" class="form-control" required />
                                 <span asp-validation-for="AssembleTarget" class="text-danger"></span>
                             </div>
                         </div>
@@ -90,7 +90,6 @@
     <script>
         $(document).ready(function () {
             "use strict"
-
             $('#ATM-Assemble').addClass('menu-open');
             $('#AssembleWorkAddRecord').addClass('active');
         });
