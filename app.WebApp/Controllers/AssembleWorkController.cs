@@ -48,7 +48,7 @@ namespace app.WebApp.Controllers
             var result = await _iService.AddRecord(viewModel);
             if (result == true)
             {
-                return RedirectToAction("Index");
+                return RedirectToAction(nameof(Index));
             }
             return View(viewModel);
         }
@@ -60,7 +60,6 @@ namespace app.WebApp.Controllers
                 .Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
             ViewBag.EmployeeList = new MultiSelectList((await _iDropdownService.EmployeeSelectionList())
                .Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
-            // AssembleWorkViewModel viewModel = new AssembleWorkViewModel();
             var result = await _iService.GetRecordById(id);
             return View(result);
         }
@@ -71,17 +70,18 @@ namespace app.WebApp.Controllers
             var result = await _iService.UpdateRecord(model);
             if (result == true)
             {
-                return RedirectToAction("Index");
+                return RedirectToAction(nameof(Index));
             }
-            ModelState.AddModelError(string.Empty, "This name is already used!");
-            return View(model);
+            ModelState.AddModelError(string.Empty, "Update operation failed. Please try again!");
+            return RedirectToAction("UpdateRecord", new {id=model.Id});
+            //return View(model);
         }
 
         [HttpGet]
         public async Task<IActionResult> Delete(long id)
         {
             var res = await _iService.DeleteRecord(id);
-            return RedirectToAction("Index");
+            return RedirectToAction(nameof(Index));
         }
 
 
@@ -98,23 +98,27 @@ namespace app.WebApp.Controllers
             var dataList = await _iService.EmployeeDashboard();
             return View(dataList);
         }
+
         [HttpPost]
         public async Task<JsonResult> MakeStepItemComplete(long assembleWorkId, long assembleWorkDetailId, long assembleWorkCategoryId, long assembleWorkStepId, long assembleWorkStepItemId)
         {
             var result = await _iService.MakeStepItemComplete(assembleWorkId, assembleWorkDetailId, assembleWorkCategoryId, assembleWorkStepId, assembleWorkStepItemId);
             return Json(result);
         }
+
         [HttpPost]
         public async Task<JsonResult> MakeStatusComplete(long assembleWorkId)
         {
             var result = await _iService.MakeStatusComplete(assembleWorkId);
             return Json(result);
         }
+
         [HttpPost]
         public async Task<JsonResult> MakeStatusFault(long assembleWorkId)
         {
             var result = await _iService.MakeStatusFault(assembleWorkId);
             return Json(result);
         }
+
     }
 }

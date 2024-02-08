@@ -5,6 +5,19 @@
     int sn = 1;
 }
 
+<style>
+    .chart-box-shadow {
+        padding: 10px 0;
+        -webkit-box-shadow: 0px 0px 2px -9px rgba(0,0,0,0.1),0px 10px 15px -3px rgba(0,0,0,0.1);
+        box-shadow: 0px 0px 2px -9px rgba(0,0,0,0.1),0px 10px 15px -3px rgba(0,0,0,0.1);
+        border: 1px solid rgba(253, 253, 254, 0.8);
+        border-radius: 2px;
+    }
+
+    .canvasjs-chart-credit {
+        display: none !important;
+    }
+</style>
 <div class="content-header">
     <div class="container-fluid ">
         <div class="breadcrumb d-flex justify-content-between align-items-center pl-3 pr-3">
@@ -28,8 +41,22 @@
                 </h5>
             </div>
             <div class="card-body">
+
                 <div class="row">
+                    <div class="col-4">
+                        <div class="chart-box-shadow my-3">
+                            <div id="pieChartContainer" style="height: 250px; width: 100%;"></div>
+                        </div>
+                    </div>
                     <div class="col-8">
+                        <div class="chart-box-shadow my-3">
+                            <div id="barChartContainer" style="height: 250px; width: 100%;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
                         <div class="table-responsive">
                             <table id="assembleWorkMainDashboardTable" class="table table-bordered">
                                 <thead>
@@ -76,7 +103,6 @@
                                             </tr>
                                             sn++;
                                         }
-
                                     }
                                     else
                                     {
@@ -90,11 +116,6 @@
                             </table>
                         </div>
                     </div>
-                    <div class="col-4">
-                        <div class="pie-chart mt-5">
-                            <div id="chartContainer" style="height: 300px; width: 100%;"></div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -106,6 +127,7 @@
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
+    <script type="text/javascript" src="https://cdn.canvasjs.com/jquery.canvasjs.min.js"></script>
 
     <script>
         $(document).ready(function () {
@@ -126,65 +148,101 @@
                 //     window.location.reload();
                 // }, 30000);
 
-                        // PieChart integration (Static)
-                        // window.onload = function () {
-
-                        //     var options = {
-                        //         title: {
-                        //             text: "Real-Time Analysis"
-                        //         },
-                        //         data: [{
-                        //             type: "pie",
-                        //             startAngle: 45,
-                        //             showInLegend: "true",
-                        //             legendText: "{label}",
-                        //             indexLabel: "{label} ({y})",
-                        //             yValueFormatString: "#,##0.#" % "",
-                        //             dataPoints: [
-                        //                 { label: "IPC", y: 20.2 },
-                        //                 { label: "Receipt Printer", y: 32.2 },
-                        //                 { label: "Card Reader", y: 81.2 },
-                        //                 { label: "Monitor", y: 3 },
-                        //                 { label: "Note Feeder (NF)", y: 47.3 },
-                        //                 { label: "Transport", y: 14.9 }
-                        //             ]
-                        //         }]
-                        //     };
-                        //     $("#chartContainer").CanvasJSChart(options);
-                        // }
-
     </script>
 
-    @* PieChart integration (Dynamic) *@
     @if (Model.MainDashboardList != null && Model.MainDashboardList.Any())
     {
         <script type="application/javascript">
-            var dataPoints = [];
-
+            window.onload = function () {
+                var pieDataPoints = [];
+                var completedDataPoints = [];
+                var faultDataPoints = [];
+                var pendingDataPoints = [];
             @foreach (var item in Model.MainDashboardList)
             {
-                @:dataPoints.push({ label: "@item.AssembleWorkCategoryName", y: @(item.Achievement > 0 ? item.Achievement : 1)});
+                decimal targetedWork = item.TodayTarget;
+                decimal completedWork = item.WorkCompleted;
+                decimal faultWork = item.FaultQty;
+                decimal pendingWork = targetedWork - completedWork;
+
+                decimal completedPercentage = targetedWork > 0 ? (100 * completedWork) / targetedWork : 0;
+                decimal faultWorkPercentage = targetedWork > 0 ? (100 * faultWork) / targetedWork : 0;
+                decimal pendingWorkPercentage = targetedWork > 0 ? (100 * pendingWork) / targetedWork : 0;
+
+                decimal minPercentage = 0.1M;
+                completedPercentage = completedPercentage > 0 ? completedPercentage : minPercentage;
+                faultWorkPercentage = faultWorkPercentage > 0 ? faultWorkPercentage : minPercentage;
+                pendingWorkPercentage = pendingWorkPercentage > 0 ? pendingWorkPercentage : minPercentage;
+
+                @:pieDataPoints.push({ label: "@item.AssembleWorkCategoryName", y: @(item.Achievement > 0 ? item.Achievement : minPercentage)});
+                @:completedDataPoints.push({ label: "@item.AssembleWorkCategoryName", y: @(completedPercentage)});
+                @:faultDataPoints.push({ label: "@item.AssembleWorkCategoryName", y: @(faultWorkPercentage)});
+                @:pendingDataPoints.push({ label: "@item.AssembleWorkCategoryName", y: @(pendingWorkPercentage)});
             }
 
-                window.onload = function () {
-                    var options = {
-                        title: {
-                            text: "Real-Time Analysis"
-                        },
-                        data: [{
-                            type: "pie",
-                            startAngle: 45,
-                            showInLegend: true,
-                            legendText: "{label}",
-                            indexLabel: "{label} ({y})",
-                            yValueFormatString: "#,##0.#",
-                            dataPoints: dataPoints
-                        }]
-                    };
-
-                    $("#chartContainer").CanvasJSChart(options);
+                var pieOptions = {
+                    animationEnabled: true,
+                    title: {
+                        text: "Daily Achievement"
+                    },
+                    data: [{
+                        type: "pie",
+                        startAngle: 45,
+                        showInLegend: true,
+                        legendText: "{label}",
+                        indexLabel: "{label} ({y}/100%)",
+                        yValueFormatString: "#,##0.#",
+                        dataPoints: pieDataPoints
+                    }]
                 };
+
+                var barOptions = {
+                    animationEnabled: true,
+                    title: {
+                        text: "Daily Work Analysis"
+                    },
+                    axisY: {
+                        suffix: "%"
+                    },
+                    toolTip: {
+                        shared: true,
+                        reversed: true
+                    },
+                    legend: {
+                        reversed: true,
+                        verticalAlign: "center",
+                        horizontalAlign: "right"
+                    },
+                    data: [
+                        {
+                            type: "stackedColumn100",
+                            name: "Pending",
+                            showInLegend: true,
+                            yValueFormatString: "#,##0\"%\"",
+                            dataPoints: pendingDataPoints
+                        },
+                        {
+                            type: "stackedColumn100",
+                            name: "Fault",
+                            showInLegend: true,
+                            yValueFormatString: "#,##0\"%\"",
+                            dataPoints: faultDataPoints
+                        },
+                        {
+                            type: "stackedColumn100",
+                            name: "Completed",
+                            showInLegend: true,
+                            yValueFormatString: "#,##0\"%\"",
+                            dataPoints: completedDataPoints
+                        }
+                    ]
+                };
+
+                $("#pieChartContainer").CanvasJSChart(pieOptions);
+                $("#barChartContainer").CanvasJSChart(barOptions);
+            };
         </script>
     }
+
 
 }

@@ -101,55 +101,55 @@
                     <div class="table-responsive">
                         <table id="bbb" class="table table-bordered">
                             <thead>
-                            <tr>
-                                <th class="text-center">#</th>
-                                <th class="text-center">Assemble Work Step</th>
-                                <th class="text-center">Assemble Work Step Item</th>
-                                <th class="text-center">Remarks</th>
-                                <th class="text-center">Is Complete</th>
-                            </tr>
+                                <tr>
+                                    <th class="text-center">#</th>
+                                    <th class="text-center">Assemble Work Step</th>
+                                    <th class="text-center">Assemble Work Step Item</th>
+                                    <th class="text-center">Remarks</th>
+                                    <th class="text-center">Is Complete</th>
+                                </tr>
                             </thead>
 
                             <tbody>
-                            @{
-                                var itemSl = 1;
+                                @{
+                                    var itemSl = 1;
 
-                                foreach (var item in Model.DetailList)
-                                {
-                                    <tr>
-                                        <td class="text-center">@itemSl</td>
-                                        <td class="text-left">
-                                            @Html.DisplayFor(modelItem => item.AssembleWorkStepName)
-                                        </td>
-                                        <td class="text-left">
-                                            @Html.DisplayFor(modelItem => item.AssembleWorkStepItemName)
-                                        </td>
-                                        <td class="text-left">
-                                            @Html.DisplayFor(modelItem => item.Remarks)
-                                        </td>
-                                        <td class="text-center">
-                                            @if (@item.IsComplete)
-                                            {
-                                                <strong class="text-success">Yes</strong>
-                                            }
-                                            else
-                                            {
-                                                <a id="makeComplete_@item.Id" style="cursor:pointer;" onClick="makeComplete(@item.AssembleWorkId, @item.Id,@Model.AssembleWorkCategoryId, @item.AssembleWorkStepId,@item.AssembleWorkStepItemId);" title="Make Complete"
-                                                   data-placement="top">
-                                                    <i class="fa fa-check-square text-info" aria-hidden="true"></i>
-                                                </a>
-                                                <strong id="completed_@item.Id" style="display: none;" class="text-success">Yes</strong>
-                                            }
-                                        </td>
-                                    </tr>
-                                    itemSl++;
+                                    foreach (var item in Model.DetailList)
+                                    {
+                                        <tr>
+                                            <td class="text-center">@itemSl</td>
+                                            <td class="text-left">
+                                                @Html.DisplayFor(modelItem => item.AssembleWorkStepName)
+                                            </td>
+                                            <td class="text-left">
+                                                @Html.DisplayFor(modelItem => item.AssembleWorkStepItemName)
+                                            </td>
+                                            <td class="text-left">
+                                                @Html.DisplayFor(modelItem => item.Remarks)
+                                            </td>
+                                            <td class="text-center">
+                                                @if (@item.IsComplete)
+                                                {
+                                                    <strong class="text-success">Yes</strong>
+                                                }
+                                                else if (@Model.StatusId != (int)AssembleWorkStatusEnum.Fault)
+                                                {
+                                                    <a id="makeComplete_@item.Id" style="cursor:pointer;" onClick="makeComplete(@item.AssembleWorkId, @item.Id,@Model.AssembleWorkCategoryId, @item.AssembleWorkStepId,@item.AssembleWorkStepItemId);" title="Make Complete"
+                                                       data-placement="top">
+                                                        <i class="fa fa-square text-info" aria-hidden="true"></i>
+                                                    </a>
+                                                    <strong id="completed_@item.Id" style="display: none;" class="text-success">Yes</strong>
+                                                }
+                                            </td>
+                                        </tr>
+                                        itemSl++;
+                                    }
                                 }
-                            }
                             </tbody>
                         </table>
                     </div>
                 </div>
-                
+
                 @if (Model.StatusId == (int)AssembleWorkStatusEnum.Confirm)
                 {
                     <div class="row mr-1" style="float:right">
@@ -251,6 +251,7 @@
                         $('#statusComplete_' + data.assembleWorkId).show();
                         $('#statusFault_' + data.assembleWorkId).show();
                     }
+                    location.reload();
                 }
             });
         }

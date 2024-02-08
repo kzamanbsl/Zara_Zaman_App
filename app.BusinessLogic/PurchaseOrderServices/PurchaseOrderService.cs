@@ -89,7 +89,7 @@ namespace app.Services.PurchaseOrderServices
                                                                                     UnitName = t1.Unit.Name,
                                                                                     CostPrice = t1.CostPrice,
                                                                                     SalePrice = t1.SalePrice,
-                                                                                    Discount = t1.Discount,
+                                                                                    //Discount = t1.Discount,
                                                                                     TotalAmount = ((decimal)t1.PurchaseQty * t1.CostPrice) - t1.Discount,
                                                                                     Remarks = t1.Remarks,
                                                                                 }).OrderByDescending(x => x.Id).AsEnumerable());
@@ -99,28 +99,7 @@ namespace app.Services.PurchaseOrderServices
         }
 
 
-        public async Task<PurchaseOrderDetailViewModel> SinglePurchaseOrderDetails(long id)
-        {
-            var v = await Task.Run(() => (from t1 in _dbContext.PurchaseOrderDetail.Where(x => x.IsActive && x.Id == id)
-
-                                          select new PurchaseOrderDetailViewModel
-                                          {
-                                              Id = t1.Id,
-                                              PurchaseOrderId = t1.PurchaseOrderId,
-                                              ProductId = t1.ProductId,
-                                              ProductName = t1.Product.Name,
-                                              PurchaseQty = t1.PurchaseQty,
-                                              Consumption = t1.Consumption,
-                                              UnitId = t1.UnitId,
-                                              UnitName = t1.Unit.Name,
-                                              CostPrice = t1.CostPrice,
-                                              SalePrice = t1.SalePrice,
-                                              Discount = t1.Discount,
-                                              TotalAmount = ((decimal)t1.PurchaseQty * t1.CostPrice) - t1.Discount,
-                                              Remarks = t1.Remarks,
-                                          }).FirstOrDefault());
-            return v;
-        }
+       
 
         
         public async Task<PurchaseOrderViewModel> GetAllRecord()
@@ -153,7 +132,8 @@ namespace app.Services.PurchaseOrderServices
             foreach (var master in purchaseMasterModel.PurchaseOrderList)
             {
                 var detailsForMaster = matchingDetails.Where(detail => detail.PurchaseOrderId == master.Id);
-                decimal? total = detailsForMaster.Sum(detail => (detail.CostPrice * (decimal)detail.PurchaseQty) - detail.Discount);
+                decimal? total = detailsForMaster.Sum(detail => (detail.CostPrice * (decimal)detail.PurchaseQty)
+                );
                 master.TotalAmount = (double)(total ?? 0);
             }
             return purchaseMasterModel;
@@ -171,7 +151,7 @@ namespace app.Services.PurchaseOrderServices
             return false;
         }
 
-        public async Task<bool> DeletePurchaseMaster(long id)
+        public async Task<bool> DeletePurchaseOrder(long id)
         {
             var result = await _iEntityRepository.GetByIdAsync(id);
             result.IsActive = false;
@@ -211,7 +191,7 @@ namespace app.Services.PurchaseOrderServices
                                                                                     UnitName = t1.Unit.Name,
                                                                                     CostPrice = t1.CostPrice,
                                                                                     SalePrice = t1.SalePrice,
-                                                                                    Discount = t1.Discount,
+                                                                                    //Discount = t1.Discount,
                                                                                     TotalAmount = ((decimal)t1.PurchaseQty * t1.CostPrice) - t1.Discount,
                                                                                     Remarks = t1.Remarks,
                                                                                 }).OrderByDescending(x => x.Id).AsEnumerable());

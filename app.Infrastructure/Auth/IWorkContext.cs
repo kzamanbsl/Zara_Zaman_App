@@ -5,5 +5,6 @@
         Task<ApplicationUser> GetCurrentAdminUserAsync();
         Task<ApplicationUser> GetCurrentUserAsync();
         Task<bool> IsUserSignedIn();
+        DateTime GetBDStandardTime();
     }
 }
