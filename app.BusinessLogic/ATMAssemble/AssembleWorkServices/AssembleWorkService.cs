@@ -158,18 +158,18 @@ namespace app.Services.ATMAssemble.AssembleWorkServices
 
         public async Task<bool> UpdateRecord(AssembleWorkViewModel viewModel)
         {
-
-            if (viewModel == null)
-            {
-                throw new Exception("Sorry! No record found.");
-            }
+            if (viewModel == null) { throw new Exception("Sorry! No record found."); }
 
             var result = await _iEntityRepository.GetByIdAsync(viewModel.Id);
-            //result.Name = viewModel.Name;
-            result.Description = viewModel.Description;
+
+            if (viewModel == null) { throw new Exception("Sorry! No record found."); }
+
+            result.AssembleDate = viewModel.AssembleDate;
             result.AssembleWorkCategoryId = viewModel.AssembleWorkCategoryId;
-            await _iEntityRepository.UpdateAsync(result);
-            return true;
+            result.Description = viewModel.Description;
+           
+            var res = await _iEntityRepository.UpdateAsync(result);
+            return res;
 
         }
 
