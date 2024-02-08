@@ -162,11 +162,14 @@
                 success: function (result) {
                     if (result) {
                         alert("Rejected successfully");
+          
                         window.location.href = "/PurchaseOrder/Index/";
 
                     } else {
                         alert("Reject failed");
                     }
+                    
+
                 },
                 error: function (error) {
                     // Handle the error case here
