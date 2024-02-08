@@ -5,6 +5,19 @@
     int sn = 1;
 }
 
+<style>
+    .chart-box-shadow {
+        padding: 10px 0;
+        -webkit-box-shadow: 0px 0px 2px -9px rgba(0,0,0,0.1),0px 10px 15px -3px rgba(0,0,0,0.1);
+        box-shadow: 0px 0px 2px -9px rgba(0,0,0,0.1),0px 10px 15px -3px rgba(0,0,0,0.1);
+        border: 1px solid rgba(253, 253, 254, 0.8);
+        border-radius: 2px;
+    }
+
+    .canvasjs-chart-credit {
+        display: none !important;
+    }
+</style>
 <div class="content-header">
     <div class="container-fluid ">
         <div class="breadcrumb d-flex justify-content-between align-items-center pl-3 pr-3">
@@ -28,8 +41,22 @@
                 </h5>
             </div>
             <div class="card-body">
+
                 <div class="row">
+                    <div class="col-4">
+                        <div class="chart-box-shadow my-3">
+                            <div id="pieChartContainer" style="height: 250px; width: 100%;"></div>
+                        </div>
+                    </div>
                     <div class="col-8">
+                        <div class="chart-box-shadow my-3">
+                            <div id="barChartContainer" style="height: 250px; width: 100%;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
                         <div class="table-responsive">
                             <table id="assembleWorkMainDashboardTable" class="table table-bordered">
                                 <thead>
@@ -76,7 +103,6 @@
                                             </tr>
                                             sn++;
                                         }
-
                                     }
                                     else
                                     {
@@ -88,11 +114,6 @@
                                     }
                                 </tbody>
                             </table>
-                        </div>
-                    </div>
-                    <div class="col-4">
-                        <div class="pie-chart mt-5">
-                            <div id="chartContainer" style="height: 300px; width: 100%;"></div>
                         </div>
                     </div>
                 </div>
@@ -111,31 +132,99 @@
     @if (Model.MainDashboardList != null && Model.MainDashboardList.Any())
     {
         <script type="application/javascript">
-            var dataPoints = [];
-
+            window.onload = function () {
+                var pieDataPoints = [];
             @foreach (var item in Model.MainDashboardList)
             {
-                @:dataPoints.push({ label: "@item.AssembleWorkCategoryName", y: @(item.Achievement > 0 ? item.Achievement : 1)});
+                @:pieDataPoints.push({ label: "@item.AssembleWorkCategoryName", y: @(item.Achievement > 0 ? item.Achievement : 1)});
             }
 
-                window.onload = function () {
-                    var options = {
-                        title: {
-                            text: "Real-Time Analysis"
-                        },
-                        data: [{
-                            type: "pie",
-                            startAngle: 45,
-                            showInLegend: true,
-                            legendText: "{label}",
-                            indexLabel: "{label} ({y})",
-                            yValueFormatString: "#,##0.#",
-                            dataPoints: dataPoints
-                        }]
-                    };
-
-                    $("#chartContainer").CanvasJSChart(options);
+                var pieOptions = {
+                    animationEnabled: true,
+                    title: {
+                        text: "Achievement Analysis"
+                    },
+                    data: [{
+                        type: "pie",
+                        startAngle: 45,
+                        showInLegend: true,
+                        legendText: "{label}",
+                        indexLabel: "{label} ({y}/100%)",
+                        yValueFormatString: "#,##0.#",
+                        dataPoints: pieDataPoints
+                    }]
                 };
+
+                $("#pieChartContainer").CanvasJSChart(pieOptions);
+
+                var barOptions = {
+                    animationEnabled: true,
+                    title: {
+                        text: "Day-wise Analysis"
+                    },
+                    axisY: {
+                        suffix: "%"
+                    },
+                    toolTip: {
+                        shared: true,
+                        reversed: true
+                    },
+                    legend: {
+                        reversed: true,
+                        verticalAlign: "center",
+                        horizontalAlign: "right"
+                    },
+                    data: [
+                        {
+                            type: "stackedColumn100",
+                            name: "Pending",
+                            showInLegend: true,
+                            yValueFormatString: "#,##0\"%\"",
+                            dataPoints: [
+                                { label: "8/2/2024", y: 20 },
+                                { label: "7/2/2024", y: 35 },
+                                { label: "6/2/2024", y: 10 },
+                                { label: "5/2/2024", y: 5 },
+                                { label: "4/2/2024", y: 10 },
+                                { label: "3/2/2024", y: 5 },
+                                { label: "2/2/2024", y: 20 },
+                            ]
+                        },
+                        {
+                            type: "stackedColumn100",
+                            name: "Fault",
+                            showInLegend: true,
+                            yValueFormatString: "#,##0\"%\"",
+                            dataPoints: [
+                                { label: "8/2/2024", y: 10 },
+                                { label: "7/2/2024", y: 5 },
+                                { label: "6/2/2024", y: 10 },
+                                { label: "5/2/2024", y: 5 },
+                                { label: "4/2/2024", y: 20 },
+                                { label: "3/2/2024", y: 15 },
+                                { label: "2/2/2024", y: 15 }
+                            ]
+                        },
+                        {
+                            type: "stackedColumn100",
+                            name: "Completed",
+                            showInLegend: true,
+                            yValueFormatString: "#,##0\"%\"",
+                            dataPoints: [
+                                { label: "8/2/2024", y: 70 },
+                                { label: "7/2/2024", y: 60 },
+                                { label: "6/2/2024", y: 55 },
+                                { label: "5/2/2024", y: 90 },
+                                { label: "4/2/2024", y: 70 },
+                                { label: "3/2/2024", y: 80 },
+                                { label: "2/2/2024", y: 65 }
+                            ]
+                        }
+                    ]
+                };
+
+                $("#barChartContainer").CanvasJSChart(barOptions);
+            };
         </script>
     }
 
@@ -161,16 +250,16 @@
         // PieChart integration (Static)
         // window.onload = function () {
 
-        //     var options = {
+        //     var pieOptions = {
         //         title: {
-        //             text: "Real-Time Analysis"
+        //             text: "Achievement Analysis"
         //         },
         //         data: [{
         //             type: "pie",
         //             startAngle: 45,
         //             showInLegend: "true",
         //             legendText: "{label}",
-        //             indexLabel: "{label} ({y})",
+        //             indexLabel: "{label} ({y}/100%)",
         //             yValueFormatString: "#,##0.#" % "",
         //             dataPoints: [
         //                 { label: "IPC", y: 20.2 },
@@ -182,8 +271,10 @@
         //             ]
         //         }]
         //     };
-        //     $("#chartContainer").CanvasJSChart(options);
+        //     $("#pieChartContainer").CanvasJSChart(pieOptions);
         // }
+
+
 
     </script>
 }
