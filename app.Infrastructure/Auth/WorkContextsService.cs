@@ -7,7 +7,7 @@ namespace app.Infrastructure.Auth
     public class WorkContextsService : IWorkContext
     {
         private const string UserGuidCookiesName = "TBDUser";
-
+       
         private ApplicationUser _currentUser;
         private readonly UserManager<ApplicationUser> _userManager;
         private SignInManager<ApplicationUser> _signInManager;
@@ -74,6 +74,13 @@ namespace app.Infrastructure.Auth
             }
 
             return false;
+        }
+
+        public DateTime GetBDStandardTime()
+        {
+            var bnTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Bangladesh Standard Time");
+            DateTime baTime = TimeZoneInfo.ConvertTime(DateTime.Now, TimeZoneInfo.Local, bnTimeZone);
+            return baTime;
         }
     }
 }

@@ -64,8 +64,9 @@ namespace app.Services.ATMAssemble.AssembleWorkServices
                 throw new Exception("Sorry, Assemble work item is not found!");
             }
 
-            var bnTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Bangladesh Standard Time");
-            DateTime baTime = TimeZoneInfo.ConvertTime(DateTime.Now, TimeZoneInfo.Local, bnTimeZone);
+            //var bnTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Bangladesh Standard Time");
+            //DateTime baTime = TimeZoneInfo.ConvertTime(DateTime.Now, TimeZoneInfo.Local, bnTimeZone);
+            DateTime baTime = _iWorkContext.GetBDStandardTime();
             var createdBy = _iWorkContext.GetCurrentUserAsync().Result.FullName;
 
             #region AssembleWorkEmployees
@@ -147,17 +148,14 @@ namespace app.Services.ATMAssemble.AssembleWorkServices
             _dbContext.AssembleWork.AddRange(assembleWorks);
             result = await _dbContext.SaveChangesAsync() > 0;
 
-            //foreach (var assembleWork in assembleWorks)
-            //{
-            //    var response = await _iEntityRepository.AddAsync(assembleWork);
-            //    if (response != null) { result = true; }
-            //}
-
             return result;
         }
 
         public async Task<bool> UpdateRecord(AssembleWorkViewModel viewModel)
         {
+            DateTime baTime = _iWorkContext.GetBDStandardTime();
+            var createdBy = _iWorkContext.GetCurrentUserAsync().Result.FullName;
+
             if (viewModel == null) { throw new Exception("Sorry! No record found."); }
 
             var result = await _iEntityRepository.GetByIdAsync(viewModel.Id);
@@ -167,8 +165,79 @@ namespace app.Services.ATMAssemble.AssembleWorkServices
             result.AssembleDate = viewModel.AssembleDate;
             result.AssembleWorkCategoryId = viewModel.AssembleWorkCategoryId;
             result.Description = viewModel.Description;
-           
-            var res = await _iEntityRepository.UpdateAsync(result);
+            result.UpdatedBy = createdBy;
+            result.UpdatedOn = baTime;
+
+            #region Assemble Work Employee Mappde
+            var mapEmps = _dbContext.AssembleWorkEmployee.Where(c => c.AssembleWorkId == result.Id);
+            var mapEmpIds = mapEmps.Select(c => c.EmployeeId).ToList();
+
+            var oldMappedEmps = mapEmps.Where(c => viewModel.EmployeeIds.Contains(c.EmployeeId)).ToList();
+            var upMappedEmps = mapEmps.Where(c => !viewModel.EmployeeIds.Contains(c.EmployeeId)).ToList();
+            var newEmpIds = viewModel.EmployeeIds.Where(c => !mapEmpIds.Contains(c)).ToList();
+
+            List<AssembleWorkEmployee> addableDetails = new List<AssembleWorkEmployee>();
+            List<AssembleWorkEmployee> updateableDetails = new List<AssembleWorkEmployee>();
+
+
+            if (newEmpIds.Count > 0)
+            {
+                foreach (var id in newEmpIds)
+                {
+                    var obj = new AssembleWorkEmployee()
+                    {
+                        Id = 0,
+                        EmployeeId = id,
+                        AssembleWorkId = result.Id,
+                        CreatedBy = createdBy,
+                        CreatedOn = baTime,
+                        IsActive = true,
+                    };
+                    addableDetails.Add(obj);
+                }
+            }
+
+            if (oldMappedEmps.Count > 0)
+            {
+                foreach (var item in oldMappedEmps)
+                {
+                    item.IsActive = true;
+                    item.UpdatedBy = createdBy;
+                    item.UpdatedOn = baTime;
+                    updateableDetails.Add(item);
+                }
+            }
+
+            if (upMappedEmps.Count > 0)
+            {
+                foreach (var item in upMappedEmps)
+                {
+                    item.IsActive = false;
+                    item.UpdatedBy = createdBy;
+                    item.UpdatedOn = baTime;
+                    updateableDetails.Add(item);
+                }
+            }
+
+            #endregion
+
+            bool res = false;
+            using (var transaction = _dbContext.Database.BeginTransaction())
+            {
+                if (addableDetails.Count > 0)
+                {
+                    _dbContext.AssembleWorkEmployee.AddRange(addableDetails);
+                    await _dbContext.SaveChangesAsync();
+                }
+                if (updateableDetails.Count > 0)
+                {
+                    _dbContext.AssembleWorkEmployee.UpdateRange(updateableDetails);
+                    await _dbContext.SaveChangesAsync();
+                }
+                res = await _iEntityRepository.UpdateAsync(result);
+                transaction.Commit();
+            }
+
             return res;
 
         }
@@ -386,8 +455,9 @@ namespace app.Services.ATMAssemble.AssembleWorkServices
 
         public async Task<object> MakeStatusComplete(long assembleWorkId)
         {
-            var bnTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Bangladesh Standard Time");
-            DateTime baTime = TimeZoneInfo.ConvertTime(DateTime.Now, TimeZoneInfo.Local, bnTimeZone);
+            //var bnTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Bangladesh Standard Time");
+            //DateTime baTime = TimeZoneInfo.ConvertTime(DateTime.Now, TimeZoneInfo.Local, bnTimeZone);
+            DateTime baTime = _iWorkContext.GetBDStandardTime();
             var updatedBy = _iWorkContext.GetCurrentUserAsync().Result.FullName;
             var unSuccessResult = new { IsSuccess = false, AssembleWorkId = assembleWorkId };
 
