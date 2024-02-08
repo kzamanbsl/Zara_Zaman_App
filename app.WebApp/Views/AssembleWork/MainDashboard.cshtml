@@ -127,16 +127,35 @@
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-
-    @* PieChart integration (Dynamic) *@
+    <script type="text/javascript" src="https://cdn.canvasjs.com/jquery.canvasjs.min.js"></script>
     @if (Model.MainDashboardList != null && Model.MainDashboardList.Any())
     {
         <script type="application/javascript">
             window.onload = function () {
                 var pieDataPoints = [];
+                var completedDataPoints = [];
+                var faultDataPoints = [];
+                var pendingDataPoints = [];
             @foreach (var item in Model.MainDashboardList)
             {
-                @:pieDataPoints.push({ label: "@item.AssembleWorkCategoryName", y: @(item.Achievement > 0 ? item.Achievement : 1)});
+                decimal targetedWork = item.TodayTarget;
+                decimal completedWork = item.WorkCompleted;
+                decimal faultWork = item.FaultQty;
+                decimal pendingWork = targetedWork - completedWork;
+
+                decimal completedPercentage = targetedWork > 0 ? (100 * completedWork) / targetedWork : 0;
+                decimal faultWorkPercentage = targetedWork > 0 ? (100 * faultWork) / targetedWork : 0;
+                decimal pendingWorkPercentage = targetedWork > 0 ? (100 * pendingWork) / targetedWork : 0;
+
+                decimal minPercentage = 0.1M;
+                completedPercentage = completedPercentage > 0 ? completedPercentage : minPercentage;
+                faultWorkPercentage = faultWorkPercentage > 0 ? faultWorkPercentage : minPercentage;
+                pendingWorkPercentage = pendingWorkPercentage > 0 ? pendingWorkPercentage : minPercentage;
+
+                @:pieDataPoints.push({ label: "@item.AssembleWorkCategoryName", y: @(item.Achievement > 0 ? item.Achievement : minPercentage)});
+                @:completedDataPoints.push({ label: "@item.AssembleWorkCategoryName", y: @(completedPercentage)});
+                @:faultDataPoints.push({ label: "@item.AssembleWorkCategoryName", y: @(faultWorkPercentage)});
+                @:pendingDataPoints.push({ label: "@item.AssembleWorkCategoryName", y: @(pendingWorkPercentage)});
             }
 
                 var pieOptions = {
@@ -154,8 +173,6 @@
                         dataPoints: pieDataPoints
                     }]
                 };
-
-                $("#pieChartContainer").CanvasJSChart(pieOptions);
 
                 var barOptions = {
                     animationEnabled: true,
@@ -180,49 +197,26 @@
                             name: "Pending",
                             showInLegend: true,
                             yValueFormatString: "#,##0\"%\"",
-                            dataPoints: [
-                                { label: "8/2/2024", y: 20 },
-                                { label: "7/2/2024", y: 35 },
-                                { label: "6/2/2024", y: 10 },
-                                { label: "5/2/2024", y: 5 },
-                                { label: "4/2/2024", y: 10 },
-                                { label: "3/2/2024", y: 5 },
-                                { label: "2/2/2024", y: 20 },
-                            ]
+                            dataPoints: pendingDataPoints
                         },
                         {
                             type: "stackedColumn100",
                             name: "Fault",
                             showInLegend: true,
                             yValueFormatString: "#,##0\"%\"",
-                            dataPoints: [
-                                { label: "8/2/2024", y: 10 },
-                                { label: "7/2/2024", y: 5 },
-                                { label: "6/2/2024", y: 10 },
-                                { label: "5/2/2024", y: 5 },
-                                { label: "4/2/2024", y: 20 },
-                                { label: "3/2/2024", y: 15 },
-                                { label: "2/2/2024", y: 15 }
-                            ]
+                            dataPoints: faultDataPoints
                         },
                         {
                             type: "stackedColumn100",
                             name: "Completed",
                             showInLegend: true,
                             yValueFormatString: "#,##0\"%\"",
-                            dataPoints: [
-                                { label: "8/2/2024", y: 70 },
-                                { label: "7/2/2024", y: 60 },
-                                { label: "6/2/2024", y: 55 },
-                                { label: "5/2/2024", y: 90 },
-                                { label: "4/2/2024", y: 70 },
-                                { label: "3/2/2024", y: 80 },
-                                { label: "2/2/2024", y: 65 }
-                            ]
+                            dataPoints: completedDataPoints
                         }
                     ]
                 };
 
+                $("#pieChartContainer").CanvasJSChart(pieOptions);
                 $("#barChartContainer").CanvasJSChart(barOptions);
             };
         </script>
@@ -246,35 +240,5 @@
         window.setTimeout(function () {
             window.location.reload();
         }, 30000);
-
-        // PieChart integration (Static)
-        // window.onload = function () {
-
-        //     var pieOptions = {
-        //         title: {
-        //             text: "Achievement Analysis"
-        //         },
-        //         data: [{
-        //             type: "pie",
-        //             startAngle: 45,
-        //             showInLegend: "true",
-        //             legendText: "{label}",
-        //             indexLabel: "{label} ({y}/100%)",
-        //             yValueFormatString: "#,##0.#" % "",
-        //             dataPoints: [
-        //                 { label: "IPC", y: 20.2 },
-        //                 { label: "Receipt Printer", y: 32.2 },
-        //                 { label: "Card Reader", y: 81.2 },
-        //                 { label: "Monitor", y: 3 },
-        //                 { label: "Note Feeder (NF)", y: 47.3 },
-        //                 { label: "Transport", y: 14.9 }
-        //             ]
-        //         }]
-        //     };
-        //     $("#pieChartContainer").CanvasJSChart(pieOptions);
-        // }
-
-
-
     </script>
 }
