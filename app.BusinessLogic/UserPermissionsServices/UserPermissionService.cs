@@ -20,8 +20,10 @@ namespace app.Services.UserPermissionsServices
             _iWorkContext = iWorkContext;
         }
 
-        public async Task<bool> AddRecord(long id, string userId)
+        public async Task<object> AddRecord(long id, string userId)
         {
+            var successResult = new { IsSuccess = true, Id = id, UserId = userId };
+
             UserPermissions userPermission = new UserPermissions();
             var result = await _dbContext.UserPermissions.FirstOrDefaultAsync(d => d.MenuItemId == id && d.UserId == userId);
             if (result == null)
@@ -29,20 +31,24 @@ namespace app.Services.UserPermissionsServices
                 userPermission.UserId = userId;
                 userPermission.MenuItemId = id;
                 var res = await _iEntityRepository.AddAsync(userPermission);
+
+                if (res != null)
+                {
+                    return successResult;
+                }
             }
             else
             {
-                if (result.IsActive == true)
-                {
-                    result.IsActive = false;
-                }
-                else
-                {
-                    result.IsActive = true;
-                }
+                result.IsActive = result.IsActive != true;
                 var res = await _iEntityRepository.UpdateAsync(result);
+                if (res == true)
+                {
+                   
+                    return successResult;
+                }
             }
-            return true;
+            var failedResult = new { IsSuccess = false, Id = id, UserId = userId };
+            return failedResult;
         }
 
         public async Task<MenuPermissionViewModel> GetAllMenuItemRecordByUserId(string userId)
@@ -88,20 +94,20 @@ namespace app.Services.UserPermissionsServices
         {
             UserPermissionViewModel viewModel = new UserPermissionViewModel();
             List<UserPermissionViewModel> models = new List<UserPermissionViewModel>();
-            var result = await _dbContext.MainMenu.Where(s => s.IsActive == true).AsNoTracking().ToListAsync();
-            foreach (var item in result)
+            var mainMenu = await _dbContext.MainMenu.Where(s => s.IsActive == true).AsNoTracking().ToListAsync();
+            foreach (var item in mainMenu)
             {
                 UserPermissionViewModel model = new UserPermissionViewModel();
                 model.MenuName = item.Name;
                 models.Add(model);
-                var itemList = _dbContext.MenuItem.Where(d => d.MenuId == item.Id && d.IsActive == true).AsNoTracking().ToList();
+                var menuItems = _dbContext.MenuItem.Where(d => d.MenuId == item.Id && d.IsActive == true).AsNoTracking().ToList();
                 List<MenuItemViewModel> menuItemList = new List<MenuItemViewModel>();
-                foreach (var menu in itemList)
+                foreach (var menuItem in menuItems)
                 {
-                    var res = await _dbContext.UserPermissions.FirstOrDefaultAsync(d => d.MenuItemId == menu.Id && d.UserId == userId);
+                    var res = await _dbContext.UserPermissions.FirstOrDefaultAsync(d => d.MenuItemId == menuItem.Id && d.UserId == userId);
                     MenuItemViewModel vm = new MenuItemViewModel();
-                    vm.Id = menu.Id;
-                    vm.Name = menu.Name;
+                    vm.Id = menuItem.Id;
+                    vm.Name = menuItem.Name;
                     if (res != null && res.IsActive == true)
                     { vm.IsPermission = true;}
 

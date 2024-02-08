@@ -48,7 +48,11 @@
                                 <tr>
                                     <td class="text-center">@sn</td>
                                     <td class="text-left">
-                                        @Html.DisplayFor(modelItem => item.AssembleDate)
+                                        @{
+                                            var assDate = item.AssembleDate;
+                                           <span>@assDate.ToString("dd-MM-yyyy")</span>
+                                        }
+                                       
                                     </td>
                                     <td class="text-left">
                                         @Html.DisplayFor(modelItem => item.AssembleWorkCategoryName)

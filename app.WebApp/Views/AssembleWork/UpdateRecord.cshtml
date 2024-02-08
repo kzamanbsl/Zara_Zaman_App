@@ -34,7 +34,7 @@
                         <div class="col-4">
                             <div class="form-group">
                                 <label class="form-label">Assemble Date</label>
-                                <input asp-for="AssembleDate" type="date" value="@DateTime.Now.ToString("dddd-MM-yyyy")" class="form-control" required />
+                                <input asp-for="AssembleDate" type="date" value="@DateTime.Now.ToString("dd/MM/yyyy")" class="form-control" required />
                                 <span asp-validation-for="AssembleDate" class="text-danger"></span>
                             </div>
                         </div>

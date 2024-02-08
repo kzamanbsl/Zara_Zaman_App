@@ -107,6 +107,54 @@
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
 
+    <script>
+        $(document).ready(function () {
+            "use strict"
+
+            $('#ATM-Assemble').addClass('menu-open');
+            $('#AssembleWorkMainDashboard').addClass('active');
+
+            // $('#assembleWorkTable').DataTable({
+            //     "paging": true,
+            //     "ordering": true,
+            //     "info": true,
+            //     order: [[0, 'asc']],
+            // });
+        });
+
+                // window.setTimeout(function () {
+                //     window.location.reload();
+                // }, 30000);
+
+                        // PieChart integration (Static)
+                        // window.onload = function () {
+
+                        //     var options = {
+                        //         title: {
+                        //             text: "Real-Time Analysis"
+                        //         },
+                        //         data: [{
+                        //             type: "pie",
+                        //             startAngle: 45,
+                        //             showInLegend: "true",
+                        //             legendText: "{label}",
+                        //             indexLabel: "{label} ({y})",
+                        //             yValueFormatString: "#,##0.#" % "",
+                        //             dataPoints: [
+                        //                 { label: "IPC", y: 20.2 },
+                        //                 { label: "Receipt Printer", y: 32.2 },
+                        //                 { label: "Card Reader", y: 81.2 },
+                        //                 { label: "Monitor", y: 3 },
+                        //                 { label: "Note Feeder (NF)", y: 47.3 },
+                        //                 { label: "Transport", y: 14.9 }
+                        //             ]
+                        //         }]
+                        //     };
+                        //     $("#chartContainer").CanvasJSChart(options);
+                        // }
+
+    </script>
+
     @* PieChart integration (Dynamic) *@
     @if (Model.MainDashboardList != null && Model.MainDashboardList.Any())
     {
@@ -139,51 +187,4 @@
         </script>
     }
 
-    <script>
-        $(document).ready(function () {
-            "use strict"
-
-            $('#ATM-Assemble').addClass('menu-open');
-            $('#AssembleWorkMainDashboard').addClass('active');
-
-            // $('#assembleWorkTable').DataTable({
-            //     "paging": true,
-            //     "ordering": true,
-            //     "info": true,
-            //     order: [[0, 'asc']],
-            // });
-        });
-
-        window.setTimeout(function () {
-            window.location.reload();
-        }, 30000);
-
-        // PieChart integration (Static)
-        // window.onload = function () {
-
-        //     var options = {
-        //         title: {
-        //             text: "Real-Time Analysis"
-        //         },
-        //         data: [{
-        //             type: "pie",
-        //             startAngle: 45,
-        //             showInLegend: "true",
-        //             legendText: "{label}",
-        //             indexLabel: "{label} ({y})",
-        //             yValueFormatString: "#,##0.#" % "",
-        //             dataPoints: [
-        //                 { label: "IPC", y: 20.2 },
-        //                 { label: "Receipt Printer", y: 32.2 },
-        //                 { label: "Card Reader", y: 81.2 },
-        //                 { label: "Monitor", y: 3 },
-        //                 { label: "Note Feeder (NF)", y: 47.3 },
-        //                 { label: "Transport", y: 14.9 }
-        //             ]
-        //         }]
-        //     };
-        //     $("#chartContainer").CanvasJSChart(options);
-        // }
-
-    </script>
 }
