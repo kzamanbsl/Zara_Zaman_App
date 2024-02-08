@@ -128,6 +128,28 @@
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
     <script type="text/javascript" src="https://cdn.canvasjs.com/jquery.canvasjs.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            "use strict"
+
+            $('#ATM-Assemble').addClass('menu-open');
+            $('#AssembleWorkMainDashboard').addClass('active');
+
+            // $('#assembleWorkTable').DataTable({
+            //     "paging": true,
+            //     "ordering": true,
+            //     "info": true,
+            //     order: [[0, 'asc']],
+            // });
+        });
+
+                // window.setTimeout(function () {
+                //     window.location.reload();
+                // }, 30000);
+
+    </script>
+
     @if (Model.MainDashboardList != null && Model.MainDashboardList.Any())
     {
         <script type="application/javascript">
@@ -161,7 +183,7 @@
                 var pieOptions = {
                     animationEnabled: true,
                     title: {
-                        text: "Achievement Analysis"
+                        text: "Daily Achievement"
                     },
                     data: [{
                         type: "pie",
@@ -177,7 +199,7 @@
                 var barOptions = {
                     animationEnabled: true,
                     title: {
-                        text: "Day-wise Analysis"
+                        text: "Daily Work Analysis"
                     },
                     axisY: {
                         suffix: "%"
@@ -222,23 +244,5 @@
         </script>
     }
 
-    <script>
-        $(document).ready(function () {
-            "use strict"
 
-            $('#ATM-Assemble').addClass('menu-open');
-            $('#AssembleWorkMainDashboard').addClass('active');
-
-            // $('#assembleWorkTable').DataTable({
-            //     "paging": true,
-            //     "ordering": true,
-            //     "info": true,
-            //     order: [[0, 'asc']],
-            // });
-        });
-
-        window.setTimeout(function () {
-            window.location.reload();
-        }, 30000);
-    </script>
 }
