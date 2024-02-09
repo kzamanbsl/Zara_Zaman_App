@@ -45,12 +45,12 @@
                 <div class="row">
                     <div class="col-4">
                         <div class="chart-box-shadow my-3">
-                            <div id="pieChartContainer" style="height: 250px; width: 100%;"></div>
+                            <div id="pieChartContainer" style="height: 320px; width: 100%;"></div>
                         </div>
                     </div>
                     <div class="col-8">
                         <div class="chart-box-shadow my-3">
-                            <div id="barChartContainer" style="height: 250px; width: 100%;"></div>
+                            <div id="barChartContainer" style="height: 320px; width: 100%;"></div>
                         </div>
                     </div>
                 </div>
@@ -144,103 +144,110 @@
             // });
         });
 
-                // window.setTimeout(function () {
-                //     window.location.reload();
-                // }, 30000);
+        // window.setTimeout(function () {
+        //     window.location.reload();
+        // }, 30000);
 
     </script>
 
     @if (Model.MainDashboardList != null && Model.MainDashboardList.Any())
     {
         <script type="application/javascript">
-            window.onload = function () {
-                var pieDataPoints = [];
-                var completedDataPoints = [];
-                var faultDataPoints = [];
-                var pendingDataPoints = [];
+                                window.onload = function () {
+                                    var pieDataPoints = [];
+                                    var completedDataPoints = [];
+                                    var faultDataPoints = [];
+                                    var pendingDataPoints = [];
             @foreach (var item in Model.MainDashboardList)
             {
                 decimal targetedWork = item.TodayTarget;
-                decimal completedWork = item.WorkCompleted;
+                @*  decimal completedWork = item.WorkCompleted;
                 decimal faultWork = item.FaultQty;
-                decimal pendingWork = targetedWork - completedWork;
+                decimal pendingWork = targetedWork - completedWork; *@
 
-                decimal completedPercentage = targetedWork > 0 ? (100 * completedWork) / targetedWork : 0;
+                @* decimal completedPercentage = targetedWork > 0 ? (100 * completedWork) / targetedWork : 0;
                 decimal faultWorkPercentage = targetedWork > 0 ? (100 * faultWork) / targetedWork : 0;
-                decimal pendingWorkPercentage = targetedWork > 0 ? (100 * pendingWork) / targetedWork : 0;
+                decimal pendingWorkPercentage = targetedWork > 0 ? (100 * pendingWork) / targetedWork : 0; *@
 
                 decimal minPercentage = 0.1M;
-                completedPercentage = completedPercentage > 0 ? completedPercentage : minPercentage;
+                @* completedPercentage = completedPercentage > 0 ? completedPercentage : minPercentage;
                 faultWorkPercentage = faultWorkPercentage > 0 ? faultWorkPercentage : minPercentage;
-                pendingWorkPercentage = pendingWorkPercentage > 0 ? pendingWorkPercentage : minPercentage;
+                pendingWorkPercentage = pendingWorkPercentage > 0 ? pendingWorkPercentage : minPercentage; *@
 
                 @:pieDataPoints.push({ label: "@item.AssembleWorkCategoryName", y: @(item.Achievement > 0 ? item.Achievement : minPercentage)});
-                @:completedDataPoints.push({ label: "@item.AssembleWorkCategoryName", y: @(completedPercentage)});
-                @:faultDataPoints.push({ label: "@item.AssembleWorkCategoryName", y: @(faultWorkPercentage)});
-                @:pendingDataPoints.push({ label: "@item.AssembleWorkCategoryName", y: @(pendingWorkPercentage)});
+                @* @:completedDataPoints.push({ label: "@item.AssembleWorkCategoryName", y: @(completedPercentage)});
+    @:faultDataPoints.push({ label: "@item.AssembleWorkCategoryName", y: @(faultWorkPercentage)});
+    @:pendingDataPoints.push({ label: "@item.AssembleWorkCategoryName", y: @(pendingWorkPercentage)}); *@
+
+                @:completedDataPoints.push({ label: "@item.AssembleWorkCategoryName", y: @(item.WorkCompleted > 0 ? item.WorkCompleted : 0)});
+                @:faultDataPoints.push({ label: "@item.AssembleWorkCategoryName", y: @(item.FaultQty > 0 ? item.FaultQty : 0)});
+                @:pendingDataPoints.push({ label: "@item.AssembleWorkCategoryName", y: @((item.TodayTarget - (item.WorkCompleted + item.FaultQty)) > 0 ? (item.TodayTarget - (item.WorkCompleted + item.FaultQty)) : 0)});
             }
 
-                var pieOptions = {
-                    animationEnabled: true,
-                    title: {
-                        text: "Daily Achievement"
-                    },
-                    data: [{
-                        type: "pie",
-                        startAngle: 45,
-                        showInLegend: true,
-                        legendText: "{label}",
-                        indexLabel: "{label} ({y}/100%)",
-                        yValueFormatString: "#,##0.#",
-                        dataPoints: pieDataPoints
-                    }]
-                };
+                                    var pieOptions = {
+                                        animationEnabled: true,
+                                        title: {
+                                            text: "Daily Achievement"
+                                        },
+                                        data: [{
+                                            type: "pie",
+                                            startAngle: 45,
+                                            showInLegend: true,
+                                            legendText: "{label}",
+                                            indexLabel: "{label} ({y}/100%)",
+                                            yValueFormatString: "#,##0.#",
+                                            dataPoints: pieDataPoints
+                                        }]
+                                    };
 
-                var barOptions = {
-                    animationEnabled: true,
-                    title: {
-                        text: "Daily Work Analysis"
-                    },
-                    axisY: {
-                        suffix: "%"
-                    },
-                    toolTip: {
-                        shared: true,
-                        reversed: true
-                    },
-                    legend: {
-                        reversed: true,
-                        verticalAlign: "center",
-                        horizontalAlign: "right"
-                    },
-                    data: [
-                        {
-                            type: "stackedColumn100",
-                            name: "Pending",
-                            showInLegend: true,
-                            yValueFormatString: "#,##0\"%\"",
-                            dataPoints: pendingDataPoints
-                        },
-                        {
-                            type: "stackedColumn100",
-                            name: "Fault",
-                            showInLegend: true,
-                            yValueFormatString: "#,##0\"%\"",
-                            dataPoints: faultDataPoints
-                        },
-                        {
-                            type: "stackedColumn100",
-                            name: "Completed",
-                            showInLegend: true,
-                            yValueFormatString: "#,##0\"%\"",
-                            dataPoints: completedDataPoints
-                        }
-                    ]
-                };
+                                    var barOptions = {
+                                        animationEnabled: true,
+                                        title: {
+                                            text: "Daily Work Analysis"
+                                        },
+                                        axisY: {
+            @* suffix: "%" *@
+                                        },
+                                        toolTip: {
+                                            shared: true,
+                                            reversed: true
+                                        },
+                                        legend: {
+                                            reversed: true,
+                                            verticalAlign: "center",
+                                            horizontalAlign: "right"
+                                        },
+                                        data: [
+                                          {
+                                                type: "stackedColumn",
+                                                name: "Completed",
+                                                showInLegend: true,
+            @* yValueFormatString: "#,##0\"%\"", *@
+                                                yValueFormatString: "#,##0\"\"",
+                                                dataPoints: completedDataPoints
+                                            },
+                                             {
+                                                type: "stackedColumn",
+                                                name: "Fault",
+                                                showInLegend: true,
+            @* yValueFormatString: "#,##0\"%\"", *@
+                                                yValueFormatString: "#,##0\"\"",
+                                                dataPoints: faultDataPoints
+                                            },
+                                            {
+                                                type: "stackedColumn",
+                                                name: "Pending",
+                                                showInLegend: true,
+            @* yValueFormatString: "#,##0\"%\"", *@
+                                                yValueFormatString: "#,##0\"\"",
+                                                dataPoints: pendingDataPoints
+                                            }
+                                        ]
+                                    };
 
-                $("#pieChartContainer").CanvasJSChart(pieOptions);
-                $("#barChartContainer").CanvasJSChart(barOptions);
-            };
+                                    $("#pieChartContainer").CanvasJSChart(pieOptions);
+                                    $("#barChartContainer").CanvasJSChart(barOptions);
+                                };
         </script>
     }
 
