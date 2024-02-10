@@ -110,13 +110,14 @@ namespace app.Services.ATMAssemble.AssembleWorkServices
                     AssembleDate = viewModel.AssembleDate,
                     Description = viewModel.Description,
                     StatusId = (int)AssembleWorkStatusEnum.Confirm,
-                    //  WorkDetails = assembleWorkDetails,
-                    // WorkEmployees = assembleWorkEmployees,
+                    WorkDetails = new List<AssembleWorkDetail>(),
+                    WorkEmployees = new List<AssembleWorkEmployee>(),
                     CreatedOn = baTime,
                     CreatedBy = createdBy,
                     IsActive = true,
 
                 };
+
                 foreach (var item in assembleWorkDetails)
                 {
                     obj.WorkDetails.Add(new AssembleWorkDetail
@@ -138,6 +139,7 @@ namespace app.Services.ATMAssemble.AssembleWorkServices
                         IsActive = true,
                     });
                 }
+
                 assembleWorks.Add(obj);
             }
 
@@ -325,8 +327,8 @@ namespace app.Services.ATMAssemble.AssembleWorkServices
                                                                  from j2 in t2_Join.DefaultIfEmpty()
                                                                  select new EmployeeViewModel()
                                                                  {
-                                                                     Id = j2.EmployeeId,
-                                                                     Name = j2.Employee.Name
+                                                                     Id = j2 != null ? j2.EmployeeId : 0,
+                                                                     Name = j2 != null ? j2.Employee.Name : "",
                                                                  }).ToList(),
 
                                                                 TodayTarget = _dbContext.AssembleWork.Count(c => c.AssembleWorkCategoryId == t1.Id && c.AssembleDate.Date == DateTime.Now.Date && c.IsActive == true),
