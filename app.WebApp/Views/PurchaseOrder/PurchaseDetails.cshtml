@@ -74,9 +74,9 @@
                             {
                                 <input asp-for="Id" class="form-control" hidden />
                                 <div class="row">
-                                <div class="col-md-5"></div>
-                                <div class="col-md-2"> <p style="margin-top:20px;" class="card-title text-info text-center"><span>Purchase Details</span></p></div>
-                                <div class="col-md-5"></div>
+                                    <div class="col-md-5"></div>
+                                    <div class="col-md-2"> <p style="margin-top:20px;" class="card-title text-info text-center"><span>Purchase Details</span></p></div>
+                                    <div class="col-md-5"></div>
                                 </div>
                                 <div class="table-responsive col-md-12 text-nowrap table-bordered">
                                     <table id="KgErpDataTable" class="table caption-top">
@@ -149,7 +149,7 @@
             $('#Purchases').addClass('menu-open');
             $('#PurchaseOrderAddPurchaseOrderAndDetail').addClass('active');
         });
-        
+
         // Reject Purchase Order
         $("#orderReject").on("click", function () {
             var id = @Model.Id;
@@ -159,26 +159,19 @@
                 data: { id: id },
                 success: function (result) {
                     if (result) {
-<<<<<<< HEAD
-                        alert("Rejected successfully");
-          
-=======
-                        showAlert("Order Rejected");
->>>>>>> 4b23ea07786499074bf0083d08679f763d5aabb0
+                        alert("Reject successfully");
                         window.location.href = "/PurchaseOrder/Index/";
 
                     } else {
-                        showAlert("Reject failed");
+                        alert("Reject failed");
                     }
-                    
-
                 },
-                error: function (error) {
-                    // Handle the error case here
-                    console.error("Error occurred during AJAX request:", error);
-                }
-            });
-        });
+            error: function (error) {
+                // Handle the error case here
+                console.error("Error occurred during AJAX request:", error);
+            }
+                    });
+                });
 
         // Purchase Order Received
         $("#orderReceived").on("click", function () {

@@ -106,9 +106,9 @@ namespace app.Services.PurchaseOrderServices
         {
             PurchaseOrderViewModel purchaseMasterModel = new PurchaseOrderViewModel();
             var dataQuery = await Task.Run(() => (from t1 in _dbContext.PurchaseOrder
-                                                  where t1.IsActive
-                                                  let orderStatus = (PurchaseOrderStatusEnum)t1.OrderStatusId
-                                                  select new PurchaseOrderViewModel
+                                                  where t1.IsActive == true && t1.PurchaseTypeId == (int)PurchaseTypeEnum.Purchase
+
+            select new PurchaseOrderViewModel
                                                   {
                                                       Id = t1.Id,
                                                       OrderNo = t1.OrderNo,
