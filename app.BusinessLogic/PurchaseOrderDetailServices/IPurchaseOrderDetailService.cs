@@ -13,5 +13,6 @@ namespace app.Services.PurchaseOrderDetailServices
         Task<bool> UpdatePurchaseDetail(PurchaseOrderViewModel vm);
         Task<bool> DeletePurchaseDetail(long id);
         Task<PurchaseOrderDetailViewModel> SinglePurchaseOrderDetails(long id);
+        
     }
 }
