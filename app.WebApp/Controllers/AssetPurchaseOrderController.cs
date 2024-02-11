@@ -1,11 +1,7 @@
-﻿using app.EntityModel.AppModels;
-using app.Services.AssetPurchaseOrderServices;
+﻿using app.Services.AssetPurchaseOrderServices;
 using app.Services.DropdownServices;
 using app.Services.InventoryServices;
-using app.Services.PurchaseOrderDetailServices;
 using app.Services.AssetPurchaseOrderDetailServices;
-using app.Services.AssetPurchaseOrderServices;
-using app.Services.PurchaseOrderServices;
 using app.Utility;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -14,15 +10,15 @@ namespace app.WebApp.Controllers
 {
     public class AssetPurchaseOrderController : Controller
     {
-        private readonly IAssetPurchaseOrderService _ipurchaseOrderService;
-        private readonly IAssetPurchaseOrderDetailService _ipurchaseOrderDetailService;
+        private readonly IAssetPurchaseOrderService _iPurchaseOrderService;
+        private readonly IAssetPurchaseOrderDetailService _iPurchaseOrderDetailService;
         private readonly IInventoryService _inventoryService;
         private readonly IDropdownService _iDropdownService;
 
-        public AssetPurchaseOrderController(IAssetPurchaseOrderService ipurchaseOrderService, IAssetPurchaseOrderDetailService ipurchaseOrderDetailService, IDropdownService iDropdownService, IInventoryService inventoryService)
+        public AssetPurchaseOrderController(IAssetPurchaseOrderService iPurchaseOrderService, IAssetPurchaseOrderDetailService iPurchaseOrderDetailService, IDropdownService iDropdownService, IInventoryService inventoryService)
         {
-            _ipurchaseOrderService = ipurchaseOrderService;
-            _ipurchaseOrderDetailService = ipurchaseOrderDetailService;
+            _iPurchaseOrderService = iPurchaseOrderService;
+            _iPurchaseOrderDetailService = iPurchaseOrderDetailService;
             _iDropdownService = iDropdownService;
             _inventoryService = inventoryService;
         }
@@ -33,7 +29,7 @@ namespace app.WebApp.Controllers
             {
                 ViewBag.StorehouseList = new SelectList((await _iDropdownService.StorehouseSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
                 ViewBag.SupplierList = new SelectList((await _iDropdownService.SupplierSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
-                AssetPurchaseOrderViewModel viewModel = await _ipurchaseOrderService.GetAllRecord();
+                AssetPurchaseOrderViewModel viewModel = await _iPurchaseOrderService.GetAllRecord();
                 return View(viewModel);
             }
             catch (Exception ex)
@@ -54,7 +50,7 @@ namespace app.WebApp.Controllers
             }
             else
             {
-                viewModel = await _ipurchaseOrderService.GetPurchaseOrder(purchaseOrderId);
+                viewModel = await _iPurchaseOrderService.GetPurchaseOrder(purchaseOrderId);
             }
             ViewBag.SupplierList = new SelectList((await _iDropdownService.SupplierSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
             ViewBag.StorehouseList = new SelectList((await _iDropdownService.StorehouseSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
@@ -72,21 +68,21 @@ namespace app.WebApp.Controllers
             {
                 if (vm.Id == 0)
                 {
-                    await _ipurchaseOrderService.AddRecord(vm); //Adding Purchase Master
+                    await _iPurchaseOrderService.AddRecord(vm); //Adding Purchase Master
                 }
-                await _ipurchaseOrderDetailService.AddRecord(vm); //Adding Purchase Details
+                //await _iPurchaseOrderDetailService.AddRecord(vm); //Adding Purchase Details
             }
             //This is for Purchase Details single Edit
             else if (vm.ActionEum == ActionEnum.Edit)
             {
-                await _ipurchaseOrderDetailService.UpdatePurchaseDetail(vm);
+                //await _iPurchaseOrderDetailService.UpdatePurchaseDetail(vm);
             }
             return RedirectToAction(nameof(AddPurchaseOrderAndDetail), new { purchaseOrderId = vm.Id });
         }
 
         public async Task<JsonResult> UpdateSinglePurchaseOrderDetails(long id)
         {
-            var model = await _ipurchaseOrderDetailService.SinglePurchaseOrderDetails(id);
+            var model = await _iPurchaseOrderDetailService.SinglePurchaseOrderDetails(id);
             return Json(model);
         }
 
@@ -94,35 +90,35 @@ namespace app.WebApp.Controllers
         [HttpPost]
         public async Task<IActionResult> ConfirmPurchaseOrder(long id)
         {
-            var res = await _ipurchaseOrderService.ConfirmPurchaseOrder(id);
+            var res = await _iPurchaseOrderService.ConfirmPurchaseOrder(id);
             return RedirectToAction("Index");
         }
 
         [HttpGet]
         public async Task<IActionResult> DeletePurchaseOrder(long id)
         {
-            var res = await _ipurchaseOrderService.DeletePurchaseOrder(id);
+            var res = await _iPurchaseOrderService.DeletePurchaseOrder(id);
             return RedirectToAction(nameof(Index));
         }
 
 
         public async Task<IActionResult> DeletePurchaseOrderDetailsById(long id, AssetPurchaseOrderViewModel vm)
         {
-            var res = await _ipurchaseOrderDetailService.DeletePurchaseDetail(id);
+            var res = await _iPurchaseOrderDetailService.DeletePurchaseDetail(id);
             return RedirectToAction(nameof(AddPurchaseOrderAndDetail), new { id = vm.Id });
         }
 
         [HttpGet]
         public async Task<IActionResult> PurchaseDetails(long id = 0)
         {
-            AssetPurchaseOrderViewModel viewModel = await _ipurchaseOrderService.GetPurchaseOrderDetails(id);
+            AssetPurchaseOrderViewModel viewModel = await _iPurchaseOrderService.GetPurchaseOrderDetails(id);
             return View(viewModel);
         }
 
         [HttpPost]
         public async Task<IActionResult> RejectPurchaseOrder(long id)
         {
-            var res = await _ipurchaseOrderService.RejectPurchaseOrder(id);
+            var res = await _iPurchaseOrderService.RejectPurchaseOrder(id);
             return RedirectToAction("Index");
         }
 
@@ -136,14 +132,14 @@ namespace app.WebApp.Controllers
 
         public async Task<JsonResult> UpdatePurchaseOrder(long id)
         {
-            var model = await _ipurchaseOrderService.GetPurchaseOrder(id);
+            var model = await _iPurchaseOrderService.GetPurchaseOrder(id);
             return Json(model);
         }
 
         [HttpPost]
         public async Task<IActionResult> UpdatePurchaseMaster(AssetPurchaseOrderViewModel vm)
         {           
-            var res = await _ipurchaseOrderService.UpdatePurchaseOrder(vm);            
+            var res = await _iPurchaseOrderService.UpdatePurchaseOrder(vm);            
             return RedirectToAction("Index");
         }
 

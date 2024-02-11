@@ -1311,7 +1311,7 @@ namespace app.Infrastructure.Migrations
                     b.Property<decimal>("SalePrice")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<decimal>("TP")
+                    b.Property<decimal>("TradePrice")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<long>("UnitId")
