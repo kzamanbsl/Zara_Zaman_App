@@ -252,7 +252,7 @@ namespace app.Services.DropdownServices
                                                                                           Id = t1.Id,
                                                                                           Name = t1.Name
 
-                                                                                      }).AsQueryable());
+                                                                                      }).AsEnumerable());
             return dropDownViewModels;
         }
         public async Task<IEnumerable<DropdownViewModel>> AssetCategorySelectionList()
@@ -264,7 +264,7 @@ namespace app.Services.DropdownServices
                                                                                           Id = t1.Id,
                                                                                           Name = t1.Name
 
-                                                                                      }).AsQueryable());
+                                                                                      }).AsEnumerable());
             return dropDownViewModels;
         }
 

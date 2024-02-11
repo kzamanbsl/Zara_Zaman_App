@@ -21,8 +21,7 @@ namespace app.Services.ProductServices
 
         public async Task<bool> AddRecord(ProductViewModel vm)
         {
-            // var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim());
-            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id == vm.Id && f.IsActive == true);
+            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.CategoryId == vm.CategoryId && f.Id == vm.Id && f.IsActive == true);
             if (checkName == null)
             {
                 Product com = new Product();
@@ -44,8 +43,8 @@ namespace app.Services.ProductServices
         {
 
             //var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim());
-            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim() && f.Id != vm.Id && f.IsActive == true);
-            if (checkName != null)
+            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.CategoryId == vm.CategoryId && f.Name.Trim() == vm.Name.Trim() && f.Id != vm.Id && f.IsActive == true);
+            if (checkName == null)
             {
                 var result = await _iEntityRepository.GetByIdAsync(vm.Id);
                 result.Name = vm.Name;
@@ -90,20 +89,20 @@ namespace app.Services.ProductServices
         {
             ProductViewModel model = new ProductViewModel();
             model.ProductList = await Task.Run(() => (from t1 in _dbContext.Product
-                where t1.IsActive == true
-                select new ProductViewModel
-                {
-                    Id = t1.Id,
-                    Name = t1.Name,
-                    Description = t1.Description,
-                    TradePrice = t1.TradePrice,
-                    SalePrice = t1.SalePrice,
-                    UnitId = t1.UnitId,
-                    UnitName = t1.Unit.Name,
-                    CategoryId = t1.CategoryId,
-                    CategoryName = t1.Category.Name,
-                    ProductTypeId = t1.ProductTypeId,
-                }).AsQueryable());
+                                                      where t1.IsActive == true
+                                                      select new ProductViewModel
+                                                      {
+                                                          Id = t1.Id,
+                                                          Name = t1.Name,
+                                                          Description = t1.Description,
+                                                          TradePrice = t1.TradePrice,
+                                                          SalePrice = t1.SalePrice,
+                                                          UnitId = t1.UnitId,
+                                                          UnitName = t1.Unit.Name,
+                                                          CategoryId = t1.CategoryId,
+                                                          CategoryName = t1.Category.Name,
+                                                          ProductTypeId = t1.ProductTypeId,
+                                                      }).AsQueryable());
             return model;
         }
 
@@ -141,7 +140,7 @@ namespace app.Services.ProductServices
 
             searchDto.RecordsTotal = totalRecords;
             searchDto.RecordsFiltered = totalRecords;
-            List<Product> filteredDataList = await searchResult.OrderBy(c => c.Id).Skip(skip).Take(pageSize).ToListAsync();
+            List<Product> filteredDataList = await searchResult.OrderByDescending(c => c.Id).Skip(skip).Take(pageSize).ToListAsync();
 
             var sl = searchDto.Start ?? 0;
             searchDto.Data = filteredDataList.Select(c => new ProductSearchDto()
