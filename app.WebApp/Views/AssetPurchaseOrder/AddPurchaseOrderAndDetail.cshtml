@@ -1,7 +1,7 @@
 ﻿@model app.Services.AssetPurchaseOrderServices.AssetPurchaseOrderViewModel
 @using app.Utility
 @{
-    ViewData["Title"] = "AddAssetPurchaseOrderAndDetail";
+    ViewData["Title"] = "AddPurchaseOrderAndDetail";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
     int sl = 0;
 }
@@ -40,7 +40,7 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-12">
-                        <form asp-action="AddAssetPurchaseOrderAndDetail" method="post">
+                        <form asp-action="AddPurchaseOrderAndDetail" method="post">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                             <input asp-for="Id" class="form-control" hidden id="purchaseorderId" />
                             <input asp-for="ActionId" hidden id="actionId" />
@@ -294,7 +294,7 @@
     <script>
         $(document).ready(function () {
             $('#Asset-Management').addClass('menu-open');
-            $('#AddAssetPurchaseOrderAndDetail').addClass('active');
+            $('#AddPurchaseOrderAndDetail').addClass('active');
         });
 
         //Purchase Order Details Edit
