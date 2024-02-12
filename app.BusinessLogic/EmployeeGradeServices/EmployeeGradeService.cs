@@ -1,7 +1,10 @@
 ﻿using app.EntityModel.AppModels;
+using app.EntityModel.DataTablePaginationModels;
 using app.Infrastructure;
 using app.Infrastructure.Auth;
 using app.Infrastructure.Repository;
+using app.Services.ProductServices;
+using Microsoft.EntityFrameworkCore;
 
 namespace app.Services.EmployeeGradeServices
 {
@@ -60,7 +63,7 @@ namespace app.Services.EmployeeGradeServices
                                                                 {
                                                                     Id = t1.Id,
                                                                     Name = t1.Name,
-                                                                }).AsQueryable());
+                                                                }).AsEnumerable());
             return model;
         }
         public async Task<bool> DeleteRecord(long id)
@@ -70,6 +73,63 @@ namespace app.Services.EmployeeGradeServices
             await _iEntityRepository.UpdateAsync(result);
             return true;
         }
+
+       
+       //public async Task<DataTablePagination<ProductSearchDto>> SearchAsync(DataTablePagination<ProductSearchDto> searchDto)
+       // {
+       //     var searchResult = _dbContext.EmployeeGrade.Include(c => c.Name).Include(c => c.Name).AsNoTracking();
+
+       //     var searchModel = searchDto.SearchVm;
+       //     var filter = searchDto?.Search?.Value?.Trim();
+       //     //if (searchModel?.CategoryId is > 0)
+       //     //{
+       //     //    searchResult = searchResult.Where(c => c.CategoryId == searchModel.CategoryId);
+       //     //}
+       //     //if (searchModel?.Name is > 0)
+       //     //{
+       //     //    searchResult = searchResult.Where(c => c.Name == searchModel.Name);
+       //     //}
+       //     if (!string.IsNullOrEmpty(filter))
+       //     {
+       //         filter = filter.ToLower();
+       //         searchResult = searchResult.Where(c =>
+       //             c.Name.ToLower().Contains(filter)
+       //             //|| c.TradePrice.ToString().Contains(filter)
+       //             //|| c.SalePrice.ToString().Contains(filter)
+       //             || c.Name.ToLower().Contains(filter)
+       //             );
+       //         //    || c.Description.ToLower().Contains(filter)
+       //         //);
+       //     }
+
+       //     var pageSize = searchDto.Length ?? 0;
+       //     var skip = searchDto.Start ?? 0;
+
+       //     var totalRecords = await searchResult.CountAsync();
+       //     if (totalRecords <= 0) return searchDto;
+
+       //     searchDto.RecordsTotal = totalRecords;
+       //     searchDto.RecordsFiltered = totalRecords;
+       //     List<EmployeeGrade> filteredDataList = await searchResult.OrderByDescending(c => c.Id).Skip(skip).Take(pageSize).ToListAsync();
+
+       //     var sl = searchDto.Start ?? 0;
+       //     searchDto.Data = filteredDataList.Select(c => new EmployeeGradeSearchDto()
+       //     {
+       //         SerialNo = ++sl,
+       //         Id = c.Id,
+       //         Name = c.Name,
+       //         //Description = c.Description,
+       //         //TradePrice = c.TradePrice,
+       //         //SalePrice = c.SalePrice,
+       //         //UnitId = c.UnitId,
+       //         //UnitName = c.Unit.Name,
+       //         //CategoryId = c.CategoryId,
+       //         //CategoryName = c.Category.Name,
+       //         //ProductTypeId = c.ProductTypeId,
+       //     }).ToList();
+
+       //     return searchDto;
+       // }
 
     }
 }
