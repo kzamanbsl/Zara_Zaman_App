@@ -68,7 +68,7 @@ namespace app.Services.ProductCategoryServices
         {
             ProductCategoryViewModel model = new ProductCategoryViewModel();
             model.ProductCategoryList = await Task.Run(() => (from t1 in _dbContext.ProductCategory
-                                                                where t1.ProductCategoryTypeId == (int)ProductCategoryTypeEnum.AssetCategory 
+                                                                where t1.ProductCategoryTypeId == (int)ProductCategoryTypeEnum.ProductCategory 
                                                                 && t1.IsActive == true
                                                                 select new ProductCategoryViewModel
                                                                 {

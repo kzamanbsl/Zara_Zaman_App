@@ -21,7 +21,7 @@ namespace app.Services.DropdownServices
                                                                                       {
                                                                                           Id = t1.Id,
                                                                                           Name = t1.Name
-                                                                                      }).AsQueryable());
+                                                                                      }).AsEnumerable());
             return dropDownViewModels;
         }
         public async Task<IEnumerable<DropdownViewModel>> DepartmentSelectionList()
@@ -31,7 +31,7 @@ namespace app.Services.DropdownServices
                                                                                       {
                                                                                           Id = t1.Id,
                                                                                           Name = t1.Name
-                                                                                      }).AsQueryable());
+                                                                                      }).AsEnumerable());
             return dropDownViewModels;
         }
         public async Task<IEnumerable<DropdownViewModel>> DesignationSelectionList()
@@ -41,7 +41,7 @@ namespace app.Services.DropdownServices
                                                                                       {
                                                                                           Id = t1.Id,
                                                                                           Name = t1.Name
-                                                                                      }).AsQueryable());
+                                                                                      }).AsEnumerable());
             return dropDownViewModels;
         }
 
@@ -52,7 +52,7 @@ namespace app.Services.DropdownServices
                                                                                       {
                                                                                           Id = t1.Id,
                                                                                           Name = t1.Name
-                                                                                      }).AsQueryable());
+                                                                                      }).AsEnumerable());
             return dropDownViewModels;
         }
 
@@ -63,7 +63,7 @@ namespace app.Services.DropdownServices
                                                                                       {
                                                                                           Id = t1.Id,
                                                                                           Name = t1.Name
-                                                                                      }).AsQueryable());
+                                                                                      }).AsEnumerable());
             return dropDownViewModels;
         }
         public async Task<IEnumerable<DropdownViewModel>> EmployeeSelectionList(long managerId = 0)
@@ -73,7 +73,7 @@ namespace app.Services.DropdownServices
                                                                                       {
                                                                                           Id = t1.Id,
                                                                                           Name = t1.Name
-                                                                                      }).AsQueryable());
+                                                                                      }).AsEnumerable());
             return dropDownViewModels;
         }
         public async Task<IEnumerable<DropdownViewModel>> CountrySelectionList()
@@ -83,7 +83,7 @@ namespace app.Services.DropdownServices
                                                                                       {
                                                                                           Id = t1.Id,
                                                                                           Name = t1.Name
-                                                                                      }).AsQueryable());
+                                                                                      }).AsEnumerable());
             return dropDownViewModels;
         }
         public async Task<IEnumerable<DropdownViewModel>> DivisionSelectionList()
@@ -93,7 +93,7 @@ namespace app.Services.DropdownServices
                                                                                       {
                                                                                           Id = t1.Id,
                                                                                           Name = t1.Name
-                                                                                      }).AsQueryable());
+                                                                                      }).AsEnumerable());
             return dropDownViewModels;
         }
         public async Task<IEnumerable<DropdownViewModel>> DistrictSelectionList(int divisionId = 0)
@@ -104,7 +104,7 @@ namespace app.Services.DropdownServices
                                                                                       {
                                                                                           Id = t1.Id,
                                                                                           Name = t1.Name
-                                                                                      }).AsQueryable());
+                                                                                      }).AsEnumerable());
             return dropDownViewModels;
         }
         public async Task<IEnumerable<DropdownViewModel>> UpazilaSelectionList(int divisionId = 0, int districtsId = 0)
@@ -118,7 +118,7 @@ namespace app.Services.DropdownServices
                                                                                       {
                                                                                           Id = t1.Id,
                                                                                           Name = t1.Name
-                                                                                      }).AsQueryable());
+                                                                                      }).AsEnumerable());
             return dropDownViewModels;
         }
         public async Task<IEnumerable<DropdownViewModel>> BloodGroupSelectionList()
@@ -130,7 +130,7 @@ namespace app.Services.DropdownServices
                                                                                           Id = t1.Id,
                                                                                           Name = t1.Name
 
-                                                                                      }).AsQueryable());
+                                                                                      }).AsEnumerable());
             return dropDownViewModels;
         }
         public async Task<IEnumerable<DropdownViewModel>> MaritalStatusSelectionList()
@@ -142,7 +142,7 @@ namespace app.Services.DropdownServices
                                                                                           Id = t1.Id,
                                                                                           Name = t1.Name
 
-                                                                                      }).AsQueryable());
+                                                                                      }).AsEnumerable());
             return dropDownViewModels;
         }
         public async Task<IEnumerable<DropdownViewModel>> GenderSelectionList()
@@ -154,7 +154,7 @@ namespace app.Services.DropdownServices
                                                                                           Id = t1.Id,
                                                                                           Name = t1.Name
 
-                                                                                      }).AsQueryable());
+                                                                                      }).AsEnumerable());
             return dropDownViewModels;
         }
         public async Task<IEnumerable<DropdownViewModel>> ReligionSelectionList()
@@ -166,7 +166,7 @@ namespace app.Services.DropdownServices
                                                                                           Id = t1.Id,
                                                                                           Name = t1.Name
 
-                                                                                      }).AsQueryable());
+                                                                                      }).AsEnumerable());
             return dropDownViewModels;
         }
         public async Task<IEnumerable<DropdownViewModel>> EmployeeCategorySelectionList()
@@ -178,7 +178,7 @@ namespace app.Services.DropdownServices
                                                                                           Id = t1.Id,
                                                                                           Name = t1.Name
 
-                                                                                      }).AsQueryable());
+                                                                                      }).AsEnumerable());
             return dropDownViewModels;
         }
         public async Task<IEnumerable<DropdownViewModel>> EmployeeServiceTypeSelectionList()
@@ -190,7 +190,7 @@ namespace app.Services.DropdownServices
                                                                                           Id = t1.Id,
                                                                                           Name = t1.Name
 
-                                                                                      }).AsQueryable());
+                                                                                      }).AsEnumerable());
             return dropDownViewModels;
         }
         public async Task<IEnumerable<DropdownViewModel>> OfficeTypeSelectionList()
@@ -202,7 +202,7 @@ namespace app.Services.DropdownServices
                                                                                           Id = t1.Id,
                                                                                           Name = t1.Name
 
-                                                                                      }).AsQueryable());
+                                                                                      }).AsEnumerable());
             return dropDownViewModels;
         }
 
@@ -215,7 +215,7 @@ namespace app.Services.DropdownServices
                                                                                           Id = t1.Id,
                                                                                           Name = t1.Name
 
-                                                                                      }).AsQueryable());
+                                                                                      }).AsEnumerable());
             return dropDownViewModels;
         }
 
@@ -228,7 +228,7 @@ namespace app.Services.DropdownServices
                                                                                           Id = t1.Id,
                                                                                           Name = t1.Name
 
-                                                                                      }).AsQueryable());
+                                                                                      }).AsEnumerable());
             return dropDownViewModels;
         }
         public async Task<IEnumerable<DropdownViewModel>> UnitSelectionList()
@@ -240,7 +240,7 @@ namespace app.Services.DropdownServices
                                                                                           Id = t1.Id,
                                                                                           Name = t1.Name
 
-                                                                                      }).AsQueryable());
+                                                                                      }).AsEnumerable());
             return dropDownViewModels;
         }
         public async Task<IEnumerable<DropdownViewModel>> ProductCategorySelectionList()
@@ -277,7 +277,7 @@ namespace app.Services.DropdownServices
                                                                                           Id = t1.Id,
                                                                                           Name = t1.Name
 
-                                                                                      }).AsQueryable());
+                                                                                      }).AsEnumerable());
             return dropDownViewModels;
         }
         public async Task<IEnumerable<DropdownViewModel>> StorehouseSelectionList()
@@ -289,7 +289,7 @@ namespace app.Services.DropdownServices
                                                                                           Id = t1.Id,
                                                                                           Name = t1.Name
 
-                                                                                      }).AsQueryable());
+                                                                                      }).AsEnumerable());
             return dropDownViewModels;
         }
 
@@ -302,7 +302,7 @@ namespace app.Services.DropdownServices
                                                                                           Id = t1.Id,
                                                                                           Name = t1.Name
 
-                                                                                      }).AsQueryable());
+                                                                                      }).AsEnumerable());
             return dropDownViewModels;
         }
 
@@ -315,7 +315,7 @@ namespace app.Services.DropdownServices
                                                                                           Id = t1.Id,
                                                                                           Name = t1.Name
 
-                                                                                      }).AsQueryable());
+                                                                                      }).AsEnumerable());
             return dropDownViewModels;
         }
 
@@ -328,7 +328,7 @@ namespace app.Services.DropdownServices
                                                                                           Id = t1.Id,
                                                                                           Name = t1.Name + " (" + t1.AssembleWorkCategory.Name + ")",
 
-                                                                                      }).AsQueryable());
+                                                                                      }).AsEnumerable());
             return dropDownViewModels;
         }
     }
