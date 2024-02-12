@@ -1,4 +1,7 @@
-﻿namespace app.Services.ShiftServices
+﻿using app.EntityModel.DataTablePaginationModels;
+using app.Services.ProductServices;
+
+namespace app.Services.ShiftServices
 {
     public interface IShiftService
     {

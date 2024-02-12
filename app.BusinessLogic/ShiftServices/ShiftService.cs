@@ -1,8 +1,11 @@
 ﻿using app.EntityModel.AppModels;
+using app.EntityModel.DataTablePaginationModels;
 using app.Infrastructure;
 using app.Infrastructure.Auth;
 using app.Infrastructure.Repository;
+using app.Services.ProductServices;
 using app.Utility;
+using Microsoft.EntityFrameworkCore;
 
 namespace app.Services.ShiftServices
 {
@@ -71,7 +74,7 @@ namespace app.Services.ShiftServices
                                                                     Name = t1.Name,
                                                                     StartAt = t1.StartAt,
                                                                     EndAt = t1.EndAt,
-                                                                }).AsQueryable());
+                                                                }).AsEnumerable());
             return model;
         }
         public async Task<bool> DeleteRecord(long id)
@@ -81,5 +84,7 @@ namespace app.Services.ShiftServices
             await _iEntityRepository.UpdateAsync(result);
             return true;
         }
+
+       
     }
 }

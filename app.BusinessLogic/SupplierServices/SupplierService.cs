@@ -1,10 +1,13 @@
 ﻿using app.EntityModel.AppModels;
+using app.EntityModel.DataTablePaginationModels;
 using app.Infrastructure;
 using app.Infrastructure.Auth;
 using app.Infrastructure.Repository;
+using app.Services.ProductServices;
 using app.Utility;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace app.Services.SupplierServices
 {
@@ -29,20 +32,20 @@ namespace app.Services.SupplierServices
             if (checkName == null)
             {
                 Supplier model = new Supplier();
-                model.Name=vm.Name;
-                model.Phone=vm.Phone;
-                model.Email=vm.Email;
-                model.Description=vm.Description;
-                model.Address=vm.Address;
-                model.CountryId=vm.CountryId;
-                model.DivisionId=vm.DivisionId;
-                model.DistrictId=vm.DistrictId;
-                model.UpazilaId=vm.UpazilaId;
+                model.Name = vm.Name;
+                model.Phone = vm.Phone;
+                model.Email = vm.Email;
+                model.Description = vm.Description;
+                model.Address = vm.Address;
+                model.CountryId = vm.CountryId;
+                model.DivisionId = vm.DivisionId;
+                model.DistrictId = vm.DistrictId;
+                model.UpazilaId = vm.UpazilaId;
                 model.CreatedBy = _httpContextAccessor.HttpContext.User.Identity.Name;
                 model.CreatedOn = DateTime.Now;
                 model.IsActive = true;
                 var res = await _iEntityRepository.AddAsync(model);
-                if(res != null)
+                if (res != null)
                 {
                     vm.Id = res.Id;
                     return true;
@@ -52,6 +55,7 @@ namespace app.Services.SupplierServices
 
             return false;
         }
+
         public async Task<bool> UpdateRecord(SupplierViewModel vm)
         {
             //var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim());
@@ -71,12 +75,12 @@ namespace app.Services.SupplierServices
                 result.UpdatedBy = _httpContextAccessor.HttpContext.User.Identity.Name;
                 result.UpdatedOn = DateTime.Now;
                 var res = await _iEntityRepository.UpdateAsync(result);
-                
+
                 return true;
             }
             return false;
         }
-       
+
         public async Task<SupplierViewModel> GetRecordById(long id)
         {
             var result = await _iEntityRepository.GetByIdAsync(id);
@@ -95,30 +99,7 @@ namespace app.Services.SupplierServices
             model.UpazilaId = result.UpazilaId;
             return model;
         }
-        public async Task<SupplierViewModel> GetAllRecord()
-        {
-            SupplierViewModel model = new SupplierViewModel();
-            model.SupplierList = await Task.Run(() => (from t1 in _dbContext.Supplier
-                                                                where t1.IsActive == true
-                                                                select new SupplierViewModel
-                                                                {
-                                                                    Id = t1.Id,
-                                                                    Name=t1.Name,
-                                                                    Phone= t1.Phone,
-                                                                    Email = t1.Email,
-                                                                    Description=t1.Description,
-                                                                    Address=t1.Address,
-                                                                    CountryId=t1.CountryId,
-                                                                    CountryName=t1.Country.Name,
-                                                                    DivisionId=t1.DivisionId,
-                                                                    DivisionName=t1.Division.Name,
-                                                                    DistrictId=t1.DistrictId,
-                                                                    DistrictName=t1.District.Name,
-                                                                    UpazilaId=t1.UpazilaId,
-                                                                    UpazilaName=t1.Upazila.Name,
-                                                                }).AsQueryable());
-            return model;
-        }
+       
         public async Task<bool> DeleteRecord(long id)
         {
             var result = await _iEntityRepository.GetByIdAsync(id);
@@ -127,5 +108,102 @@ namespace app.Services.SupplierServices
             return true;
         }
 
+        public async Task<SupplierViewModel> GetAllRecord()
+        {
+            SupplierViewModel model = new SupplierViewModel();
+            model.SupplierList = await Task.Run(() => (from t1 in _dbContext.Supplier
+                                                       where t1.IsActive == true
+                                                       select new SupplierViewModel
+                                                       {
+                                                           Id = t1.Id,
+                                                           Name = t1.Name,
+                                                           Phone = t1.Phone,
+                                                           Email = t1.Email,
+                                                           Description = t1.Description,
+                                                           Address = t1.Address,
+                                                           CountryId = t1.CountryId,
+                                                           CountryName = t1.Country.Name,
+                                                           DivisionId = t1.DivisionId,
+                                                           DivisionName = t1.Division.Name,
+                                                           DistrictId = t1.DistrictId,
+                                                           DistrictName = t1.District.Name,
+                                                           UpazilaId = t1.UpazilaId,
+                                                           UpazilaName = t1.Upazila.Name,
+                                                       }).AsEnumerable());
+            return model;
+        }
+
+        public async Task<DataTablePagination<SupplierSearchDto>> SearchAsync(DataTablePagination<SupplierSearchDto> searchDto)
+        {
+            var searchResult = _dbContext.Supplier.Include(c => c.Upazila).Include(c => c.District).Include(c=>c.Division).Include(c => c.Country).AsNoTracking();
+
+            var searchModel = searchDto.SearchVm;
+            var filter = searchDto?.Search?.Value?.Trim();
+            if (searchModel?.CountryId is > 0)
+            {
+                searchResult = searchResult.Where(c => c.CountryId == searchModel.CountryId);
+            }
+            if (searchModel?.DivisionId is > 0)
+            {
+                searchResult = searchResult.Where(c => c.DivisionId == searchModel.DivisionId);
+            }
+            if (searchModel?.DistrictId is > 0)
+            {
+                searchResult = searchResult.Where(c => c.DistrictId == searchModel.DistrictId);
+            }
+            if (searchModel?.UpazilaId is > 0)
+            {
+                searchResult = searchResult.Where(c => c.UpazilaId == searchModel.UpazilaId);
+            }
+            if (!string.IsNullOrEmpty(filter))
+            {
+                filter = filter.ToLower();
+                searchResult = searchResult.Where(c =>
+                    c.Name.ToLower().Contains(filter)
+                    ||c.Phone.ToLower().Contains(filter)
+                    || c.Address.ToString().Contains(filter)
+                    || c.Country.Name.ToString().Contains(filter)
+                     || c.Division.Name.ToString().Contains(filter)
+                     || c.District.Name.ToString().Contains(filter)
+                      || c.Upazila.Name.ToString().Contains(filter)
+                    || c.Email.ToLower().Contains(filter)
+                    || c.Description.ToLower().Contains(filter)
+                    || c.Address.ToLower().Contains(filter)
+                );
+            }
+
+            var pageSize = searchDto.Length ?? 0;
+            var skip = searchDto.Start ?? 0;
+
+            var totalRecords = await searchResult.CountAsync();
+            if (totalRecords <= 0) return searchDto;
+
+            searchDto.RecordsTotal = totalRecords;
+            searchDto.RecordsFiltered = totalRecords;
+            List<Supplier> filteredDataList = await searchResult.OrderByDescending(c => c.Id).Skip(skip).Take(pageSize).ToListAsync();
+
+            var sl = searchDto.Start ?? 0;
+            searchDto.Data = filteredDataList.Select(c => new SupplierSearchDto()
+            {
+                SerialNo = ++sl,
+                Id = c.Id,
+                Name = c.Name,
+                Description = c.Description,
+                Phone = c.Phone,
+                Email = c.Email,
+               
+                CountryId = c.CountryId,
+                CountryName = c.Country.Name,
+                DivisionId = c.DivisionId,
+                DivisionName = c.Division.Name,
+                DistrictId = c.DistrictId,
+                DistrictName = c.District.Name,
+                UpazilaId = c.UpazilaId,
+                UpazilaName = c.Upazila.Name,
+                Address = c.Address,
+            }).ToList();
+
+            return searchDto;
+        }
     }
 }
