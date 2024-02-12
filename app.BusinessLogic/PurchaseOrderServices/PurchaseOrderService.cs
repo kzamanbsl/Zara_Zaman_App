@@ -92,23 +92,23 @@ namespace app.Services.PurchaseOrderServices
                                                                                     //Discount = t1.Discount,
                                                                                     TotalAmount = ((decimal)t1.PurchaseQty * t1.CostPrice) - t1.Discount,
                                                                                     Remarks = t1.Remarks,
-                                                                                }).OrderByDescending(x => x.Id).AsEnumerable());
+                                                                                }).OrderByDescending(x => x.Id).AsQueryable());
 
 
             return purchaseOrderModel;
         }
 
 
-       
 
-        
+
+
         public async Task<PurchaseOrderViewModel> GetAllRecord()
         {
             PurchaseOrderViewModel purchaseMasterModel = new PurchaseOrderViewModel();
             var dataQuery = await Task.Run(() => (from t1 in _dbContext.PurchaseOrder
                                                   where t1.IsActive == true && t1.PurchaseTypeId == (int)PurchaseTypeEnum.Purchase
 
-            select new PurchaseOrderViewModel
+                                                  select new PurchaseOrderViewModel
                                                   {
                                                       Id = t1.Id,
                                                       OrderNo = t1.OrderNo,
@@ -119,7 +119,7 @@ namespace app.Services.PurchaseOrderServices
                                                       StoreName = t1.Storehouse.Name,
                                                       OrderStatusId = (int)(PurchaseOrderStatusEnum)t1.OrderStatusId,
 
-                                                  }).OrderByDescending(x => x.Id).AsEnumerable());
+                                                  }).OrderByDescending(x => x.Id).AsQueryable());
 
             purchaseMasterModel.PurchaseOrderList = await Task.Run(() => dataQuery.ToList());
             purchaseMasterModel.PurchaseOrderList.ToList().ForEach((c => c.OrderStatusName = Enum.GetName(typeof(PurchaseOrderStatusEnum), c.OrderStatusId)));
@@ -194,7 +194,7 @@ namespace app.Services.PurchaseOrderServices
                                                                                     //Discount = t1.Discount,
                                                                                     TotalAmount = ((decimal)t1.PurchaseQty * t1.CostPrice) - t1.Discount,
                                                                                     Remarks = t1.Remarks,
-                                                                                }).OrderByDescending(x => x.Id).AsEnumerable());
+                                                                                }).OrderByDescending(x => x.Id).AsQueryable());
 
 
             return purchaseOrderModel;
