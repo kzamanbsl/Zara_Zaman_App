@@ -40,7 +40,7 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-12">
-                        <form asp-action="AddPurchaseOrderAndDetail" method="post">
+                        <form asp-action="AddAssetPurchaseOrderAndDetail" method="post">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                             <input asp-for="Id" class="form-control" hidden id="purchaseorderId" />
                             <input asp-for="ActionId" hidden id="actionId" />
@@ -294,14 +294,14 @@
     <script>
         $(document).ready(function () {
             $('#Asset-Management').addClass('menu-open');
-            $('#AssetPurchaseOrderAddPurchaseOrderAndDetail').addClass('active');
+            $('#AddAssetPurchaseOrderAndDetail').addClass('active');
         });
 
         //Purchase Order Details Edit
         function makeEditble(rowId) {
             $.ajax({
                 type: "POST",
-                url: "@Url.Action("UpdateSinglePurchaseOrderDetails", "PurchaseOrder")",
+                url: "@Url.Action("UpdateSinglePurchaseOrderDetails", "AssetPurchaseOrder")",
                 datatype: "Json",
                 data: { id: rowId },
                 success: function (data) {

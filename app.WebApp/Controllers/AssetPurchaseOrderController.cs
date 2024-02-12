@@ -40,7 +40,7 @@ namespace app.WebApp.Controllers
 
 
         [HttpGet]
-        public async Task<IActionResult> AddPurchaseOrderAndDetail(long purchaseOrderId = 0)
+        public async Task<IActionResult> AddAssetPurchaseOrderAndDetail(long purchaseOrderId = 0)
         {
             AssetPurchaseOrderViewModel viewModel = new AssetPurchaseOrderViewModel();
 
@@ -62,7 +62,7 @@ namespace app.WebApp.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> AddPurchaseOrderAndDetail(AssetPurchaseOrderViewModel vm)
+        public async Task<IActionResult> AddAssetPurchaseOrderAndDetail(AssetPurchaseOrderViewModel vm)
         {
             if (vm.ActionEum == ActionEnum.Add)
             {
@@ -77,7 +77,7 @@ namespace app.WebApp.Controllers
             {
                 //await _iPurchaseOrderDetailService.UpdatePurchaseDetail(vm);
             }
-            return RedirectToAction(nameof(AddPurchaseOrderAndDetail), new { purchaseOrderId = vm.Id });
+            return RedirectToAction(nameof(AddAssetPurchaseOrderAndDetail), new { purchaseOrderId = vm.Id });
         }
 
         public async Task<JsonResult> UpdateSinglePurchaseOrderDetails(long id)
@@ -105,7 +105,7 @@ namespace app.WebApp.Controllers
         public async Task<IActionResult> DeletePurchaseOrderDetailsById(long id, AssetPurchaseOrderViewModel vm)
         {
             var res = await _iPurchaseOrderDetailService.DeletePurchaseDetail(id);
-            return RedirectToAction(nameof(AddPurchaseOrderAndDetail), new { id = vm.Id });
+            return RedirectToAction(nameof(AddAssetPurchaseOrderAndDetail), new { id = vm.Id });
         }
 
         [HttpGet]
