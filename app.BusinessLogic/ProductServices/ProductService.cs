@@ -102,7 +102,7 @@ namespace app.Services.ProductServices
                                                           CategoryId = t1.CategoryId,
                                                           CategoryName = t1.Category.Name,
                                                           ProductTypeId = t1.ProductTypeId,
-                                                      }).AsQueryable());
+                                                      }).AsEnumerable());
             return model;
         }
 
