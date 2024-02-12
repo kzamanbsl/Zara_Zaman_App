@@ -2,13 +2,8 @@
 using app.Infrastructure.Auth;
 using app.Infrastructure.Repository;
 using app.Infrastructure;
-using app.Services.ProductServices;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using app.Utility;
+using app.EntityModel.DataTablePaginationModels;
+using Microsoft.EntityFrameworkCore;
 
 namespace app.Services.ProductServices
 {
@@ -24,6 +19,47 @@ namespace app.Services.ProductServices
             _iWorkContext = iWorkContext;
         }
 
+        public async Task<bool> AddRecord(ProductViewModel vm)
+        {
+            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.CategoryId == vm.CategoryId && f.Id == vm.Id && f.IsActive == true);
+            if (checkName == null)
+            {
+                Product com = new Product();
+                com.Name = vm.Name;
+                com.Description = vm.Description;
+                com.TradePrice = vm.TradePrice;
+                com.SalePrice = vm.SalePrice;
+                com.UnitId = vm.UnitId;
+                com.CategoryId = vm.CategoryId;
+                com.ProductTypeId = vm.ProductTypeId;
+                var res = await _iEntityRepository.AddAsync(com);
+                vm.Id = res.Id;
+                return true;
+            }
+            return false;
+        }
+
+        public async Task<bool> UpdateRecord(ProductViewModel vm)
+        {
+
+            //var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim());
+            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.CategoryId == vm.CategoryId && f.Name.Trim() == vm.Name.Trim() && f.Id != vm.Id && f.IsActive == true);
+            if (checkName == null)
+            {
+                var result = await _iEntityRepository.GetByIdAsync(vm.Id);
+                result.Name = vm.Name;
+                result.Description = vm.Description;
+                result.TradePrice = vm.TradePrice;
+                result.SalePrice = vm.SalePrice;
+                result.UnitId = vm.UnitId;
+                result.CategoryId = vm.CategoryId;
+                result.ProductTypeId = vm.ProductTypeId;
+                await _iEntityRepository.UpdateAsync(result);
+                return true;
+            }
+            return false;
+        }
+
         public async Task<ProductViewModel> GetRecordById(long id)
         {
             var result = await _iEntityRepository.GetByIdAsync(id);
@@ -31,7 +67,7 @@ namespace app.Services.ProductServices
             model.Id = result.Id;
             model.Name = result.Name;
             model.Description = result.Description;
-            model.TP = result.TP;
+            model.TradePrice = result.TradePrice;
             model.SalePrice = result.SalePrice;
             model.UnitId = result.UnitId;
             model.UnitName = result.Unit?.Name;
@@ -40,6 +76,15 @@ namespace app.Services.ProductServices
             model.ProductTypeId = result.ProductTypeId;
             return model;
         }
+
+        public async Task<bool> DeleteRecord(long id)
+        {
+            var result = await _iEntityRepository.GetByIdAsync(id);
+            result.IsActive = false;
+            await _iEntityRepository.UpdateAsync(result);
+            return true;
+        }
+
         public async Task<ProductViewModel> GetAllRecord()
         {
             ProductViewModel model = new ProductViewModel();
@@ -50,7 +95,7 @@ namespace app.Services.ProductServices
                                                           Id = t1.Id,
                                                           Name = t1.Name,
                                                           Description = t1.Description,
-                                                          TP = t1.TP,
+                                                          TradePrice = t1.TradePrice,
                                                           SalePrice = t1.SalePrice,
                                                           UnitId = t1.UnitId,
                                                           UnitName = t1.Unit.Name,
@@ -60,53 +105,60 @@ namespace app.Services.ProductServices
                                                       }).AsQueryable());
             return model;
         }
-        public async Task<bool> AddRecord(ProductViewModel vm)
-        {
-            // var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim());
-            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id == vm.Id && f.IsActive == true);
-            if (checkName == null)
-            {
-                Product com = new Product();
-                com.Name = vm.Name;
-                com.Description = vm.Description;
-                com.TP = vm.TP;
-                com.SalePrice = vm.SalePrice;
-                com.UnitId = vm.UnitId;
-                com.CategoryId = vm.CategoryId;
-                com.ProductTypeId = vm.ProductTypeId;           
-                var res = await _iEntityRepository.AddAsync(com);
-                vm.Id = res.Id;
-                return true;
-            }
-            return false;
-        }
-        public async Task<bool> UpdateRecord(ProductViewModel vm)
-        {
 
-            //var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim());
-            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim() && f.Id != vm.Id  && f.IsActive == true);
-            if (checkName != null)
-            {
-                var result = await _iEntityRepository.GetByIdAsync(vm.Id);
-                result.Name = vm.Name;
-                result.Description = vm.Description;
-                result.TP = vm.TP;
-                result.SalePrice = vm.SalePrice;
-                result.UnitId = vm.UnitId;
-                result.CategoryId = vm.CategoryId;
-                result.ProductTypeId = vm.ProductTypeId;
-                await _iEntityRepository.UpdateAsync(result);
-                return true;
-            }
-            return false;
-        }
-        public async Task<bool> DeleteRecord(long id)
+        public async Task<DataTablePagination<ProductSearchDto>> SearchAsync(DataTablePagination<ProductSearchDto> searchDto)
         {
-            var result = await _iEntityRepository.GetByIdAsync(id);
-            result.IsActive = false;
-            await _iEntityRepository.UpdateAsync(result);
-            return true;
-        }
+            var searchResult = _dbContext.Product.Include(c => c.Category).Include(c => c.Unit).AsNoTracking();
 
+            var searchModel = searchDto.SearchVm;
+            var filter = searchDto?.Search?.Value?.Trim();
+            if (searchModel?.CategoryId is > 0)
+            {
+                searchResult = searchResult.Where(c => c.CategoryId == searchModel.CategoryId);
+            }
+            if (searchModel?.UnitId is > 0)
+            {
+                searchResult = searchResult.Where(c => c.UnitId == searchModel.UnitId);
+            }
+            if (!string.IsNullOrEmpty(filter))
+            {
+                filter = filter.ToLower();
+                searchResult = searchResult.Where(c =>
+                    c.Name.ToLower().Contains(filter)
+                    || c.TradePrice.ToString().Contains(filter)
+                    || c.SalePrice.ToString().Contains(filter)
+                    || c.Unit.Name.ToLower().Contains(filter)
+                    || c.Description.ToLower().Contains(filter)
+                );
+            }
+
+            var pageSize = searchDto.Length ?? 0;
+            var skip = searchDto.Start ?? 0;
+
+            var totalRecords = await searchResult.CountAsync();
+            if (totalRecords <= 0) return searchDto;
+
+            searchDto.RecordsTotal = totalRecords;
+            searchDto.RecordsFiltered = totalRecords;
+            List<Product> filteredDataList = await searchResult.OrderByDescending(c => c.Id).Skip(skip).Take(pageSize).ToListAsync();
+
+            var sl = searchDto.Start ?? 0;
+            searchDto.Data = filteredDataList.Select(c => new ProductSearchDto()
+            {
+                SerialNo = ++sl,
+                Id = c.Id,
+                Name = c.Name,
+                Description = c.Description,
+                TradePrice = c.TradePrice,
+                SalePrice = c.SalePrice,
+                UnitId = c.UnitId,
+                UnitName = c.Unit.Name,
+                CategoryId = c.CategoryId,
+                CategoryName = c.Category.Name,
+                ProductTypeId = c.ProductTypeId,
+            }).ToList();
+
+            return searchDto;
+        }
     }
 }

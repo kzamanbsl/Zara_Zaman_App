@@ -2,7 +2,7 @@
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
-    int SN = 1;
+    int sn = 1;
 }
 
 <div class="content-header">
@@ -40,7 +40,7 @@
                                 </th>
                                 <th class="text-center">Name</th>
                                 <th class="text-center">Description</th>
-                                <th class="text-center">TP</th>
+                                <th class="text-center">TradePrice</th>
                                 <th class="text-center">SalePrice</th>
                                 <th class="text-center">Unit</th>
                                 <th class="text-center">Product Category</th>
@@ -53,7 +53,7 @@
                             {
                                 <tr>
                                     <td>
-                                        @SN
+                                        @sn
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.Name)
@@ -62,7 +62,7 @@
                                         @Html.DisplayFor(modelItem => item.Description)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.TP)
+                                        @Html.DisplayFor(modelItem => item.TradePrice)
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.SalePrice)
@@ -78,7 +78,7 @@
                                         @Html.ActionLink("", "Delete", new { id = item.Id }, new { @title = "Delete", @class = "text-danger fas fa-trash", onclick = "return confirm('Are you sure you want to delete this?')" })
                                     </td>
                                 </tr>
-                                SN++;
+                                sn++;
                             }
                         </tbody>
 

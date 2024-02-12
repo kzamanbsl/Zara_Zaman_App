@@ -31,7 +31,7 @@ namespace app.Services.AssetItemServices
             model.Id = result.Id;
             model.Name = result.Name;
             model.Description = result.Description;
-            model.TP = result.TP;
+            model.TP = result.TradePrice;
             model.UnitId = result.UnitId;
             model.CategoryId = result.CategoryId;
             return model;
@@ -46,7 +46,7 @@ namespace app.Services.AssetItemServices
                                                           ProductTypeId = t1.ProductTypeId,
                                                           Name = t1.Name,
                                                           Description = t1.Description,
-                                                          TP = t1.TP,
+                                                          TP = t1.TradePrice,
                                                           UnitId = t1.UnitId,
                                                           UnitName =t1.Unit.Name,
                                                           CategoryId = t1.CategoryId,
@@ -64,7 +64,7 @@ namespace app.Services.AssetItemServices
                 com.Id = vm.Id;
                 com.Name = vm.Name;
                 com.Description = vm.Description;
-                com.TP = vm.TP;
+                com.TradePrice = vm.TP;
                 com.UnitId = vm.UnitId;
                 com.CategoryId = vm.CategoryId;
                 com.ProductTypeId = (int)ProductTypeEnum.Asset;
@@ -84,7 +84,7 @@ namespace app.Services.AssetItemServices
                 result.Id = vm.Id;
                 result.Name = vm.Name;
                 result.Description = vm.Description;
-                result.TP = vm.TP;
+                result.TradePrice = vm.TP;
                 result.UnitId = vm.UnitId;
                 result.CategoryId = vm.CategoryId;
                 result.ProductTypeId = (int)ProductTypeEnum.Asset;

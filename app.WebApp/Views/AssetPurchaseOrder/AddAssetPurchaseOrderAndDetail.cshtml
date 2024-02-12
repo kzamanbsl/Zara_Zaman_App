@@ -1,7 +1,7 @@
 ﻿@model app.Services.AssetPurchaseOrderServices.AssetPurchaseOrderViewModel
 @using app.Utility
 @{
-    ViewData["Title"] = "AddPurchaseOrderAndDetail";
+    ViewData["Title"] = "AddAssetPurchaseOrderAndDetail";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
     int sl = 0;
 }
@@ -293,8 +293,8 @@
     }
     <script>
         $(document).ready(function () {
-            $('#Purchases').addClass('menu-open');
-            $('#PurchaseOrderAddPurchaseOrderAndDetail').addClass('active');
+            $('#Asset-Management').addClass('menu-open');
+            $('#AssetPurchaseOrderAddPurchaseOrderAndDetail').addClass('active');
         });
 
         //Purchase Order Details Edit

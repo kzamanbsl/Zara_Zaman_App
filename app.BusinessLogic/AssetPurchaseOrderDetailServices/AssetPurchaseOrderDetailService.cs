@@ -7,10 +7,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using app.Services.AssetPurchaseOrderServices;
 using app.Services.PurchaseOrderServices;
 using Microsoft.EntityFrameworkCore;
-using app.Services.AssetPurchaseOrderServices;
-
 namespace app.Services.AssetPurchaseOrderDetailServices
 {
     public class AssetPurchaseOrderDetailService : IAssetPurchaseOrderDetailService
@@ -22,7 +21,7 @@ namespace app.Services.AssetPurchaseOrderDetailServices
             _iEntityRepository = iEntityRepository;
             _dbContext = dbContext;
         }
-        public async Task<bool> AddRecord(AssetPurchaseOrderDetailViewModel vm)
+        public async Task<bool> AddRecord(AssetPurchaseOrderViewModel vm)
         {
             try
             {
@@ -30,16 +29,16 @@ namespace app.Services.AssetPurchaseOrderDetailServices
                 {
 
                     PurchaseOrderId = vm.Id,
-                    Id = vm.AssetPurchaseOrderVM.Id,
-                    ProductId = vm.AssetPurchaseOrderVM.ProductId,
-                    PurchaseQty = vm.AssetPurchaseOrderVM.PurchaseQty,
-                    Consumption = vm.AssetPurchaseOrderVM.Consumption,
-                    UnitId = vm.AssetPurchaseOrderVM.UnitId,
-                    CostPrice = vm.AssetPurchaseOrderVM.CostPrice,
-                    SalePrice = vm.AssetPurchaseOrderVM.SalePrice,
-                    Discount = vm.AssetPurchaseOrderVM.Discount,
-                    TotalAmount = (vm.AssetPurchaseOrderVM.CostPrice * (decimal)vm.AssetPurchaseOrderVM.PurchaseQty) - vm.AssetPurchaseOrderVM.Discount,
-                    Remarks = vm.AssetPurchaseOrderVM.Remarks
+                    Id = vm.AssetPurchaseOrderDetailVM.Id,
+                    ProductId = vm.AssetPurchaseOrderDetailVM.ProductId,
+                    PurchaseQty = vm.AssetPurchaseOrderDetailVM.PurchaseQty,
+                    Consumption = vm.AssetPurchaseOrderDetailVM.Consumption,
+                    UnitId = vm.AssetPurchaseOrderDetailVM.UnitId,
+                    CostPrice = vm.AssetPurchaseOrderDetailVM.CostPrice,
+                    SalePrice = vm.AssetPurchaseOrderDetailVM.SalePrice,
+                    Discount = vm.AssetPurchaseOrderDetailVM.Discount,
+                    TotalAmount = (vm.AssetPurchaseOrderDetailVM.CostPrice * (decimal)vm.AssetPurchaseOrderDetailVM.PurchaseQty) - vm.AssetPurchaseOrderDetailVM.Discount,
+                    Remarks = vm.AssetPurchaseOrderDetailVM.Remarks
                 };
 
                 var res = await _iEntityRepository.AddAsync(assetPurchaseOrderDetail);
@@ -111,9 +110,9 @@ namespace app.Services.AssetPurchaseOrderDetailServices
             return true;
         }
 
-        public Task<bool> UpdatePurchaseDetail(AssetPurchaseOrderDetailViewModel vm)
-        {
-            throw new NotImplementedException();
-        }
+        //public Task<bool> UpdatePurchaseDetail(AssetPurchaseOrderDetailViewModel vm)
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
 }

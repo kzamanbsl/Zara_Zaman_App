@@ -1,5 +1,5 @@
 ﻿@using app.Utility
-@model app.Services.PurchaseOrderServices.PurchaseOrderViewModel
+@model app.Services.AssetPurchaseOrderServices.AssetPurchaseOrderViewModel
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
@@ -32,7 +32,7 @@
             </div>
             <div class="card-body">
                 <div class="table-responsive">
-                    <table id="PurchaseOrdertable" class="table table-sm table-bordered">
+                    <table id="AssetPurchaseOrdertable" class="table table-sm table-bordered">
                         <thead>
                             <tr>
                                 <th>SL</th>
@@ -47,7 +47,7 @@
                         </thead>
 
                         <tbody>
-                            @foreach (var item in Model.PurchaseOrderList)
+                            @foreach (var item in Model.AssetPurchaseOrderList)
                             {
                                 <tr>
                                     <td style="width:10px;">@(++SN)</td>
@@ -147,9 +147,9 @@
         
         $(document).ready(function () {
             // var reject = document.getElementById('OrderStatusId').val(PurchaseOrderStatusEnum.Reject);
-            $('#Purchases').addClass('menu-open');
-            $('#PurchaseOrderIndex').addClass('active');
-            $('#PurchaseOrdertable').DataTable({
+            $('#Asset-Management').addClass('menu-open');
+            $('#AssetCategoryIndex').addClass('active');
+            $('#AssetPurchaseOrdertable').DataTable({
                 "paging": true,
                 "ordering": true,
                 "info": true,

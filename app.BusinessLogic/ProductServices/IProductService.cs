@@ -1,10 +1,4 @@
-﻿using app.Services.AssetInventoryServices;
-using app.Services.ProductServices;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using app.EntityModel.DataTablePaginationModels;
 
 namespace app.Services.ProductServices
 {
@@ -13,7 +7,9 @@ namespace app.Services.ProductServices
         Task<bool> AddRecord(ProductViewModel vm);
         Task<bool> UpdateRecord(ProductViewModel vm);
         Task<ProductViewModel> GetRecordById(long id);
-        Task<ProductViewModel> GetAllRecord();
         Task<bool> DeleteRecord(long id);
+        Task<ProductViewModel> GetAllRecord();
+        Task<DataTablePagination<ProductSearchDto>> SearchAsync(DataTablePagination<ProductSearchDto> searchDto);
+    
     }
 }
