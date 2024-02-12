@@ -15,5 +15,6 @@ namespace app.Services.AssetPurchaseOrderDetailServices
         Task<bool> DeletePurchaseDetail(long id);
         Task<AssetPurchaseOrderDetailViewModel> SinglePurchaseOrderDetails(long id);
         Task UpdatePurchaseDetail(AssetPurchaseOrderViewModel vm);
+        Task AddRecord(AssetPurchaseOrderViewModel vm);
     }
 }
