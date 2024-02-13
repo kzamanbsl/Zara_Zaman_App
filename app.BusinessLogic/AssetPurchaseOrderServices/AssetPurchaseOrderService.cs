@@ -2,16 +2,26 @@
 using app.Infrastructure.Auth;
 using app.Infrastructure.Repository;
 using app.Infrastructure;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using app.Utility;
-using Microsoft.EntityFrameworkCore;
 using app.Services.AssetPurchaseOrderDetailServices;
+using app.Services.DropdownServices;
+using Microsoft.EntityFrameworkCore;
+using app.Services.ProductServices;
+using app.Services.LeaveBalanceServices;
+using app.Services.JobStatusServices;
+using app.Services.StorehouseServices;
 
 namespace app.Services.AssetPurchaseOrderServices
 {
     public class AssetPurchaseOrderService : IAssetPurchaseOrderService
     {
         private readonly IEntityRepository<PurchaseOrder> _iEntityRepository;
-        private readonly InventoryDbContext _dbContext; 
+        private readonly InventoryDbContext _dbContext;
         private readonly IWorkContext _iWorkContext;
         public AssetPurchaseOrderService(IEntityRepository<PurchaseOrder> iEntityRepository, InventoryDbContext dbContext, IWorkContext iWorkContext)
         {
@@ -82,22 +92,22 @@ namespace app.Services.AssetPurchaseOrderServices
                                                                                     //Discount = t1.Discount,
                                                                                     TotalAmount = ((decimal)t1.PurchaseQty * t1.CostPrice) - t1.Discount,
                                                                                     Remarks = t1.Remarks,
-                                                                                }).OrderByDescending(x => x.Id).AsEnumerable());
+                                                                                }).OrderByDescending(x => x.Id).AsQueryable());
 
 
             return assetPurchaseOrderModel;
         }
 
 
-       
 
-        
+
+
         public async Task<AssetPurchaseOrderViewModel> GetAllRecord()
         {
             AssetPurchaseOrderViewModel assetPurchaseMasterModel = new AssetPurchaseOrderViewModel();
             var dataQuery = await Task.Run(() => (from t1 in _dbContext.PurchaseOrder
-                                                  where t1.IsActive
-                                                  let orderStatus = (PurchaseOrderStatusEnum)t1.OrderStatusId
+                                                  where t1.IsActive == true && t1.PurchaseTypeId == (int)PurchaseTypeEnum.Purchase
+
                                                   select new AssetPurchaseOrderViewModel
                                                   {
                                                       Id = t1.Id,
@@ -109,7 +119,7 @@ namespace app.Services.AssetPurchaseOrderServices
                                                       StoreName = t1.Storehouse.Name,
                                                       OrderStatusId = (int)(PurchaseOrderStatusEnum)t1.OrderStatusId,
 
-                                                  }).OrderByDescending(x => x.Id).AsEnumerable());
+                                                  }).OrderByDescending(x => x.Id).AsQueryable());
 
             assetPurchaseMasterModel.AssetPurchaseOrderList = await Task.Run(() => dataQuery.ToList());
             assetPurchaseMasterModel.AssetPurchaseOrderList.ToList().ForEach((c => c.OrderStatusName = Enum.GetName(typeof(PurchaseOrderStatusEnum), c.OrderStatusId)));
@@ -184,7 +194,7 @@ namespace app.Services.AssetPurchaseOrderServices
                                                                                     //Discount = t1.Discount,
                                                                                     TotalAmount = ((decimal)t1.PurchaseQty * t1.CostPrice) - t1.Discount,
                                                                                     Remarks = t1.Remarks,
-                                                                                }).OrderByDescending(x => x.Id).AsEnumerable());
+                                                                                }).OrderByDescending(x => x.Id).AsQueryable());
 
 
             return assetPurchaseOrderModel;
@@ -204,14 +214,14 @@ namespace app.Services.AssetPurchaseOrderServices
 
         public async Task<bool> UpdateAssetPurchaseOrder(AssetPurchaseOrderViewModel vm)
         {
-            var assetPurchaseOrder = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id == vm.Id);
-            if (assetPurchaseOrder != null)
+            var purchaseOrder = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id == vm.Id);
+            if (purchaseOrder != null)
             {
-                assetPurchaseOrder.Id = vm.Id;
-                assetPurchaseOrder.PurchaseDate = vm.PurchaseDate;
-                assetPurchaseOrder.SupplierId = vm.SupplierId;
-                assetPurchaseOrder.StorehouseId = vm.StorehouseId;
-                await _iEntityRepository.UpdateAsync(assetPurchaseOrder);
+                purchaseOrder.Id = vm.Id;
+                purchaseOrder.PurchaseDate = vm.PurchaseDate;
+                purchaseOrder.SupplierId = vm.SupplierId;
+                purchaseOrder.StorehouseId = vm.StorehouseId;
+                await _iEntityRepository.UpdateAsync(purchaseOrder);
                 return true;
             }
             return false;
