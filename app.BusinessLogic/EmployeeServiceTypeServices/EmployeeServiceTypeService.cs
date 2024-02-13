@@ -60,7 +60,7 @@ namespace app.Services.EmployeeServiceTypeServices
                                                                 {
                                                                     Id = t1.Id,
                                                                     Name = t1.Name,
-                                                                }).AsQueryable());
+                                                                }).AsEnumerable());
             return model;
         }
         public async Task<bool> DeleteRecord(long id)

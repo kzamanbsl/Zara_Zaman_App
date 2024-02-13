@@ -51,18 +51,6 @@ namespace app.Services.EmployeeCategoryServices
             model.Name = result.Name;
             return model;
         }
-        public async Task<EmployeeCategoryViewModel> GetAllRecord()
-        {
-            EmployeeCategoryViewModel model = new EmployeeCategoryViewModel();
-            model.EmployeeCategoryList = await Task.Run(() => (from t1 in _dbContext.EmployeeCategory
-                                                          where t1.IsActive == true
-                                                          select new EmployeeCategoryViewModel
-                                                          {
-                                                              Id = t1.Id,
-                                                              Name = t1.Name,
-                                                          }).AsQueryable());
-            return model;
-        }
         public async Task<bool> DeleteRecord(long id)
         {
             var result = await _iEntityRepository.GetByIdAsync(id);
@@ -70,6 +58,17 @@ namespace app.Services.EmployeeCategoryServices
             await _iEntityRepository.UpdateAsync(result);
             return true;
         }
-
+        public async Task<EmployeeCategoryViewModel> GetAllRecord()
+        {
+            EmployeeCategoryViewModel model = new EmployeeCategoryViewModel();
+            model.EmployeeCategoryList = await Task.Run(() => (from t1 in _dbContext.EmployeeCategory
+                                                               where t1.IsActive == true
+                                                               select new EmployeeCategoryViewModel
+                                                               {
+                                                                   Id = t1.Id,
+                                                                   Name = t1.Name,
+                                                               }).AsEnumerable());
+            return model;
+        }
     }
 }

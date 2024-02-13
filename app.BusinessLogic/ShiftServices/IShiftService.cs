@@ -10,7 +10,7 @@ namespace app.Services.ShiftServices
         Task<bool> UpdateRecord(ShiftViewModel vm);
 
         Task<ShiftViewModel> GetRecordById(long id);
-        Task<ShiftViewModel> GetAllRecord();
         Task<bool> DeleteRecord(long id);
+        Task<ShiftViewModel> GetAllRecord();
     }
 }

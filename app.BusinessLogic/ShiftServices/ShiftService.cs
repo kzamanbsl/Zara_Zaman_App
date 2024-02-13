@@ -63,20 +63,6 @@ namespace app.Services.ShiftServices
             model.EndAt = result.EndAt;
             return model;
         }
-        public async Task<ShiftViewModel> GetAllRecord()
-        {
-            ShiftViewModel model = new ShiftViewModel();
-            model.ShiftList = await Task.Run(() => (from t1 in _dbContext.Shift
-                                                                where t1.IsActive == true
-                                                                select new ShiftViewModel
-                                                                {
-                                                                    Id = t1.Id,
-                                                                    Name = t1.Name,
-                                                                    StartAt = t1.StartAt,
-                                                                    EndAt = t1.EndAt,
-                                                                }).AsEnumerable());
-            return model;
-        }
         public async Task<bool> DeleteRecord(long id)
         {
             var result = await _iEntityRepository.GetByIdAsync(id);
@@ -84,7 +70,21 @@ namespace app.Services.ShiftServices
             await _iEntityRepository.UpdateAsync(result);
             return true;
         }
+        public async Task<ShiftViewModel> GetAllRecord()
+        {
+            ShiftViewModel model = new ShiftViewModel();
+            model.ShiftList = await Task.Run(() => (from t1 in _dbContext.Shift
+                                                    where t1.IsActive == true
+                                                    select new ShiftViewModel
+                                                    {
+                                                        Id = t1.Id,
+                                                        Name = t1.Name,
+                                                        StartAt = t1.StartAt,
+                                                        EndAt = t1.EndAt,
+                                                    }).AsEnumerable());
+            return model;
+        }
 
-       
+
     }
 }
