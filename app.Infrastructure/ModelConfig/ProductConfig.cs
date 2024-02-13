@@ -14,7 +14,7 @@ namespace app.Infrastructure.ModelConfig
         public void Configure(EntityTypeBuilder<Product> builder)
         {
             builder.HasKey(c => c.Id);
-            builder.Property(c => c.Name).HasMaxLength(250);
+            builder.Property(c => c.Name).HasMaxLength(500);
             builder.Property(c => c.Description).HasMaxLength(500);
 
             builder.ToTable(TableNameEnum.Product.ToString());
