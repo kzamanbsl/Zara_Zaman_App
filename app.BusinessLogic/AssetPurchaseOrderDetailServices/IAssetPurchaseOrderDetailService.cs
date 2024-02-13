@@ -10,8 +10,8 @@ namespace app.Services.AssetPurchaseOrderDetailServices
     public interface IAssetPurchaseOrderDetailService
     {
         Task<bool> AddRecord(AssetPurchaseOrderViewModel vm);
-        Task<bool> UpdatePurchaseDetail(AssetPurchaseOrderViewModel vm);
-        Task<bool> DeletePurchaseDetail(long id);
+        Task<bool> UpdateAssetPurchaseDetail(AssetPurchaseOrderViewModel vm);
+        Task<bool> DeleteAssetPurchaseDetail(long id);
         Task<AssetPurchaseOrderDetailViewModel> SingleAssetPurchaseOrderDetails(long id);
 
     }

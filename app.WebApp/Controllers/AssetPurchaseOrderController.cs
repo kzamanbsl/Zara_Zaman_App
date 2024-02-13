@@ -76,7 +76,7 @@ namespace app.WebApp.Controllers
             //This is for Purchase Details single Edit
             else if (vm.ActionEum == ActionEnum.Edit)
             {
-                await _iAssetPurchaseOrderDetailService.UpdatePurchaseDetail(vm);
+                await _iAssetPurchaseOrderDetailService.UpdateAssetPurchaseDetail(vm);
             }
             return RedirectToAction(nameof(AddAssetPurchaseOrderAndDetail), new { assetPurchaseOrderId = vm.Id });
         }
@@ -105,7 +105,7 @@ namespace app.WebApp.Controllers
 
         public async Task<IActionResult> DeleteAssetPurchaseOrderDetailsById(long id, AssetPurchaseOrderViewModel vm)
         {
-            var res = await _iAssetPurchaseOrderDetailService.DeletePurchaseDetail(id);
+            var res = await _iAssetPurchaseOrderDetailService.DeleteAssetPurchaseDetail(id);
             return RedirectToAction(nameof(AddAssetPurchaseOrderAndDetail), new { id = vm.Id });
         }
 

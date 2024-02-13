@@ -52,7 +52,7 @@ namespace app.Services.AssetPurchaseOrderDetailServices
 
         }
 
-        public async Task<bool> UpdatePurchaseDetail(AssetPurchaseOrderViewModel model)
+        public async Task<bool> UpdateAssetPurchaseDetail(AssetPurchaseOrderViewModel model)
         {
             var assetPurchaseOrderDetail = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id == model.AssetPurchaseOrderDetailVM.Id);
             if (assetPurchaseOrderDetail != null)
@@ -96,7 +96,7 @@ namespace app.Services.AssetPurchaseOrderDetailServices
             return v;
         }
 
-        public async Task<bool> DeletePurchaseDetail(long id)
+        public async Task<bool> DeleteAssetPurchaseDetail(long id)
         {
 
             PurchaseOrderDetail assetPurchaseDetails = await _dbContext.PurchaseOrderDetail.FindAsync(id);
