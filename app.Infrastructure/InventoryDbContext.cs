@@ -56,6 +56,9 @@ namespace app.Infrastructure
         public virtual DbSet<PurchaseOrder> PurchaseOrder { get; set; }
         public virtual DbSet<PurchaseOrderDetail> PurchaseOrderDetail { get; set; }
         public virtual DbSet<Inventory> Inventory { get; set; }
+        public virtual DbSet<SalesTermsAndCondition> SalesTermsAndCondition { get; set; }
+        public virtual DbSet<SalesOrder> SalesOrder { get; set; }
+        public virtual DbSet<SalesOrderDetails> SalesOrderDetails { get; set; }
 
         #region ATMAssemble
         public virtual DbSet<AssetInventory> AssetInventory { get; set; }
