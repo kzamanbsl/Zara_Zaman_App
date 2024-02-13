@@ -32,12 +32,12 @@
         Purchase = 1,
         Manufacture       
     }
+
     public enum PurchaseTypeEnum
     {
         Purchase = 1,
         AssetPurchase
     }
-
 
     public enum ProductCategoryTypeEnum
     {
@@ -64,7 +64,24 @@
         SaleCenter,
         ServiceCenter
     }
-    
+
+    public enum SalesOrderStatusEnum
+    {
+        Draft = 1,
+        Confirm,
+        Approve,
+        Receive,
+        Hold,
+        Reject
+    }
+
+    public enum PaymentStatusEnum
+    {
+        Due = 1,
+        Partial,
+        Paid,
+    }
+
     public enum AssembleWorkStatusEnum
     {
         Draft = 1,
@@ -74,4 +91,5 @@
         Hold,
         Reject
     }
+
 }
