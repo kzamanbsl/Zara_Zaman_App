@@ -54,19 +54,6 @@ namespace app.Services.JobStatusServices
             model.Name = result.Name;
             return model;
         }
-        public async Task<JobStatusViewModel> GetAllRecord()
-        {
-            JobStatusViewModel model = new JobStatusViewModel();
-            model.JobStatusList = await Task.Run(() => (from t1 in _dbContext.JobStatus
-                                                          where t1.IsActive == true
-                                                          select new JobStatusViewModel
-                                                          {
-                                                              Id = t1.Id,
-                                                              Name = t1.Name,
-                                                          }).AsQueryable());
-            return model;
-        }
-
         public async Task<bool> DeleteRecord(long id)
         {
             var result = await _iEntityRepository.GetByIdAsync(id);
@@ -75,6 +62,18 @@ namespace app.Services.JobStatusServices
             return true;
         }
 
+        public async Task<JobStatusViewModel> GetAllRecord()
+        {
+            JobStatusViewModel model = new JobStatusViewModel();
+            model.JobStatusList = await Task.Run(() => (from t1 in _dbContext.JobStatus
+                                                        where t1.IsActive == true
+                                                        select new JobStatusViewModel
+                                                        {
+                                                            Id = t1.Id,
+                                                            Name = t1.Name,
+                                                        }).AsEnumerable());
+            return model;
+        }
 
     }
 }

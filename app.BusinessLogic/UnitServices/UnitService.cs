@@ -52,13 +52,6 @@ namespace app.Services.UnitServices
             }
             return false;
         }
-        public async Task<bool> DeleteRecord(long id)
-        {
-            var result = await _iEntityRepository.GetByIdAsync(id);
-            result.IsActive = false;
-            await _iEntityRepository.UpdateAsync(result);
-            return true;
-        }
         public async Task<UnitViewModel> GetRecordById(long id)
         {
             var result = await _iEntityRepository.GetByIdAsync(id);
@@ -66,6 +59,13 @@ namespace app.Services.UnitServices
             model.Id = result.Id;
             model.Name = result.Name;
             return model;
+        }
+        public async Task<bool> DeleteRecord(long id)
+        {
+            var result = await _iEntityRepository.GetByIdAsync(id);
+            result.IsActive = false;
+            await _iEntityRepository.UpdateAsync(result);
+            return true;
         }
         public async Task<UnitViewModel> GetAllRecord()
         {
@@ -76,7 +76,7 @@ namespace app.Services.UnitServices
                                                          {
                                                              Id = t1.Id,
                                                              Name = t1.Name,
-                                                         }).AsQueryable());
+                                                         }).AsEnumerable());
             return model;
         }
 
