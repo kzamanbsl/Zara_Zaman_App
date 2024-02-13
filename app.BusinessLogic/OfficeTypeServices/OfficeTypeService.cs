@@ -55,24 +55,24 @@ namespace app.Services.OfficeTypeServices
             model.Name = result.Name;
             return model;
         }
-        public async Task<OfficeTypeViewModel> GetAllRecord()
-        {
-            OfficeTypeViewModel model = new OfficeTypeViewModel();
-            model.OfficeTypeList = await Task.Run(() => (from t1 in _dbContext.OfficeType
-                                                          where t1.IsActive == true
-                                                          select new OfficeTypeViewModel
-                                                          {
-                                                              Id = t1.Id,
-                                                              Name = t1.Name,
-                                                          }).AsQueryable());
-            return model;
-        }
         public async Task<bool> DeleteRecord(long id)
         {
             var result = await _iEntityRepository.GetByIdAsync(id);
             result.IsActive = false;
             await _iEntityRepository.UpdateAsync(result);
             return true;
+        }
+        public async Task<OfficeTypeViewModel> GetAllRecord()
+        {
+            OfficeTypeViewModel model = new OfficeTypeViewModel();
+            model.OfficeTypeList = await Task.Run(() => (from t1 in _dbContext.OfficeType
+                                                         where t1.IsActive == true
+                                                         select new OfficeTypeViewModel
+                                                         {
+                                                             Id = t1.Id,
+                                                             Name = t1.Name,
+                                                         }).AsEnumerable());
+            return model;
         }
     }
 }
