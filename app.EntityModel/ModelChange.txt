@@ -74,3 +74,9 @@ Date : 02-01-2024
 + PurchaseReturn
 + PurchaseReturnDetail
 + Inventory
+
+Date : 12-02-2024
+===================
++ SalesOrder
++ SalesOrderDetail
+

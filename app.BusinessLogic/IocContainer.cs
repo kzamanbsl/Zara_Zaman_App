@@ -42,6 +42,8 @@ using app.Services.ATMAssemble.AssembleWorkServices;
 using app.Services.ATMAssemble.AssembleWorkDetailServices;
 using app.Services.ATMAssemble.AssembleWorkEmployeeServices;
 using app.Services.InventoryServices;
+using app.Services.AssetPurchaseOrderServices;
+using app.Services.AssetPurchaseOrderDetailServices;
 
 namespace app.Services
 {
@@ -85,6 +87,8 @@ namespace app.Services
             services.AddTransient<IServiceCenterService, ServiceCenterService>();
             services.AddTransient<ISaleCenterService, SaleCenterService>();
             services.AddTransient<IInventoryService, InventoryService>();
+            services.AddTransient<IAssetPurchaseOrderService, AssetPurchaseOrderService>();
+            services.AddTransient<IAssetPurchaseOrderDetailService, AssetPurchaseOrderDetailService>();
 
             #region ATM Assemble
             services.AddTransient<IAssembleWorkCategoryService, AssembleWorkCategoryService>();

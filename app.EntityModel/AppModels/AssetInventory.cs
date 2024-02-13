@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace app.EntityModel.AppModels
+﻿namespace app.EntityModel.AppModels
 {
     public class AssetInventory : BaseEntity
     {
         public DateTime StockDate { get; set; }
-        public int StoreTypeId { get; set; }
+        public int StoreTypeId { get; set; } //Purchase Or Manufecture Enum Value
+        public long StoreFromId { get; set; } //Purchase Or Manufecture
         public long StorehouseId { get; set; }
+        public BusinessCenter Storehouse { get; set; }
         public long ProductId { get; set; }
         public Product Product { get; set; }
         public long UnitId { get; set; }
