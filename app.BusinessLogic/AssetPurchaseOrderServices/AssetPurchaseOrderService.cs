@@ -106,7 +106,7 @@ namespace app.Services.AssetPurchaseOrderServices
         {
             AssetPurchaseOrderViewModel assetPurchaseMasterModel = new AssetPurchaseOrderViewModel();
             var dataQuery = await Task.Run(() => (from t1 in _dbContext.PurchaseOrder
-                                                  where t1.IsActive == true && t1.PurchaseTypeId == (int)PurchaseTypeEnum.Purchase
+                                                  where t1.IsActive == true && t1.PurchaseTypeId == (int)PurchaseTypeEnum.AssetPurchase
 
                                                   select new AssetPurchaseOrderViewModel
                                                   {
@@ -214,14 +214,14 @@ namespace app.Services.AssetPurchaseOrderServices
 
         public async Task<bool> UpdateAssetPurchaseOrder(AssetPurchaseOrderViewModel vm)
         {
-            var purchaseOrder = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id == vm.Id);
-            if (purchaseOrder != null)
+            var assetPurchaseOrder = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id == vm.Id);
+            if (assetPurchaseOrder != null)
             {
-                purchaseOrder.Id = vm.Id;
-                purchaseOrder.PurchaseDate = vm.PurchaseDate;
-                purchaseOrder.SupplierId = vm.SupplierId;
-                purchaseOrder.StorehouseId = vm.StorehouseId;
-                await _iEntityRepository.UpdateAsync(purchaseOrder);
+                assetPurchaseOrder.Id = vm.Id;
+                assetPurchaseOrder.PurchaseDate = vm.PurchaseDate;
+                assetPurchaseOrder.SupplierId = vm.SupplierId;
+                assetPurchaseOrder.StorehouseId = vm.StorehouseId;
+                await _iEntityRepository.UpdateAsync(assetPurchaseOrder);
                 return true;
             }
             return false;
