@@ -13,7 +13,7 @@
                 <li class="breadcrumb-item"><a href="/Admin/Index">Home</a></li>
             </ol>
             <div>
-                <a asp-action="Index"><i class="fa fa-list"></i>Asset Purchase Order List </a>
+                <a asp-action="Index"><i class="fa fa-list"></i> Asset Purchase Order List </a>
             </div>
         </div>
     </div>
@@ -75,7 +75,7 @@
                                 <input asp-for="Id" class="form-control" hidden />
                                 <div class="row">
                                     <div class="col-md-5"></div>
-                                    <div class="col-md-2"> <p style="margin-top:20px;" class="card-title text-info text-center"><span>Asset Purchase Details</span></p></div>
+                                    <div class="col-md-2"> <p style="margin-top:20px;" class="card-title text-info text-center"><span>Purchase Details</span></p></div>
                                     <div class="col-md-5"></div>
                                 </div>
                                 <div class="table-responsive col-md-12 text-nowrap table-bordered">
@@ -123,7 +123,7 @@
                         {
                             <div class="form-group" style="float:right">
                                 <button id="orderReceived" class="linkPointer btn btn-success btn-sm">Received</button>
-                                <button asp-action="RejectPurchaseOrder" method="post" id="orderReject" class="linkPointer btn btn-danger btn-sm">Reject</button>
+                                <button asp-action="RejectAssetPurchaseOrder" method="post" id="orderReject" class="linkPointer btn btn-danger btn-sm">Reject</button>
                             </div>
                         }
                         @if (Model.Id > 0 && Model.OrderStatusId == (int)PurchaseOrderStatusEnum.Reject)
@@ -147,7 +147,7 @@
     <script>
         $(document).ready(function () {
             $('#Asset-Management').addClass('menu-open');
-            $('#PurchaseOrderAddPurchaseOrderAndDetail').addClass('active');
+            $('#AssetPurchaseOrderAddAssetPurchaseOrderAndDetail').addClass('active');
         });
 
         // Reject Purchase Order
@@ -155,12 +155,12 @@
             var id = @Model.Id;
             $.ajax({
                 type: "POST",
-                url: "/PurchaseOrder/RejectPurchaseOrder",
+                url: "/AssetPurchaseOrder/RejectAssetPurchaseOrder",
                 data: { id: id },
                 success: function (result) {
                     if (result) {
                         alert("Reject successfully");
-                        window.location.href = "/PurchaseOrder/Index/";
+                        window.location.href = "/AssetPurchaseOrder/Index/";
 
                     } else {
                         alert("Reject failed");
@@ -178,12 +178,12 @@
             var id = @Model.Id;
             $.ajax({
                 type: "POST",
-                url: "/PurchaseOrder/AddInventory",
+                url: "/AssetPurchaseOrder/AddInventory",
                 data: { id: id },
                 success: function (result) {
                     if (result) {
                         alert("Purchase Store In successfully");
-                        window.location.href = "/PurchaseOrder/Index/";
+                        window.location.href = "/AssetPurchaseOrder/Index/";
 
                     } else {
                         alert("Store In failed");

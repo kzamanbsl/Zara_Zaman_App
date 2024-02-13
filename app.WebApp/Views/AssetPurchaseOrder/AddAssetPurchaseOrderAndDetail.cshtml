@@ -1,7 +1,7 @@
 ﻿@model app.Services.AssetPurchaseOrderServices.AssetPurchaseOrderViewModel
 @using app.Utility
 @{
-    ViewData["Title"] = "AddPurchaseOrderAndDetail";
+    ViewData["Title"] = "AddAssetPurchaseOrderAndDetail";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
     int sl = 0;
 }
@@ -12,7 +12,7 @@
                 <li class="breadcrumb-item"><a href="/Admin/Index">Home</a></li>
             </ol>
             <div>
-                <a asp-action="Index"><i class="fa fa-list"></i> Asset Purchase Order List </a>
+                <a asp-action="Index"><i class="fa fa-list"></i>Asset Purchase Order List </a>
             </div>
         </div>
     </div>
@@ -40,7 +40,7 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-12">
-                        <form asp-action="AddPurchaseOrderAndDetail" method="post">
+                        <form asp-action="AddAssetPurchaseOrderAndDetail" method="post">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                             <input asp-for="Id" class="form-control" hidden id="purchaseorderId" />
                             <input asp-for="ActionId" hidden id="actionId" />
@@ -185,8 +185,8 @@
                                    @*  <div class="col-md-3">
                                         <div class="form-group">
                                             <label>Discount (Taka)</label>
-                                            <input asp-for="PurchaseOrderDetailVM.Discount" id="discount" class="form-control" required min="0" />
-                                            <span asp-validation-for="PurchaseOrderDetailVM.Discount" class="text-danger"></span>
+                                            <input asp-for="AssetPurchaseOrderDetailVM.Discount" id="discount" class="form-control" required min="0" />
+                                            <span asp-validation-for="AssetPurchaseOrderDetailVM.Discount" class="text-danger"></span>
                                         </div>
                                     </div> *@
 
@@ -274,7 +274,7 @@
                         @if (Model.Id > 0 && Model.OrderStatusId == (int)PurchaseOrderStatusEnum.Draft)
                         {
                             <div class="form-group" style="float:right">
-                                <button asp-action="ConfirmPurchaseOrder" method="post" id="confirmButton" class="linkPointer btn btn-success  btn-block">Confirm</button>
+                                <button asp-action="ConfirmAssetPurchaseOrder" method="post" id="confirmButton" class="linkPointer btn btn-success  btn-block">Confirm</button>
                             </div>
                         }
                     </div>
@@ -294,14 +294,14 @@
     <script>
         $(document).ready(function () {
             $('#Asset-Management').addClass('menu-open');
-            $('#AddPurchaseOrderAndDetail').addClass('active');
+            $('#AssetPurchaseOrderAddAssetPurchaseOrderAndDetail').addClass('active');
         });
 
         //Purchase Order Details Edit
         function makeEditble(rowId) {
             $.ajax({
                 type: "POST",
-                url: "@Url.Action("UpdateSinglePurchaseOrderDetails", "AssetPurchaseOrder")",
+                url: "@Url.Action("UpdateSingleAssetPurchaseOrderDetails", "AssetPurchaseOrder")",
                 datatype: "Json",
                 data: { id: rowId },
                 success: function (data) {
@@ -327,12 +327,12 @@
             var id = @Model.Id;
             $.ajax({
                 type: "POST",
-                url: "/PurchaseOrder/ConfirmPurchaseOrder",
+                url: "/AssetPurchaseOrder/ConfirmAssetPurchaseOrder",
                 data: { id: id },
                 success: function (result) {
                     if (result) {
                         alert("Purchase confirmed successfully");
-                        window.location.href = "/PurchaseOrder/Index/";
+                        window.location.href = "/AssetPurchaseOrder/Index/";
 
                     } else {
                         alert("Purchase confirmation failed");
@@ -349,12 +349,12 @@
         function makeDeletable(rowId) {
             $.ajax({
                 type: "GET",
-                url: "@Url.Action("DeletePurchaseOrderDetailsById", "PurchaseOrder")",
+                url: "@Url.Action("DeleteAssetPurchaseOrderDetailsById", "AssetPurchaseOrder")",
                 data: { id: rowId },
                 success: function (data) {
                     if (data) {
                         alert("Delete successfully");
-                        window.location.href = "/PurchaseOrder/Index/";
+                        window.location.href = "/AssetPurchaseOrder/Index/";
 
                     } else {
                         alert("Delete failed");
