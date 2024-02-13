@@ -1,5 +1,5 @@
 ﻿using app.EntityModel.AppModels;
-using app.Services.PurchaseOrderServices;
+using app.Services.AssetPurchaseOrderServices;
 using app.Utility;
 using System;
 using System.Collections.Generic;
@@ -16,8 +16,8 @@ namespace app.Services.AssetPurchaseOrderDetailServices
         public PurchaseOrder PurchaseOrder { get; set; }
 
         [Required(ErrorMessage = "Select Product")]
-        public long ProductId { get; set; }   
-        public string ProductName { get; set; } 
+        public long ProductId { get; set; }
+        public string ProductName { get; set; }
         public Product Product { get; set; }
         public long UnitId { get; set; }
         public Unit Unit { get; set; }
@@ -31,6 +31,6 @@ namespace app.Services.AssetPurchaseOrderDetailServices
         public string Remarks { get; set; }
         public ActionEnum ActionEum { get { return (ActionEnum)this.ActionId; } }
         public int ActionId { get; set; } = 1;
-        public AssetPurchaseOrderDetailViewModel AssetPurchaseOrderVM { get; set; }
+        public AssetPurchaseOrderViewModel AssetPurchaseOrderVM { get; set; }
     }
 }

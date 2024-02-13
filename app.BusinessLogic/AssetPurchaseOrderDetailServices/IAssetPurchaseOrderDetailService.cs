@@ -1,6 +1,9 @@
 ﻿using app.Services.AssetPurchaseOrderServices;
-using app.Services.PurchaseOrderDetailServices;
-using app.Services.PurchaseOrderServices;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace app.Services.AssetPurchaseOrderDetailServices
 {
@@ -9,6 +12,7 @@ namespace app.Services.AssetPurchaseOrderDetailServices
         Task<bool> AddRecord(AssetPurchaseOrderViewModel vm);
         Task<bool> UpdatePurchaseDetail(AssetPurchaseOrderViewModel vm);
         Task<bool> DeletePurchaseDetail(long id);
-        Task<AssetPurchaseOrderDetailViewModel> SinglePurchaseOrderDetails(long id);
+        Task<AssetPurchaseOrderDetailViewModel> SingleAssetPurchaseOrderDetails(long id);
+
     }
 }
