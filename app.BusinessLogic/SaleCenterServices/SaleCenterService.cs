@@ -55,7 +55,6 @@ namespace app.Services.SaleCenterServices
             }
             return false;
         }
-
         public async Task<SaleCenterViewModel> GetRecordById(long id)
         {
             var result = await _iEntityRepository.GetByIdAsync(id);
@@ -68,29 +67,28 @@ namespace app.Services.SaleCenterServices
             model.BusinessCenterTypeId = result.BusinessCenterTypeId;
             return model;
         }
-        public async Task<SaleCenterViewModel> GetAllRecord()
-        {
-            SaleCenterViewModel model = new SaleCenterViewModel();
-            model.SaleCenterList = await Task.Run(() => (from t1 in _dbContext.BusinessCenter
-                                                                where t1.BusinessCenterTypeId == (int)BusinessCenterEnum.SaleCenter && t1.IsActive == true
-                                                                select new SaleCenterViewModel
-                                                                {
-                                                                    Id = t1.Id,
-                                                                    Name = t1.Name,
-                                                                    Code = t1.Code,
-                                                                    Location = t1.Location,
-                                                                    Description = t1.Description,
-                                                                    BusinessCenterTypeId=t1.BusinessCenterTypeId,
-                                                                }).AsQueryable());
-            return model;
-        }
-
         public async Task<bool> DeleteRecord(long id)
         {
             var result = await _iEntityRepository.GetByIdAsync(id);
             result.IsActive = false;
             await _iEntityRepository.UpdateAsync(result);
             return true;
+        }
+        public async Task<SaleCenterViewModel> GetAllRecord()
+        {
+            SaleCenterViewModel model = new SaleCenterViewModel();
+            model.SaleCenterList = await Task.Run(() => (from t1 in _dbContext.BusinessCenter
+                                                         where t1.BusinessCenterTypeId == (int)BusinessCenterEnum.SaleCenter && t1.IsActive == true
+                                                         select new SaleCenterViewModel
+                                                         {
+                                                             Id = t1.Id,
+                                                             Name = t1.Name,
+                                                             Code = t1.Code,
+                                                             Location = t1.Location,
+                                                             Description = t1.Description,
+                                                             BusinessCenterTypeId = t1.BusinessCenterTypeId,
+                                                         }).AsEnumerable());
+            return model;
         }
     }
 }
