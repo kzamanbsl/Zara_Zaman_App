@@ -12,7 +12,7 @@ namespace app.Services.AssetCategoryServices
         Task<bool> AddRecord(AssetCategoryViewModel vm);
         Task<bool> UpdateRecord(AssetCategoryViewModel vm);
         Task<AssetCategoryViewModel> GetRecordById(long id);
-        Task<AssetCategoryViewModel> GetAllRecord();
         Task<bool> DeleteRecord(long id);
+        Task<AssetCategoryViewModel> GetAllRecord();
     }
 }
