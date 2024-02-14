@@ -1,12 +1,5 @@
 ﻿using app.EntityModel.AppModels;
-using app.Services.PurchaseOrderServices;
-using app.Utility;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace app.Services.PurchaseOrderDetailServices
 {
@@ -29,8 +22,8 @@ namespace app.Services.PurchaseOrderDetailServices
         public decimal Discount { get; set; }
         public decimal TotalAmount { get; set; }
         public string Remarks { get; set; }
-        public ActionEnum ActionEum { get { return (ActionEnum)this.ActionId; } }
-        public int ActionId { get; set; } = 1;
-        public PurchaseOrderViewModel PurchaseOrderVM { get; set; }
+        //public ActionEnum ActionEum { get { return (ActionEnum)this.ActionId; } }
+        //public int ActionId { get; set; } = 1;
+        //public PurchaseOrderViewModel PurchaseOrderVM { get; set; }
     }
 }

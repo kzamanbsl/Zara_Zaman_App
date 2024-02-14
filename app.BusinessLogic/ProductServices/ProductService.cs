@@ -44,8 +44,6 @@ namespace app.Services.ProductServices
 
         public async Task<bool> UpdateRecord(ProductViewModel vm)
         {
-
-            //var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim());
             var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.CategoryId == vm.CategoryId && f.Name.Trim() == vm.Name.Trim() && f.Id != vm.Id && f.IsActive == true);
             if (checkName == null)
             {
