@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using app.Infrastructure;
 
@@ -11,9 +12,10 @@ using app.Infrastructure;
 namespace app.Infrastructure.Migrations
 {
     [DbContext(typeof(InventoryDbContext))]
-    partial class InventoryDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240214033850_AddIsForServiceInSalesDetails")]
+    partial class AddIsForServiceInSalesDetails
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1306,15 +1308,6 @@ namespace app.Infrastructure.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
-                    b.Property<bool>("HasModelNo")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("HasSerialNo")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("HasWarranty")
-                        .HasColumnType("bit");
-
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
@@ -1601,9 +1594,6 @@ namespace app.Infrastructure.Migrations
                     b.Property<bool?>("IsForService")
                         .HasColumnType("bit");
 
-                    b.Property<string>("ModelNo")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<long>("ProductId")
                         .HasColumnType("bigint");
 
@@ -1619,9 +1609,6 @@ namespace app.Infrastructure.Migrations
                     b.Property<decimal>("SalesQty")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<string>("SerialNo")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<decimal>("TotalAmount")
                         .HasColumnType("decimal(18,2)");
 
@@ -1632,12 +1619,6 @@ namespace app.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("UpdatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("WarrantyFormDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("WarrantyToDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -2385,14 +2366,14 @@ namespace app.Infrastructure.Migrations
                         new
                         {
                             Id = "8e445865-a24d-4543-a6c6-9443d048cdb9",
-                            ConcurrencyStamp = "cbc88a7e-76a6-41a2-8b5a-12ac03266685",
+                            ConcurrencyStamp = "f2106f89-7467-4f12-b918-32ff5c384d08",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         },
                         new
                         {
                             Id = "2c5e174e-3b0e-446f-86af-483d56fd7210",
-                            ConcurrencyStamp = "dd2f0fca-603b-430c-b61b-999caf16627f",
+                            ConcurrencyStamp = "441aa1b5-da5e-465d-891f-29392722b4e3",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });

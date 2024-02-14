@@ -32,6 +32,9 @@ namespace app.Services.ProductServices
                 com.UnitId = vm.UnitId;
                 com.CategoryId = vm.CategoryId;
                 com.ProductTypeId = vm.ProductTypeId;
+                com.HasModelNo = vm.HasModelNo;
+                com.HasSerialNo = vm.HasSerialNo;
+                com.HasWarranty = vm.HasWarranty;
                 var res = await _iEntityRepository.AddAsync(com);
                 vm.Id = res.Id;
                 return true;
@@ -54,6 +57,9 @@ namespace app.Services.ProductServices
                 result.UnitId = vm.UnitId;
                 result.CategoryId = vm.CategoryId;
                 result.ProductTypeId = vm.ProductTypeId;
+                result.HasModelNo = vm.HasModelNo;
+                result.HasSerialNo = vm.HasSerialNo;
+                result.HasWarranty = vm.HasWarranty;
                 await _iEntityRepository.UpdateAsync(result);
                 return true;
             }
@@ -74,6 +80,9 @@ namespace app.Services.ProductServices
             model.CategoryId = result.CategoryId;
             model.CategoryName = result.Category?.Name;
             model.ProductTypeId = result.ProductTypeId;
+            model.HasModelNo = result.HasModelNo;
+            model.HasSerialNo = result.HasSerialNo;
+            model.HasWarranty = result.HasWarranty;
             return model;
         }
 
