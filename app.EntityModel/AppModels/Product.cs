@@ -11,6 +11,9 @@
         public Unit Unit { get; set; }
         public long CategoryId { get; set; }
         public ProductCategory Category { get; set; }
+        public bool HasWarranty { get; set; }
+        public bool HasSerialNo { get; set; }
+        public bool HasModelNo { get; set; }
 
     }
 }

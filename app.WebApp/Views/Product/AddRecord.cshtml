@@ -4,6 +4,17 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
+<style>
+    .checkbox-container {
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .checkbox-item {
+        margin-right: 20px;
+    }
+</style>
+
 <div class="content-header">
     <div class="container-fluid ">
         <div class="breadcrumb d-flex justify-content-between align-items-center  pl-3 pr-3">
@@ -87,6 +98,27 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="row">
+                                <div class="checkbox-container">
+                                    <div class="checkbox-item">
+                                        <label>
+                                            <input type="checkbox" asp-for="HasWarranty" /> Has Warranty
+                                        </label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <label>
+                                            <input type="checkbox" asp-for="HasSerialNo" /> Has Serial No
+                                        </label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <label>
+                                            <input type="checkbox" asp-for="HasModelNo" /> Has Model No
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="form-group" style="float:right">
                                 <input type="submit" value="Create" class="btn btn-primary" />
                             </div>
