@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace app.Services.AssetPurchaseOrderDetailServices
 {
+
     public class AssetPurchaseOrderDetailService : IAssetPurchaseOrderDetailService
     {
         private readonly IEntityRepository<PurchaseOrderDetail> _iEntityRepository;

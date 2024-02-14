@@ -110,7 +110,7 @@ namespace app.WebApp.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> PurchaseDetails(long id = 0)
+        public async Task<IActionResult> AssetPurchaseDetails(long id = 0)
         {
             AssetPurchaseOrderViewModel viewModel = await _iAssetPurchaseOrderService.GetAssetPurchaseOrderDetails(id);
             return View(viewModel);
@@ -138,7 +138,7 @@ namespace app.WebApp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> UpdatePurchaseMaster(AssetPurchaseOrderViewModel vm)
+        public async Task<IActionResult> UpdateAssetPurchaseMaster(AssetPurchaseOrderViewModel vm)
         {
             var res = await _iAssetPurchaseOrderService.UpdateAssetPurchaseOrder(vm);
             return RedirectToAction("Index");

@@ -38,6 +38,8 @@
         PurchaseOrder,
         PurchaseOrderDetail,
         AssetInventory,
+        Inventory,
+        SalesTermsAndCondition,
 
         #region ATMAssemble
         AssembleWorkCategory,
