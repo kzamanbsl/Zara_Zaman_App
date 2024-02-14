@@ -53,15 +53,6 @@ namespace app.Services.ATMAssemble.AssembleWorkCategoryServices
                 return false;
             }
         }
-
-        public async Task<bool> DeleteRecord(long id)
-        {
-            var result = await _iEntityRepository.GetByIdAsync(id);
-            result.IsActive = false;
-            await _iEntityRepository.UpdateAsync(result);
-            return true;
-        }
-
         public async Task<AssembleWorkCategoryViewModel> GetRecordById(long id)
         {
             var result = await _iEntityRepository.GetByIdAsync(id);
@@ -71,7 +62,13 @@ namespace app.Services.ATMAssemble.AssembleWorkCategoryServices
             model.Description = result.Description;
             return model;
         }
-
+        public async Task<bool> DeleteRecord(long id)
+        {
+            var result = await _iEntityRepository.GetByIdAsync(id);
+            result.IsActive = false;
+            await _iEntityRepository.UpdateAsync(result);
+            return true;
+        }
         public async Task<AssembleWorkCategoryViewModel> GetAllRecord()
         {
             AssembleWorkCategoryViewModel model = new AssembleWorkCategoryViewModel();
@@ -82,7 +79,7 @@ namespace app.Services.ATMAssemble.AssembleWorkCategoryServices
                                                                        Id = t1.Id,
                                                                        Name = t1.Name,
                                                                        Description = t1.Description,
-                                                                   }).AsQueryable());
+                                                                   }).AsEnumerable());
             return model;
         }
 
