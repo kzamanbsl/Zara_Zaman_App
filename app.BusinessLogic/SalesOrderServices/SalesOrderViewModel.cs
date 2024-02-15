@@ -1,6 +1,10 @@
-﻿namespace app.EntityModel.AppModels
+﻿using app.EntityModel.AppModels;
+using app.Services.SalesOrderDetailServices;
+using app.Utility;
+
+namespace app.Services.SalesOrderServices
 {
-    public class SalesOrder : BaseEntity
+    public class SalesOrderViewModel : BaseViewModel
     {
         public string OrderNo { get; set; }
         public DateTime SalesDate { get; set; }
@@ -12,9 +16,13 @@
         public string Description { get; set; }
         public string TermsAndCondition { get; set; }
         public DateTime? DeliveryDate { get; set; }
-        public string DeliveryAddress { get; set; }     
+        public string DeliveryAddress { get; set; }
         public int OrderStatusId { get; set; } //SalesOrderStatusEnum
         public int PaymentStatusId { get; set; } //PaymentStatusEnum
-
+        public ActionEnum ActionEum { get { return (ActionEnum)this.ActionId; } }
+        public int ActionId { get; set; } = 1;
+        public SalesOrderDetailViewModel SalesOrderDetailVM { get; set; }
+        public IEnumerable<SalesOrderViewModel> SalesOrderList { get; set; }
+        public IEnumerable<SalesOrderDetailViewModel> SalesOrderDetailsList { get; set; }
     }
 }
