@@ -145,6 +145,16 @@ namespace app.Services.AttendanceServices
 
             return vm;
         }
+        
+        public async Task<bool> DeleteRecord(long id)
+        {
+            var result = await _iEntityRepository.GetByIdAsync(id)
+;
+            result.IsActive = false;
+            await _iEntityRepository.UpdateAsync(result);
+            return true;
+        }
+
         public async Task<AttendanceViewModel> GetAllRecord()
         {
             AttendanceViewModel model = new AttendanceViewModel();
@@ -161,16 +171,8 @@ namespace app.Services.AttendanceServices
                                                              LoginTime = t1.LoginTime,
                                                              LogoutTime = t1.LogoutTime,
                                                              Remarks = t1.Remarks,
-                                                         }).AsQueryable());
+                                                         }).AsEnumerable());
             return model;
-        }
-        public async Task<bool> DeleteRecord(long id)
-        {
-            var result = await _iEntityRepository.GetByIdAsync(id)
-;
-            result.IsActive = false;
-            await _iEntityRepository.UpdateAsync(result);
-            return true;
         }
     }
 }
