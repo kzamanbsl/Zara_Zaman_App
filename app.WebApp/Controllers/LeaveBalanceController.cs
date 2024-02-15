@@ -1,6 +1,8 @@
-﻿using app.Services.CompanyServices;
+﻿using app.EntityModel.DataTablePaginationModels;
+using app.Services.CompanyServices;
 using app.Services.DropdownServices;
 using app.Services.LeaveBalanceServices;
+using app.Services.ProductServices;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -71,5 +73,24 @@ namespace app.WebApp.Controllers
             var res = await _iService.DeleteRecord(id);
             return RedirectToAction("Index");
         }
+
+        #region Search
+
+        [HttpGet]
+        public async Task<IActionResult> Search()
+        {
+            ViewBag.leaveCategory = new SelectList((await _iDropdownService.LeaveCategorySelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
+            //ViewBag.leaveQty = new SelectList((await _iDropdownService.LeaveCategorySelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Search(DataTablePagination<LeaveBalanceSearchDto> searchDto)
+        {
+            var dataTable = await _iService.SearchAsync(searchDto);
+            return Json(dataTable);
+        }
+
+        #endregion
     }
 }
