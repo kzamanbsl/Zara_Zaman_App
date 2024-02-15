@@ -9,12 +9,12 @@ namespace app.Services.LeaveApplicationServices
         Task<bool> UpdateRecord(LeaveApplicationViewModel vm);
        
         Task<LeaveApplicationViewModel> GetRecordById(long id);
-        Task<LeaveApplicationViewModel> GetAllRecord();
         Task<IEnumerable<LeaveBalanceCountViewModel>> GetLeaveBalanceByEmployeeId(long employeeId);
         Task<bool> ConfirmRecord(long id);
         Task<bool> ApproveRecord(long id);
         Task<bool> RejectRecord(long id);
         Task<bool> DeleteRecord(long id);
-        
+        Task<LeaveApplicationViewModel> GetAllRecord();
+
     }
 }

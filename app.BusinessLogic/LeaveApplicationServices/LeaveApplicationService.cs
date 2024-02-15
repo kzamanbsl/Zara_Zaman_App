@@ -45,7 +45,6 @@ namespace app.Services.LeaveApplicationServices
             }
             return false;
         }
-
         public async Task<bool> UpdateRecord(LeaveApplicationViewModel vm)
         {
 
@@ -90,36 +89,6 @@ namespace app.Services.LeaveApplicationServices
             model.Remarks = result.Remarks;
             model.ApplicationDate = result.ApplicationDate;
             model.StatusId = result.StatusId;
-            return model;
-        }
-        public async Task<LeaveApplicationViewModel> GetAllRecord()
-        {
-            LeaveApplicationViewModel model = new LeaveApplicationViewModel();
-            model.LeaveApplicationList = await Task.Run(() =>
-            {
-                var query = from t1 in _dbContext.LeaveApplication
-                            where t1.IsActive == true
-                            select new LeaveApplicationViewModel
-                            {
-                                Id = t1.Id,
-                                EmployeeId = t1.EmployeeId,
-                                EmployeeName = t1.Employee.Name,
-                                ManagerName = t1.Manager.Name,
-                                LeaveCategoryId = t1.LeaveCategoryId,
-                                LeaveCategoryName = t1.LeaveCategory.Name,
-                                StartDate = t1.StartDate,
-                                EndDate = t1.EndDate,
-                                LeaveDays = t1.LeaveDays,
-                                StayDuringLeave = t1.StayDuringLeave,
-                                Reason = t1.Reason,
-                                Remarks = t1.Remarks,
-                                StatusId = t1.StatusId,
-                                ApplicationDate = t1.ApplicationDate,
-                            };
-
-                return query.AsQueryable();
-            });
-
             return model;
         }
         public async Task<IEnumerable<LeaveBalanceCountViewModel>> GetLeaveBalanceByEmployeeId(long employeeId)
@@ -192,7 +161,36 @@ namespace app.Services.LeaveApplicationServices
             await _iEntityRepository.UpdateAsync(result);
             return true;
         }
+        public async Task<LeaveApplicationViewModel> GetAllRecord()
+        {
+            LeaveApplicationViewModel model = new LeaveApplicationViewModel();
+            model.LeaveApplicationList = await Task.Run(() =>
+            {
+                var query = from t1 in _dbContext.LeaveApplication
+                            where t1.IsActive == true
+                            select new LeaveApplicationViewModel
+                            {
+                                Id = t1.Id,
+                                EmployeeId = t1.EmployeeId,
+                                EmployeeName = t1.Employee.Name,
+                                ManagerName = t1.Manager.Name,
+                                LeaveCategoryId = t1.LeaveCategoryId,
+                                LeaveCategoryName = t1.LeaveCategory.Name,
+                                StartDate = t1.StartDate,
+                                EndDate = t1.EndDate,
+                                LeaveDays = t1.LeaveDays,
+                                StayDuringLeave = t1.StayDuringLeave,
+                                Reason = t1.Reason,
+                                Remarks = t1.Remarks,
+                                StatusId = t1.StatusId,
+                                ApplicationDate = t1.ApplicationDate,
+                            };
 
+                return query.AsEnumerable();
+            });
+
+            return model;
+        }
 
     }
 }
