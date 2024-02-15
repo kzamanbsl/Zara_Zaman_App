@@ -58,24 +58,24 @@ namespace app.Services.LeaveCategoryServices
             model.Name = result.Name;
             return model;
         }
-        public async Task<LeaveCategoryViewModel> GetAllRecord()
-        {
-            LeaveCategoryViewModel model = new LeaveCategoryViewModel();
-            model.LeaveCategoryList = await Task.Run(() => (from t1 in _dbContext.LeaveCategory
-                where t1.IsActive == true
-                select new LeaveCategoryViewModel
-                {
-                    Id = t1.Id,
-                    Name = t1.Name,
-                }).AsQueryable());
-            return model;
-        }
         public async Task<bool> DeleteRecord(long id)
         {
             var result = await _iEntityRepository.GetByIdAsync(id);
             result.IsActive = false;
             await _iEntityRepository.UpdateAsync(result);
             return true;
+        }
+        public async Task<LeaveCategoryViewModel> GetAllRecord()
+        {
+            LeaveCategoryViewModel model = new LeaveCategoryViewModel();
+            model.LeaveCategoryList = await Task.Run(() => (from t1 in _dbContext.LeaveCategory
+                                                            where t1.IsActive == true
+                                                            select new LeaveCategoryViewModel
+                                                            {
+                                                                Id = t1.Id,
+                                                                Name = t1.Name,
+                                                            }).AsEnumerable());
+            return model;
         }
     }
 }
