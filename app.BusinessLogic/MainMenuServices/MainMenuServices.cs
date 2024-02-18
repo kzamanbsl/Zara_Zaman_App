@@ -66,12 +66,7 @@ namespace app.Services.MainMenuServices
             model.IsActive = menu.IsActive;
             return model;
         }
-        public async Task<List<MainMenu>> GetAllRecord()
-        {
-            List<MainMenu> getItem = await _entityRepository.AllIQueryableAsync().OrderBy(d => d.OrderNo).ToListAsync();
-            return getItem;
-        }
-
+        
         public async Task<bool> DeleteRecord(long id)
         {
             var getItem = await _entityRepository.GetByIdAsync(id);
@@ -86,6 +81,11 @@ namespace app.Services.MainMenuServices
                 return false;
             }
             return false;
+        }
+        public async Task<List<MainMenu>> GetAllRecord()
+        {
+            List<MainMenu> getItem = await _entityRepository.AllIQueryableAsync().OrderBy(d => d.OrderNo).ToListAsync();
+            return getItem;
         }
 
     }
