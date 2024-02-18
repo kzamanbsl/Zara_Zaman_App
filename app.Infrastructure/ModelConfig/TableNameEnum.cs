@@ -40,7 +40,6 @@
         AssetInventory,
         Inventory,
         SalesTermsAndCondition,
-
         #region ATMAssemble
         AssembleWorkCategory,
         AssembleWorkStep,

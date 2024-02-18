@@ -10,6 +10,6 @@ namespace app.Services.IAssetnventoryServices
 {
     public interface IAssetInventoryService
     {
-        Task<bool> AddInventory(long id);
+        Task<bool> AddAssetInventory(long id);
     }
 }
