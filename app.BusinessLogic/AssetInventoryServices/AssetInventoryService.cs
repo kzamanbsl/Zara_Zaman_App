@@ -18,10 +18,10 @@ namespace app.Services.AssetInventoryServices
 {
     public class AssetInventoryService : IAssetInventoryService
     {
-        private readonly IEntityRepository<Inventory> _iEntityRepository;
+        private readonly IEntityRepository<AssetInventory> _iEntityRepository;
         private readonly InventoryDbContext _dbContext;
         private readonly IWorkContext _iWorkContext;
-        public AssetInventoryService(IEntityRepository<Inventory> iEntityRepository, InventoryDbContext dbContext, IWorkContext iWorkContext)
+        public AssetInventoryService(IEntityRepository<AssetInventory> iEntityRepository, InventoryDbContext dbContext, IWorkContext iWorkContext)
         {
             _iEntityRepository = iEntityRepository;
             _dbContext = dbContext;
@@ -29,7 +29,7 @@ namespace app.Services.AssetInventoryServices
         }
    
 
-        public async Task<bool> AddInventory(long id = 0)
+        public async Task<bool> AddAssetInventory(long id = 0)
         {
             AssetPurchaseOrderViewModel assetPurchaseOrderModel = await Task.Run(() =>
                 (from t1 in _dbContext.PurchaseOrder
@@ -71,7 +71,7 @@ namespace app.Services.AssetInventoryServices
 
             foreach (var detail in assetPurchaseOrderModel.AssetPurchaseOrderDetailsList)
             {
-                Inventory inventory = new Inventory
+                AssetInventory assetInventory = new AssetInventory
                 {
                     StoreFromId = detail.PurchaseOrderId,
                     StoreTypeId = (int)StoreTypeEnum.Purchase,
@@ -84,7 +84,7 @@ namespace app.Services.AssetInventoryServices
                     Consumption = detail?.Consumption ?? 0,
                     Remarks = detail.Remarks,
                 };
-                var res = await _iEntityRepository.AddAsync(inventory);
+                var res = await _iEntityRepository.AddAsync(assetInventory);
                 detail.Id = res?.Id ?? 0;
             }
             var assetPurchaseOrder = await _dbContext.PurchaseOrder.FirstOrDefaultAsync(x => x.Id == id && x.IsActive); ;
