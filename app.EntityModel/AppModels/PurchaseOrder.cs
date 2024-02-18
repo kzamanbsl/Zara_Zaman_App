@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace app.EntityModel.AppModels
 {
-    public class PurchaseOrder : BaseEntity
+    public class PurchaseOrderList : BaseEntity
     {
         public DateTime PurchaseDate { get; set; }
         public string Description { get; set; }

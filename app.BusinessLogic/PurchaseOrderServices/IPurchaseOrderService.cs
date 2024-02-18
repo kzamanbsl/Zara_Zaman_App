@@ -1,4 +1,5 @@
-﻿using app.Services.JobStatusServices;
+﻿using app.EntityModel.DataTablePaginationModels;
+using app.Services.JobStatusServices;
 using app.Services.ProductServices;
 using app.Services.PurchaseOrderDetailServices;
 using System;
@@ -19,6 +20,7 @@ namespace app.Services.PurchaseOrderServices
         Task<bool> RejectPurchaseOrder(long id);
         Task<bool> DeletePurchaseOrder(long id);
         Task<PurchaseOrderViewModel> GetAllRecord();
+        Task<DataTablePagination<PurchaseOrderSearchDto>> SearchAsync(DataTablePagination<PurchaseOrderSearchDto> searchDto);
 
     }
 }

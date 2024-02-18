@@ -22,10 +22,10 @@ namespace app.Services.PurchaseOrderServices
 {
     public class SalesOrderDetailService : ISalesOrderDetailService
     {
-        private readonly IEntityRepository<PurchaseOrder> _iEntityRepository;
+        private readonly IEntityRepository<PurchaseOrderList> _iEntityRepository;
         private readonly InventoryDbContext _dbContext;
         private readonly IWorkContext _iWorkContext;
-        public SalesOrderDetailService(IEntityRepository<PurchaseOrder> iEntityRepository, InventoryDbContext dbContext, IWorkContext iWorkContext)
+        public SalesOrderDetailService(IEntityRepository<PurchaseOrderList> iEntityRepository, InventoryDbContext dbContext, IWorkContext iWorkContext)
         {
             _iEntityRepository = iEntityRepository;
             _dbContext = dbContext;
@@ -46,7 +46,7 @@ namespace app.Services.PurchaseOrderServices
                            DateTime.Now.ToString("dd") + "-" +
                            poMax.ToString().PadLeft(2, '0');
 
-            PurchaseOrder purchaseOrder = new PurchaseOrder();
+            PurchaseOrderList purchaseOrder = new PurchaseOrderList();
             purchaseOrder.OrderNo = poCid;
             purchaseOrder.PurchaseDate = vm.PurchaseDate;
             purchaseOrder.SupplierId = vm.SupplierId;

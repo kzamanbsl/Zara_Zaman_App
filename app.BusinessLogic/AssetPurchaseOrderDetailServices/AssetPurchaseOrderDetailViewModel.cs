@@ -13,7 +13,7 @@ namespace app.Services.AssetPurchaseOrderDetailServices
     public class AssetPurchaseOrderDetailViewModel : BaseViewModel
     {
         public long PurchaseOrderId { get; set; }
-        public PurchaseOrder PurchaseOrder { get; set; }
+        public PurchaseOrderList PurchaseOrder { get; set; }
 
         [Required(ErrorMessage = "Select Product")]
         public long ProductId { get; set; }

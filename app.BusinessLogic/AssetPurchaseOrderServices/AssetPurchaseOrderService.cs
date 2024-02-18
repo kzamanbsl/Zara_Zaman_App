@@ -20,10 +20,10 @@ namespace app.Services.AssetPurchaseOrderServices
 {
     public class AssetPurchaseOrderService : IAssetPurchaseOrderService
     {
-        private readonly IEntityRepository<PurchaseOrder> _iEntityRepository;
+        private readonly IEntityRepository<PurchaseOrderList> _iEntityRepository;
         private readonly InventoryDbContext _dbContext;
         private readonly IWorkContext _iWorkContext;
-        public AssetPurchaseOrderService(IEntityRepository<PurchaseOrder> iEntityRepository, InventoryDbContext dbContext, IWorkContext iWorkContext)
+        public AssetPurchaseOrderService(IEntityRepository<PurchaseOrderList> iEntityRepository, InventoryDbContext dbContext, IWorkContext iWorkContext)
         {
             _iEntityRepository = iEntityRepository;
             _dbContext = dbContext;
@@ -44,7 +44,7 @@ namespace app.Services.AssetPurchaseOrderServices
                            DateTime.Now.ToString("dd") + "-" +
                            poMax.ToString().PadLeft(2, '0');
 
-            PurchaseOrder assetPurchaseOrder = new PurchaseOrder();
+            PurchaseOrderList assetPurchaseOrder = new PurchaseOrderList();
             assetPurchaseOrder.OrderNo = poCid;
             assetPurchaseOrder.PurchaseDate = vm.PurchaseDate;
             assetPurchaseOrder.SupplierId = vm.SupplierId;

@@ -15,15 +15,16 @@ using app.Services.ProductServices;
 using app.Services.LeaveBalanceServices;
 using app.Services.JobStatusServices;
 using app.Services.StorehouseServices;
+using app.EntityModel.DataTablePaginationModels;
 
 namespace app.Services.PurchaseOrderServices
 {
     public class PurchaseOrderService : IPurchaseOrderService
     {
-        private readonly IEntityRepository<PurchaseOrder> _iEntityRepository;
+        private readonly IEntityRepository<PurchaseOrderList> _iEntityRepository;
         private readonly InventoryDbContext _dbContext;
         private readonly IWorkContext _iWorkContext;
-        public PurchaseOrderService(IEntityRepository<PurchaseOrder> iEntityRepository, InventoryDbContext dbContext, IWorkContext iWorkContext)
+        public PurchaseOrderService(IEntityRepository<PurchaseOrderList> iEntityRepository, InventoryDbContext dbContext, IWorkContext iWorkContext)
         {
             _iEntityRepository = iEntityRepository;
             _dbContext = dbContext;
@@ -44,7 +45,7 @@ namespace app.Services.PurchaseOrderServices
                            DateTime.Now.ToString("dd") + "-" +
                            poMax.ToString().PadLeft(2, '0');
 
-            PurchaseOrder purchaseOrder = new PurchaseOrder();
+            PurchaseOrderList purchaseOrder = new PurchaseOrderList();
             purchaseOrder.OrderNo = poCid;
             purchaseOrder.PurchaseDate = vm.PurchaseDate;
             purchaseOrder.SupplierId = vm.SupplierId;
@@ -218,6 +219,70 @@ namespace app.Services.PurchaseOrderServices
                 master.TotalAmount = (double)(total ?? 0);
             }
             return purchaseMasterModel;
+        }
+        public async Task<DataTablePagination<PurchaseOrderSearchDto>> SearchAsync(DataTablePagination<PurchaseOrderSearchDto> searchDto)
+        {
+            var searchResult = _dbContext.PurchaseOrder.Include(c => c.StorehouseId).Include(c => c.SupplierId).Include(c => c.OrderStatusId).AsNoTracking();
+
+            var searchModel = searchDto.SearchVm;
+            var filter = searchDto?.Search?.Value?.Trim();
+            if (searchModel?.StorehouseId is > 0)
+            {
+                searchResult = searchResult.Where(c => c.StorehouseId == searchModel.StorehouseId);
+            }
+            if (searchModel?.SupplierId is > 0)
+            {
+                searchResult = searchResult.Where(c => c.SupplierId == searchModel.SupplierId);
+            }
+            if (searchModel?.OrderStatusId is > 0)
+            {
+                searchResult = searchResult.Where(c => c.OrderStatusId == searchModel.OrderStatusId);
+            }
+            if (!string.IsNullOrEmpty(filter))
+            {
+                filter = filter.ToLower();
+                searchResult = searchResult.Where(c =>
+                    c.OrderNo.ToLower().Contains(filter)
+                    || c.PurchaseDate.ToString().Contains(filter)
+                    || c.Supplier.ToString().Contains(filter)
+                    || c.Storehouse.Name.ToLower().Contains(filter)
+                );
+            }
+
+            var pageSize = searchDto.Length ?? 0;
+            var skip = searchDto.Start ?? 0;
+
+            var totalRecords = await searchResult.CountAsync();
+            if (totalRecords <= 0) return searchDto;
+
+            searchDto.RecordsTotal = totalRecords;
+            searchDto.RecordsFiltered = totalRecords;
+            List<PurchaseOrderList> filteredDataList = await searchResult
+        .OrderByDescending(c => c.Id)
+        .Skip(skip)
+        .Take(pageSize)
+        .ToListAsync();
+
+            var sl = searchDto.Start ?? 0;
+            searchDto.Data = (from t1 in filteredDataList
+                              join t2 in _dbContext.PurchaseOrderDetail on t1.Id equals t2.PurchaseOrderId // Assuming PurchaseOrderId is the common property
+                              select new PurchaseOrderSearchDto
+                              {
+                                  SerialNo = ++sl,
+                                  Id = t1.Id,
+                                  OrderNo = t1.OrderNo,
+                                  PurchaseDate = t1.PurchaseDate,
+                                  StorehouseId = t1.StorehouseId,
+                                  Storehouse = t1.Storehouse,
+                                  OrderStatusId = (int)(PurchaseOrderStatusEnum)t1.OrderStatusId,
+                                  SupplierId = t1.SupplierId,
+                                  Supplier = t1.Supplier,
+                                  TotalAmount =(double)t2.TotalAmount,
+                                  // You might need to include properties from t2 (PurchaseOrderDetail) here as needed
+                              }).ToList();
+
+
+            return searchDto;
         }
 
     }

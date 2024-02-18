@@ -1,6 +1,8 @@
 ﻿using app.EntityModel.AppModels;
+using app.EntityModel.DataTablePaginationModels;
 using app.Services.DropdownServices;
 using app.Services.InventoryServices;
+using app.Services.ProductServices;
 using app.Services.PurchaseOrderDetailServices;
 using app.Services.PurchaseOrderServices;
 using app.Utility;
@@ -143,6 +145,26 @@ namespace app.WebApp.Controllers
             var res = await _iPurchaseOrderService.UpdatePurchaseOrder(vm);            
             return RedirectToAction("Index");
         }
+
+        #region Search
+
+        [HttpGet]
+        public async Task<IActionResult> Search()
+        {
+            ViewBag.Storehouses = new SelectList((await _iDropdownService.StorehouseSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
+            ViewBag.Suppliers = new SelectList((await _iDropdownService.SupplierSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
+            ViewBag.OrderStatus = new SelectList((await _iDropdownService.EmptySelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Search(DataTablePagination<PurchaseOrderSearchDto> searchDto)
+        {
+            var dataTable = await _iPurchaseOrderService.SearchAsync(searchDto);
+            return Json(dataTable);
+        }
+
+        #endregion
 
     }
 }
