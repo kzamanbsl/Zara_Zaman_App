@@ -22,8 +22,5 @@ namespace app.Services.PurchaseOrderDetailServices
         public decimal Discount { get; set; }
         public decimal TotalAmount { get; set; }
         public string Remarks { get; set; }
-        //public ActionEnum ActionEum { get { return (ActionEnum)this.ActionId; } }
-        //public int ActionId { get; set; } = 1;
-        //public PurchaseOrderViewModel PurchaseOrderVM { get; set; }
     }
 }

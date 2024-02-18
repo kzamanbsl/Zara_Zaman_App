@@ -10,8 +10,10 @@ namespace app.Services.SalesOrderServices
         public DateTime SalesDate { get; set; }
         public long StorehouseId { get; set; }
         public BusinessCenter Storehouse { get; set; }
+        public string StoreName { get; set; }
         public long CustomerId { get; set; }
         public Customer Customer { get; set; }
+        public string CustomerName { get; set; }
         public decimal OverallDiscount { get; set; }
         public string Description { get; set; }
         public string TermsAndCondition { get; set; }

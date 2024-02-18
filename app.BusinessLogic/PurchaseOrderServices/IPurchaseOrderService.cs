@@ -1,13 +1,4 @@
-﻿using app.Services.JobStatusServices;
-using app.Services.ProductServices;
-using app.Services.PurchaseOrderDetailServices;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace app.Services.PurchaseOrderServices
+﻿namespace app.Services.PurchaseOrderServices
 {
     public interface IPurchaseOrderService
     {

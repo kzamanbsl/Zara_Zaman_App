@@ -2,20 +2,11 @@
 using app.Infrastructure.Auth;
 using app.Infrastructure.Repository;
 using app.Infrastructure;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using app.Utility;
 using app.Services.SalesOrderDetailServices;
-using app.Services.DropdownServices;
 using Microsoft.EntityFrameworkCore;
-using app.Services.ProductServices;
-using app.Services.LeaveBalanceServices;
-using app.Services.JobStatusServices;
-using app.Services.StorehouseServices;
-using app.Services.SalesOrderServices;
+using app.Services.PurchaseOrderDetailServices;
+using app.Services.PurchaseOrderServices;
 
 namespace app.Services.SalesOrderServices
 {
@@ -30,7 +21,7 @@ namespace app.Services.SalesOrderServices
             _dbContext = dbContext;
             _iWorkContext = iWorkContext;
         }
-        public async Task<bool> AddRecord(SalesOrderViewModel vm)
+        public async Task<bool> AddSalesOrder(SalesOrderViewModel vm)
         {
 
             if (vm.OrderStatusId == 0)
@@ -38,48 +29,75 @@ namespace app.Services.SalesOrderServices
                 vm.OrderStatusId = (int)SalesOrderStatusEnum.Draft;
             }
 
-            var poMax = _dbContext.SalesOrder.Count() + 1;
-            string poCid = @"PO-" +
+            var soMax = _dbContext.SalesOrder.Count() + 1;
+            string soCid = @"SO-" +
                            DateTime.Now.ToString("yy") +
                            DateTime.Now.ToString("MM") +
                            DateTime.Now.ToString("dd") + "-" +
-                           poMax.ToString().PadLeft(2, '0');
+                           soMax.ToString().PadLeft(2, '0');
 
             SalesOrder purchaseOrder = new SalesOrder();
-            purchaseOrder.OrderNo = poCid;
+            purchaseOrder.OrderNo = soCid;
             purchaseOrder.SalesDate = vm.SalesDate;
             purchaseOrder.StorehouseId = vm.StorehouseId;
+            purchaseOrder.CustomerId = vm.CustomerId;
             purchaseOrder.OverallDiscount = vm.OverallDiscount;
             purchaseOrder.Description = vm.Description;
+            purchaseOrder.TermsAndCondition = vm.TermsAndCondition;
+            purchaseOrder.DeliveryDate = vm.DeliveryDate;
+            purchaseOrder.DeliveryAddress = vm.DeliveryAddress;
+            purchaseOrder.PaymentStatusId = (int)PaymentStatusEnum.Due;
             purchaseOrder.OrderStatusId = (int)SalesOrderStatusEnum.Draft;
             var res = await _iEntityRepository.AddAsync(purchaseOrder);
             vm.Id = res?.Id ?? 0;
             return true;
         }
-        public async Task<SalesOrderViewModel> GetSalesOrder(long purchaseOrderId = 0)
+        public async Task<SalesOrderViewModel> GetSalesOrder(long salesOrderId = 0)
         {
-            SalesOrderViewModel purchaseOrderModel = new SalesOrderViewModel();
-            purchaseOrderModel = await Task.Run(() => (from t1 in _dbContext.SalesOrder.Where(x => x.IsActive && x.Id == purchaseOrderId)
-                                                       select new SalesOrderViewModel
-                                                       {
-                                                           Id = t1.Id,
-                                                           SalesDate = t1.SalesDate,
-                                                           OrderNo = t1.OrderNo,
-                                                           OrderStatusId = (int)(SalesOrderStatusEnum)t1.OrderStatusId,
-                                                           Description = t1.Description,
-                                                       }).FirstOrDefault());
+            SalesOrderViewModel SalesOrderModel = new SalesOrderViewModel();
+            SalesOrderModel = await Task.Run(() => (from t1 in _dbContext.SalesOrder.Where(x => x.IsActive && x.Id == salesOrderId)
+                                                    select new SalesOrderViewModel
+                                                    {
+                                                        Id = t1.Id,
+                                                        SalesDate = t1.SalesDate,
+                                                        OrderNo = t1.OrderNo,
+                                                        OrderStatusId = (int)(SalesOrderStatusEnum)t1.OrderStatusId,
+                                                        StorehouseId = t1.StorehouseId,
+                                                        StoreName = t1.Storehouse.Name,
+                                                        CustomerId = t1.CustomerId,
+                                                        CustomerName = t1.Customer.Name,
+                                                        DeliveryDate = t1.DeliveryDate,
+                                                        DeliveryAddress = t1.DeliveryAddress,
+                                                        PaymentStatusId = (int)(PaymentStatusEnum)t1.PaymentStatusId,
+                                                        TermsAndCondition = t1.TermsAndCondition,
+                                                        OverallDiscount = t1.OverallDiscount,
+                                                        Description = t1.Description,
+                                                    }).FirstOrDefault());
 
-            purchaseOrderModel.SalesOrderDetailsList = await Task.Run(() => (from t1 in _dbContext.PurchaseOrderDetail.Where(x => x.IsActive)
-                                                                             select new SalesOrderDetailViewModel
-                                                                             {
-                                                                                 Id = t1.Id,
-                                                                                 Remarks = t1.Remarks,
-                                                                             }).OrderByDescending(x => x.Id).AsQueryable());
+            SalesOrderModel.SalesOrderDetailsList = await Task.Run(() => (from t1 in _dbContext.SalesOrderDetails.Where(x => x.IsActive && x.SalesOrder.Id == salesOrderId)
+                                                                          select new SalesOrderDetailViewModel
+                                                                          {
+                                                                              Id = t1.Id,
+                                                                              SalesOrderId = t1.SalesOrderId,
+                                                                              ProductId = t1.ProductId,
+                                                                              ProductName = t1.Product.Name,
+                                                                              UnitId = t1.UnitId,
+                                                                              UnitName = t1.Unit.Name,
+                                                                              SalesPrice = t1.SalesPrice,
+                                                                              SalesQty = t1.SalesQty,
+                                                                              Discount = t1.Discount,
+                                                                              TotalAmount = t1.TotalAmount,
+                                                                              WarrantyFormDate = t1.WarrantyFormDate,
+                                                                              WarrantyToDate = t1.WarrantyToDate,
+                                                                              SerialNo = t1.SerialNo,
+                                                                              ModelNo = t1.ModelNo,
+                                                                              IsForService = t1.IsForService,
+                                                                              Remarks = t1.Remarks,
+                                                                          }).OrderByDescending(x => x.Id).AsQueryable());
 
 
-            return purchaseOrderModel;
+            return SalesOrderModel;
         }
-
 
 
 
@@ -88,7 +106,7 @@ namespace app.Services.SalesOrderServices
         {
             SalesOrderViewModel purchaseMasterModel = new SalesOrderViewModel();
             var dataQuery = await Task.Run(() => (from t1 in _dbContext.SalesOrder
-                                                  where t1.IsActive == true 
+                                                  where t1.IsActive == true
 
                                                   select new SalesOrderViewModel
                                                   {
@@ -132,7 +150,7 @@ namespace app.Services.SalesOrderServices
                                                            SalesDate = t1.SalesDate,
                                                            OrderNo = t1.OrderNo,
                                                            OrderStatusId = (int)(SalesOrderStatusEnum)t1.OrderStatusId,
-                                                   
+
                                                            Description = t1.Description,
                                                        }).FirstOrDefault());
 

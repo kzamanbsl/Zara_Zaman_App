@@ -3,6 +3,7 @@
     public class SalesOrderDetails : BaseEntity
     {
         public long SalesOrderId { get; set; }
+        public SalesOrder SalesOrder { get; set; }
         public long ProductId { get; set; }
         public Product Product { get; set; }
         public long UnitId { get; set; }
