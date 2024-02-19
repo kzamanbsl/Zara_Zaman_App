@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 ﻿using app.EntityModel.DataTablePaginationModels;
 using app.Services.JobStatusServices;
 using app.Services.ProductServices;
@@ -10,9 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace app.Services.PurchaseOrderServices
-=======
-﻿namespace app.Services.PurchaseOrderServices
->>>>>>> dd06daa72bec12423b6d09ba182da259f96d7bab
+
 {
     public interface IPurchaseOrderService
     {

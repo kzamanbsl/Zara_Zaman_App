@@ -5,14 +5,12 @@ using app.Infrastructure;
 using app.Utility;
 using app.Services.PurchaseOrderDetailServices;
 using Microsoft.EntityFrameworkCore;
-<<<<<<< HEAD
 using app.Services.ProductServices;
 using app.Services.LeaveBalanceServices;
 using app.Services.JobStatusServices;
 using app.Services.StorehouseServices;
 using app.EntityModel.DataTablePaginationModels;
-=======
->>>>>>> dd06daa72bec12423b6d09ba182da259f96d7bab
+
 
 namespace app.Services.PurchaseOrderServices
 {
