@@ -2,11 +2,7 @@
 using app.Infrastructure.Auth;
 using app.Infrastructure.Repository;
 using app.Infrastructure;
-using app.Utility;
-using Microsoft.EntityFrameworkCore;
-using app.Services.SalesOrderDetailServices;
 using app.Services.SalesOrderServices;
-using app.Services.PurchaseOrderServices;
 
 namespace app.Services.SalesOrderDetailServices
 {
