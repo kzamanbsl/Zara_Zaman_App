@@ -1,4 +1,6 @@
-﻿using app.Services.LeaveBalanceServices;
+﻿using app.EntityModel.DataTablePaginationModels;
+using app.Services.LeaveBalanceServices;
+using app.Services.ProductServices;
 
 namespace app.Services.LeaveApplicationServices
 {
@@ -15,6 +17,7 @@ namespace app.Services.LeaveApplicationServices
         Task<bool> RejectRecord(long id);
         Task<bool> DeleteRecord(long id);
         Task<LeaveApplicationViewModel> GetAllRecord();
+        Task<DataTablePagination<LeaveApplicationSearchDto>> SearchAsync(DataTablePagination<LeaveApplicationSearchDto> searchDto);
 
     }
 }

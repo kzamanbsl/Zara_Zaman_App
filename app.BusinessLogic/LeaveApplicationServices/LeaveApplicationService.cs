@@ -6,6 +6,8 @@ using app.Utility;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using app.Services.LeaveBalanceServices;
+using app.EntityModel.DataTablePaginationModels;
+using app.Services.ProductServices;
 
 namespace app.Services.LeaveApplicationServices
 {
@@ -190,6 +192,64 @@ namespace app.Services.LeaveApplicationServices
             });
 
             return model;
+        }
+
+        public async Task<DataTablePagination<LeaveApplicationSearchDto>> SearchAsync(DataTablePagination<LeaveApplicationSearchDto> searchDto)
+        {
+            var searchResult = _dbContext.LeaveApplication.Include(c => c.Employee).Include(c => c.LeaveCategory).AsNoTracking();
+
+            var searchModel = searchDto.SearchVm;
+            var filter = searchDto?.Search?.Value?.Trim();
+            if (searchModel?.EmployeeId is > 0)
+            {
+                searchResult = searchResult.Where(c => c.EmployeeId == searchModel.EmployeeId);
+            }
+            if (searchModel?.LeaveCategoryId is > 0)
+            {
+                searchResult = searchResult.Where(c => c.LeaveCategoryId == searchModel.LeaveCategoryId);
+            }
+            if (!string.IsNullOrEmpty(filter))
+            {
+                filter = filter.ToLower();
+                searchResult = searchResult.Where(c =>
+                    c.Employee.Name.ToLower().Contains(filter)
+                    || c.LeaveCategory.ToString().Contains(filter)
+                    || c.Manager.Name.ToString().Contains(filter)
+                    || c.StayDuringLeave.ToLower().Contains(filter)
+                    || c.Reason.ToLower().Contains(filter)
+                );
+            }
+
+            var pageSize = searchDto.Length ?? 0;
+            var skip = searchDto.Start ?? 0;
+
+            var totalRecords = await searchResult.CountAsync();
+            if (totalRecords <= 0) return searchDto;
+
+            searchDto.RecordsTotal = totalRecords;
+            searchDto.RecordsFiltered = totalRecords;
+            List<LeaveApplication> filteredDataList = await searchResult.OrderByDescending(c => c.Id).Skip(skip).Take(pageSize).ToListAsync();
+
+            var sl = searchDto.Start ?? 0;
+            searchDto.Data = filteredDataList.Select(c => new LeaveApplicationSearchDto()
+            {
+                SerialNo = ++sl,
+                Id = c.Id,
+                EmployeeId = c.EmployeeId,
+                EmployeeName = c.Employee.Name,
+                LeaveCategoryId = c.LeaveCategoryId,
+                LeaveCategoryName = c.LeaveCategory.Name,
+                ApplicationDate = c.ApplicationDate,
+                StartDate = c.StartDate,
+                EndDate = c.EndDate,
+                LeaveDays = c.LeaveDays,
+                StayDuringLeave = c.StayDuringLeave,
+                Reason = c.Reason,
+                StatusId = c.StatusId,
+                Remarks = c.Remarks
+            }).ToList();
+
+            return searchDto;
         }
 
     }

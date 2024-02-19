@@ -1,0 +1,246 @@
+﻿@model app.Services.LeaveApplicationServices.LeaveApplicationSearchDto
+@{
+    ViewData["Title"] = "Search";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="content-header">
+    <div class="container-fluid ">
+        <div class="breadcrumb d-flex justify-content-between align-items-center  pl-3 pr-3">
+            <ol class="breadcrumb mb-0 p-0">
+                <li class="breadcrumb-item"><a href="/Admin/Index">Home</a></li>
+                <li class="breadcrumb-item active"> Leave List </li>
+            </ol>
+            <div>
+                <a asp-action="AddRecord"><i class="fa fa-plus"></i>  Add Leave </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="card">
+            <div class="card-header">
+                <div class="row w-100">
+                    <div class="col-sm-3">
+                        <h5> <i class="fas fa-list"></i>  All Leave Application </h5>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <form method="post" asp-controller="LeaveApplication" asp-action="Search">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>Employee</label>
+                                        <select class="form-control" asp-for="EmployeeId" asp-items="ViewBag.Employees">
+                                            <option value="0" selected>--Employee--</option>
+                                            <span asp-validation-for="EmployeeId" class="text-danger"></span>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>Leave Category</label>
+                                        <select class="form-control" asp-for="LeaveCategoryId" asp-items="ViewBag.LeaveCategories">
+                                            <option value="0" selected>--Leave Category--</option>
+                                            <span asp-validation-for="LeaveCategoryId" class="text-danger"></span>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group text-right">
+                                @*<a href="@Url.Action("Search","Product")"><input type="submit" formtarget="_blank" value="Preview" class="btn btn-preview btn-width" /></a>*@
+                                @*<button asp-controller="Product" asp-action="Search" type="submit" title="Download" class="btn btn-report btn-width"><i class="fa fa-download"></i></button>*@
+                                <input id="LeaveApplicationDTSearchBtn" type="button" value="Search" class="btn btn-info btn-width" />
+                                <a href="@Url.Action("Search","LeaveApplication")"><input type="button" value="Clear" class="btn btn-warning btn-width" /></a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <hr />
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="table-responsive">
+                            <table id="LeaveApplicationSearchTable" class="table table-bordered table-sm">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">
+                                            @Html.DisplayNameFor(model => model.SerialNo)
+                                        </th>
+                                        <th class="text-center">
+                                            @Html.DisplayNameFor(model => model.EmployeeName)
+                                        </th>
+                                        <th class="text-center">
+                                            @Html.DisplayNameFor(model => model.LeaveCategoryName)
+                                        </th>
+                                        <th class="text-center">
+                                            @Html.DisplayNameFor(model => model.ApplicationDate)
+                                        </th>
+                                        <th class="text-center">
+                                            @Html.DisplayNameFor(model => model.StartDate)
+                                        </th>
+                                        <th class="text-center">
+                                            @Html.DisplayNameFor(model => model.EndDate)
+                                        </th>
+                                        <th class="text-center">
+                                            @Html.DisplayNameFor(model => model.LeaveDays)
+                                        </th>
+                                        <th class="text-center">
+                                            @Html.DisplayNameFor(model => model.StayDuringLeave)
+                                        </th>
+                                        <th class="text-center">
+                                            @Html.DisplayNameFor(model => model.Reason)
+                                        </th>
+                                        <th class="text-center">
+                                            @Html.DisplayNameFor(model => model.Remarks)
+                                        </th>
+                                        <th class="text-center">
+                                            @Html.DisplayNameFor(model => model.Action)
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        $(document).ready(function () {
+            $('#Configuration').addClass('menu-open');
+            $('#LeaveApplicationIndex').addClass('active');
+
+            search();
+        });
+
+        $(document.body).on("click", "#LeaveApplicationDTSearchBtn", function () {
+            search();
+        });
+
+        function getSearchObject() {
+
+            var searchVm = {
+                "EmployeeId": $("#EmployeeId").val(),
+                "LeaveCategoryId": $("#LeaveCategoryId").val(),
+                
+            }
+            return searchVm;
+        }
+
+        function search() {
+            var searchVm = getSearchObject();
+
+            if ($.fn.DataTable.isDataTable("#LeaveApplcationSearchTable")) {
+                var table = $("#LeaveApplicationSearchTable").DataTable();
+                table.destroy();
+            }
+
+            var params = "";
+            if (searchVm != undefined && searchVm !== "") {
+                params = { searchVm: searchVm }
+            }
+
+            var oTable = $("#LeaveApplicationSearchTable").DataTable({
+                "aLengthMenu": [[25, 50, 100, 200], [25, 50, 100, 200]],
+                "iDisplayLength": 25,
+                "processing": true,
+                "serverSide": true,
+                "bSort": false,
+                "ajax": {
+                    url: "/LeaveApplication/Search",
+                    type: "POST",
+                    data: params
+                },
+
+                "columns": [
+                    {
+                        data: "SerialNo",
+                        render: function (data, type, row, meta) {
+                            return row.serialNo;
+                        }
+                    },
+                    {
+                        data: "EmployeeName",
+                        render: function (data, type, row, meta) {
+                            return row.employeeName;
+                        }
+                    },
+                    {
+                        data: "LeaveCategory",
+                        render: function (data, type, row, meta) {
+                            return row.leaveCategory;
+                        }
+                    },
+                    {
+                        data: "ApplicaionDate",
+                        render: function (data, type, row, meta) {
+                            return row.applicationDate;
+                        }
+                    },
+                    {
+                        data: "StartDate",
+                        render: function (data, type, row, meta) {
+                            return row.startDate;
+                        }
+                    },
+                    {
+                        data: "EndDate",
+                        render: function (data, type, row, meta) {
+                            return row.endDate;
+                        }
+                    },
+                    {
+                        data: "LeaveDays",
+                        render: function (data, type, row, meta) {
+                            return row.leaveDays;
+                        }
+                    },
+                    {
+                        data: "StayDuringLeave",
+                        render: function (data, type, row, meta) {
+                            return row.stayDuringLeave;
+                        }
+                    },
+                    {
+                        data: "Reason",
+                        render: function (data, type, row, meta) {
+                            return row.reason;
+                        }
+                    },
+                    {
+                        data: "Remarks",
+                        render: function (data, type, row, meta) {
+                            return row.remarks;
+                        }
+                    },
+                    {
+                        data: "Action",
+                        render: function (data, type, row, meta) {
+                            var editBtn = "<a href='UpdateRecord/" + row.id + "'><i class='fas fa-pen text-warning m-1' title='Edit' aria-hidden='true'></i></a>";
+                            //var detailsBtn = "<a href='Details/" + row.id + "'><i class='fa fa-eye text-info m-1' title='Details' aria-hidden='true'></i></a>";
+                            var deleteBtn = "<a href='Delete/" + row.id + "'><i class='fas fa-trash text-danger m-1' title='Delete' aria-hidden='true'></i></a>";
+                            var actionBtn = editBtn + deleteBtn;
+                            return actionBtn;
+                        }
+                    }
+                ]
+            });
+        }
+    </script>
+}
