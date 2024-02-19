@@ -1,29 +1,19 @@
-﻿using app.EntityModel.AppModels;
-using app.Infrastructure.Auth;
+﻿using app.Infrastructure.Auth;
 using app.Infrastructure.Repository;
 using app.Infrastructure;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using app.Utility;
 using app.Services.AssetPurchaseOrderDetailServices;
-using app.Services.DropdownServices;
 using Microsoft.EntityFrameworkCore;
-using app.Services.ProductServices;
-using app.Services.LeaveBalanceServices;
-using app.Services.JobStatusServices;
-using app.Services.StorehouseServices;
+using app.EntityModel.AppModels;
 
 namespace app.Services.AssetPurchaseOrderServices
 {
     public class AssetPurchaseOrderService : IAssetPurchaseOrderService
     {
-        private readonly IEntityRepository<PurchaseOrderList> _iEntityRepository;
+        private readonly IEntityRepository<PurchaseOrder> _iEntityRepository;
         private readonly InventoryDbContext _dbContext;
         private readonly IWorkContext _iWorkContext;
-        public AssetPurchaseOrderService(IEntityRepository<PurchaseOrderList> iEntityRepository, InventoryDbContext dbContext, IWorkContext iWorkContext)
+        public AssetPurchaseOrderService(IEntityRepository<PurchaseOrder> iEntityRepository, InventoryDbContext dbContext, IWorkContext iWorkContext)
         {
             _iEntityRepository = iEntityRepository;
             _dbContext = dbContext;
@@ -44,7 +34,7 @@ namespace app.Services.AssetPurchaseOrderServices
                            DateTime.Now.ToString("dd") + "-" +
                            poMax.ToString().PadLeft(2, '0');
 
-            PurchaseOrderList assetPurchaseOrder = new PurchaseOrderList();
+            PurchaseOrder assetPurchaseOrder = new PurchaseOrder();
             assetPurchaseOrder.OrderNo = poCid;
             assetPurchaseOrder.PurchaseDate = vm.PurchaseDate;
             assetPurchaseOrder.SupplierId = vm.SupplierId;

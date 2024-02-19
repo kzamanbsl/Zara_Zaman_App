@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace app.EntityModel.AppModels
+﻿namespace app.EntityModel.AppModels
 {
     public class PurchaseOrderDetail : BaseEntity
     {
         public long PurchaseOrderId { get; set; }
-        public PurchaseOrderList PurchaseOrder { get; set; }
+        public PurchaseOrder PurchaseOrder { get; set; }
         public long ProductId { get; set; }
         public Product Product { get; set; }
         public long UnitId { get; set; }

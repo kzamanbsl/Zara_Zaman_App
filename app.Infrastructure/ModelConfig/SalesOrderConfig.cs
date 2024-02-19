@@ -4,14 +4,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace app.Infrastructure.ModelConfig
 {
-    public class PurchaseOrderConfig : IEntityTypeConfiguration<PurchaseOrder>
+    public class SalesOrderConfig : IEntityTypeConfiguration<SalesOrder>
     {
-        public void Configure(EntityTypeBuilder<PurchaseOrder> builder)
+        public void Configure(EntityTypeBuilder<SalesOrder> builder)
         {
             builder.HasKey(c => c.Id);
             builder.Property(c => c.Description).HasMaxLength(500);
 
-            builder.ToTable(TableNameEnum.PurchaseOrder.ToString());
+            builder.ToTable(TableNameEnum.SalesOrder.ToString());
         }
     }
 }
