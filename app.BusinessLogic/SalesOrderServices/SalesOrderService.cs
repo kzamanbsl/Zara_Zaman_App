@@ -66,6 +66,7 @@ namespace app.Services.SalesOrderServices
                                                         StoreName = t1.Storehouse.Name,
                                                         CustomerId = t1.CustomerId,
                                                         CustomerName = t1.Customer.Name,
+                                                        CustomerPhoneNo = t1.Customer.Phone,
                                                         DeliveryDate = t1.DeliveryDate,
                                                         DeliveryAddress = t1.DeliveryAddress,
                                                         PaymentStatusId = (int)(PaymentStatusEnum)t1.PaymentStatusId,
