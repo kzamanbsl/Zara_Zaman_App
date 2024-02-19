@@ -6,7 +6,7 @@ namespace app.Services.PurchaseOrderDetailServices
     public class PurchaseOrderDetailViewModel : BaseViewModel
     {
         public long PurchaseOrderId { get; set; }
-        public PurchaseOrderList PurchaseOrder { get; set; }
+        public PurchaseOrder PurchaseOrder { get; set; }
 
         [Required(ErrorMessage = "Select Product")]
         public long ProductId { get; set; }   

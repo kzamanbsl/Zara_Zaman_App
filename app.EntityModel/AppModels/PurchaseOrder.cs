@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace app.EntityModel.AppModels
+﻿namespace app.EntityModel.AppModels
 {
-    public class PurchaseOrderList : BaseEntity
+    public class PurchaseOrder : BaseEntity
     {
         public DateTime PurchaseDate { get; set; }
         public string Description { get; set; }

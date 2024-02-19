@@ -1,13 +1,5 @@
 
-﻿using app.EntityModel.DataTablePaginationModels;
-using app.Services.JobStatusServices;
-using app.Services.ProductServices;
-using app.Services.PurchaseOrderDetailServices;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using app.EntityModel.DataTablePaginationModels;
 
 namespace app.Services.PurchaseOrderServices
 
