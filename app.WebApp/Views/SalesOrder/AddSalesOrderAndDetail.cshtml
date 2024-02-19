@@ -1,0 +1,182 @@
+﻿@model app.Services.SalesOrderServices.SalesOrderViewModel
+@using app.Utility
+@{
+    ViewData["Title"] = "AddSalesOrderAndDetail";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    int sl = 0;
+}
+<div class="content-header">
+    <div class="container-fluid ">
+        <div class="breadcrumb d-flex justify-content-between align-items-center  pl-3 pr-3">
+            <ol class="breadcrumb mb-0 p-0">
+                <li class="breadcrumb-item"><a href="/Admin/Index">Home</a></li>
+            </ol>
+            <div>
+                <a asp-action="Index"><i class="fa fa-list"></i> Sales Order List </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="card">
+            <div class="card-header">
+
+                @if (Model.Id > 0)
+                {
+                    <h3 class="card-title text-info">
+                        Sales Order Information
+                    </h3>
+                }
+                else
+                {
+                    <h3 class="card-title text-info">
+                        Sales Order
+                    </h3>
+                }
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form asp-action="AddSalesOrderAndDetail" method="post">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <input asp-for="Id" class="form-control" hidden id="salesorderId" />
+                            <input asp-for="ActionId" hidden id="actionId" />
+                            <input asp-for="SalesOrderDetailVM.Id" class="form-control" id="salesOrderDetailsId" hidden />
+
+                            @if (Model.Id > 0)
+                            {
+                                <div class="card-body">
+                                    <div class="row rounded">
+                                        <table class="table table-bordered border-primary">
+                                            <tr>
+                                                <th style="width:18%">Invoice No</th>
+                                                <td style="width:30%">@Model.OrderNo</td>
+
+                                                <th style="width:18%">Date</th>
+                                                <td style="width:30%">@Model.SalesDate.ToString("dd-MM-yyyy")</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Customer Name</th>
+                                                <td>@Model.CustomerName</td>
+                                                <th style="width:18%">Store Information</th>
+                                                <td style="width:30%">@Model.StoreName</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+
+                            }
+                           
+
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        @if (Model.Id > 0 && Model.OrderStatusId == (int)PurchaseOrderStatusEnum.Draft)
+                        {
+                            <div class="form-group" style="float:right">
+                                <button asp-action="ConfirmPurchaseOrder" method="post" id="confirmButton" class="linkPointer btn btn-success  btn-block">Confirm</button>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        $(document).ready(function () {
+            $('#Purchases').addClass('menu-open');
+            $('#PurchaseOrderAddPurchaseOrderAndDetail').addClass('active');
+        });
+
+        //Purchase Order Details Edit
+        function makeEditble(rowId) {
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("UpdateSinglePurchaseOrderDetails", "PurchaseOrder")",
+                datatype: "Json",
+                data: { id: rowId },
+                success: function (data) {
+                    $('#poCreateBtn').html("<i class='fas fa-edit'></i>&nbsp;Update");
+                    $("#purchaseorderId").val(data.id);
+                    $("#purchaseOrderDetailsId").val(data.id);
+                    $('#actionId').val(2);
+                    $("#productId").val(data.productId);
+                    $("#unitId").val(data.unitId);
+                    $("#purchaseQty").val(data.purchaseQty);
+                    $("#consumption").val(data.consumption);
+                    $("#costPrice").val(data.costPrice);
+                    $("#salePrice").val(data.salePrice);
+                    //$("#discount").val(data.discount);
+                    $("#txtRemarks").val(data.remarks);
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+            });
+        }
+
+        //Confirm Purchase Order
+        $("#confirmButton").on("click", function () {
+            var id = @Model.Id;
+            $.ajax({
+                type: "POST",
+                url: "/PurchaseOrder/ConfirmPurchaseOrder",
+                data: { id: id },
+                success: function (result) {
+                    if (result) {
+                        alert("Purchase confirmed successfully");
+                        window.location.href = "/PurchaseOrder/Index/";
+
+                    } else {
+                        alert("Purchase confirmation failed");
+                    }
+                },
+                error: function (error) {
+                    // Handle the error case here
+                    console.error("Error occurred during AJAX request:", error);
+                }
+            });
+        });
+
+
+        function makeDeletable(rowId) {
+            $.ajax({
+                type: "GET",
+                url: "@Url.Action("DeletePurchaseOrderDetailsById", "PurchaseOrder")",
+                data: { id: rowId },
+                success: function (data) {
+                    if (data) {
+                        alert("Delete successfully");
+                        window.location.href = "/PurchaseOrder/Index/";
+
+                    } else {
+                        alert("Delete failed");
+                    }
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    location.reload();
+                }
+            });
+        }
+
+    </script>
+
+}
+
+
+

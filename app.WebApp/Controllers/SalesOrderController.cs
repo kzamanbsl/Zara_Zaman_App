@@ -2,6 +2,7 @@
 using app.Services.InventoryServices;
 using app.Services.PurchaseOrderDetailServices;
 using app.Services.PurchaseOrderServices;
+using app.Services.SalesOrderDetailServices;
 using app.Services.SalesOrderServices;
 using app.Utility;
 using Microsoft.AspNetCore.Mvc;
@@ -12,12 +13,14 @@ namespace app.WebApp.Controllers
     public class SalesOrderController : Controller
     {
         private readonly ISalesOrderService _isalesOrderService;
+        private readonly ISalesOrderDetailService _isalesOrderDetailService;
         private readonly IInventoryService _inventoryService;
         private readonly IDropdownService _iDropdownService;
 
-        public SalesOrderController(ISalesOrderService isalesOrderService, IDropdownService iDropdownService, IInventoryService inventoryService)
+        public SalesOrderController(ISalesOrderService isalesOrderService,ISalesOrderDetailService isalesOrderDetailService, IDropdownService iDropdownService, IInventoryService inventoryService)
         {
             _isalesOrderService = isalesOrderService;
+            _isalesOrderDetailService = isalesOrderDetailService;
             _iDropdownService = iDropdownService;
             _inventoryService = inventoryService;
         }
@@ -57,6 +60,24 @@ namespace app.WebApp.Controllers
 
             return View(viewModel);
         }
+
+
+        [HttpPost]
+        public async Task<IActionResult> AddSalesOrderAndDetail(SalesOrderViewModel vm)
+        {
+            if (vm.ActionEum == ActionEnum.Add)
+            {
+                if (vm.Id == 0)
+                {
+                    await _isalesOrderService.AddSalesOrder(vm); //Adding Sales Master
+                }
+                await _isalesOrderDetailService.AddSalesOrderDetails(vm); //Adding Sales Details
+            }
+            
+            return RedirectToAction(nameof(AddSalesOrderAndDetail), new { salesOrderId = vm.Id });
+        }
+
+
 
 
 
