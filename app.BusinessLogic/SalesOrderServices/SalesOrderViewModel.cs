@@ -14,6 +14,7 @@ namespace app.Services.SalesOrderServices
         public long CustomerId { get; set; }
         public Customer Customer { get; set; }
         public string CustomerName { get; set; }
+        public string CustomerPhoneNo { get; set; }
         public decimal OverallDiscount { get; set; }
         public string Description { get; set; }
         public string TermsAndCondition { get; set; }

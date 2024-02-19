@@ -54,24 +54,260 @@
                                             <tr>
                                                 <th style="width:18%">Invoice No</th>
                                                 <td style="width:30%">@Model.OrderNo</td>
-
-                                                <th style="width:18%">Date</th>
+                                                <th style="width:18%">Invoice Date</th>
                                                 <td style="width:30%">@Model.SalesDate.ToString("dd-MM-yyyy")</td>
                                             </tr>
                                             <tr>
-                                                <th>Customer Name</th>
+                                                <th>Name</th>
                                                 <td>@Model.CustomerName</td>
                                                 <th style="width:18%">Store Information</th>
                                                 <td style="width:30%">@Model.StoreName</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Phone</th>
+                                                <td>@Model.CustomerPhoneNo</td>
+                                                <th style="width:18%">Address</th>
+                                                <td style="width:30%">@Model.DeliveryAddress</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Delivery Date</th>
+                                                <td>@Model.DeliveryDate?.ToString("dd-MM-yyyy")</td>
                                             </tr>
                                         </table>
                                     </div>
                                 </div>
 
                             }
-                           
+                            @if (Model.Id == 0)
+                            {
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Invoice Date</label>
+                                            <input asp-for="SalesDate" value="@DateTime.Today.ToString("yyyy-MM-dd")" class="form-control" type="date" autocomplete="off" required />
+                                            <span asp-validation-for="SalesDate" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Storehouse</label>
+                                            <select class="form-control" asp-for="StorehouseId" asp-items="ViewBag.StorehouseList" required>
+                                                <option value="0" selected>-- Select Storehouse --</option>
+                                                <span asp-validation-for="StorehouseId" class="text-danger"></span>
+                                            </select>
+                                        </div>
+                                    </div>
 
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Customer</label>
+                                            <select class="form-control" asp-for="CustomerId" asp-items="ViewBag.CustomerList" required>
+                                                <option value="0" selected>-- Select Customer --</option>
+                                                <span asp-validation-for="CustomerId" class="text-danger"></span>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Phone</label>
+                                            <input asp-for="CustomerPhoneNo" class="form-control" />
+                                            <span asp-validation-for="CustomerPhoneNo" class="text-danger"></span>
+                                        </div>
+                                    </div>
 
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Delivery Date</label>
+                                            <input asp-for="DeliveryDate" value="@DateTime.Today.ToString("yyyy-MM-dd")" class="form-control" type="date" autocomplete="off" required />
+                                            <span asp-validation-for="DeliveryDate" class="text-danger"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Delivery Address</label>
+                                            <input asp-for="DeliveryAddress" value="@DateTime.Today.ToString("yyyy-MM-dd")" class="form-control" type="date" autocomplete="off" required />
+                                            <span asp-validation-for="DeliveryAddress" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>OverAll Discount (Taka)</label>
+                                            <input asp-for="OverallDiscount" class="form-control" />
+                                            <span asp-validation-for="OverallDiscount" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label asp-for="Description " class="control-label"></label>
+                                            <textarea asp-for="Description" class="form-control" rows="2"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            @if (Model.OrderStatusId == (int)SalesOrderStatusEnum.Draft)
+                            {
+                                <div class="" style="padding-top:30px;">
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            <div class="form-group">
+                                                <label>Product</label>
+                                                <select class="form-control" asp-for="SalesOrderDetailVM.ProductId" id="productId" asp-items="ViewBag.ProductList" required>
+                                                    <option value="0" selected>-- Select Product --</option>
+                                                    <span asp-validation-for="SalesOrderDetailVM.ProductId" class="text-danger"></span>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label>Sale Qty</label>
+                                                <input asp-for="SalesOrderDetailVM.SalesQty" id="saleQty" class="form-control" required min="0" />
+                                                <span asp-validation-for="SalesOrderDetailVM.SalesQty" class="text-danger"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label>Unit</label>
+                                                <select class="form-control" asp-for="SalesOrderDetailVM.UnitId" id="unitId" asp-items="ViewBag.UnitList" required>
+                                                    <option value="0" selected>-- Select Unit --</option>
+                                                    <span asp-validation-for="SalesOrderDetailVM.UnitId" class="text-danger"></span>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label>Sale Price</label>
+                                                <input asp-for="SalesOrderDetailVM.SalesPrice" id="salePrice" class="form-control" required min="0" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>Discount</label>
+                                            <input asp-for="SalesOrderDetailVM.Discount" id="discount" class="form-control" required min="0" />
+                                            <span asp-validation-for="SalesOrderDetailVM.Discount" class="text-danger"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>Warranty Form Date</label>
+                                            <input asp-for="SalesOrderDetailVM.WarrantyFormDate" id="salePrice" class="form-control" />
+                                            <span asp-validation-for="SalesOrderDetailVM.WarrantyFormDate" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>Warranty To Date</label>
+                                            <input asp-for="SalesOrderDetailVM.WarrantyToDate" id="txtRemarks" class="form-control" />
+                                            <span asp-validation-for="SalesOrderDetailVM.WarrantyToDate" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>Serial No</label>
+                                            <input asp-for="SalesOrderDetailVM.SerialNo" id="serialNo" class="form-control" />
+                                            <span asp-validation-for="SalesOrderDetailVM.SerialNo" class="text-danger"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>Warranty Form Date</label>
+                                            <input asp-for="SalesOrderDetailVM.ModelNo" id="salePrice" class="form-control" />
+                                            <span asp-validation-for="SalesOrderDetailVM.ModelNo" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>Remarks</label>
+                                            <input asp-for="SalesOrderDetailVM.Remarks" id="remarks" class="form-control" />
+                                            <span asp-validation-for="SalesOrderDetailVM.Remarks" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="checkbox-item">
+                                    <label>
+                                        <input type="checkbox" asp-for="SalesOrderDetailVM.IsForService" />Service?
+                                    </label>
+                                </div>
+                            }
+                            <div class="form-group" style="float:right">
+                                <button type="submit" id="poCreateBtn" class="btn btn-primary btn-block">
+                                    <i class='fa fa-plus'></i>
+                                    @if (Model.Id > 0)
+                                    {
+                                        <span>Add Another</span>
+                                    }
+                                    else
+                                    {
+                                        <span>Create</span>
+                                    }
+                                </button>
+                            </div>
+                            @if (Model.Id > 0)
+                            {
+                                <input asp-for="Id" class="form-control" hidden />
+                                <div class="table-responsive col-md-12  text-nowrap">
+                                    <table id="KgErpDataTable" class="table caption-top">
+                                        <thead class="table-light table-bordered border-primary">
+                                            <tr>
+                                                <th style="padding:5px;text-align:center;">SL</th>
+                                                <th style="padding: 5px; text-align: left;">Product</th>
+                                                <th style="padding: 5px; text-align: left;">Purchase Qty</th>
+                                                <th style="padding: 5px; text-align: left;">Unit</th>
+                                                <th style="padding: 5px; text-align: right; ">Consumption</th>
+                                                <th style="padding: 5px; text-align: right; ">Cost Price</th>
+                                                <th style="padding: 5px; text-align: right; ">Sale Price</th>
+                                                <th style="padding: 5px; text-align: right; ">Total Price</th>
+                                                @if (Model.OrderStatusId == (int)PurchaseOrderStatusEnum.Draft)
+                                                {
+                                                    <th style="padding:5px;text-align:center;">Action</th>
+                                                }
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                            @foreach (var item in Model.SalesOrderDetailsList)
+                                            {
+
+                                                <tr>
+                                                    <td style="padding: 5px">@(++sl)</td>
+                                                    <td style="padding: 5px;text-align:left;">@item.ProductName</td>
+                                                    <td style="padding: 5px;text-align:left;">@String.Format("{0:0.00}", item.UnitName)</td>
+                                                    <td style="padding: 5px; text-align: right;">@String.Format("{0:0.00}", item.SalesPrice)</td>
+                                                    <td style="padding: 5px; text-align: right;">@String.Format("{0:0.00}", item.SalesQty)</td>
+                                                    <td style="padding: 5px; text-align: right;">@String.Format("{0:0.00}", item.WarrantyFormDate)</td>
+                                                    <td style="padding: 5px; text-align: right;">@String.Format("{0:0.00}", item.WarrantyToDate)</td>
+                                                    <td style="padding: 5px; text-align: right;">@String.Format("{0:0.00}", item.TotalAmount)</td>
+
+                                                    @{
+                                                        if (Model.OrderStatusId == (int)PurchaseOrderStatusEnum.Draft)
+                                                        {
+                                                            <td style="padding:5px;text-align:center;">
+                                                                <a id="@item.Id" onclick="makeEditble(@item.Id);" class="linkPointer" title="Edit"><i class="text-warning fas fa-edit" aria-hidden="true"></i></a>
+                                                                <a id="@item.Id" onclick="makeDeletable(@item.Id)" class="linkPointer"><i class="text-danger fas fa-trash" aria-hidden="true"></i></a>
+                                                            </td>
+                                                        }
+                                                    }
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            }
                         </form>
                     </div>
                 </div>
