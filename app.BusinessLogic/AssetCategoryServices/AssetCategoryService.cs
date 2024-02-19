@@ -53,13 +53,6 @@ namespace app.Services.AssetCategoryServices
             }
             return false;
         }
-        public async Task<bool> DeleteRecord(long id)
-        {
-            var result = await _iEntityRepository.GetByIdAsync(id);
-            result.IsActive = false;
-            await _iEntityRepository.UpdateAsync(result);
-            return true;
-        }
         public async Task<AssetCategoryViewModel> GetRecordById(long id)
         {
             var result = await _iEntityRepository.GetByIdAsync(id);
@@ -68,6 +61,13 @@ namespace app.Services.AssetCategoryServices
             model.Name = result.Name;
             model.AssetCategoryTypeId = result.ProductCategoryTypeId;
             return model;
+        }
+        public async Task<bool> DeleteRecord(long id)
+        {
+            var result = await _iEntityRepository.GetByIdAsync(id);
+            result.IsActive = false;
+            await _iEntityRepository.UpdateAsync(result);
+            return true;
         }
         public async Task<AssetCategoryViewModel> GetAllRecord()
         {
@@ -79,7 +79,7 @@ namespace app.Services.AssetCategoryServices
                                                                   Id = t1.Id,
                                                                   Name = t1.Name,
                                                                   AssetCategoryTypeId = t1.ProductCategoryTypeId,
-                                                              }).AsQueryable());
+                                                              }).AsEnumerable());
             return model;
         }
     }

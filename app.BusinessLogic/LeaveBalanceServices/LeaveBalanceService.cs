@@ -1,7 +1,10 @@
 ﻿using app.EntityModel.AppModels;
+using app.EntityModel.DataTablePaginationModels;
 using app.Infrastructure;
 using app.Infrastructure.Auth;
 using app.Infrastructure.Repository;
+using app.Services.ProductServices;
+using Microsoft.EntityFrameworkCore;
 
 namespace app.Services.LeaveBalanceServices
 {
@@ -58,27 +61,75 @@ namespace app.Services.LeaveBalanceServices
             model.Description = result.Description;
             return model;
         }
-        public async Task<LeaveBalanceViewModel> GetAllRecord()
-        {
-            LeaveBalanceViewModel model = new LeaveBalanceViewModel();
-            model.LeaveBalanceList = await Task.Run(() => (from t1 in _dbContext.LeaveBalance
-                                                                where t1.IsActive == true
-                                                                select new LeaveBalanceViewModel
-                                                                {
-                                                                    Id = t1.Id,
-                                                                    LeaveCategoryId=t1.LeaveCategoryId,
-                                                                    LeaveCategoryName= t1.LeaveCategory.Name,
-                                                                    LeaveQty = t1.LeaveQty,
-                                                                    Description=t1.Description,
-                                                                }).AsQueryable());
-            return model;
-        }
         public async Task<bool> DeleteRecord(long id)
         {
             var result = await _iEntityRepository.GetByIdAsync(id);
             result.IsActive = false;
             await _iEntityRepository.UpdateAsync(result);
             return true;
+        }
+
+        public async Task<LeaveBalanceViewModel> GetAllRecord()
+        {
+            LeaveBalanceViewModel model = new LeaveBalanceViewModel();
+            model.LeaveBalanceList = await Task.Run(() => (from t1 in _dbContext.LeaveBalance
+                                                           where t1.IsActive == true
+                                                           select new LeaveBalanceViewModel
+                                                           {
+                                                               Id = t1.Id,
+                                                               LeaveCategoryId = t1.LeaveCategoryId,
+                                                               LeaveCategoryName = t1.LeaveCategory.Name,
+                                                               LeaveQty = t1.LeaveQty,
+                                                               Description = t1.Description,
+                                                           }).AsEnumerable());
+            return model;
+        }
+        public async Task<DataTablePagination<LeaveBalanceSearchDto>> SearchAsync(DataTablePagination<LeaveBalanceSearchDto> searchDto)
+        {
+            var searchResult = _dbContext.LeaveBalance.Include(c => c.LeaveCategory).AsNoTracking();
+
+            var searchModel = searchDto.SearchVm;
+            var filter = searchDto?.Search?.Value?.Trim();
+            if (searchModel?.LeaveCategoryId is > 0)
+            {
+                searchResult = searchResult.Where(c => c.LeaveCategoryId == searchModel.LeaveCategoryId);
+            }
+            //if (searchModel?.LeaveQty is > 0)
+            //{
+            //    searchResult = searchResult.Where(c => c.LeaveQty == searchModel.LeaveQty);
+            //}
+            if (!string.IsNullOrEmpty(filter))
+            {
+                filter = filter.ToLower();
+                searchResult = searchResult.Where(c =>
+                    c.LeaveCategory.Name.ToLower().Contains(filter)
+                    || c.LeaveQty.ToString().Contains(filter)
+                    || c.Description.ToLower().Contains(filter)
+                );
+            }
+
+            var pageSize = searchDto.Length ?? 0;
+            var skip = searchDto.Start ?? 0;
+
+            var totalRecords = await searchResult.CountAsync();
+            if (totalRecords <= 0) return searchDto;
+
+            searchDto.RecordsTotal = totalRecords;
+            searchDto.RecordsFiltered = totalRecords;
+            List<LeaveBalance> filteredDataList = await searchResult.OrderByDescending(c => c.Id).Skip(skip).Take(pageSize).ToListAsync();
+
+            var sl = searchDto.Start ?? 0;
+            searchDto.Data = filteredDataList.Select(c => new LeaveBalanceSearchDto()
+            {
+                SerialNo = ++sl,
+                Id = c.Id,
+                LeaveCategoryId = c.LeaveCategoryId,
+                LeaveCategoryName = c.LeaveCategory.Name,
+                LeaveQty = c.LeaveQty,
+                Description = c.Description,
+            }).ToList();
+
+            return searchDto;
         }
 
     }

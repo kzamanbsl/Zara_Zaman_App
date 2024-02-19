@@ -85,6 +85,36 @@ namespace app.Services.MenuItemServices
             model.IsMenuShow = item.IsMenuShow;
             return model;
         }
+        public async Task<bool> DeleteRecord(long id)
+        {
+            var getItem = await _iEntityRepository.GetByIdAsync(id);
+            if (getItem != null)
+            {
+                getItem.IsActive = false;
+                var result = await _iEntityRepository.UpdateAsync(getItem);
+                if (result)
+                {
+                    return true;
+                }
+                return false;
+            }
+            return false;
+        }
+        public async Task<bool> MenuShowSideBar(long id)
+        {
+            var getItem = await _iEntityRepository.GetByIdAsync(id);
+            if (getItem != null)
+            {
+                getItem.IsMenuShow = false;
+                var result = await _iEntityRepository.UpdateAsync(getItem);
+                if (result)
+                {
+                    return true;
+                }
+                return false;
+            }
+            return false;
+        }
         public async Task<MenuItemViewModel> GetAllRecord()
         {
             MenuItemViewModel model = new MenuItemViewModel();
@@ -105,37 +135,6 @@ namespace app.Services.MenuItemServices
                                                        IsMenuShow = t1.IsMenuShow,
                                                    }).OrderByDescending(x => x.OrderNo).AsEnumerable());
             return model;
-        }
-        public async Task<bool> DeleteRecord(long id)
-        {
-            var getItem = await _iEntityRepository.GetByIdAsync(id);
-            if (getItem != null)
-            {
-                getItem.IsActive = false;
-                var result = await _iEntityRepository.UpdateAsync(getItem);
-                if (result)
-                {
-                    return true;
-                }
-                return false;
-            }
-            return false;
-        }
-
-        public async Task<bool> MenuShowSideBar(long id)
-        {
-            var getItem = await _iEntityRepository.GetByIdAsync(id);
-            if (getItem != null)
-            {
-                getItem.IsMenuShow = false;
-                var result = await _iEntityRepository.UpdateAsync(getItem);
-                if (result)
-                {
-                    return true;
-                }
-                return false;
-            }
-            return false;
         }
     }
 }

@@ -90,13 +90,11 @@ namespace app.Services.UserServices
             }
             return false;
         }
-
         public async Task<ApplicationUser> GetUserByEmail(string email)
         {
             var result = await _dbContext.Users.FirstOrDefaultAsync(d => d.Email == email && d.IsActive == true);
             return result;
         }
-
         public async Task<UserViewModel> GetUserById(string userId)
         {
             var model = await _dbContext.Users.FirstOrDefaultAsync(d => d.Id == userId);
@@ -112,22 +110,6 @@ namespace app.Services.UserServices
             users.RoleId = _dbContext.UserRoles.FirstOrDefault(g => g.UserId == model.Id)?.RoleId;
             return users;
         }
-        public async Task<UserViewModel> GetAllRecord()
-        {
-            UserViewModel model = new UserViewModel();
-            model.DataList = await Task.Run(() => (from t1 in _dbContext.Users
-                select new UserViewModel
-                {
-                    UserId = t1.Id,
-                    FullName = t1.FullName,
-                    UserName = t1.UserName,
-                    IsActive = t1.IsActive,
-                    Email = t1.Email,
-                    Mobile = t1.PhoneNumber,
-                }).OrderByDescending(x => x.UserName).AsEnumerable());
-            return model;
-        }
-
         public async Task<bool> SoftDelete(string userId)
         {
             var model = await _dbContext.Users.FirstOrDefaultAsync(d => d.Id == userId);
@@ -141,6 +123,21 @@ namespace app.Services.UserServices
                 return true;
             }
             return false;
+        }
+        public async Task<UserViewModel> GetAllRecord()
+        {
+            UserViewModel model = new UserViewModel();
+            model.DataList = await Task.Run(() => (from t1 in _dbContext.Users
+                                                   select new UserViewModel
+                                                   {
+                                                       UserId = t1.Id,
+                                                       FullName = t1.FullName,
+                                                       UserName = t1.UserName,
+                                                       IsActive = t1.IsActive,
+                                                       Email = t1.Email,
+                                                       Mobile = t1.PhoneNumber,
+                                                   }).OrderByDescending(x => x.UserName).AsEnumerable());
+            return model;
         }
     }
 }

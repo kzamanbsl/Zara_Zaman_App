@@ -1,8 +1,10 @@
 ﻿using app.EntityModel.AppModels;
+using app.EntityModel.DataTablePaginationModels;
 using app.Infrastructure;
 using app.Infrastructure.Auth;
 using app.Infrastructure.Repository;
 using app.Services.AttendanceLogServices;
+using app.Services.ProductServices;
 using Microsoft.EntityFrameworkCore;
 
 namespace app.Services.AttendanceServices
@@ -145,6 +147,16 @@ namespace app.Services.AttendanceServices
 
             return vm;
         }
+        
+        public async Task<bool> DeleteRecord(long id)
+        {
+            var result = await _iEntityRepository.GetByIdAsync(id)
+;
+            result.IsActive = false;
+            await _iEntityRepository.UpdateAsync(result);
+            return true;
+        }
+
         public async Task<AttendanceViewModel> GetAllRecord()
         {
             AttendanceViewModel model = new AttendanceViewModel();
@@ -161,16 +173,61 @@ namespace app.Services.AttendanceServices
                                                              LoginTime = t1.LoginTime,
                                                              LogoutTime = t1.LogoutTime,
                                                              Remarks = t1.Remarks,
-                                                         }).AsQueryable());
+                                                         }).AsEnumerable());
             return model;
         }
-        public async Task<bool> DeleteRecord(long id)
+
+        public async Task<DataTablePagination<AttendanceSearchDto>> SearchAsync(DataTablePagination<AttendanceSearchDto> searchDto)
         {
-            var result = await _iEntityRepository.GetByIdAsync(id)
-;
-            result.IsActive = false;
-            await _iEntityRepository.UpdateAsync(result);
-            return true;
+            var searchResult = _dbContext.Attendance.Include(c => c.Employee).Include(c => c.Shift).AsNoTracking();
+
+            var searchModel = searchDto.SearchVm;
+            var filter = searchDto?.Search?.Value?.Trim();
+            if (searchModel?.EmployeeId is > 0)
+            {
+                searchResult = searchResult.Where(c => c.EmployeeId == searchModel.EmployeeId);
+            }
+            if (searchModel?.ShiftId is > 0)
+            {
+                searchResult = searchResult.Where(c => c.ShiftId == searchModel.ShiftId);
+            }
+            if (!string.IsNullOrEmpty(filter))
+            {
+                filter = filter.ToLower();
+                searchResult = searchResult.Where(c =>
+                    c.Employee.Name.ToLower().Contains(filter)
+                    || c.AttendanceDate.ToString().Contains(filter)
+                    || c.LoginTime.ToString().Contains(filter)
+                    || c.Shift.Name.ToLower().Contains(filter)
+                );
+            }
+
+            var pageSize = searchDto.Length ?? 0;
+            var skip = searchDto.Start ?? 0;
+
+            var totalRecords = await searchResult.CountAsync();
+            if (totalRecords <= 0) return searchDto;
+
+            searchDto.RecordsTotal = totalRecords;
+            searchDto.RecordsFiltered = totalRecords;
+            List<Attendance> filteredDataList = await searchResult.OrderByDescending(c => c.Id).Skip(skip).Take(pageSize).ToListAsync();
+
+            var sl = searchDto.Start ?? 0;
+            searchDto.Data = filteredDataList.Select(c => new AttendanceSearchDto()
+            {
+                SerialNo = ++sl,
+                Id = c.Id,
+                EmployeeId = c.EmployeeId,
+                EmployeeName = c.Employee.Name,
+                ShiftId = c.ShiftId,
+                ShiftName = c.Shift.Name,
+                AttendanceDate = c.AttendanceDate,
+                LoginTime = c.LoginTime,
+                LogoutTime = c.LogoutTime,
+                Remarks = c.Remarks,
+            }).ToList();
+
+            return searchDto;
         }
     }
 }

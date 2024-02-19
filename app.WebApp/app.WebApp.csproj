@@ -72,10 +72,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Views\LeaveBalance\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Include="Views\PublicError\PublicError.cshtml" />
   </ItemGroup>
 

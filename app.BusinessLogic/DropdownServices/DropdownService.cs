@@ -14,6 +14,16 @@ namespace app.Services.DropdownServices
             _iWorkContext = iWorkContext;
         }
 
+        public async Task<IEnumerable<DropdownViewModel>> EmptySelectionList()
+        {
+            IEnumerable<DropdownViewModel> dropDownViewModels = await Task.Run(() => new List<DropdownViewModel> { new DropdownViewModel
+                                                                                      {
+                                                                                          Id = 0,
+                                                                                          Name = ""
+                                                                                      }});
+            return dropDownViewModels;
+        }
+
         public async Task<IEnumerable<DropdownViewModel>> CompanySelectionList()
         {
             IEnumerable<DropdownViewModel> dropDownViewModels = await Task.Run(() => (from t1 in _dbContext.Company

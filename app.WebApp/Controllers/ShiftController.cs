@@ -1,6 +1,10 @@
-﻿using app.Services.CompanyServices;
+﻿using app.EntityModel.DataTablePaginationModels;
+using app.Services.CompanyServices;
+using app.Services.DropdownServices;
+using app.Services.ProductServices;
 using app.Services.ShiftServices;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace app.WebApp.Controllers
 {
@@ -8,6 +12,7 @@ namespace app.WebApp.Controllers
     {
 
         private readonly IShiftService _iService;
+     
         public ShiftController(IShiftService iService)
         {
             _iService = iService;
@@ -64,5 +69,7 @@ namespace app.WebApp.Controllers
             var res = await _iService.DeleteRecord(id);
             return RedirectToAction("Index");
         }
+
+        }
+      
     }
-}

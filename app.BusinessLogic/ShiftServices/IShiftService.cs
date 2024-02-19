@@ -1,4 +1,7 @@
-﻿namespace app.Services.ShiftServices
+﻿using app.EntityModel.DataTablePaginationModels;
+using app.Services.ProductServices;
+
+namespace app.Services.ShiftServices
 {
     public interface IShiftService
     {
@@ -7,7 +10,7 @@
         Task<bool> UpdateRecord(ShiftViewModel vm);
 
         Task<ShiftViewModel> GetRecordById(long id);
-        Task<ShiftViewModel> GetAllRecord();
         Task<bool> DeleteRecord(long id);
+        Task<ShiftViewModel> GetAllRecord();
     }
 }

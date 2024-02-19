@@ -1,0 +1,322 @@
+﻿@model app.Services.SupplierServices.SupplierSearchDto
+@{
+    ViewData["Title"] = "Search";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="content-header">
+    <div class="container-fluid ">
+        <div class="breadcrumb d-flex justify-content-between align-items-center  pl-3 pr-3">
+            <ol class="breadcrumb mb-0 p-0">
+                <li class="breadcrumb-item"><a href="/Admin/Index">Home</a></li>
+                <li class="breadcrumb-item active"> Supplier List </li>
+            </ol>
+            <div>
+                <a asp-action="AddRecord"><i class="fa fa-plus"></i>  Add Supplier </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="card">
+            <div class="card-header">
+                <div class="row w-100">
+                    <div class="col-sm-3">
+                        <h5> <i class="fas fa-list"></i>  All Supplier </h5>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <form method="post" asp-controller="Supplier" asp-action="Search">
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label>Division</label>
+                                        <select class="form-control" asp-for="DivisionId" asp-items="ViewBag.Divisions">
+                                            <option value="0" selected>--Division--</option>
+                                            <span asp-validation-for="DivisionId" class="text-danger"></span>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label>District</label>
+                                        <select class="form-control" asp-for="DistrictId" asp-items="ViewBag.Districts">
+                                            <option value="0" selected>--District--</option>
+                                            <span asp-validation-for="DistrictId" class="text-danger"></span>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label>Upazila</label>
+                                        <select class="form-control" asp-for="UpazilaId" asp-items="ViewBag.Upazilas">
+                                            <option value="0" selected>--Upazila--</option>
+                                            <span asp-validation-for="UpazilaId" class="text-danger"></span>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label>Country</label>
+                                        <select class="form-control" asp-for="CountryId" asp-items="ViewBag.Countries">
+                                            <option value="0" selected>--Country--</option>
+                                            <span asp-validation-for="CountryId" class="text-danger"></span>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group text-right">
+                                @*<a href="@Url.Action("Search","Product")"><input type="submit" formtarget="_blank" value="Preview" class="btn btn-preview btn-width" /></a>*@
+                                @*<button asp-controller="Product" asp-action="Search" type="submit" title="Download" class="btn btn-report btn-width"><i class="fa fa-download"></i></button>*@
+                                <input id="SupplierDTSearchBtn" type="button" value="Search" class="btn btn-info btn-width" />
+                                <a href="@Url.Action("Search","Supplier")"><input type="button" value="Clear" class="btn btn-warning btn-width" /></a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <hr />
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="table-responsive">
+                            <table id="SupplierSearchTable" class="table table-bordered table-sm">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">
+                                            @Html.DisplayNameFor(model => model.SerialNo)
+                                        </th>
+                                        <th class="text-center">
+                                            @Html.DisplayNameFor(model => model.Name)
+                                        </th>
+                                        <th class="text-center">
+                                            @Html.DisplayNameFor(model => model.Phone)
+                                        </th>
+                                        <th class="text-center">
+                                            @Html.DisplayNameFor(model => model.Email)
+                                        </th>
+                                       
+                                        <th class="text-center">
+                                            @Html.DisplayNameFor(model => model.CountryName)
+                                        </th>
+                                        <th class="text-center">
+                                            @Html.DisplayNameFor(model => model.DivisionName)
+                                        </th>
+                                        <th class="text-center">
+                                            @Html.DisplayNameFor(model => model.DistrictName)
+                                        </th>
+                                        <th class="text-center">
+                                            @Html.DisplayNameFor(model => model.UpazilaName)
+                                        </th>
+                                        <th class="text-center">
+                                            @Html.DisplayNameFor(model => model.Address)
+                                        </th>
+                                        <th class="text-center">
+                                            @Html.DisplayNameFor(model => model.Description)
+                                        </th>
+                                        <th class="text-center">
+                                            @Html.DisplayNameFor(model => model.Action)
+                                        </th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        $(document).ready(function () {
+            $('#Configuration').addClass('menu-open');
+            $('#SupplierIndex').addClass('active');
+
+            search();
+        });
+
+        //Bind District base on DivisionId Selection
+           $('#DivisionId').change(function () {
+            $.ajax({
+                type: "post",
+                url: "/Dropdown/GetDistrictSelectionList",
+                data: { divisionId: $('#DivisionId').val() },
+                dataType: "json",
+                success: function (data) {
+                    var district = "<select>";
+                    district = district + '<option value="">--Select--</option>';
+                    for (var i = 0; i < data.length; i++) {
+                        district = district + '<option value=' + data[i].id + '>' + data[i].name + '</option>';
+                    }
+                    district = district + '</select>';
+                    $('#DistrictId').html(district);
+                }
+            });
+        });
+
+        //Bind Upzila base on District Selection
+        $('#DistrictId').change(function () {
+            $.ajax({
+                type: "post",
+                url: "/Dropdown/GetUpazilaSelectionList",
+                data: { districtId: $('#DistrictId').val() },
+
+                datatype: "json",
+                traditional: true,
+                success: function (data) {
+                    var upazila = "<select>";
+                    upazila = upazila + '<option value="">--Select--</option>';
+                    for (var i = 0; i < data.length; i++) {
+                        upazila = upazila + '<option value=' + data[i].id + '>' + data[i].name + '</option>';
+                    }
+                    upazila = upazila + '</select>';
+                    $('#UpazilaId').html(upazila);
+                }
+            });
+        });
+
+        $(document.body).on("click", "#SupplierDTSearchBtn", function () {
+            search();
+        });
+
+        function getSearchObject() {
+
+            var searchVm = {
+                "CountryId": $("#CountryId").val(),
+                "DivisionId": $("#DivisionId").val(),
+                "DistrictId": $("#DistrictId").val(),
+                "UpazilaId": $("#UpazilaId").val(),
+            }
+            return searchVm;
+        }
+
+        function search() {
+            var searchVm = getSearchObject();
+
+            if ($.fn.DataTable.isDataTable("#SupplierSearchTable")) {
+                var table = $("#SupplierSearchTable").DataTable();
+                table.destroy();
+            }
+
+            var params = "";
+            if (searchVm != undefined && searchVm !== "") {
+                params = { searchVm: searchVm }
+            }
+
+            var oTable = $("#SupplierSearchTable").DataTable({
+                "aLengthMenu": [[25, 50, 100, 200], [25, 50, 100, 200]],
+                "iDisplayLength": 25,
+                "processing": true,
+                "serverSide": true,
+                "bSort": false,
+                "ajax": {
+                    url: "/Supplier/Search",
+                    type: "POST",
+                    data: params
+                },
+
+                "columns": [
+                    {
+                        data: "SerialNo",
+                        render: function (data, type, row, meta) {
+                            return row.serialNo;
+                        }
+                    },
+                    {
+                        data: "Name",
+                        render: function (data, type, row, meta) {
+                            return row.name;
+                        }
+                    },
+                    {
+                        data: "Phone",
+                        render: function (data, type, row, meta) {
+                            return row.phone;
+                        }
+                    },
+                    {
+                        data: "Email",
+                        render: function (data, type, row, meta) {
+                            return row.email;
+                        }
+                    },
+                    // {
+                    //     data: "TradePrice",
+                    //     render: function (data, type, row, meta) {
+                    //         var txt = '<div style="text-align: right">' + Number(row.tradePrice).toFixed(2) + '</div>';
+                    //         return txt;
+                    //     }
+                    // },
+                    // {
+                    //     data: "SalePrice",
+                    //     render: function (data, type, row, meta) {
+                    //         var txt = '<div style="text-align: right">' + Number(row.salePrice).toFixed(2) + '</div>';
+                    //         return txt;
+                    //     }
+                    // },
+
+                    {
+                        data: "CountryName",
+                        render: function (data, type, row, meta) {
+                            return row.countryName;
+                        }
+                    },
+                    {
+                        data: "DivisionName",
+                        render: function (data, type, row, meta) {
+                            return row.divisionName;
+                        }
+                    },
+                    {
+                        data: "DistrictName",
+                        render: function (data, type, row, meta) {
+                            return row.districtName;
+                        }
+                    },
+                    {
+                        data: "UpazilaName",
+                        render: function (data, type, row, meta) {
+                            return row.upazilaName;
+                        }
+                    },
+                    {
+                        data: "Address",
+                        render: function (data, type, row, meta) {
+                            return row.address;
+                        }
+                    },
+                    {
+                        data: "Description",
+                        render: function (data, type, row, meta) {
+                            return row.description;
+                        }
+                    },
+                    {
+                        data: "Action",
+                        render: function (data, type, row, meta) {
+                            var editBtn = "<a href='UpdateRecord/" + row.id + "'><i class='fas fa-pen text-warning m-1' title='Edit' aria-hidden='true'></i></a>";
+                            //var detailsBtn = "<a href='Details/" + row.id + "'><i class='fa fa-eye text-info m-1' title='Details' aria-hidden='true'></i></a>";
+                            var deleteBtn = "<a href='Delete/" + row.id + "'><i class='fas fa-trash text-danger m-1' title='Delete' aria-hidden='true'></i></a>";
+                            var actionBtn = editBtn + deleteBtn;
+                            return actionBtn;
+                        }
+                    }
+                ]
+            });
+        }
+    </script>
+}

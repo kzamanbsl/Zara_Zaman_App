@@ -2,6 +2,7 @@
 {
     public interface IDropdownService
     {
+        Task<IEnumerable<DropdownViewModel>> EmptySelectionList();
         Task<IEnumerable<DropdownViewModel>> CompanySelectionList();
         Task<IEnumerable<DropdownViewModel>> DepartmentSelectionList();
         Task<IEnumerable<DropdownViewModel>> DesignationSelectionList();

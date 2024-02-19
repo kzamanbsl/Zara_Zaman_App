@@ -20,10 +20,10 @@ namespace app.Services.AssetPurchaseOrderServices
 {
     public class AssetPurchaseOrderService : IAssetPurchaseOrderService
     {
-        private readonly IEntityRepository<PurchaseOrder> _iEntityRepository;
+        private readonly IEntityRepository<PurchaseOrderList> _iEntityRepository;
         private readonly InventoryDbContext _dbContext;
         private readonly IWorkContext _iWorkContext;
-        public AssetPurchaseOrderService(IEntityRepository<PurchaseOrder> iEntityRepository, InventoryDbContext dbContext, IWorkContext iWorkContext)
+        public AssetPurchaseOrderService(IEntityRepository<PurchaseOrderList> iEntityRepository, InventoryDbContext dbContext, IWorkContext iWorkContext)
         {
             _iEntityRepository = iEntityRepository;
             _dbContext = dbContext;
@@ -44,7 +44,7 @@ namespace app.Services.AssetPurchaseOrderServices
                            DateTime.Now.ToString("dd") + "-" +
                            poMax.ToString().PadLeft(2, '0');
 
-            PurchaseOrder assetPurchaseOrder = new PurchaseOrder();
+            PurchaseOrderList assetPurchaseOrder = new PurchaseOrderList();
             assetPurchaseOrder.OrderNo = poCid;
             assetPurchaseOrder.PurchaseDate = vm.PurchaseDate;
             assetPurchaseOrder.SupplierId = vm.SupplierId;
@@ -96,47 +96,6 @@ namespace app.Services.AssetPurchaseOrderServices
 
 
             return assetPurchaseOrderModel;
-        }
-
-
-
-
-
-        public async Task<AssetPurchaseOrderViewModel> GetAllRecord()
-        {
-            AssetPurchaseOrderViewModel assetPurchaseMasterModel = new AssetPurchaseOrderViewModel();
-            var dataQuery = await Task.Run(() => (from t1 in _dbContext.PurchaseOrder
-                                                  where t1.IsActive == true && t1.PurchaseTypeId == (int)PurchaseTypeEnum.AssetPurchase
-
-                                                  select new AssetPurchaseOrderViewModel
-                                                  {
-                                                      Id = t1.Id,
-                                                      OrderNo = t1.OrderNo,
-                                                      PurchaseDate = t1.PurchaseDate,
-                                                      SupplierId = t1.SupplierId,
-                                                      SupplierName = t1.Supplier.Name,
-                                                      StorehouseId = t1.StorehouseId,
-                                                      StoreName = t1.Storehouse.Name,
-                                                      OrderStatusId = (int)(PurchaseOrderStatusEnum)t1.OrderStatusId,
-
-                                                  }).OrderByDescending(x => x.Id).AsQueryable());
-
-            assetPurchaseMasterModel.AssetPurchaseOrderList = await Task.Run(() => dataQuery.ToList());
-            assetPurchaseMasterModel.AssetPurchaseOrderList.ToList().ForEach((c => c.OrderStatusName = Enum.GetName(typeof(PurchaseOrderStatusEnum), c.OrderStatusId)));
-
-            var masterIds = assetPurchaseMasterModel.AssetPurchaseOrderList.Select(x => x.Id);
-
-            var matchingDetails = await _dbContext.PurchaseOrderDetail
-                .Where(detail => masterIds.Contains(detail.PurchaseOrderId) && detail.IsActive == true)
-                .ToListAsync();
-            foreach (var master in assetPurchaseMasterModel.AssetPurchaseOrderList)
-            {
-                var detailsForMaster = matchingDetails.Where(detail => detail.PurchaseOrderId == master.Id);
-                decimal? total = detailsForMaster.Sum(detail => (detail.CostPrice * (decimal)detail.PurchaseQty)
-                );
-                master.TotalAmount = (double)(total ?? 0);
-            }
-            return assetPurchaseMasterModel;
         }
 
         public async Task<bool> ConfirmAssetPurchaseOrder(long id)
@@ -225,6 +184,43 @@ namespace app.Services.AssetPurchaseOrderServices
                 return true;
             }
             return false;
+        }
+
+        public async Task<AssetPurchaseOrderViewModel> GetAllRecord()
+        {
+            AssetPurchaseOrderViewModel assetPurchaseMasterModel = new AssetPurchaseOrderViewModel();
+            var dataQuery = await Task.Run(() => (from t1 in _dbContext.PurchaseOrder
+                                                  where t1.IsActive == true && t1.PurchaseTypeId == (int)PurchaseTypeEnum.AssetPurchase
+
+                                                  select new AssetPurchaseOrderViewModel
+                                                  {
+                                                      Id = t1.Id,
+                                                      OrderNo = t1.OrderNo,
+                                                      PurchaseDate = t1.PurchaseDate,
+                                                      SupplierId = t1.SupplierId,
+                                                      SupplierName = t1.Supplier.Name,
+                                                      StorehouseId = t1.StorehouseId,
+                                                      StoreName = t1.Storehouse.Name,
+                                                      OrderStatusId = (int)(PurchaseOrderStatusEnum)t1.OrderStatusId,
+
+                                                  }).OrderByDescending(x => x.Id).AsQueryable());
+
+            assetPurchaseMasterModel.AssetPurchaseOrderList = await Task.Run(() => dataQuery.ToList());
+            assetPurchaseMasterModel.AssetPurchaseOrderList.ToList().ForEach((c => c.OrderStatusName = Enum.GetName(typeof(PurchaseOrderStatusEnum), c.OrderStatusId)));
+
+            var masterIds = assetPurchaseMasterModel.AssetPurchaseOrderList.Select(x => x.Id);
+
+            var matchingDetails = await _dbContext.PurchaseOrderDetail
+                .Where(detail => masterIds.Contains(detail.PurchaseOrderId) && detail.IsActive == true)
+                .ToListAsync();
+            foreach (var master in assetPurchaseMasterModel.AssetPurchaseOrderList)
+            {
+                var detailsForMaster = matchingDetails.Where(detail => detail.PurchaseOrderId == master.Id);
+                decimal? total = detailsForMaster.Sum(detail => (detail.CostPrice * (decimal)detail.PurchaseQty)
+                );
+                master.TotalAmount = (double)(total ?? 0);
+            }
+            return assetPurchaseMasterModel;
         }
     }
 }

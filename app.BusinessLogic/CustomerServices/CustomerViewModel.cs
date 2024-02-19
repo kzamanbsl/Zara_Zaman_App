@@ -2,6 +2,7 @@
 using app.Services.ProductServices;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,6 +16,8 @@ namespace app.Services.CustomerServices
         public string Email { get; set; }
         public string Description { get; set; }
         public string Address { get; set; }
+        //public int? CountryId { get; set; }
+        //public string CountryName { get; set; }
         public int? DivisionId { get; set; }
         public string DivisionName { get; set; }
         public int? DistrictId { get; set; }

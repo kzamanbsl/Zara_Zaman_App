@@ -1,5 +1,7 @@
-﻿using app.Services.DropdownServices;
+﻿using app.EntityModel.DataTablePaginationModels;
+using app.Services.DropdownServices;
 using app.Services.EmployeeServices;
+using app.Services.ProductServices;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -103,6 +105,26 @@ namespace app.WebApp.Controllers
             var result = await _iService.GetDetailsById(id);
             return View(result);
         }
+
+
+        #region Search
+
+        [HttpGet]
+        public async Task<IActionResult> Search()
+        {
+            ViewBag.Departments = new SelectList((await _iDropdownService.DepartmentSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
+            ViewBag.Designations = new SelectList((await _iDropdownService.DesignationSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Search(DataTablePagination<EmployeeSearchDto> searchDto)
+        {
+            var dataTable = await _iService.SearchAsync(searchDto);
+            return Json(dataTable);
+        }
+
+        #endregion
 
     }
 }

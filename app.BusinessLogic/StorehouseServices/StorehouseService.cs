@@ -65,28 +65,27 @@ namespace app.Services.StorehouseServices
             model.Description = result.Description;
             return model;
         }
-        public async Task<StorehouseViewModel> GetAllRecord()
-        {
-            StorehouseViewModel model = new StorehouseViewModel();
-            model.StorehouseList = await Task.Run(() => (from t1 in _dbContext.BusinessCenter
-                                                                where t1.BusinessCenterTypeId == (int)BusinessCenterEnum.Storehouse && t1.IsActive == true
-                                                                select new StorehouseViewModel
-                                                                {
-                                                                    Id = t1.Id,
-                                                                    Name = t1.Name,
-                                                                    Code = t1.Code,
-                                                                    Location = t1.Location,
-                                                                    Description = t1.Description,
-                                                                }).AsQueryable());
-            return model;
-        }
-
         public async Task<bool> DeleteRecord(long id)
         {
             var result = await _iEntityRepository.GetByIdAsync(id);
             result.IsActive = false;
             await _iEntityRepository.UpdateAsync(result);
             return true;
+        }
+        public async Task<StorehouseViewModel> GetAllRecord()
+        {
+            StorehouseViewModel model = new StorehouseViewModel();
+            model.StorehouseList = await Task.Run(() => (from t1 in _dbContext.BusinessCenter
+                                                         where t1.BusinessCenterTypeId == (int)BusinessCenterEnum.Storehouse && t1.IsActive == true
+                                                         select new StorehouseViewModel
+                                                         {
+                                                             Id = t1.Id,
+                                                             Name = t1.Name,
+                                                             Code = t1.Code,
+                                                             Location = t1.Location,
+                                                             Description = t1.Description,
+                                                         }).AsEnumerable());
+            return model;
         }
     }
 }

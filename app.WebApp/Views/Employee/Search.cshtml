@@ -1,0 +1,230 @@
+﻿@model app.Services.EmployeeServices.EmployeeSearchDto
+@{
+    ViewData["Title"] = "Search";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="content-header">
+    <div class="container-fluid ">
+        <div class="breadcrumb d-flex justify-content-between align-items-center  pl-3 pr-3">
+            <ol class="breadcrumb mb-0 p-0">
+                <li class="breadcrumb-item"><a href="/Admin/Index">Home</a></li>
+                <li class="breadcrumb-item active"> Employee List </li>
+            </ol>
+            <div>
+                <a asp-action="AddRecord"><i class="fa fa-plus"></i>  Add Employee </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="card">
+            <div class="card-header">
+                <div class="row w-100">
+                    <div class="col-sm-3">
+                        <h5> <i class="fas fa-list"></i>  All Employee </h5>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <form method="post" asp-controller="Employee" asp-action="Search">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>Department</label>
+                                        <select class="form-control" asp-for="DepartmentId" asp-items="ViewBag.Departments">
+                                            <option value="0" selected>--Department--</option>
+                                            <span asp-validation-for="DepartmentId" class="text-danger"></span>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>Designation</label>
+                                        <select class="form-control" asp-for="DesignationId" asp-items="ViewBag.Designations">
+                                            <option value="0" selected>--Designation--</option>
+                                            <span asp-validation-for="DesignationId" class="text-danger"></span>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group text-right">
+                                @*<a href="@Url.Action("Search","Product")"><input type="submit" formtarget="_blank" value="Preview" class="btn btn-preview btn-width" /></a>*@
+                                @*<button asp-controller="Product" asp-action="Search" type="submit" title="Download" class="btn btn-report btn-width"><i class="fa fa-download"></i></button>*@
+                                <input id="EmployeeDTSearchBtn" type="button" value="Search" class="btn btn-info btn-width" />
+                                <a href="@Url.Action("Search","Employee")"><input type="button" value="Clear" class="btn btn-warning btn-width" /></a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <hr />
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="table-responsive">
+                            <table id="EmployeeSearchTable" class="table table-bordered table-sm">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">
+                                            @Html.DisplayNameFor(model => model.SerialNo)
+                                        </th>
+                                        <th class="text-center">
+                                            @Html.DisplayNameFor(model => model.EmployeeCode)
+                                        </th>
+                                        <th class="text-center">
+                                            @Html.DisplayNameFor(model => model.Name)
+                                        </th>
+                                        <th class="text-center">
+                                            @Html.DisplayNameFor(model => model.DepartmentName)
+                                        </th>
+                                        <th class="text-center">
+                                            @Html.DisplayNameFor(model => model.DesignationName)
+                                        </th>
+                                        <th class="text-center">
+                                            @Html.DisplayNameFor(model => model.MobileNo)
+                                        </th>
+                                        <th class="text-center">
+                                            @Html.DisplayNameFor(model => model.JoiningDate)
+                                        </th>
+                                        <th class="text-center">
+                                            @Html.DisplayNameFor(model => model.Email)
+                                        </th>
+                                       @*  <th class="text-center">
+                                            @Html.DisplayNameFor(model => model.UserName)
+                                        </th> *@
+                                        <th class="text-center">
+                                            @Html.DisplayNameFor(model => model.Action)
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        $(document).ready(function () {
+            $('#Configuration').addClass('menu-open');
+            $('#EmployeeIndex').addClass('active');
+
+            search();
+        });
+
+        $(document.body).on("click", "#EmployeeDTSearchBtn", function () {
+            search();
+        });
+
+        function getSearchObject() {
+
+            var searchVm = {
+                "DepartmentId": $("#DepartmentId").val(),
+                "DesignationId": $("#DesignationId").val(),
+            }
+            return searchVm;
+        }
+
+        function search() {
+            var searchVm = getSearchObject();
+
+            if ($.fn.DataTable.isDataTable("#EmployeeSearchTable")) {
+                var table = $("#EmployeeSearchTable").DataTable();
+                table.destroy();
+            }
+
+            var params = "";
+            if (searchVm != undefined && searchVm !== "") {
+                params = { searchVm: searchVm }
+            }
+
+            var oTable = $("#EmployeeSearchTable").DataTable({
+                "aLengthMenu": [[25, 50, 100, 200], [25, 50, 100, 200]],
+                "iDisplayLength": 25,
+                "processing": true,
+                "serverSide": true,
+                "bSort": false,
+                "ajax": {
+                    url: "/Employee/Search",
+                    type: "POST",
+                    data: params
+                },
+
+                "columns": [
+                    {
+                        data: "SerialNo",
+                        render: function (data, type, row, meta) {
+                            return row.serialNo;
+                        }
+                    },
+                    {
+                        data: "EmployeeCode",
+                        render: function (data, type, row, meta) {
+                            return row.employeeCode;
+                        }
+                    },
+                    {
+                        data: "Name",
+                        render: function (data, type, row, meta) {
+                            return row.name;
+                        }
+                    },
+                    {
+                        data: "DepartmentName",
+                        render: function (data, type, row, meta) {
+                            return row.depatmentName;
+                        }
+                    },
+                    {
+                        data: "DesignationName",
+                        render: function (data, type, row, meta) {
+                            return row.designationName;
+                        }
+                    },
+                    {
+                        data: "MobileNo",
+                        render: function (data, type, row, meta) {
+                            return row.mobileNo;
+                        }
+                    },
+                    {
+                        data: "JoiningDate",
+                        render: function (data, type, row, meta) {
+                            return row.joiningDate;
+                        }
+                    },
+                    {
+                        data: "Email",
+                        render: function (data, type, row, meta) {
+                            return row.email;
+                        }
+                    },
+                    {
+                        data: "Action",
+                        render: function (data, type, row, meta) {
+                            var editBtn = "<a href='UpdateRecord/" + row.id + "'><i class='fas fa-pen text-warning m-1' title='Edit' aria-hidden='true'></i></a>";
+                            //var detailsBtn = "<a href='Details/" + row.id + "'><i class='fa fa-eye text-info m-1' title='Details' aria-hidden='true'></i></a>";
+                            var deleteBtn = "<a href='Delete/" + row.id + "'><i class='fas fa-trash text-danger m-1' title='Delete' aria-hidden='true'></i></a>";
+                            var actionBtn = editBtn + deleteBtn;
+                            return actionBtn;
+                        }
+                    }
+                ]
+            });
+        }
+    </script>
+}

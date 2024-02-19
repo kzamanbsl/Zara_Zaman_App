@@ -1,4 +1,6 @@
-﻿namespace app.Services.EmployeeGradeServices
+﻿using app.EntityModel.DataTablePaginationModels;
+using app.Services.ProductServices;
+namespace app.Services.EmployeeGradeServices
 {
     public interface IEmployeeGradeService
     {
@@ -8,6 +10,8 @@
         Task<EmployeeGradeViewModel> GetRecordById(long id);
         Task<EmployeeGradeViewModel> GetAllRecord();
         Task<bool> DeleteRecord(long id);
-        
+        //Task<DataTablePagination<ProductSearchDto>> SearchAsync(DataTablePagination<EmployeeGradeSearchDto> searchDto);
+
+
     }
 }

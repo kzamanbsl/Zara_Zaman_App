@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace app.Infrastructure.ModelConfig
 {
-    public class PurchaseOrderConfig : IEntityTypeConfiguration<PurchaseOrder>
+    public class PurchaseOrderConfig : IEntityTypeConfiguration<PurchaseOrderList>
     {
-        public void Configure(EntityTypeBuilder<PurchaseOrder> builder)
+        public void Configure(EntityTypeBuilder<PurchaseOrderList> builder)
         {
             builder.HasKey(c => c.Id);
             builder.Property(c => c.Description).HasMaxLength(500);

@@ -48,13 +48,6 @@ namespace app.Services.ProductCategoryServices
             }
             return false;
         }
-        public async Task<bool> DeleteRecord(long id)
-        {
-            var result = await _iEntityRepository.GetByIdAsync(id);
-            result.IsActive = false;
-            await _iEntityRepository.UpdateAsync(result);
-            return true;
-        }
         public async Task<ProductCategoryViewModel> GetRecordById(long id)
         {
             var result = await _iEntityRepository.GetByIdAsync(id);
@@ -63,6 +56,13 @@ namespace app.Services.ProductCategoryServices
             model.Name = result.Name;
             model.ProductCategoryTypeId = result.ProductCategoryTypeId;
             return model;
+        }
+        public async Task<bool> DeleteRecord(long id)
+        {
+            var result = await _iEntityRepository.GetByIdAsync(id);
+            result.IsActive = false;
+            await _iEntityRepository.UpdateAsync(result);
+            return true;
         }
         public async Task<ProductCategoryViewModel> GetAllRecord()
         {
@@ -75,7 +75,7 @@ namespace app.Services.ProductCategoryServices
                                                                     Id = t1.Id,
                                                                     Name = t1.Name,
                                                                     ProductCategoryTypeId = t1.ProductCategoryTypeId,
-                                                                }).AsQueryable());
+                                                                }).AsEnumerable());
             return model;
         }
 

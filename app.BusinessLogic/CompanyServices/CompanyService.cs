@@ -47,13 +47,6 @@ namespace app.Services.CompanyServices
             }
             return false;
         }
-        public async Task<bool> DeleteRecord(long id)
-        {
-            var result = await _iEntityRepository.GetByIdAsync(id);
-            result.IsActive = false;
-            await _iEntityRepository.UpdateAsync(result);
-            return true;
-        }
         public async Task<CompanyViewModel> GetRecordById(long id)
         {
             var result = await _iEntityRepository.GetByIdAsync(id);
@@ -61,6 +54,13 @@ namespace app.Services.CompanyServices
             model.Id = result.Id;
             model.Name = result.Name;
             return model;
+        }
+        public async Task<bool> DeleteRecord(long id)
+        {
+            var result = await _iEntityRepository.GetByIdAsync(id);
+            result.IsActive = false;
+            await _iEntityRepository.UpdateAsync(result);
+            return true;
         }
         public async Task<CompanyViewModel> GetAllRecord()
         {
@@ -71,7 +71,7 @@ namespace app.Services.CompanyServices
                                                                 {
                                                                     Id = t1.Id,
                                                                     Name = t1.Name,
-                                                                }).AsQueryable());
+                                                                }).AsEnumerable());
             return model;
         }
         

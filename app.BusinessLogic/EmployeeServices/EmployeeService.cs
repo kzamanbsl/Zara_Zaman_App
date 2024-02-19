@@ -7,6 +7,8 @@ using Microsoft.EntityFrameworkCore;
 using app.Services.ShiftServices;
 using app.Utility;
 using app.Services.LeaveApplicationServices;
+using app.EntityModel.DataTablePaginationModels;
+using app.Services.ProductServices;
 
 namespace app.Services.EmployeeServices
 {
@@ -87,7 +89,6 @@ namespace app.Services.EmployeeServices
                 throw;
             }
         }
-
         public async Task<bool> UpdateRecord(EmployeeViewModel vm)
         {
             var existingEmployee = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.EmployeeCode == vm.EmployeeCode && f.IsActive == true);
@@ -191,29 +192,6 @@ namespace app.Services.EmployeeServices
             vm.PhotoUrl = emp.PhotoUrl;
             return vm;
         }
-
-        public async Task<EmployeeViewModel> GetAllRecord()
-        {
-            EmployeeViewModel model = new EmployeeViewModel();
-            model.EmployeeList = await Task.Run(() => (from t1 in _dbContext.Employee
-                                                       where t1.IsActive == true
-                                                       select new EmployeeViewModel
-                                                       {
-                                                           Id = t1.Id,
-                                                           EmployeeCode = t1.EmployeeCode,
-                                                           Name = t1.Name,
-                                                           UserName = t1.UserName,
-                                                           DepartmentId = t1.DepartmentId,
-                                                           DepartmentName = t1.Department.Name,
-                                                           DesignationName = t1.Designation.Name,
-                                                           MobileNo = t1.MobileNo,
-                                                           JoiningDate = t1.JoiningDate,
-                                                           Email = t1.Email,
-
-                                                       }).AsQueryable());
-            return model;
-        }
-
         public async Task<EmployeeViewModel> GetDetailsById(long id)
         {
 
@@ -288,6 +266,83 @@ namespace app.Services.EmployeeServices
             model.SignUrl = result.SignUrl;
             model.PhotoUrl = result.PhotoUrl;
             return model;
+        }
+        public async Task<EmployeeViewModel> GetAllRecord()
+        {
+            EmployeeViewModel model = new EmployeeViewModel();
+            model.EmployeeList = await Task.Run(() => (from t1 in _dbContext.Employee
+                                                       where t1.IsActive == true
+                                                       select new EmployeeViewModel
+                                                       {
+                                                           Id = t1.Id,
+                                                           EmployeeCode = t1.EmployeeCode,
+                                                           Name = t1.Name,
+                                                           UserName = t1.UserName,
+                                                           DepartmentId = t1.DepartmentId,
+                                                           DepartmentName = t1.Department.Name,
+                                                           DesignationName = t1.Designation.Name,
+                                                           MobileNo = t1.MobileNo,
+                                                           JoiningDate = t1.JoiningDate,
+                                                           Email = t1.Email,
+
+                                                       }).AsEnumerable());
+            return model;
+        }
+        public async Task<DataTablePagination<EmployeeSearchDto>> SearchAsync(DataTablePagination<EmployeeSearchDto> searchDto)
+        {
+            var searchResult = _dbContext.Employee.Include(c => c.Department).Include(c => c.Designation).AsNoTracking();
+
+            var searchModel = searchDto.SearchVm;
+            var filter = searchDto?.Search?.Value?.Trim();
+            if (searchModel?.DepartmentId is > 0)
+            {
+                searchResult = searchResult.Where(c => c.DepartmentId == searchModel.DepartmentId);
+            }
+            if (searchModel?.DesignationId is > 0)
+            {
+                searchResult = searchResult.Where(c => c.DesignationId == searchModel.DesignationId);
+            }
+            if (!string.IsNullOrEmpty(filter))
+            {
+                filter = filter.ToLower();
+                searchResult = searchResult.Where(c =>
+                    c.Name.ToLower().Contains(filter)
+                    || c.Department.Name.ToLower().Contains(filter)
+                    || c.Designation.Name.ToLower().Contains(filter)
+                    || c.EmployeeCode.ToLower().Contains(filter)
+                    || c.MobileNo.ToLower().Contains(filter)
+                    || c.Email.ToLower().Contains(filter)    
+                );
+            }
+
+            var pageSize = searchDto.Length ?? 0;
+            var skip = searchDto.Start ?? 0;
+
+            var totalRecords = await searchResult.CountAsync();
+            if (totalRecords <= 0) return searchDto;
+
+            searchDto.RecordsTotal = totalRecords;
+            searchDto.RecordsFiltered = totalRecords;
+            List<Employee> filteredDataList = await searchResult.OrderByDescending(c => c.Id).Skip(skip).Take(pageSize).ToListAsync();
+
+            var sl = searchDto.Start ?? 0;
+            searchDto.Data = filteredDataList.Select(c => new EmployeeSearchDto()
+            {
+                SerialNo = ++sl,
+                Id = c.Id,
+                Name = c.Name,
+                EmployeeCode = c.EmployeeCode,
+                DepartmentId = c.DepartmentId,
+                DepartmentName = c.Department.Name,
+                DesignationId = c.DesignationId,
+                DesignationName = c.Designation.Name,
+                MobileNo = c.MobileNo,
+                Email = c.Email,
+                JoiningDate = c.JoiningDate,
+                
+            }).ToList();
+
+            return searchDto;
         }
     }
 }

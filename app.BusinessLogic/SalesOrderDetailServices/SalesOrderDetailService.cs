@@ -24,7 +24,7 @@ namespace app.Services.SalesOrderDetailServices
                 SalesOrderDetails purchaseOrderDetail = new SalesOrderDetails
                 {
                     SalesOrderId = vm.Id,
-                    Id = vm.SalesOrderDetailVM.Id,        
+                    Id = vm.SalesOrderDetailVM.Id,
                     ProductId = vm.SalesOrderDetailVM.ProductId,
                     UnitId = vm.SalesOrderDetailVM.UnitId,
                     SalesPrice = vm.SalesOrderDetailVM.SalesPrice,

@@ -12,7 +12,7 @@ namespace app.Services.UnitServices
         Task<bool> AddRecord(UnitViewModel vm);
         Task<bool> UpdateRecord(UnitViewModel vm);
         Task<UnitViewModel> GetRecordById(long id);
-        Task<UnitViewModel> GetAllRecord();
         Task<bool> DeleteRecord(long id);
+        Task<UnitViewModel> GetAllRecord();
     }
 }

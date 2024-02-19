@@ -6,6 +6,8 @@ using app.Utility;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using app.Services.LeaveBalanceServices;
+using app.EntityModel.DataTablePaginationModels;
+using app.Services.ProductServices;
 
 namespace app.Services.LeaveApplicationServices
 {
@@ -45,7 +47,6 @@ namespace app.Services.LeaveApplicationServices
             }
             return false;
         }
-
         public async Task<bool> UpdateRecord(LeaveApplicationViewModel vm)
         {
 
@@ -90,36 +91,6 @@ namespace app.Services.LeaveApplicationServices
             model.Remarks = result.Remarks;
             model.ApplicationDate = result.ApplicationDate;
             model.StatusId = result.StatusId;
-            return model;
-        }
-        public async Task<LeaveApplicationViewModel> GetAllRecord()
-        {
-            LeaveApplicationViewModel model = new LeaveApplicationViewModel();
-            model.LeaveApplicationList = await Task.Run(() =>
-            {
-                var query = from t1 in _dbContext.LeaveApplication
-                            where t1.IsActive == true
-                            select new LeaveApplicationViewModel
-                            {
-                                Id = t1.Id,
-                                EmployeeId = t1.EmployeeId,
-                                EmployeeName = t1.Employee.Name,
-                                ManagerName = t1.Manager.Name,
-                                LeaveCategoryId = t1.LeaveCategoryId,
-                                LeaveCategoryName = t1.LeaveCategory.Name,
-                                StartDate = t1.StartDate,
-                                EndDate = t1.EndDate,
-                                LeaveDays = t1.LeaveDays,
-                                StayDuringLeave = t1.StayDuringLeave,
-                                Reason = t1.Reason,
-                                Remarks = t1.Remarks,
-                                StatusId = t1.StatusId,
-                                ApplicationDate = t1.ApplicationDate,
-                            };
-
-                return query.AsQueryable();
-            });
-
             return model;
         }
         public async Task<IEnumerable<LeaveBalanceCountViewModel>> GetLeaveBalanceByEmployeeId(long employeeId)
@@ -192,7 +163,94 @@ namespace app.Services.LeaveApplicationServices
             await _iEntityRepository.UpdateAsync(result);
             return true;
         }
+        public async Task<LeaveApplicationViewModel> GetAllRecord()
+        {
+            LeaveApplicationViewModel model = new LeaveApplicationViewModel();
+            model.LeaveApplicationList = await Task.Run(() =>
+            {
+                var query = from t1 in _dbContext.LeaveApplication
+                            where t1.IsActive == true
+                            select new LeaveApplicationViewModel
+                            {
+                                Id = t1.Id,
+                                EmployeeId = t1.EmployeeId,
+                                EmployeeName = t1.Employee.Name,
+                                ManagerName = t1.Manager.Name,
+                                LeaveCategoryId = t1.LeaveCategoryId,
+                                LeaveCategoryName = t1.LeaveCategory.Name,
+                                StartDate = t1.StartDate,
+                                EndDate = t1.EndDate,
+                                LeaveDays = t1.LeaveDays,
+                                StayDuringLeave = t1.StayDuringLeave,
+                                Reason = t1.Reason,
+                                Remarks = t1.Remarks,
+                                StatusId = t1.StatusId,
+                                ApplicationDate = t1.ApplicationDate,
+                            };
 
+                return query.AsEnumerable();
+            });
+
+            return model;
+        }
+
+        public async Task<DataTablePagination<LeaveApplicationSearchDto>> SearchAsync(DataTablePagination<LeaveApplicationSearchDto> searchDto)
+        {
+            var searchResult = _dbContext.LeaveApplication.Include(c => c.Employee).Include(c => c.LeaveCategory).AsNoTracking();
+
+            var searchModel = searchDto.SearchVm;
+            var filter = searchDto?.Search?.Value?.Trim();
+            if (searchModel?.EmployeeId is > 0)
+            {
+                searchResult = searchResult.Where(c => c.EmployeeId == searchModel.EmployeeId);
+            }
+            if (searchModel?.LeaveCategoryId is > 0)
+            {
+                searchResult = searchResult.Where(c => c.LeaveCategoryId == searchModel.LeaveCategoryId);
+            }
+            if (!string.IsNullOrEmpty(filter))
+            {
+                filter = filter.ToLower();
+                searchResult = searchResult.Where(c =>
+                    c.Employee.Name.ToLower().Contains(filter)
+                    || c.LeaveCategory.ToString().Contains(filter)
+                    || c.Manager.Name.ToString().Contains(filter)
+                    || c.StayDuringLeave.ToLower().Contains(filter)
+                    || c.Reason.ToLower().Contains(filter)
+                );
+            }
+
+            var pageSize = searchDto.Length ?? 0;
+            var skip = searchDto.Start ?? 0;
+
+            var totalRecords = await searchResult.CountAsync();
+            if (totalRecords <= 0) return searchDto;
+
+            searchDto.RecordsTotal = totalRecords;
+            searchDto.RecordsFiltered = totalRecords;
+            List<LeaveApplication> filteredDataList = await searchResult.OrderByDescending(c => c.Id).Skip(skip).Take(pageSize).ToListAsync();
+
+            var sl = searchDto.Start ?? 0;
+            searchDto.Data = filteredDataList.Select(c => new LeaveApplicationSearchDto()
+            {
+                SerialNo = ++sl,
+                Id = c.Id,
+                EmployeeId = c.EmployeeId,
+                EmployeeName = c.Employee.Name,
+                LeaveCategoryId = c.LeaveCategoryId,
+                LeaveCategoryName = c.LeaveCategory.Name,
+                ApplicationDate = c.ApplicationDate,
+                StartDate = c.StartDate,
+                EndDate = c.EndDate,
+                LeaveDays = c.LeaveDays,
+                StayDuringLeave = c.StayDuringLeave,
+                Reason = c.Reason,
+                StatusId = c.StatusId,
+                Remarks = c.Remarks
+            }).ToList();
+
+            return searchDto;
+        }
 
     }
 }

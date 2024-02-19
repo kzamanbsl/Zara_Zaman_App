@@ -66,29 +66,28 @@ namespace app.Services.ServiceCenterServices
             model.BusinessCenterTypeId =result.BusinessCenterTypeId;
             return model;
         }
-        public async Task<ServiceCenterViewModel> GetAllRecord()
-        {
-            ServiceCenterViewModel model = new ServiceCenterViewModel();
-            model.ServiceCenterList = await Task.Run(() => (from t1 in _dbContext.BusinessCenter
-                                                                where t1.BusinessCenterTypeId == (int)BusinessCenterEnum.ServiceCenter && t1.IsActive == true
-                                                                select new ServiceCenterViewModel
-                                                                {
-                                                                    Id = t1.Id,
-                                                                    Name = t1.Name,
-                                                                    Code = t1.Code,
-                                                                    Location = t1.Location,
-                                                                    Description = t1.Description,
-                                                                    BusinessCenterTypeId =t1.BusinessCenterTypeId,
-                                                                }).AsQueryable());
-            return model;
-        }
-
         public async Task<bool> DeleteRecord(long id)
         {
             var result = await _iEntityRepository.GetByIdAsync(id);
             result.IsActive = false;
             await _iEntityRepository.UpdateAsync(result);
             return true;
+        }
+        public async Task<ServiceCenterViewModel> GetAllRecord()
+        {
+            ServiceCenterViewModel model = new ServiceCenterViewModel();
+            model.ServiceCenterList = await Task.Run(() => (from t1 in _dbContext.BusinessCenter
+                                                            where t1.BusinessCenterTypeId == (int)BusinessCenterEnum.ServiceCenter && t1.IsActive == true
+                                                            select new ServiceCenterViewModel
+                                                            {
+                                                                Id = t1.Id,
+                                                                Name = t1.Name,
+                                                                Code = t1.Code,
+                                                                Location = t1.Location,
+                                                                Description = t1.Description,
+                                                                BusinessCenterTypeId = t1.BusinessCenterTypeId,
+                                                            }).AsEnumerable());
+            return model;
         }
     }
 }
