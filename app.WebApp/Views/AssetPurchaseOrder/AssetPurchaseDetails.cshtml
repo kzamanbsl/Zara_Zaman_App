@@ -178,7 +178,7 @@
             var id = @Model.Id;
             $.ajax({
                 type: "POST",
-                url: "/AssetPurchaseOrder/AddInventory",
+                url: "/AssetPurchaseOrder/AddAssetInventory",
                 data: { id: id },
                 success: function (result) {
                     if (result) {

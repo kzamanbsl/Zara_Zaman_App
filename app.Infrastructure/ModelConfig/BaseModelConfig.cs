@@ -44,6 +44,7 @@ namespace app.Infrastructure.ModelConfig
             new PurchaseOrderConfig()?.Configure(builder.Entity<PurchaseOrderList>());
             new PurchaseOrderDetailConfig()?.Configure(builder.Entity<PurchaseOrderDetail>());
             new InventoryConfig()?.Configure(builder.Entity<Inventory>());
+            new AssetInventoryConfig()?.Configure(builder.Entity<AssetInventory>());
             new SalesTermsAndConditionConfig()?.Configure(builder.Entity<SalesTermsAndCondition>());
            
 

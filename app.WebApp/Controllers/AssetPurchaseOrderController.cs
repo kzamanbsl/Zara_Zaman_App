@@ -6,6 +6,7 @@ using app.Services.AssetPurchaseOrderServices;
 using app.Utility;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using app.Services.IAssetnventoryServices;
 
 namespace app.WebApp.Controllers
 {
@@ -13,15 +14,16 @@ namespace app.WebApp.Controllers
     {
         private readonly IAssetPurchaseOrderService _iAssetPurchaseOrderService;
         private readonly IAssetPurchaseOrderDetailService _iAssetPurchaseOrderDetailService;
-        private readonly IInventoryService _inventoryService;
+        private readonly IAssetInventoryService _iassetInventoryService;
         private readonly IDropdownService _iDropdownService;
 
-        public AssetPurchaseOrderController(IAssetPurchaseOrderService iAssetPurchaseOrderService, IAssetPurchaseOrderDetailService iAssetPurchaseOrderDetailService, IDropdownService iDropdownService, IInventoryService inventoryService)
+        public AssetPurchaseOrderController(IAssetPurchaseOrderService iAssetPurchaseOrderService, IAssetPurchaseOrderDetailService iAssetPurchaseOrderDetailService, IDropdownService iDropdownService, IAssetInventoryService iassetInventoryService)
         {
             _iAssetPurchaseOrderService = iAssetPurchaseOrderService;
             _iAssetPurchaseOrderDetailService = iAssetPurchaseOrderDetailService;
             _iDropdownService = iDropdownService;
-            _inventoryService = inventoryService;
+            //_inventoryService = inventoryService;
+            _iassetInventoryService = iassetInventoryService;
         }
 
         public async Task<IActionResult> Index()
@@ -124,9 +126,9 @@ namespace app.WebApp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddInventory(long id)
+        public async Task<IActionResult> AddAssetInventory(long id)
         {
-            var res = await _inventoryService.AddInventory(id);
+            var res = await _iassetInventoryService.AddAssetInventory(id);
             return RedirectToAction("Index");
         }
 
