@@ -2,6 +2,9 @@
 using Microsoft.EntityFrameworkCore;
 using app.Infrastructure.Auth;
 using Microsoft.AspNetCore.Identity;
+using app.EntityModel.AppModels;
+using app.EntityModel.DataTablePaginationModels;
+using app.Services.ProductServices;
 
 namespace app.Services.UserServices
 {
@@ -138,6 +141,54 @@ namespace app.Services.UserServices
                                                        Mobile = t1.PhoneNumber,
                                                    }).OrderByDescending(x => x.UserName).AsEnumerable());
             return model;
+        }
+
+        public async Task<DataTablePagination<UserSearchDto>> SearchAsync(DataTablePagination<UserSearchDto> searchDto)
+        {
+            var searchResult = _dbContext.Users.AsNoTracking();
+
+            var searchModel = searchDto.SearchVm;
+            var filter = searchDto?.Search?.Value?.Trim();
+            //if (searchModel?.CategoryId is > 0)
+            //{
+            //    searchResult = searchResult.Where(c => c.CategoryId == searchModel.CategoryId);
+            //}
+            //if (searchModel?.UnitId is > 0)
+            //{
+            //    searchResult = searchResult.Where(c => c.UnitId == searchModel.UnitId);
+            //}
+            if (!string.IsNullOrEmpty(filter))
+            {
+                filter = filter.ToLower();
+                searchResult = searchResult.Where(c =>
+                    c.FullName.ToLower().Contains(filter)
+                    || c.UserName.ToString().Contains(filter)
+                    || c.Email.ToLower().Contains(filter)
+                );
+            }
+
+            var pageSize = searchDto.Length ?? 0;
+            var skip = searchDto.Start ?? 0;
+
+            var totalRecords = await searchResult.CountAsync();
+            if (totalRecords <= 0) return searchDto;
+
+            searchDto.RecordsTotal = totalRecords;
+            searchDto.RecordsFiltered = totalRecords;
+            List<ApplicationUser> filteredDataList = await searchResult.OrderByDescending(c => c.Id).Skip(skip).Take(pageSize).ToListAsync();
+
+            var sl = searchDto.Start ?? 0;
+            searchDto.Data = filteredDataList.Select(c => new UserSearchDto()
+            {
+                SerialNo = ++sl,
+                UserId = c.Id,
+                FullName = c.FullName,
+                UserName = c.UserName,
+                Email = c.Email,
+                IsActive = c.IsActive,
+            }).ToList();
+
+            return searchDto;
         }
     }
 }
