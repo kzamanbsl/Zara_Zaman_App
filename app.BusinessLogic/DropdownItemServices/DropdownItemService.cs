@@ -3,6 +3,9 @@ using app.EntityModel.AppModels;
 using app.Infrastructure.Auth;
 using app.Infrastructure.Repository;
 using app.Infrastructure;
+using app.EntityModel.DataTablePaginationModels;
+using app.Services.ProductCategoryServices;
+using Microsoft.EntityFrameworkCore;
 
 namespace app.Services.DropdownItemServices
 {
@@ -72,9 +75,50 @@ namespace app.Services.DropdownItemServices
                                                              Id = t1.Id,
                                                              Name = t1.Name,
                                                              DropdownTypeId = t1.DropdownTypeId,
-                                                         }).AsQueryable());
+                                                         }).AsEnumerable());
             return model;
         }
 
+
+        public async Task<DataTablePagination<DropdownItemSearchDto>> SearchAsync(DataTablePagination<DropdownItemSearchDto> searchDto)
+        {
+            var searchResult = _dbContext.DropdownItem.AsNoTracking();
+
+            var searchModel = searchDto.SearchVm;
+            var filter = searchDto?.Search?.Value?.Trim();
+
+            if (!string.IsNullOrEmpty(filter))
+            {
+                filter = filter.ToLower();
+                searchResult = searchResult.Where(c =>
+                    c.Name.ToLower().Contains(filter)
+                    || c.DropdownTypeId.ToString().Contains(filter)
+
+                );
+            }
+
+            var pageSize = searchDto.Length ?? 0;
+            var skip = searchDto.Start ?? 0;
+
+            var totalRecords = await searchResult.CountAsync();
+            if (totalRecords <= 0) return searchDto;
+
+            searchDto.RecordsTotal = totalRecords;
+            searchDto.RecordsFiltered = totalRecords;
+            List<DropdownItem> filteredDataList = await searchResult.OrderByDescending(c => c.Id).Skip(skip).Take(pageSize).ToListAsync();
+
+            var sl = searchDto.Start ?? 0;
+            searchDto.Data = filteredDataList.Select(c => new DropdownItemSearchDto()
+            {
+                SerialNo = ++sl,
+                Id = c.Id,
+                Name = c.Name,
+                DropdownTypeId = c.DropdownTypeId,
+
+
+            }).ToList();
+
+            return searchDto;
+        }
     }
 }
