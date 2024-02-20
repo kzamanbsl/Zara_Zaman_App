@@ -1,7 +1,11 @@
 ﻿using app.EntityModel.AppModels;
+using app.EntityModel.DataTablePaginationModels;
 using app.Infrastructure;
 using app.Infrastructure.Auth;
 using app.Infrastructure.Repository;
+using app.Services.EmployeeGradeServices;
+using app.Services.UserServices;
+using Microsoft.EntityFrameworkCore;
 
 namespace app.Services.EmployeeServiceTypeServices
 {
@@ -51,24 +55,60 @@ namespace app.Services.EmployeeServiceTypeServices
             model.Name = result.Name;
             return model;
         }
-        public async Task<EmployeeServiceTypeViewModel> GetAllRecord()
-        {
-            EmployeeServiceTypeViewModel model = new EmployeeServiceTypeViewModel();
-            model.EmployeeServiceTypeList = await Task.Run(() => (from t1 in _dbContext.EmployeeServiceType
-                                                                where t1.IsActive == true
-                                                                select new EmployeeServiceTypeViewModel
-                                                                {
-                                                                    Id = t1.Id,
-                                                                    Name = t1.Name,
-                                                                }).AsEnumerable());
-            return model;
-        }
         public async Task<bool> DeleteRecord(long id)
         {
             var result = await _iEntityRepository.GetByIdAsync(id);
             result.IsActive = false;
             await _iEntityRepository.UpdateAsync(result);
             return true;
+        }
+        public async Task<EmployeeServiceTypeViewModel> GetAllRecord()
+        {
+            EmployeeServiceTypeViewModel model = new EmployeeServiceTypeViewModel();
+            model.EmployeeServiceTypeList = await Task.Run(() => (from t1 in _dbContext.EmployeeServiceType
+                                                                  where t1.IsActive == true
+                                                                  select new EmployeeServiceTypeViewModel
+                                                                  {
+                                                                      Id = t1.Id,
+                                                                      Name = t1.Name,
+                                                                  }).AsEnumerable());
+            return model;
+        }
+        public async Task<DataTablePagination<EmployeeServiceTypeSearchDto>> SearchAsync(DataTablePagination<EmployeeServiceTypeSearchDto> searchDto)
+        {
+            var searchResult = _dbContext.EmployeeServiceType.AsNoTracking();
+
+            var searchModel = searchDto.SearchVm;
+            var filter = searchDto?.Search?.Value?.Trim();
+          
+            if (!string.IsNullOrEmpty(filter))
+            {
+                filter = filter.ToLower();
+                searchResult = searchResult.Where(c =>
+                    c.Name.ToLower().Contains(filter)
+                    
+                    );
+            }
+
+            var pageSize = searchDto.Length ?? 0;
+            var skip = searchDto.Start ?? 0;
+
+            var totalRecords = await searchResult.CountAsync();
+            if (totalRecords <= 0) return searchDto;
+
+            searchDto.RecordsTotal = totalRecords;
+            searchDto.RecordsFiltered = totalRecords;
+            List<EmployeeServiceType> filteredDataList = await searchResult.OrderByDescending(c => c.Id).Skip(skip).Take(pageSize).ToListAsync();
+
+            var sl = searchDto.Start ?? 0;
+            searchDto.Data = filteredDataList.Select(c => new EmployeeServiceTypeSearchDto()
+            {
+                SerialNo = ++sl,
+                Id = c.Id,
+                Name = c.Name,
+            }).ToList();
+
+            return searchDto;
         }
 
     }
