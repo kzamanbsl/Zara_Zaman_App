@@ -1,5 +1,7 @@
-﻿using app.Services.MainMenuServices;
+﻿using app.EntityModel.DataTablePaginationModels;
+using app.Services.MainMenuServices;
 using app.Services.MenuItemServices;
+using app.Services.UserServices;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -91,6 +93,23 @@ namespace app.WebApp.AdminControllers
             return RedirectToAction("Index");
         }
 
+        #region Search
+
+        [HttpGet]
+        public async Task<IActionResult> Search()
+        {
+
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Search(DataTablePagination<MenuItemSearchDto> searchDto)
+        {
+            var dataTable = await _iService.SearchAsync(searchDto);
+            return Json(dataTable);
+        }
+
+        #endregion
     }
 }
 
