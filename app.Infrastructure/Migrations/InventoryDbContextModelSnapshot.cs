@@ -1537,7 +1537,8 @@ namespace app.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
@@ -1560,8 +1561,11 @@ namespace app.Infrastructure.Migrations
                     b.Property<long>("StorehouseId")
                         .HasColumnType("bigint");
 
-                    b.Property<string>("TermsAndCondition")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<long?>("TermsAndConditionId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("TermsandconditionsId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
@@ -1574,6 +1578,8 @@ namespace app.Infrastructure.Migrations
                     b.HasIndex("CustomerId");
 
                     b.HasIndex("StorehouseId");
+
+                    b.HasIndex("TermsAndConditionId");
 
                     b.ToTable("SalesOrder", "dbo");
                 });
@@ -1643,6 +1649,8 @@ namespace app.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ProductId");
+
+                    b.HasIndex("SalesOrderId");
 
                     b.HasIndex("UnitId");
 
@@ -2385,14 +2393,14 @@ namespace app.Infrastructure.Migrations
                         new
                         {
                             Id = "8e445865-a24d-4543-a6c6-9443d048cdb9",
-                            ConcurrencyStamp = "cbc88a7e-76a6-41a2-8b5a-12ac03266685",
+                            ConcurrencyStamp = "7264f801-bbb1-4378-bd10-019dacbcbb94",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         },
                         new
                         {
                             Id = "2c5e174e-3b0e-446f-86af-483d56fd7210",
-                            ConcurrencyStamp = "dd2f0fca-603b-430c-b61b-999caf16627f",
+                            ConcurrencyStamp = "22484ac4-eb33-4a5c-bbae-e741d77d5f78",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -2919,9 +2927,15 @@ namespace app.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("app.EntityModel.AppModels.SalesTermsAndCondition", "TermsAndCondition")
+                        .WithMany()
+                        .HasForeignKey("TermsAndConditionId");
+
                     b.Navigation("Customer");
 
                     b.Navigation("Storehouse");
+
+                    b.Navigation("TermsAndCondition");
                 });
 
             modelBuilder.Entity("app.EntityModel.AppModels.SalesOrderDetails", b =>
@@ -2932,6 +2946,12 @@ namespace app.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("app.EntityModel.AppModels.SalesOrder", "SalesOrder")
+                        .WithMany()
+                        .HasForeignKey("SalesOrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("app.EntityModel.AppModels.Unit", "Unit")
                         .WithMany()
                         .HasForeignKey("UnitId")
@@ -2939,6 +2959,8 @@ namespace app.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Product");
+
+                    b.Navigation("SalesOrder");
 
                     b.Navigation("Unit");
                 });
