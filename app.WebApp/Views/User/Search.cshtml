@@ -1,8 +1,7 @@
-﻿@model app.Services.UserServices.UserViewModel
+﻿@model app.Services.UserServices.UserSearchDto
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Search";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
-    int SN = 1;
 }
 
 <div class="content-header">
@@ -13,12 +12,11 @@
                 <li class="breadcrumb-item active"> Users List </li>
             </ol>
             <div>
-                <a asp-action="AddRecord"><i class="fa fa-plus"></i>Add  Users </a>
+                <a asp-action="AddRecord"><i class="fa fa-plus"></i>  Add User </a>
             </div>
         </div>
     </div>
 </div>
-
 
 
 <section class="content">
@@ -27,70 +25,83 @@
             <div class="card-header">
                 <div class="row w-100">
                     <div class="col-sm-3">
-                        <h5> <i class="fas fa-list"></i>  All User </h5>
+                        <h5> <i class="fas fa-list"></i>  All Users </h5>
                     </div>
                 </div>
             </div>
             <div class="card-body">
-                <div class="table-responsive">
-                    <table id="UserTable" class="table table-sm table-bordered">
-                        <thead>
-                            <tr>
-                                <th>
-                                    #
-                                </th>
-                                <th class="text-center">
-                                    Full Name
-                                </th>
-                                <th class="text-center">
-                                    User Name
-                                </th>
-                                <th class="text-center">
-                                    Email
-                                </th>
-                                <th class="text-center"> Status </th>
-                                <th class="text-center">Action</th>
-                            </tr>
-                        </thead>
+              @*   <div class="row">
+                    <div class="col-sm-12">
+                        <form method="post" asp-controller="Product" asp-action="Search">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>Category</label>
+                                        <select class="form-control" asp-for="CategoryId" asp-items="ViewBag.ProductCategories">
+                                            <option value="0" selected>--Category--</option>
+                                            <span asp-validation-for="CategoryId" class="text-danger"></span>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>Unit</label>
+                                        <select class="form-control" asp-for="UnitId" asp-items="ViewBag.Units">
+                                            <option value="0" selected>--Unit--</option>
+                                            <span asp-validation-for="UnitId" class="text-danger"></span>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
 
-                        <tbody>
-                            @foreach (var item in Model.DataList)
-                            {
-                                <tr>
-                                    <td>
-                                        @SN
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.FullName)
-                                    </td>
-                                    <td class="text-left">
-                                        @item.UserName
-                                    </td>
-                                    <td class="text-left">
-                                        @Html.DisplayFor(modelItem => item.Email)
-                                    </td>
-                                    <td class="text-center">
-                                        @if (item.IsActive == false)
-                                        {
-                                            <b class="text-danger"> <i class="fas fa-times-circle fa-2x" style="font-size:20px"></i></b>
-                                        }
-                                        else
-                                        {
-                                            <b class="text-success"> <i class="fas fa-check-square" style="font-size:20px"></i></b>
-                                        }
-
-                                    </td>
-                                    <td class="text-left">
-                                        @Html.ActionLink("", "UpdateRecord", new { id = item.UserId }, new {@title="Edit", @class = "text-warning fas fa-edit" }) |
-                                        @Html.ActionLink("", "Delete", new { id = item.UserId }, new {@title="Delete", @class = "text-danger fas fa-trash", onclick = "return confirm('Are you sure you want to delete this?')" })
-                                    </td>
-                                </tr>
-                                SN++;
-                            }
-                        </tbody>
-
-                    </table>
-
+                            <div class="form-group text-right">
+                                @*<a href="@Url.Action("Search","Product")"><input type="submit" formtarget="_blank" value="Preview" class="btn btn-preview btn-width" /></a>*@
+                                @*<button asp-controller="Product" asp-action="Search" type="submit" title="Download" class="btn btn-report btn-width"><i class="fa fa-download"></i></button>*@
+                              @*   <input id="ProductDTSearchBtn" type="button" value="Search" class="btn btn-info btn-width" />
+                                <a href="@Url.Action("Search","Product")"><input type="button" value="Clear" class="btn btn-warning btn-width" /></a>
+                            </div>
+                        </form>
+                    </div>
+                </div>  *@
+                <hr />
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="table-responsive">
+                            <table id="UserSearchTable" class="table table-bordered table-sm">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">
+                                            @Html.DisplayNameFor(model => model.SerialNo)
+                                        </th>
+                                        <th class="text-center">
+                                            @Html.DisplayNameFor(model => model.FullName)
+                                        </th>
+                                        <th class="text-center">
+                                            @Html.DisplayNameFor(model => model.UserName)
+                                        </th>
+                                        <th class="text-center">
+                                            @Html.DisplayNameFor(model => model.Email)
+                                        </th>
+                                        <th class="text-center">
+                                            @* @Html.DisplayNameFor(model => model.IsActive) *@
+                                            Status
+                                        </th>
+                                       @*  <th class="text-center">
+                                            @Html.DisplayNameFor(model => model.SalePrice)
+                                        </th>
+                                        <th class="text-center">
+                                            @Html.DisplayNameFor(model => model.Description)
+                                        </th> *@
+                                        <th class="text-center">
+                                            @Html.DisplayNameFor(model => model.Action)
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -104,19 +115,93 @@
     }
     <script>
         $(document).ready(function () {
-            $('#User-Management').addClass('menu-open');
+            $('#Configuration').addClass('menu-open');
             $('#UserIndex').addClass('active');
 
-            $('#UserTable').DataTable({
-                "paging": true,
-                "ordering": true,
-                "info": true,
-                order: [[0, 'asc']],
-            });
+            search();
         });
+
+        $(document.body).on("click", "#UserDTSearchBtn", function () {
+            search();
+        });
+
+        function getSearchObject() {
+
+            var searchVm = {
+                "CategoryId": $("#CategoryId").val(),
+                "UnitId": $("#UnitId").val(),
+            }
+            return searchVm;
+        }
+
+        function search() {
+            var searchVm = getSearchObject();
+
+            if ($.fn.DataTable.isDataTable("#UserSearchTable")) {
+                var table = $("#UserSearchTable").DataTable();
+                table.destroy();
+            }
+
+            var params = "";
+            if (searchVm != undefined && searchVm !== "") {
+                params = { searchVm: searchVm }
+            }
+
+            var oTable = $("#UserSearchTable").DataTable({
+                "aLengthMenu": [[25, 50, 100, 200], [25, 50, 100, 200]],
+                "iDisplayLength": 25,
+                "processing": true,
+                "serverSide": true,
+                "bSort": false,
+                "ajax": {
+                    url: "/User/Search",
+                    type: "POST",
+                    data: params
+                },
+
+                "columns": [
+                    {
+                        data: "SerialNo",
+                        render: function (data, type, row, meta) {
+                            return row.serialNo;
+                        }
+                    },
+                    {
+                        data: "FullName",
+                        render: function (data, type, row, meta) {
+                            return row.fullName;
+                        }
+                    },
+                    {
+                        data: "UserName",
+                        render: function (data, type, row, meta) {
+                            return row.userName;
+                        }
+                    },
+                    {
+                        data: "Email",
+                        render: function (data, type, row, meta) {
+                            return row.email;
+                        }
+                    },
+                    {
+                        data: "IsActive",
+                        render: function (data, type, row, meta) {
+                            return row.isActive;
+                        }
+                    },
+                    {
+                        data: "Action",
+                        render: function (data, type, row, meta) {
+                            var editBtn = "<a href='UpdateRecord/" + row.id + "'><i class='fas fa-pen text-warning m-1' title='Edit' aria-hidden='true'></i></a>";
+                            //var detailsBtn = "<a href='Details/" + row.id + "'><i class='fa fa-eye text-info m-1' title='Details' aria-hidden='true'></i></a>";
+                            var deleteBtn = "<a href='Delete/" + row.id + "'><i class='fas fa-trash text-danger m-1' title='Delete' aria-hidden='true'></i></a>";
+                            var actionBtn = editBtn + deleteBtn;
+                            return actionBtn;
+                        }
+                    }
+                ]
+            });
+        }
     </script>
-
 }
-
-
-
