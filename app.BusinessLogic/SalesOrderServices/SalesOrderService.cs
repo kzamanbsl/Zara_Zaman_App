@@ -41,7 +41,7 @@ namespace app.Services.SalesOrderServices
             salesOrder.CustomerId = vm.CustomerId;
             salesOrder.OverallDiscount = vm.OverallDiscount;
             salesOrder.Description = vm.Description;
-            salesOrder.TermsAndCondition = vm.TermsAndCondition;
+            salesOrder.TermsandconditionsId = vm.TermsandconditionsId;
             salesOrder.DeliveryDate = vm.DeliveryDate;
             salesOrder.DeliveryAddress = vm.DeliveryAddress;
             salesOrder.PaymentStatusId = (int)PaymentStatusEnum.Due;
@@ -68,7 +68,7 @@ namespace app.Services.SalesOrderServices
                                                         DeliveryDate = t1.DeliveryDate,
                                                         DeliveryAddress = t1.DeliveryAddress,
                                                         PaymentStatusId = (int)(PaymentStatusEnum)t1.PaymentStatusId,
-                                                        TermsAndCondition = t1.TermsAndCondition,
+                                                        TermsAndConditionKey = t1.TermsAndCondition.Key,
                                                         OverallDiscount = t1.OverallDiscount,
                                                         Description = t1.Description,
                                                     }).FirstOrDefault());

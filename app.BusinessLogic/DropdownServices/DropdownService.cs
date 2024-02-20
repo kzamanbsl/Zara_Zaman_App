@@ -354,5 +354,18 @@ namespace app.Services.DropdownServices
                                                                                       }).AsEnumerable());
             return dropDownViewModels;
         }
+
+        public async Task<IEnumerable<DropdownViewModel>> TermsandconditionsSelectionList()
+        {
+            IEnumerable<DropdownViewModel> dropDownViewModels = await Task.Run(() => (from t1 in _dbContext.SalesTermsAndCondition
+                                                                                      where t1.IsActive == true
+                                                                                      select new DropdownViewModel
+                                                                                      {
+                                                                                          Id = t1.Id,
+                                                                                          Name = t1.Key,
+
+                                                                                      }).AsEnumerable());
+            return dropDownViewModels;
+        }
     }
 }
