@@ -32,5 +32,6 @@
         Task<IEnumerable<DropdownViewModel>> ProductSelectionList();
         Task<IEnumerable<DropdownViewModel>> AssembleWorkCategorySelectionList();
         Task<IEnumerable<DropdownViewModel>> AssembleWorkStepSelectionList();
+        Task<IEnumerable<DropdownViewModel>> TermsandconditionsSelectionList();
     }
 }
