@@ -1,11 +1,16 @@
 ﻿using app.EntityModel.CoreModel;
+using app.EntityModel.DataTablePaginationModels;
+using app.Infrastructure;
+using app.Infrastructure.Auth;
 using app.Infrastructure.Repository;
+using app.Services.UserServices;
 using Microsoft.EntityFrameworkCore;
 
 namespace app.Services.MainMenuServices
 {
     public class MainMenuService : IMainMenuService
     {
+        private readonly InventoryDbContext _dbContext;
         private readonly IEntityRepository<MainMenu> _entityRepository;
         public MainMenuService(IEntityRepository<MainMenu> entityRepository)
         {
@@ -86,6 +91,53 @@ namespace app.Services.MainMenuServices
         {
             List<MainMenu> getItem = await _entityRepository.AllIQueryableAsync().OrderBy(d => d.OrderNo).ToListAsync();
             return getItem;
+        }
+
+        public async Task<DataTablePagination<MainMenuSearchDto>> SearchAsync(DataTablePagination<MainMenuSearchDto> searchDto)
+        {
+            var searchResult = _dbContext.MainMenu.AsNoTracking();
+
+            var searchModel = searchDto.SearchVm;
+            var filter = searchDto?.Search?.Value?.Trim();
+            //if (searchModel?.CategoryId is > 0)
+            //{
+            //    searchResult = searchResult.Where(c => c.CategoryId == searchModel.CategoryId);
+            //}
+            //if (searchModel?.UnitId is > 0)
+            //{
+            //    searchResult = searchResult.Where(c => c.UnitId == searchModel.UnitId);
+            //}
+            if (!string.IsNullOrEmpty(filter))
+            {
+                filter = filter.ToLower();
+                searchResult = searchResult.Where(c =>
+                    c.Name.ToLower().Contains(filter)
+                    || c.Icon.ToLower().Contains(filter)
+                );
+            }
+
+            var pageSize = searchDto.Length ?? 0;
+            var skip = searchDto.Start ?? 0;
+
+            var totalRecords = await searchResult.CountAsync();
+            if (totalRecords <= 0) return searchDto;
+
+            searchDto.RecordsTotal = totalRecords;
+            searchDto.RecordsFiltered = totalRecords;
+            List<MainMenu> filteredDataList = await searchResult.OrderByDescending(c => c.Id).Skip(skip).Take(pageSize).ToListAsync();
+
+            var sl = searchDto.Start ?? 0;
+            searchDto.Data = filteredDataList.Select(c => new MainMenuSearchDto()
+            {
+                SerialNo = ++sl,
+                Id = c.Id,
+                Name = c.Name,
+                Icon = c.Icon,
+                OrderNo = c.OrderNo,
+                IsActive = c.IsActive,
+            }).ToList();
+
+            return searchDto;
         }
 
     }
