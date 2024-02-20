@@ -1,4 +1,6 @@
-﻿using app.Services.JobStatusServices;
+﻿using app.EntityModel.DataTablePaginationModels;
+using app.Services.JobStatusServices;
+using app.Services.OfficeTypeServices;
 using Microsoft.AspNetCore.Mvc;
 
 namespace app.WebApp.Controllers
@@ -63,5 +65,21 @@ namespace app.WebApp.Controllers
             var res = await _iService.DeleteRecord(id);
             return RedirectToAction("Index");
         }
+
+        #region Search
+        [HttpGet]
+        public async Task<IActionResult> Search()
+        {
+
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Search(DataTablePagination<JobStatusSearchDto> searchDto)
+        {
+            var dataTable = await _iService.SearchAsync(searchDto);
+            return Json(dataTable);
+        }
+        #endregion
     }
 }
