@@ -1,4 +1,4 @@
-﻿@model app.Services.PurchaseOrderServices.PurchaseOrderSearchDto
+﻿@model app.Services.AssetPurchaseOrderServices.AssetPurchaseOrderSearchDto
 @{
     ViewData["Title"] = "Search";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
@@ -9,10 +9,10 @@
         <div class="breadcrumb d-flex justify-content-between align-items-center  pl-3 pr-3">
             <ol class="breadcrumb mb-0 p-0">
                 <li class="breadcrumb-item"><a href="/Admin/Index">Home</a></li>
-                <li class="breadcrumb-item active"> Purchase Order List </li>
+                <li class="breadcrumb-item active"> Asset Purchase Order List </li>
             </ol>
             <div>
-                <a asp-action="AddRecord"><i class="fa fa-plus"></i>  Add Purchase Order </a>
+                <a asp-action="AddRecord"><i class="fa fa-plus"></i>  Add Asset Purchase Order </a>
             </div>
         </div>
     </div>
@@ -25,14 +25,14 @@
             <div class="card-header">
                 <div class="row w-100">
                     <div class="col-sm-3">
-                        <h5> <i class="fas fa-list"></i>  All Purchase Order </h5>
+                        <h5> <i class="fas fa-list"></i>  All Asset Purchase Order </h5>
                     </div>
                 </div>
             </div>
             <div class="card-body">
                 <div class="row">
                     <div class="col-sm-12">
-                        <form method="post" asp-controller="PurchaseOrder" asp-action="Search">
+                        <form method="post" asp-controller="AssetPurchaseOrder" asp-action="Search">
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="form-group">
@@ -52,22 +52,13 @@
                                         </select>
                                     </div>
                                 </div>
-                               @*  <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <label>Status</label>
-                                        <select class="form-control" asp-for="OrderStatusId" asp-items="ViewBag.OrderStatus">
-                                            <option value="0" selected>--Status--</option>
-                                            <span asp-validation-for="OrderStatusId" class="text-danger"></span>
-                                        </select>
-                                    </div>
-                                </div> *@
                             </div>
 
                             <div class="form-group text-right">
                                 @*<a href="@Url.Action("Search","Product")"><input type="submit" formtarget="_blank" value="Preview" class="btn btn-preview btn-width" /></a>*@
                                 @*<button asp-controller="Product" asp-action="Search" type="submit" title="Download" class="btn btn-report btn-width"><i class="fa fa-download"></i></button>*@
-                                <input id="PurchaseOrderDTSearchBtn" type="button" value="Search" class="btn btn-info btn-width" />
-                                <a href="@Url.Action("Search","PurchaseOrder")"><input type="button" value="Clear" class="btn btn-warning btn-width" /></a>
+                                <input id="AssetPurchaseOrderDTSearchBtn" type="button" value="Search" class="btn btn-info btn-width" />
+                                <a href="@Url.Action("Search","AssetPurchaseOrder")"><input type="button" value="Clear" class="btn btn-warning btn-width" /></a>
                             </div>
                         </form>
                     </div>
@@ -76,15 +67,15 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="table-responsive">
-                            <table id="PurchaseOrderSearchTable" class="table table-bordered table-sm">
+                            <table id="AssetPurchaseOrderSearchTable" class="table table-bordered table-sm">
                                 <thead>
                                     <tr>
                                         <th class="text-center">
                                             @Html.DisplayNameFor(model => model.SerialNo)
                                         </th>
                                         <th class="text-center">
-                                          @*   @Html.DisplayNameFor(model => model.OrderNo) *@
-                                          PO No
+                                           @*  @Html.DisplayNameFor(model => model.OrderNo) *@
+                                           PO No
                                         </th>
                                         <th class="text-center">
                                             @Html.DisplayNameFor(model => model.PurchaseDate)
@@ -126,12 +117,12 @@
     <script>
         $(document).ready(function () {
             $('#Configuration').addClass('menu-open');
-            $('#PurchaseOrderIndex').addClass('active');
+            $('#AssetPurchaseOrderIndex').addClass('active');
 
             search();
         });
 
-        $(document.body).on("click", "#PurchaseorderDTSearchBtn", function () {
+        $(document.body).on("click", "#AssetPurchaseorderDTSearchBtn", function () {
             search();
         });
 
@@ -140,7 +131,7 @@
             var searchVm = {
                 "StorehouseId": $("#StorehouseId").val(),
                 "SupplierId": $("#SupplierId").val(),
-               
+                
             }
             return searchVm;
         }
@@ -148,8 +139,8 @@
         function search() {
             var searchVm = getSearchObject();
 
-            if ($.fn.DataTable.isDataTable("#PurchaseOrderSearchTable")) {
-                var table = $("#PurchaseOrderSearchTable").DataTable();
+            if ($.fn.DataTable.isDataTable("#AssetPurchaseOrderSearchTable")) {
+                var table = $("#AssetPurchaseOrderSearchTable").DataTable();
                 table.destroy();
             }
 
@@ -158,14 +149,14 @@
                 params = { searchVm: searchVm }
             }
 
-            var oTable = $("#PurchaseOrderSearchTable").DataTable({
+            var oTable = $("#AssetPurchaseOrderSearchTable").DataTable({
                 "aLengthMenu": [[25, 50, 100, 200], [25, 50, 100, 200]],
                 "iDisplayLength": 25,
                 "processing": true,
                 "serverSide": true,
                 "bSort": false,
                 "ajax": {
-                    url: "/PurchaseOrder/Search",
+                    url: "/AssetPurchaseOrder/Search",
                     type: "POST",
                     data: params
                 },
