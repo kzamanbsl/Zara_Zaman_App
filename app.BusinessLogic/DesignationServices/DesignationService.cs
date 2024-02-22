@@ -2,6 +2,10 @@
 using app.Infrastructure.Auth;
 using app.Infrastructure.Repository;
 using app.Infrastructure;
+using app.EntityModel.CoreModel;
+using app.EntityModel.DataTablePaginationModels;
+using app.Services.CompanyServices;
+using Microsoft.EntityFrameworkCore;
 
 namespace app.Services.DesignationServices
 {
@@ -71,6 +75,43 @@ namespace app.Services.DesignationServices
                                                          }).AsEnumerable());
             return model;
         }
-        
+
+        public async Task<DataTablePagination<DesignationSearchDto>> SearchAsync(DataTablePagination<DesignationSearchDto> searchDto)
+        {
+            var searchResult = _dbContext.Designation.AsNoTracking();
+
+            var searchModel = searchDto.SearchVm;
+            var filter = searchDto?.Search?.Value?.Trim();
+
+            if (!string.IsNullOrEmpty(filter))
+            {
+                filter = filter.ToLower();
+                searchResult = searchResult.Where(c =>
+                    c.Name.ToLower().Contains(filter)
+                );
+            }
+
+            var pageSize = searchDto.Length ?? 0;
+            var skip = searchDto.Start ?? 0;
+
+            var totalRecords = await searchResult.CountAsync();
+            if (totalRecords <= 0) return searchDto;
+
+            searchDto.RecordsTotal = totalRecords;
+            searchDto.RecordsFiltered = totalRecords;
+            List<Designation> filteredDataList = await searchResult.OrderByDescending(c => c.Id).Skip(skip).Take(pageSize).ToListAsync();
+
+            var sl = searchDto.Start ?? 0;
+            searchDto.Data = filteredDataList.Select(c => new DesignationSearchDto()
+            {
+                SerialNo = ++sl,
+                Id = c.Id,
+                Name = c.Name,
+
+            }).ToList();
+
+            return searchDto;
+        }
+
     }
 }
