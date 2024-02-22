@@ -1,4 +1,6 @@
-﻿using app.Services.SalesTermsAndConditonServices;
+﻿using app.EntityModel.DataTablePaginationModels;
+using app.Services.ProductServices;
+using app.Services.SalesTermsAndConditonServices;
 using Microsoft.AspNetCore.Mvc;
 
 namespace app.WebApp.Controllers
@@ -63,5 +65,22 @@ namespace app.WebApp.Controllers
             var res = await _iService.DeleteRecord(id);
             return RedirectToAction("Index");
         }
+
+        #region Search
+
+        [HttpGet]
+        public async Task<IActionResult> Search()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Search(DataTablePagination<SalesTermsAndConditionSearchDto> searchDto)
+        {
+            var dataTable = await _iService.SearchAsync(searchDto);
+            return Json(dataTable);
+        }
+
+        #endregion
     }
 }
