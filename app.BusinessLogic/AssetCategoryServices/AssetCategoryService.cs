@@ -109,7 +109,7 @@ namespace app.Services.AssetCategoryServices
 
             searchDto.RecordsTotal = totalRecords;
             searchDto.RecordsFiltered = totalRecords;
-            var filteredDataList = await searchResult.OrderByDescending(c => c.Id).Skip(skip).Take(pageSize).ToListAsync();
+            List<ProductCategory> filteredDataList = await searchResult.OrderByDescending(c => c.Id).Skip(skip).Take(pageSize).ToListAsync();
 
             var sl = searchDto.Start ?? 0;
             searchDto.Data = filteredDataList.Select(c => new AssetCategorySearchDto()

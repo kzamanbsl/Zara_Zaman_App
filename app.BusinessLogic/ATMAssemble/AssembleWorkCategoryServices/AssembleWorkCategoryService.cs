@@ -1,8 +1,11 @@
 ﻿using app.EntityModel.AppModels;
 using app.EntityModel.AppModels.ATMAssemble;
+using app.EntityModel.DataTablePaginationModels;
 using app.Infrastructure;
 using app.Infrastructure.Auth;
 using app.Infrastructure.Repository;
+using app.Services.AssetCategoryServices;
+using Microsoft.EntityFrameworkCore;
 
 namespace app.Services.ATMAssemble.AssembleWorkCategoryServices
 {
@@ -83,5 +86,43 @@ namespace app.Services.ATMAssemble.AssembleWorkCategoryServices
             return model;
         }
 
+        public async Task<DataTablePagination<AssembleWorkCategorySearchDto>> SearchAsync(DataTablePagination<AssembleWorkCategorySearchDto> searchDto)
+        {
+            var searchResult = _dbContext.AssembleWorkCategory.AsNoTracking();
+
+            var searchModel = searchDto.SearchVm;
+            var filter = searchDto?.Search?.Value?.Trim();
+
+            if (!string.IsNullOrEmpty(filter))
+            {
+                filter = filter.ToLower();
+                searchResult = searchResult.Where(c =>
+                    c.Name.ToLower().Contains(filter)
+                );
+            }
+
+            var pageSize = searchDto.Length ?? 0;
+            var skip = searchDto.Start ?? 0;
+
+            var totalRecords = await searchResult.CountAsync();
+            if (totalRecords <= 0) return searchDto;
+
+            searchDto.RecordsTotal = totalRecords;
+            searchDto.RecordsFiltered = totalRecords;
+            List<AssembleWorkCategory> filteredDataList = await searchResult.OrderByDescending(c => c.Id).Skip(skip).Take(pageSize).ToListAsync();
+
+            var sl = searchDto.Start ?? 0;
+            searchDto.Data = filteredDataList.Select(c => new AssembleWorkCategorySearchDto()
+            {
+                SerialNo = ++sl,
+                Id = c.Id,
+                Name = c.Name,
+                Description = c.Description,
+
+            }).ToList();
+
+            return searchDto;
+        }
     }
+
 }
