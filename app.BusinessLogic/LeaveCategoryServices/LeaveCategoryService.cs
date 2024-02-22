@@ -3,6 +3,9 @@ using app.Infrastructure.Auth;
 using app.Infrastructure.Repository;
 using app.Infrastructure;
 using app.Utility;
+using app.EntityModel.DataTablePaginationModels;
+using app.Services.ProductServices;
+using Microsoft.EntityFrameworkCore;
 
 namespace app.Services.LeaveCategoryServices
 {
@@ -76,6 +79,50 @@ namespace app.Services.LeaveCategoryServices
                                                                 Name = t1.Name,
                                                             }).AsEnumerable());
             return model;
+        }
+
+        public async Task<DataTablePagination<LeaveCategorySearchDto>> SearchAsync(DataTablePagination<LeaveCategorySearchDto> searchDto)
+        {
+            var searchResult = _dbContext.LeaveCategory.AsNoTracking();
+
+            var searchModel = searchDto.SearchVm;
+            var filter = searchDto?.Search?.Value?.Trim();
+            //if (searchModel?.CategoryId is > 0)
+            //{
+            //    searchResult = searchResult.Where(c => c.CategoryId == searchModel.CategoryId);
+            //}
+            //if (searchModel?.UnitId is > 0)
+            //{
+            //    searchResult = searchResult.Where(c => c.UnitId == searchModel.UnitId);
+            //}
+            if (!string.IsNullOrEmpty(filter))
+            {
+                filter = filter.ToLower();
+                searchResult = searchResult.Where(c =>
+                    c.Name.ToLower().Contains(filter)
+                   
+                );
+            }
+
+            var pageSize = searchDto.Length ?? 0;
+            var skip = searchDto.Start ?? 0;
+
+            var totalRecords = await searchResult.CountAsync();
+            if (totalRecords <= 0) return searchDto;
+
+            searchDto.RecordsTotal = totalRecords;
+            searchDto.RecordsFiltered = totalRecords;
+            List<LeaveCategory> filteredDataList = await searchResult.OrderByDescending(c => c.Id).Skip(skip).Take(pageSize).ToListAsync();
+
+            var sl = searchDto.Start ?? 0;
+            searchDto.Data = filteredDataList.Select(c => new LeaveCategorySearchDto()
+            {
+                SerialNo = ++sl,
+                Id = c.Id,
+                Name = c.Name,
+            }).ToList();
+
+            return searchDto;
         }
     }
 }
