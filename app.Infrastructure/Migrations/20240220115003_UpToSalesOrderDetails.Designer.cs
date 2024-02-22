@@ -12,8 +12,8 @@ using app.Infrastructure;
 namespace app.Infrastructure.Migrations
 {
     [DbContext(typeof(InventoryDbContext))]
-    [Migration("20240213115748_SalesModelAndTermsandConditionAdded")]
-    partial class SalesModelAndTermsandConditionAdded
+    [Migration("20240220115003_UpToSalesOrderDetails")]
+    partial class UpToSalesOrderDetails
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -1308,6 +1308,15 @@ namespace app.Infrastructure.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
+                    b.Property<bool>("HasModelNo")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("HasSerialNo")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("HasWarranty")
+                        .HasColumnType("bit");
+
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
@@ -1530,7 +1539,8 @@ namespace app.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
@@ -1553,8 +1563,11 @@ namespace app.Infrastructure.Migrations
                     b.Property<long>("StorehouseId")
                         .HasColumnType("bigint");
 
-                    b.Property<string>("TermsAndCondition")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<long?>("TermsAndConditionId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("TermsandconditionsId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
@@ -1567,6 +1580,8 @@ namespace app.Infrastructure.Migrations
                     b.HasIndex("CustomerId");
 
                     b.HasIndex("StorehouseId");
+
+                    b.HasIndex("TermsAndConditionId");
 
                     b.ToTable("SalesOrder", "dbo");
                 });
@@ -1591,6 +1606,12 @@ namespace app.Infrastructure.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
+                    b.Property<bool?>("IsForService")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ModelNo")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<long>("ProductId")
                         .HasColumnType("bigint");
 
@@ -1606,6 +1627,9 @@ namespace app.Infrastructure.Migrations
                     b.Property<decimal>("SalesQty")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<string>("SerialNo")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<decimal>("TotalAmount")
                         .HasColumnType("decimal(18,2)");
 
@@ -1618,9 +1642,17 @@ namespace app.Infrastructure.Migrations
                     b.Property<DateTime?>("UpdatedOn")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime?>("WarrantyFormDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("WarrantyToDate")
+                        .HasColumnType("datetime2");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ProductId");
+
+                    b.HasIndex("SalesOrderId");
 
                     b.HasIndex("UnitId");
 
@@ -2363,14 +2395,14 @@ namespace app.Infrastructure.Migrations
                         new
                         {
                             Id = "8e445865-a24d-4543-a6c6-9443d048cdb9",
-                            ConcurrencyStamp = "f8de955b-d102-47cd-b21a-9e29322ef935",
+                            ConcurrencyStamp = "7264f801-bbb1-4378-bd10-019dacbcbb94",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         },
                         new
                         {
                             Id = "2c5e174e-3b0e-446f-86af-483d56fd7210",
-                            ConcurrencyStamp = "549380c6-6691-4930-9ffd-eb30ca001d8c",
+                            ConcurrencyStamp = "22484ac4-eb33-4a5c-bbae-e741d77d5f78",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -2897,9 +2929,15 @@ namespace app.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("app.EntityModel.AppModels.SalesTermsAndCondition", "TermsAndCondition")
+                        .WithMany()
+                        .HasForeignKey("TermsAndConditionId");
+
                     b.Navigation("Customer");
 
                     b.Navigation("Storehouse");
+
+                    b.Navigation("TermsAndCondition");
                 });
 
             modelBuilder.Entity("app.EntityModel.AppModels.SalesOrderDetails", b =>
@@ -2910,6 +2948,12 @@ namespace app.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("app.EntityModel.AppModels.SalesOrder", "SalesOrder")
+                        .WithMany()
+                        .HasForeignKey("SalesOrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("app.EntityModel.AppModels.Unit", "Unit")
                         .WithMany()
                         .HasForeignKey("UnitId")
@@ -2917,6 +2961,8 @@ namespace app.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Product");
+
+                    b.Navigation("SalesOrder");
 
                     b.Navigation("Unit");
                 });
