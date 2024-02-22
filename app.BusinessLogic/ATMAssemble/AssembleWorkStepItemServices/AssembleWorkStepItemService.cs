@@ -1,7 +1,11 @@
-﻿using app.EntityModel.AppModels.ATMAssemble;
+﻿using app.EntityModel.AppModels;
+using app.EntityModel.AppModels.ATMAssemble;
+using app.EntityModel.DataTablePaginationModels;
 using app.Infrastructure;
 using app.Infrastructure.Auth;
 using app.Infrastructure.Repository;
+using app.Services.ProductServices;
+using Microsoft.EntityFrameworkCore;
 
 namespace app.Services.ATMAssemble.AssembleWorkStepItemServices
 {
@@ -89,9 +93,60 @@ namespace app.Services.ATMAssemble.AssembleWorkStepItemServices
                                                                        AssembleWorkStepName = t1.AssembleWorkStep.Name,
                                                                        AssembleWorkCategoryId = t1.AssembleWorkStep.AssembleWorkCategory.Id,
                                                                        AssembleWorkCategoryName = t1.AssembleWorkStep.AssembleWorkCategory.Name,
-                                                                   }).AsQueryable());
+                                                                   }).AsEnumerable());
             return model;
         }
 
+        public async Task<DataTablePagination<AssembleWorkStepItemSearchDto>> SearchAsync(DataTablePagination<AssembleWorkStepItemSearchDto> searchDto)
+        {
+            var searchResult = _dbContext.AssembleWorkStepItem.Include(c => c.AssembleWorkStep).Include(c=>c.AssembleWorkStep.AssembleWorkCategory).AsNoTracking();
+
+            var searchModel = searchDto.SearchVm;
+            var filter = searchDto?.Search?.Value?.Trim();
+            if (searchModel?.AssembleWorkStepId is > 0)
+            {
+                searchResult = searchResult.Where(c => c.AssembleWorkStepId == searchModel.AssembleWorkStepId);
+            }
+            if (searchModel?.AssembleWorkCategoryId is > 0)
+            {
+                searchResult = searchResult.Where(c => c.AssembleWorkStep.AssembleWorkCategoryId == searchModel.AssembleWorkCategoryId);
+            }
+            if (!string.IsNullOrEmpty(filter))
+            {
+                filter = filter.ToLower();
+                searchResult = searchResult.Where(c =>
+                    c.Name.ToLower().Contains(filter)
+                    || c.AssembleWorkStep.Name.ToLower().Contains(filter)
+                    || c.AssembleWorkStep.AssembleWorkCategory.Name.ToLower().Contains(filter)
+                    || c.Description.ToLower().Contains(filter)
+                );
+            }
+
+            var pageSize = searchDto.Length ?? 0;
+            var skip = searchDto.Start ?? 0;
+
+            var totalRecords = await searchResult.CountAsync();
+            if (totalRecords <= 0) return searchDto;
+
+            searchDto.RecordsTotal = totalRecords;
+            searchDto.RecordsFiltered = totalRecords;
+            List<AssembleWorkStepItem> filteredDataList = await searchResult.OrderByDescending(c => c.Id).Skip(skip).Take(pageSize).ToListAsync();
+
+            var sl = searchDto.Start ?? 0;
+            searchDto.Data = filteredDataList.Select(c => new AssembleWorkStepItemSearchDto()
+            {
+                SerialNo = ++sl,
+                Id = c.Id,
+                Name = c.Name,
+                AssembleWorkStepId = c.AssembleWorkStepId,
+                AssembleWorkStepName = c.AssembleWorkStep.Name,
+                AssembleWorkCategoryId = c.AssembleWorkStep.AssembleWorkCategory.Id,
+                AssembleWorkCategoryName = c.AssembleWorkStep.AssembleWorkCategory.Name,
+                Description = c.Description,
+
+            }).ToList();
+
+            return searchDto;
+        }
     }
 }

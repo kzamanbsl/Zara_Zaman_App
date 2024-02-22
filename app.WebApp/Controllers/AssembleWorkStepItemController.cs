@@ -1,4 +1,6 @@
-﻿using app.Services.ATMAssemble.AssembleWorkStepItemServices;
+﻿using app.EntityModel.DataTablePaginationModels;
+using app.Services.ATMAssemble.AssembleWorkStepItemServices;
+using app.Services.ATMAssemble.AssembleWorkStepServices;
 using app.Services.DropdownServices;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -71,5 +73,24 @@ namespace app.WebApp.Controllers
             var res = await _iService.DeleteRecord(id);
             return RedirectToAction("Index");
         }
+
+        #region Search
+        [HttpGet]
+        public async Task<IActionResult> Search()
+        {
+            ViewBag.AssembleWorkCategoryList = new SelectList((await _iDropdownService.AssembleWorkCategorySelectionList())
+               .Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
+            ViewBag.AssembleWorkStepList = new SelectList((await _iDropdownService.AssembleWorkStepSelectionList())
+               .Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Search(DataTablePagination<AssembleWorkStepItemSearchDto> searchDto)
+        {
+            var dataTable = await _iService.SearchAsync(searchDto);
+            return Json(dataTable);
+        }
+        #endregion
     }
 }
