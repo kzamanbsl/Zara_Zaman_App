@@ -142,8 +142,8 @@ namespace app.Services.MenuItemServices
 
         public async Task<DataTablePagination<MenuItemSearchDto>> SearchAsync(DataTablePagination<MenuItemSearchDto> searchDto)
         {
-            var searchResult = _dbContext.MenuItem.AsNoTracking();
-             //var searchResult = _dbContext.MenuItem.Include(c => c.MenuId).Include(c => c.OrderNo).AsNoTracking();
+            var searchResult = _dbContext.MenuItem.Include(c => c.Menu).AsNoTracking();
+            //var searchResult = _dbContext.MenuItem.Include(c => c.MenuId).Include(c => c.OrderNo).AsNoTracking();
 
             var searchModel = searchDto.SearchVm;
             var filter = searchDto?.Search?.Value?.Trim();
@@ -160,7 +160,7 @@ namespace app.Services.MenuItemServices
                 filter = filter.ToLower();
                 searchResult = searchResult.Where(c =>
                     c.Name.ToLower().Contains(filter)
-                    || c.MenuId.ToString().Contains(filter)
+                    || c.Menu.Name.ToString().Contains(filter)
                     || c.ShortName.ToLower().Contains(filter)
                     || c.OrderNo.ToString().Contains(filter)
                 );
@@ -181,11 +181,12 @@ namespace app.Services.MenuItemServices
             {
                 SerialNo = ++sl,
                 Id = c.Id,
-                 Name= c.Name,
+                Name = c.Name,
                 ShortName = c.ShortName,
                 Icon = c.Icon,
                 MenuId = c.MenuId,
-               IsMenuShow = c.IsMenuShow,
+                MenuName = c.Menu?.Name,
+                IsMenuShow = c.IsMenuShow,
                 IsActive = c.IsActive,
             }).ToList();
 

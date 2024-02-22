@@ -74,8 +74,8 @@
                                             @Html.DisplayNameFor(model => model.SerialNo)
                                         </th>
                                         <th class="text-center">
-                                          @*   @Html.DisplayNameFor(model => model.MenuName) *@
-                                          Menu
+                                            @*   @Html.DisplayNameFor(model => model.MenuName) *@
+                                            Menu
                                         </th>
                                         <th class="text-center">
                                             @Html.DisplayNameFor(model => model.Name)
@@ -94,10 +94,10 @@
                                             Show
                                         </th>
                                         <th class="text-center">
-                                        @* @Html.DisplayNameFor(model => model.IsActive) *@
-                                           Status
+                                            @* @Html.DisplayNameFor(model => model.IsActive) *@
+                                            Status
                                         </th>
-                                       
+
                                         <th class="text-center">
                                             @Html.DisplayNameFor(model => model.Action)
                                         </th>
@@ -173,9 +173,9 @@
                         }
                     },
                     {
-                        data: "ManuName",
+                        data: "MenuName",
                         render: function (data, type, row, meta) {
-                            return row.manuName;
+                            return row.menuName;
                         }
                     },
                     {
@@ -205,13 +205,27 @@
                     {
                         data: "IsMenuShow",
                         render: function (data, type, row, meta) {
-                            return row.isMenuShow;
+                            var result = "";
+                            if (row.isMenuShow == false) {
+                                var result = '<b class="text-danger" > <i class="fas fa-times-circle fa-2x" style = "font-size:20px" > </i></b >';
+                            }
+                            else {
+                                var result = '<b class="text-success" > <i class="fas fa-check-square" style = "font-size:20px" > </i></b >';
+                            }
+                            return result;
                         }
                     },
                     {
                         data: "IsActive",
                         render: function (data, type, row, meta) {
-                            return row.isActive;
+                            var result = "";
+                            if (row.isActive == false) {
+                                var result = '<b class="text-danger" > <i class="fas fa-times-circle fa-2x" style = "font-size:20px" > </i></b >';
+                            }
+                            else {
+                                var result = '<b class="text-success" > <i class="fas fa-check-square" style = "font-size:20px" > </i></b >';
+                            }
+                            return result;
                         }
                     },
                     {

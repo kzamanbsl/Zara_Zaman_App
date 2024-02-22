@@ -9,6 +9,7 @@
         public string Action { get; set; }        
         public string Icon { get; set; }
         public long MenuId { get; set; }
+        public MainMenu Menu { get; set; }
         public bool IsMenuShow { get; set; } = true;
     }
 }
