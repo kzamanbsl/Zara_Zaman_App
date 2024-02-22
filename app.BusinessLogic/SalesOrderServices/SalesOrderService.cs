@@ -5,6 +5,7 @@ using app.Infrastructure;
 using app.Utility;
 using app.Services.SalesOrderDetailServices;
 using Microsoft.EntityFrameworkCore;
+using app.Services.SalesTermsAndConditonServices;
 
 namespace app.Services.SalesOrderServices
 {
@@ -28,7 +29,7 @@ namespace app.Services.SalesOrderServices
             }
 
             var soMax = _dbContext.SalesOrder.Count() + 1;
-            string soCid = @"SO-" +
+            string soCid = @"SO#" +
                            DateTime.Now.ToString("yy") +
                            DateTime.Now.ToString("MM") +
                            DateTime.Now.ToString("dd") + "-" +
@@ -41,7 +42,7 @@ namespace app.Services.SalesOrderServices
             salesOrder.CustomerId = vm.CustomerId;
             salesOrder.OverallDiscount = vm.OverallDiscount;
             salesOrder.Description = vm.Description;
-            salesOrder.TermsandconditionsId = vm.TermsandconditionsId;
+            salesOrder.TermsAndCondition = vm.TermsAndCondition;
             salesOrder.DeliveryDate = vm.DeliveryDate;
             salesOrder.DeliveryAddress = vm.DeliveryAddress;
             salesOrder.PaymentStatusId = (int)PaymentStatusEnum.Due;
@@ -68,7 +69,7 @@ namespace app.Services.SalesOrderServices
                                                         DeliveryDate = t1.DeliveryDate,
                                                         DeliveryAddress = t1.DeliveryAddress,
                                                         PaymentStatusId = (int)(PaymentStatusEnum)t1.PaymentStatusId,
-                                                        TermsAndConditionKey = t1.TermsAndCondition.Key,
+                                                        TermsAndCondition = t1.TermsAndCondition,
                                                         OverallDiscount = t1.OverallDiscount,
                                                         Description = t1.Description,
                                                     }).FirstOrDefault());
@@ -187,6 +188,18 @@ namespace app.Services.SalesOrderServices
                 return true;
             }
             return false;
+        }
+
+        public async Task<SalesTermsAndConditionViewModel> GetSOTermsAndCondition(long id)
+        {
+            var item = await (from t1 in _dbContext.SalesTermsAndCondition.Where(t => t.IsActive == true && t.Id == id)
+                              select new SalesTermsAndConditionViewModel
+                              {
+                                  Value = t1.Value,
+                                  Key = t1.Key,
+                                  Id = t1.Id
+                              }).FirstOrDefaultAsync();
+            return item;
         }
     }
 }

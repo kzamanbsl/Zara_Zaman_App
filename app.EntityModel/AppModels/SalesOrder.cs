@@ -10,8 +10,7 @@
         public Customer Customer { get; set; }
         public decimal OverallDiscount { get; set; }
         public string Description { get; set; }
-        public long TermsandconditionsId { get; set; }
-        public SalesTermsAndCondition TermsAndCondition { get; set; }
+        public string TermsAndCondition { get; set; }
         public DateTime? DeliveryDate { get; set; }
         public string DeliveryAddress { get; set; }     
         public int OrderStatusId { get; set; } //SalesOrderStatusEnum

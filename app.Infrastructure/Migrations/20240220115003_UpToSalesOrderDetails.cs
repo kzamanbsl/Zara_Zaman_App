@@ -117,15 +117,15 @@ namespace app.Infrastructure.Migrations
                         column: x => x.StorehouseId,
                         principalSchema: "dbo",
                         principalTable: "BusinessCenter",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id"
+                      /*  onDelete: ReferentialAction.Cascade*/);
                     table.ForeignKey(
                         name: "FK_SalesOrder_Customer_CustomerId",
                         column: x => x.CustomerId,
                         principalSchema: "dbo",
                         principalTable: "Customer",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id"
+                        /*onDelete: ReferentialAction.Cascade*/);
                     table.ForeignKey(
                         name: "FK_SalesOrder_SalesTermsAndCondition_TermsAndConditionId",
                         column: x => x.TermsAndConditionId,
@@ -168,22 +168,22 @@ namespace app.Infrastructure.Migrations
                         column: x => x.ProductId,
                         principalSchema: "dbo",
                         principalTable: "Product",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id"
+                        /*onDelete: ReferentialAction.Cascade*/);
                     table.ForeignKey(
                         name: "FK_SalesOrderDetails_SalesOrder_SalesOrderId",
                         column: x => x.SalesOrderId,
                         principalSchema: "dbo",
                         principalTable: "SalesOrder",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id"
+                        /*onDelete: ReferentialAction.Cascade*/);
                     table.ForeignKey(
                         name: "FK_SalesOrderDetails_Unit_UnitId",
                         column: x => x.UnitId,
                         principalSchema: "dbo",
                         principalTable: "Unit",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id"
+                        /*onDelete: ReferentialAction.Cascade*/);
                 });
 
             migrationBuilder.UpdateData(
