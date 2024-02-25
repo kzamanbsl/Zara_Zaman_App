@@ -20,14 +20,6 @@ namespace app.WebApp.AdminControllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index()
-        {
-            MenuItemViewModel menuItemViewModel = new MenuItemViewModel();
-            menuItemViewModel = await _iService.GetAllRecord();
-            return View(menuItemViewModel);
-        }
-
-        [HttpGet]
         public async Task<IActionResult> AddRecord()
         {
             MenuItemViewModel menuItemViewModel = new MenuItemViewModel();
