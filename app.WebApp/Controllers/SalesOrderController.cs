@@ -1,5 +1,6 @@
 ﻿using app.Services.DropdownServices;
 using app.Services.InventoryServices;
+using app.Services.PurchaseOrderServices;
 using app.Services.SalesOrderDetailServices;
 using app.Services.SalesOrderServices;
 using app.Utility;
@@ -21,6 +22,29 @@ namespace app.WebApp.Controllers
             _isalesOrderDetailService = isalesOrderDetailService;
             _iDropdownService = iDropdownService;
             _inventoryService = inventoryService;
+        }
+
+
+        //[HttpGet]
+        //public async Task<IActionResult> Index()
+        //{
+        //    var result =await _isalesOrderService.GetAllSalesRecord();
+        //    return View(result);
+        //}
+
+
+        public async Task<IActionResult> Index()
+        {
+            try
+            {
+                ViewBag.CustomerList = new SelectList((await _iDropdownService.CustomerSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
+                SalesOrderViewModel viewModel = await _isalesOrderService.GetAllSalesRecord();
+                return View(viewModel);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message, ex);
+            }
         }
 
 

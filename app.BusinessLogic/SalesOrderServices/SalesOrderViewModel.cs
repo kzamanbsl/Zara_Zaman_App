@@ -22,7 +22,9 @@ namespace app.Services.SalesOrderServices
         public DateTime? DeliveryDate { get; set; }
         public string DeliveryAddress { get; set; }
         public int OrderStatusId { get; set; } //SalesOrderStatusEnum
+        public string OrderStatusName { get; set; }
         public int PaymentStatusId { get; set; } //PaymentStatusEnum
+        public string PaymentStatusName { get; set; }
         public ActionEnum ActionEum { get { return (ActionEnum)this.ActionId; } }
         public int ActionId { get; set; } = 1;
         public SalesOrderDetailViewModel SalesOrderDetailVM { get; set; }

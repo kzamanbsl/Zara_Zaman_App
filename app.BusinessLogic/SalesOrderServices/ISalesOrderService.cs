@@ -8,7 +8,7 @@ namespace app.Services.SalesOrderServices
         Task<SalesOrderViewModel> GetSalesOrder(long salesOrderId);
         Task<SalesOrderViewModel> GetSalesOrderDetails(long id);
         Task<SalesTermsAndConditionViewModel> GetSOTermsAndCondition(long id);
-        Task<SalesOrderViewModel> GetAllRecord(); 
+        Task<SalesOrderViewModel> GetAllSalesRecord(); 
         Task<bool> ConfirmSalesOrder(long id);
         Task<bool> DeleteSalesOrder(long id);
         Task<bool> RejectSalesOrder(long id);

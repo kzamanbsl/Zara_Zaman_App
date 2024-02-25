@@ -6,6 +6,7 @@ using app.Utility;
 using app.Services.SalesOrderDetailServices;
 using Microsoft.EntityFrameworkCore;
 using app.Services.SalesTermsAndConditonServices;
+using app.Services.CustomerServices;
 
 namespace app.Services.SalesOrderServices
 {
@@ -99,25 +100,24 @@ namespace app.Services.SalesOrderServices
             return SalesOrderModel;
         }
 
-
-
-
-        public async Task<SalesOrderViewModel> GetAllRecord()
+        public async Task<SalesOrderViewModel> GetAllSalesRecord()
         {
-            SalesOrderViewModel purchaseMasterModel = new SalesOrderViewModel();
-            var dataQuery = await Task.Run(() => (from t1 in _dbContext.SalesOrder
-                                                  where t1.IsActive == true
+            SalesOrderViewModel salesOrder = new SalesOrderViewModel();
+            salesOrder.SalesOrderList = await Task.Run(() => (from t1 in _dbContext.SalesOrder
+                                                       where t1.IsActive == true
+                                                              select new SalesOrderViewModel
+                                                              {
+                                                                  Id = t1.Id,
+                                                                  OrderNo = t1.OrderNo,
+                                                                  SalesDate = t1.SalesDate,
+                                                                  CustomerId = t1.CustomerId,
+                                                                  CustomerName = t1.Customer.Name,
+                                                                  DeliveryDate = t1.DeliveryDate,
+                                                                  PaymentStatusId = (int)(PaymentStatusEnum)t1.PaymentStatusId,
+                                                                  OrderStatusId = (int)(SalesOrderStatusEnum)t1.OrderStatusId,
 
-                                                  select new SalesOrderViewModel
-                                                  {
-                                                      Id = t1.Id,
-                                                      OrderNo = t1.OrderNo,
-                                                      SalesDate = t1.SalesDate,
-                                                      OrderStatusId = (int)(SalesOrderStatusEnum)t1.OrderStatusId,
-
-                                                  }).OrderByDescending(x => x.Id).AsQueryable());
-
-            return purchaseMasterModel;
+                                                              }).AsEnumerable());
+            return salesOrder;
         }
 
         public async Task<bool> ConfirmSalesOrder(long id)
