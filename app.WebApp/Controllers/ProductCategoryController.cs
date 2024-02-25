@@ -18,13 +18,6 @@ namespace app.WebApp.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index()
-        {
-            var result = await _iService.GetAllRecord();
-            return View(result);
-        }
-
-        [HttpGet]
         public async Task<IActionResult> AddRecord()
         {
             ProductCategoryViewModel viewModel = new ProductCategoryViewModel();

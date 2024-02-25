@@ -14,13 +14,6 @@ namespace app.WebApp.AdminControllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index()
-        {
-            var result= await _iService.GetAllRecord();
-            return View(result);
-        }
-
-        [HttpGet]
         public async Task<IActionResult> AddRecord()
         {
             CompanyViewModel viewModel = new CompanyViewModel();
