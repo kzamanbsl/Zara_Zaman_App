@@ -19,13 +19,6 @@ namespace app.WebApp.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index()
-        {
-            var result = await _iService.GetAllRecord();
-            return View(result);
-        }
-
-        [HttpGet]
         public async Task<IActionResult> AddOrUpdateRecord()
         {
             ViewBag.ManagerList = new SelectList((await _iDropdownService.EmployeeSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
@@ -55,7 +48,7 @@ namespace app.WebApp.Controllers
             var result = await _iService.AddRecord(viewModel);
             if (result == true)
             {
-                return RedirectToAction("Index");
+                return RedirectToAction("Search");
             }
             ModelState.AddModelError(string.Empty, "Same Employee already exists!");
             return View(viewModel);
@@ -93,7 +86,7 @@ namespace app.WebApp.Controllers
             var result = await _iService.UpdateRecord(model);
             if (result == true)
             {
-                return RedirectToAction("Index");
+                return RedirectToAction("Search");
             }
             ModelState.AddModelError(string.Empty, "Same Employee Code already exists!");
             return View(model);
