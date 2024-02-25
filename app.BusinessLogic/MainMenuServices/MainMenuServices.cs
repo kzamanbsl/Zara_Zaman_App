@@ -12,9 +12,10 @@ namespace app.Services.MainMenuServices
     {
         private readonly InventoryDbContext _dbContext;
         private readonly IEntityRepository<MainMenu> _entityRepository;
-        public MainMenuService(IEntityRepository<MainMenu> entityRepository)
+        public MainMenuService(InventoryDbContext dbContext, IEntityRepository<MainMenu> entityRepository)
         {
-            _entityRepository = entityRepository;
+            _dbContext = dbContext;
+           _entityRepository = entityRepository;
         }
         public async Task<bool> AddRecord(MainMenuViewModel vm)
         {

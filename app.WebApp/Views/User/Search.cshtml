@@ -22,6 +22,7 @@
 <section class="content">
     <div class="container-fluid">
         <div class="card">
+
             <div class="card-header">
                 <div class="row w-100">
                     <div class="col-sm-3">
@@ -29,41 +30,8 @@
                     </div>
                 </div>
             </div>
-            <div class="card-body">
-              @*   <div class="row">
-                    <div class="col-sm-12">
-                        <form method="post" asp-controller="Product" asp-action="Search">
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label>Category</label>
-                                        <select class="form-control" asp-for="CategoryId" asp-items="ViewBag.ProductCategories">
-                                            <option value="0" selected>--Category--</option>
-                                            <span asp-validation-for="CategoryId" class="text-danger"></span>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label>Unit</label>
-                                        <select class="form-control" asp-for="UnitId" asp-items="ViewBag.Units">
-                                            <option value="0" selected>--Unit--</option>
-                                            <span asp-validation-for="UnitId" class="text-danger"></span>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
 
-                            <div class="form-group text-right">
-                                @*<a href="@Url.Action("Search","Product")"><input type="submit" formtarget="_blank" value="Preview" class="btn btn-preview btn-width" /></a>*@
-                                @*<button asp-controller="Product" asp-action="Search" type="submit" title="Download" class="btn btn-report btn-width"><i class="fa fa-download"></i></button>*@
-                              @*   <input id="ProductDTSearchBtn" type="button" value="Search" class="btn btn-info btn-width" />
-                                <a href="@Url.Action("Search","Product")"><input type="button" value="Clear" class="btn btn-warning btn-width" /></a>
-                            </div>
-                        </form>
-                    </div>
-                </div>  *@
-                <hr />
+            <div class="card-body">
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="table-responsive">
@@ -115,8 +83,8 @@
     }
     <script>
         $(document).ready(function () {
-            $('#Configuration').addClass('menu-open');
-            $('#UserIndex').addClass('active');
+            $('#User-Management').addClass('menu-open');
+            $('#UserSearch').addClass('active');
 
             search();
         });

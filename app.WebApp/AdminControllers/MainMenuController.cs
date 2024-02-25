@@ -15,13 +15,6 @@ namespace app.WebApp.AdminControllers
             _iService = iService;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Index()
-        {
-            MainMenuViewModel mainMenuViewModel = new MainMenuViewModel();
-            mainMenuViewModel.DataList = await _iService.GetAllRecord();
-            return View(mainMenuViewModel);
-        }
 
         [HttpGet]
         public IActionResult AddRecord()

@@ -18,13 +18,6 @@ namespace app.WebApp.AdminControllers
         }
 
         #region User Section 
-        [HttpGet]
-        public async Task<IActionResult> Index()
-        {
-            UserViewModel model = new UserViewModel();
-            model = await _iUserService.GetAllRecord();
-            return View(model);
-        }
 
         [HttpGet]
         public async Task<IActionResult> AddRecord()
