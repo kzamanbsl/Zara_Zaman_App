@@ -39,7 +39,7 @@ namespace app.WebApp.AdminControllers
                 return View(model2);
             }
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Search");
         }
 
         [HttpGet]
@@ -63,14 +63,14 @@ namespace app.WebApp.AdminControllers
                 return View(model2);
             }
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Search");
         }
 
         [HttpGet]
         public async Task<IActionResult> Delete(string id)
         {
             var res = await _iUserService.SoftDelete(id);
-            return RedirectToAction("Index");
+            return RedirectToAction("Search");
         }
         #endregion
 

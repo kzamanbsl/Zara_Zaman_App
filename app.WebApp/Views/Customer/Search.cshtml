@@ -34,15 +34,6 @@
                     <div class="col-sm-12">
                         <form method="post" asp-controller="Customer" asp-action="Search">
                             <div class="row">
-                       @*          <div class="col-sm-3">
-                                    <div class="form-group">
-                                        <label>Country</label>
-                                        <select class="form-control" asp-for="CountryId" asp-items="ViewBag.Countries">
-                                            <option value="0" selected>--Country--</option>
-                                            <span asp-validation-for="CountryId" class="text-danger"></span>
-                                        </select>
-                                    </div>
-                                </div>  *@
                                 <div class="col-sm-4">
                                     <div class="form-group">
                                         <label>Division</label>
@@ -143,7 +134,7 @@
     <script>
         $(document).ready(function () {
             $('#Configuration').addClass('menu-open');
-            $('#CustomerIndex').addClass('active');
+            $('#CustomerSearch').addClass('active');
 
             search();
         });

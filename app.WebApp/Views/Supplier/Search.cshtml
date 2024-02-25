@@ -144,7 +144,7 @@
     <script>
         $(document).ready(function () {
             $('#Configuration').addClass('menu-open');
-            $('#SupplierIndex').addClass('active');
+            $('#SupplierSearch').addClass('active');
 
             search();
         });
@@ -254,21 +254,6 @@
                             return row.email;
                         }
                     },
-                    // {
-                    //     data: "TradePrice",
-                    //     render: function (data, type, row, meta) {
-                    //         var txt = '<div style="text-align: right">' + Number(row.tradePrice).toFixed(2) + '</div>';
-                    //         return txt;
-                    //     }
-                    // },
-                    // {
-                    //     data: "SalePrice",
-                    //     render: function (data, type, row, meta) {
-                    //         var txt = '<div style="text-align: right">' + Number(row.salePrice).toFixed(2) + '</div>';
-                    //         return txt;
-                    //     }
-                    // },
-
                     {
                         data: "CountryName",
                         render: function (data, type, row, meta) {

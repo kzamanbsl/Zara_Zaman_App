@@ -33,7 +33,7 @@ namespace app.WebApp.AdminControllers
             var result = await _iService.AddRecord(model);
             if (result)
             {
-                return RedirectToAction("Index");
+                return RedirectToAction("Search");
             }
             else
             {
@@ -49,7 +49,7 @@ namespace app.WebApp.AdminControllers
         public async Task<IActionResult> Delete(long id)
         {
             var res = await _iService.DeleteRecord(id);
-            return RedirectToAction("Index");
+            return RedirectToAction("Search");
         }
 
         [HttpGet]
@@ -67,7 +67,7 @@ namespace app.WebApp.AdminControllers
             var result = await _iService.UpdateRecord(viewModel);
             if (result)
             {
-                return RedirectToAction("Index");
+                return RedirectToAction("Search");
             }
             else
             {
