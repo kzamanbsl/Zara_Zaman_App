@@ -1,6 +1,8 @@
 ﻿using app.EntityModel.AppModels.ATMAssemble;
+using app.EntityModel.DataTablePaginationModels;
 using app.Services.ATMAssemble.AssembleWorkServices;
 using app.Services.DropdownServices;
+using app.Services.ProductServices;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -120,5 +122,23 @@ namespace app.WebApp.Controllers
             return Json(result);
         }
 
+        #region Search
+
+        [HttpGet]
+        public async Task<IActionResult> Search()
+        {
+            ViewBag.AssembleWorkCategoryList = new SelectList((await _iDropdownService.AssembleWorkCategorySelectionList())
+                .Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Search(DataTablePagination<AssembleWorkSearchDto> searchDto)
+        {
+            var dataTable = await _iService.SearchAsync(searchDto);
+            return Json(dataTable);
+        }
+
+        #endregion
     }
 }

@@ -68,22 +68,21 @@ namespace app.WebApp.Controllers
             return RedirectToAction("Index");
         }
 
-        //#region Search
-        //[HttpGet]
-        //public async Task<IActionResult> Search()
-        //{
-        //    ViewBag.Name = new SelectList((await _dropdownService.SelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
-        //    ViewBag.GradeCategories = new SelectList((await _dropdownService.ProductCategorySelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
-        //    return View();
-        //}
+        #region Search
+        [HttpGet]
+        public async Task<IActionResult> Search()
+        {
+           
+            return View();
+        }
 
-        //[HttpPost]
-        //public async Task<IActionResult> Search(DataTablePagination<ProductSearchDto> searchDto)
-        //{
-        //    var dataTable = await _iService.SearchAsync(searchDto);
-        //    return Json(dataTable);
-        //}
-        //#endregion
+        [HttpPost]
+        public async Task<IActionResult> Search(DataTablePagination<EmployeeGradeSearchDto> searchDto)
+        {
+            var dataTable = await _iService.SearchAsync(searchDto);
+            return Json(dataTable);
+        }
+        #endregion
 
     }
 }

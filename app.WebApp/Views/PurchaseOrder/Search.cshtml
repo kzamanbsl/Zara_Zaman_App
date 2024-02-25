@@ -34,7 +34,7 @@
                     <div class="col-sm-12">
                         <form method="post" asp-controller="PurchaseOrder" asp-action="Search">
                             <div class="row">
-                                <div class="col-sm-4">
+                                <div class="col-sm-6">
                                     <div class="form-group">
                                         <label>Store House</label>
                                         <select class="form-control" asp-for="StorehouseId" asp-items="ViewBag.Storehouses">
@@ -43,7 +43,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-sm-4">
+                                <div class="col-sm-6">
                                     <div class="form-group">
                                         <label>Supplier</label>
                                         <select class="form-control" asp-for="SupplierId" asp-items="ViewBag.Suppliers">
@@ -52,7 +52,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-sm-4">
+                               @*  <div class="col-sm-4">
                                     <div class="form-group">
                                         <label>Status</label>
                                         <select class="form-control" asp-for="OrderStatusId" asp-items="ViewBag.OrderStatus">
@@ -60,7 +60,7 @@
                                             <span asp-validation-for="OrderStatusId" class="text-danger"></span>
                                         </select>
                                     </div>
-                                </div>
+                                </div> *@
                             </div>
 
                             <div class="form-group text-right">
@@ -83,7 +83,8 @@
                                             @Html.DisplayNameFor(model => model.SerialNo)
                                         </th>
                                         <th class="text-center">
-                                            @Html.DisplayNameFor(model => model.OrderNo)
+                                          @*   @Html.DisplayNameFor(model => model.OrderNo) *@
+                                          PO No
                                         </th>
                                         <th class="text-center">
                                             @Html.DisplayNameFor(model => model.PurchaseDate)
@@ -95,7 +96,8 @@
                                             @Html.DisplayNameFor(model => model.Supplier)
                                         </th>
                                         <th class="text-center">
-                                            @Html.DisplayNameFor(model => model.OrderStatusName)
+                                           @*  @Html.DisplayNameFor(model => model.OrderStatusName) *@
+                                           Status
                                         </th>
                                         <th class="text-center">
                                             @Html.DisplayNameFor(model => model.TotalAmount)
@@ -138,7 +140,7 @@
             var searchVm = {
                 "StorehouseId": $("#StorehouseId").val(),
                 "SupplierId": $("#SupplierId").val(),
-                "OrderStatusId": $("#OrderStatusId").val(),
+               
             }
             return searchVm;
         }
@@ -190,7 +192,7 @@
                     {
                         data: "Storehouse",
                         render: function (data, type, row, meta) {
-                            return row.storeHouse;
+                            return row.storehouse;
                         }
                     },
                     {
@@ -202,7 +204,7 @@
                     {
                         data: "OrderStatusName",
                         render: function (data, type, row, meta) {
-                            return row.status;
+                            return row.orderStatusName;
                         }
                     },
                     {

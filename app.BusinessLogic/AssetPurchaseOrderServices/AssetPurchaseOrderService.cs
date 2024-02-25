@@ -5,6 +5,9 @@ using app.Utility;
 using app.Services.AssetPurchaseOrderDetailServices;
 using Microsoft.EntityFrameworkCore;
 using app.EntityModel.AppModels;
+using app.EntityModel.DataTablePaginationModels;
+using app.Services.ProductServices;
+using app.Services.PurchaseOrderServices;
 
 namespace app.Services.AssetPurchaseOrderServices
 {
@@ -51,38 +54,38 @@ namespace app.Services.AssetPurchaseOrderServices
         {
             AssetPurchaseOrderViewModel assetPurchaseOrderModel = new AssetPurchaseOrderViewModel();
             assetPurchaseOrderModel = await Task.Run(() => (from t1 in _dbContext.PurchaseOrder.Where(x => x.IsActive && x.Id == assetPurchaseOrderId)
-                                                       select new AssetPurchaseOrderViewModel
-                                                       {
-                                                           Id = t1.Id,
-                                                           PurchaseDate = t1.PurchaseDate,
-                                                           OrderNo = t1.OrderNo,
-                                                           OrderStatusId = (int)(PurchaseOrderStatusEnum)t1.OrderStatusId,
-                                                           SupplierId = t1.SupplierId,
-                                                           SupplierName = t1.Supplier.Name,
-                                                           StorehouseId = t1.StorehouseId,
-                                                           StoreName = t1.Storehouse.Name,
-                                                           OverallDiscount = t1.OverallDiscount,
-                                                           PurchaseTypeId = t1.PurchaseTypeId,
-                                                           Description = t1.Description,
-                                                       }).FirstOrDefault());
+                                                            select new AssetPurchaseOrderViewModel
+                                                            {
+                                                                Id = t1.Id,
+                                                                PurchaseDate = t1.PurchaseDate,
+                                                                OrderNo = t1.OrderNo,
+                                                                OrderStatusId = (int)(PurchaseOrderStatusEnum)t1.OrderStatusId,
+                                                                SupplierId = t1.SupplierId,
+                                                                SupplierName = t1.Supplier.Name,
+                                                                StorehouseId = t1.StorehouseId,
+                                                                StoreName = t1.Storehouse.Name,
+                                                                OverallDiscount = t1.OverallDiscount,
+                                                                PurchaseTypeId = t1.PurchaseTypeId,
+                                                                Description = t1.Description,
+                                                            }).FirstOrDefault());
 
             assetPurchaseOrderModel.AssetPurchaseOrderDetailsList = await Task.Run(() => (from t1 in _dbContext.PurchaseOrderDetail.Where(x => x.IsActive && x.PurchaseOrder.Id == assetPurchaseOrderId)
-                                                                                select new AssetPurchaseOrderDetailViewModel
-                                                                                {
-                                                                                    Id = t1.Id,
-                                                                                    PurchaseOrderId = t1.PurchaseOrderId,
-                                                                                    ProductId = t1.ProductId,
-                                                                                    ProductName = t1.Product.Name,
-                                                                                    PurchaseQty = t1.PurchaseQty,
-                                                                                    Consumption = t1.Consumption,
-                                                                                    UnitId = t1.UnitId,
-                                                                                    UnitName = t1.Unit.Name,
-                                                                                    CostPrice = t1.CostPrice,
-                                                                                    SalePrice = t1.SalePrice,
-                                                                                    //Discount = t1.Discount,
-                                                                                    TotalAmount = ((decimal)t1.PurchaseQty * t1.CostPrice) - t1.Discount,
-                                                                                    Remarks = t1.Remarks,
-                                                                                }).OrderByDescending(x => x.Id).AsQueryable());
+                                                                                          select new AssetPurchaseOrderDetailViewModel
+                                                                                          {
+                                                                                              Id = t1.Id,
+                                                                                              PurchaseOrderId = t1.PurchaseOrderId,
+                                                                                              ProductId = t1.ProductId,
+                                                                                              ProductName = t1.Product.Name,
+                                                                                              PurchaseQty = t1.PurchaseQty,
+                                                                                              Consumption = t1.Consumption,
+                                                                                              UnitId = t1.UnitId,
+                                                                                              UnitName = t1.Unit.Name,
+                                                                                              CostPrice = t1.CostPrice,
+                                                                                              SalePrice = t1.SalePrice,
+                                                                                              //Discount = t1.Discount,
+                                                                                              TotalAmount = ((decimal)t1.PurchaseQty * t1.CostPrice) - t1.Discount,
+                                                                                              Remarks = t1.Remarks,
+                                                                                          }).OrderByDescending(x => x.Id).AsQueryable());
 
 
             return assetPurchaseOrderModel;
@@ -112,38 +115,38 @@ namespace app.Services.AssetPurchaseOrderServices
         {
             AssetPurchaseOrderViewModel assetPurchaseOrderModel = new AssetPurchaseOrderViewModel();
             assetPurchaseOrderModel = await Task.Run(() => (from t1 in _dbContext.PurchaseOrder.Where(x => x.IsActive && x.Id == id)
-                                                       select new AssetPurchaseOrderViewModel
-                                                       {
-                                                           Id = t1.Id,
-                                                           PurchaseDate = t1.PurchaseDate,
-                                                           OrderNo = t1.OrderNo,
-                                                           OrderStatusId = (int)(PurchaseOrderStatusEnum)t1.OrderStatusId,
-                                                           SupplierId = t1.SupplierId,
-                                                           SupplierName = t1.Supplier.Name,
-                                                           StorehouseId = t1.StorehouseId,
-                                                           StoreName = t1.Storehouse.Name,
-                                                           OverallDiscount = t1.OverallDiscount,
-                                                           PurchaseTypeId = t1.PurchaseTypeId,
-                                                           Description = t1.Description,
-                                                       }).FirstOrDefault());
+                                                            select new AssetPurchaseOrderViewModel
+                                                            {
+                                                                Id = t1.Id,
+                                                                PurchaseDate = t1.PurchaseDate,
+                                                                OrderNo = t1.OrderNo,
+                                                                OrderStatusId = (int)(PurchaseOrderStatusEnum)t1.OrderStatusId,
+                                                                SupplierId = t1.SupplierId,
+                                                                SupplierName = t1.Supplier.Name,
+                                                                StorehouseId = t1.StorehouseId,
+                                                                StoreName = t1.Storehouse.Name,
+                                                                OverallDiscount = t1.OverallDiscount,
+                                                                PurchaseTypeId = t1.PurchaseTypeId,
+                                                                Description = t1.Description,
+                                                            }).FirstOrDefault());
 
             assetPurchaseOrderModel.AssetPurchaseOrderDetailsList = await Task.Run(() => (from t1 in _dbContext.PurchaseOrderDetail.Where(x => x.IsActive && x.PurchaseOrder.Id == id)
-                                                                                select new AssetPurchaseOrderDetailViewModel
-                                                                                {
-                                                                                    Id = t1.Id,
-                                                                                    PurchaseOrderId = t1.PurchaseOrderId,
-                                                                                    ProductId = t1.ProductId,
-                                                                                    ProductName = t1.Product.Name,
-                                                                                    PurchaseQty = t1.PurchaseQty,
-                                                                                    Consumption = t1.Consumption,
-                                                                                    UnitId = t1.UnitId,
-                                                                                    UnitName = t1.Unit.Name,
-                                                                                    CostPrice = t1.CostPrice,
-                                                                                    SalePrice = t1.SalePrice,
-                                                                                    //Discount = t1.Discount,
-                                                                                    TotalAmount = ((decimal)t1.PurchaseQty * t1.CostPrice) - t1.Discount,
-                                                                                    Remarks = t1.Remarks,
-                                                                                }).OrderByDescending(x => x.Id).AsQueryable());
+                                                                                          select new AssetPurchaseOrderDetailViewModel
+                                                                                          {
+                                                                                              Id = t1.Id,
+                                                                                              PurchaseOrderId = t1.PurchaseOrderId,
+                                                                                              ProductId = t1.ProductId,
+                                                                                              ProductName = t1.Product.Name,
+                                                                                              PurchaseQty = t1.PurchaseQty,
+                                                                                              Consumption = t1.Consumption,
+                                                                                              UnitId = t1.UnitId,
+                                                                                              UnitName = t1.Unit.Name,
+                                                                                              CostPrice = t1.CostPrice,
+                                                                                              SalePrice = t1.SalePrice,
+                                                                                              //Discount = t1.Discount,
+                                                                                              TotalAmount = ((decimal)t1.PurchaseQty * t1.CostPrice) - t1.Discount,
+                                                                                              Remarks = t1.Remarks,
+                                                                                          }).OrderByDescending(x => x.Id).AsQueryable());
 
 
             return assetPurchaseOrderModel;
@@ -211,6 +214,63 @@ namespace app.Services.AssetPurchaseOrderServices
                 master.TotalAmount = (double)(total ?? 0);
             }
             return assetPurchaseMasterModel;
+        }
+
+        public async Task<DataTablePagination<AssetPurchaseOrderSearchDto>> SearchAsync(DataTablePagination<AssetPurchaseOrderSearchDto> searchDto)
+        {
+            var searchResult = _dbContext.PurchaseOrderDetail.Include(c => c.PurchaseOrder).AsNoTracking();
+
+            var searchModel = searchDto.SearchVm;
+            var filter = searchDto?.Search?.Value?.Trim();
+            if (searchModel?.StorehouseId is > 0)
+            {
+                searchResult = searchResult.Where(c => c.PurchaseOrder.StorehouseId == searchModel.StorehouseId);
+            }
+            if (searchModel?.SupplierId is > 0)
+            {
+                searchResult = searchResult.Where(c => c.PurchaseOrder.SupplierId == searchModel.SupplierId);
+            }
+            if (searchModel?.OrderStatusId is > 0)
+            {
+                searchResult = searchResult.Where(c => c.PurchaseOrder.OrderStatusId == searchModel.OrderStatusId);
+            }
+            if (!string.IsNullOrEmpty(filter))
+            {
+                filter = filter.ToLower();
+                searchResult = searchResult.Where(c =>
+                    c.PurchaseOrder.OrderNo.ToLower().Contains(filter)
+                    || c.PurchaseOrder.PurchaseDate.ToString().Contains(filter)
+                    || c.PurchaseOrder.Supplier.ToString().Contains(filter)
+                    || c.PurchaseOrder.Storehouse.Name.ToLower().Contains(filter)
+                );
+            }
+
+            var pageSize = searchDto.Length ?? 0;
+            var skip = searchDto.Start ?? 0;
+
+            var totalRecords = await searchResult.CountAsync();
+            if (totalRecords <= 0) return searchDto;
+
+            searchDto.RecordsTotal = totalRecords;
+            searchDto.RecordsFiltered = totalRecords;
+            List<PurchaseOrderDetail> filteredDataList = await searchResult.OrderByDescending(c => c.Id).Skip(skip).Take(pageSize).ToListAsync();
+
+            var sl = searchDto.Start ?? 0;
+            searchDto.Data = filteredDataList.Select(c => new AssetPurchaseOrderSearchDto()
+            {
+                SerialNo = ++sl,
+                Id = c.PurchaseOrder.Id,
+                OrderNo = c.PurchaseOrder.OrderNo,
+                PurchaseDate = c.PurchaseOrder.PurchaseDate,
+                StorehouseId = c.PurchaseOrder.StorehouseId,
+                Storehouse = c.PurchaseOrder.Storehouse,
+                OrderStatusId = (int)(PurchaseOrderStatusEnum)c.PurchaseOrder.OrderStatusId,
+                SupplierId = c.PurchaseOrder.SupplierId,
+                Supplier = c.PurchaseOrder.Supplier,
+                TotalAmount = (double)c.TotalAmount,
+            }).ToList();
+
+            return searchDto;
         }
     }
 }

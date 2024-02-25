@@ -1,4 +1,7 @@
-﻿namespace app.Services.OfficeTypeServices
+﻿using app.EntityModel.DataTablePaginationModels;
+using app.Services.EmployeeCategoryServices;
+
+namespace app.Services.OfficeTypeServices
 {
     public interface IOfficeTypeService
     {
@@ -8,5 +11,6 @@
         Task<OfficeTypeViewModel> GetRecordById(long id);
         Task<bool> DeleteRecord(long id);
         Task<OfficeTypeViewModel> GetAllRecord();
+        Task<DataTablePagination<OfficeTypeSearchDto>> SearchAsync(DataTablePagination<OfficeTypeSearchDto> searchDto);
     }
 }

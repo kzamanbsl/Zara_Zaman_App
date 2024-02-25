@@ -1,4 +1,6 @@
-﻿using app.Services.ProductCategoryServices;
+﻿using app.EntityModel.DataTablePaginationModels;
+using app.Services.ProductCategoryServices;
+using app.Services.SaleCenterServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,5 +16,6 @@ namespace app.Services.AssetCategoryServices
         Task<AssetCategoryViewModel> GetRecordById(long id);
         Task<bool> DeleteRecord(long id);
         Task<AssetCategoryViewModel> GetAllRecord();
+        Task<DataTablePagination<AssetCategorySearchDto>> SearchAsync(DataTablePagination<AssetCategorySearchDto> searchDto);
     }
 }

@@ -153,7 +153,6 @@ namespace app.WebApp.Controllers
         {
             ViewBag.Storehouses = new SelectList((await _iDropdownService.StorehouseSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
             ViewBag.Suppliers = new SelectList((await _iDropdownService.SupplierSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
-            ViewBag.OrderStatus = new SelectList((await _iDropdownService.EmptySelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
             return View();
         }
 

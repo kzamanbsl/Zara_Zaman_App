@@ -12,5 +12,6 @@ namespace app.Services.ShiftServices
         Task<ShiftViewModel> GetRecordById(long id);
         Task<bool> DeleteRecord(long id);
         Task<ShiftViewModel> GetAllRecord();
+        Task<DataTablePagination<ShiftSearchDto>> SearchAsync(DataTablePagination<ShiftSearchDto> searchDto);
     }
 }

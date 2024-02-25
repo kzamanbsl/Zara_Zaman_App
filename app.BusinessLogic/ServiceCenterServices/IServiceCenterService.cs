@@ -1,4 +1,7 @@
-﻿namespace app.Services.ServiceCenterServices
+﻿using app.EntityModel.DataTablePaginationModels;
+using app.Services.DepartmentServices;
+
+namespace app.Services.ServiceCenterServices
 {
     public interface IServiceCenterService
     {
@@ -8,5 +11,6 @@
         Task<ServiceCenterViewModel> GetRecordById(long id);
         Task<bool> DeleteRecord(long id);
         Task<ServiceCenterViewModel> GetAllRecord();
+        Task<DataTablePagination<ServiceCenterSearchDto>> SearchAsync(DataTablePagination<ServiceCenterSearchDto> searchDto);
     }
 }

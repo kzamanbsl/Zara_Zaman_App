@@ -1,8 +1,12 @@
-﻿using app.EntityModel.CoreModel;
+﻿using app.EntityModel.AppModels;
+using app.EntityModel.CoreModel;
+using app.EntityModel.DataTablePaginationModels;
 using app.Infrastructure;
 using app.Infrastructure.Auth;
 using app.Infrastructure.Repository;
+using app.Services.StorehouseServices;
 using app.Utility;
+using Microsoft.EntityFrameworkCore;
 
 namespace app.Services.CompanyServices
 {
@@ -74,6 +78,42 @@ namespace app.Services.CompanyServices
                                                                 }).AsEnumerable());
             return model;
         }
-        
+
+        public async Task<DataTablePagination<CompanySearchDto>> SearchAsync(DataTablePagination<CompanySearchDto> searchDto)
+        {
+            var searchResult = _dbContext.Company.AsNoTracking();
+
+            var searchModel = searchDto.SearchVm;
+            var filter = searchDto?.Search?.Value?.Trim();
+
+            if (!string.IsNullOrEmpty(filter))
+            {
+                filter = filter.ToLower();
+                searchResult = searchResult.Where(c =>
+                    c.Name.ToLower().Contains(filter)
+                );
+            }
+
+            var pageSize = searchDto.Length ?? 0;
+            var skip = searchDto.Start ?? 0;
+
+            var totalRecords = await searchResult.CountAsync();
+            if (totalRecords <= 0) return searchDto;
+
+            searchDto.RecordsTotal = totalRecords;
+            searchDto.RecordsFiltered = totalRecords;
+            List<Company> filteredDataList = await searchResult.OrderByDescending(c => c.Id).Skip(skip).Take(pageSize).ToListAsync();
+
+            var sl = searchDto.Start ?? 0;
+            searchDto.Data = filteredDataList.Select(c => new CompanySearchDto()
+            {
+                SerialNo = ++sl,
+                Id = c.Id,
+                Name = c.Name,
+                
+            }).ToList();
+
+            return searchDto;
+        }
     }
 }

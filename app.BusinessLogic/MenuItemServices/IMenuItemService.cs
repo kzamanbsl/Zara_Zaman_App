@@ -1,4 +1,7 @@
-﻿namespace app.Services.MenuItemServices
+﻿using app.EntityModel.DataTablePaginationModels;
+using app.Services.UserServices;
+
+namespace app.Services.MenuItemServices
 {
     public interface IMenuItemService
     {
@@ -8,6 +11,6 @@
         Task<bool> DeleteRecord(long id);
         Task<bool> MenuShowSideBar(long id);
         Task<MenuItemViewModel> GetAllRecord();
-
+        Task<DataTablePagination<MenuItemSearchDto>> SearchAsync(DataTablePagination<MenuItemSearchDto> searchDto);
     }
 }

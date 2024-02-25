@@ -2,6 +2,9 @@
 using app.Infrastructure.Auth;
 using app.Infrastructure.Repository;
 using app.Infrastructure;
+using app.EntityModel.DataTablePaginationModels;
+using app.Services.ShiftServices;
+using Microsoft.EntityFrameworkCore;
 
 namespace app.Services.EmployeeCategoryServices
 {
@@ -70,5 +73,44 @@ namespace app.Services.EmployeeCategoryServices
                                                                }).AsEnumerable());
             return model;
         }
+
+        public async Task<DataTablePagination<EmployeeCategorySearchDto>> SearchAsync(DataTablePagination<EmployeeCategorySearchDto> searchDto)
+        {
+            var searchResult = _dbContext.EmployeeCategory.AsNoTracking();
+
+            var searchModel = searchDto.SearchVm;
+            var filter = searchDto?.Search?.Value?.Trim();
+
+            if (!string.IsNullOrEmpty(filter))
+            {
+                filter = filter.ToLower();
+                searchResult = searchResult.Where(c =>
+                    c.Name.ToLower().Contains(filter)
+                );
+            }
+
+            var pageSize = searchDto.Length ?? 0;
+            var skip = searchDto.Start ?? 0;
+
+            var totalRecords = await searchResult.CountAsync();
+            if (totalRecords <= 0) return searchDto;
+
+            searchDto.RecordsTotal = totalRecords;
+            searchDto.RecordsFiltered = totalRecords;
+            List<EmployeeCategory> filteredDataList = await searchResult.OrderByDescending(c => c.Id).Skip(skip).Take(pageSize).ToListAsync();
+
+            var sl = searchDto.Start ?? 0;
+            searchDto.Data = filteredDataList.Select(c => new EmployeeCategorySearchDto()
+            {
+                SerialNo = ++sl,
+                Id = c.Id,
+                Name = c.Name,
+               
+            }).ToList();
+
+            return searchDto;
+        }
+
+
     }
 }

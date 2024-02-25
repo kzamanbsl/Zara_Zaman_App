@@ -1,4 +1,6 @@
-﻿using app.Services.UnitServices;
+﻿using app.EntityModel.DataTablePaginationModels;
+using app.Services.JobStatusServices;
+using app.Services.UnitServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,5 +16,6 @@ namespace app.Services.UnitServices
         Task<UnitViewModel> GetRecordById(long id);
         Task<bool> DeleteRecord(long id);
         Task<UnitViewModel> GetAllRecord();
+        Task<DataTablePagination<UnitSearchDto>> SearchAsync(DataTablePagination<UnitSearchDto> searchDto);
     }
 }

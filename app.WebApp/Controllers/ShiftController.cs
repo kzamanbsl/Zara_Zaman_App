@@ -1,6 +1,7 @@
 ﻿using app.EntityModel.DataTablePaginationModels;
 using app.Services.CompanyServices;
 using app.Services.DropdownServices;
+using app.Services.EmployeeServiceTypeServices;
 using app.Services.ProductServices;
 using app.Services.ShiftServices;
 using Microsoft.AspNetCore.Mvc;
@@ -70,6 +71,22 @@ namespace app.WebApp.Controllers
             return RedirectToAction("Index");
         }
 
+        #region Search
+        [HttpGet]
+        public async Task<IActionResult> Search()
+        {
+
+            return View();
         }
-      
+
+        [HttpPost]
+        public async Task<IActionResult> Search(DataTablePagination<ShiftSearchDto> searchDto)
+        {
+            var dataTable = await _iService.SearchAsync(searchDto);
+            return Json(dataTable);
+        }
+        #endregion
+
     }
+
+}

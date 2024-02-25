@@ -9,6 +9,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using app.Utility;
+using app.EntityModel.DataTablePaginationModels;
+using app.Services.JobStatusServices;
+using Microsoft.EntityFrameworkCore;
 
 namespace app.Services.UnitServices
 {
@@ -80,5 +83,40 @@ namespace app.Services.UnitServices
             return model;
         }
 
+        public async Task<DataTablePagination<UnitSearchDto>> SearchAsync(DataTablePagination<UnitSearchDto> searchDto)
+        {
+            var searchResult = _dbContext.Unit.AsNoTracking();
+
+            var searchModel = searchDto.SearchVm;
+            var filter = searchDto?.Search?.Value?.Trim();
+
+            if (!string.IsNullOrEmpty(filter))
+            {
+                filter = filter.ToLower();
+                searchResult = searchResult.Where(c =>
+                    c.Name.ToLower().Contains(filter)
+                );
+            }
+
+            var pageSize = searchDto.Length ?? 0;
+            var skip = searchDto.Start ?? 0;
+
+            var totalRecords = await searchResult.CountAsync();
+            if (totalRecords <= 0) return searchDto;
+
+            searchDto.RecordsTotal = totalRecords;
+            searchDto.RecordsFiltered = totalRecords;
+            List<Unit> filteredDataList = await searchResult.OrderByDescending(c => c.Id).Skip(skip).Take(pageSize).ToListAsync();
+
+            var sl = searchDto.Start ?? 0;
+            searchDto.Data = filteredDataList.Select(c => new UnitSearchDto()
+            {
+                SerialNo = ++sl,
+                Id = c.Id,
+                Name = c.Name,
+            }).ToList();
+
+            return searchDto;
+        }
     }
 }

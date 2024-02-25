@@ -1,4 +1,6 @@
-﻿using app.Services.MainMenuServices;
+﻿using app.EntityModel.DataTablePaginationModels;
+using app.Services.MainMenuServices;
+using app.Services.UserServices;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -66,6 +68,24 @@ namespace app.WebApp.AdminControllers
             ModelState.AddModelError(string.Empty, "Same Name already exists!");
             return View(viewModel);
         }
+
+        #region Search
+
+        [HttpGet]
+        public async Task<IActionResult> Search()
+        {
+
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Search(DataTablePagination<MainMenuSearchDto> searchDto)
+        {
+            var dataTable = await _iService.SearchAsync(searchDto);
+            return Json(dataTable);
+        }
+
+        #endregion
 
     }
 }

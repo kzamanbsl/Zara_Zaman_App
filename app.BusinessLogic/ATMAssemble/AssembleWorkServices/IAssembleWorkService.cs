@@ -1,4 +1,7 @@
-﻿namespace app.Services.ATMAssemble.AssembleWorkServices
+﻿using app.EntityModel.DataTablePaginationModels;
+using app.Services.ProductServices;
+
+namespace app.Services.ATMAssemble.AssembleWorkServices
 {
     public interface IAssembleWorkService
     {
@@ -13,6 +16,7 @@
         Task<object> MakeStatusFault(long assembleWorkId);
         Task<bool> DeleteRecord(long id);
         Task<AssembleWorkViewModel> GetAllRecord();
+        Task<DataTablePagination<AssembleWorkSearchDto>> SearchAsync(DataTablePagination<AssembleWorkSearchDto> searchDto);
 
 
     }

@@ -1,8 +1,11 @@
 ﻿using app.EntityModel.AppModels;
+using app.EntityModel.DataTablePaginationModels;
 using app.Infrastructure;
 using app.Infrastructure.Auth;
 using app.Infrastructure.Repository;
+using app.Services.ProductCategoryServices;
 using app.Utility;
+using Microsoft.EntityFrameworkCore;
 
 namespace app.Services.StorehouseServices
 {
@@ -86,6 +89,47 @@ namespace app.Services.StorehouseServices
                                                              Description = t1.Description,
                                                          }).AsEnumerable());
             return model;
+        }
+
+        public async Task<DataTablePagination<StorehouseSearchDto>> SearchAsync(DataTablePagination<StorehouseSearchDto> searchDto)
+        {
+           var  searchResult = _dbContext.BusinessCenter.AsNoTracking();
+
+            var searchModel = searchDto.SearchVm;
+            var filter = searchDto?.Search?.Value?.Trim();
+
+            if (!string.IsNullOrEmpty(filter))
+            {
+                filter = filter.ToLower();
+                searchResult = searchResult.Where(c =>
+                    c.Name.ToLower().Contains(filter)
+                    || c.Code.ToLower().Contains(filter)
+                    || c.Location.ToLower().Contains(filter)
+                    || c.Description.ToLower().Contains(filter)
+                );
+            }
+
+            var pageSize = searchDto.Length ?? 0;
+            var skip = searchDto.Start ?? 0;
+
+            var totalRecords = await searchResult.CountAsync();
+            if (totalRecords <= 0) return searchDto;
+
+            searchDto.RecordsTotal = totalRecords;
+            searchDto.RecordsFiltered = totalRecords;
+            List<BusinessCenter> filteredDataList = await searchResult.OrderByDescending(c => c.Id).Skip(skip).Take(pageSize).ToListAsync();
+
+            var sl = searchDto.Start ?? 0;
+            searchDto.Data = filteredDataList.Select(c => new StorehouseSearchDto()
+            {
+                SerialNo = ++sl,
+                Id = c.Id,
+                Name = c.Name,
+                Location = c.Location,
+                Description = c.Description,
+            }).ToList();
+
+            return searchDto;
         }
     }
 }
