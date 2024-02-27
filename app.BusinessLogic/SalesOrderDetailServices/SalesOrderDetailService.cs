@@ -3,6 +3,7 @@ using app.Infrastructure.Auth;
 using app.Infrastructure.Repository;
 using app.Infrastructure;
 using app.Services.SalesOrderServices;
+using app.Services.PurchaseOrderServices;
 
 namespace app.Services.SalesOrderDetailServices
 {
@@ -48,5 +49,27 @@ namespace app.Services.SalesOrderDetailServices
             }
 
         }
+
+        public async Task<bool> UpdateSalesDetail(SalesOrderDetailViewModel vm)
+        {
+            var salesOrderDetailOrder = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id == vm.Id);
+            if (salesOrderDetailOrder != null)
+            {
+                vm.Id = salesOrderDetailOrder.Id;
+                salesOrderDetailOrder.SalesOrderId=vm.SalesOrderId;
+                salesOrderDetailOrder.ProductId = vm.ProductId;
+                salesOrderDetailOrder.SalesPrice = vm.SalesPrice;
+                salesOrderDetailOrder.SalesQty = vm.SalesQty;
+                salesOrderDetailOrder.WarrantyFormDate =vm.WarrantyFormDate;
+                salesOrderDetailOrder.WarrantyToDate =vm.WarrantyToDate;
+                salesOrderDetailOrder.SerialNo = vm.SerialNo;
+                salesOrderDetailOrder.ModelNo = vm.ModelNo;
+                salesOrderDetailOrder.TotalAmount = vm.TotalAmount;
+                await _iEntityRepository.UpdateAsync(salesOrderDetailOrder);
+                return true;
+            }
+            return false;
+        }
+
     }
 }

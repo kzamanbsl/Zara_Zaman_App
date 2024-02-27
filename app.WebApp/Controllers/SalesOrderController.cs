@@ -1,4 +1,5 @@
-﻿using app.Services.DropdownServices;
+﻿using app.Services.AssetPurchaseOrderServices;
+using app.Services.DropdownServices;
 using app.Services.InventoryServices;
 using app.Services.PurchaseOrderServices;
 using app.Services.SalesOrderDetailServices;
@@ -85,6 +86,18 @@ namespace app.WebApp.Controllers
                 return Json(model);
             }
             return Json(null);
+        }
+        public async Task<JsonResult> UpdateSalesDetail(long id)
+        {
+            var model = await _isalesOrderService.GetSalesOrder(id);
+            return Json(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateSalesDetail(SalesOrderDetailViewModel vm)
+        {
+            var res = await _isalesOrderDetailService.UpdateSalesDetail(vm);
+            return RedirectToAction(nameof(AddSalesOrderAndDetail), new { salesOrderId = vm.Id });
         }
         #endregion
 

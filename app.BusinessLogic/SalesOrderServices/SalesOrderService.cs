@@ -207,6 +207,7 @@ namespace app.Services.SalesOrderServices
             return false;
         }
 
+
         public async Task<SalesTermsAndConditionViewModel> GetSOTermsAndCondition(long id)
         {
             var item = await (from t1 in _dbContext.SalesTermsAndCondition.Where(t => t.IsActive == true && t.Id == id)
