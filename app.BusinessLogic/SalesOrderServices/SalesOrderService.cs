@@ -6,8 +6,6 @@ using app.Utility;
 using app.Services.SalesOrderDetailServices;
 using Microsoft.EntityFrameworkCore;
 using app.Services.SalesTermsAndConditonServices;
-using app.Services.CustomerServices;
-using app.Services.PurchaseOrderServices;
 
 namespace app.Services.SalesOrderServices
 {
