@@ -160,16 +160,16 @@ namespace app.Services.MenuItemServices
                 filter = filter.ToLower();
                 searchResult = searchResult.Where(c =>
                     c.Name.ToLower().Contains(filter)
-                    || c.Menu.Name.ToString().Contains(filter)
+                    || c.Menu.Name.ToLower().Contains(filter)
                     || c.ShortName.ToLower().Contains(filter)
-                    || c.OrderNo.ToString().Contains(filter)
+                    || c.Action.ToLower().Contains(filter)
                 );
             }
 
             var pageSize = searchDto.Length ?? 0;
             var skip = searchDto.Start ?? 0;
 
-            var totalRecords = await searchResult.CountAsync();
+            var totalRecords = searchResult.Count();
             if (totalRecords <= 0) return searchDto;
 
             searchDto.RecordsTotal = totalRecords;
@@ -186,6 +186,8 @@ namespace app.Services.MenuItemServices
                 Icon = c.Icon,
                 MenuId = c.MenuId,
                 MenuName = c.Menu?.Name,
+                Controller=c.Controller,
+                ControllerAction=c.Action,
                 IsMenuShow = c.IsMenuShow,
                 IsActive = c.IsActive,
             }).ToList();
