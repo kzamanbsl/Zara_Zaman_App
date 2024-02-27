@@ -32,6 +32,30 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-sm-12">
+                        <form method="post" asp-controller="MenuItem" asp-action="Search">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>Menu</label>
+                                        <select class="form-control" asp-for="MenuId" asp-items="ViewBag.Record">
+                                            <option value="0" selected>--Menu--</option>
+                                            <span asp-validation-for="MenuId" class="text-danger"></span>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group text-right">  
+                                <input id="LeaveBalanceDTSearchBtn" type="button" value="Search" class="btn btn-info btn-width" />
+                                <a href="@Url.Action("Search","MenuItem")"><input type="button" value="Clear" class="btn btn-warning btn-width" /></a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <hr />
+
+                <div class="row">
+                    <div class="col-sm-12">
                         <div class="table-responsive">
                             <table id="MenuItemSearchTable" class="table table-bordered table-sm">
                                 <thead>

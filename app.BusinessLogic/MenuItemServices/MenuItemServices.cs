@@ -143,14 +143,14 @@ namespace app.Services.MenuItemServices
         public async Task<DataTablePagination<MenuItemSearchDto>> SearchAsync(DataTablePagination<MenuItemSearchDto> searchDto)
         {
             var searchResult = _dbContext.MenuItem.Include(c => c.Menu).AsNoTracking();
-            //var searchResult = _dbContext.MenuItem.Include(c => c.MenuId).Include(c => c.OrderNo).AsNoTracking();
+            //var searchResult = _dbContext.MenuItem.Include(c => c.Menu).AsNoTracking();
 
             var searchModel = searchDto.SearchVm;
             var filter = searchDto?.Search?.Value?.Trim();
-            //if (searchModel?.MenuId is > 0)
-            //{
-            //    searchResult = searchResult.Where(c => c.MenuId == searchModel.MenuId);
-            //}
+            if (searchModel?.MenuId is > 0)
+            {
+                searchResult = searchResult.Where(c => c.MenuId == searchModel.MenuId);
+            }
             //if (searchModel?.OrderNo is > 0)
             //{
             //    searchResult = searchResult.Where(c => c.OrderNo == searchModel.OrderNo);
