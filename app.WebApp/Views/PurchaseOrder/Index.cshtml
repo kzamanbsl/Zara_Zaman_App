@@ -133,12 +133,6 @@
 
 
 
-
-
-
-
-
-
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
@@ -146,7 +140,6 @@
     <script>
         
         $(document).ready(function () {
-            // var reject = document.getElementById('OrderStatusId').val(PurchaseOrderStatusEnum.Reject);
             $('#Purchases').addClass('menu-open');
             $('#PurchaseOrderIndex').addClass('active');
             $('#PurchaseOrdertable').DataTable({
