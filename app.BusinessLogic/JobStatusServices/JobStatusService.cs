@@ -96,7 +96,7 @@ namespace app.Services.JobStatusServices
             var pageSize = searchDto.Length ?? 0;
             var skip = searchDto.Start ?? 0;
 
-            var totalRecords = await searchResult.CountAsync();
+            var totalRecords = searchResult.Count();
             if (totalRecords <= 0) return searchDto;
 
             searchDto.RecordsTotal = totalRecords;

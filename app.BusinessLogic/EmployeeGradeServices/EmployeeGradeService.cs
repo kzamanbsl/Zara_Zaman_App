@@ -105,7 +105,7 @@ namespace app.Services.EmployeeGradeServices
             var pageSize = searchDto.Length ?? 0;
             var skip = searchDto.Start ?? 0;
 
-            var totalRecords = await searchResult.CountAsync();
+            var totalRecords = searchResult.Count();
             if (totalRecords <= 0) return searchDto;
 
             searchDto.RecordsTotal = totalRecords;
@@ -118,14 +118,6 @@ namespace app.Services.EmployeeGradeServices
                 SerialNo = ++sl,
                 Id = c.Id,
                 Name = c.Name,
-                //Description = c.Description,
-                //TradePrice = c.TradePrice,
-                //SalePrice = c.SalePrice,
-                //UnitId = c.UnitId,
-                //UnitName = c.Unit.Name,
-                //CategoryId = c.CategoryId,
-                //CategoryName = c.Category.Name,
-                //ProductTypeId = c.ProductTypeId,
             }).ToList();
 
             return searchDto;

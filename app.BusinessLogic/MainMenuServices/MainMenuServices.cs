@@ -100,14 +100,6 @@ namespace app.Services.MainMenuServices
 
             var searchModel = searchDto.SearchVm;
             var filter = searchDto?.Search?.Value?.Trim();
-            //if (searchModel?.CategoryId is > 0)
-            //{
-            //    searchResult = searchResult.Where(c => c.CategoryId == searchModel.CategoryId);
-            //}
-            //if (searchModel?.UnitId is > 0)
-            //{
-            //    searchResult = searchResult.Where(c => c.UnitId == searchModel.UnitId);
-            //}
             if (!string.IsNullOrEmpty(filter))
             {
                 filter = filter.ToLower();
@@ -120,7 +112,7 @@ namespace app.Services.MainMenuServices
             var pageSize = searchDto.Length ?? 0;
             var skip = searchDto.Start ?? 0;
 
-            var totalRecords = await searchResult.CountAsync();
+            var totalRecords = searchResult.Count();
             if (totalRecords <= 0) return searchDto;
 
             searchDto.RecordsTotal = totalRecords;

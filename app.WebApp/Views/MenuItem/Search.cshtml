@@ -9,7 +9,7 @@
         <div class="breadcrumb d-flex justify-content-between align-items-center  pl-3 pr-3">
             <ol class="breadcrumb mb-0 p-0">
                 <li class="breadcrumb-item"><a href="/Admin/Index">Home</a></li>
-                <li class="breadcrumb-item active"> MenuItem List </li>
+                <li class="breadcrumb-item active"> Menu Item List </li>
             </ol>
             <div>
                 <a asp-action="AddRecord"><i class="fa fa-plus"></i>  Add Menu Item </a>
@@ -32,6 +32,30 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-sm-12">
+                        <form method="post" asp-controller="MenuItem" asp-action="Search">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>Menu</label>
+                                        <select class="form-control" asp-for="MenuId" asp-items="ViewBag.Record">
+                                            <option value="0" selected>--Menu--</option>
+                                            <span asp-validation-for="MenuId" class="text-danger"></span>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group text-right">  
+                                <input id="LeaveBalanceDTSearchBtn" type="button" value="Search" class="btn btn-info btn-width" />
+                                <a href="@Url.Action("Search","MenuItem")"><input type="button" value="Clear" class="btn btn-warning btn-width" /></a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <hr />
+
+                <div class="row">
+                    <div class="col-sm-12">
                         <div class="table-responsive">
                             <table id="MenuItemSearchTable" class="table table-bordered table-sm">
                                 <thead>
@@ -50,20 +74,17 @@
                                             @Html.DisplayNameFor(model => model.ShortName)
                                         </th>
                                         <th class="text-center">
+                                            @Html.DisplayNameFor(model => model.Controller)
+                                        </th>
+                                        <th class="text-center">
+                                            @Html.DisplayNameFor(model => model.ControllerAction)
+                                        </th>
+                                        <th class="text-center">
                                             @Html.DisplayNameFor(model => model.Icon)
                                         </th>
                                         <th class="text-center">
                                             @Html.DisplayNameFor(model => model.OrderNo)
                                         </th>
-                                        <th class="text-center">
-                                            @* @Html.DisplayNameFor(model => model.IsMenuShow) *@
-                                            Show
-                                        </th>
-                                        <th class="text-center">
-                                            @* @Html.DisplayNameFor(model => model.IsActive) *@
-                                            Status
-                                        </th>
-
                                         <th class="text-center">
                                             @Html.DisplayNameFor(model => model.Action)
                                         </th>
@@ -100,8 +121,8 @@
         function getSearchObject() {
 
             var searchVm = {
-                "CategoryId": $("#CategoryId").val(),
-                "UnitId": $("#UnitId").val(),
+                
+                "MenuId": $("#MenuId").val(),
             }
             return searchVm;
         }
@@ -157,6 +178,18 @@
                         }
                     },
                     {
+                        data: "Controller",
+                        render: function (data, type, row, meta) {
+                            return row.controller;
+                        }
+                    },
+                    {
+                        data: "ControllerAction",
+                        render: function (data, type, row, meta) {
+                            return row.controllerAction;
+                        }
+                    },
+                    {
                         data: "Icon",
                         render: function (data, type, row, meta) {
                             return row.icon;
@@ -166,32 +199,6 @@
                         data: "OrderNo",
                         render: function (data, type, row, meta) {
                             return row.orderNo;
-                        }
-                    },
-                    {
-                        data: "IsMenuShow",
-                        render: function (data, type, row, meta) {
-                            var result = "";
-                            if (row.isMenuShow == false) {
-                                var result = '<b class="text-danger" > <i class="fas fa-times-circle fa-2x" style = "font-size:20px" > </i></b >';
-                            }
-                            else {
-                                var result = '<b class="text-success" > <i class="fas fa-check-square" style = "font-size:20px" > </i></b >';
-                            }
-                            return result;
-                        }
-                    },
-                    {
-                        data: "IsActive",
-                        render: function (data, type, row, meta) {
-                            var result = "";
-                            if (row.isActive == false) {
-                                var result = '<b class="text-danger" > <i class="fas fa-times-circle fa-2x" style = "font-size:20px" > </i></b >';
-                            }
-                            else {
-                                var result = '<b class="text-success" > <i class="fas fa-check-square" style = "font-size:20px" > </i></b >';
-                            }
-                            return result;
                         }
                     },
                     {

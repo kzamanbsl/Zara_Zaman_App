@@ -90,7 +90,7 @@ namespace app.WebApp.AdminControllers
         [HttpGet]
         public async Task<IActionResult> Search()
         {
-
+            ViewBag.Record = new SelectList((await _iMainMenuService.GetAllRecord()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
             return View();
         }
 

@@ -54,7 +54,7 @@ namespace app.WebApp.Controllers
             var result = await _iService.AddRecord(viewModel);
             if (result == true)
             {
-                return RedirectToAction("Search");
+                return RedirectToAction("Index");
             }
             ModelState.AddModelError(string.Empty, "Same Employee already exists!");
             return View(viewModel);
@@ -92,7 +92,7 @@ namespace app.WebApp.Controllers
             var result = await _iService.UpdateRecord(model);
             if (result == true)
             {
-                return RedirectToAction("Search");
+                return RedirectToAction("Index");
             }
             ModelState.AddModelError(string.Empty, "Same Employee Code already exists!");
             return View(model);

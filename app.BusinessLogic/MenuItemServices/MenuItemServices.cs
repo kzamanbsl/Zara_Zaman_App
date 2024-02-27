@@ -143,14 +143,14 @@ namespace app.Services.MenuItemServices
         public async Task<DataTablePagination<MenuItemSearchDto>> SearchAsync(DataTablePagination<MenuItemSearchDto> searchDto)
         {
             var searchResult = _dbContext.MenuItem.Include(c => c.Menu).AsNoTracking();
-            //var searchResult = _dbContext.MenuItem.Include(c => c.MenuId).Include(c => c.OrderNo).AsNoTracking();
+            //var searchResult = _dbContext.MenuItem.Include(c => c.Menu).AsNoTracking();
 
             var searchModel = searchDto.SearchVm;
             var filter = searchDto?.Search?.Value?.Trim();
-            //if (searchModel?.MenuId is > 0)
-            //{
-            //    searchResult = searchResult.Where(c => c.MenuId == searchModel.MenuId);
-            //}
+            if (searchModel?.MenuId is > 0)
+            {
+                searchResult = searchResult.Where(c => c.MenuId == searchModel.MenuId);
+            }
             //if (searchModel?.OrderNo is > 0)
             //{
             //    searchResult = searchResult.Where(c => c.OrderNo == searchModel.OrderNo);
@@ -160,16 +160,16 @@ namespace app.Services.MenuItemServices
                 filter = filter.ToLower();
                 searchResult = searchResult.Where(c =>
                     c.Name.ToLower().Contains(filter)
-                    || c.Menu.Name.ToString().Contains(filter)
+                    || c.Menu.Name.ToLower().Contains(filter)
                     || c.ShortName.ToLower().Contains(filter)
-                    || c.OrderNo.ToString().Contains(filter)
+                    || c.Action.ToLower().Contains(filter)
                 );
             }
 
             var pageSize = searchDto.Length ?? 0;
             var skip = searchDto.Start ?? 0;
 
-            var totalRecords = await searchResult.CountAsync();
+            var totalRecords = searchResult.Count();
             if (totalRecords <= 0) return searchDto;
 
             searchDto.RecordsTotal = totalRecords;
@@ -186,6 +186,8 @@ namespace app.Services.MenuItemServices
                 Icon = c.Icon,
                 MenuId = c.MenuId,
                 MenuName = c.Menu?.Name,
+                Controller=c.Controller,
+                ControllerAction=c.Action,
                 IsMenuShow = c.IsMenuShow,
                 IsActive = c.IsActive,
             }).ToList();
