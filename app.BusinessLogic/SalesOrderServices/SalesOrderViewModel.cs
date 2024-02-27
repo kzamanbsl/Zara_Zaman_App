@@ -25,6 +25,7 @@ namespace app.Services.SalesOrderServices
         public string OrderStatusName { get; set; }
         public int PaymentStatusId { get; set; } //PaymentStatusEnum
         public string PaymentStatusName { get; set; }
+        public double TotalAmount { get; set; }
         public ActionEnum ActionEum { get { return (ActionEnum)this.ActionId; } }
         public int ActionId { get; set; } = 1;
         public SalesOrderDetailViewModel SalesOrderDetailVM { get; set; }

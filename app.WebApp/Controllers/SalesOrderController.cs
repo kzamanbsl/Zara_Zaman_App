@@ -25,14 +25,6 @@ namespace app.WebApp.Controllers
         }
 
 
-        //[HttpGet]
-        //public async Task<IActionResult> Index()
-        //{
-        //    var result =await _isalesOrderService.GetAllSalesRecord();
-        //    return View(result);
-        //}
-
-
         public async Task<IActionResult> Index()
         {
             try

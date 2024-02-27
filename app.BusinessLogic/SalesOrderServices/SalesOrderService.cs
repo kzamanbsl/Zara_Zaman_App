@@ -7,6 +7,7 @@ using app.Services.SalesOrderDetailServices;
 using Microsoft.EntityFrameworkCore;
 using app.Services.SalesTermsAndConditonServices;
 using app.Services.CustomerServices;
+using app.Services.PurchaseOrderServices;
 
 namespace app.Services.SalesOrderServices
 {
@@ -102,22 +103,39 @@ namespace app.Services.SalesOrderServices
 
         public async Task<SalesOrderViewModel> GetAllSalesRecord()
         {
-            SalesOrderViewModel salesOrder = new SalesOrderViewModel();
-            salesOrder.SalesOrderList = await Task.Run(() => (from t1 in _dbContext.SalesOrder
-                                                       where t1.IsActive == true
-                                                              select new SalesOrderViewModel
-                                                              {
-                                                                  Id = t1.Id,
-                                                                  OrderNo = t1.OrderNo,
-                                                                  SalesDate = t1.SalesDate,
-                                                                  CustomerId = t1.CustomerId,
-                                                                  CustomerName = t1.Customer.Name,
-                                                                  DeliveryDate = t1.DeliveryDate,
-                                                                  PaymentStatusId = (int)(PaymentStatusEnum)t1.PaymentStatusId,
-                                                                  OrderStatusId = (int)(SalesOrderStatusEnum)t1.OrderStatusId,
+            SalesOrderViewModel salesMaster = new SalesOrderViewModel();
+            var dataQuery = await Task.Run(() => (from t1 in _dbContext.SalesOrder
+                                                  where t1.IsActive == true
 
-                                                              }).AsEnumerable());
-            return salesOrder;
+                                                  select new SalesOrderViewModel
+                                                  {
+                                                      Id = t1.Id,
+                                                      OrderNo = t1.OrderNo,
+                                                      SalesDate = t1.SalesDate,
+                                                      CustomerId = t1.CustomerId,
+                                                      CustomerName = t1.Customer.Name,
+                                                      DeliveryDate = t1.DeliveryDate,
+                                                      PaymentStatusId = (int)(PaymentStatusEnum)t1.PaymentStatusId,
+                                                      OrderStatusId = (int)(SalesOrderStatusEnum)t1.OrderStatusId,
+                                                  }).OrderByDescending(x => x.Id).AsQueryable());
+
+            salesMaster.SalesOrderList = await Task.Run(() => dataQuery.ToList());
+            salesMaster.SalesOrderList.ToList().ForEach((c => c.OrderStatusName = Enum.GetName(typeof(PurchaseOrderStatusEnum), c.OrderStatusId)));
+            salesMaster.SalesOrderList.ToList().ForEach((c => c.PaymentStatusName = Enum.GetName(typeof(PaymentStatusEnum), c.PaymentStatusId)));
+
+            var masterIds = salesMaster.SalesOrderList.Select(x => x.Id);
+
+            var matchingDetails = await _dbContext.SalesOrderDetails
+                .Where(detail => masterIds.Contains(detail.SalesOrderId) && detail.IsActive == true)
+                .ToListAsync();
+
+            foreach (var master in salesMaster.SalesOrderList)
+            {
+                var detailsForMaster = matchingDetails.Where(detail => detail.SalesOrderId == master.Id);
+                decimal? total = detailsForMaster.Sum(detail => (detail.SalesPrice * (decimal)detail.SalesQty));
+                master.TotalAmount = (double)(total ?? 0);
+            }
+            return salesMaster;
         }
 
         public async Task<bool> ConfirmSalesOrder(long id)
@@ -150,7 +168,6 @@ namespace app.Services.SalesOrderServices
                                                            SalesDate = t1.SalesDate,
                                                            OrderNo = t1.OrderNo,
                                                            OrderStatusId = (int)(SalesOrderStatusEnum)t1.OrderStatusId,
-
                                                            Description = t1.Description,
                                                        }).FirstOrDefault());
 
