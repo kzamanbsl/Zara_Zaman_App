@@ -100,14 +100,6 @@ namespace app.Services.MainMenuServices
 
             var searchModel = searchDto.SearchVm;
             var filter = searchDto?.Search?.Value?.Trim();
-            //if (searchModel?.CategoryId is > 0)
-            //{
-            //    searchResult = searchResult.Where(c => c.CategoryId == searchModel.CategoryId);
-            //}
-            //if (searchModel?.UnitId is > 0)
-            //{
-            //    searchResult = searchResult.Where(c => c.UnitId == searchModel.UnitId);
-            //}
             if (!string.IsNullOrEmpty(filter))
             {
                 filter = filter.ToLower();
