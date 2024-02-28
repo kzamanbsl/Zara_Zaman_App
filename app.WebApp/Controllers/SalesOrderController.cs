@@ -86,12 +86,12 @@ namespace app.WebApp.Controllers
             return Json(model);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> DeleteSalesOrder(long id)
-        {
-            var res = await _isalesOrderDetailService.DeleteSalesDetail(id);
-            return RedirectToAction(nameof(Index));
-        }
+        //[HttpGet]
+        //public async Task<IActionResult> DeleteSalesOrder(long id)
+        //{
+        //    var res = await _isalesOrderService.DeleteSalesOrder(id);
+        //    return RedirectToAction(nameof(Index));
+        //}
 
         public async Task<IActionResult> DeleteSalesOrderDetailsById(long id, SalesOrderDetailViewModel vm)
         {
