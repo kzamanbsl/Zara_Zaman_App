@@ -61,7 +61,7 @@ namespace app.WebApp.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Edit(long id)
+        public async Task<IActionResult> UpdateRecord(long id)
         {
             ViewBag.ManagerList = new SelectList((await _iDropdownService.EmployeeSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
             ViewBag.BloodgroupList = new SelectList((await _iDropdownService.BloodGroupSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
@@ -87,7 +87,7 @@ namespace app.WebApp.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> Edit(EmployeeViewModel model)
+        public async Task<IActionResult> UpdateRecord(EmployeeViewModel model)
         {
             var result = await _iService.UpdateRecord(model);
             if (result == true)

@@ -20,13 +20,6 @@ namespace app.WebApp.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index()
-        {
-            var result = await _iService.GetAllRecord();
-            return View(result);
-        }
-
-        [HttpGet]
         public async Task<IActionResult> Details(long id)
         {
             var result = await _iService.GetRecordById(id);
@@ -50,7 +43,7 @@ namespace app.WebApp.Controllers
             var result = await _iService.AddRecord(viewModel);
             if (result == true)
             {
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Search));
             }
             return View(viewModel);
         }
@@ -72,7 +65,7 @@ namespace app.WebApp.Controllers
             var result = await _iService.UpdateRecord(model);
             if (result == true)
             {
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Search));
             }
             ModelState.AddModelError(string.Empty, "Update operation failed. Please try again!");
             return RedirectToAction("UpdateRecord", new {id=model.Id});
@@ -83,7 +76,7 @@ namespace app.WebApp.Controllers
         public async Task<IActionResult> Delete(long id)
         {
             var res = await _iService.DeleteRecord(id);
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Search));
         }
 
 
