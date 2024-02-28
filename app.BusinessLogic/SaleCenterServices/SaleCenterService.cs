@@ -106,7 +106,7 @@ namespace app.Services.SaleCenterServices
                 filter = filter.ToLower();
                 searchResult = searchResult.Where(c =>
                     c.Name.ToLower().Contains(filter)
-                    || c.Code.ToLower().Contains(filter)
+                    || c.Code.ToString().Contains(filter)
                     || c.Location.ToLower().Contains(filter)
                 );
             }
