@@ -72,7 +72,7 @@ namespace app.WebApp.Controllers
             var result = await _iService.AddRecord(viewModel);
             if (result == true)
             {
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Search));
             }
             ModelState.AddModelError(string.Empty, "Same Name already exists!");
             return View(viewModel);
@@ -94,7 +94,7 @@ namespace app.WebApp.Controllers
             var result = await _iService.UpdateRecord(model);
             if (result ==true)
             {
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Search));
             }
             ModelState.AddModelError(string.Empty, "Same Name already exists!");
             return View(model);
@@ -129,7 +129,7 @@ namespace app.WebApp.Controllers
         public async Task<IActionResult> Delete(long id)
         {
             var res = await _iService.DeleteRecord(id);
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Search));
         }
 
         #region Search
