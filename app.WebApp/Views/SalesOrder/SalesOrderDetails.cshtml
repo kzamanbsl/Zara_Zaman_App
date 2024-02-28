@@ -1,7 +1,7 @@
-﻿@model app.Services.SalesOrderServices.SalesOrderViewModel
+﻿@model app.Services.AssetPurchaseOrderServices.AssetPurchaseOrderViewModel
 @using app.Utility
 @{
-    ViewData["Title"] = "Sales Details";
+    ViewData["Title"] = "Purchase Details";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
     int sl = 0;
 }
@@ -13,7 +13,7 @@
                 <li class="breadcrumb-item"><a href="/Admin/Index">Home</a></li>
             </ol>
             <div>
-                <a asp-action="Index"><i class="fa fa-list"></i> Sales Order List </a>
+                <a asp-action="Index"><i class="fa fa-list"></i> Asset Purchase Order List </a>
             </div>
         </div>
     </div>
@@ -28,7 +28,7 @@
                 @if (Model.Id > 0)
                 {
                     <h3 class="card-title text-info">
-                        Sales Information
+                       Asset Purchase Information
                     </h3>
                 }
                 else
@@ -41,11 +41,11 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-12">
-                        <form asp-action="SalesDetails" method="get">
+                        <form asp-action="AssetPurchaseDetails" method="get">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                             <input asp-for="Id" class="form-control" hidden id="purchaseorderId" />
                             <input asp-for="ActionId" hidden id="actionId" />
-                            <input asp-for="SalesOrderDetailVM.Id" class="form-control" id="purchaseOrderDetailsId" hidden />
+                            <input asp-for="AssetPurchaseOrderDetailVM.Id" class="form-control" id="purchaseOrderDetailsId" hidden />
 
                             @if (Model.Id > 0)
                             {
@@ -53,15 +53,15 @@
                                     <div class="row rounded">
                                         <table class="table table-bordered border-primary">
                                             <tr>
-                                                <th style="width:18%">Sales No</th>
+                                                <th style="width:18%">Purchase No</th>
                                                 <td style="width:30%">@Model.OrderNo</td>
 
-                                                <th style="width:18%"> Sales Date</th>
-                                                <td style="width:30%">@Model.SalesDate.ToString("dd-MM-yyyy")</td>
+                                                <th style="width:18%"> Purchase Date</th>
+                                                <td style="width:30%">@Model.PurchaseDate.ToString("dd-MM-yyyy")</td>
                                             </tr>
                                             <tr>
                                                 <th>Supplier Name</th>
-                                                <td>@Model.SalesDate</td>
+                                                <td>@Model.SupplierName</td>
                                                 <th style="width:18%">Store Information</th>
                                                 <td style="width:30%">@Model.StoreName</td>
                                             </tr>
@@ -75,7 +75,7 @@
                                 <input asp-for="Id" class="form-control" hidden />
                                 <div class="row">
                                     <div class="col-md-5"></div>
-                                    <div class="col-md-2"> <p style="margin-top:20px;" class="card-title text-info text-center"><span>Sales Details</span></p></div>
+                                    <div class="col-md-2"> <p style="margin-top:20px;" class="card-title text-info text-center"><span>Purchase Details</span></p></div>
                                     <div class="col-md-5"></div>
                                 </div>
                                 <div class="table-responsive col-md-12 text-nowrap table-bordered">
@@ -84,7 +84,7 @@
                                             <tr>
                                                 <th style="padding:5px;text-align:center;">SL</th>
                                                 <th style="padding: 5px; text-align: left;">Product</th>
-                                                <th style="padding: 5px; text-align: left;">Sales Qty</th>
+                                                <th style="padding: 5px; text-align: left;">Purchase Qty</th>
                                                 <th style="padding: 5px; text-align: left;">Unit</th>
                                                 <th style="padding: 5px; text-align: right; ">Consumption</th>
                                                 <th style="padding: 5px; text-align: right; ">Cost Price</th>
@@ -94,12 +94,12 @@
                                         </thead>
                                         <tbody>
 
-                                            @foreach (var item in Model.SalesOrderDetailsList)
+                                            @foreach (var item in Model.AssetPurchaseOrderDetailsList)
                                             {
                                                 <tr>
                                                     <td style="padding:5px">@(++sl)</td>
                                                     <td style="padding:5px;text-align:left;">@item.ProductName</td>
-                                                    <td style="padding: 5px; text-align: left;">@item.SalesQty</td>
+                                                    <td style="padding: 5px; text-align: left;">@item.PurchaseQty</td>
                                                     <td style="padding:5px;text-align:left;">@String.Format("{0:0.00}", item.UnitName)</td>
                                                     <td style="padding: 5px; text-align: right;">@String.Format("{0:0.00}", item.Consumption)</td>
                                                     <td style="padding: 5px; text-align: right;">@String.Format("{0:0.00}", item.CostPrice)</td>
@@ -119,14 +119,14 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-12">
-                        @if (Model.Id > 0 && Model.OrderStatusId == (int)SalesOrderStatusEnum.Draft || Model.Id > 0 && Model.OrderStatusId == (int)SalesOrderStatusEnum.Confirm)
+                        @if (Model.Id > 0 && Model.OrderStatusId == (int)PurchaseOrderStatusEnum.Draft || Model.Id > 0 && Model.OrderStatusId == (int)PurchaseOrderStatusEnum.Confirm)
                         {
                             <div class="form-group" style="float:right">
                                 <button id="orderReceived" class="linkPointer btn btn-success btn-sm">Received</button>
-                                <button asp-action="RejectSalesOrder" method="post" id="orderReject" class="linkPointer btn btn-danger btn-sm">Reject</button>
+                                <button asp-action="RejectAssetPurchaseOrder" method="post" id="orderReject" class="linkPointer btn btn-danger btn-sm">Reject</button>
                             </div>
                         }
-                        @if (Model.Id > 0 && Model.OrderStatusId == (int)SalesOrderStatusEnum.Reject)
+                        @if (Model.Id > 0 && Model.OrderStatusId == (int)PurchaseOrderStatusEnum.Reject)
                         {
                             <div class="form-group" style="float:right">
                                 <h3><span style="color:red">Order Rejected</span></h3>
@@ -146,21 +146,21 @@
     }
     <script>
         $(document).ready(function () {
-            $('#Saless').addClass('menu-open');
-            $('#SalesOrderAddSalesOrderAndDetail').addClass('active');
+            $('#Asset-Management').addClass('menu-open');
+            $('#AssetPurchaseOrderAddAssetPurchaseOrderAndDetail').addClass('active');
         });
 
-        // Reject Sales Order
+        // Reject Purchase Order
         $("#orderReject").on("click", function () {
             var id = @Model.Id;
             $.ajax({
                 type: "POST",
-                url: "/SalesOrder/RejectSalesOrder",
+                url: "/AssetPurchaseOrder/RejectAssetPurchaseOrder",
                 data: { id: id },
                 success: function (result) {
                     if (result) {
                         alert("Reject successfully");
-                        window.location.href = "/SalesOrder/Index/";
+                        window.location.href = "/AssetPurchaseOrder/Index/";
 
                     } else {
                         alert("Reject failed");
@@ -173,17 +173,17 @@
                     });
                 });
 
-        // Sales Order Received
+        // Purchase Order Received
         $("#orderReceived").on("click", function () {
             var id = @Model.Id;
             $.ajax({
                 type: "POST",
-                url: "/SalesOrder/AddInventory",
+                url: "/AssetPurchaseOrder/AddAssetInventory",
                 data: { id: id },
                 success: function (result) {
                     if (result) {
-                        alert("Sales Store In successfully");
-                        window.location.href = "/SalesOrder/Index/";
+                        alert("Purchase Store In successfully");
+                        window.location.href = "/AssetPurchaseOrder/Index/";
 
                     } else {
                         alert("Store In failed");

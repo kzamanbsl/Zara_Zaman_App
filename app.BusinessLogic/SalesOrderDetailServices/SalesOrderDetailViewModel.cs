@@ -1,4 +1,6 @@
 ﻿using app.EntityModel.AppModels;
+using app.Services.AssetPurchaseOrderServices;
+using app.Utility;
 
 namespace app.Services.SalesOrderDetailServices
 {
@@ -22,5 +24,8 @@ namespace app.Services.SalesOrderDetailServices
         public string ModelNo { get; set; }
         public bool IsForService { get; set; }
         public string Remarks { get; set; }
+        public ActionEnum ActionEum { get { return (ActionEnum)this.ActionId; } }
+        public int ActionId { get; set; } = 1;
+        public SalesOrderDetailViewModel SalesOrderVM { get; set; }
     }
 }

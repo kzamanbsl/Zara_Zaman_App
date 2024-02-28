@@ -4,6 +4,8 @@ using app.Infrastructure.Repository;
 using app.Infrastructure;
 using app.Services.SalesOrderServices;
 using app.Services.PurchaseOrderServices;
+using app.Services.AssetPurchaseOrderServices;
+using app.Services.PurchaseOrderDetailServices;
 
 namespace app.Services.SalesOrderDetailServices
 {
@@ -52,7 +54,7 @@ namespace app.Services.SalesOrderDetailServices
 
         public async Task<bool> UpdateSalesDetail(SalesOrderDetailViewModel vm)
         {
-            var salesOrderDetailOrder = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id == vm.Id);
+            var salesOrderDetailOrder = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id == vm.SalesOrderVM.Id);
             if (salesOrderDetailOrder != null)
             {
                 vm.Id = salesOrderDetailOrder.Id;
@@ -70,6 +72,51 @@ namespace app.Services.SalesOrderDetailServices
             }
             return false;
         }
+
+        public async Task<SalesOrderDetailViewModel> SingleSalesOrderDetails(long id)
+        {
+            var v = await Task.Run(() => (from t1 in _dbContext.SalesOrderDetailViewModel.Where(x => x.IsActive && x.Id == id)
+
+                                          select new PurchaseOrderDetailViewModel
+                                          {
+                                              Id = t1.Id,
+                                              Sal = t1.PurchaseOrderId,
+                                              ProductId = t1.ProductId,
+                                              ProductName = t1.Product.Name,
+                                              PurchaseQty = t1.PurchaseQty,
+                                              Consumption = t1.Consumption,
+                                              UnitId = t1.UnitId,
+                                              UnitName = t1.Unit.Name,
+                                              CostPrice = t1.CostPrice,
+                                              SalePrice = t1.SalePrice,
+                                              Discount = t1.Discount,
+                                              TotalAmount = ((decimal)t1.PurchaseQty * t1.CostPrice) - t1.Discount,
+                                              Remarks = t1.Remarks,
+                                          }).FirstOrDefault());
+            return v;
+        }
+
+        //public async Task<bool> UpdateAssetPurchaseDetail(AssetPurchaseOrderViewModel model)
+        //{
+        //    var assetPurchaseOrderDetail = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id == model.AssetPurchaseOrderDetailVM.Id);
+        //    if (assetPurchaseOrderDetail != null)
+        //    {
+        //        model.Id = assetPurchaseOrderDetail.PurchaseOrderId;
+        //        assetPurchaseOrderDetail.ProductId = model.AssetPurchaseOrderDetailVM.ProductId;
+        //        assetPurchaseOrderDetail.UnitId = model.AssetPurchaseOrderDetailVM.UnitId;
+        //        assetPurchaseOrderDetail.Consumption = model.AssetPurchaseOrderDetailVM.Consumption;
+        //        assetPurchaseOrderDetail.Discount = model.AssetPurchaseOrderDetailVM.Discount;
+        //        assetPurchaseOrderDetail.PurchaseQty = model.AssetPurchaseOrderDetailVM.PurchaseQty;
+        //        assetPurchaseOrderDetail.SalePrice = model.AssetPurchaseOrderDetailVM.SalePrice;
+        //        assetPurchaseOrderDetail.CostPrice = model.AssetPurchaseOrderDetailVM.CostPrice;
+        //        assetPurchaseOrderDetail.TotalAmount = ((decimal)model.AssetPurchaseOrderDetailVM.PurchaseQty * model.AssetPurchaseOrderDetailVM.CostPrice) - model.AssetPurchaseOrderDetailVM.Discount;
+        //        assetPurchaseOrderDetail.Remarks = model.AssetPurchaseOrderDetailVM.Remarks;
+        //        await _iEntityRepository.UpdateAsync(assetPurchaseOrderDetail);
+        //        return true;
+        //    }
+        //    return false;
+        //}
+
 
     }
 }

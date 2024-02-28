@@ -327,7 +327,7 @@
                                             {
 
                                                 <tr>
-                                                    @* <a id="@item.Id" onclick="makeEditble(@item.Id);" class="linkPointer" title="Edit"><i class="text-warning fas fa-edit" aria-hidden="true"></i></a> *@
+                                                    
                                                     <td style="padding: 5px">@(++sl)</td>
                                                     <td style="padding: 5px;text-align:left;">@item.ProductName</td>
                                                     @* <td style="padding: 5px;text-align:left;">@String.Format("{0:0.00}", item.UnitName)</td> *@
@@ -342,7 +342,7 @@
                                                         if (Model.OrderStatusId == (int)PurchaseOrderStatusEnum.Draft)
                                                         {
                                                             <td style="padding:5px;text-align:center;">
-                                                                <a id="@item.Id" onclick=" makeEditble(@item.Id);" class="linkPointer" data-toggle="modal" data-target="#editAssetPurchaseOrderModal" title="Edit" data-placement="top"><i class="text-warning fas fa-edit" aria-hidden="true"></i></a> |
+                                                                <a id="@item.Id" onclick="makeEditble(@item.Id);" class="linkPointer" title="Edit"><i class="text-warning fas fa-edit" aria-hidden="true"></i></a> |
                                                                 <a id="@item.Id" onclick="makeDeletable(@item.Id)" class="linkPointer"><i class="text-danger fas fa-trash" aria-hidden="true"></i></a>
                                                             </td>
                                                         }
@@ -374,105 +374,13 @@
 </section>
 
 
-<div class="modal fade" tabindex="-1" id="editAssetPurchaseOrderModal" data-toggle="modal" role="dialog">
-    <div class="modal-dialog modal-xl" role="document">
-        <div class="modal-content">
-            <form asp-action="UpdateSalesDetail" method="post">
-
-
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Update Sales Order</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-
-                <div class="modal-body">
-
-                    @Html.HiddenFor(model => model.Id, new { id = "hidPOID" })
-                    <div class="row">
-
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label>Product</label>
-                                <select class="form-control" asp-for="SalesOrderDetailVM.ProductId" id="productId" asp-items="ViewBag.ProductList" required>
-                                    <option value="0" selected>-- Select Product --</option>
-                                    <span asp-validation-for="SalesOrderDetailVM.ProductId" class="text-danger"></span>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label>Sale Price</label>
-                                <input asp-for="SalesOrderDetailVM.SalesPrice" id="salePrice" class="form-control" required min="0" />
-                                <span asp-validation-for="SalesOrderDetailVM.SalesPrice" class="text-danger"></span>
-                            </div>
-                        </div>
-
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label>Sale Qty</label>
-                                <input asp-for="SalesOrderDetailVM.SalesQty" id="salesQty" class="form-control" required min="0" />
-                                <span asp-validation-for="SalesOrderDetailVM.SalesQty" class="text-danger"></span>
-                            </div>
-                        </div>
-
-
-                        <div class="col-md-2">
-                            <div class="form-group">
-                                <label>Warrenty Form Date</label>
-                                <input asp-for="SalesOrderDetailVM.WarrantyFormDate" value="@DateTime.Today.ToString("yyyy-MM-dd")" type="date" class="form-control" autocomplete="off" />
-                                <span asp-validation-for="SalesOrderDetailVM.WarrantyFormDate" class="text-danger"></span>
-                            </div>
-                        </div>
-
-                        <div class="col-md-2">
-                            <div class="form-group">
-                                <label>Warrenty To Date</label>
-                                <input asp-for="SalesOrderDetailVM.WarrantyToDate" value="@DateTime.Today.ToString("yyyy-MM-dd")" type="date" class="form-control" autocomplete="off" />
-                                <span asp-validation-for="SalesOrderDetailVM.WarrantyToDate" class="text-danger"></span>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label>Serial No</label>
-                                <input asp-for="SalesOrderDetailVM.SerialNo" id="serialNo" class="form-control" />
-                                <span asp-validation-for="SalesOrderDetailVM.SerialNo" class="text-danger"></span>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label>Model No</label>
-                                <input asp-for="SalesOrderDetailVM.ModelNo" id="modelNo" class="form-control" />
-                                <span asp-validation-for="SalesOrderDetailVM.ModelNo" class="text-danger"></span>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label>Totl Price</label>
-                                <input asp-for="SalesOrderDetailVM.TotalAmount" id="totalAmount" class="form-control" />
-                                <span asp-validation-for="SalesOrderDetailVM.TotalAmount" class="text-danger"></span>
-                            </div>
-                        </div>
-                    </div>
-                    </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Update</button>
-                </div>
-            </form>
-
-        </div>
-    </div>
-</div>
-
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
     <script>
         $(document).ready(function () {
-            $('#Purchases').addClass('menu-open');
+            $('#Sales').addClass('menu-open');
             $('#PurchaseOrderAddPurchaseOrderAndDetail').addClass('active');
         });
 
@@ -493,30 +401,31 @@
                 });
             });
         });
+
         function makeEditble(rowId) {
             $.ajax({
                 type: "POST",
-                url: "@Url.Action("UpdateSalesDetail", "SalesOrder")",
+                url: "@Url.Action("UpdateSingleSelesOrderDetails", "SalesOrder")",
                 datatype: "Json",
                 data: { id: rowId },
                 success: function (data) {
-                    $("#hidPOID").val(data.id);
-
-                    // Parse date if needed and adjust for timezone
-                    var purchaseDate = new Date(data.formattedDate);
-                    var offset = purchaseDate.getTimezoneOffset();
-                    purchaseDate = new Date(purchaseDate.getTime() - (offset * 60 * 1000));
-
-                    // Format date as YYYY-MM-DD
-                    var formattedDate = purchaseDate.toISOString().split('T')[0];
-
-                    // Set value
-                    $("#purchaseDate").val(formattedDate);
-                    $("#storehouseId").val(data.storehouseId);
-                    $("#supplierId").val(data.supplierId);
+                    $('#poCreateBtn').html("<i class='fas fa-edit'></i>&nbsp;Update");
+                    $("#purchaseorderId").val(data.id);
+                    $("#purchaseOrderDetailsId").val(data.id);
+                    $("#productId").val(data.productId);
+                    $("#unitId").val(data.unitId);
+                    $("#purchaseQty").val(data.purchaseQty);
+                    $("#consumption").val(data.consumption);
+                    $("#costPrice").val(data.costPrice);
+                    $("#salePrice").val(data.salePrice);
+                    //$("#discount").val(data.discount);
+                    $("#txtRemarks").val(data.remarks);
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
                 }
             });
         }
+
+
     </script>
 
 }
