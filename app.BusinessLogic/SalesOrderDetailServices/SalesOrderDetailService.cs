@@ -24,7 +24,7 @@ namespace app.Services.SalesOrderDetailServices
         {
             try
             {
-                SalesOrderDetails purchaseOrderDetail = new SalesOrderDetails
+                SalesOrderDetails SalesOrderDetail = new SalesOrderDetails
                 {
                     SalesOrderId = vm.Id,
                     Id = vm.SalesOrderDetailVM.Id,
@@ -41,8 +41,8 @@ namespace app.Services.SalesOrderDetailServices
                     Remarks = vm.SalesOrderDetailVM.Remarks
                 };
 
-                var res = await _iEntityRepository.AddAsync(purchaseOrderDetail);
-                purchaseOrderDetail.Id = res?.Id ?? 0;
+                var res = await _iEntityRepository.AddAsync(SalesOrderDetail);
+                SalesOrderDetail.Id = res?.Id ?? 0;
                 return true;
             }
             catch (Exception ex)
@@ -75,48 +75,66 @@ namespace app.Services.SalesOrderDetailServices
 
         public async Task<SalesOrderDetailViewModel> SingleSalesOrderDetails(long id)
         {
-            var v = await Task.Run(() => (from t1 in _dbContext.SalesOrderDetailViewModel.Where(x => x.IsActive && x.Id == id)
+            var v = await Task.Run(() => (from t1 in _dbContext.SalesOrderDetails.Where(x => x.IsActive && x.Id == id)
 
-                                          select new PurchaseOrderDetailViewModel
+                                          select new SalesOrderDetailViewModel
                                           {
-                                              Id = t1.Id,
-                                              Sal = t1.PurchaseOrderId,
+                                              SalesOrderId = t1.SalesOrderId,
                                               ProductId = t1.ProductId,
                                               ProductName = t1.Product.Name,
-                                              PurchaseQty = t1.PurchaseQty,
-                                              Consumption = t1.Consumption,
                                               UnitId = t1.UnitId,
                                               UnitName = t1.Unit.Name,
-                                              CostPrice = t1.CostPrice,
-                                              SalePrice = t1.SalePrice,
+                                              SalesPrice = t1.SalesPrice,
+                                              SalesQty = t1.SalesQty,
                                               Discount = t1.Discount,
-                                              TotalAmount = ((decimal)t1.PurchaseQty * t1.CostPrice) - t1.Discount,
+                                              TotalAmount = t1.TotalAmount,
+                                              WarrantyFormDate = t1.WarrantyFormDate,
+                                              WarrantyToDate = t1.WarrantyToDate,
+                                              SerialNo = t1.SerialNo,
+                                              ModelNo = t1.ModelNo,
+                                              //TotalAmount = ((decimal)t1.PurchaseQty * t1.CostPrice) - t1.Discount,
+                                              IsForService = t1.IsForService,
                                               Remarks = t1.Remarks,
                                           }).FirstOrDefault());
             return v;
         }
 
-        //public async Task<bool> UpdateAssetPurchaseDetail(AssetPurchaseOrderViewModel model)
-        //{
-        //    var assetPurchaseOrderDetail = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id == model.AssetPurchaseOrderDetailVM.Id);
-        //    if (assetPurchaseOrderDetail != null)
-        //    {
-        //        model.Id = assetPurchaseOrderDetail.PurchaseOrderId;
-        //        assetPurchaseOrderDetail.ProductId = model.AssetPurchaseOrderDetailVM.ProductId;
-        //        assetPurchaseOrderDetail.UnitId = model.AssetPurchaseOrderDetailVM.UnitId;
-        //        assetPurchaseOrderDetail.Consumption = model.AssetPurchaseOrderDetailVM.Consumption;
-        //        assetPurchaseOrderDetail.Discount = model.AssetPurchaseOrderDetailVM.Discount;
-        //        assetPurchaseOrderDetail.PurchaseQty = model.AssetPurchaseOrderDetailVM.PurchaseQty;
-        //        assetPurchaseOrderDetail.SalePrice = model.AssetPurchaseOrderDetailVM.SalePrice;
-        //        assetPurchaseOrderDetail.CostPrice = model.AssetPurchaseOrderDetailVM.CostPrice;
-        //        assetPurchaseOrderDetail.TotalAmount = ((decimal)model.AssetPurchaseOrderDetailVM.PurchaseQty * model.AssetPurchaseOrderDetailVM.CostPrice) - model.AssetPurchaseOrderDetailVM.Discount;
-        //        assetPurchaseOrderDetail.Remarks = model.AssetPurchaseOrderDetailVM.Remarks;
-        //        await _iEntityRepository.UpdateAsync(assetPurchaseOrderDetail);
-        //        return true;
-        //    }
-        //    return false;
-        //}
+        public async Task<bool> DeleteSalesDetail(long id)
+        {
 
-
+            SalesOrderDetails salesDetails = await _dbContext.SalesOrderDetails.FindAsync(id);
+            if (salesDetails == null)
+            {
+                throw new Exception("Sorry! Order not found!");
+            }
+            var result = await _iEntityRepository.GetByIdAsync(id);
+            result.IsActive = false;
+            await _iEntityRepository.UpdateAsync(result);
+            return true;
+        }
     }
+
+    //public async Task<bool> UpdateAssetPurchaseDetail(AssetPurchaseOrderViewModel model)
+    //{
+    //    var assetPurchaseOrderDetail = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id == model.AssetPurchaseOrderDetailVM.Id);
+    //    if (assetPurchaseOrderDetail != null)
+    //    {
+    //        model.Id = assetPurchaseOrderDetail.PurchaseOrderId;
+    //        assetPurchaseOrderDetail.ProductId = model.AssetPurchaseOrderDetailVM.ProductId;
+    //        assetPurchaseOrderDetail.UnitId = model.AssetPurchaseOrderDetailVM.UnitId;
+    //        assetPurchaseOrderDetail.Consumption = model.AssetPurchaseOrderDetailVM.Consumption;
+    //        assetPurchaseOrderDetail.Discount = model.AssetPurchaseOrderDetailVM.Discount;
+    //        assetPurchaseOrderDetail.PurchaseQty = model.AssetPurchaseOrderDetailVM.PurchaseQty;
+    //        assetPurchaseOrderDetail.SalePrice = model.AssetPurchaseOrderDetailVM.SalePrice;
+    //        assetPurchaseOrderDetail.CostPrice = model.AssetPurchaseOrderDetailVM.CostPrice;
+    //        assetPurchaseOrderDetail.TotalAmount = ((decimal)model.AssetPurchaseOrderDetailVM.PurchaseQty * model.AssetPurchaseOrderDetailVM.CostPrice) - model.AssetPurchaseOrderDetailVM.Discount;
+    //        assetPurchaseOrderDetail.Remarks = model.AssetPurchaseOrderDetailVM.Remarks;
+    //        await _iEntityRepository.UpdateAsync(assetPurchaseOrderDetail);
+    //        return true;
+    //    }
+    //    return false;
+    //}
+
+
 }
+

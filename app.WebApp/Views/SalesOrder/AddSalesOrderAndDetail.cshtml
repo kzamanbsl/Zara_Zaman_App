@@ -425,6 +425,26 @@
             });
         }
 
+        
+        function makeDeletable(rowId) {
+            $.ajax({
+                type: "GET",
+                url: "@Url.Action("DeleteSalesOrderDetailsById", "SalesOrder")",
+                data: { id: rowId },
+                success: function (data) {
+                    if (data) {
+                        alert("Delete successfully");
+                        window.location.href = "/SalesOrder/Index/";
+
+                    } else {
+                        alert("Delete failed");
+                    }
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    location.reload();
+                }
+            });
+        }
+
 
     </script>
 

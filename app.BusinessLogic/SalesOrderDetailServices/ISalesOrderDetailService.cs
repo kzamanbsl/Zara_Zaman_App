@@ -8,7 +8,7 @@ namespace app.Services.SalesOrderDetailServices
     {
         Task<bool> AddSalesOrderDetails(SalesOrderViewModel vm);
         Task<bool> UpdateSalesDetail(SalesOrderDetailViewModel vm);
-        //Task<bool> DeleteSalesDetail(long id);
+        Task<bool> DeleteSalesDetail(long id);
         //Task<SalesOrderDetailViewModel> SingleSalesOrderDetails(long id);
 
         //Task<bool> UpdateAssetPurchaseDetail(AssetPurchaseOrderViewModel vm);
