@@ -89,7 +89,7 @@ namespace app.WebApp.Controllers
         [HttpGet]
         public async Task<IActionResult> DeleteSalesOrder(long id)
         {
-            var res = await _isalesOrderDetailService.DeleteSalesDetail(id);
+            var res = await _isalesOrderService.DeleteSalesOrder(id);
             return RedirectToAction(nameof(Index));
         }
 
