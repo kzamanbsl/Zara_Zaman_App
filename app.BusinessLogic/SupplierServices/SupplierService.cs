@@ -160,12 +160,12 @@ namespace app.Services.SupplierServices
                 filter = filter.ToLower();
                 searchResult = searchResult.Where(c =>
                     c.Name.ToLower().Contains(filter)
-                    ||c.Phone.ToLower().Contains(filter)
-                    || c.Address.ToString().Contains(filter)
-                    || c.Country.Name.ToString().Contains(filter)
-                     || c.Division.Name.ToString().Contains(filter)
-                     || c.District.Name.ToString().Contains(filter)
-                      || c.Upazila.Name.ToString().Contains(filter)
+                    ||c.Phone.ToString().Contains(filter)
+                    || c.Address.ToLower().Contains(filter)
+                    || c.Country.Name.ToLower().Contains(filter)
+                     || c.Division.Name.ToLower().Contains(filter)
+                     || c.District.Name.ToLower().Contains(filter)
+                      || c.Upazila.Name.ToLower().Contains(filter)
                     || c.Email.ToLower().Contains(filter)
                     || c.Description.ToLower().Contains(filter)
                     || c.Address.ToLower().Contains(filter)
