@@ -73,11 +73,35 @@ namespace app.WebApp.Controllers
                 await _isalesOrderService.AddSalesOrder(vm); //Adding Sales Master
             }
             await _isalesOrderDetailService.AddSalesOrderDetails(vm); //Adding Sales Details
-
+            //else if (vm.Id>0)
+            //{
+            //    await _isalesOrderDetailService.UpdateSalesDetail(vm);
+            //}
+            //return RedirectToAction(nameof(AddSalesOrderAndDetail), new { SalesOrderId = vm.Id });
             return RedirectToAction(nameof(AddSalesOrderAndDetail), new { salesOrderId = vm.Id });
+        }
+        public async Task<JsonResult> UpdateSingleSelesOrderDetails(long id)
+        {
+            var model = await _isalesOrderDetailService.SingleSalesOrderDetails(id);
+            return Json(model);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> DeleteSalesOrder(long id)
+        {
+            var res = await _isalesOrderDetailService.DeleteSalesDetail(id);
+            return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> DeleteSalesOrderDetailsById(long id, SalesOrderDetailViewModel vm)
+        {
+            var res = await _isalesOrderDetailService.DeleteSalesDetail(id);
+            return RedirectToAction(nameof(AddSalesOrderAndDetail), new { id = vm.Id });
         }
 
         #region Get Terms And Condition
+
+
         public async Task<JsonResult> GetTermsAndCondition(long id)
         {
             if (id != 0)
@@ -87,18 +111,7 @@ namespace app.WebApp.Controllers
             }
             return Json(null);
         }
-        public async Task<JsonResult> UpdateSalesDetail(long id)
-        {
-            var model = await _isalesOrderService.GetSalesOrder(id);
-            return Json(model);
-        }
 
-        [HttpPost]
-        public async Task<IActionResult> UpdateSalesDetail(SalesOrderDetailViewModel vm)
-        {
-            var res = await _isalesOrderDetailService.UpdateSalesDetail(vm);
-            return RedirectToAction(nameof(AddSalesOrderAndDetail), new { salesOrderId = vm.Id });
-        }
         #endregion
 
     }
