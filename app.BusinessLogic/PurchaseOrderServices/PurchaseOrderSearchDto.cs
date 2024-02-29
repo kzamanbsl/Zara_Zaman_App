@@ -8,6 +8,8 @@ namespace app.Services.PurchaseOrderServices
 {
     public class PurchaseOrderSearchDto : BaseDataTableSearch
     {
+
+        [DisplayName("Purchase Date")]
         public DateTime PurchaseDate { get; set; }
         public string Description { get; set; }
 
@@ -26,7 +28,7 @@ namespace app.Services.PurchaseOrderServices
         [DisplayName("Total Amount")]
         public double TotalAmount { get; set; }
 
-        [DisplayName("PurchaseType")]
+        [DisplayName("Purchase Type")]
         public int PurchaseTypeId { get; set; }
         public bool IsOpening { get; set; } = false;
 
@@ -43,10 +45,10 @@ namespace app.Services.PurchaseOrderServices
         public string SupplierName { get; set; }
 
 
-        [DisplayName("Storehouse")]
+        [DisplayName("Store House")]
         public long? StorehouseId { get; set; }
 
-        [DisplayName("Storehouse")]
+        [DisplayName("Store House")]
         public BusinessCenter Storehouse { get; set; }
 
         [DisplayName("Store Name")]
