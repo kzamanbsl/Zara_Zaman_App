@@ -6,6 +6,7 @@ using app.Utility;
 using app.Services.PurchaseOrderDetailServices;
 using Microsoft.EntityFrameworkCore;
 using app.EntityModel.DataTablePaginationModels;
+using app.Services.AssetPurchaseOrderServices;
 
 
 namespace app.Services.PurchaseOrderServices
@@ -214,65 +215,57 @@ namespace app.Services.PurchaseOrderServices
 
         public async Task<DataTablePagination<PurchaseOrderSearchDto>> SearchAsync(DataTablePagination<PurchaseOrderSearchDto> searchDto)
         {
-            var searchResult = _dbContext.PurchaseOrder.Include(c => c.Storehouse).Include(c => c.Supplier).AsNoTracking();
+            var searchResult = _dbContext.PurchaseOrderDetail.Include(c => c.PurchaseOrder).AsNoTracking();
 
             var searchModel = searchDto.SearchVm;
             var filter = searchDto?.Search?.Value?.Trim();
             if (searchModel?.StorehouseId is > 0)
             {
-                searchResult = searchResult.Where(c => c.StorehouseId == searchModel.StorehouseId);
+                searchResult = searchResult.Where(c => c.PurchaseOrder.StorehouseId == searchModel.StorehouseId);
             }
             if (searchModel?.SupplierId is > 0)
             {
-                searchResult = searchResult.Where(c => c.SupplierId == searchModel.SupplierId);
+                searchResult = searchResult.Where(c => c.PurchaseOrder.SupplierId == searchModel.SupplierId);
             }
             if (searchModel?.OrderStatusId is > 0)
             {
-                searchResult = searchResult.Where(c => c.OrderStatusId == searchModel.OrderStatusId);
+                searchResult = searchResult.Where(c => c.PurchaseOrder.OrderStatusId == searchModel.OrderStatusId);
             }
             if (!string.IsNullOrEmpty(filter))
             {
                 filter = filter.ToLower();
                 searchResult = searchResult.Where(c =>
-                    c.OrderNo.ToLower().Contains(filter)
-                    || c.PurchaseDate.ToString().Contains(filter)
-                    || c.Supplier.ToString().Contains(filter)
-                    || c.Storehouse.Name.ToLower().Contains(filter)
+                    c.PurchaseOrder.OrderNo.ToString().Contains(filter)
+                    || c.PurchaseOrder.PurchaseDate.ToString().Contains(filter)
+                    || c.PurchaseOrder.Supplier.Name.ToLower().Contains(filter)
+                    || c.PurchaseOrder.Storehouse.Name.ToLower().Contains(filter)
                 );
             }
 
             var pageSize = searchDto.Length ?? 0;
             var skip = searchDto.Start ?? 0;
 
-            var totalRecords = await searchResult.CountAsync();
+            var totalRecords = searchResult.Count();
             if (totalRecords <= 0) return searchDto;
 
             searchDto.RecordsTotal = totalRecords;
             searchDto.RecordsFiltered = totalRecords;
-            List<PurchaseOrder> filteredDataList = await searchResult
-        .OrderByDescending(c => c.Id)
-        .Skip(skip)
-        .Take(pageSize)
-        .ToListAsync();
+            List<PurchaseOrderDetail> filteredDataList = await searchResult.OrderByDescending(c => c.Id).Skip(skip).Take(pageSize).ToListAsync();
 
             var sl = searchDto.Start ?? 0;
-            searchDto.Data = (from t1 in filteredDataList
-                              join t2 in _dbContext.PurchaseOrderDetail on t1.Id equals t2.PurchaseOrderId // Assuming PurchaseOrderId is the common property
-                              select new PurchaseOrderSearchDto
-                              {
-                                  SerialNo = ++sl,
-                                  Id = t1.Id,
-                                  OrderNo = t1.OrderNo,
-                                  PurchaseDate = t1.PurchaseDate,
-                                  StorehouseId = t1.StorehouseId,
-                                  Storehouse = t1.Storehouse,
-                                  OrderStatusId = (int)(PurchaseOrderStatusEnum)t1.OrderStatusId,
-                                  SupplierId = t1.SupplierId,
-                                  Supplier = t1.Supplier,
-                                  TotalAmount = (double)t2.TotalAmount,
-                                  // You might need to include properties from t2 (PurchaseOrderDetail) here as needed
-                              }).ToList();
-
+            searchDto.Data = filteredDataList.Select(c => new PurchaseOrderSearchDto()
+            {
+                SerialNo = ++sl,
+                Id = c.PurchaseOrder.Id,
+                OrderNo = c.PurchaseOrder.OrderNo,
+                PurchaseDate = c.PurchaseOrder.PurchaseDate,
+                StorehouseId = c.PurchaseOrder.StorehouseId,
+                Storehouse = c.PurchaseOrder.Storehouse,
+                OrderStatusId = c.PurchaseOrder.OrderStatusId,
+                SupplierId = c.PurchaseOrder.SupplierId,
+                Supplier = c.PurchaseOrder.Supplier,
+                TotalAmount = (double)c.TotalAmount,
+            }).ToList();
 
             return searchDto;
         }

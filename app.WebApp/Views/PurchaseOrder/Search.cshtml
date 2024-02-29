@@ -52,15 +52,6 @@
                                         </select>
                                     </div>
                                 </div>
-                               @*  <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <label>Status</label>
-                                        <select class="form-control" asp-for="OrderStatusId" asp-items="ViewBag.OrderStatus">
-                                            <option value="0" selected>--Status--</option>
-                                            <span asp-validation-for="OrderStatusId" class="text-danger"></span>
-                                        </select>
-                                    </div>
-                                </div> *@
                             </div>
 
                             <div class="form-group text-right">
@@ -83,8 +74,8 @@
                                             @Html.DisplayNameFor(model => model.SerialNo)
                                         </th>
                                         <th class="text-center">
-                                          @*   @Html.DisplayNameFor(model => model.OrderNo) *@
-                                          PO No
+                                            @Html.DisplayNameFor(model => model.OrderNo)
+                                        
                                         </th>
                                         <th class="text-center">
                                             @Html.DisplayNameFor(model => model.PurchaseDate)
@@ -96,8 +87,8 @@
                                             @Html.DisplayNameFor(model => model.Supplier)
                                         </th>
                                         <th class="text-center">
-                                           @*  @Html.DisplayNameFor(model => model.OrderStatusName) *@
-                                           Status
+                                            @Html.DisplayNameFor(model => model.OrderStatusName)
+                                           
                                         </th>
                                         <th class="text-center">
                                             @Html.DisplayNameFor(model => model.TotalAmount)
@@ -125,8 +116,8 @@
     }
     <script>
         $(document).ready(function () {
-            $('#Configuration').addClass('menu-open');
-            $('#PurchaseOrderIndex').addClass('active');
+            $('#Purchases').addClass('menu-open');
+            $('#PurchaseOrderSearch').addClass('active');
 
             search();
         });
@@ -196,15 +187,15 @@
                         }
                     },
                     {
-                        data: "SupplierName",
+                        data: "Supplier",
                         render: function (data, type, row, meta) {
-                            return row.supplierName;
+                            return row.supplier;
                         }
                     },
                     {
-                        data: "OrderStatusName",
+                        data: "OrderStatusId",
                         render: function (data, type, row, meta) {
-                            return row.orderStatusName;
+                            return row.orderStatusId;
                         }
                     },
                     {

@@ -11,13 +11,13 @@ namespace app.Services.PurchaseOrderServices
         public DateTime PurchaseDate { get; set; }
         public string Description { get; set; }
 
-        [DisplayName("Order No")]
+        [DisplayName("PO No")]
         public string OrderNo { get; set; }
 
-        [DisplayName("OrderStatus Name")]
+        [DisplayName("Status")]
         public int OrderStatusId { get; set; }
 
-        [DisplayName("OrderStatus Name")]
+        [DisplayName("Status")]
         public string OrderStatusName { get; set; }
 
         [DisplayName("Overall Discount")]
@@ -26,27 +26,27 @@ namespace app.Services.PurchaseOrderServices
         [DisplayName("Total Amount")]
         public double TotalAmount { get; set; }
 
-        [DisplayName("PurchaseType Name")]
+        [DisplayName("PurchaseType")]
         public int PurchaseTypeId { get; set; }
         public bool IsOpening { get; set; } = false;
 
 
-        [DisplayName("Supplier Name")]
+        [DisplayName("Supplier")]
         public long? SupplierId { get; set; }
 
 
-        [DisplayName("Supplier Name")]
+        [DisplayName("Supplier")]
         public Supplier Supplier { get; set; }
 
 
-        [DisplayName("OrderStatus Name")]
+        [DisplayName("Supplier")]
         public string SupplierName { get; set; }
 
 
-        [DisplayName("Storehouse Name")]
+        [DisplayName("Storehouse")]
         public long? StorehouseId { get; set; }
 
-        [DisplayName("Storehouse Name")]
+        [DisplayName("Storehouse")]
         public BusinessCenter Storehouse { get; set; }
 
         [DisplayName("Store Name")]
@@ -54,7 +54,5 @@ namespace app.Services.PurchaseOrderServices
         public ActionEnum ActionEum { get { return (ActionEnum)this.ActionId; } }
         public int ActionId { get; set; } = 1;
         public PurchaseOrderDetailViewModel PurchaseOrderDetailVM { get; set; } 
-        //public IEnumerable<PurchaseOrderViewModel> PurchaseOrderList { get; set; }
-        //public IEnumerable<PurchaseOrderDetailViewModel> PurchaseOrderDetailsList { get; set; }
     }
 }

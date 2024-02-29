@@ -238,9 +238,9 @@ namespace app.Services.AssetPurchaseOrderServices
             {
                 filter = filter.ToLower();
                 searchResult = searchResult.Where(c =>
-                    c.PurchaseOrder.OrderNo.ToLower().Contains(filter)
+                    c.PurchaseOrder.OrderNo.ToString().Contains(filter)
                     || c.PurchaseOrder.PurchaseDate.ToString().Contains(filter)
-                    || c.PurchaseOrder.Supplier.ToString().Contains(filter)
+                    || c.PurchaseOrder.Supplier.Name.ToLower().Contains(filter)
                     || c.PurchaseOrder.Storehouse.Name.ToLower().Contains(filter)
                 );
             }
@@ -248,7 +248,7 @@ namespace app.Services.AssetPurchaseOrderServices
             var pageSize = searchDto.Length ?? 0;
             var skip = searchDto.Start ?? 0;
 
-            var totalRecords = await searchResult.CountAsync();
+            var totalRecords = searchResult.Count();
             if (totalRecords <= 0) return searchDto;
 
             searchDto.RecordsTotal = totalRecords;
