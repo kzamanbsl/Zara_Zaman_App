@@ -20,10 +20,10 @@ namespace app.Services.LeaveApplicationServices
         [DisplayName("Manager Name")]
         public string ManagerName { get; set; }
 
-        [DisplayName("Leave Category Name")]
+        [DisplayName("Leave Category")]
         public long LeaveCategoryId { get; set; }
 
-        [DisplayName("Leave Category Name")]
+        [DisplayName("Leave Category")]
         public string LeaveCategoryName { get; set; }
 
         [Required]
