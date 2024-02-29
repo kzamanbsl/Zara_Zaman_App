@@ -123,7 +123,7 @@ namespace app.Services.CustomerServices
         }
         public async Task<DataTablePagination<CustomerSearchDto>> SearchAsync(DataTablePagination<CustomerSearchDto> searchDto)
         {
-            var searchResult = _dbContext.Customer.Include(c => c.Upazila).Include(c => c.District).Include(c => c.Division).AsNoTracking();
+            var searchResult = _dbContext.Customer.Include(c => c.Upazila).Include(c => c.District).Include(c => c.Division).Where(c=>c.IsActive==true).AsNoTracking();
 
             var searchModel = searchDto.SearchVm;
             var filter = searchDto?.Search?.Value?.Trim();
@@ -193,8 +193,6 @@ namespace app.Services.CustomerServices
 
             return searchDto;
         }
-
-
 
     }
 }

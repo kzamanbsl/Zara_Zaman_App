@@ -88,7 +88,7 @@ namespace app.Services.ShiftServices
 
         public async Task<DataTablePagination<ShiftSearchDto>> SearchAsync(DataTablePagination<ShiftSearchDto> searchDto)
         {
-            var searchResult = _dbContext.Shift.AsNoTracking();
+            var searchResult = _dbContext.Shift.Where(c => c.IsActive == true).AsNoTracking();
 
             var searchModel = searchDto.SearchVm;
             var filter = searchDto?.Search?.Value?.Trim();
