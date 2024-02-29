@@ -43,7 +43,7 @@
                         <form asp-action="AddSalesOrderAndDetail" method="post">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                             <input asp-for="Id" class="form-control" hidden id="salesOrderId" />
-                            @* <input asp-for="ActionId" hidden id="actionId" /> *@
+                            <input asp-for="ActionId" hidden id="actionId" />
                             <input asp-for="SalesOrderDetailVM.Id" class="form-control" id="salesOrderDetailsId" hidden />
 
                             @if (Model.Id > 0)
@@ -169,13 +169,6 @@
                                             <textarea asp-for="TermsAndCondition" class="form-control" id="txtTermsAndCondition" rows="1"></textarea>
                                         </div>
                                     </div>
-
-                                    @* <div class="col-md-6">
-                                <div class="form-group">
-                                <label asp-for="TermsAndCondition" for="txtDescription" id="txtTermsAndCondition" class="control-label">Terms & Condition</label>
-                                <textarea asp-for="TermsAndCondition" class="form-control" rows="1"></textarea>
-                                </div>
-                                </div> *@
                                 </div>
                             }
 
@@ -205,7 +198,7 @@
                                         <div class="col-md-2">
                                             <div class="form-group">
                                                 <label>Warrenty Form Date</label>
-                                                <input asp-for="SalesOrderDetailVM.WarrantyFormDate" value="@DateTime.Today.ToString("yyyy-MM-dd")" type="date" class="form-control" autocomplete="off" />
+                                                <input asp-for="SalesOrderDetailVM.WarrantyFormDate" id="warrantyFormDate" value="@DateTime.Today.ToString("yyyy-MM-dd")" type="date" class="form-control" autocomplete="off" />
                                                 <span asp-validation-for="SalesOrderDetailVM.WarrantyFormDate" class="text-danger"></span>
                                             </div>
                                         </div>
@@ -213,7 +206,7 @@
                                         <div class="col-md-2">
                                             <div class="form-group">
                                                 <label>Warrenty To Date</label>
-                                                <input asp-for="SalesOrderDetailVM.WarrantyToDate" value="@DateTime.Today.ToString("yyyy-MM-dd")" type="date" class="form-control" autocomplete="off" />
+                                                <input asp-for="SalesOrderDetailVM.WarrantyToDate" id="warrantyToDate" value="@DateTime.Today.ToString("yyyy-MM-dd")" type="date" class="form-control" autocomplete="off" />
                                                 <span asp-validation-for="SalesOrderDetailVM.WarrantyToDate" class="text-danger"></span>
                                             </div>
                                         </div>
@@ -234,7 +227,7 @@
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label>Sale Price</label>
-                                            <input asp-for="SalesOrderDetailVM.SalesPrice" id="salePrice" class="form-control" required min="0" />
+                                            <input asp-for="SalesOrderDetailVM.SalesPrice" id="salesPrice" class="form-control" required min="0" />
                                             <span asp-validation-for="SalesOrderDetailVM.SalesPrice" class="text-danger"></span>
                                         </div>
                                     </div>
@@ -278,7 +271,7 @@
                                 <div class="row">
                                     <div class="col-12 text-right">
                                         <label>
-                                            <input type="checkbox" class="class=" form-check-label"" asp-for="SalesOrderDetailVM.IsForService" /> Is Service?
+                                            <input type="checkbox" class="class=" id="isForService" asp-for="SalesOrderDetailVM.IsForService" /> Is Service?
                                         </label>
                                     </div>
                                 </div>
@@ -307,9 +300,8 @@
                                             <tr>
                                                 <th style="padding:5px;text-align:center;">SL</th>
                                                 <th style="padding: 5px; text-align: left;">Product</th>
-                                                @* <th style="padding: 5px; text-align: left;">Unit</th> *@
-                                                <th style="padding: 5px; text-align: right;">Sale Price</th>
                                                 <th style="padding: 5px; text-align: right;">Sale Qty</th>
+                                                <th style="padding: 5px; text-align: right;">Sale Price</th>                                                
                                                 <th style="padding: 5px; text-align: right; ">WFD</th>
                                                 <th style="padding: 5px; text-align: right; ">WTD</th>
                                                 <th style="padding: 5px; text-align: right; ">Serial No</th>
@@ -402,6 +394,8 @@
             });
         });
 
+        //Sales Order Details Edit
+
         function makeEditble(rowId) {
             $.ajax({
                 type: "POST",
@@ -410,20 +404,39 @@
                 data: { id: rowId },
                 success: function (data) {
                     $('#poCreateBtn').html("<i class='fas fa-edit'></i>&nbsp;Update");
-                    $("#purchaseorderId").val(data.id);
-                    $("#purchaseOrderDetailsId").val(data.id);
+                    $('#actionId').val(2);
+                    $("#salesOrderId").val(data.id);
+                    $("#salesOrderDetailsId").val(data.id);
                     $("#productId").val(data.productId);
                     $("#unitId").val(data.unitId);
-                    $("#purchaseQty").val(data.purchaseQty);
-                    $("#consumption").val(data.consumption);
-                    $("#costPrice").val(data.costPrice);
-                    $("#salePrice").val(data.salePrice);
-                    //$("#discount").val(data.discount);
+                    $("#salesQty").val(data.salesQty);
+                    $("#salesPrice").val(data.salesPrice);
+                    $("#discount").val(data.discount);
+                    $("#serialNo").val(data.serialNo);
+                    $("#modelNo").val(data.modelNo);
                     $("#txtRemarks").val(data.remarks);
+
+
+                    // Parse date if needed and adjust for timezone
+                    var warrantyFormDate = new Date(data.warrantyFormDate);
+                    var offset = warrantyFormDate.getTimezoneOffset();
+                    warrantyFormDate = new Date(warrantyFormDate.getTime() - (offset * 60 * 1000));
+                    var formattedDate = warrantyFormDate.toISOString().split('T')[0];
+                    $("#warrantyFormDate").val(formattedDate);
+
+
+                    // Parse date if needed and adjust for timezone
+                    var warrantyToDate = new Date(data.warrantyToDate);
+                    var offset = warrantyToDate.getTimezoneOffset();
+                    warrantyToDate = new Date(warrantyToDate.getTime() - (offset * 60 * 1000));
+                    var formattedDate = warrantyToDate.toISOString().split('T')[0];
+                    $("#warrantyToDate").val(formattedDate);
+
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                 }
             });
         }
+        
 
         
         function makeDeletable(rowId) {

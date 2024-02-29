@@ -52,22 +52,25 @@ namespace app.Services.SalesOrderDetailServices
 
         }
 
-        public async Task<bool> UpdateSalesDetail(SalesOrderDetailViewModel vm)
+        public async Task<bool> UpdateSalesDetail(SalesOrderViewModel model)
         {
-            var salesOrderDetailOrder = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id == vm.SalesOrderVM.Id);
-            if (salesOrderDetailOrder != null)
+            var salesOrderDetail = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id == model.SalesOrderDetailVM.Id);
+            if (salesOrderDetail != null)
             {
-                vm.Id = salesOrderDetailOrder.Id;
-                salesOrderDetailOrder.SalesOrderId=vm.SalesOrderId;
-                salesOrderDetailOrder.ProductId = vm.ProductId;
-                salesOrderDetailOrder.SalesPrice = vm.SalesPrice;
-                salesOrderDetailOrder.SalesQty = vm.SalesQty;
-                salesOrderDetailOrder.WarrantyFormDate =vm.WarrantyFormDate;
-                salesOrderDetailOrder.WarrantyToDate =vm.WarrantyToDate;
-                salesOrderDetailOrder.SerialNo = vm.SerialNo;
-                salesOrderDetailOrder.ModelNo = vm.ModelNo;
-                salesOrderDetailOrder.TotalAmount = vm.TotalAmount;
-                await _iEntityRepository.UpdateAsync(salesOrderDetailOrder);
+                model.Id = salesOrderDetail.SalesOrderId;
+                salesOrderDetail.ProductId = model.SalesOrderDetailVM.ProductId;
+                salesOrderDetail.UnitId = model.SalesOrderDetailVM.UnitId;
+                salesOrderDetail.SalesPrice = model.SalesOrderDetailVM.SalesPrice;
+                salesOrderDetail.SalesQty = model.SalesOrderDetailVM.SalesQty;
+                salesOrderDetail.WarrantyFormDate = model.SalesOrderDetailVM.WarrantyFormDate;
+                salesOrderDetail.WarrantyToDate = model.SalesOrderDetailVM.WarrantyToDate;
+                salesOrderDetail.ModelNo = model.SalesOrderDetailVM.ModelNo;
+                salesOrderDetail.SerialNo = model.SalesOrderDetailVM.SerialNo;
+                salesOrderDetail.IsForService = model.SalesOrderDetailVM.IsForService;
+                salesOrderDetail.Discount = model.SalesOrderDetailVM.Discount;
+                salesOrderDetail.TotalAmount = ((decimal)model.SalesOrderDetailVM.SalesPrice * model.SalesOrderDetailVM.SalesQty) - model.SalesOrderDetailVM.Discount;
+                salesOrderDetail.Remarks = model.SalesOrderDetailVM.Remarks;
+                await _iEntityRepository.UpdateAsync(salesOrderDetail);
                 return true;
             }
             return false;
@@ -79,6 +82,7 @@ namespace app.Services.SalesOrderDetailServices
 
                                           select new SalesOrderDetailViewModel
                                           {
+                                              Id = t1.Id,
                                               SalesOrderId = t1.SalesOrderId,
                                               ProductId = t1.ProductId,
                                               ProductName = t1.Product.Name,
@@ -92,7 +96,6 @@ namespace app.Services.SalesOrderDetailServices
                                               WarrantyToDate = t1.WarrantyToDate,
                                               SerialNo = t1.SerialNo,
                                               ModelNo = t1.ModelNo,
-                                              //TotalAmount = ((decimal)t1.PurchaseQty * t1.CostPrice) - t1.Discount,
                                               IsForService = t1.IsForService,
                                               Remarks = t1.Remarks,
                                           }).FirstOrDefault());
@@ -116,19 +119,19 @@ namespace app.Services.SalesOrderDetailServices
 
     //public async Task<bool> UpdateAssetPurchaseDetail(AssetPurchaseOrderViewModel model)
     //{
-    //    var assetPurchaseOrderDetail = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id == model.AssetPurchaseOrderDetailVM.Id);
+    //    var assetPurchaseOrderDetail = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id == model.AssetSalesOrderDetailVM.Id);
     //    if (assetPurchaseOrderDetail != null)
     //    {
     //        model.Id = assetPurchaseOrderDetail.PurchaseOrderId;
-    //        assetPurchaseOrderDetail.ProductId = model.AssetPurchaseOrderDetailVM.ProductId;
-    //        assetPurchaseOrderDetail.UnitId = model.AssetPurchaseOrderDetailVM.UnitId;
-    //        assetPurchaseOrderDetail.Consumption = model.AssetPurchaseOrderDetailVM.Consumption;
-    //        assetPurchaseOrderDetail.Discount = model.AssetPurchaseOrderDetailVM.Discount;
-    //        assetPurchaseOrderDetail.PurchaseQty = model.AssetPurchaseOrderDetailVM.PurchaseQty;
-    //        assetPurchaseOrderDetail.SalePrice = model.AssetPurchaseOrderDetailVM.SalePrice;
-    //        assetPurchaseOrderDetail.CostPrice = model.AssetPurchaseOrderDetailVM.CostPrice;
-    //        assetPurchaseOrderDetail.TotalAmount = ((decimal)model.AssetPurchaseOrderDetailVM.PurchaseQty * model.AssetPurchaseOrderDetailVM.CostPrice) - model.AssetPurchaseOrderDetailVM.Discount;
-    //        assetPurchaseOrderDetail.Remarks = model.AssetPurchaseOrderDetailVM.Remarks;
+    //        assetPurchaseOrderDetail.ProductId = model.AssetSalesOrderDetailVM.ProductId;
+    //        assetPurchaseOrderDetail.UnitId = model.AssetSalesOrderDetailVM.UnitId;
+    //        assetPurchaseOrderDetail.Consumption = model.AssetSalesOrderDetailVM.Consumption;
+    //        assetPurchaseOrderDetail.Discount = model.AssetSalesOrderDetailVM.Discount;
+    //        assetPurchaseOrderDetail.PurchaseQty = model.AssetSalesOrderDetailVM.PurchaseQty;
+    //        assetPurchaseOrderDetail.SalePrice = model.AssetSalesOrderDetailVM.SalePrice;
+    //        assetPurchaseOrderDetail.CostPrice = model.AssetSalesOrderDetailVM.CostPrice;
+    //        assetPurchaseOrderDetail.TotalAmount = ((decimal)model.AssetSalesOrderDetailVM.PurchaseQty * model.AssetSalesOrderDetailVM.CostPrice) - model.AssetSalesOrderDetailVM.Discount;
+    //        assetPurchaseOrderDetail.Remarks = model.AssetSalesOrderDetailVM.Remarks;
     //        await _iEntityRepository.UpdateAsync(assetPurchaseOrderDetail);
     //        return true;
     //    }

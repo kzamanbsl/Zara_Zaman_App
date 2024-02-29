@@ -61,7 +61,8 @@
                                     <td>@item.TotalAmount</td>
 
                                     <td class="text-center">
-                                        <a id="@item.Id" onclick=" makeEditble(@item.Id);" class="linkPointer" data-toggle="modal" data-target="#editPurchaseOrderModal" title="Edit" data-placement="top"><i class="text-warning fas fa-edit" aria-hidden="true"></i></a> |
+
+                                        <a id="@item.Id" onclick=" makeEditble(@item.Id);" class="linkPointer" data-toggle="modal" data-target="#editSalesOrderModal" title="Edit" data-placement="top"><i class="text-warning fas fa-edit" aria-hidden="true"></i></a> |
                                         @Html.ActionLink("", "DeleteSalesOrder", new { id = item.Id }, new { @title = "Delete", @class = "text-danger fas fa-trash", onclick = "return confirm('Are you sure you want to delete this?')" }) |
                                         @Html.ActionLink("", "PurchaseDetails", new { id = item.Id }, new { @title = "Details", @class = "text-primary fas fa-eye"})
                                     </td>
@@ -76,8 +77,105 @@
 </section>
 
 
+<div class="modal fade" tabindex="-1" id="editSalesOrderModal" data-toggle="modal" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form asp-action="UpdateSalesOrder" method="post">
+
+
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Update Sales Order</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+
+                    @Html.HiddenFor(model => model.Id, new { id = "hidPOID" })
+
+                    <div class="form-group">
+                        <label>Storehouse</label>
+                        <select class="form-control" id="storehouseId" asp-for="StorehouseId" asp-items="ViewBag.StorehouseList" required>
+                            <option value="0" selected>-- Select Storehouse --</option>
+                            <span asp-validation-for="StorehouseId" class="text-danger"></span>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Customer</label>
+                        <select class="form-control" id="customerId" asp-for="CustomerId" asp-items="ViewBag.CustomerList" required>
+                            <option value="0" selected>-- Select Customer --</option>
+                            <span asp-validation-for="CustomerId" class="text-danger"></span>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Delivery Date</label>
+                        <input id="deliveryDate" asp-for="DeliveryDate" value="@DateTime.Today.ToString("yyyy-MM-dd")" type="date" class="form-control" autocomplete="off" required />
+                        <span asp-validation-for="DeliveryDate" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Delivery Address</label>
+                        <input id="deliveryAddress" asp-for="DeliveryAddress" class="form-control" autocomplete="off" required />
+                        <span asp-validation-for="DeliveryAddress" class="text-danger"></span>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Update</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
+    <script>
+
+        $(document).ready(function () {
+            // var reject = document.getElementById('OrderStatusId').val(PurchaseOrderStatusEnum.Reject);
+            $('#Sales').addClass('menu-open');
+            $('#SalesOrderIndex').addClass('active');
+            $('#SalesOrdertable').DataTable({
+                "paging": true,
+                "ordering": true,
+                "info": true,
+                order: [[0, 'asc']],
+            });
+        });
+
+        function makeEditble(rowId) {
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("UpdateSalesOrder", "SalesOrder")",
+                datatype: "Json",
+                data: { id: rowId },
+                success: function (data) {
+                    $("#hidPOID").val(data.id);
+
+                    // Parse date if needed and adjust for timezone
+                    var deliveryDate = new Date(data.deliveryDate);
+                    var offset = deliveryDate.getTimezoneOffset();
+                    deliveryDate = new Date(deliveryDate.getTime() - (offset * 60 * 1000));
+
+                    // Format date as YYYY-MM-DD
+                    var formattedDate = deliveryDate.toISOString().split('T')[0];
+
+                    // Set value
+                    $("#storehouseId").val(data.storehouseId);
+                    $("#customerId").val(data.customerId);
+                    $("#deliveryDate").val(formattedDate);
+                    $("#deliveryAddress").val(data.deliveryAddress);
+
+                }
+            });
+        }
+
+    </script>
 }

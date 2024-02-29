@@ -6,6 +6,7 @@ using app.Utility;
 using app.Services.SalesOrderDetailServices;
 using Microsoft.EntityFrameworkCore;
 using app.Services.SalesTermsAndConditonServices;
+using app.Services.PurchaseOrderServices;
 
 namespace app.Services.SalesOrderServices
 {
@@ -78,6 +79,7 @@ namespace app.Services.SalesOrderServices
                                                                           select new SalesOrderDetailViewModel
                                                                           {
                                                                               Id = t1.Id,
+
                                                                               SalesOrderId = t1.SalesOrderId,
                                                                               ProductId = t1.ProductId,
                                                                               ProductName = t1.Product.Name,
@@ -98,7 +100,27 @@ namespace app.Services.SalesOrderServices
 
             return SalesOrderModel;
         }
+        public async Task<SalesOrderViewModel> GetAllRecord()
+        {
+            SalesOrderViewModel salesMasterModel = new SalesOrderViewModel();
+            var dataQuery = await Task.Run(() => (from t1 in _dbContext.SalesOrder
+                                                  where t1.IsActive == true 
 
+                                                  select new SalesOrderViewModel
+                                                  {
+                                                      Id = t1.Id,
+                                                      OrderNo = t1.OrderNo,
+                                                      DeliveryDate = t1.DeliveryDate,
+                                                      CustomerId = t1.CustomerId,
+                                                      CustomerName = t1.Customer.Name,
+                                                      StorehouseId = t1.StorehouseId,
+                                                      StoreName = t1.Storehouse.Name,
+                                                      OrderStatusId = (int)(PurchaseOrderStatusEnum)t1.OrderStatusId,
+
+                                                  }).OrderByDescending(x => x.Id).AsQueryable());
+
+            return salesMasterModel;
+        }
         public async Task<SalesOrderViewModel> GetAllSalesRecord()
         {
             SalesOrderViewModel salesMaster = new SalesOrderViewModel();
@@ -191,15 +213,18 @@ namespace app.Services.SalesOrderServices
             }
             return false;
         }
-
+        
         public async Task<bool> UpdateSalesOrder(SalesOrderViewModel vm)
         {
-            var purchaseOrder = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id == vm.Id);
-            if (purchaseOrder != null)
+            var salesOrder = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id == vm.Id);
+            if (salesOrder == null)
             {
-                purchaseOrder.Id = vm.Id;
-                purchaseOrder.StorehouseId = vm.StorehouseId;
-                await _iEntityRepository.UpdateAsync(purchaseOrder);
+                salesOrder.Id = vm.Id;
+                salesOrder.StorehouseId = (int)vm.StorehouseId;
+                salesOrder.CustomerId = vm.CustomerId;
+                salesOrder.DeliveryDate = vm.DeliveryDate;
+                salesOrder.DeliveryAddress = vm.DeliveryAddress;
+                await _iEntityRepository.UpdateAsync(salesOrder);
                 return true;
             }
             return false;
