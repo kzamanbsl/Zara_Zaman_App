@@ -30,6 +30,12 @@ namespace app.WebApp.Controllers
         {
             try
             {
+                
+                ViewBag.StorehouseList = new SelectList((await _iDropdownService.StorehouseSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
+                ViewBag.ProductList = new SelectList((await _iDropdownService.ProductSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
+                ViewBag.UnitList = new SelectList((await _iDropdownService.UnitSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
+                ViewBag.TermsandconditionList = new SelectList((await _iDropdownService.TermsandconditionsSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
+
                 ViewBag.CustomerList = new SelectList((await _iDropdownService.CustomerSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
                 SalesOrderViewModel viewModel = await _isalesOrderService.GetAllSalesRecord();
                 return View(viewModel);
@@ -80,6 +86,8 @@ namespace app.WebApp.Controllers
             //return RedirectToAction(nameof(AddSalesOrderAndDetail), new { SalesOrderId = vm.Id });
             return RedirectToAction(nameof(AddSalesOrderAndDetail), new { salesOrderId = vm.Id });
         }
+
+
         public async Task<JsonResult> UpdateSingleSelesOrderDetails(long id)
         {
             var model = await _isalesOrderDetailService.SingleSalesOrderDetails(id);
@@ -110,6 +118,19 @@ namespace app.WebApp.Controllers
                 return Json(model);
             }
             return Json(null);
+        }
+
+        public async Task<JsonResult> UpdateSalesOrder(long id)
+        {
+            var model = await _isalesOrderService.GetSalesOrder(id);
+            return Json(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateSalesOrder(SalesOrderViewModel vm)
+        {
+            var res = await _isalesOrderService.UpdateSalesOrder(vm);
+            return RedirectToAction("Index");
         }
 
         #endregion

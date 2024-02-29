@@ -76,6 +76,54 @@
 </section>
 
 
+<div class="modal fade" tabindex="-1" id="editPurchaseOrderModal" data-toggle="modal" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form asp-action="UpdateSalesOrder" method="post">
+
+
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Update Sales Order</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+
+                    @Html.HiddenFor(model => model.Id, new { id = "hidPOID" })
+
+                    <div class="form-group">
+                        <label>Sales Date </label>
+                        <input asp-for="SalesDate" id="salesDate" class="form-control" type="date" autocomplete="off" required />
+                        <span asp-validation-for="SalesDate" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Storehouse</label>
+                        <select class="form-control" id="storehouseId" asp-for="StorehouseId" asp-items="ViewBag.StorehouseList" required>
+                            <option value="0" selected>-- Select Storehouse --</option>
+                            <span asp-validation-for="StorehouseId" class="text-danger"></span>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Customer</label>
+                        <select class="form-control" asp-for="CustomerId" asp-items="ViewBag.CustomerList" required>
+                            <option value="0" selected>-- Select Customer --</option>
+                            <span asp-validation-for="CustomerId" class="text-danger"></span>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Update</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");

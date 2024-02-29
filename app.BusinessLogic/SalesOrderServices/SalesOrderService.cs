@@ -194,12 +194,23 @@ namespace app.Services.SalesOrderServices
 
         public async Task<bool> UpdateSalesOrder(SalesOrderViewModel vm)
         {
-            var purchaseOrder = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id == vm.Id);
-            if (purchaseOrder != null)
+            var salesOrder = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id == vm.Id);
+            if (salesOrder != null)
             {
-                purchaseOrder.Id = vm.Id;
-                purchaseOrder.StorehouseId = vm.StorehouseId;
-                await _iEntityRepository.UpdateAsync(purchaseOrder);
+                salesOrder.Id = vm.Id;
+                salesOrder.OrderNo= vm.OrderNo;
+                salesOrder.SalesDate = vm.SalesDate;
+                salesOrder.OrderStatusId = (int)vm.OrderStatusId;
+                salesOrder.CustomerId = vm.CustomerId;
+                salesOrder.OverallDiscount = vm.OverallDiscount;
+                salesOrder.Description = vm.Description;
+                salesOrder.TermsAndCondition = vm.TermsAndCondition;
+                salesOrder.DeliveryDate = vm.DeliveryDate;
+                salesOrder.DeliveryAddress = vm.DeliveryAddress;
+                salesOrder.OrderStatusId= (int)vm.OrderStatusId;
+                salesOrder.PaymentStatusId = (int)vm.PaymentStatusId;
+                
+                await _iEntityRepository.UpdateAsync(salesOrder);
                 return true;
             }
             return false;
