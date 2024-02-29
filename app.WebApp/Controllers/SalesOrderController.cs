@@ -67,19 +67,23 @@ namespace app.WebApp.Controllers
         [HttpPost]
         public async Task<IActionResult> AddSalesOrderAndDetail(SalesOrderViewModel vm)
         {
-
-            if (vm.Id == 0)
+            if (vm.ActionEum == ActionEnum.Add)
             {
-                await _isalesOrderService.AddSalesOrder(vm); //Adding Sales Master
+                if (vm.Id == 0)
+                {
+                    await _isalesOrderService.AddSalesOrder(vm); //Adding Purchase Master
+                }
+                await _isalesOrderDetailService.AddSalesOrderDetails(vm); //Adding Purchase Details
             }
-            await _isalesOrderDetailService.AddSalesOrderDetails(vm); //Adding Sales Details
-            //else if (vm.Id>0)
-            //{
-            //    await _isalesOrderDetailService.UpdateSalesDetail(vm);
-            //}
-            //return RedirectToAction(nameof(AddSalesOrderAndDetail), new { SalesOrderId = vm.Id });
+            //This is for Purchase Details single Edit
+            else if (vm.ActionEum == ActionEnum.Edit)
+            {
+                await _isalesOrderDetailService.UpdateSalesDetail(vm);
+            }
             return RedirectToAction(nameof(AddSalesOrderAndDetail), new { salesOrderId = vm.Id });
         }
+
+
         public async Task<JsonResult> UpdateSingleSelesOrderDetails(long id)
         {
             var model = await _isalesOrderDetailService.SingleSalesOrderDetails(id);
