@@ -41,6 +41,7 @@
         Inventory,
         SalesTermsAndCondition,
         SalesOrder,
+        SalesOrderDetails,
         #region ATMAssemble
         AssembleWorkCategory,
         AssembleWorkStep,

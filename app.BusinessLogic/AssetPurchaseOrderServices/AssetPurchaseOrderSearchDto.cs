@@ -8,6 +8,9 @@ namespace app.Services.AssetPurchaseOrderServices
 {
     public class AssetPurchaseOrderSearchDto : BaseDataTableSearch
     {
+
+
+        [DisplayName("Purchase Date")]
         public DateTime PurchaseDate { get; set; }
         public string Description { get; set; }
 
@@ -20,6 +23,8 @@ namespace app.Services.AssetPurchaseOrderServices
         [DisplayName("Status")]
         public string OrderStatusName { get; set; }
         public decimal OverallDiscount { get; set; }
+
+        [DisplayName("Total Amount")]
         public double TotalAmount { get; set; }
         public int PurchaseTypeId { get; set; }
         public bool IsOpening { get; set; } = false;
@@ -33,13 +38,13 @@ namespace app.Services.AssetPurchaseOrderServices
         [DisplayName("Supplier")]
         public string SupplierName { get; set; }
 
-        [DisplayName("Storehouse")]
+        [DisplayName("Store House")]
         public long? StorehouseId { get; set; }
 
-        [DisplayName("Storehouse")]
+        [DisplayName("Store House")]
         public BusinessCenter Storehouse { get; set; }
 
-        [DisplayName("Storehouse")]
+        [DisplayName("Store House")]
         public string StoreName { get; set; }
         public ActionEnum ActionEum { get { return (ActionEnum)this.ActionId; } }
         public int ActionId { get; set; } = 1;

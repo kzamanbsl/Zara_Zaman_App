@@ -96,7 +96,7 @@ namespace app.Services.MainMenuServices
 
         public async Task<DataTablePagination<MainMenuSearchDto>> SearchAsync(DataTablePagination<MainMenuSearchDto> searchDto)
         {
-            var searchResult = _dbContext.MainMenu.AsNoTracking();
+            var searchResult = _dbContext.MainMenu.Where(c => c.IsActive == true).AsNoTracking();
 
             var searchModel = searchDto.SearchVm;
             var filter = searchDto?.Search?.Value?.Trim();

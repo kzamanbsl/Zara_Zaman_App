@@ -82,7 +82,7 @@ namespace app.Services.DropdownItemServices
 
         public async Task<DataTablePagination<DropdownItemSearchDto>> SearchAsync(DataTablePagination<DropdownItemSearchDto> searchDto)
         {
-            var searchResult = _dbContext.DropdownItem.AsNoTracking();
+            var searchResult = _dbContext.DropdownItem.Where(c => c.IsActive == true).AsNoTracking();
 
             var searchModel = searchDto.SearchVm;
             var filter = searchDto?.Search?.Value?.Trim();

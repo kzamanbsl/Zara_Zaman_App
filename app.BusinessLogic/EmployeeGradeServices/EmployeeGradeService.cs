@@ -77,7 +77,7 @@ namespace app.Services.EmployeeGradeServices
 
         public async Task<DataTablePagination<EmployeeGradeSearchDto>> SearchAsync(DataTablePagination<EmployeeGradeSearchDto> searchDto)
         {
-            var searchResult = _dbContext.EmployeeGrade.AsNoTracking();
+            var searchResult = _dbContext.EmployeeGrade.Where(c=>c.IsActive==true).AsNoTracking();
 
             var searchModel = searchDto.SearchVm;
             var filter = searchDto?.Search?.Value?.Trim();
@@ -96,7 +96,6 @@ namespace app.Services.EmployeeGradeServices
                     c.Name.ToLower().Contains(filter)
                     //|| c.TradePrice.ToString().Contains(filter)
                     //|| c.SalePrice.ToString().Contains(filter)
-                    || c.Name.ToLower().Contains(filter)
                     );
                 //    || c.Description.ToLower().Contains(filter)
                 //);

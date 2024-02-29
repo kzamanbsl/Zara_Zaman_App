@@ -80,7 +80,7 @@ namespace app.Services.JobStatusServices
 
         public async Task<DataTablePagination<JobStatusSearchDto>> SearchAsync(DataTablePagination<JobStatusSearchDto> searchDto)
         {
-            var searchResult = _dbContext.JobStatus.AsNoTracking();
+            var searchResult = _dbContext.JobStatus.Where(c => c.IsActive == true).AsNoTracking();
 
             var searchModel = searchDto.SearchVm;
             var filter = searchDto?.Search?.Value?.Trim();

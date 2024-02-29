@@ -29,22 +29,22 @@ namespace app.Services.CustomerServices
         [DisplayName("Country Name")]
         public string CountryName { get; set; }
 
-        [DisplayName("DivisionName")]
+        [DisplayName("Division Name")]
         public int? DivisionId { get; set; }
 
-        [DisplayName("DivisionName")]
+        [DisplayName("Division Name")]
         public string DivisionName { get; set; }
 
-        [DisplayName("DistrictName")]
+        [DisplayName("District Name")]
         public int? DistrictId { get; set; }
 
-        [DisplayName("DistrictName")]
+        [DisplayName("District Name")]
         public string DistrictName { get; set; }
 
-        [DisplayName("UpazilaName")]
+        [DisplayName("Upazila Name")]
         public int? UpazilaId { get; set; }
 
-        [DisplayName("UpazilaName")]
+        [DisplayName("Upazila Name")]
         public string UpazilaName { get; set; }
     }
 }

@@ -76,7 +76,7 @@ namespace app.Services.EmployeeCategoryServices
 
         public async Task<DataTablePagination<EmployeeCategorySearchDto>> SearchAsync(DataTablePagination<EmployeeCategorySearchDto> searchDto)
         {
-            var searchResult = _dbContext.EmployeeCategory.AsNoTracking();
+            var searchResult = _dbContext.EmployeeCategory.Where(c => c.IsActive == true).AsNoTracking();
 
             var searchModel = searchDto.SearchVm;
             var filter = searchDto?.Search?.Value?.Trim();

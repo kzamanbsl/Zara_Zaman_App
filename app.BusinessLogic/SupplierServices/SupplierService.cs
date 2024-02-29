@@ -135,7 +135,7 @@ namespace app.Services.SupplierServices
 
         public async Task<DataTablePagination<SupplierSearchDto>> SearchAsync(DataTablePagination<SupplierSearchDto> searchDto)
         {
-            var searchResult = _dbContext.Supplier.Include(c => c.Upazila).Include(c => c.District).Include(c=>c.Division).Include(c => c.Country).AsNoTracking();
+            var searchResult = _dbContext.Supplier.Include(c => c.Upazila).Include(c => c.District).Include(c=>c.Division).Include(c => c.Country).Where(c=>c.IsActive==true).AsNoTracking();
 
             var searchModel = searchDto.SearchVm;
             var filter = searchDto?.Search?.Value?.Trim();

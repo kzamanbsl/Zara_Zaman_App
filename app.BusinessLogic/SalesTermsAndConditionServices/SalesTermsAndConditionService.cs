@@ -82,7 +82,7 @@ namespace app.Services.SalesTermsAndConditonServices
 
         public async Task<DataTablePagination<SalesTermsAndConditionSearchDto>> SearchAsync(DataTablePagination<SalesTermsAndConditionSearchDto> searchDto)
         {
-            var searchResult = _dbContext.SalesTermsAndCondition.AsNoTracking();
+            var searchResult = _dbContext.SalesTermsAndCondition.Where(c=>c.IsActive==true).AsNoTracking();
 
             var searchModel = searchDto.SearchVm;
             var filter = searchDto?.Search?.Value?.Trim();
@@ -92,7 +92,7 @@ namespace app.Services.SalesTermsAndConditonServices
                 filter = filter.ToLower();
                 searchResult = searchResult.Where(c =>
                     c.Key.ToLower().Contains(filter)
-                    || c.Value.ToString().Contains(filter)
+                    || c.Value.ToLower().Contains(filter)
                     
                 );
             }
