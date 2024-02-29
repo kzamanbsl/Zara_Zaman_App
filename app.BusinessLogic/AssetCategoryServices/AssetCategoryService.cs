@@ -88,7 +88,7 @@ namespace app.Services.AssetCategoryServices
 
         public async Task<DataTablePagination<AssetCategorySearchDto>> SearchAsync(DataTablePagination<AssetCategorySearchDto> searchDto)
         {
-            var searchResult = _dbContext.ProductCategory.AsNoTracking();
+            var searchResult = _dbContext.ProductCategory.Where(c => c.IsActive == true).AsNoTracking();
 
             var searchModel = searchDto.SearchVm;
             var filter = searchDto?.Search?.Value?.Trim();

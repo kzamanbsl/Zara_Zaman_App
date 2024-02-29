@@ -86,7 +86,7 @@ namespace app.Services.LeaveBalanceServices
         }
         public async Task<DataTablePagination<LeaveBalanceSearchDto>> SearchAsync(DataTablePagination<LeaveBalanceSearchDto> searchDto)
         {
-            var searchResult = _dbContext.LeaveBalance.Include(c => c.LeaveCategory).AsNoTracking();
+            var searchResult = _dbContext.LeaveBalance.Include(c => c.LeaveCategory).Where(c => c.IsActive == true).AsNoTracking();
 
             var searchModel = searchDto.SearchVm;
             var filter = searchDto?.Search?.Value?.Trim();

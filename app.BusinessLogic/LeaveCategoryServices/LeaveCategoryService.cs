@@ -83,7 +83,7 @@ namespace app.Services.LeaveCategoryServices
 
         public async Task<DataTablePagination<LeaveCategorySearchDto>> SearchAsync(DataTablePagination<LeaveCategorySearchDto> searchDto)
         {
-            var searchResult = _dbContext.LeaveCategory.AsNoTracking();
+            var searchResult = _dbContext.LeaveCategory.Where(c => c.IsActive == true).AsNoTracking();
 
             var searchModel = searchDto.SearchVm;
             var filter = searchDto?.Search?.Value?.Trim();

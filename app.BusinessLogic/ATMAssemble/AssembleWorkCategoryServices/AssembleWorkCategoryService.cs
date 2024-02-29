@@ -88,7 +88,7 @@ namespace app.Services.ATMAssemble.AssembleWorkCategoryServices
 
         public async Task<DataTablePagination<AssembleWorkCategorySearchDto>> SearchAsync(DataTablePagination<AssembleWorkCategorySearchDto> searchDto)
         {
-            var searchResult = _dbContext.AssembleWorkCategory.AsNoTracking();
+            var searchResult = _dbContext.AssembleWorkCategory.Where(c => c.IsActive == true).AsNoTracking();
 
             var searchModel = searchDto.SearchVm;
             var filter = searchDto?.Search?.Value?.Trim();

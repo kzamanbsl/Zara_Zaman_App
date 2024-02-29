@@ -196,7 +196,7 @@ namespace app.Services.LeaveApplicationServices
 
         public async Task<DataTablePagination<LeaveApplicationSearchDto>> SearchAsync(DataTablePagination<LeaveApplicationSearchDto> searchDto)
         {
-            var searchResult = _dbContext.LeaveApplication.Include(c => c.Employee).Include(c => c.LeaveCategory).AsNoTracking();
+            var searchResult = _dbContext.LeaveApplication.Include(c => c.Employee).Include(c => c.LeaveCategory).Where(c=>c.IsActive==true).AsNoTracking();
 
             var searchModel = searchDto.SearchVm;
             var filter = searchDto?.Search?.Value?.Trim();

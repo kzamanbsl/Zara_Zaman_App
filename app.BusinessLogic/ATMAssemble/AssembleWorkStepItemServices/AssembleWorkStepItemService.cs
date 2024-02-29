@@ -99,7 +99,7 @@ namespace app.Services.ATMAssemble.AssembleWorkStepItemServices
 
         public async Task<DataTablePagination<AssembleWorkStepItemSearchDto>> SearchAsync(DataTablePagination<AssembleWorkStepItemSearchDto> searchDto)
         {
-            var searchResult = _dbContext.AssembleWorkStepItem.Include(c => c.AssembleWorkStep).Include(c=>c.AssembleWorkStep.AssembleWorkCategory).AsNoTracking();
+            var searchResult = _dbContext.AssembleWorkStepItem.Include(c => c.AssembleWorkStep).Include(c => c.AssembleWorkStep.AssembleWorkCategory).Where(c => c.IsActive == true).AsNoTracking();
 
             var searchModel = searchDto.SearchVm;
             var filter = searchDto?.Search?.Value?.Trim();

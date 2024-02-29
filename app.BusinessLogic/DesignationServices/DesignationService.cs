@@ -78,7 +78,7 @@ namespace app.Services.DesignationServices
 
         public async Task<DataTablePagination<DesignationSearchDto>> SearchAsync(DataTablePagination<DesignationSearchDto> searchDto)
         {
-            var searchResult = _dbContext.Designation.AsNoTracking();
+            var searchResult = _dbContext.Designation.Where(c => c.IsActive == true).AsNoTracking();
 
             var searchModel = searchDto.SearchVm;
             var filter = searchDto?.Search?.Value?.Trim();
