@@ -175,10 +175,18 @@
                             return row.description;
                         }
                     },
+
                     {
                         data: "StatusId",
                         render: function (data, type, row, meta) {
-                            return row.statusId;
+                            var result = "";
+                            if (row.isMenuShow == false) {
+                                var result = '<b class="text-danger" > <i class="fas fa-times-circle fa-2x" style = "font-size:20px" > </i></b >';
+                            }
+                            else {
+                                var result = '<b class="text-success" > <i class="fas fa-check-square" style = "font-size:20px" > </i></b >';
+                            }
+                            return result;
                         }
                     },
                     {
