@@ -218,7 +218,7 @@ namespace app.Services.AssetPurchaseOrderServices
 
         public async Task<DataTablePagination<AssetPurchaseOrderSearchDto>> SearchAsync(DataTablePagination<AssetPurchaseOrderSearchDto> searchDto)
         {
-            var searchResult = _dbContext.PurchaseOrderDetail.Include(c => c.PurchaseOrder).Where(c=>c.IsActive==true).AsNoTracking();
+            var searchResult = _dbContext.PurchaseOrderDetail.Include(c => c.PurchaseOrder.Storehouse).Include(c=>c.PurchaseOrder.Supplier).Where(c=>c.IsActive==true).AsNoTracking();
 
             var searchModel = searchDto.SearchVm;
             var filter = searchDto?.Search?.Value?.Trim();
@@ -229,10 +229,6 @@ namespace app.Services.AssetPurchaseOrderServices
             if (searchModel?.SupplierId is > 0)
             {
                 searchResult = searchResult.Where(c => c.PurchaseOrder.SupplierId == searchModel.SupplierId);
-            }
-            if (searchModel?.OrderStatusId is > 0)
-            {
-                searchResult = searchResult.Where(c => c.PurchaseOrder.OrderStatusId == searchModel.OrderStatusId);
             }
             if (!string.IsNullOrEmpty(filter))
             {
