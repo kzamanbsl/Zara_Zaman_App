@@ -1,6 +1,4 @@
-﻿using app.Services.JobStatusServices;
-using app.Services.ProductServices;
-using app.Services.PurchaseOrderDetailServices;
+﻿
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +20,6 @@ namespace app.Services.SalesOrderServices
         Task<bool> DeleteSalesOrder(long id);
         Task<bool> RejectSalesOrder(long id);
         Task<bool> UpdateSalesOrder(SalesOrderViewModel vm);
-
+        Task<SalesOrderViewModel> SalesOrderById(long id);
     }
 }

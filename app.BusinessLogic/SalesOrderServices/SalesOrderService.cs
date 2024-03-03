@@ -15,6 +15,8 @@ using app.Services.JobStatusServices;
 using app.Services.StorehouseServices;
 using app.Services.SalesTermsAndConditonServices;
 using app.Services.PurchaseOrderServices;
+using app.Services.PurchaseOrderDetailServices;
+using System.Security.Cryptography.X509Certificates;
 
 namespace app.Services.SalesOrderServices
 {
@@ -108,6 +110,27 @@ namespace app.Services.SalesOrderServices
 
             return SalesOrderModel;
         }
+
+        public async Task<SalesOrderViewModel> SalesOrderById(long id)
+        {
+            SalesOrderViewModel sendData = new SalesOrderViewModel();
+            var result = await _dbContext.SalesOrder.FirstOrDefaultAsync(x => x.Id == id);
+            sendData.Id = result.Id;
+            sendData.SalesDate = result.SalesDate;
+            sendData.OrderNo = result.OrderNo;
+            sendData.OrderStatusId = (int)(SalesOrderStatusEnum)result.OrderStatusId;
+            sendData.StorehouseId = result.StorehouseId;
+            sendData.CustomerId = result.CustomerId;
+            sendData.DeliveryDate = result.DeliveryDate;
+            sendData.DeliveryAddress = result.DeliveryAddress;
+            sendData.PaymentStatusId = (int)(PaymentStatusEnum)result.PaymentStatusId;
+            sendData.TermsAndCondition = result.TermsAndCondition;
+            sendData.OverallDiscount = result.OverallDiscount;
+            sendData.Description = result.Description;
+            return sendData;
+        }
+
+
         //public async Task<SalesOrderViewModel> GetAllRecord()
         //{
         //    SalesOrderViewModel salesMasterModel = new SalesOrderViewModel();
@@ -221,16 +244,16 @@ namespace app.Services.SalesOrderServices
             }
             return false;
         }
-        
+
         public async Task<bool> UpdateSalesOrder(SalesOrderViewModel vm)
         {
             var salesOrder = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id == vm.Id);
-            if (salesOrder == null)
+            if (salesOrder != null)
             {
                 salesOrder.Id = vm.Id;
+                salesOrder.DeliveryDate = vm.DeliveryDate;
                 salesOrder.StorehouseId = (int)vm.StorehouseId;
                 salesOrder.CustomerId = vm.CustomerId;
-                salesOrder.DeliveryDate = vm.DeliveryDate;
                 salesOrder.DeliveryAddress = vm.DeliveryAddress;
                 await _iEntityRepository.UpdateAsync(salesOrder);
                 return true;
