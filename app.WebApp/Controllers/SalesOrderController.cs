@@ -1,7 +1,5 @@
-﻿using app.Services.AssetPurchaseOrderServices;
-using app.Services.DropdownServices;
+﻿using app.Services.DropdownServices;
 using app.Services.InventoryServices;
-using app.Services.PurchaseOrderServices;
 using app.Services.SalesOrderDetailServices;
 using app.Services.SalesOrderServices;
 using app.Utility;

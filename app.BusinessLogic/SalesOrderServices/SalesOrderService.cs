@@ -152,7 +152,7 @@ namespace app.Services.SalesOrderServices
             foreach (var master in salesMaster.SalesOrderList)
             {
                 var detailsForMaster = matchingDetails.Where(detail => detail.SalesOrderId == master.Id);
-                decimal? total = detailsForMaster.Sum(detail => (detail.SalesPrice * (decimal)detail.SalesQty));
+                decimal? total = detailsForMaster.Sum(detail => (detail.SalesPrice * (decimal)detail.SalesQty) - detail.Discount);
                 master.TotalAmount = (double)(total ?? 0);
             }
             return salesMaster;

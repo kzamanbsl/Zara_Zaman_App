@@ -1,8 +1,6 @@
-﻿using app.EntityModel.AppModels;
-using app.EntityModel.DataTablePaginationModels;
+﻿using app.EntityModel.DataTablePaginationModels;
 using app.Services.DropdownServices;
 using app.Services.InventoryServices;
-using app.Services.ProductServices;
 using app.Services.PurchaseOrderDetailServices;
 using app.Services.PurchaseOrderServices;
 using app.Utility;
