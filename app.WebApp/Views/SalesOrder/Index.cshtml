@@ -160,7 +160,7 @@
 
         function MakeEditable(rowId) {
             $.ajax({
-                type: "GET",
+                type: "GET", 
                 url: "@Url.Action("GetSalesOrderById", "SalesOrder")",
                 data: { id: rowId },
                 datatype: "Json",

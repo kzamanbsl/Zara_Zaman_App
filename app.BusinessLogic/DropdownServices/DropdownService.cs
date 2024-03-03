@@ -315,6 +315,18 @@ namespace app.Services.DropdownServices
                                                                                       }).AsEnumerable());
             return dropDownViewModels;
         }
+        public async Task<IEnumerable<DropdownViewModel>> AssetSelectionList()
+        {
+            IEnumerable<DropdownViewModel> dropDownViewModels = await Task.Run(() => (from t1 in _dbContext.Product
+                                                                                      where t1.ProductTypeId == (int)ProductTypeEnum.Asset && t1.IsActive == true
+                                                                                      select new DropdownViewModel
+                                                                                      {
+                                                                                          Id = t1.Id,
+                                                                                          Name = t1.Name
+
+                                                                                      }).AsEnumerable());
+            return dropDownViewModels;
+        }
 
         public async Task<IEnumerable<DropdownViewModel>> AssembleWorkCategorySelectionList()
         {
