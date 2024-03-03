@@ -54,7 +54,7 @@ namespace app.WebApp.Controllers
             var result = await _iService.UpdateRecord(model);
             if (result == true)
             {
-                return RedirectToAction("Index");
+                return RedirectToAction("Search");
             }
             ModelState.AddModelError(string.Empty, "Same Name already exists!");
             return View(model);

@@ -45,7 +45,6 @@ namespace app.WebApp.Controllers
             }
         }
 
-
         [HttpGet]
         public async Task<IActionResult> AddSalesOrderAndDetail(long salesOrderId = 0)
         {
@@ -120,18 +119,20 @@ namespace app.WebApp.Controllers
             }
             return Json(null);
         }
-        [HttpGet]
-        public async Task<JsonResult> UpdateSalesOrder(long id)
-        {
-            var model = await _isalesOrderService.GetSalesOrder(id);
-            return Json(model);
-        }
+
 
         [HttpPost]
         public async Task<IActionResult> UpdateSalesOrder(SalesOrderViewModel vm)
         {
             var res = await _isalesOrderService.UpdateSalesOrder(vm);
             return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public async Task<JsonResult> GetSalesOrderById(long id)
+        {
+            var viewData = await _isalesOrderService.SalesOrderById(id);
+            return Json(viewData);
         }
 
         #endregion

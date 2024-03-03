@@ -1,12 +1,22 @@
-﻿using app.EntityModel.AppModels;
+﻿using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using app.EntityModel.AppModels;
 using app.Infrastructure.Auth;
 using app.Infrastructure.Repository;
 using app.Infrastructure;
 using app.Utility;
 using app.Services.SalesOrderDetailServices;
+using app.Services.DropdownServices;
 using Microsoft.EntityFrameworkCore;
+using app.Services.ProductServices;
+using app.Services.LeaveBalanceServices;
+using app.Services.JobStatusServices;
+using app.Services.StorehouseServices;
 using app.Services.SalesTermsAndConditonServices;
 using app.Services.PurchaseOrderServices;
+using app.Services.PurchaseOrderDetailServices;
+using System.Security.Cryptography.X509Certificates;
 
 namespace app.Services.SalesOrderServices
 {
@@ -100,27 +110,48 @@ namespace app.Services.SalesOrderServices
 
             return SalesOrderModel;
         }
-        public async Task<SalesOrderViewModel> GetAllRecord()
+
+        public async Task<SalesOrderViewModel> SalesOrderById(long id)
         {
-            SalesOrderViewModel salesMasterModel = new SalesOrderViewModel();
-            var dataQuery = await Task.Run(() => (from t1 in _dbContext.SalesOrder
-                                                  where t1.IsActive == true 
-
-                                                  select new SalesOrderViewModel
-                                                  {
-                                                      Id = t1.Id,
-                                                      OrderNo = t1.OrderNo,
-                                                      DeliveryDate = t1.DeliveryDate,
-                                                      CustomerId = t1.CustomerId,
-                                                      CustomerName = t1.Customer.Name,
-                                                      StorehouseId = t1.StorehouseId,
-                                                      StoreName = t1.Storehouse.Name,
-                                                      OrderStatusId = (int)(PurchaseOrderStatusEnum)t1.OrderStatusId,
-
-                                                  }).OrderByDescending(x => x.Id).AsQueryable());
-
-            return salesMasterModel;
+            SalesOrderViewModel sendData = new SalesOrderViewModel();
+            var result = await _dbContext.SalesOrder.FirstOrDefaultAsync(x => x.Id == id);
+            sendData.Id = result.Id;
+            sendData.SalesDate = result.SalesDate;
+            sendData.OrderNo = result.OrderNo;
+            sendData.OrderStatusId = (int)(SalesOrderStatusEnum)result.OrderStatusId;
+            sendData.StorehouseId = result.StorehouseId;
+            sendData.CustomerId = result.CustomerId;
+            sendData.DeliveryDate = result.DeliveryDate;
+            sendData.DeliveryAddress = result.DeliveryAddress;
+            sendData.PaymentStatusId = (int)(PaymentStatusEnum)result.PaymentStatusId;
+            sendData.TermsAndCondition = result.TermsAndCondition;
+            sendData.OverallDiscount = result.OverallDiscount;
+            sendData.Description = result.Description;
+            return sendData;
         }
+
+
+        //public async Task<SalesOrderViewModel> GetAllRecord()
+        //{
+        //    SalesOrderViewModel salesMasterModel = new SalesOrderViewModel();
+        //    var dataQuery = await Task.Run(() => (from t1 in _dbContext.SalesOrder
+        //                                          where t1.IsActive == true 
+
+        //                                          select new SalesOrderViewModel
+        //                                          {
+        //                                              Id = t1.Id,
+        //                                              OrderNo = t1.OrderNo,
+        //                                              DeliveryDate = t1.DeliveryDate,
+        //                                              CustomerId = t1.CustomerId,
+        //                                              CustomerName = t1.Customer.Name,
+        //                                              StorehouseId = t1.StorehouseId,
+        //                                              StoreName = t1.Storehouse.Name,
+        //                                              OrderStatusId = (int)(PurchaseOrderStatusEnum)t1.OrderStatusId,
+
+        //                                          }).OrderByDescending(x => x.Id).AsQueryable());
+
+        //    return salesMasterModel;
+        //}
         public async Task<SalesOrderViewModel> GetAllSalesRecord()
         {
             SalesOrderViewModel salesMaster = new SalesOrderViewModel();
@@ -213,16 +244,16 @@ namespace app.Services.SalesOrderServices
             }
             return false;
         }
-        
+
         public async Task<bool> UpdateSalesOrder(SalesOrderViewModel vm)
         {
             var salesOrder = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id == vm.Id);
-            if (salesOrder == null)
+            if (salesOrder != null)
             {
                 salesOrder.Id = vm.Id;
+                salesOrder.DeliveryDate = vm.DeliveryDate;
                 salesOrder.StorehouseId = (int)vm.StorehouseId;
                 salesOrder.CustomerId = vm.CustomerId;
-                salesOrder.DeliveryDate = vm.DeliveryDate;
                 salesOrder.DeliveryAddress = vm.DeliveryAddress;
                 await _iEntityRepository.UpdateAsync(salesOrder);
                 return true;

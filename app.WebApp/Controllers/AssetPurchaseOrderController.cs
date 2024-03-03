@@ -96,14 +96,14 @@ namespace app.WebApp.Controllers
         public async Task<IActionResult> ConfirmAssetPurchaseOrder(long id)
         {
             var res = await _iAssetPurchaseOrderService.ConfirmAssetPurchaseOrder(id);
-            return RedirectToAction("Index");
+            return RedirectToAction("Search");
         }
 
         [HttpGet]
         public async Task<IActionResult> DeleteAssetPurchaseOrder(long id)
         {
             var res = await _iAssetPurchaseOrderService.DeleteAssetPurchaseOrder(id);
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Search));
         }
 
 
@@ -124,14 +124,14 @@ namespace app.WebApp.Controllers
         public async Task<IActionResult> RejectAssetPurchaseOrder(long id)
         {
             var res = await _iAssetPurchaseOrderService.RejectAssetPurchaseOrder(id);
-            return RedirectToAction("Index");
+            return RedirectToAction("Search");
         }
 
         [HttpPost]
         public async Task<IActionResult> AddAssetInventory(long id)
         {
             var res = await _iassetInventoryService.AddAssetInventory(id);
-            return RedirectToAction("Index");
+            return RedirectToAction("Search");
         }
 
 
@@ -145,7 +145,7 @@ namespace app.WebApp.Controllers
         public async Task<IActionResult> UpdateAssetPurchaseMaster(AssetPurchaseOrderViewModel vm)
         {
             var res = await _iAssetPurchaseOrderService.UpdateAssetPurchaseOrder(vm);
-            return RedirectToAction("Index");
+            return RedirectToAction("Search");
         }
 
         #region Search

@@ -92,14 +92,14 @@ namespace app.WebApp.Controllers
         public async Task<IActionResult> ConfirmPurchaseOrder(long id)
         {
             var res = await _iPurchaseOrderService.ConfirmPurchaseOrder(id);
-            return RedirectToAction("Index");
+            return RedirectToAction("Search");
         }
 
         [HttpGet]
         public async Task<IActionResult> DeletePurchaseOrder(long id)
         {
             var res = await _iPurchaseOrderService.DeletePurchaseOrder(id);
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Search));
         }
 
 
@@ -120,14 +120,14 @@ namespace app.WebApp.Controllers
         public async Task<IActionResult> RejectPurchaseOrder(long id)
         {
             var res = await _iPurchaseOrderService.RejectPurchaseOrder(id);
-            return RedirectToAction("Index");
+            return RedirectToAction("Search");
         }
 
         [HttpPost]
         public async Task<IActionResult> AddInventory(long id)
         {
             var res = await _inventoryService.AddInventory(id);
-            return RedirectToAction("Index");
+            return RedirectToAction("Search");
         }
 
 
@@ -141,7 +141,7 @@ namespace app.WebApp.Controllers
         public async Task<IActionResult> UpdatePurchaseMaster(PurchaseOrderViewModel vm)
         {           
             var res = await _iPurchaseOrderService.UpdatePurchaseOrder(vm);            
-            return RedirectToAction("Index");
+            return RedirectToAction("Search");
         }
 
         #region Search
