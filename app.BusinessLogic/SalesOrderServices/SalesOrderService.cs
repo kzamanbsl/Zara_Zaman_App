@@ -1,10 +1,18 @@
-﻿using app.EntityModel.AppModels;
+﻿using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using app.EntityModel.AppModels;
 using app.Infrastructure.Auth;
 using app.Infrastructure.Repository;
 using app.Infrastructure;
 using app.Utility;
 using app.Services.SalesOrderDetailServices;
+using app.Services.DropdownServices;
 using Microsoft.EntityFrameworkCore;
+using app.Services.ProductServices;
+using app.Services.LeaveBalanceServices;
+using app.Services.JobStatusServices;
+using app.Services.StorehouseServices;
 using app.Services.SalesTermsAndConditonServices;
 using app.Services.PurchaseOrderServices;
 
@@ -100,27 +108,27 @@ namespace app.Services.SalesOrderServices
 
             return SalesOrderModel;
         }
-        public async Task<SalesOrderViewModel> GetAllRecord()
-        {
-            SalesOrderViewModel salesMasterModel = new SalesOrderViewModel();
-            var dataQuery = await Task.Run(() => (from t1 in _dbContext.SalesOrder
-                                                  where t1.IsActive == true 
+        //public async Task<SalesOrderViewModel> GetAllRecord()
+        //{
+        //    SalesOrderViewModel salesMasterModel = new SalesOrderViewModel();
+        //    var dataQuery = await Task.Run(() => (from t1 in _dbContext.SalesOrder
+        //                                          where t1.IsActive == true 
 
-                                                  select new SalesOrderViewModel
-                                                  {
-                                                      Id = t1.Id,
-                                                      OrderNo = t1.OrderNo,
-                                                      DeliveryDate = t1.DeliveryDate,
-                                                      CustomerId = t1.CustomerId,
-                                                      CustomerName = t1.Customer.Name,
-                                                      StorehouseId = t1.StorehouseId,
-                                                      StoreName = t1.Storehouse.Name,
-                                                      OrderStatusId = (int)(PurchaseOrderStatusEnum)t1.OrderStatusId,
+        //                                          select new SalesOrderViewModel
+        //                                          {
+        //                                              Id = t1.Id,
+        //                                              OrderNo = t1.OrderNo,
+        //                                              DeliveryDate = t1.DeliveryDate,
+        //                                              CustomerId = t1.CustomerId,
+        //                                              CustomerName = t1.Customer.Name,
+        //                                              StorehouseId = t1.StorehouseId,
+        //                                              StoreName = t1.Storehouse.Name,
+        //                                              OrderStatusId = (int)(PurchaseOrderStatusEnum)t1.OrderStatusId,
 
-                                                  }).OrderByDescending(x => x.Id).AsQueryable());
+        //                                          }).OrderByDescending(x => x.Id).AsQueryable());
 
-            return salesMasterModel;
-        }
+        //    return salesMasterModel;
+        //}
         public async Task<SalesOrderViewModel> GetAllSalesRecord()
         {
             SalesOrderViewModel salesMaster = new SalesOrderViewModel();
