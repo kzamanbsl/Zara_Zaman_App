@@ -290,7 +290,7 @@ namespace app.Services.EmployeeServices
         }
         public async Task<DataTablePagination<EmployeeSearchDto>> SearchAsync(DataTablePagination<EmployeeSearchDto> searchDto)
         {
-            var searchResult = _dbContext.Employee.Include(c => c.Department).Include(c => c.Designation).AsNoTracking();
+            var searchResult = _dbContext.Employee.Include(c => c.Department).Include(c => c.Designation).Where(c=>c.IsActive==true).AsNoTracking();
 
             var searchModel = searchDto.SearchVm;
             var filter = searchDto?.Search?.Value?.Trim();

@@ -12,7 +12,7 @@
                 <li class="breadcrumb-item active"> Purchase Order List </li>
             </ol>
             <div>
-                <a asp-action="AddRecord"><i class="fa fa-plus"></i>  Add Purchase Order </a>
+                <a asp-action="AddPurchaseOrderAndDetail"><i class="fa fa-plus"></i>  Add Purchase Order </a>
             </div>
         </div>
     </div>
@@ -183,21 +183,29 @@
                     {
                         data: "Storehouse",
                         render: function (data, type, row, meta) {
-                            return row.storehouse;
+                            return row.storehouse.name;
                         }
                     },
                     {
                         data: "Supplier",
                         render: function (data, type, row, meta) {
-                            return row.supplier;
+                            return row.supplier.name;
                         }
                     },
                     {
                         data: "OrderStatusId",
                         render: function (data, type, row, meta) {
-                            return row.orderStatusId;
+                            var result = "";
+                            if (row.isMenuShow == false) {
+                                var result = '<b class="text-danger" > <i class="fas fa-times-circle fa-2x" style = "font-size:20px" > </i></b >';
+                            }
+                            else {
+                                var result = '<b class="text-success" > <i class="fas fa-check-square" style = "font-size:20px" > </i></b >';
+                            }
+                            return result;
                         }
                     },
+
                     {
                         data: "TotalAmount",
                         render: function (data, type, row, meta) {
