@@ -8,7 +8,7 @@
         public Product Product { get; set; }
         public long UnitId { get; set; }
         public Unit Unit { get; set; }
-        public decimal SalesQty { get; set; }
+        public int SalesQty { get; set; }
         public decimal SalesPrice { get; set; }
         public decimal Discount { get; set; }
         public decimal TotalAmount { get; set; }

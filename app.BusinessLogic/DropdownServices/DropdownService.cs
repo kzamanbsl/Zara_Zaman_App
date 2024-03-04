@@ -37,6 +37,7 @@ namespace app.Services.DropdownServices
         public async Task<IEnumerable<DropdownViewModel>> DepartmentSelectionList()
         {
             IEnumerable<DropdownViewModel> dropDownViewModels = await Task.Run(() => (from t1 in _dbContext.Department
+                                                                                      where t1.IsActive == true
                                                                                       select new DropdownViewModel
                                                                                       {
                                                                                           Id = t1.Id,
