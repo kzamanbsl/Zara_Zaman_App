@@ -4,6 +4,7 @@ using app.Infrastructure.Repository;
 using app.Infrastructure;
 using app.EntityModel.DataTablePaginationModels;
 using Microsoft.EntityFrameworkCore;
+using app.Utility;
 
 namespace app.Services.ProductServices
 {
@@ -31,7 +32,7 @@ namespace app.Services.ProductServices
                 com.SalePrice = vm.SalePrice;
                 com.UnitId = vm.UnitId;
                 com.CategoryId = vm.CategoryId;
-                com.ProductTypeId = vm.ProductTypeId;
+                com.ProductTypeId = (int)ProductTypeEnum.Product;
                 com.HasModelNo = vm.HasModelNo;
                 com.HasSerialNo = vm.HasSerialNo;
                 com.HasWarranty = vm.HasWarranty;
@@ -54,7 +55,7 @@ namespace app.Services.ProductServices
                 result.SalePrice = vm.SalePrice;
                 result.UnitId = vm.UnitId;
                 result.CategoryId = vm.CategoryId;
-                result.ProductTypeId = vm.ProductTypeId;
+                result.ProductTypeId = (int)ProductTypeEnum.Product;
                 result.HasModelNo = vm.HasModelNo;
                 result.HasSerialNo = vm.HasSerialNo;
                 result.HasWarranty = vm.HasWarranty;
@@ -77,7 +78,7 @@ namespace app.Services.ProductServices
             model.UnitName = result.Unit?.Name;
             model.CategoryId = result.CategoryId;
             model.CategoryName = result.Category?.Name;
-            model.ProductTypeId = result.ProductTypeId;
+            model.ProductTypeId = (int)ProductTypeEnum.Product;
             model.HasModelNo = result.HasModelNo;
             model.HasSerialNo = result.HasSerialNo;
             model.HasWarranty = result.HasWarranty;

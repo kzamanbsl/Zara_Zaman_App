@@ -306,7 +306,7 @@ namespace app.Services.DropdownServices
         public async Task<IEnumerable<DropdownViewModel>> ProductSelectionList()
         {
             IEnumerable<DropdownViewModel> dropDownViewModels = await Task.Run(() => (from t1 in _dbContext.Product
-                                                                                      where t1.IsActive == true
+                                                                                      where t1.ProductTypeId == (int)ProductTypeEnum.Product && t1.IsActive == true
                                                                                       select new DropdownViewModel
                                                                                       {
                                                                                           Id = t1.Id,
