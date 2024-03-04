@@ -42,6 +42,8 @@
         SalesTermsAndCondition,
         SalesOrder,
         SalesOrderDetails,
+        AssetAllocation,
+        AssetAllocationDetail,
         #region ATMAssemble
         AssembleWorkCategory,
         AssembleWorkStep,

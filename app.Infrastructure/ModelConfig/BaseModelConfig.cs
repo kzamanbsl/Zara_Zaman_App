@@ -47,7 +47,9 @@ namespace app.Infrastructure.ModelConfig
             new AssetInventoryConfig()?.Configure(builder.Entity<AssetInventory>());
             new SalesTermsAndConditionConfig()?.Configure(builder.Entity<SalesTermsAndCondition>());
             new SalesOrderConfig()?.Configure(builder.Entity<SalesOrder>());
-            new SalesOrderDetailsConfig()?.Configure(builder.Entity<SalesOrderDetails>());
+            new SalesOrderDetailsConfig()?.Configure(builder.Entity<SalesOrderDetails>()); 
+            new AssetAllocationConfig()?.Configure(builder.Entity<AssetAllocation>());
+            new AssetAllocationDetailConfig()?.Configure(builder.Entity<AssetAllocationDetail>());
 
             #region   AssembleWorkCategory,
 

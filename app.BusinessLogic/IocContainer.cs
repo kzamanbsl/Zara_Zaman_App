@@ -49,6 +49,8 @@ using app.Services.IAssetnventoryServices;
 using app.Services.AssetInventoryServices;
 using app.Services.SalesOrderServices;
 using app.Services.SalesOrderDetailServices;
+using app.Services.AssetAllocationServices;
+using app.Services.AssetAllocationDetailServices;
 
 namespace app.Services
 {
@@ -97,7 +99,8 @@ namespace app.Services
             services.AddTransient<ISalesTermsAndConditionService, SalesTermsAndConditionService>();
             services.AddTransient<ISalesOrderService, SalesOrderService>();
             services.AddTransient<ISalesOrderDetailService,SalesOrderDetailService>();
-
+            //services.AddTransient<IAssetAllocationService, AssetAllocationService>();
+            //services.AddTransient<IAssetAllocationDetailService, AssetAllocationDetailService>();
 
             #region ATM Assemble
             services.AddTransient<IAssetInventoryService, AssetInventoryService>();
