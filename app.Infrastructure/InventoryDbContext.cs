@@ -59,7 +59,8 @@ namespace app.Infrastructure
         public virtual DbSet<SalesTermsAndCondition> SalesTermsAndCondition { get; set; }
         public virtual DbSet<SalesOrder> SalesOrder { get; set; }
         public virtual DbSet<SalesOrderDetails> SalesOrderDetails { get; set; }
-
+        public virtual DbSet<AssetAllocation> AssetAllocation { get; set; }
+        public virtual DbSet<AssetAllocationDetail> AssetAllocationDetail { get; set; }
         #region ATMAssemble
         public virtual DbSet<AssetInventory> AssetInventory { get; set; }
         public virtual DbSet<AssembleWorkCategory> AssembleWorkCategory { get; set; }
