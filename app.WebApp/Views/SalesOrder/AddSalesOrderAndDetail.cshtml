@@ -241,29 +241,30 @@
                                     </div>
                                     <div class="col-md-3">
                                         <div class="form-group">
-                                            <label>Serial No</label>
-                                            <input asp-for="SalesOrderDetailVM.SerialNo" id="serialNo" class="form-control" />
-                                            <span asp-validation-for="SalesOrderDetailVM.SerialNo" class="text-danger"></span>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-3">
-                                        <div class="form-group">
-                                            <label>Model No</label>
-                                            <input asp-for="SalesOrderDetailVM.ModelNo" id="modelNo" class="form-control" />
-                                            <span asp-validation-for="SalesOrderDetailVM.ModelNo" class="text-danger"></span>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-3">
-                                        <div class="form-group">
                                             <label>Remarks</label>
                                             <input asp-for="SalesOrderDetailVM.Remarks" id="txtRemarks" class="form-control" />
                                             <span asp-validation-for="SalesOrderDetailVM.Remarks" class="text-danger"></span>
                                         </div>
                                     </div>
+                                    @*  <div class="col-md-3">
+                                <div class="form-group">
+                                <label>Serial No</label>
+                                <input asp-for="SalesOrderDetailVM.SerialNo" id="serialNo" class="form-control" />
+                                <span asp-validation-for="SalesOrderDetailVM.SerialNo" class="text-danger"></span>
+                                </div>
+                                </div> *@
+                                </div>
+                                <div id="product-details"></div>
+                                <div class="row">
+                                    @*       <div class="col-md-3">
+                                <div class="form-group">
+                                <label>Model No</label>
+                                <input asp-for="SalesOrderDetailVM.ModelNo" id="modelNo" class="form-control" />
+                                <span asp-validation-for="SalesOrderDetailVM.ModelNo" class="text-danger"></span>
+                                </div>
+                                </div> *@
+
+
                                 </div>
 
 
@@ -301,7 +302,7 @@
                                                 <th style="padding:5px;text-align:center;">SL</th>
                                                 <th style="padding: 5px; text-align: left;">Product</th>
                                                 <th style="padding: 5px; text-align: right;">Sale Qty</th>
-                                                <th style="padding: 5px; text-align: right;">Sale Price</th>                                                
+                                                <th style="padding: 5px; text-align: right;">Sale Price</th>
                                                 <th style="padding: 5px; text-align: right; ">WFD</th>
                                                 <th style="padding: 5px; text-align: right; ">WTD</th>
                                                 <th style="padding: 5px; text-align: right; ">Serial No</th>
@@ -319,7 +320,7 @@
                                             {
 
                                                 <tr>
-                                                    
+
                                                     <td style="padding: 5px">@(++sl)</td>
                                                     <td style="padding: 5px;text-align:left;">@item.ProductName</td>
                                                     @* <td style="padding: 5px;text-align:left;">@String.Format("{0:0.00}", item.UnitName)</td> *@
@@ -370,6 +371,66 @@
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
+
+    <script>
+        document.getElementById('salesQty').addEventListener('input', function () {
+            const quantity = parseInt(this.value);
+            const productDetailsDiv = document.getElementById('product-details');
+            productDetailsDiv.innerHTML = '';
+
+            for (let i = 1; i <= quantity; i++) {
+                productDetailsDiv.innerHTML += `
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                                <label for="serialNo_${i}">Serial No </label>
+                        <input type="text" id="serialNo_${i}" name="SalesOrderDetailVM.SerialNo[${i - 1}]" class="form-control" required>
+                                                            </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                                        <label for="modelNo_${i}">Model No</label>
+                                                                                              <input type="text" id="modelNo_${i}" name="SalesOrderDetailVM.ModelNo[${i - 1}]" class="form-control" required>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        `;
+            }
+        });
+
+        // function submitForm() {
+        //     // Get all the SerialNo and ModelNo inputs
+        //     const formData = {
+        //         SerialNo: [],
+        //         ModelNo: []
+        //     };
+
+        //     $('[name^="SerialNo"]').each(function () {
+        //         formData.SerialNo.push($(this).val());
+        //     });
+
+        //     $('[name^="ModelNo"]').each(function () {
+        //         formData.ModelNo.push($(this).val());
+        //     });
+
+        //     // Send data to the controller using AJAX
+        //     $.ajax({
+        //         url: '/ControllerName/ActionName',
+        //         type: 'POST',
+        //         contentType: 'application/json',
+        //         data: JSON.stringify(formData),
+        //         success: function (response) {
+        //             // Handle success response
+        //         },
+        //         error: function (xhr, status, error) {
+        //             // Handle error
+        //         }
+        //     });
+        // }
+    </script>
+
+
     <script>
         $(document).ready(function () {
             $('#Sales').addClass('menu-open');
@@ -436,9 +497,9 @@
                 }
             });
         }
-        
 
-        
+
+
         function makeDeletable(rowId) {
             $.ajax({
                 type: "GET",
@@ -462,3 +523,5 @@
     </script>
 
 }
+
+

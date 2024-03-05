@@ -1,5 +1,6 @@
 ﻿using app.EntityModel.AppModels;
 using app.Services.SalesOrderDetailServices;
+using app.Services.SalesProductDetailServices;
 using app.Utility;
 
 namespace app.Services.SalesOrderServices
@@ -28,7 +29,8 @@ namespace app.Services.SalesOrderServices
         public double TotalAmount { get; set; }
         public ActionEnum ActionEum { get { return (ActionEnum)this.ActionId; } }
         public int ActionId { get; set; } = 1;
-        public SalesOrderDetailViewModel SalesOrderDetailVM { get; set; }
+        public SalesOrderDetailViewModel SalesOrderDetailVM { get; set; }       
+        public SalesProductDetailViewModel SalesProductDetailVM { get; set; }       
         public IEnumerable<SalesOrderViewModel> SalesOrderList { get; set; }
         public IEnumerable<SalesOrderDetailViewModel> SalesOrderDetailsList { get; set; }
     }

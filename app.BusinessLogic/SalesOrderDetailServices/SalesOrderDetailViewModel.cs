@@ -1,6 +1,4 @@
 ﻿using app.EntityModel.AppModels;
-using app.Services.AssetPurchaseOrderServices;
-using app.Utility;
 
 namespace app.Services.SalesOrderDetailServices
 {
@@ -20,8 +18,8 @@ namespace app.Services.SalesOrderDetailServices
         public decimal TotalAmount { get; set; }
         public DateTime? WarrantyFormDate { get; set; }
         public DateTime? WarrantyToDate { get; set; }
-        public string SerialNo { get; set; }
-        public string ModelNo { get; set; }
+        public string[] SerialNo { get; set; }
+        public string[] ModelNo { get; set; }
         public bool IsForService { get; set; }
         public string Remarks { get; set; }
         //public ActionEnum ActionEum { get { return (ActionEnum)this.ActionId; } }
