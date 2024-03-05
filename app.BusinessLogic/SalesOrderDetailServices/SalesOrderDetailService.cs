@@ -30,10 +30,10 @@ namespace app.Services.SalesOrderDetailServices
                     SalesPrice = vm.SalesOrderDetailVM.SalesPrice,
                     SalesQty = vm.SalesOrderDetailVM.SalesQty,
                     TotalAmount = ((decimal)vm.SalesOrderDetailVM.SalesPrice * vm.SalesOrderDetailVM.SalesQty) - vm.SalesOrderDetailVM.Discount,
-                    WarrantyFormDate = vm.SalesOrderDetailVM.WarrantyFormDate,
-                    WarrantyToDate = vm.SalesOrderDetailVM.WarrantyToDate,
-                    SerialNo = vm.SalesOrderDetailVM.SerialNo,
-                    ModelNo = vm.SalesOrderDetailVM.ModelNo,
+                    //WarrantyFormDate = vm.SalesOrderDetailVM.WarrantyFormDate,
+                    //WarrantyToDate = vm.SalesOrderDetailVM.WarrantyToDate,
+                    //SerialNo = vm.SalesOrderDetailVM.SerialNo,
+                    //ModelNo = vm.SalesOrderDetailVM.ModelNo,
                     Discount = vm.SalesOrderDetailVM.Discount,
                     IsForService = vm.SalesOrderDetailVM.IsForService,
                     Remarks = vm.SalesOrderDetailVM.Remarks
@@ -62,8 +62,8 @@ namespace app.Services.SalesOrderDetailServices
                 salesOrderDetail.SalesQty = model.SalesOrderDetailVM.SalesQty;
                 salesOrderDetail.WarrantyFormDate = model.SalesOrderDetailVM.WarrantyFormDate;
                 salesOrderDetail.WarrantyToDate = model.SalesOrderDetailVM.WarrantyToDate;
-                salesOrderDetail.ModelNo = model.SalesOrderDetailVM.ModelNo;
-                salesOrderDetail.SerialNo = model.SalesOrderDetailVM.SerialNo;
+                //salesOrderDetail.ModelNo = model.SalesOrderDetailVM.ModelNo;
+                //salesOrderDetail.SerialNo = model.SalesOrderDetailVM.SerialNo;
                 salesOrderDetail.IsForService = model.SalesOrderDetailVM.IsForService;
                 salesOrderDetail.Discount = model.SalesOrderDetailVM.Discount;
                 salesOrderDetail.TotalAmount = ((decimal)model.SalesOrderDetailVM.SalesPrice * model.SalesOrderDetailVM.SalesQty) - model.SalesOrderDetailVM.Discount;
@@ -92,8 +92,8 @@ namespace app.Services.SalesOrderDetailServices
                                               TotalAmount = t1.TotalAmount,
                                               WarrantyFormDate = t1.WarrantyFormDate,
                                               WarrantyToDate = t1.WarrantyToDate,
-                                              SerialNo = t1.SerialNo,
-                                              ModelNo = t1.ModelNo,
+                                              //SerialNo = t1.SerialNo,
+                                              //ModelNo = t1.ModelNo,
                                               IsForService = t1.IsForService,
                                               Remarks = t1.Remarks,
                                           }).FirstOrDefault());

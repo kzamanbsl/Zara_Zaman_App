@@ -86,7 +86,7 @@
                                             @Html.DisplayNameFor(model => model.Supplier)
                                         </th>
                                         <th class="text-center">
-                                            @Html.DisplayNameFor(model => model.OrderStatusName)
+                                            @Html.DisplayNameFor(model => model.OrderStatusId)
                                         </th>
                                         <th class="text-center">
                                             @Html.DisplayNameFor(model => model.TotalAmount)
@@ -191,16 +191,9 @@
                         }
                     },
                     {
-                        data: "OrderStatusName",
+                        data: "OrderStatusId",
                         render: function (data, type, row, meta) {
-                            var result = "";
-                            if (row.isMenuShow == false) {
-                                var result = '<b class="text-danger" > <i class="fas fa-times-circle fa-2x" style = "font-size:20px" > </i></b >';
-                            }
-                            else {
-                                var result = '<b class="text-success" > <i class="fas fa-check-square" style = "font-size:20px" > </i></b >';
-                            }
-                            return result;
+                         return row.orderStatusId;
                         }
                     },
 
@@ -215,9 +208,9 @@
                         data: "Action",
                         render: function (data, type, row, meta) {
                             var editBtn = "<a href='UpdateRecord/" + row.id + "'><i class='fas fa-pen text-warning m-1' title='Edit' aria-hidden='true'></i></a>";
-                            //var detailsBtn = "<a href='Details/" + row.id + "'><i class='fa fa-eye text-info m-1' title='Details' aria-hidden='true'></i></a>";
+                            var detailsBtn = "<a href='Details/" + row.id + "'><i class='fa fa-eye text-info m-1' title='Details' aria-hidden='true'></i></a>";
                             var deleteBtn = "<a href='Delete/" + row.id + "'><i class='fas fa-trash text-danger m-1' title='Delete' aria-hidden='true'></i></a>";
-                            var actionBtn = editBtn + deleteBtn;
+                            var actionBtn = editBtn + detailsBtn + deleteBtn;
                             return actionBtn;
                         }
                     }

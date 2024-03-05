@@ -2,6 +2,7 @@
 using app.Services.InventoryServices;
 using app.Services.SalesOrderDetailServices;
 using app.Services.SalesOrderServices;
+using app.Services.SalesProductDetailServices;
 using app.Utility;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -12,15 +13,17 @@ namespace app.WebApp.Controllers
     {
         private readonly ISalesOrderService _isalesOrderService;
         private readonly ISalesOrderDetailService _isalesOrderDetailService;
+        private readonly ISalesProductDetailService _isalesProductDetailService;
         private readonly IInventoryService _inventoryService;
         private readonly IDropdownService _iDropdownService;
 
-        public SalesOrderController(ISalesOrderService isalesOrderService, ISalesOrderDetailService isalesOrderDetailService, IDropdownService iDropdownService, IInventoryService inventoryService)
+        public SalesOrderController(ISalesOrderService isalesOrderService, ISalesOrderDetailService isalesOrderDetailService, IDropdownService iDropdownService, IInventoryService inventoryService,ISalesProductDetailService isalesProductDetailService)
         {
             _isalesOrderService = isalesOrderService;
             _isalesOrderDetailService = isalesOrderDetailService;
             _iDropdownService = iDropdownService;
             _inventoryService = inventoryService;
+            _isalesProductDetailService = isalesProductDetailService;
         }
 
 
@@ -72,7 +75,13 @@ namespace app.WebApp.Controllers
                 {
                     await _isalesOrderService.AddSalesOrder(vm); //Adding Purchase Master
                 }
+                if(vm.SalesOrderDetailVM.SalesQty > 0)
+                {
+                    await _isalesProductDetailService.AddSalesProductDetails(vm);
+                }
                 await _isalesOrderDetailService.AddSalesOrderDetails(vm); //Adding Purchase Details
+           
+            
             }
             //This is for Purchase Details single Edit
             else if (vm.ActionEum == ActionEnum.Edit)

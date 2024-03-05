@@ -93,7 +93,7 @@ namespace app.Services.StorehouseServices
 
         public async Task<DataTablePagination<StorehouseSearchDto>> SearchAsync(DataTablePagination<StorehouseSearchDto> searchDto)
         {
-           var  searchResult = _dbContext.BusinessCenter.Where(c=>c.IsActive==true).AsNoTracking();
+           var  searchResult = _dbContext.BusinessCenter.Where(c=>c.IsActive==true && c.BusinessCenterTypeId == (int)BusinessCenterEnum.Storehouse).AsNoTracking();
 
             var searchModel = searchDto.SearchVm;
             var filter = searchDto?.Search?.Value?.Trim();

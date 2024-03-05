@@ -1,6 +1,6 @@
 ﻿namespace app.EntityModel.AppModels
 {
-    public class SalesProductDetails : BaseEntity
+    public class SalesProductDetail : BaseEntity
     {
         public long SalesOrderDetailsId { get; set; }
         public SalesOrderDetails SalesOrderDetails { get; set; }

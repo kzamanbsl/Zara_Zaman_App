@@ -127,7 +127,7 @@ namespace app.WebApp.Controllers
         public async Task<IActionResult> AddInventory(long id)
         {
             var res = await _inventoryService.AddInventory(id);
-            return RedirectToAction("Search");
+            return RedirectToAction("Index");
         }
 
 

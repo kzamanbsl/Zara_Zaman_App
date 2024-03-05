@@ -51,6 +51,7 @@ using app.Services.SalesOrderServices;
 using app.Services.SalesOrderDetailServices;
 using app.Services.AssetAllocationServices;
 using app.Services.AssetAllocationDetailServices;
+using app.Services.SalesProductDetailServices;
 
 namespace app.Services
 {
@@ -99,7 +100,12 @@ namespace app.Services
             services.AddTransient<ISalesTermsAndConditionService, SalesTermsAndConditionService>();
             services.AddTransient<ISalesOrderService, SalesOrderService>();
             services.AddTransient<ISalesOrderDetailService,SalesOrderDetailService>();
+<<<<<<< HEAD
             services.AddTransient<IAssetAllocationService, AssetAllocationService>();
+=======
+            services.AddTransient<ISalesProductDetailService, SalesProductDetailService>();
+            //services.AddTransient<IAssetAllocationService, AssetAllocationService>();
+>>>>>>> 133c45e21375108ca28d760ad75b8c6fdf7a10d1
             //services.AddTransient<IAssetAllocationDetailService, AssetAllocationDetailService>();
 
             #region ATM Assemble
