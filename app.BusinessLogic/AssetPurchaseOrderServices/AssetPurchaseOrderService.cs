@@ -85,7 +85,7 @@ namespace app.Services.AssetPurchaseOrderServices
                                                                                               //Discount = t1.Discount,
                                                                                               TotalAmount = ((decimal)t1.PurchaseQty * t1.CostPrice) - t1.Discount,
                                                                                               Remarks = t1.Remarks,
-                                                                                          }).OrderByDescending(x => x.Id).AsQueryable());
+                                                                                          }).OrderByDescending(x => x.Id).AsEnumerable());
 
 
             return assetPurchaseOrderModel;
@@ -146,7 +146,7 @@ namespace app.Services.AssetPurchaseOrderServices
                                                                                               //Discount = t1.Discount,
                                                                                               TotalAmount = ((decimal)t1.PurchaseQty * t1.CostPrice) - t1.Discount,
                                                                                               Remarks = t1.Remarks,
-                                                                                          }).OrderByDescending(x => x.Id).AsQueryable());
+                                                                                          }).OrderByDescending(x => x.Id).AsEnumerable());
 
 
             return assetPurchaseOrderModel;
