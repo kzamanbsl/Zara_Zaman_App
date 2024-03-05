@@ -1,12 +1,12 @@
-﻿using app.Services.AssetPurchaseOrderServices;
+﻿using app.Services.AssetAllocationServices;
 
 namespace app.Services.AssetAllocationDetailServices
 {
     public interface IAssetAllocationDetailService
     {
-        Task<bool> AddRecord(AssetPurchaseOrderViewModel vm);
-        Task<bool> UpdateAssetPurchaseDetail(AssetPurchaseOrderViewModel vm);
-        Task<bool> DeleteAssetPurchaseDetail(long id);
+        Task<bool> AddRecord(AssetAllocationViewModel vm);
+        Task<bool> UpdateAssetAllocationDetail(AssetAllocationViewModel vm);
+        Task<bool> DeleteAssetAllocationDetail(long id);
         Task<AssetAllocationDetailViewModel> SingleAssetAllocationDetails(long id);
 
     }

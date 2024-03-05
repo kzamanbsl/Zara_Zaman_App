@@ -99,7 +99,7 @@ namespace app.Services
             services.AddTransient<ISalesTermsAndConditionService, SalesTermsAndConditionService>();
             services.AddTransient<ISalesOrderService, SalesOrderService>();
             services.AddTransient<ISalesOrderDetailService,SalesOrderDetailService>();
-            //services.AddTransient<IAssetAllocationService, AssetAllocationService>();
+            services.AddTransient<IAssetAllocationService, AssetAllocationService>();
             //services.AddTransient<IAssetAllocationDetailService, AssetAllocationDetailService>();
 
             #region ATM Assemble

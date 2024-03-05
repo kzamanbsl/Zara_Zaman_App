@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Views\AssetAllocation\**" />
+    <Content Remove="Views\AssetAllocation\**" />
+    <EmbeddedResource Remove="Views\AssetAllocation\**" />
+    <None Remove="Views\AssetAllocation\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Views\Sales\wiobhmcp.ech~" />
   </ItemGroup>
 

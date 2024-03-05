@@ -1,5 +1,6 @@
 ﻿using app.EntityModel.DataTablePaginationModels;
 using app.Services.ProductServices;
+using app.Services.SalesOrderServices;
 
 namespace app.Services.AssetAllocationServices
 {
@@ -13,6 +14,8 @@ namespace app.Services.AssetAllocationServices
         Task<bool> RejectAssetAllocation(long id);
         Task<bool> UpdateAssetAllocation(AssetAllocationViewModel vm);
         Task<AssetAllocationViewModel> GetAllRecord();
+        Task<AssetAllocationViewModel> AssetAllocationById(long id);
+
         //Task<DataTablePagination<AssetAllocationSearchDto>> SearchAsync(DataTablePagination<AssetAllocationSearchDto> searchDto);
     }
 }
