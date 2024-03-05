@@ -101,7 +101,7 @@ namespace app.Services.PurchaseOrderServices
                                                                                     //Discount = t1.Discount,
                                                                                     TotalAmount = ((decimal)t1.PurchaseQty * t1.CostPrice) - t1.Discount,
                                                                                     Remarks = t1.Remarks,
-                                                                                }).OrderByDescending(x => x.Id).AsQueryable());
+                                                                                }).OrderByDescending(x => x.Id).AsEnumerable());
 
 
             return purchaseOrderModel;
@@ -142,7 +142,7 @@ namespace app.Services.PurchaseOrderServices
                                                                                     //Discount = t1.Discount,
                                                                                     TotalAmount = ((decimal)t1.PurchaseQty * t1.CostPrice) - t1.Discount,
                                                                                     Remarks = t1.Remarks,
-                                                                                }).OrderByDescending(x => x.Id).AsQueryable());
+                                                                                }).OrderByDescending(x => x.Id).AsEnumerable());
 
 
             return purchaseOrderModel;
@@ -219,6 +219,7 @@ namespace app.Services.PurchaseOrderServices
 
             var searchModel = searchDto.SearchVm;
             var filter = searchDto?.Search?.Value?.Trim();
+
             if (searchModel?.StorehouseId is > 0)
             {
                 searchResult = searchResult.Where(c => c.PurchaseOrder.StorehouseId == searchModel.StorehouseId);

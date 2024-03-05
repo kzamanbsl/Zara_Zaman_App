@@ -94,7 +94,7 @@ namespace app.Services.ServiceCenterServices
         }
         public async Task<DataTablePagination<ServiceCenterSearchDto>> SearchAsync(DataTablePagination<ServiceCenterSearchDto> searchDto)
         {
-            var searchResult = _dbContext.BusinessCenter.Where(c => c.IsActive == true).AsNoTracking();
+            var searchResult = _dbContext.BusinessCenter.Where(c => c.IsActive == true && c.BusinessCenterTypeId == (int)BusinessCenterEnum.Storehouse).AsNoTracking();
 
             var searchModel = searchDto.SearchVm;
             var filter = searchDto?.Search?.Value?.Trim();
