@@ -102,13 +102,10 @@ namespace app.Services
             services.AddTransient<ISalesOrderDetailService,SalesOrderDetailService>();
             services.AddTransient<IAssetAllocationService, AssetAllocationService>();
             services.AddTransient<ISalesProductDetailService, SalesProductDetailService>();
-<<<<<<< HEAD
             services.AddTransient<IAssetAllocationService, AssetAllocationService>();
             services.AddTransient<IAssetAllocationDetailService, AssetAllocationDetailService>();
-=======
-            //services.AddTransient<IAssetAllocationService, AssetAllocationService>();
-            //services.AddTransient<IAssetAllocationDetailService, AssetAllocationDetailService>();
->>>>>>> 3e4ea6338d1e90721c81060b8fd9745c7ff4e327
+            services.AddTransient<IAssetAllocationService, AssetAllocationService>();
+            services.AddTransient<IAssetAllocationDetailService, AssetAllocationDetailService>();
 
             #region ATM Assemble
             services.AddTransient<IAssetInventoryService, AssetInventoryService>();

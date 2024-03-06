@@ -17,6 +17,7 @@ namespace app.Services.AssetAllocationServices
         public string ProductName { get; set; }
         public string OrderNo { get; set; }
         public int AssetAllocationStatusId { get; set; }
+        public string AssetAllocationStatusName { get; set; }
         public decimal OverallDiscount { get; set; }
         public Product Product { get; set; }
         public int Quantity { get; set; }
