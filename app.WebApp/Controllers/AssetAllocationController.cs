@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using app.Services.IAssetnventoryServices;
 using app.EntityModel.DataTablePaginationModels;
-using app.Services.AssetAllocationServices;
 
 namespace app.WebApp.Controllers
 {
@@ -32,8 +31,7 @@ namespace app.WebApp.Controllers
         {
             try
             {
-                ViewBag.StorehouseList = new SelectList((await _iDropdownService.StorehouseSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
-                ViewBag.SupplierList = new SelectList((await _iDropdownService.SupplierSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
+                ViewBag.ProductList = new SelectList((await _iDropdownService.ProductSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
                 AssetAllocationViewModel viewModel = await _iAssetAllocationService.GetAllRecord();
                 return View(viewModel);
             }
@@ -51,16 +49,15 @@ namespace app.WebApp.Controllers
 
             if (assetAllocationId == 0)
             {
-                //viewModel.OrderStatusId = (int)AllocationStatusEnum.Draft;
+                viewModel.AssetAllocationStatusId = (int)AasetAllocationStatusEnum.Draft;
             }
             else
             {
                 viewModel = await _iAssetAllocationService.GetAssetAllocation(assetAllocationId);
             }
-            //ViewBag.SupplierList = new SelectList((await _iDropdownService.SupplierSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
-            //ViewBag.StorehouseList = new SelectList((await _iDropdownService.StorehouseSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
-            ViewBag.ProductList = new SelectList((await _iDropdownService.AssetSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
-            //ViewBag.UnitList = new SelectList((await _iDropdownService.UnitSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
+            
+            ViewBag.ProductList = new SelectList((await _iDropdownService.ProductSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
+            
 
             return View(viewModel);
         }
@@ -96,7 +93,7 @@ namespace app.WebApp.Controllers
         public async Task<IActionResult> ConfirmAssetAllocation(long id)
         {
             var res = await _iAssetAllocationService.ConfirmAssetAllocation(id);
-            return RedirectToAction("Search");
+            return RedirectToAction("Index");
         }
 
         [HttpGet]
@@ -124,14 +121,14 @@ namespace app.WebApp.Controllers
         public async Task<IActionResult> RejectAssetAllocation(long id)
         {
             var res = await _iAssetAllocationService.RejectAssetAllocation(id);
-            return RedirectToAction("Search");
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
         public async Task<IActionResult> AddAssetInventory(long id)
         {
             var res = await _iassetInventoryService.AddAssetInventory(id);
-            return RedirectToAction("Search");
+            return RedirectToAction("Index");
         }
 
 

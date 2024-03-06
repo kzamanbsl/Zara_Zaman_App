@@ -4,6 +4,8 @@
     {
         public long AssetAllocationId { get; set; }
         public AssetAllocation AssetAllocation { get; set; }
+        public long? ProductId { get; set; }
+        public Product Product { get; set; }
         public long? EmployeeId { get; set; }
         public Employee Employee { get; set; }
         public long? DepartmentId { get; set; }
