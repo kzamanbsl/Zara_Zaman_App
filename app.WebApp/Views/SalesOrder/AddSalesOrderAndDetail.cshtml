@@ -45,6 +45,7 @@
                             <input asp-for="Id" class="form-control" hidden id="salesOrderId" />
                             <input asp-for="ActionId" hidden id="actionId" />
                             <input asp-for="SalesOrderDetailVM.Id" class="form-control" id="salesOrderDetailsId" hidden />
+                            <input asp-for="SalesProductDetailVM.Id" class="form-control" id="salesProductDetailsId" hidden />
 
                             @if (Model.Id > 0)
                             {
@@ -380,54 +381,30 @@
 
             for (let i = 1; i <= quantity; i++) {
                 productDetailsDiv.innerHTML += `
-                                            <div class="row">
-                                                <div class="col-md-3">
-                                                    <div class="form-group">
-                                                                <label for="serialNo_${i}">Serial No </label>
-                        <input type="text" id="serialNo_${i}" name="SalesOrderDetailVM.SerialNo[${i - 1}]" class="form-control" required>
-                                                            </div>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <div class="form-group">
-                                                                        <label for="modelNo_${i}">Model No</label>
-                                                                                              <input type="text" id="modelNo_${i}" name="SalesOrderDetailVM.ModelNo[${i - 1}]" class="form-control" required>
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        `;
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="serialNo_${i}">Serial No</label>
+                        <input type="text" id="serialNo_${i}" name="SalesProductDetailVM.SerialNo[${i - 1}]" class="form-control" required>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="modelNo_${i}">Model No</label>
+                        <input type="text" id="modelNo_${i}" name="SalesProductDetailVM.ModelNo[${i - 1}]" class="form-control" required>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label for="warrantyFormDate_${i}">Warranty Form Date</label>
+                        <input type="text" id="warrantyFormDate_${i}" name="SalesProductDetailVM.WarrantyFormDate[${i - 1}]" value="@DateTime.Today.ToString("yyyy-MM-dd")" class="form-control" autocomplete="off" required>
+                    </div>
+                </div>
+            </div>
+        `;
             }
         });
 
-        // function submitForm() {
-        //     // Get all the SerialNo and ModelNo inputs
-        //     const formData = {
-        //         SerialNo: [],
-        //         ModelNo: []
-        //     };
-
-        //     $('[name^="SerialNo"]').each(function () {
-        //         formData.SerialNo.push($(this).val());
-        //     });
-
-        //     $('[name^="ModelNo"]').each(function () {
-        //         formData.ModelNo.push($(this).val());
-        //     });
-
-        //     // Send data to the controller using AJAX
-        //     $.ajax({
-        //         url: '/ControllerName/ActionName',
-        //         type: 'POST',
-        //         contentType: 'application/json',
-        //         data: JSON.stringify(formData),
-        //         success: function (response) {
-        //             // Handle success response
-        //         },
-        //         error: function (xhr, status, error) {
-        //             // Handle error
-        //         }
-        //     });
-        // }
     </script>
 
 
