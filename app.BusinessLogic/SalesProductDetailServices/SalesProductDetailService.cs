@@ -3,7 +3,6 @@ using app.Infrastructure.Auth;
 using app.Infrastructure.Repository;
 using app.Infrastructure;
 using app.Services.SalesOrderServices;
-using Microsoft.EntityFrameworkCore;
 
 namespace app.Services.SalesProductDetailServices
 {
@@ -19,6 +18,7 @@ namespace app.Services.SalesProductDetailServices
             _iWorkContext = iWorkContext;
         }
 
+
         public async Task<bool> AddSalesProductDetails(SalesOrderViewModel vm)
         {
             try
@@ -27,9 +27,10 @@ namespace app.Services.SalesProductDetailServices
                 {
                     SalesProductDetail salesDetail = new SalesProductDetail
                     {
-                        //SalesOrderDetailsId = vm.Id,
-                        Id = vm.SalesOrderDetailVM.Id,
-                        IsForService = vm.SalesProductDetailVM.IsForService,
+                        SalesOrderDetailsId = vm.SalesOrderDetailVM.Id,
+                        WarrantyFormDate = vm.SalesOrderDetailVM.WarrantyFormDate,
+                        WarrantyToDate = vm.SalesOrderDetailVM.WarrantyToDate,
+                        //IsForService = (bool)vm.SalesProductDetailVM.IsForService[i],
                         SerialNo = vm.SalesProductDetailVM.SerialNo[i],
                         ModelNo = vm.SalesProductDetailVM.ModelNo[i]
                     };
@@ -44,30 +45,5 @@ namespace app.Services.SalesProductDetailServices
             }
         }
 
-
-        //public async Task<bool> AddSalesProductDetails(SalesOrderViewModel vm)
-        //{
-        //    try
-        //    {
-        //        SalesProductDetail SalesProductDetail = new SalesProductDetail
-        //        {
-        //            SalesOrderDetailsId = vm.Id,
-        //            Id = vm.SalesProductDetailVM.Id,
-        //            WarrantyFormDate = vm.SalesProductDetailVM.WarrantyFormDate,
-        //            WarrantyToDate = vm.SalesProductDetailVM.WarrantyToDate,
-        //            SerialNo = vm.SalesProductDetailVM.SerialNo,
-        //            ModelNo = vm.SalesProductDetailVM.ModelNo,
-        //            IsForService = vm.SalesProductDetailVM.IsForService,
-        //        };
-
-        //        var res = await _iEntityRepository.AddAsync(SalesProductDetail);
-        //        SalesProductDetail.Id = res?.Id ?? 0;
-        //        return true;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        throw;
-        //    }
-        //}
     }
 }

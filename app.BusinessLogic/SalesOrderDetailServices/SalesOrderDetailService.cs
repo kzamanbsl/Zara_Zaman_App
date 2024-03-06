@@ -3,6 +3,8 @@ using app.Infrastructure.Auth;
 using app.Infrastructure.Repository;
 using app.Infrastructure;
 using app.Services.SalesOrderServices;
+using app.Services.SalesProductDetailServices;
+using app.Services.InventoryServices;
 
 namespace app.Services.SalesOrderDetailServices
 {
@@ -11,11 +13,13 @@ namespace app.Services.SalesOrderDetailServices
         private readonly IEntityRepository<SalesOrderDetails> _iEntityRepository;
         private readonly InventoryDbContext _dbContext;
         private readonly IWorkContext _iWorkContext;
-        public SalesOrderDetailService(IEntityRepository<SalesOrderDetails> iEntityRepository, InventoryDbContext dbContext, IWorkContext iWorkContext)
+        private readonly ISalesProductDetailService _isalesProductDetailService;
+        public SalesOrderDetailService(IEntityRepository<SalesOrderDetails> iEntityRepository, InventoryDbContext dbContext, IWorkContext iWorkContext, ISalesProductDetailService isalesProductDetailService)
         {
             _iEntityRepository = iEntityRepository;
             _dbContext = dbContext;
             _iWorkContext = iWorkContext;
+            _isalesProductDetailService = isalesProductDetailService;
         }
         public async Task<bool> AddSalesOrderDetails(SalesOrderViewModel vm)
         {
@@ -24,7 +28,7 @@ namespace app.Services.SalesOrderDetailServices
                 SalesOrderDetails SalesOrderDetail = new SalesOrderDetails
                 {
                     SalesOrderId = vm.Id,
-                    Id = vm.SalesOrderDetailVM.Id,
+                    //Id = vm.SalesOrderDetailVM.Id,
                     ProductId = vm.SalesOrderDetailVM.ProductId,
                     UnitId = vm.SalesOrderDetailVM.UnitId,
                     SalesPrice = vm.SalesOrderDetailVM.SalesPrice,
@@ -38,16 +42,19 @@ namespace app.Services.SalesOrderDetailServices
                     IsForService = vm.SalesOrderDetailVM.IsForService,
                     Remarks = vm.SalesOrderDetailVM.Remarks
                 };
-
-                var res = await _iEntityRepository.AddAsync(SalesOrderDetail);
+                var res = await _iEntityRepository.AddAsync(SalesOrderDetail); 
                 SalesOrderDetail.Id = res?.Id ?? 0;
-                return true;
+                vm.SalesOrderDetailVM.Id = SalesOrderDetail.Id;
+                if (vm.SalesOrderDetailVM.SalesQty > 0 && SalesOrderDetail.Id > 0)
+                {
+                    await _isalesProductDetailService.AddSalesProductDetails(vm);
+                };
+                return true;             
             }
             catch (Exception ex)
             {
                 throw;
             }
-
         }
 
         public async Task<bool> UpdateSalesDetail(SalesOrderViewModel model)
