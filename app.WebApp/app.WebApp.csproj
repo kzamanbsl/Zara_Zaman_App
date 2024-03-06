@@ -7,10 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Views\AssetAllocation\**" />
-    <Content Remove="Views\AssetAllocation\**" />
-    <EmbeddedResource Remove="Views\AssetAllocation\**" />
-    <None Remove="Views\AssetAllocation\**" />
+    <Content Remove="Views\AssetAllocation\Search.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -79,6 +76,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="Views\AssetAllocation\Search.cshtml" />
+    <None Include="Views\AssetPurchaseOrder\AddAssetPurchaseOrderAndDetail.cshtml" />
+    <None Include="Views\AssetPurchaseOrder\AssetPurchaseDetails.cshtml" />
+    <None Include="Views\AssetPurchaseOrder\Index.cshtml" />
+    <None Include="Views\AssetPurchaseOrder\Search.cshtml" />
     <None Include="Views\PublicError\PublicError.cshtml" />
   </ItemGroup>
 

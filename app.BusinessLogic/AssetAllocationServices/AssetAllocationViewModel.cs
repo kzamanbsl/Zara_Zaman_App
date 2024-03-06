@@ -1,15 +1,24 @@
 ﻿using app.EntityModel.AppModels;
 using app.Services.AssetAllocationDetailServices;
+using app.Services.PurchaseOrderDetailServices;
 using app.Utility;
-using System.ComponentModel.DataAnnotations;
+using System;
+using System.Buffers.Text;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace app.Services.AssetAllocationServices
 {
     public class AssetAllocationViewModel : BaseViewModel
     {
-        [Required(ErrorMessage = "Select Product")]
         public long ProductId { get; set; }
         public string ProductName { get; set; }
+        public string OrderNo { get; set; }
+        public int AssetAllocationStatusId { get; set; }
+        public string AssetAllocationStatusName { get; set; }
+        public decimal OverallDiscount { get; set; }
         public Product Product { get; set; }
         public int Quantity { get; set; }
         public string Tags { get; set; }

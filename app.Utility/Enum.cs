@@ -26,6 +26,15 @@
         Hold,
         Reject
     }
+    public enum AasetAllocationStatusEnum
+    {
+        Draft = 1,
+        Confirm,
+        Approve,
+        Receive,
+        Hold,
+        Reject
+    }
 
     public enum StoreTypeEnum
     {

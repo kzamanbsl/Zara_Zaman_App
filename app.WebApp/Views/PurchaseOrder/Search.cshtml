@@ -32,40 +32,6 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-sm-12">
-                        <form method="post" asp-controller="PurchaseOrder" asp-action="Search">
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label>Store House</label>
-                                        <select class="form-control" asp-for="StorehouseId" asp-items="ViewBag.Storehouses">
-                                            <option value="0" selected>--Store House--</option>
-                                            <span asp-validation-for="StorehouseId" class="text-danger"></span>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label>Supplier</label>
-                                        <select class="form-control" asp-for="SupplierId" asp-items="ViewBag.Suppliers">
-                                            <option value="0" selected>--Supplier--</option>
-                                            <span asp-validation-for="SupplierId" class="text-danger"></span>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="form-group text-right">
-                                @*<a href="@Url.Action("Search","Product")"><input type="submit" formtarget="_blank" value="Preview" class="btn btn-preview btn-width" /></a>*@
-                                @*<button asp-controller="Product" asp-action="Search" type="submit" title="Download" class="btn btn-report btn-width"><i class="fa fa-download"></i></button>*@
-                                <input id="PurchaseOrderDTSearchBtn" type="button" value="Search" class="btn btn-info btn-width" />
-                                <a href="@Url.Action("Search","PurchaseOrder")"><input type="button" value="Clear" class="btn btn-warning btn-width" /></a>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-                <hr />
-                <div class="row">
-                    <div class="col-sm-12">
                         <div class="table-responsive">
                             <table id="PurchaseOrderSearchTable" class="table table-bordered table-sm">
                                 <thead>
@@ -109,6 +75,54 @@
 
 </section>
 
+<div class="modal fade" tabindex="-1" id="editPurchaseOrderModal" data-toggle="modal" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form asp-action="UpdatePurchaseOrder" method="post">
+
+
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Update Purchase Order</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+
+                    @Html.HiddenFor(model => model.Id, new { id = "purchaseOrderIdModal" })
+
+                    <div class="form-group">
+                        <label>Purchase Date</label>
+                        <input id="purchaseDateModal" asp-for="PurchaseDate" value="@DateTime.Today.ToString("yyyy-MM-dd")" type="date" class="form-control" autocomplete="off" required />
+                        <span asp-validation-for="PurchaseDate" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Storehouse</label>
+                        <select class="form-control" id="storehouseIdModal" asp-for="StorehouseId" asp-items="ViewBag.StorehouseList" required>
+                            <option value="0" selected>-- Select Storehouse --</option>
+                            <span asp-validation-for="StorehouseId" class="text-danger"></span>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Customer</label>
+                        <select class="form-control" id="supplierIdModal" asp-for="SupplierId" asp-items="ViewBag.SupplierList" required>
+                            <option value="0" selected>-- Select Supplier --</option>
+                            <span asp-validation-for="SupplierId" class="text-danger"></span>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Update</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
@@ -121,16 +135,14 @@
             search();
         });
 
-        $(document.body).on("click", "#PurchaseorderDTSearchBtn", function () {
+        $(document.body).on("click", "#PurchaseOrderDTSearchBtn", function () {
             search();
         });
 
         function getSearchObject() {
 
             var searchVm = {
-                "StorehouseId": $("#StorehouseId").val(),
-                "SupplierId": $("#SupplierId").val(),
-
+               
             }
             return searchVm;
         }
@@ -199,6 +211,22 @@
                         }
                     },
 
+                    // {
+                    //     data: "OrderStatusId",
+                    //     render: function (data, type, row, meta) {
+                    //         var result = "";
+                    //      if (row.orderStatusId == (int)PurchaseOrderStatusEnum.Receive || row.orderStatusId == (int)PurchaseOrderStatusEnum.Reject)
+                    // {
+                    //      var result = <p> Received </p>
+                    // }
+                    // else if (row.orderStatusId == (int)PurchaseOrderStatusEnum.Draft || row.orderStatusId == (int)PurchaseOrderStatusEnum.Confirm)
+                    // {
+                    //         var result = <p> Rejected </p>
+                    // }
+                    //         return result;
+                    //     }
+                    // },
+
                     {
                         data: "TotalAmount",
                         render: function (data, type, row, meta) {
@@ -209,12 +237,10 @@
                     {
                         data: "Action",
                         render: function (data, type, row, meta) {
-                            var editBtn = "<a href='UpdatePurchaseOrder/" + row.id + "'><i class='fas fa-pen text-warning m-1' title='Edit' aria-hidden='true'></i></a>";
-                            var detailsBtn = "<a href='Details/" + row.id + "'><i class='fa fa-eye text-info m-1' title='Details' aria-hidden='true'></i></a>";
+                            var editBtn = "<a onclick='MakeEditable(" + row.id + ");' data-toggle='modal' data-target='#editPuchaseOrderModal' data-placement='top'><i class='fas fa-pen text-warning m-1' title='Edit' aria-hidden='true'></i></a>";
+                            var detailsBtn = "<a href='PurchaseDetails/" + row.id + "'><i class='fa fa-eye text-info m-1' title='Details' aria-hidden='true'></i></a>";
                             var deleteBtn = "<a href='DeletePurchaseOrder/" + row.id + "'><i class='fas fa-trash text-danger m-1' title='Delete' aria-hidden='true'></i></a>";
                             var actionBtn = editBtn + detailsBtn + deleteBtn;
-
-
                             return actionBtn;
                         }
                     }
