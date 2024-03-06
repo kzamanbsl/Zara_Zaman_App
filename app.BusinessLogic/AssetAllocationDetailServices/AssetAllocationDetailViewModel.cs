@@ -11,6 +11,9 @@ namespace app.Services.AssetAllocationDetailServices
         public long AssetAllocationId { get; set; }
         public AssetAllocation AssetAllocation { get; set; }
         public string AssetAllocationName { get; set; }
+        public long? ProductId { get; set; }
+        public string ProductName { get; set; }
+        public Product Product { get; set; }
         public long? EmployeeId { get; set; }
         public Employee Employee { get; set; }
         public string EmployeeName { get; set; }

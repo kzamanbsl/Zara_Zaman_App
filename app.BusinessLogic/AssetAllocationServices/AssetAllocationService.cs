@@ -26,38 +26,25 @@ namespace app.Services.AssetAllocationServices
         public async Task<bool> AddRecord(AssetAllocationViewModel vm)
         {
 
-            //if (vm.OrderStatusId == 0)
-            //{
-            //    vm.OrderStatusId = (int)AssetAllocationStatusEnum.Draft;
-            //}
+            if (vm.AssetAllocationStatusId == 0)
+            {
+                vm.AssetAllocationStatusId = (int)AasetAllocationStatusEnum.Draft;
+            }
 
-            //var poMax = _dbContext.AssetAllocation.Count() + 1;
-            //string poCid = @"PO-" +
-            //               DateTime.Now.ToString("yy") +
-            //               DateTime.Now.ToString("MM") +
-            //               DateTime.Now.ToString("dd") + "-" +
-            //               poMax.ToString().PadLeft(2, '0');
+            var poMax = _dbContext.AssetAllocation.Count() + 1;
+            string poCid = @"ALNO" +
+                           DateTime.Now.ToString("yy") +
+                           DateTime.Now.ToString("MM") +
+                           DateTime.Now.ToString("dd") + "-" +
+                           poMax.ToString().PadLeft(2, '0');
 
-            //var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id == vm.Id && f.Id == vm.Id);
-            //if (checkName == null)
-            //{
-            //    AssetAllocation assetAllocation = new AssetAllocation();
-            //    assetAllocation.ProductId = vm.ProductId;
-            //    assetAllocation.Quantity = vm.Quantity;
-            //    assetAllocation.Tags = vm.Tags;
-            //    assetAllocation.Remarks = vm.Remarks;
-            //    var res = await _iEntityRepository.AddAsync(assetAllocation);
-            //    vm.Id = res?.Id ?? 0;
-            //    return true;
-            //}
-
-            //return false;
-            AssetAllocation assetAllocation=new AssetAllocation();
-            assetAllocation.Id = vm.Id;
+            AssetAllocation assetAllocation =new AssetAllocation();
+            assetAllocation.OrderNo = poCid;
             assetAllocation.ProductId = vm.ProductId;
             assetAllocation.Quantity = vm.Quantity;
             assetAllocation.Tags = vm.Tags;
             assetAllocation.Remarks = vm.Remarks;
+            assetAllocation.AssetAllocationStatusId = (int)AasetAllocationStatusEnum.Draft;
             var res = await _iEntityRepository.AddAsync(assetAllocation);
             vm.Id = res?.Id ?? 0;
             return true;
@@ -69,6 +56,8 @@ namespace app.Services.AssetAllocationServices
                                                          select new AssetAllocationViewModel
                                                          {
                                                              Id = t1.Id,
+                                                             OrderNo= t1.OrderNo,
+                                                             AssetAllocationStatusId = (int)(AasetAllocationStatusEnum)t1.AssetAllocationStatusId,
                                                              ProductId = t1.ProductId,
                                                              ProductName = t1.Product.Name,
                                                              Quantity = t1.Quantity,
@@ -79,7 +68,8 @@ namespace app.Services.AssetAllocationServices
                                                                                     select new AssetAllocationDetailViewModel
                                                                                     {
                                                                                         Id = t1.Id,
-                                                                                        AssetAllocationId = t1.AssetAllocationId,
+                                                                                        AssetAllocationId = t1.AssetAllocationId,                                                                         ProductId= t1.ProductId,
+                                                                                        ProductName= t1.Product.Name,
                                                                                         EmployeeId = t1.EmployeeId,
                                                                                         EmployeeName = t1.Employee.Name,
                                                                                         DepartmentId = t1.DepartmentId,
