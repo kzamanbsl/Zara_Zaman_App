@@ -1,0 +1,216 @@
+﻿@model app.Services.AssetAllocationServices.AssetAllocationViewModel
+@using app.Utility
+@{
+    ViewData["Title"] = "Allocation Details";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    int sl = 0;
+}
+
+<div class="content-header">
+    <div class="container-fluid ">
+        <div class="breadcrumb d-flex justify-content-between align-items-center  pl-3 pr-3">
+            <ol class="breadcrumb mb-0 p-0">
+                <li class="breadcrumb-item"><a href="/Admin/Index">Home</a></li>
+            </ol>
+            <div>
+                <a asp-action="Index"><i class="fa fa-list"></i> Asset Allocation List </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="card">
+            <div class="card-header">
+
+                @if (Model.Id > 0)
+                {
+                    <h3 class="card-title text-info">
+                       Asset Allocation Information
+                    </h3>
+                }
+                else
+                {
+                    <h3 class="card-title text-info">
+                        Nothig Found
+                    </h3>
+                }
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form asp-action="AssetAllocationDetails" method="get">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <input asp-for="Id" class="form-control" hidden id="assetAllocationId" />
+                            <input asp-for="ActionId" hidden id="actionId" />
+                            <input asp-for="AssetAllocationDetailVM.Id" class="form-control" id="assetAllocationDetailsId" hidden />
+
+                            @if (Model.Id > 0)
+                            {
+                                <div class="card-body">
+                                    <div class="row rounded">
+                                        <table class="table table-bordered border-primary">
+                                            <tr>
+                                                <th style="width:18%">Allocation No</th>
+                                                <td style="width:30%">@Model.OrderNo</td>
+
+                                                <th style="width:18%"> Product </th>
+                                                <td style="width:30%">@Model.ProductName</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Quantity </th>
+                                                <td>@Model.Quantity</td>
+                                                <th style="width:18%">Tags  Information</th>
+                                                <td style="width:30%">@Model.Tags</td>
+                                                <th>Remarks  </th>
+                                                <td>@Model.Remarks </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+
+                            }
+                            @if (Model.Id > 0)
+                            {
+                                <input asp-for="Id" class="form-control" hidden />
+                                <div class="row">
+                                    <div class="col-md-5"></div>
+                                    <div class="col-md-2"> <p style="margin-top:20px;" class="card-title text-info text-center"><span>Allocation Details</span></p></div>
+                                    <div class="col-md-5"></div>
+                                </div>
+                                <div class="table-responsive col-md-12 text-nowrap table-bordered">
+                                    <table id="KgErpDataTable" class="table caption-top">
+                                        <thead class="table-light border-primary">
+                                            <tr>
+                                                <th style="padding:5px;text-align:center;">SL</th>
+                                                <th style="padding: 5px; text-align: left;">Employee Name </th>
+                                                <th style="padding: 5px; text-align: left;">Department Name </th>
+                                                <th style="padding: 5px; text-align: left;">Quantity </th>
+                                                <th style="padding: 5px; text-align: left;">Date </th>
+                                                <th style="padding: 5px; text-align: left;">Description  </th>
+
+
+                                                @* <th style="padding: 5px; text-align: right; ">Consumption</th>
+                                                <th style="padding: 5px; text-align: right; ">Cost Price</th>
+                                                <th style="padding: 5px; text-align: right; ">Sale Price</th>
+                                                <th style="padding: 5px; text-align: right; ">Total Price</th> *@
+
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                            @foreach (var item in Model.AssetAllocationDetailsList)
+                                            {
+                                                <tr>
+                                                    <td style="padding:5px">@(++sl)</td>
+                                                    <td style="padding:5px;text-align:left;">@item.ProductName</td>
+                                                    <td style="padding: 5px; text-align: left;">@item.DepartmentName</td>
+                                                    <td style="padding: 5px; text-align: left;">@item.Date </td>
+                                                    <td style="padding: 5px; text-align: left;">@item.Description </td>
+
+
+                                                    @* <td style="padding:5px;text-align:left;">@String.Format("{0:0.00}", item.UnitName)</td>
+                                                    <td style="padding: 5px; text-align: right;">@String.Format("{0:0.00}", item.Consumption)</td>
+                                                    <td style="padding: 5px; text-align: right;">@String.Format("{0:0.00}", item.CostPrice)</td>
+                                                    <td style="padding: 5px; text-align: right;">@String.Format("{0:0.00}", item.SalePrice)</td>
+                                                    <td style="padding: 5px; text-align: right;">@String.Format("{0:0.00}", item.TotalAmount)</td> *@
+
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            }
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        @if (Model.Id > 0 && Model.AssetAllocationStatusId == (int)AasetAllocationStatusEnum.Draft || Model.Id > 0 && Model.AssetAllocationStatusId == (int)AasetAllocationStatusEnum.Confirm)
+                        {
+                            <div class="form-group" style="float:right">
+                                <button id="orderReceived" class="linkPointer btn btn-success btn-sm">Received</button>
+                                <button asp-action="RejectAssetAllocation" method="post" id="orderReject" class="linkPointer btn btn-danger btn-sm">Reject</button>
+                            </div>
+                        }
+                        @if (Model.Id > 0 && Model.AssetAllocationStatusId == (int)AasetAllocationStatusEnum.Reject)
+                        {
+                            <div class="form-group" style="float:right">
+                                <h3><span style="color:red">Order Rejected</span></h3>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        $(document).ready(function () {
+            $('#Asset-Management').addClass('menu-open');
+            $('#AssetAllocationAddAssetAllocationAndDetail').addClass('active');
+        });
+
+        // Reject Allocation Order
+        $("#orderReject").on("click", function () {
+            var id = @Model.Id;
+            $.ajax({
+                type: "POST",
+                url: "/AssetAllocation/RejectAssetAllocation",
+                data: { id: id },
+                success: function (result) {
+                    if (result) {
+                        alert("Reject successfully");
+                        window.location.href = "/AssetAllocation/Index/";
+
+                    } else {
+                        alert("Reject failed");
+                    }
+                },
+            error: function (error) {
+                // Handle the error case here
+                console.error("Error occurred during AJAX request:", error);
+            }
+                    });
+                });
+
+        // Allocation Received
+        $("#orderReceived").on("click", function () {
+            var id = @Model.Id;
+            $.ajax({
+                type: "POST",
+                url: "/AssetAllocation/AddAssetInventory",
+                data: { id: id },
+                success: function (result) {
+                    if (result) {
+                        alert("Allocation Store In successfully");
+                        window.location.href = "/AssetAllocation/Index/";
+
+                    } else {
+                        alert("Store In failed");
+                    }
+                },
+                error: function (error) {
+                    console.error("Error occurred during Stock In:", error);
+                }
+            });
+        });
+
+
+    </script>
+}
+
+
+

@@ -57,6 +57,8 @@ namespace app.WebApp.Controllers
             }
             
             ViewBag.ProductList = new SelectList((await _iDropdownService.ProductSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
+            ViewBag.EmployeeList = new SelectList((await _iDropdownService.EmployeeSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
+            ViewBag.DepartmentList = new SelectList((await _iDropdownService.DepartmentSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
             
 
             return View(viewModel);
@@ -142,7 +144,7 @@ namespace app.WebApp.Controllers
         public async Task<IActionResult> UpdateAssetAllocationMaster(AssetAllocationViewModel vm)
         {
             var res = await _iAssetAllocationService.UpdateAssetAllocation(vm);
-            return RedirectToAction("Search");
+            return RedirectToAction("Index");
         }
 
         #region Search
