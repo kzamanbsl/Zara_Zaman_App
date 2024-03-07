@@ -2,12 +2,14 @@
 {
     public class AssetAllocation : BaseEntity
     {
-        public long ProductId { get; set; }
-        public Product Product { get; set; }
+      
         public string OrderNo { get; set; }
         public int AssetAllocationStatusId { get; set; }
-        public int Quantity { get;set; }
-        public string Tags { get; set; }
+        public long? EmployeeId { get; set; }
+        public Employee Employee { get; set; }
+        public long? DepartmentId { get; set; }
+        public Department Department { get; set; }
+        public DateTime Date { get; set; }
         public string Remarks { get; set; }
        
     }

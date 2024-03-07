@@ -26,10 +26,10 @@ namespace app.Services.AssetAllocationDetailServices
 
                     AssetAllocationId = vm.Id,
                     Id = vm.AssetAllocationDetailVM.Id,
-                    EmployeeId = vm.AssetAllocationDetailVM.EmployeeId,
+                    //EmployeeId = vm.AssetAllocationDetailVM.EmployeeId,
                     ProductId = vm.AssetAllocationDetailVM.ProductId,
-                    DepartmentId = vm.AssetAllocationDetailVM.DepartmentId,
-                    Date = vm.AssetAllocationDetailVM.Date,
+                   // DepartmentId = vm.AssetAllocationDetailVM.DepartmentId,
+                    //Date = vm.AssetAllocationDetailVM.Date,
                     Description = vm.AssetAllocationDetailVM.Description,
 
                 };
@@ -52,9 +52,9 @@ namespace app.Services.AssetAllocationDetailServices
             {
                 model.Id = assetAllocationDetail.AssetAllocationId;
                 assetAllocationDetail.ProductId = model.AssetAllocationDetailVM.ProductId;
-                assetAllocationDetail.EmployeeId = model.AssetAllocationDetailVM.EmployeeId;
-                assetAllocationDetail.DepartmentId = model.AssetAllocationDetailVM.DepartmentId;
-                assetAllocationDetail.Date = model.AssetAllocationDetailVM.Date;
+                //assetAllocationDetail.EmployeeId = model.AssetAllocationDetailVM.EmployeeId;
+                //assetAllocationDetail.DepartmentId = model.AssetAllocationDetailVM.DepartmentId;
+                //assetAllocationDetail.Date = model.AssetAllocationDetailVM.Date;
                 assetAllocationDetail.Description = model.AssetAllocationDetailVM.Description;
 
 
@@ -72,11 +72,11 @@ namespace app.Services.AssetAllocationDetailServices
                                           {
                                               Id = t1.Id,
                                               AssetAllocationId = t1.AssetAllocationId,
-                                              EmployeeId = t1.EmployeeId,
-                                              EmployeeName = t1.Employee.Name,
-                                              DepartmentId = t1.DepartmentId,
-                                              DepartmentName = t1.Department.Name,
-                                              Date = t1.Date,
+                                              //EmployeeId = t1.EmployeeId,
+                                              //EmployeeName = t1.Employee.Name,
+                                              //DepartmentId = t1.DepartmentId,
+                                             // DepartmentName = t1.Department.Name,
+                                             // Date = t1.Date,
                                               Description = t1.Description,
 
 
