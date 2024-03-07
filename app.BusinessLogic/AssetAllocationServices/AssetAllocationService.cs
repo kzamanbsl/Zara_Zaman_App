@@ -50,6 +50,23 @@ namespace app.Services.AssetAllocationServices
             vm.Id = res?.Id ?? 0;
             return true;
         }
+        public async Task<bool> UpdateAssetAllocation(AssetAllocationViewModel vm)
+        {
+            var assetAllocation = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id == vm.Id);
+            if (assetAllocation != null)
+            {
+                assetAllocation.Id = vm.Id;
+                assetAllocation.OrderNo = vm.OrderNo;
+                assetAllocation.AssetAllocationStatusId = vm.AssetAllocationStatusId;
+                assetAllocation.EmployeeId = vm.EmployeeId;
+                assetAllocation.DepartmentId = vm.DepartmentId;
+                assetAllocation.Date = vm.Date;
+                assetAllocation.Remarks = vm.Remarks;
+                await _iEntityRepository.UpdateAsync(assetAllocation);
+                return true;
+            }
+            return false;
+        }
         public async Task<AssetAllocationViewModel> GetAssetAllocation(long assetAllocationId = 0)
         {
             AssetAllocationViewModel assetAllocationModel = new AssetAllocationViewModel();
@@ -72,17 +89,92 @@ namespace app.Services.AssetAllocationServices
                                                                                     select new AssetAllocationDetailViewModel
                                                                                     {
                                                                                         Id = t1.Id,
-                                                                                        AssetAllocationId = t1.AssetAllocationId,                                                                        ProductId= t1.ProductId,
+                                                                                        AssetAllocationId = t1.AssetAllocationId,                                                               ProductId= t1.ProductId,
                                                                                         ProductName= t1.Product.Name,
                                                                                         Quantity = t1.Quantity,
                                                                                         Tags = t1.Tags,
                                                                                         Description = t1.Description,
-                                                                                    }).OrderByDescending(x => x.Id).AsQueryable());
+                                                                                    }).OrderByDescending(x => x.Id).AsEnumerable());
 
 
             return assetAllocationModel;
         }
+        public async Task<AssetAllocationViewModel> GetAssetAllocationDetails(long id = 0)
+        {
+            AssetAllocationViewModel assetAllocationModel = new AssetAllocationViewModel();
+            assetAllocationModel = await Task.Run(() => (from t1 in _dbContext.AssetAllocation.Where(x => x.IsActive && x.Id == id)
+                                                         select new AssetAllocationViewModel
+                                                         {
+                                                             Id = t1.Id,
+                                                             OrderNo = t1.OrderNo,
+                                                             AssetAllocationStatusId = (int)(AasetAllocationStatusEnum)t1.AssetAllocationStatusId,
+                                                             EmployeeId = t1.EmployeeId,
+                                                             EmployeeName = t1.Employee.Name,
+                                                             Date = t1.Date,
+                                                             Remarks = t1.Remarks,
+                                                         }).FirstOrDefault());
 
+            assetAllocationModel.AssetAllocationDetailsList = await Task.Run(() => (from t1 in _dbContext.AssetAllocationDetail.Where(x => x.IsActive && x.AssetAllocation.Id == id)
+                                                                                    select new AssetAllocationDetailViewModel
+                                                                                    {
+                                                                                        Id = t1.Id,
+                                                                                        AssetAllocationId = t1.AssetAllocationId,
+                                                                                        ProductId = t1.ProductId,
+                                                                                        ProductName = t1.Product.Name,
+                                                                                        Quantity = t1.Quantity,
+                                                                                        Tags = t1.Tags,
+                                                                                        Description = t1.Description,
+
+                                                                                    }).OrderByDescending(x => x.Id).AsEnumerable());
+
+
+            return assetAllocationModel;
+        }
+        public async Task<AssetAllocationViewModel> AssetAllocationById(long id)
+        {
+            AssetAllocationViewModel sendData = new AssetAllocationViewModel();
+            var result = await _dbContext.AssetAllocation.FirstOrDefaultAsync(x => x.Id == id);
+            sendData.Id = result.Id;
+            sendData.OrderNo = result.OrderNo;
+            sendData.EmployeeId = result.EmployeeId;
+            sendData.DepartmentId = result.DepartmentId;
+            sendData.AssetAllocationStatusId = result.AssetAllocationStatusId;
+            sendData.Date = result.Date;
+            sendData.Remarks = result.Remarks;
+
+            return sendData;
+        }
+        public async Task<bool> ConfirmAssetAllocation(long id)
+        {
+            var checkAssetAllocation = await _dbContext.AssetAllocation.FirstOrDefaultAsync(c => c.Id == id);
+            if (checkAssetAllocation != null && checkAssetAllocation.Id == id)
+            {
+                checkAssetAllocation.AssetAllocationStatusId = (int)AasetAllocationStatusEnum.Confirm;
+                await _iEntityRepository.UpdateAsync(checkAssetAllocation);
+                return true;
+            }
+            return false;
+        }
+        public async Task<bool> RejectAssetAllocation(long id)
+        {
+            var checkAssetAllocation = await _dbContext.AssetAllocation.FirstOrDefaultAsync(c => c.Id == id);
+
+            if (checkAssetAllocation != null || checkAssetAllocation.AssetAllocationStatusId == (int)AasetAllocationStatusEnum.Draft || checkAssetAllocation.AssetAllocationStatusId == (int)AasetAllocationStatusEnum.Confirm)
+            {
+                checkAssetAllocation.AssetAllocationStatusId = (int)AasetAllocationStatusEnum.Reject;
+                await _iEntityRepository.UpdateAsync(checkAssetAllocation);
+                return true;
+            }
+            return false;
+
+        }
+        public async Task<bool> DeleteAssetAllocation(long id)
+        {
+            var result = await _iEntityRepository.GetByIdAsync(id);
+            result.IsActive = false;
+            await _iEntityRepository.UpdateAsync(result);
+            return true;
+        }
         public async Task<AssetAllocationViewModel> GetAllRecord()
         {
             AssetAllocationViewModel assetAllocationMasterModel = new AssetAllocationViewModel();
@@ -98,7 +190,7 @@ namespace app.Services.AssetAllocationServices
                                                       EmployeeName = t1.Employee.Name,
                                                       DepartmentId = t1.DepartmentId,
                                                       DepartmentName = t1.Department.Name,
-                                                      Date=t1.Date,
+                                                      Date = t1.Date,
                                                       Remarks = t1.Remarks,
 
                                                   }).OrderByDescending(x => x.Id).AsQueryable());
@@ -121,106 +213,7 @@ namespace app.Services.AssetAllocationServices
             //}
             return assetAllocationMasterModel;
         }
-
-        public async Task<bool> ConfirmAssetAllocation(long id)
-        {
-            var checkAssetAllocation = await _dbContext.AssetAllocation.FirstOrDefaultAsync(c => c.Id == id);
-            if (checkAssetAllocation != null && checkAssetAllocation.Id == id)
-            {
-                checkAssetAllocation.AssetAllocationStatusId = (int)AasetAllocationStatusEnum.Confirm;
-                await _iEntityRepository.UpdateAsync(checkAssetAllocation);
-                return true;
-            }
-            return false;
-        }
-
-        public async Task<bool> DeleteAssetAllocation(long id)
-        {
-            var result = await _iEntityRepository.GetByIdAsync(id);
-            result.IsActive = false;
-            await _iEntityRepository.UpdateAsync(result);
-            return true;
-        }
-
-        public async Task<AssetAllocationViewModel> GetAssetAllocationDetails(long id = 0)
-        {
-            AssetAllocationViewModel assetAllocationModel = new AssetAllocationViewModel();
-            assetAllocationModel = await Task.Run(() => (from t1 in _dbContext.AssetAllocation.Where(x => x.IsActive && x.Id == id)
-                                                              select new AssetAllocationViewModel
-                                                              {
-                                                                  Id = t1.Id,
-                                                                  OrderNo = t1.OrderNo,
-                                                                  AssetAllocationStatusId = (int)(AasetAllocationStatusEnum)t1.AssetAllocationStatusId,
-                                                                  EmployeeId = t1.EmployeeId,
-                                                                  EmployeeName=t1.Employee.Name,
-                                                                  Date=t1.Date,
-                                                                  Remarks = t1.Remarks,
-                                                              }).FirstOrDefault());
-
-            assetAllocationModel.AssetAllocationDetailsList = await Task.Run(() => (from t1 in _dbContext.AssetAllocationDetail.Where(x => x.IsActive && x.AssetAllocation.Id == id)
-                                                                                         select new AssetAllocationDetailViewModel
-                                                                                         {
-                                                                                             Id = t1.Id,
-                                                                                             AssetAllocationId = t1.AssetAllocationId,
-                                                                                             ProductId = t1.ProductId,
-                                                                                             ProductName = t1.Product.Name,
-                                                                                             Quantity=t1.Quantity,
-                                                                                             Tags=t1.Tags,
-                                                                                             Description =t1.Description,
-                                                                                             
-                                                                                         }).OrderByDescending(x => x.Id).AsQueryable());
-
-
-            return assetAllocationModel;
-        }
-
-        public async Task<bool> RejectAssetAllocation(long id)
-        {
-            var checkAssetAllocation = await _dbContext.AssetAllocation.FirstOrDefaultAsync(c => c.Id == id);
-
-            if (checkAssetAllocation != null || checkAssetAllocation.AssetAllocationStatusId == (int)AasetAllocationStatusEnum.Draft || checkAssetAllocation.AssetAllocationStatusId == (int)AasetAllocationStatusEnum.Confirm)
-            {
-                checkAssetAllocation.AssetAllocationStatusId = (int)AasetAllocationStatusEnum.Reject;
-                await _iEntityRepository.UpdateAsync(checkAssetAllocation);
-                return true;
-            }
-            return false;
-
-        }
-        public async Task<AssetAllocationViewModel> AssetAllocationById(long id)
-        {
-            AssetAllocationViewModel sendData = new AssetAllocationViewModel();
-            var result = await _dbContext.AssetAllocation.FirstOrDefaultAsync(x => x.Id == id);
-            sendData.Id = result.Id;
-            sendData.OrderNo = result.OrderNo;
-            sendData.EmployeeId= result.EmployeeId;
-            sendData.DepartmentId= result.DepartmentId;
-            sendData.AssetAllocationStatusId = result.AssetAllocationStatusId;
-            sendData.Date = result.Date;
-            sendData.Remarks = result.Remarks;
-            
-            return sendData;
-        }
-        public async Task<bool> UpdateAssetAllocation(AssetAllocationViewModel vm)
-        {
-            var assetAllocation = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id == vm.Id);
-            if (assetAllocation != null)
-            {
-                assetAllocation.Id = vm.Id;
-                assetAllocation.OrderNo = vm.OrderNo;
-                assetAllocation.AssetAllocationStatusId=vm.AssetAllocationStatusId;
-                assetAllocation.EmployeeId = vm.EmployeeId;
-                assetAllocation.DepartmentId = vm.DepartmentId;
-                assetAllocation.Date = vm.Date;
-                assetAllocation.Remarks = vm.Remarks;
-                await _iEntityRepository.UpdateAsync(assetAllocation);
-                return true;
-            }
-            return false;
-        }
-
-        
-
+     
         //public async Task<DataTablePagination<AssetAllocationSearchDto>> SearchAsync(DataTablePagination<AssetAllocationSearchDto> searchDto)
         //{
         //    var searchResult = _dbContext.AssetAllocationDetail.Include(c => c.AssetAllocation.Storehouse).Include(c => c.AssetAllocation.Supplier).Where(c => c.IsActive == true).AsNoTracking();
