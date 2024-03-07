@@ -1,4 +1,7 @@
-﻿namespace app.Services.CompanyServices
+﻿using app.EntityModel.DataTablePaginationModels;
+using app.Services.ProductServices;
+
+namespace app.Services.CompanyServices
 {
     public interface ICompanyService
     {
@@ -8,5 +11,6 @@
         Task<CompanyViewModel> GetRecordById(long id);
         Task<bool> DeleteRecord(long id);
         Task<CompanyViewModel> GetAllRecord();
+        Task<DataTablePagination<CompanySearchDto>> SearchAsync(DataTablePagination<CompanySearchDto> searchDto);
     }
 }

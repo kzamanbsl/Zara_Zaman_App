@@ -5,8 +5,6 @@ using app.Infrastructure;
 using app.Utility;
 using app.Services.SalesOrderDetailServices;
 using Microsoft.EntityFrameworkCore;
-using app.Services.PurchaseOrderDetailServices;
-using app.Services.PurchaseOrderServices;
 
 namespace app.Services.SalesOrderServices
 {
@@ -36,19 +34,19 @@ namespace app.Services.SalesOrderServices
                            DateTime.Now.ToString("dd") + "-" +
                            soMax.ToString().PadLeft(2, '0');
 
-            SalesOrder purchaseOrder = new SalesOrder();
-            purchaseOrder.OrderNo = soCid;
-            purchaseOrder.SalesDate = vm.SalesDate;
-            purchaseOrder.StorehouseId = vm.StorehouseId;
-            purchaseOrder.CustomerId = vm.CustomerId;
-            purchaseOrder.OverallDiscount = vm.OverallDiscount;
-            purchaseOrder.Description = vm.Description;
-            purchaseOrder.TermsAndCondition = vm.TermsAndCondition;
-            purchaseOrder.DeliveryDate = vm.DeliveryDate;
-            purchaseOrder.DeliveryAddress = vm.DeliveryAddress;
-            purchaseOrder.PaymentStatusId = (int)PaymentStatusEnum.Due;
-            purchaseOrder.OrderStatusId = (int)SalesOrderStatusEnum.Draft;
-            var res = await _iEntityRepository.AddAsync(purchaseOrder);
+            SalesOrder salesOrder = new SalesOrder();
+            salesOrder.OrderNo = soCid;
+            salesOrder.SalesDate = vm.SalesDate;
+            salesOrder.StorehouseId = vm.StorehouseId;
+            salesOrder.CustomerId = vm.CustomerId;
+            salesOrder.OverallDiscount = vm.OverallDiscount;
+            salesOrder.Description = vm.Description;
+            salesOrder.TermsandconditionsId = vm.TermsandconditionsId;
+            salesOrder.DeliveryDate = vm.DeliveryDate;
+            salesOrder.DeliveryAddress = vm.DeliveryAddress;
+            salesOrder.PaymentStatusId = (int)PaymentStatusEnum.Due;
+            salesOrder.OrderStatusId = (int)SalesOrderStatusEnum.Draft;
+            var res = await _iEntityRepository.AddAsync(salesOrder);
             vm.Id = res?.Id ?? 0;
             return true;
         }
@@ -66,10 +64,11 @@ namespace app.Services.SalesOrderServices
                                                         StoreName = t1.Storehouse.Name,
                                                         CustomerId = t1.CustomerId,
                                                         CustomerName = t1.Customer.Name,
+                                                        CustomerPhoneNo = t1.Customer.Phone,
                                                         DeliveryDate = t1.DeliveryDate,
                                                         DeliveryAddress = t1.DeliveryAddress,
                                                         PaymentStatusId = (int)(PaymentStatusEnum)t1.PaymentStatusId,
-                                                        TermsAndCondition = t1.TermsAndCondition,
+                                                        TermsAndConditionKey = t1.TermsAndCondition.Key,
                                                         OverallDiscount = t1.OverallDiscount,
                                                         Description = t1.Description,
                                                     }).FirstOrDefault());

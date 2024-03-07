@@ -1,4 +1,6 @@
-﻿using app.Services.CompanyServices;
+﻿using app.EntityModel.DataTablePaginationModels;
+using app.Services.CompanyServices;
+using app.Services.StorehouseServices;
 using Microsoft.AspNetCore.Mvc;
 
 namespace app.WebApp.AdminControllers
@@ -63,5 +65,20 @@ namespace app.WebApp.AdminControllers
             return RedirectToAction("Index");
         }
 
+        #region Search
+        [HttpGet]
+        public async Task<IActionResult> Search()
+        {
+
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Search(DataTablePagination<CompanySearchDto> searchDto)
+        {
+            var dataTable = await _iService.SearchAsync(searchDto);
+            return Json(dataTable);
+        }
+        #endregion
     }
 }

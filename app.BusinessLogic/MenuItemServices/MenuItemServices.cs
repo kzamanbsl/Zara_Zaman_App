@@ -1,6 +1,9 @@
 ﻿using app.EntityModel.CoreModel;
+using app.EntityModel.DataTablePaginationModels;
 using app.Infrastructure;
+using app.Infrastructure.Auth;
 using app.Infrastructure.Repository;
+using app.Services.UserServices;
 using Microsoft.EntityFrameworkCore;
 
 namespace app.Services.MenuItemServices
@@ -135,6 +138,59 @@ namespace app.Services.MenuItemServices
                                                        IsMenuShow = t1.IsMenuShow,
                                                    }).OrderByDescending(x => x.OrderNo).AsEnumerable());
             return model;
+        }
+
+        public async Task<DataTablePagination<MenuItemSearchDto>> SearchAsync(DataTablePagination<MenuItemSearchDto> searchDto)
+        {
+            var searchResult = _dbContext.MenuItem.Include(c => c.Menu).AsNoTracking();
+            //var searchResult = _dbContext.MenuItem.Include(c => c.MenuId).Include(c => c.OrderNo).AsNoTracking();
+
+            var searchModel = searchDto.SearchVm;
+            var filter = searchDto?.Search?.Value?.Trim();
+            //if (searchModel?.MenuId is > 0)
+            //{
+            //    searchResult = searchResult.Where(c => c.MenuId == searchModel.MenuId);
+            //}
+            //if (searchModel?.OrderNo is > 0)
+            //{
+            //    searchResult = searchResult.Where(c => c.OrderNo == searchModel.OrderNo);
+            //}
+            if (!string.IsNullOrEmpty(filter))
+            {
+                filter = filter.ToLower();
+                searchResult = searchResult.Where(c =>
+                    c.Name.ToLower().Contains(filter)
+                    || c.Menu.Name.ToString().Contains(filter)
+                    || c.ShortName.ToLower().Contains(filter)
+                    || c.OrderNo.ToString().Contains(filter)
+                );
+            }
+
+            var pageSize = searchDto.Length ?? 0;
+            var skip = searchDto.Start ?? 0;
+
+            var totalRecords = await searchResult.CountAsync();
+            if (totalRecords <= 0) return searchDto;
+
+            searchDto.RecordsTotal = totalRecords;
+            searchDto.RecordsFiltered = totalRecords;
+            List<MenuItem> filteredDataList = await searchResult.OrderByDescending(c => c.Id).Skip(skip).Take(pageSize).ToListAsync();
+
+            var sl = searchDto.Start ?? 0;
+            searchDto.Data = filteredDataList.Select(c => new MenuItemSearchDto()
+            {
+                SerialNo = ++sl,
+                Id = c.Id,
+                Name = c.Name,
+                ShortName = c.ShortName,
+                Icon = c.Icon,
+                MenuId = c.MenuId,
+                MenuName = c.Menu?.Name,
+                IsMenuShow = c.IsMenuShow,
+                IsActive = c.IsActive,
+            }).ToList();
+
+            return searchDto;
         }
     }
 }

@@ -2,13 +2,7 @@
 using app.Infrastructure.Auth;
 using app.Infrastructure.Repository;
 using app.Infrastructure;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using app.Services.AssetPurchaseOrderServices;
-using Microsoft.EntityFrameworkCore;
 
 namespace app.Services.AssetPurchaseOrderDetailServices
 {

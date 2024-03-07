@@ -5,10 +5,6 @@ using app.Infrastructure;
 using app.Utility;
 using app.Services.PurchaseOrderDetailServices;
 using Microsoft.EntityFrameworkCore;
-using app.Services.ProductServices;
-using app.Services.LeaveBalanceServices;
-using app.Services.JobStatusServices;
-using app.Services.StorehouseServices;
 using app.EntityModel.DataTablePaginationModels;
 
 
@@ -16,10 +12,10 @@ namespace app.Services.PurchaseOrderServices
 {
     public class PurchaseOrderService : IPurchaseOrderService
     {
-        private readonly IEntityRepository<PurchaseOrderList> _iEntityRepository;
+        private readonly IEntityRepository<PurchaseOrder> _iEntityRepository;
         private readonly InventoryDbContext _dbContext;
         private readonly IWorkContext _iWorkContext;
-        public PurchaseOrderService(IEntityRepository<PurchaseOrderList> iEntityRepository, InventoryDbContext dbContext, IWorkContext iWorkContext)
+        public PurchaseOrderService(IEntityRepository<PurchaseOrder> iEntityRepository, InventoryDbContext dbContext, IWorkContext iWorkContext)
         {
             _iEntityRepository = iEntityRepository;
             _dbContext = dbContext;
@@ -40,7 +36,7 @@ namespace app.Services.PurchaseOrderServices
                            DateTime.Now.ToString("dd") + "-" +
                            poMax.ToString().PadLeft(2, '0');
 
-            PurchaseOrderList purchaseOrder = new PurchaseOrderList();
+            PurchaseOrder purchaseOrder = new PurchaseOrder();
             purchaseOrder.OrderNo = poCid;
             purchaseOrder.PurchaseDate = vm.PurchaseDate;
             purchaseOrder.SupplierId = vm.SupplierId;
@@ -215,9 +211,10 @@ namespace app.Services.PurchaseOrderServices
             }
             return purchaseMasterModel;
         }
+
         public async Task<DataTablePagination<PurchaseOrderSearchDto>> SearchAsync(DataTablePagination<PurchaseOrderSearchDto> searchDto)
         {
-            var searchResult = _dbContext.PurchaseOrder.Include(c => c.StorehouseId).Include(c => c.SupplierId).Include(c => c.OrderStatusId).AsNoTracking();
+            var searchResult = _dbContext.PurchaseOrder.Include(c => c.Storehouse).Include(c => c.Supplier).AsNoTracking();
 
             var searchModel = searchDto.SearchVm;
             var filter = searchDto?.Search?.Value?.Trim();
@@ -252,7 +249,7 @@ namespace app.Services.PurchaseOrderServices
 
             searchDto.RecordsTotal = totalRecords;
             searchDto.RecordsFiltered = totalRecords;
-            List<PurchaseOrderList> filteredDataList = await searchResult
+            List<PurchaseOrder> filteredDataList = await searchResult
         .OrderByDescending(c => c.Id)
         .Skip(skip)
         .Take(pageSize)
@@ -272,7 +269,7 @@ namespace app.Services.PurchaseOrderServices
                                   OrderStatusId = (int)(PurchaseOrderStatusEnum)t1.OrderStatusId,
                                   SupplierId = t1.SupplierId,
                                   Supplier = t1.Supplier,
-                                  TotalAmount =(double)t2.TotalAmount,
+                                  TotalAmount = (double)t2.TotalAmount,
                                   // You might need to include properties from t2 (PurchaseOrderDetail) here as needed
                               }).ToList();
 

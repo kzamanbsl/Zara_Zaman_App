@@ -7,6 +7,8 @@ using app.Utility;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using app.Services.IAssetnventoryServices;
+using app.EntityModel.DataTablePaginationModels;
+using app.Services.PurchaseOrderServices;
 
 namespace app.WebApp.Controllers
 {
@@ -145,6 +147,25 @@ namespace app.WebApp.Controllers
             var res = await _iAssetPurchaseOrderService.UpdateAssetPurchaseOrder(vm);
             return RedirectToAction("Index");
         }
+
+        #region Search
+
+        [HttpGet]
+        public async Task<IActionResult> Search()
+        {
+            ViewBag.Storehouses = new SelectList((await _iDropdownService.StorehouseSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
+            ViewBag.Suppliers = new SelectList((await _iDropdownService.SupplierSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Search(DataTablePagination<AssetPurchaseOrderSearchDto> searchDto)
+        {
+            var dataTable = await _iAssetPurchaseOrderService.SearchAsync(searchDto);
+            return Json(dataTable);
+        }
+
+        #endregion
 
     }
 }

@@ -1,4 +1,6 @@
-﻿using app.EntityModel.AppModels.ATMAssemble;
+﻿using app.EntityModel.AppModels;
+using app.EntityModel.AppModels.ATMAssemble;
+using app.EntityModel.DataTablePaginationModels;
 using app.Infrastructure;
 using app.Infrastructure.Auth;
 using app.Infrastructure.Repository;
@@ -6,6 +8,7 @@ using app.Services.ATMAssemble.AssembleWorkCategoryServices;
 using app.Services.ATMAssemble.AssembleWorkDetailServices;
 using app.Services.ATMAssemble.AssembleWorkStepItemServices;
 using app.Services.EmployeeServices;
+using app.Services.ProductServices;
 using app.Utility;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
@@ -515,6 +518,52 @@ namespace app.Services.ATMAssemble.AssembleWorkServices
                 return result;
             }
             return unSuccessResult;
+        }
+
+        public async Task<DataTablePagination<AssembleWorkSearchDto>> SearchAsync(DataTablePagination<AssembleWorkSearchDto> searchDto)
+        {
+            var searchResult = _dbContext.AssembleWork.Include(c => c.AssembleWorkCategory).AsNoTracking();
+
+            var searchModel = searchDto.SearchVm;
+            var filter = searchDto?.Search?.Value?.Trim();
+            if (searchModel?.AssembleWorkCategoryId is > 0)
+            {
+                searchResult = searchResult.Where(c => c.AssembleWorkCategoryId == searchModel.AssembleWorkCategoryId);
+            }
+          
+            if (!string.IsNullOrEmpty(filter))
+            {
+                filter = filter.ToLower();
+                searchResult = searchResult.Where(c =>
+                    c.AssembleWorkCategory.Name.ToLower().Contains(filter)
+                    || c.AssembleDate.ToString().Contains(filter)
+                    || c.Description.ToLower().Contains(filter)
+                );
+            }
+
+            var pageSize = searchDto.Length ?? 0;
+            var skip = searchDto.Start ?? 0;
+
+            var totalRecords = await searchResult.CountAsync();
+            if (totalRecords <= 0) return searchDto;
+
+            searchDto.RecordsTotal = totalRecords;
+            searchDto.RecordsFiltered = totalRecords;
+            List<AssembleWork> filteredDataList = await searchResult.OrderByDescending(c => c.Id).Skip(skip).Take(pageSize).ToListAsync();
+
+            var sl = searchDto.Start ?? 0;
+            searchDto.Data = filteredDataList.Select(c => new AssembleWorkSearchDto()
+            {
+                SerialNo = ++sl,
+                Id = c.Id,
+                AssembleWorkCategoryId = c.AssembleWorkCategoryId,
+                AssembleWorkCategoryName = c.AssembleWorkCategory?.Name,
+                AssembleDate = c.AssembleDate,
+                Description = c.Description,
+                StatusId=c.StatusId
+            }).ToList();
+
+            return searchDto;
         }
 
     }

@@ -14,9 +14,13 @@ namespace app.Services.SalesOrderServices
         public long CustomerId { get; set; }
         public Customer Customer { get; set; }
         public string CustomerName { get; set; }
+        public string CustomerPhoneNo { get; set; }
         public decimal OverallDiscount { get; set; }
         public string Description { get; set; }
-        public string TermsAndCondition { get; set; }
+        public long TermsandconditionsId { get; set; }
+        public SalesTermsAndCondition TermsAndCondition { get; set; }
+        public string TermsAndConditionKey { get; set; }
+        public string TermsAndConditionValue { get; set; }
         public DateTime? DeliveryDate { get; set; }
         public string DeliveryAddress { get; set; }
         public int OrderStatusId { get; set; } //SalesOrderStatusEnum

@@ -1,13 +1,6 @@
 ﻿using app.EntityModel.AppModels;
 using app.Services.AssetPurchaseOrderDetailServices;
-using app.Services.PurchaseOrderDetailServices;
 using app.Utility;
-using System;
-using System.Buffers.Text;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace app.Services.AssetPurchaseOrderServices
 {

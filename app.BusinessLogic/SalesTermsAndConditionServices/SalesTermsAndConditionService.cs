@@ -2,6 +2,9 @@
 using app.Infrastructure.Auth;
 using app.Infrastructure.Repository;
 using app.Infrastructure;
+using app.EntityModel.DataTablePaginationModels;
+using app.Services.ProductServices;
+using Microsoft.EntityFrameworkCore;
 
 namespace app.Services.SalesTermsAndConditonServices
 {
@@ -55,19 +58,6 @@ namespace app.Services.SalesTermsAndConditonServices
             model.Value = result.Value;
             return model;
         }
-        public async Task<SalesTermsAndConditionViewModel> GetAllRecord()
-        {
-            SalesTermsAndConditionViewModel model = new SalesTermsAndConditionViewModel();
-            model.SalesTermsAndConditionList = await Task.Run(() => (from t1 in _dbContext.SalesTermsAndCondition
-                                                          where t1.IsActive == true
-                                                          select new SalesTermsAndConditionViewModel
-                                                          {
-                                                              Id = t1.Id,
-                                                              Key = t1.Key,
-                                                              Value = t1.Value,
-                                                          }).AsQueryable());
-            return model;
-        }
         public async Task<bool> DeleteRecord(long id)
         {
             var result = await _iEntityRepository.GetByIdAsync(id);
@@ -75,5 +65,59 @@ namespace app.Services.SalesTermsAndConditonServices
             await _iEntityRepository.UpdateAsync(result);
             return true;
         }
+
+        public async Task<SalesTermsAndConditionViewModel> GetAllRecord()
+        {
+            SalesTermsAndConditionViewModel model = new SalesTermsAndConditionViewModel();
+            model.SalesTermsAndConditionList = await Task.Run(() => (from t1 in _dbContext.SalesTermsAndCondition
+                                                                     where t1.IsActive == true
+                                                                     select new SalesTermsAndConditionViewModel
+                                                                     {
+                                                                         Id = t1.Id,
+                                                                         Key = t1.Key,
+                                                                         Value = t1.Value,
+                                                                     }).AsEnumerable());
+            return model;
+        }
+
+        public async Task<DataTablePagination<SalesTermsAndConditionSearchDto>> SearchAsync(DataTablePagination<SalesTermsAndConditionSearchDto> searchDto)
+        {
+            var searchResult = _dbContext.SalesTermsAndCondition.AsNoTracking();
+
+            var searchModel = searchDto.SearchVm;
+            var filter = searchDto?.Search?.Value?.Trim();
+          
+            if (!string.IsNullOrEmpty(filter))
+            {
+                filter = filter.ToLower();
+                searchResult = searchResult.Where(c =>
+                    c.Key.ToLower().Contains(filter)
+                    || c.Value.ToString().Contains(filter)
+                    
+                );
+            }
+
+            var pageSize = searchDto.Length ?? 0;
+            var skip = searchDto.Start ?? 0;
+
+            var totalRecords = await searchResult.CountAsync();
+            if (totalRecords <= 0) return searchDto;
+
+            searchDto.RecordsTotal = totalRecords;
+            searchDto.RecordsFiltered = totalRecords;
+            List<SalesTermsAndCondition> filteredDataList = await searchResult.OrderByDescending(c => c.Id).Skip(skip).Take(pageSize).ToListAsync();
+
+            var sl = searchDto.Start ?? 0;
+            searchDto.Data = filteredDataList.Select(c => new SalesTermsAndConditionSearchDto()
+            {
+                SerialNo = ++sl,
+                Id = c.Id,
+                Key = c.Key,
+                Value = c.Value,
+            }).ToList();
+
+            return searchDto;
+        }
+
     }
 }

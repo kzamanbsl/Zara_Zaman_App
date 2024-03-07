@@ -1,29 +1,22 @@
-﻿using app.EntityModel.AppModels;
-using app.Infrastructure.Auth;
+﻿using app.Infrastructure.Auth;
 using app.Infrastructure.Repository;
 using app.Infrastructure;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using app.Utility;
 using app.Services.AssetPurchaseOrderDetailServices;
-using app.Services.DropdownServices;
 using Microsoft.EntityFrameworkCore;
+using app.EntityModel.AppModels;
+using app.EntityModel.DataTablePaginationModels;
 using app.Services.ProductServices;
-using app.Services.LeaveBalanceServices;
-using app.Services.JobStatusServices;
-using app.Services.StorehouseServices;
+using app.Services.PurchaseOrderServices;
 
 namespace app.Services.AssetPurchaseOrderServices
 {
     public class AssetPurchaseOrderService : IAssetPurchaseOrderService
     {
-        private readonly IEntityRepository<PurchaseOrderList> _iEntityRepository;
+        private readonly IEntityRepository<PurchaseOrder> _iEntityRepository;
         private readonly InventoryDbContext _dbContext;
         private readonly IWorkContext _iWorkContext;
-        public AssetPurchaseOrderService(IEntityRepository<PurchaseOrderList> iEntityRepository, InventoryDbContext dbContext, IWorkContext iWorkContext)
+        public AssetPurchaseOrderService(IEntityRepository<PurchaseOrder> iEntityRepository, InventoryDbContext dbContext, IWorkContext iWorkContext)
         {
             _iEntityRepository = iEntityRepository;
             _dbContext = dbContext;
@@ -44,7 +37,7 @@ namespace app.Services.AssetPurchaseOrderServices
                            DateTime.Now.ToString("dd") + "-" +
                            poMax.ToString().PadLeft(2, '0');
 
-            PurchaseOrderList assetPurchaseOrder = new PurchaseOrderList();
+            PurchaseOrder assetPurchaseOrder = new PurchaseOrder();
             assetPurchaseOrder.OrderNo = poCid;
             assetPurchaseOrder.PurchaseDate = vm.PurchaseDate;
             assetPurchaseOrder.SupplierId = vm.SupplierId;
@@ -61,46 +54,130 @@ namespace app.Services.AssetPurchaseOrderServices
         {
             AssetPurchaseOrderViewModel assetPurchaseOrderModel = new AssetPurchaseOrderViewModel();
             assetPurchaseOrderModel = await Task.Run(() => (from t1 in _dbContext.PurchaseOrder.Where(x => x.IsActive && x.Id == assetPurchaseOrderId)
-                                                       select new AssetPurchaseOrderViewModel
-                                                       {
-                                                           Id = t1.Id,
-                                                           PurchaseDate = t1.PurchaseDate,
-                                                           OrderNo = t1.OrderNo,
-                                                           OrderStatusId = (int)(PurchaseOrderStatusEnum)t1.OrderStatusId,
-                                                           SupplierId = t1.SupplierId,
-                                                           SupplierName = t1.Supplier.Name,
-                                                           StorehouseId = t1.StorehouseId,
-                                                           StoreName = t1.Storehouse.Name,
-                                                           OverallDiscount = t1.OverallDiscount,
-                                                           PurchaseTypeId = t1.PurchaseTypeId,
-                                                           Description = t1.Description,
-                                                       }).FirstOrDefault());
+                                                            select new AssetPurchaseOrderViewModel
+                                                            {
+                                                                Id = t1.Id,
+                                                                PurchaseDate = t1.PurchaseDate,
+                                                                OrderNo = t1.OrderNo,
+                                                                OrderStatusId = (int)(PurchaseOrderStatusEnum)t1.OrderStatusId,
+                                                                SupplierId = t1.SupplierId,
+                                                                SupplierName = t1.Supplier.Name,
+                                                                StorehouseId = t1.StorehouseId,
+                                                                StoreName = t1.Storehouse.Name,
+                                                                OverallDiscount = t1.OverallDiscount,
+                                                                PurchaseTypeId = t1.PurchaseTypeId,
+                                                                Description = t1.Description,
+                                                            }).FirstOrDefault());
 
             assetPurchaseOrderModel.AssetPurchaseOrderDetailsList = await Task.Run(() => (from t1 in _dbContext.PurchaseOrderDetail.Where(x => x.IsActive && x.PurchaseOrder.Id == assetPurchaseOrderId)
-                                                                                select new AssetPurchaseOrderDetailViewModel
-                                                                                {
-                                                                                    Id = t1.Id,
-                                                                                    PurchaseOrderId = t1.PurchaseOrderId,
-                                                                                    ProductId = t1.ProductId,
-                                                                                    ProductName = t1.Product.Name,
-                                                                                    PurchaseQty = t1.PurchaseQty,
-                                                                                    Consumption = t1.Consumption,
-                                                                                    UnitId = t1.UnitId,
-                                                                                    UnitName = t1.Unit.Name,
-                                                                                    CostPrice = t1.CostPrice,
-                                                                                    SalePrice = t1.SalePrice,
-                                                                                    //Discount = t1.Discount,
-                                                                                    TotalAmount = ((decimal)t1.PurchaseQty * t1.CostPrice) - t1.Discount,
-                                                                                    Remarks = t1.Remarks,
-                                                                                }).OrderByDescending(x => x.Id).AsQueryable());
+                                                                                          select new AssetPurchaseOrderDetailViewModel
+                                                                                          {
+                                                                                              Id = t1.Id,
+                                                                                              PurchaseOrderId = t1.PurchaseOrderId,
+                                                                                              ProductId = t1.ProductId,
+                                                                                              ProductName = t1.Product.Name,
+                                                                                              PurchaseQty = t1.PurchaseQty,
+                                                                                              Consumption = t1.Consumption,
+                                                                                              UnitId = t1.UnitId,
+                                                                                              UnitName = t1.Unit.Name,
+                                                                                              CostPrice = t1.CostPrice,
+                                                                                              SalePrice = t1.SalePrice,
+                                                                                              //Discount = t1.Discount,
+                                                                                              TotalAmount = ((decimal)t1.PurchaseQty * t1.CostPrice) - t1.Discount,
+                                                                                              Remarks = t1.Remarks,
+                                                                                          }).OrderByDescending(x => x.Id).AsQueryable());
 
 
             return assetPurchaseOrderModel;
         }
 
+        public async Task<bool> ConfirmAssetPurchaseOrder(long id)
+        {
+            var checkAssetPurchaseOrder = await _dbContext.PurchaseOrder.FirstOrDefaultAsync(c => c.Id == id);
+            if (checkAssetPurchaseOrder != null && checkAssetPurchaseOrder.OrderStatusId == (int)PurchaseOrderStatusEnum.Draft)
+            {
+                checkAssetPurchaseOrder.OrderStatusId = (int)PurchaseOrderStatusEnum.Confirm;
+                await _iEntityRepository.UpdateAsync(checkAssetPurchaseOrder);
+                return true;
+            }
+            return false;
+        }
+
+        public async Task<bool> DeleteAssetPurchaseOrder(long id)
+        {
+            var result = await _iEntityRepository.GetByIdAsync(id);
+            result.IsActive = false;
+            await _iEntityRepository.UpdateAsync(result);
+            return true;
+        }
+
+        public async Task<AssetPurchaseOrderViewModel> GetAssetPurchaseOrderDetails(long id = 0)
+        {
+            AssetPurchaseOrderViewModel assetPurchaseOrderModel = new AssetPurchaseOrderViewModel();
+            assetPurchaseOrderModel = await Task.Run(() => (from t1 in _dbContext.PurchaseOrder.Where(x => x.IsActive && x.Id == id)
+                                                            select new AssetPurchaseOrderViewModel
+                                                            {
+                                                                Id = t1.Id,
+                                                                PurchaseDate = t1.PurchaseDate,
+                                                                OrderNo = t1.OrderNo,
+                                                                OrderStatusId = (int)(PurchaseOrderStatusEnum)t1.OrderStatusId,
+                                                                SupplierId = t1.SupplierId,
+                                                                SupplierName = t1.Supplier.Name,
+                                                                StorehouseId = t1.StorehouseId,
+                                                                StoreName = t1.Storehouse.Name,
+                                                                OverallDiscount = t1.OverallDiscount,
+                                                                PurchaseTypeId = t1.PurchaseTypeId,
+                                                                Description = t1.Description,
+                                                            }).FirstOrDefault());
+
+            assetPurchaseOrderModel.AssetPurchaseOrderDetailsList = await Task.Run(() => (from t1 in _dbContext.PurchaseOrderDetail.Where(x => x.IsActive && x.PurchaseOrder.Id == id)
+                                                                                          select new AssetPurchaseOrderDetailViewModel
+                                                                                          {
+                                                                                              Id = t1.Id,
+                                                                                              PurchaseOrderId = t1.PurchaseOrderId,
+                                                                                              ProductId = t1.ProductId,
+                                                                                              ProductName = t1.Product.Name,
+                                                                                              PurchaseQty = t1.PurchaseQty,
+                                                                                              Consumption = t1.Consumption,
+                                                                                              UnitId = t1.UnitId,
+                                                                                              UnitName = t1.Unit.Name,
+                                                                                              CostPrice = t1.CostPrice,
+                                                                                              SalePrice = t1.SalePrice,
+                                                                                              //Discount = t1.Discount,
+                                                                                              TotalAmount = ((decimal)t1.PurchaseQty * t1.CostPrice) - t1.Discount,
+                                                                                              Remarks = t1.Remarks,
+                                                                                          }).OrderByDescending(x => x.Id).AsQueryable());
 
 
+            return assetPurchaseOrderModel;
+        }
 
+        public async Task<bool> RejectAssetPurchaseOrder(long id)
+        {
+            var checkAssetPurchaseOrder = await _dbContext.PurchaseOrder.FirstOrDefaultAsync(c => c.Id == id);
+            if (checkAssetPurchaseOrder != null || checkAssetPurchaseOrder.OrderStatusId == (int)PurchaseOrderStatusEnum.Draft || checkAssetPurchaseOrder.OrderStatusId == (int)PurchaseOrderStatusEnum.Confirm)
+            {
+                checkAssetPurchaseOrder.OrderStatusId = (int)PurchaseOrderStatusEnum.Reject;
+                await _iEntityRepository.UpdateAsync(checkAssetPurchaseOrder);
+                return true;
+            }
+            return false;
+        }
+
+        public async Task<bool> UpdateAssetPurchaseOrder(AssetPurchaseOrderViewModel vm)
+        {
+            var assetPurchaseOrder = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id == vm.Id);
+            if (assetPurchaseOrder != null)
+            {
+                assetPurchaseOrder.Id = vm.Id;
+                assetPurchaseOrder.PurchaseDate = vm.PurchaseDate;
+                assetPurchaseOrder.SupplierId = vm.SupplierId;
+                assetPurchaseOrder.StorehouseId = vm.StorehouseId;
+                await _iEntityRepository.UpdateAsync(assetPurchaseOrder);
+                return true;
+            }
+            return false;
+        }
 
         public async Task<AssetPurchaseOrderViewModel> GetAllRecord()
         {
@@ -139,92 +216,61 @@ namespace app.Services.AssetPurchaseOrderServices
             return assetPurchaseMasterModel;
         }
 
-        public async Task<bool> ConfirmAssetPurchaseOrder(long id)
+        public async Task<DataTablePagination<AssetPurchaseOrderSearchDto>> SearchAsync(DataTablePagination<AssetPurchaseOrderSearchDto> searchDto)
         {
-            var checkAssetPurchaseOrder = await _dbContext.PurchaseOrder.FirstOrDefaultAsync(c => c.Id == id);
-            if (checkAssetPurchaseOrder != null && checkAssetPurchaseOrder.OrderStatusId == (int)PurchaseOrderStatusEnum.Draft)
+            var searchResult = _dbContext.PurchaseOrderDetail.Include(c => c.PurchaseOrder).AsNoTracking();
+
+            var searchModel = searchDto.SearchVm;
+            var filter = searchDto?.Search?.Value?.Trim();
+            if (searchModel?.StorehouseId is > 0)
             {
-                checkAssetPurchaseOrder.OrderStatusId = (int)PurchaseOrderStatusEnum.Confirm;
-                await _iEntityRepository.UpdateAsync(checkAssetPurchaseOrder);
-                return true;
+                searchResult = searchResult.Where(c => c.PurchaseOrder.StorehouseId == searchModel.StorehouseId);
             }
-            return false;
-        }
-
-        public async Task<bool> DeleteAssetPurchaseOrder(long id)
-        {
-            var result = await _iEntityRepository.GetByIdAsync(id);
-            result.IsActive = false;
-            await _iEntityRepository.UpdateAsync(result);
-            return true;
-        }
-
-        public async Task<AssetPurchaseOrderViewModel> GetAssetPurchaseOrderDetails(long id = 0)
-        {
-            AssetPurchaseOrderViewModel assetPurchaseOrderModel = new AssetPurchaseOrderViewModel();
-            assetPurchaseOrderModel = await Task.Run(() => (from t1 in _dbContext.PurchaseOrder.Where(x => x.IsActive && x.Id == id)
-                                                       select new AssetPurchaseOrderViewModel
-                                                       {
-                                                           Id = t1.Id,
-                                                           PurchaseDate = t1.PurchaseDate,
-                                                           OrderNo = t1.OrderNo,
-                                                           OrderStatusId = (int)(PurchaseOrderStatusEnum)t1.OrderStatusId,
-                                                           SupplierId = t1.SupplierId,
-                                                           SupplierName = t1.Supplier.Name,
-                                                           StorehouseId = t1.StorehouseId,
-                                                           StoreName = t1.Storehouse.Name,
-                                                           OverallDiscount = t1.OverallDiscount,
-                                                           PurchaseTypeId = t1.PurchaseTypeId,
-                                                           Description = t1.Description,
-                                                       }).FirstOrDefault());
-
-            assetPurchaseOrderModel.AssetPurchaseOrderDetailsList = await Task.Run(() => (from t1 in _dbContext.PurchaseOrderDetail.Where(x => x.IsActive && x.PurchaseOrder.Id == id)
-                                                                                select new AssetPurchaseOrderDetailViewModel
-                                                                                {
-                                                                                    Id = t1.Id,
-                                                                                    PurchaseOrderId = t1.PurchaseOrderId,
-                                                                                    ProductId = t1.ProductId,
-                                                                                    ProductName = t1.Product.Name,
-                                                                                    PurchaseQty = t1.PurchaseQty,
-                                                                                    Consumption = t1.Consumption,
-                                                                                    UnitId = t1.UnitId,
-                                                                                    UnitName = t1.Unit.Name,
-                                                                                    CostPrice = t1.CostPrice,
-                                                                                    SalePrice = t1.SalePrice,
-                                                                                    //Discount = t1.Discount,
-                                                                                    TotalAmount = ((decimal)t1.PurchaseQty * t1.CostPrice) - t1.Discount,
-                                                                                    Remarks = t1.Remarks,
-                                                                                }).OrderByDescending(x => x.Id).AsQueryable());
-
-
-            return assetPurchaseOrderModel;
-        }
-
-        public async Task<bool> RejectAssetPurchaseOrder(long id)
-        {
-            var checkAssetPurchaseOrder = await _dbContext.PurchaseOrder.FirstOrDefaultAsync(c => c.Id == id);
-            if (checkAssetPurchaseOrder != null || checkAssetPurchaseOrder.OrderStatusId == (int)PurchaseOrderStatusEnum.Draft || checkAssetPurchaseOrder.OrderStatusId == (int)PurchaseOrderStatusEnum.Confirm)
+            if (searchModel?.SupplierId is > 0)
             {
-                checkAssetPurchaseOrder.OrderStatusId = (int)PurchaseOrderStatusEnum.Reject;
-                await _iEntityRepository.UpdateAsync(checkAssetPurchaseOrder);
-                return true;
+                searchResult = searchResult.Where(c => c.PurchaseOrder.SupplierId == searchModel.SupplierId);
             }
-            return false;
-        }
-
-        public async Task<bool> UpdateAssetPurchaseOrder(AssetPurchaseOrderViewModel vm)
-        {
-            var assetPurchaseOrder = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id == vm.Id);
-            if (assetPurchaseOrder != null)
+            if (searchModel?.OrderStatusId is > 0)
             {
-                assetPurchaseOrder.Id = vm.Id;
-                assetPurchaseOrder.PurchaseDate = vm.PurchaseDate;
-                assetPurchaseOrder.SupplierId = vm.SupplierId;
-                assetPurchaseOrder.StorehouseId = vm.StorehouseId;
-                await _iEntityRepository.UpdateAsync(assetPurchaseOrder);
-                return true;
+                searchResult = searchResult.Where(c => c.PurchaseOrder.OrderStatusId == searchModel.OrderStatusId);
             }
-            return false;
+            if (!string.IsNullOrEmpty(filter))
+            {
+                filter = filter.ToLower();
+                searchResult = searchResult.Where(c =>
+                    c.PurchaseOrder.OrderNo.ToLower().Contains(filter)
+                    || c.PurchaseOrder.PurchaseDate.ToString().Contains(filter)
+                    || c.PurchaseOrder.Supplier.ToString().Contains(filter)
+                    || c.PurchaseOrder.Storehouse.Name.ToLower().Contains(filter)
+                );
+            }
+
+            var pageSize = searchDto.Length ?? 0;
+            var skip = searchDto.Start ?? 0;
+
+            var totalRecords = await searchResult.CountAsync();
+            if (totalRecords <= 0) return searchDto;
+
+            searchDto.RecordsTotal = totalRecords;
+            searchDto.RecordsFiltered = totalRecords;
+            List<PurchaseOrderDetail> filteredDataList = await searchResult.OrderByDescending(c => c.Id).Skip(skip).Take(pageSize).ToListAsync();
+
+            var sl = searchDto.Start ?? 0;
+            searchDto.Data = filteredDataList.Select(c => new AssetPurchaseOrderSearchDto()
+            {
+                SerialNo = ++sl,
+                Id = c.PurchaseOrder.Id,
+                OrderNo = c.PurchaseOrder.OrderNo,
+                PurchaseDate = c.PurchaseOrder.PurchaseDate,
+                StorehouseId = c.PurchaseOrder.StorehouseId,
+                Storehouse = c.PurchaseOrder.Storehouse,
+                OrderStatusId = (int)(PurchaseOrderStatusEnum)c.PurchaseOrder.OrderStatusId,
+                SupplierId = c.PurchaseOrder.SupplierId,
+                Supplier = c.PurchaseOrder.Supplier,
+                TotalAmount = (double)c.TotalAmount,
+            }).ToList();
+
+            return searchDto;
         }
     }
 }

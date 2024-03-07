@@ -1,4 +1,6 @@
-﻿using app.Infrastructure.Auth;
+﻿using app.EntityModel.DataTablePaginationModels;
+using app.Infrastructure.Auth;
+using app.Services.ProductServices;
 
 namespace app.Services.UserServices
 {
@@ -10,6 +12,7 @@ namespace app.Services.UserServices
         Task<UserViewModel> GetUserById(string userId);
         Task<bool> SoftDelete(string userId);
         Task<UserViewModel> GetAllRecord();
+        Task<DataTablePagination<UserSearchDto>> SearchAsync(DataTablePagination<UserSearchDto> searchDto);
 
 
     }

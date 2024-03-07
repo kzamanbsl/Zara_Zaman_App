@@ -4,6 +4,7 @@ using app.Infrastructure;
 using app.Infrastructure.Auth;
 using app.Infrastructure.Repository;
 using app.Services.ProductServices;
+using app.Services.UserServices;
 using app.Utility;
 using Microsoft.EntityFrameworkCore;
 
@@ -83,6 +84,46 @@ namespace app.Services.ShiftServices
                                                         EndAt = t1.EndAt,
                                                     }).AsEnumerable());
             return model;
+        }
+
+        public async Task<DataTablePagination<ShiftSearchDto>> SearchAsync(DataTablePagination<ShiftSearchDto> searchDto)
+        {
+            var searchResult = _dbContext.Shift.AsNoTracking();
+
+            var searchModel = searchDto.SearchVm;
+            var filter = searchDto?.Search?.Value?.Trim();
+            
+            if (!string.IsNullOrEmpty(filter))
+            {
+                filter = filter.ToLower();
+                searchResult = searchResult.Where(c =>
+                    c.Name.ToLower().Contains(filter)
+                    || c.StartAt.ToString().Contains(filter)
+                    || c.EndAt.ToString().Contains(filter)
+                );
+            }
+
+            var pageSize = searchDto.Length ?? 0;
+            var skip = searchDto.Start ?? 0;
+
+            var totalRecords = await searchResult.CountAsync();
+            if (totalRecords <= 0) return searchDto;
+
+            searchDto.RecordsTotal = totalRecords;
+            searchDto.RecordsFiltered = totalRecords;
+            List<Shift> filteredDataList = await searchResult.OrderByDescending(c => c.Id).Skip(skip).Take(pageSize).ToListAsync();
+
+            var sl = searchDto.Start ?? 0;
+            searchDto.Data = filteredDataList.Select(c => new ShiftSearchDto()
+            {
+                SerialNo = ++sl,
+                Id = c.Id,
+                Name = c.Name,
+                StartAt = c.StartAt,
+                EndAt = c.EndAt,
+            }).ToList();
+
+            return searchDto;
         }
 
 

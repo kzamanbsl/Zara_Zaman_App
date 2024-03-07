@@ -27,9 +27,11 @@
         Task<IEnumerable<DropdownViewModel>> ProductCategorySelectionList();
         Task<IEnumerable<DropdownViewModel>> AssetCategorySelectionList();
         Task<IEnumerable<DropdownViewModel>> SupplierSelectionList();
+        Task<IEnumerable<DropdownViewModel>> CustomerSelectionList();
         Task<IEnumerable<DropdownViewModel>> StorehouseSelectionList();
         Task<IEnumerable<DropdownViewModel>> ProductSelectionList();
         Task<IEnumerable<DropdownViewModel>> AssembleWorkCategorySelectionList();
         Task<IEnumerable<DropdownViewModel>> AssembleWorkStepSelectionList();
+        Task<IEnumerable<DropdownViewModel>> TermsandconditionsSelectionList();
     }
 }

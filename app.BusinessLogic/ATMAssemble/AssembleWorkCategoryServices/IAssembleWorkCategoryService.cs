@@ -1,4 +1,7 @@
-﻿namespace app.Services.ATMAssemble.AssembleWorkCategoryServices
+﻿using app.EntityModel.DataTablePaginationModels;
+using app.Services.ProductServices;
+
+namespace app.Services.ATMAssemble.AssembleWorkCategoryServices
 {
     public interface IAssembleWorkCategoryService
     {
@@ -8,6 +11,7 @@
         Task<AssembleWorkCategoryViewModel> GetRecordById(long id);
         Task<bool> DeleteRecord(long id);
         Task<AssembleWorkCategoryViewModel> GetAllRecord();
+        Task<DataTablePagination<AssembleWorkCategorySearchDto>> SearchAsync(DataTablePagination<AssembleWorkCategorySearchDto> searchDto);
 
     }
 }

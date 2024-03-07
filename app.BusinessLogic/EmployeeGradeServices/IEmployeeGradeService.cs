@@ -10,7 +10,7 @@ namespace app.Services.EmployeeGradeServices
         Task<EmployeeGradeViewModel> GetRecordById(long id);
         Task<EmployeeGradeViewModel> GetAllRecord();
         Task<bool> DeleteRecord(long id);
-        //Task<DataTablePagination<ProductSearchDto>> SearchAsync(DataTablePagination<EmployeeGradeSearchDto> searchDto);
+        Task<DataTablePagination<EmployeeGradeSearchDto>> SearchAsync(DataTablePagination<EmployeeGradeSearchDto> searchDto);
 
 
     }

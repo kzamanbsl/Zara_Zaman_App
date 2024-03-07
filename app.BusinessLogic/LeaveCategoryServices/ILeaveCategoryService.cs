@@ -1,4 +1,7 @@
-﻿namespace app.Services.LeaveCategoryServices
+﻿using app.EntityModel.DataTablePaginationModels;
+using app.Services.ProductServices;
+
+namespace app.Services.LeaveCategoryServices
 {
     public interface ILeaveCategoryService
     {
@@ -8,6 +11,7 @@
         Task<LeaveCategoryViewModel> GetRecordById(long id);
         Task<bool> DeleteRecord(long id);
         Task<LeaveCategoryViewModel> GetAllRecord();
+        Task<DataTablePagination<LeaveCategorySearchDto>> SearchAsync(DataTablePagination<LeaveCategorySearchDto> searchDto);
 
     }
 }

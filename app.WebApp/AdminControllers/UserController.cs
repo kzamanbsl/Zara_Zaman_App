@@ -1,4 +1,6 @@
-﻿using app.Services.RolesServices;
+﻿using app.EntityModel.DataTablePaginationModels;
+using app.Services.ProductServices;
+using app.Services.RolesServices;
 using app.Services.UserServices;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -88,6 +90,24 @@ namespace app.WebApp.AdminControllers
             return View(result); 
         }
 
+
+        #endregion
+
+        #region Search
+
+        [HttpGet]
+        public async Task<IActionResult> Search()
+        {
+            
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Search(DataTablePagination<UserSearchDto> searchDto)
+        {
+            var dataTable = await _iUserService.SearchAsync(searchDto);
+            return Json(dataTable);
+        }
 
         #endregion
 
