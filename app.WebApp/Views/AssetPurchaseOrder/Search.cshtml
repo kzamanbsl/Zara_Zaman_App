@@ -54,9 +54,9 @@
                                         <th class="text-center">
                                             @Html.DisplayNameFor(model => model.OrderStatusId)
                                         </th>
-                                        <th class="text-center">
+                                        @* <th class="text-center">
                                             @Html.DisplayNameFor(model => model.TotalAmount)
-                                        </th>
+                                        </th> *@
                                         <th class="text-center">
                                             @Html.DisplayNameFor(model => model.Action)
                                         </th>
@@ -74,7 +74,7 @@
 
 </section>
 
-<div class="modal fade" tabindex="-1" id="editAssetPurchaseOrderModal" data-toggle="modal" role="dialog">
+<div class="modal fade" tabindex="-1" id="editAssetPuchaseOrderModal" data-toggle="modal" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <form asp-action="UpdateAssetPurchaseOrder" method="post">
@@ -193,13 +193,13 @@
                     {
                         data: "Storehouse",
                         render: function (data, type, row, meta) {
-                            return row.storehouse.name;
+                            return row.storehouse;
                         }
                     },
                     {
                         data: "Supplier",
                         render: function (data, type, row, meta) {
-                            return row.supplier.name;
+                            return row.supplier;
                         }
                     },
                     {
@@ -208,13 +208,13 @@
                             return row.orderStatusId;
                         }
                     },
-                    {
-                        data: "TotalAmount",
-                        render: function (data, type, row, meta) {
-                            var txt = '<div style="text-align: right">' + Number(row.totalAmount).toFixed(2) + '</div>';
-                            return txt;
-                        }
-                    },
+                    // {
+                    //     data: "TotalAmount",
+                    //     render: function (data, type, row, meta) {
+                    //         var txt = '<div style="text-align: right">' + Number(row.totalAmount).toFixed(2) + '</div>';
+                    //         return txt;
+                    //     }
+                    // },
                     {
                         data: "Action",
                         render: function (data, type, row, meta) {

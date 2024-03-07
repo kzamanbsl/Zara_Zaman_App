@@ -218,7 +218,7 @@ namespace app.Services.AssetPurchaseOrderServices
 
         public async Task<DataTablePagination<AssetPurchaseOrderSearchDto>> SearchAsync(DataTablePagination<AssetPurchaseOrderSearchDto> searchDto)
         {
-            var searchResult = _dbContext.PurchaseOrderDetail.Where(c=>c.IsActive==true && c.PurchaseOrder.PurchaseTypeId == (int)PurchaseTypeEnum.AssetPurchase).AsNoTracking();
+            var searchResult = _dbContext.PurchaseOrder.Where(c=>c.IsActive==true && c.PurchaseTypeId == (int)PurchaseTypeEnum.AssetPurchase).AsNoTracking();
 
             var searchModel = searchDto.SearchVm;
             var filter = searchDto?.Search?.Value?.Trim();
@@ -227,10 +227,10 @@ namespace app.Services.AssetPurchaseOrderServices
             {
                 filter = filter.ToLower();
                 searchResult = searchResult.Where(c =>
-                    c.PurchaseOrder.OrderNo.ToString().Contains(filter)
-                    || c.PurchaseOrder.PurchaseDate.ToString().Contains(filter)
-                    || c.PurchaseOrder.Supplier.Name.ToLower().Contains(filter)
-                    || c.PurchaseOrder.Storehouse.Name.ToLower().Contains(filter)
+                    c.OrderNo.ToString().Contains(filter)
+                    || c.PurchaseDate.ToString().Contains(filter)
+                    || c.Supplier.Name.ToLower().Contains(filter)
+                    || c.Storehouse.Name.ToLower().Contains(filter)
                 );
             }
 
@@ -242,21 +242,21 @@ namespace app.Services.AssetPurchaseOrderServices
 
             searchDto.RecordsTotal = totalRecords;
             searchDto.RecordsFiltered = totalRecords;
-            List<PurchaseOrderDetail> filteredDataList = await searchResult.OrderByDescending(c => c.Id).Skip(skip).Take(pageSize).ToListAsync();
+            List<PurchaseOrder> filteredDataList = await searchResult.OrderByDescending(c => c.Id).Skip(skip).Take(pageSize).ToListAsync();
 
             var sl = searchDto.Start ?? 0;
             searchDto.Data = filteredDataList.Select(c => new AssetPurchaseOrderSearchDto()
             {
                 SerialNo = ++sl,
-                Id = c.PurchaseOrder.Id,
-                OrderNo = c.PurchaseOrder.OrderNo,
-                PurchaseDate = c.PurchaseOrder.PurchaseDate,
-                StorehouseId = c.PurchaseOrder.StorehouseId,
-                Storehouse = c.PurchaseOrder.Storehouse,
-                OrderStatusId = (int)(PurchaseOrderStatusEnum)c.PurchaseOrder.OrderStatusId,
-                SupplierId = c.PurchaseOrder.SupplierId,
-                Supplier = c.PurchaseOrder.Supplier,
-                TotalAmount = (double)c.TotalAmount,
+                Id = c.Id,
+                OrderNo = c.OrderNo,
+                PurchaseDate = c.PurchaseDate,
+                StorehouseId = c.StorehouseId,
+                Storehouse = c.Storehouse,
+                OrderStatusId = (int)(PurchaseOrderStatusEnum)c.OrderStatusId,
+                SupplierId = c.SupplierId,
+                Supplier = c.Supplier,
+                //TotalAmount = (double)c.TotalAmount,
             }).ToList();
 
             return searchDto;
