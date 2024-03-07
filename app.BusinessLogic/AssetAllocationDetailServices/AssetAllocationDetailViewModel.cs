@@ -12,15 +12,10 @@ namespace app.Services.AssetAllocationDetailServices
         public AssetAllocation AssetAllocation { get; set; }
         public string AssetAllocationName { get; set; }
         public long? ProductId { get; set; }
-        public string ProductName { get; set; }
         public Product Product { get; set; }
-        public long? EmployeeId { get; set; }
-        public Employee Employee { get; set; }
-        public string EmployeeName { get; set; }
-        public long? DepartmentId { get; set; }
-        public Department Department { get; set; }
-        public string DepartmentName { get; set; }
-        public DateTime Date { get; set; }
+        public string ProductName { get; set; }
+        public int Quantity { get; set; }
+        public string Tags { get; set; }
         public string Description { get; set; }
         public ActionEnum ActionEum { get { return (ActionEnum)this.ActionId; } }
         public int ActionId { get; set; } = 1;

@@ -55,16 +55,19 @@
                                                 <th style="width:18%">Asset No</th>
                                                 <td style="width:30%">@Model.OrderNo</td>
 
-                                                <th style="width:18%"> Product </th>
-                                                <td style="width:30%">@Model.Product</td>
+                                                <th style="width:18%"> Date</th>
+                                                <td style="width:30%">@Model.Date </td>
                                             </tr>
                                             <tr>
-                                                <th>Quantity </th>
-                                                <td>@Model.Quantity </td>
+                                                <th>Employee Name </th>
+                                                <td>@Model.EmployeeName </td>
 
 
-                                                <th style="width:18%">Tags  Information</th>
-                                                <td style="width:30%">@Model.Tags </td>
+                                                <th style="width:18%">Department Name </th>
+                                                <td style="width:30%">@Model.DepartmentName </td>
+
+                                                <th style="width:18%">Remarks </th>
+                                                <td style="width:30%">@Model.Remarks </td>
                                             </tr>
                                             @*  <tr>
                                         <th>OverAll Discount</th>
@@ -82,7 +85,7 @@
                             @if (Model.Id == 0)
                             {
                                 <div class="row">
-                                    <div class="col-md-3">
+                                    <div class="col-md-2">
                                         <div class="form-group">
                                             <label>Order No </label>
                                             <input asp-for="OrderNo" class="form-control" autocomplete="off" required />
@@ -91,26 +94,29 @@
                                     </div>
                                     <div class="col-md-3">
                                         <div class="form-group">
-                                            <label>Product</label>
-                                            <select class="form-control" asp-for="Product" asp-items="ViewBag.ProductList" required>
-                                                <option value="0" selected>-- Select Product --</option>
-                                                <span asp-validation-for="ProductId" class="text-danger"></span>
+                                            <label>Asset Date </label>
+                                            <input asp-for="Date" value="@DateTime.Today.ToString("yyyy-MM-dd")" class="form-control" type="date" autocomplete="off" required />
+                                            <span asp-validation-for="Date" class="text-danger"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>Employee Name</label>
+                                            <select class="form-control" asp-for="EmployeeId" asp-items="ViewBag.EmployeeList" required>
+                                                <option value="0" selected>-- Select Employee --</option>
+                                                <span asp-validation-for="EmployeeId" class="text-danger"></span>
                                             </select>
                                         </div>
                                     </div>
 
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="form-group">
-                                            <label>Quantity  </label>
-                                            <input asp-for="Quantity" class="form-control" />
-                                            <span asp-validation-for="Quantity" class="text-danger"></span>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <div class="form-group">
-                                            <label>Tags</label>
-                                            <input asp-for="Tags" class="form-control" />
-                                            <span asp-validation-for="Tags" class="text-danger"></span>
+                                            <label>Department Name</label>
+                                            <select class="form-control" asp-for="DepartmentId" asp-items="ViewBag.DepartmentList" required>
+                                                <option value="0" selected>-- Select Department --</option>
+                                                <span asp-validation-for="DepartmentId" class="text-danger"></span>
+                                            </select>
                                         </div>
                                     </div>
                                 </div>
@@ -129,28 +135,27 @@
                                     <div class="row">
                                         <div class="col-md-5">
                                             <div class="form-group">
-                                                <label>Employee Name </label>
-                                                <select class="form-control" asp-for="AssetAllocationDetailVM.EmployeeId " id="employeeId" asp-items="ViewBag.EmployeeList" required>
-                                                    <option value="0" selected>-- Select Employee --</option>
-                                                    <span asp-validation-for="AssetAllocationDetailVM.EmployeeId " class="text-danger"></span>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <div class="form-group">
-                                                <label>Department  </label>
-                                                <select class="form-control" asp-for="AssetAllocationDetailVM.DepartmentId " id="departmentId" asp-items="ViewBag.DepartmentList" required>
-                                                    <option value="0" selected>-- Select Department  --</option>
-                                                    <span asp-validation-for="AssetAllocationDetailVM.DepartmentId " class="text-danger"></span>
+                                                <label>Product Name </label>
+                                                <select class="form-control" asp-for="AssetAllocationDetailVM.ProductId  " id="productId " asp-items="ViewBag.ProductList" required>
+                                                    <option value="0" selected>-- Select Product --</option>
+                                                    <span asp-validation-for="AssetAllocationDetailVM.ProductId " class="text-danger"></span>
                                                 </select>
                                             </div>
                                         </div>
 
                                         <div class="col-md-2">
                                             <div class="form-group">
-                                                <label>Date  </label>
-                                                <input asp-for="AssetAllocationDetailVM.Date " id="date" class="form-control" required min="0" />
-                                                <span asp-validation-for="AssetAllocationDetailVM.Date" class="text-danger"></span>
+                                                <label>Asset Quantity</label>
+                                                <input asp-for="AssetAllocationDetailVM.Quantity" id="quantity" class="form-control" required min="0" />
+                                                <span asp-validation-for="AssetAllocationDetailVM.Quantity" class="text-danger"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label>Asset Tags  </label>
+                                                <input asp-for="AssetAllocationDetailVM.Tags" id="tags" class="form-control" required min="0" />
+                                                <span asp-validation-for="AssetAllocationDetailVM.Tags" class="text-danger"></span>
                                             </div>
                                         </div>
 
@@ -186,9 +191,9 @@
                                         <thead class="table-light table-bordered border-primary">
                                             <tr>
                                                 <th style="padding:5px;text-align:center;">SL</th>
-                                                <th style="padding: 5px; text-align: left;">Employee Name</th>
-                                                <th style="padding: 5px; text-align: left;">Department Name</th>
-                                                <th style="padding: 5px; text-align: left;">Date</th>
+                                                <th style="padding: 5px; text-align: left;">Product Name</th>
+                                                <th style="padding: 5px; text-align: left;">Quantity </th>
+                                                <th style="padding: 5px; text-align: left;">Asset Tags </th>
                                                 <th style="padding: 5px; text-align: left;">Description</th>
 
                                                 @* <th style="padding: 5px; text-align: right; ">Consumption</th>
@@ -209,9 +214,9 @@
 
                                                 <tr>
                                                     <td style="padding:5px">@(++sl)</td>
-                                                    <td style="padding:5px;text-align:left;">@item.EmployeeName</td>
-                                                    <td style="padding: 5px; text-align: left;">@item.DepartmentName</td>
-                                                    <td style="padding: 5px; text-align: left;">@item.Date</td>
+                                                    <td style="padding:5px;text-align:left;">@item.ProductName</td>
+                                                    <td style="padding: 5px; text-align: left;">@item.Quantity</td>
+                                                    <td style="padding: 5px; text-align: left;">@item.Tags</td>
                                                     <td style="padding: 5px; text-align: left;">@item.Description</td>
 
                                                     @* <td style="padding:5px;text-align:left;">@String.Format("{0:0.00}", item.UnitName)</td>
@@ -281,10 +286,11 @@
                     $("#assetAllocationId").val(data.id);
                     $("#assetAllocationDetailsId").val(data.id);
                     $('#actionId').val(2);
-                    $("#employeeId").val(data.employeeId);
-                    $("#departmentId").val(data.departmentId);
+                    $("#productId").val(data.productId);
+                    $("#quantity").val(data.quantity);
+                    $("#tags ").val(data.tags);
                     $("#txtDescription").val(data.txtDescription);
-                    $("#date").val(data.date);
+                   
                     // $("#costPrice").val(data.costPrice);
                     // $("#salePrice").val(data.salePrice);
                     //$("#discount").val(data.discount);

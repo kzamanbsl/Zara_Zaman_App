@@ -31,7 +31,9 @@ namespace app.WebApp.Controllers
         {
             try
             {
-                ViewBag.ProductList = new SelectList((await _iDropdownService.ProductSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
+                ViewBag.EmployeeList = new SelectList((await _iDropdownService.EmployeeSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
+                ViewBag.DepartmentList = new SelectList((await _iDropdownService.DepartmentSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
+
                 AssetAllocationViewModel viewModel = await _iAssetAllocationService.GetAllRecord();
                 return View(viewModel);
             }
@@ -55,11 +57,10 @@ namespace app.WebApp.Controllers
             {
                 viewModel = await _iAssetAllocationService.GetAssetAllocation(assetAllocationId);
             }
-            
+
             ViewBag.ProductList = new SelectList((await _iDropdownService.ProductSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
-            ViewBag.EmployeeList = new SelectList((await _iDropdownService.EmployeeSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
-            ViewBag.DepartmentList = new SelectList((await _iDropdownService.DepartmentSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
-            
+
+
 
             return View(viewModel);
         }
@@ -102,7 +103,7 @@ namespace app.WebApp.Controllers
         public async Task<IActionResult> DeleteAssetAllocation(long id)
         {
             var res = await _iAssetAllocationService.DeleteAssetAllocation(id);
-            return RedirectToAction(nameof(Search));
+            return RedirectToAction(nameof(Index));
         }
 
 
@@ -147,15 +148,15 @@ namespace app.WebApp.Controllers
             return RedirectToAction("Index");
         }
 
-        #region Search
+        //#region Search
 
-        [HttpGet]
-        public async Task<IActionResult> Search()
-        {
-            ViewBag.Storehouses = new SelectList((await _iDropdownService.StorehouseSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
-            ViewBag.Suppliers = new SelectList((await _iDropdownService.SupplierSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
-            return View();
-        }
+        //[HttpGet]
+        //public async Task<IActionResult> Search()
+        //{
+        //    ViewBag.Storehouses = new SelectList((await _iDropdownService.StorehouseSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
+        //    ViewBag.Suppliers = new SelectList((await _iDropdownService.SupplierSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
+        //    return View();
+        //}
 
         //[HttpPost]
         //public async Task<IActionResult> Search(DataTablePagination<AssetAllocationSearchDto> searchDto)
@@ -164,8 +165,8 @@ namespace app.WebApp.Controllers
         //    return Json(dataTable);
         //}
 
-        #endregion
-
+        //#endregion
     }
 }
+
 
