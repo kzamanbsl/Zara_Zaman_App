@@ -41,9 +41,9 @@ namespace app.Services.AssetAllocationServices
 
             AssetAllocation assetAllocation =new AssetAllocation();
             assetAllocation.OrderNo = poCid;
-            //assetAllocation.ProductId = vm.ProductId;
-            //assetAllocation.Quantity = vm.Quantity;
-            //assetAllocation.Tags = vm.Tags;
+            assetAllocation.EmployeeId = vm.EmployeeId;
+            assetAllocation.DepartmentId = vm.DepartmentId;
+            assetAllocation.Date = vm.Date;
             assetAllocation.Remarks = vm.Remarks;
             assetAllocation.AssetAllocationStatusId = (int)AasetAllocationStatusEnum.Draft;
             var res = await _iEntityRepository.AddAsync(assetAllocation);
@@ -59,8 +59,11 @@ namespace app.Services.AssetAllocationServices
                                                              Id = t1.Id,
                                                              OrderNo= t1.OrderNo,
                                                              AssetAllocationStatusId = (int)(AasetAllocationStatusEnum)t1.AssetAllocationStatusId,
-                                                             //ProductId = t1.ProductId,
-                                                             //ProductName = t1.Product.Name,
+                                                             EmployeeId = t1.EmployeeId,
+                                                             EmployeeName= t1.Employee.Name,
+                                                             DepartmentId = t1.DepartmentId,
+                                                             DepartmentName= t1.Department.Name,
+                                                             Date = t1.Date,
                                                              //Quantity = t1.Quantity,
                                                              Remarks = t1.Remarks,
                                                          }).FirstOrDefault()); ;
@@ -69,13 +72,11 @@ namespace app.Services.AssetAllocationServices
                                                                                     select new AssetAllocationDetailViewModel
                                                                                     {
                                                                                         Id = t1.Id,
-                                                                                        AssetAllocationId = t1.AssetAllocationId,                                                                         ProductId= t1.ProductId,
+                                                                                        AssetAllocationId = t1.AssetAllocationId,                                                                        ProductId= t1.ProductId,
                                                                                         ProductName= t1.Product.Name,
-                                                                                        //EmployeeId = t1.EmployeeId,
-                                                                                        //EmployeeName = t1.Employee.Name,
-                                                                                        //DepartmentId = t1.DepartmentId,
-                                                                                        //DepartmentName = t1.Department.Name,
-                                                                                        //Date = t1.Date,
+                                                                                        Quantity = t1.Quantity,
+                                                                                        Tags = t1.Tags,
+                                                                                        Description = t1.Description,
                                                                                     }).OrderByDescending(x => x.Id).AsQueryable());
 
 
@@ -93,9 +94,11 @@ namespace app.Services.AssetAllocationServices
                                                       Id = t1.Id,
                                                       OrderNo = t1.OrderNo,
                                                       AssetAllocationStatusId = (int)(AasetAllocationStatusEnum)t1.AssetAllocationStatusId,
-                                                      //ProductId = t1.ProductId,
-                                                      //ProductName = t1.Product.Name,
-                                                      //Quantity = t1.Quantity,
+                                                      EmployeeId = t1.EmployeeId,
+                                                      EmployeeName = t1.Employee.Name,
+                                                      DepartmentId = t1.DepartmentId,
+                                                      DepartmentName = t1.Department.Name,
+                                                      Date=t1.Date,
                                                       Remarks = t1.Remarks,
 
                                                   }).OrderByDescending(x => x.Id).AsQueryable());
@@ -146,12 +149,11 @@ namespace app.Services.AssetAllocationServices
                                                               select new AssetAllocationViewModel
                                                               {
                                                                   Id = t1.Id,
-                                                                  //ProductId = t1.ProductId,
-                                                                  //ProductName=t1.Product.Name,
                                                                   OrderNo = t1.OrderNo,
                                                                   AssetAllocationStatusId = (int)(AasetAllocationStatusEnum)t1.AssetAllocationStatusId,
-                                                                  //Quantity = t1.Quantity,
-                                                                  //Tags = t1.Tags,
+                                                                  EmployeeId = t1.EmployeeId,
+                                                                  EmployeeName=t1.Employee.Name,
+                                                                  Date=t1.Date,
                                                                   Remarks = t1.Remarks,
                                                               }).FirstOrDefault());
 
@@ -160,15 +162,11 @@ namespace app.Services.AssetAllocationServices
                                                                                          {
                                                                                              Id = t1.Id,
                                                                                              AssetAllocationId = t1.AssetAllocationId,
-                                                                                             
                                                                                              ProductId = t1.ProductId,
                                                                                              ProductName = t1.Product.Name,
-                                                                                             //EmployeeId = t1.EmployeeId,
-                                                                                             //EmployeeName=t1.Employee.Name,
-                                                                                             //DepartmentId=t1.DepartmentId,
-                                                                                             //DepartmentName=t1.Department.Name,
-                                                                                             //Date=t1.Date,
-                                                                                             Description=t1.Description,
+                                                                                             Quantity=t1.Quantity,
+                                                                                             Tags=t1.Tags,
+                                                                                             Description =t1.Description,
                                                                                              
                                                                                          }).OrderByDescending(x => x.Id).AsQueryable());
 
@@ -194,11 +192,12 @@ namespace app.Services.AssetAllocationServices
             AssetAllocationViewModel sendData = new AssetAllocationViewModel();
             var result = await _dbContext.AssetAllocation.FirstOrDefaultAsync(x => x.Id == id);
             sendData.Id = result.Id;
-            //sendData.ProductId = result.ProductId;
-            //sendData.Quantity = result.Quantity;
-            //sendData.Tags = result.Tags;
+            sendData.OrderNo = result.OrderNo;
+            sendData.EmployeeId= result.EmployeeId;
+            sendData.DepartmentId= result.DepartmentId;
+            sendData.AssetAllocationStatusId = result.AssetAllocationStatusId;
+            sendData.Date = result.Date;
             sendData.Remarks = result.Remarks;
-
             
             return sendData;
         }
@@ -210,9 +209,9 @@ namespace app.Services.AssetAllocationServices
                 assetAllocation.Id = vm.Id;
                 assetAllocation.OrderNo = vm.OrderNo;
                 assetAllocation.AssetAllocationStatusId=vm.AssetAllocationStatusId;
-                //assetAllocation.ProductId = vm.ProductId;
-                //assetAllocation.Quantity = vm.Quantity;
-                //assetAllocation.Tags = vm.Tags;
+                assetAllocation.EmployeeId = vm.EmployeeId;
+                assetAllocation.DepartmentId = vm.DepartmentId;
+                assetAllocation.Date = vm.Date;
                 assetAllocation.Remarks = vm.Remarks;
                 await _iEntityRepository.UpdateAsync(assetAllocation);
                 return true;

@@ -56,14 +56,15 @@
                                                 <th style="width:18%">Allocation No</th>
                                                 <td style="width:30%">@Model.OrderNo</td>
 
-                                                <th style="width:18%"> Product </th>
-                                                <td style="width:30%">@Model.ProductName</td>
+                                                <th style="width:18%"> Asset Allocation Date </th>
+                                                <td style="width:30%">@Model.Date</td>
                                             </tr>
                                             <tr>
-                                                <th>Quantity </th>
-                                                <td>@Model.Quantity</td>
-                                                <th style="width:18%">Tags  Information</th>
-                                                <td style="width:30%">@Model.Tags</td>
+                                                <th>Employee Name </th>
+                                                <td>@Model.EmployeeName</td>
+
+                                                <th style="width:18%">Department Name</th>
+                                                <td style="width:30%">@Model.DepartmentName</td>
                                                 <th>Remarks  </th>
                                                 <td>@Model.Remarks </td>
                                             </tr>
@@ -85,10 +86,10 @@
                                         <thead class="table-light border-primary">
                                             <tr>
                                                 <th style="padding:5px;text-align:center;">SL</th>
-                                                <th style="padding: 5px; text-align: left;">Employee Name </th>
-                                                <th style="padding: 5px; text-align: left;">Department Name </th>
+                                                <th style="padding: 5px; text-align: left;">Product Name </th>
+                                                <th style="padding: 5px; text-align: left;">Quantity</th>
                                                 <th style="padding: 5px; text-align: left;">Quantity </th>
-                                                <th style="padding: 5px; text-align: left;">Date </th>
+                                                <th style="padding: 5px; text-align: left;">Tags </th>
                                                 <th style="padding: 5px; text-align: left;">Description  </th>
 
 
@@ -107,8 +108,8 @@
                                                 <tr>
                                                     <td style="padding:5px">@(++sl)</td>
                                                     <td style="padding:5px;text-align:left;">@item.ProductName</td>
-                                                    <td style="padding: 5px; text-align: left;">@item.DepartmentName</td>
-                                                    <td style="padding: 5px; text-align: left;">@item.Date </td>
+                                                    <td style="padding: 5px; text-align: left;">@item.Quantity</td>
+                                                    <td style="padding: 5px; text-align: left;">@item.Tags </td>
                                                     <td style="padding: 5px; text-align: left;">@item.Description </td>
 
 

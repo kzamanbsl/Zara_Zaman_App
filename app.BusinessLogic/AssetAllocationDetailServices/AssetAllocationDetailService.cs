@@ -26,10 +26,9 @@ namespace app.Services.AssetAllocationDetailServices
 
                     AssetAllocationId = vm.Id,
                     Id = vm.AssetAllocationDetailVM.Id,
-                    //EmployeeId = vm.AssetAllocationDetailVM.EmployeeId,
                     ProductId = vm.AssetAllocationDetailVM.ProductId,
-                   // DepartmentId = vm.AssetAllocationDetailVM.DepartmentId,
-                    //Date = vm.AssetAllocationDetailVM.Date,
+                    Quantity = vm.AssetAllocationDetailVM.Quantity,
+                    Tags = vm.AssetAllocationDetailVM.Tags,
                     Description = vm.AssetAllocationDetailVM.Description,
 
                 };
@@ -52,9 +51,8 @@ namespace app.Services.AssetAllocationDetailServices
             {
                 model.Id = assetAllocationDetail.AssetAllocationId;
                 assetAllocationDetail.ProductId = model.AssetAllocationDetailVM.ProductId;
-                //assetAllocationDetail.EmployeeId = model.AssetAllocationDetailVM.EmployeeId;
-                //assetAllocationDetail.DepartmentId = model.AssetAllocationDetailVM.DepartmentId;
-                //assetAllocationDetail.Date = model.AssetAllocationDetailVM.Date;
+                assetAllocationDetail.Quantity = model.AssetAllocationDetailVM.Quantity;
+                assetAllocationDetail.Tags = model.AssetAllocationDetailVM.Tags;
                 assetAllocationDetail.Description = model.AssetAllocationDetailVM.Description;
 
 
@@ -72,11 +70,10 @@ namespace app.Services.AssetAllocationDetailServices
                                           {
                                               Id = t1.Id,
                                               AssetAllocationId = t1.AssetAllocationId,
-                                              //EmployeeId = t1.EmployeeId,
-                                              //EmployeeName = t1.Employee.Name,
-                                              //DepartmentId = t1.DepartmentId,
-                                             // DepartmentName = t1.Department.Name,
-                                             // Date = t1.Date,
+                                              ProductId = t1.ProductId,
+                                              ProductName=t1.Product.Name,
+                                              Quantity= t1.Quantity,
+                                              Tags = t1.Tags,
                                               Description = t1.Description,
 
 

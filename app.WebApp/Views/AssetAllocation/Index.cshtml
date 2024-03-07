@@ -37,9 +37,10 @@
                             <tr>
                                 <th>SL</th>
                                 <th class="text-center">Allocation Order No</th>
-                                <th class="text-center">Product </th>
-                                <th class="text-center">Quantity </th>
-                                <th class="text-center">Tags  </th>
+                                <th class="text-center">Date </th>
+                                <th class="text-center">Employee Name </th>
+                                <th class="text-center">Department Name  </th>
+                                <th class="text-center">Asset Status</th>
                                 <th class="text-center">Remarks</th>
                                 @* <th class="text-center">Total Amount</th> *@
                                 <th class="text-center">Action</th>
@@ -52,11 +53,11 @@
                                 <tr>
                                     <td style="width:10px;">@(++SN)</td>
                                     <td>@item.OrderNo</td>
-                                    <td>@item.ProductName</td>
-                                    <td>@item.Quantity </td>
-                                    <td>@item.Tags </td>
+                                    <td>@item.Date.ToString("dd-MM-yyyy")</td>
+                                    <td>@item.EmployeeName </td>
+                                    <td>@item.DepartmentName </td>
+                                    <td>@item.AssetAllocationStatusName </td>
                                     <td>@item.Remarks </td>
-                                    <td>@item.AssetAllocationStatusName</td>
                                     @* <td>@item.TotalAmount</td> *@
                                     @if (@item.AssetAllocationStatusId == (int)AasetAllocationStatusEnum.Receive || @item.AssetAllocationStatusId == (int)AasetAllocationStatusEnum.Reject)
                                     {
@@ -108,23 +109,29 @@
                     </div>
 
                     <div class="form-group">
-                        <label>Product</label>
-                        <select class="form-control" id="productId" asp-for="ProductId" asp-items="ViewBag.ProductList" required>
-                            <option value="0" selected>-- Select Product --</option>
-                            <span asp-validation-for="ProductId" class="text-danger"></span>
+                        <label>Asset Date </label>
+                        <input asp-for="Date" id="assetdate" class="form-control" type="date" autocomplete="off" required />
+                        <span asp-validation-for="Date" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Employee Name</label>
+                        <select class="form-control" id="employeeId" asp-for="EmployeeId" asp-items="ViewBag.EmployeeList" required>
+                            <option value="0" selected>-- Select Employee --</option>
+                            <span asp-validation-for="Employee" class="text-danger"></span>
                         </select>
                     </div>
 
                     <div class="form-group">
-                        <label>Quantity  </label>
-                        <input asp-for="Quantity" id="ouantity " class="form-control" autocomplete="off" required />
-                        <span asp-validation-for="OrderNo" class="text-danger"></span>
+                        <label>Department  Name</label>
+                        <select class="form-control" id="departmentId" asp-for="DepartmentId" asp-items="ViewBag.DepartmentList" required>
+                            <option value="0" selected>-- Select Department --</option>
+                            <span asp-validation-for="DepartmentId" class="text-danger"></span>
+                        </select>
                     </div>
-
                     <div class="form-group">
-                        <label>Tags  </label>
-                        <input asp-for="Tags" id="tags" class="form-control" autocomplete="off" required />
-                        <span asp-validation-for="Tags" class="text-danger"></span>
+                        <label asp-for="Remarks" id="remarks" class="control-label">Remarks</label>
+                        <textarea asp-for="Remarks" class="form-control" rows="2"></textarea>
                     </div>
 
                 </div>
@@ -173,18 +180,19 @@
                     $("#hidPOID").val(data.id);
 
                     // Parse date if needed and adjust for timezone
-                    // var purchaseDate = new Date(data.purchaseDate);
-                    // var offset = purchaseDate.getTimezoneOffset();
-                    // purchaseDate = new Date(purchaseDate.getTime() - (offset * 60 * 1000));
+                    var assetdate = new Date(data.assetdate);
+                    var offset = assetdate.getTimezoneOffset();
+                    assetdate = new Date(assetdate.getTime() - (offset * 60 * 1000));
 
-                    // // Format date as YYYY-MM-DD
-                    // var formattedDate = purchaseDate.toISOString().split('T')[0];
+                    // Format date as YYYY-MM-DD
+                    var formattedDate = purchaseDate.toISOString().split('T')[0];
 
                     // Set value
                     $("#orderNo").val(data.orderNo);
-                    $("#productId").val(data.productId);
-                    $("#ouantity").val(data.ouantity);
-                    $("#Tags").val(data.Tags);
+                    $("#assetdate").val(assetdate);
+                    $("#employeeId").val(data.employeeId);
+                    $("#departmentId").val(data.departmentId);
+                    $("#remarks").val(data.Tags);
                 }
             });
         }
