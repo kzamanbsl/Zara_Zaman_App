@@ -30,6 +30,40 @@
                 </div>
             </div>
             <div class="card-body">
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <form method="post" asp-controller="PurchaseOrder" asp-action="Search">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>Storehouse</label>
+                                        <select class="form-control" asp-for="StorehouseId" asp-items="ViewBag.StorehouseList" required>
+                                            <option value="0" selected>-- Select Storehouse --</option>
+                                            <span asp-validation-for="StorehouseId" class="text-danger"></span>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>Supplier</label>
+                                        <select class="form-control" asp-for="SupplierId" asp-items="ViewBag.SupplierList" required>
+                                            <option value="0" selected>-- Select Supplier --</option>
+                                            <span asp-validation-for="SupplierId" class="text-danger"></span>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group text-right">
+                                <input id="PurchaseOrderDTSearchBtn" type="button" value="Search" class="btn btn-info btn-width" />
+                                <a href="@Url.Action("Search","PurchaseOrder")"><input type="button" value="Clear" class="btn btn-warning btn-width" /></a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <hr />
+
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="table-responsive">
@@ -47,16 +81,16 @@
                                             @Html.DisplayNameFor(model => model.PurchaseDate)
                                         </th>
                                         <th class="text-center">
-                                            @Html.DisplayNameFor(model => model.Storehouse)
+                                            @Html.DisplayNameFor(model => model.StoreName)
                                         </th>
                                         <th class="text-center">
-                                            @Html.DisplayNameFor(model => model.Supplier)
+                                            @Html.DisplayNameFor(model => model.SupplierName)
                                         </th>
                                         <th class="text-center">
-                                            @Html.DisplayNameFor(model => model.OrderStatusId)
+                                            @Html.DisplayNameFor(model => model.OrderStatusName)
                                         </th>
-                                      @*   <th class="text-center">
-                                            @Html.DisplayNameFor(model => model.TotalAmount)
+                                        @*   <th class="text-center">
+                                        @Html.DisplayNameFor(model => model.TotalAmount)
                                         </th> *@
                                         <th class="text-center">
                                             @Html.DisplayNameFor(model => model.Action)
@@ -72,13 +106,13 @@
             </div>
         </div>
     </div>
-
 </section>
 
-<div class="modal fade" tabindex="-1" id="editPuchaseOrderModal" data-toggle="modal" role="dialog">
+
+<div class="modal fade" tabindex="-1" id="editPurchaseOrderModal" data-toggle="modal" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form asp-action="UpdatePurchaseOrder" method="post">
+            <form asp-action="UpdatePurchaseMaster" method="post">
 
 
                 <div class="modal-header">
@@ -90,25 +124,25 @@
 
                 <div class="modal-body">
 
-                    @Html.HiddenFor(model => model.Id, new { id = "purchaseOrderIdModal" })
+                    @Html.HiddenFor(model => model.Id, new { id = "hidPOID" })
 
                     <div class="form-group">
-                        <label>Purchase Date</label>
-                        <input id="purchaseDateModal" asp-for="PurchaseDate" value="@DateTime.Today.ToString("yyyy-MM-dd")" type="date" class="form-control" autocomplete="off" required />
+                        <label>Purchase Date </label>
+                        <input asp-for="PurchaseDate" id="purchaseDate" class="form-control" type="date" autocomplete="off" required />
                         <span asp-validation-for="PurchaseDate" class="text-danger"></span>
                     </div>
 
                     <div class="form-group">
                         <label>Storehouse</label>
-                        <select class="form-control" id="storehouseIdModal" asp-for="StorehouseId" asp-items="ViewBag.StorehouseList" required>
+                        <select class="form-control" id="storehouseId" asp-for="StorehouseId" asp-items="ViewBag.StorehouseList" required>
                             <option value="0" selected>-- Select Storehouse --</option>
                             <span asp-validation-for="StorehouseId" class="text-danger"></span>
                         </select>
                     </div>
 
                     <div class="form-group">
-                        <label>Customer</label>
-                        <select class="form-control" id="supplierIdModal" asp-for="SupplierId" asp-items="ViewBag.SupplierList" required>
+                        <label>Supplier</label>
+                        <select class="form-control" id="supplierId" asp-for="SupplierId" asp-items="ViewBag.SupplierList" required>
                             <option value="0" selected>-- Select Supplier --</option>
                             <span asp-validation-for="SupplierId" class="text-danger"></span>
                         </select>
@@ -123,6 +157,7 @@
     </div>
 </div>
 
+
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
@@ -131,9 +166,33 @@
         $(document).ready(function () {
             $('#Purchases').addClass('menu-open');
             $('#PurchaseOrderSearch').addClass('active');
-
             search();
         });
+
+        function makeEditble(rowId) {
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("UpdatePurchaseOrder", "PurchaseOrder")",
+                datatype: "Json",
+                data: { id: rowId },
+                success: function (data) {
+                    $("#hidPOID").val(data.id);
+
+                    // Parse date if needed and adjust for timezone
+                    var purchaseDate = new Date(data.purchaseDate);
+                    var offset = purchaseDate.getTimezoneOffset();
+                    purchaseDate = new Date(purchaseDate.getTime() - (offset * 60 * 1000));
+
+                    // Format date as YYYY-MM-DD
+                    var formattedDate = purchaseDate.toISOString().split('T')[0];
+
+                    // Set value
+                    $("#purchaseDate").val(formattedDate);
+                    $("#storehouseId").val(data.storehouseId);
+                    $("#supplierId").val(data.supplierId);
+                }
+            });
+        }
 
         $(document.body).on("click", "#PurchaseOrderDTSearchBtn", function () {
             search();
@@ -142,7 +201,8 @@
         function getSearchObject() {
 
             var searchVm = {
-               
+                "StorehouseId": $("#StorehouseId").val(),
+                "SupplierId": $("#SupplierId").val(),
             }
             return searchVm;
         }
@@ -161,8 +221,8 @@
             }
 
             var oTable = $("#PurchaseOrderSearchTable").DataTable({
-                "aLengthMenu": [[25, 50, 100, 200], [25, 50, 100, 200]],
-                "iDisplayLength": 25,
+                "aLengthMenu": [[10, 25, 50, 100, 200], [10, 25, 50, 100, 200]],
+                "iDisplayLength": 10,
                 "processing": true,
                 "serverSide": true,
                 "bSort": false,
@@ -188,56 +248,34 @@
                     {
                         data: "PurchaseDate",
                         render: function (data, type, row, meta) {
-                            return row.purchaseDate;
+                            var date = new Date(row.purchaseDate);
+                            var formattedDate = (date.getDate().toString().padStart(2, '0')) + '-' + ((date.getMonth() + 1).toString().padStart(2, '0')) + '-' + date.getFullYear();
+                            return formattedDate;
                         }
                     },
                     {
-                        data: "Storehouse",
+                        data: "StoreName",
                         render: function (data, type, row, meta) {
-                            return row.storehouse;
+                            return row.storeName;
                         }
                     },
                     {
-                        data: "Supplier",
+                        data: "SupplierName",
                         render: function (data, type, row, meta) {
-                            return row.supplier;
+                            return row.supplierName;
                         }
                     },
 
                     {
-                        data: "OrderStatusId",
+                        data: "OrderStatusName",
                         render: function (data, type, row, meta) {
-                            return row.orderStatusId;
+                            return row.orderStatusName;
                         }
                     },
-
-                    // {
-                    //     data: "OrderStatusId",
-                    //     render: function (data, type, row, meta) {
-                    //         var result = "";
-                    //      if (row.orderStatusId == (int)PurchaseOrderStatusEnum.Receive || row.orderStatusId == (int)PurchaseOrderStatusEnum.Reject)
-                    // {
-                    //      var result = <p> Received </p>
-                    // }
-                    // else if (row.orderStatusId == (int)PurchaseOrderStatusEnum.Draft || row.orderStatusId == (int)PurchaseOrderStatusEnum.Confirm)
-                    // {
-                    //         var result = <p> Rejected </p>
-                    // }
-                    //         return result;
-                    //     }
-                    // },
-
-                    // {
-                    //     data: "TotalAmount",
-                    //     render: function (data, type, row, meta) {
-                    //         var txt = '<div style="text-align: right">' + Number(row.totalAmount).toFixed(2) + '</div>';
-                    //         return txt;
-                    //     }
-                    // },
                     {
                         data: "Action",
                         render: function (data, type, row, meta) {
-                            var editBtn = "<a onclick='MakeEditable(" + row.id + ");' data-toggle='modal' data-target='#editPuchaseOrderModal' data-placement='top'><i class='fas fa-pen text-warning m-1' title='Edit' aria-hidden='true'></i></a>";
+                            var editBtn = "<a onclick='makeEditble(" + row.id + ");' data-toggle='modal' data-target='#editPurchaseOrderModal' data-placement='top'><i class='fas fa-pen text-warning m-1' title='Edit' aria-hidden='true'></i></a>";
                             var detailsBtn = "<a href='PurchaseDetails/" + row.id + "'><i class='fa fa-eye text-info m-1' title='Details' aria-hidden='true'></i></a>";
                             var deleteBtn = "<a href='DeletePurchaseOrder/" + row.id + "'><i class='fas fa-trash text-danger m-1' title='Delete' aria-hidden='true'></i></a>";
                             var actionBtn = editBtn + detailsBtn + deleteBtn;
@@ -247,5 +285,6 @@
                 ]
             });
         }
+
     </script>
 }

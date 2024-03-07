@@ -215,10 +215,19 @@ namespace app.Services.PurchaseOrderServices
 
         public async Task<DataTablePagination<PurchaseOrderSearchDto>> SearchAsync(DataTablePagination<PurchaseOrderSearchDto> searchDto)
         {
-            var searchResult = _dbContext.PurchaseOrder.Where(c=>c.IsActive == true && c.PurchaseTypeId == (int)PurchaseTypeEnum.Purchase).AsNoTracking();
+            var searchResult = _dbContext.PurchaseOrder.Include(c => c.Storehouse).Include(c => c.Supplier).Where(c=>c.IsActive == true && c.PurchaseTypeId == (int)PurchaseTypeEnum.Purchase).AsNoTracking(); ;
 
             var searchModel = searchDto.SearchVm;
             var filter = searchDto?.Search?.Value?.Trim();
+
+            if (searchModel?.StorehouseId is > 0)
+            {
+                searchResult = searchResult.Where(c => c.StorehouseId == searchModel.StorehouseId);
+            }
+            if (searchModel?.SupplierId is > 0)
+            {
+                searchResult = searchResult.Where(c => c.SupplierId == searchModel.SupplierId);
+            }
 
             if (!string.IsNullOrEmpty(filter))
             {
@@ -249,12 +258,14 @@ namespace app.Services.PurchaseOrderServices
                 OrderNo = c.OrderNo,
                 PurchaseDate = c.PurchaseDate,
                 StorehouseId = c.StorehouseId,
-                Storehouse = c.Storehouse,
-                OrderStatusId = (int)(PurchaseOrderStatusEnum)c.OrderStatusId,
+                StoreName = c.Storehouse.Name,
                 SupplierId = c.SupplierId,
-                Supplier = c.Supplier,
-                //TotalAmount = (double)c.TotalAmount,
-            }).ToList();
+                SupplierName = c.Supplier.Name,
+                OrderStatusId = (int)(PurchaseOrderStatusEnum)c.OrderStatusId,
+                OrderStatusName = Enum.GetName(typeof(PurchaseOrderStatusEnum),c.OrderStatusId),
+
+            //TotalAmount = (double)c.TotalAmount,
+        }).ToList();
 
             return searchDto;
         }

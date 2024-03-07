@@ -149,7 +149,8 @@ namespace app.WebApp.Controllers
         [HttpGet]
         public async Task<IActionResult> Search()
         {
-           
+            ViewBag.StorehouseList = new SelectList((await _iDropdownService.StorehouseSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
+            ViewBag.SupplierList = new SelectList((await _iDropdownService.SupplierSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
             return View();
         }
 

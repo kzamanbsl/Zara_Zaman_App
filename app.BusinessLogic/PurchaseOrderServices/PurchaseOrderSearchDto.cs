@@ -55,6 +55,6 @@ namespace app.Services.PurchaseOrderServices
         public string StoreName { get; set; }
         public ActionEnum ActionEum { get { return (ActionEnum)this.ActionId; } }
         public int ActionId { get; set; } = 1;
-        public PurchaseOrderDetailViewModel PurchaseOrderDetailVM { get; set; } 
+        public PurchaseOrderDetailViewModel PurchaseOrderDetailVM { get; set; }
     }
 }
