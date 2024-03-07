@@ -75,7 +75,6 @@
                                         </th>
                                         <th class="text-center">
                                             @Html.DisplayNameFor(model => model.OrderNo)
-
                                         </th>
                                         <th class="text-center">
                                             @Html.DisplayNameFor(model => model.PurchaseDate)
@@ -113,8 +112,6 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <form asp-action="UpdatePurchaseMaster" method="post">
-
-
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Update Purchase Order</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -162,12 +159,8 @@
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
+
     <script>
-        $(document).ready(function () {
-            $('#Purchases').addClass('menu-open');
-            $('#PurchaseOrderSearch').addClass('active');
-            search();
-        });
 
         function makeEditble(rowId) {
             $.ajax({
@@ -194,6 +187,13 @@
             });
         }
 
+        $(document).ready(function () {
+            $('#Purchases').addClass('menu-open');
+            $('#PurchaseOrderSearch').addClass('active');
+
+            search();
+        });
+
         $(document.body).on("click", "#PurchaseOrderDTSearchBtn", function () {
             search();
         });
@@ -209,6 +209,7 @@
 
         function search() {
             var searchVm = getSearchObject();
+                
 
             if ($.fn.DataTable.isDataTable("#PurchaseOrderSearchTable")) {
                 var table = $("#PurchaseOrderSearchTable").DataTable();
@@ -284,6 +285,13 @@
                     }
                 ]
             });
+        }
+    </script>
+
+
+    <script>    
+
+            
         }
 
     </script>

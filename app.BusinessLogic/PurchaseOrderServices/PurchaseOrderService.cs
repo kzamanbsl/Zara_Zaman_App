@@ -237,6 +237,7 @@ namespace app.Services.PurchaseOrderServices
                     || c.PurchaseDate.ToString().Contains(filter)
                     || c.Supplier.Name.ToLower().Contains(filter)
                     || c.Storehouse.Name.ToLower().Contains(filter)
+                    || Enum.GetName(typeof(PurchaseOrderStatusEnum), c.OrderStatusId).ToLower().Contains(filter)
                 );
             }
 
