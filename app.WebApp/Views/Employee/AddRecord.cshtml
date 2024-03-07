@@ -62,7 +62,7 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <div class="col-md-8">
-                                                    <label asp-for="EmployeeCode">Employee Code</label>
+                                                    <label asp-for="EmployeeCode">Employee Id</label>
                                                     <input asp-for="EmployeeCode" class="form-control" required />
                                                     <span asp-validation-for="EmployeeCode" class="text-danger"></span>
                                                 </div>
@@ -80,7 +80,7 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <div class="col-md-8">
-                                                    <label asp-for="ManagerId">Manager</label>
+                                                    <label asp-for="ManagerId">Line Manager</label>
                                                     <select asp-for="ManagerId" class="form-control"  asp-items="ViewBag.ManagerList">
                                                         <option value="">-- Select Manager --</option>
                                                     </select>
@@ -88,7 +88,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
+                                    @*     <div class="col-md-6">
                                             <div class="form-group">
                                                 <div class="col-md-8">
                                                     <label asp-for="EmployeeOrder">Employee Order</label>
@@ -96,7 +96,7 @@
                                                     <span asp-validation-for="EmployeeOrder" class="text-danger"></span>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> *@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <div class="col-md-8">
@@ -170,7 +170,7 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <div class="col-md-8">
-                                                    <label asp-for="SpouseName">Spouse</label>
+                                                    <label asp-for="SpouseName">Spouse Name</label>
                                                     <input asp-for="SpouseName" class="form-control" />
                                                     <span asp-validation-for="SpouseName" class="text-danger"></span>
                                                 </div>
@@ -301,7 +301,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
+                                        @* <div class="col-md-6">
                                             <div class="form-group">
                                                 <div class="col-md-8">
                                                     <label asp-for="JobStatusId">Job Status</label>
@@ -311,7 +311,7 @@
                                                     <span asp-validation-for="JobStatusId" class="text-danger"></span>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> *@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <div class="col-md-8">
@@ -498,7 +498,7 @@
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <img height="300" width="300" src="@Url.Content(Model.SignUrl)" alt="User Signature">
+                                                <img height="300" width="300">
                                             </div>
                                         </div>
                                     </div>
