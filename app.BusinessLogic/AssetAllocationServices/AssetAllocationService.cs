@@ -29,7 +29,7 @@ namespace app.Services.AssetAllocationServices
 
             if (vm.AssetAllocationStatusId == 0)
             {
-                vm.AssetAllocationStatusId = (int)AasetAllocationStatusEnum.Draft;
+                vm.AssetAllocationStatusId = (int)AssetAllocationStatusEnum.Draft;
             }
 
             var poMax = _dbContext.AssetAllocation.Count() + 1;
@@ -45,7 +45,7 @@ namespace app.Services.AssetAllocationServices
             assetAllocation.DepartmentId = vm.DepartmentId;
             assetAllocation.Date = vm.Date;
             assetAllocation.Remarks = vm.Remarks;
-            assetAllocation.AssetAllocationStatusId = (int)AasetAllocationStatusEnum.Draft;
+            assetAllocation.AssetAllocationStatusId = (int)AssetAllocationStatusEnum.Draft;
             var res = await _iEntityRepository.AddAsync(assetAllocation);
             vm.Id = res?.Id ?? 0;
             return true;
@@ -75,7 +75,7 @@ namespace app.Services.AssetAllocationServices
                                                          {
                                                              Id = t1.Id,
                                                              OrderNo= t1.OrderNo,
-                                                             AssetAllocationStatusId = (int)(AasetAllocationStatusEnum)t1.AssetAllocationStatusId,
+                                                             AssetAllocationStatusId = (int)(AssetAllocationStatusEnum)t1.AssetAllocationStatusId,
                                                              EmployeeId = t1.EmployeeId,
                                                              EmployeeName= t1.Employee.Name,
                                                              DepartmentId = t1.DepartmentId,
@@ -94,7 +94,7 @@ namespace app.Services.AssetAllocationServices
                                                                                         Quantity = t1.Quantity,
                                                                                         Tags = t1.Tags,
                                                                                         Description = t1.Description,
-                                                                                    }).OrderByDescending(x => x.Id).AsEnumerable());
+                                                                                    }).OrderByDescending(x => x.Id).AsQueryable());
 
 
             return assetAllocationModel;
@@ -107,10 +107,12 @@ namespace app.Services.AssetAllocationServices
                                                          {
                                                              Id = t1.Id,
                                                              OrderNo = t1.OrderNo,
-                                                             AssetAllocationStatusId = (int)(AasetAllocationStatusEnum)t1.AssetAllocationStatusId,
+                                                             Date = t1.Date,
                                                              EmployeeId = t1.EmployeeId,
                                                              EmployeeName = t1.Employee.Name,
-                                                             Date = t1.Date,
+                                                             DepartmentId=t1.DepartmentId,
+                                                             DepartmentName=t1.Department.Name,
+                                                             AssetAllocationStatusId = (int)(AssetAllocationStatusEnum)t1.AssetAllocationStatusId,
                                                              Remarks = t1.Remarks,
                                                          }).FirstOrDefault());
 
@@ -125,7 +127,7 @@ namespace app.Services.AssetAllocationServices
                                                                                         Tags = t1.Tags,
                                                                                         Description = t1.Description,
 
-                                                                                    }).OrderByDescending(x => x.Id).AsEnumerable());
+                                                                                    }).OrderByDescending(x => x.Id).AsQueryable());
 
 
             return assetAllocationModel;
@@ -151,7 +153,7 @@ namespace app.Services.AssetAllocationServices
             var checkAssetAllocation = await _dbContext.AssetAllocation.FirstOrDefaultAsync(c => c.Id == id);
             if (checkAssetAllocation != null && checkAssetAllocation.Id == id)
             {
-                checkAssetAllocation.AssetAllocationStatusId = (int)AasetAllocationStatusEnum.Confirm;
+                checkAssetAllocation.AssetAllocationStatusId = (int)AssetAllocationStatusEnum.Confirm;
                 await _iEntityRepository.UpdateAsync(checkAssetAllocation);
                 return true;
             }
@@ -161,9 +163,9 @@ namespace app.Services.AssetAllocationServices
         {
             var checkAssetAllocation = await _dbContext.AssetAllocation.FirstOrDefaultAsync(c => c.Id == id);
 
-            if (checkAssetAllocation != null || checkAssetAllocation.AssetAllocationStatusId == (int)AasetAllocationStatusEnum.Draft || checkAssetAllocation.AssetAllocationStatusId == (int)AasetAllocationStatusEnum.Confirm)
+            if (checkAssetAllocation != null || checkAssetAllocation.AssetAllocationStatusId == (int)AssetAllocationStatusEnum.Draft || checkAssetAllocation.AssetAllocationStatusId == (int)AssetAllocationStatusEnum.Confirm)
             {
-                checkAssetAllocation.AssetAllocationStatusId = (int)AasetAllocationStatusEnum.Reject;
+                checkAssetAllocation.AssetAllocationStatusId = (int)AssetAllocationStatusEnum.Reject;
                 await _iEntityRepository.UpdateAsync(checkAssetAllocation);
                 return true;
             }
@@ -181,13 +183,13 @@ namespace app.Services.AssetAllocationServices
         {
             AssetAllocationViewModel assetAllocationMasterModel = new AssetAllocationViewModel();
             var dataQuery = await Task.Run(() => (from t1 in _dbContext.AssetAllocation
-                                                  where t1.IsActive == true && t1.AssetAllocationStatusId == (int)AasetAllocationStatusEnum.Draft
+                                                  where t1.IsActive == true && t1.AssetAllocationStatusId == (int)AssetAllocationStatusEnum.Draft
 
                                                   select new AssetAllocationViewModel
                                                   {
                                                       Id = t1.Id,
                                                       OrderNo = t1.OrderNo,
-                                                      AssetAllocationStatusId = (int)(AasetAllocationStatusEnum)t1.AssetAllocationStatusId,
+                                                      AssetAllocationStatusId = (int)(AssetAllocationStatusEnum)t1.AssetAllocationStatusId,
                                                       EmployeeId = t1.EmployeeId,
                                                       EmployeeName = t1.Employee.Name,
                                                       DepartmentId = t1.DepartmentId,
@@ -198,10 +200,10 @@ namespace app.Services.AssetAllocationServices
                                                   }).OrderByDescending(x => x.Id).AsQueryable());
 
             assetAllocationMasterModel.AssetAllocationList = await Task.Run(() => dataQuery.ToList());
-            assetAllocationMasterModel.AssetAllocationList.ToList().ForEach((c => c.AssetAllocationStatusName = Enum.GetName(typeof(AasetAllocationStatusEnum), c.AssetAllocationStatusId)));
+            assetAllocationMasterModel.AssetAllocationList.ToList().ForEach((c => c.AssetAllocationStatusName = Enum.GetName(typeof(AssetAllocationStatusEnum), c.AssetAllocationStatusId)));
 
 
-            //var masterIds = assetAllocationMasterModel.AssetAllocationList.Select(x => x.Id);
+            var masterIds = assetAllocationMasterModel.AssetAllocationList.Select(x => x.Id);
 
             //var matchingDetails = await _dbContext.AssetAllocationDetail
             //    .Where(detail => masterIds.Contains(detail.AssetAllocationStatusId) && detail.IsActive == true)
@@ -218,7 +220,7 @@ namespace app.Services.AssetAllocationServices
         }
         public async Task<DataTablePagination<AssetAllocationSearchDto>> SearchAsync(DataTablePagination<AssetAllocationSearchDto> searchDto)
         {
-            var searchResult = _dbContext.AssetAllocation.Where(c => c.IsActive == true && c.AssetAllocationStatusId == (int)AasetAllocationStatusEnum.Draft).AsNoTracking();
+            var searchResult = _dbContext.AssetAllocation.Where(c => c.IsActive == true && c.AssetAllocationStatusId == (int)AssetAllocationStatusEnum.Draft).AsNoTracking();
 
             var searchModel = searchDto.SearchVm;
             var filter = searchDto?.Search?.Value?.Trim();
@@ -264,7 +266,7 @@ namespace app.Services.AssetAllocationServices
                 Department = c.Department,
                 DepartmentId = c.DepartmentId,
                 DepartmentName = c.Department.Name,
-                AssetAllocationStatusId = (int)(AasetAllocationStatusEnum)c.AssetAllocationStatusId,
+                AssetAllocationStatusId = (int)(AssetAllocationStatusEnum)c.AssetAllocationStatusId,
                 Remarks = c.Remarks,
             }).ToList();
 

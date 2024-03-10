@@ -11,10 +11,10 @@
         <div class="breadcrumb d-flex justify-content-between align-items-center  pl-3 pr-3">
             <ol class="breadcrumb mb-0 p-0">
                 <li class="breadcrumb-item"><a href="/Admin/Index">Home </a></li>
-                <li class="breadcrumb-item active">Asset Allocation Order List </li>
+                <li class="breadcrumb-item active">Asset Allocation List </li>
             </ol>
             <div>
-                <a asp-action="AddAssetAllocationAndDetail"><i class="fa fa-plus"></i>Add Asset Allocation Order </a>
+                <a asp-action="AddAssetAllocationAndDetail"><i class="fa fa-plus"></i>Add Asset Allocation List</a>
             </div>
         </div>
     </div>
@@ -26,7 +26,7 @@
             <div class="card-header">
                 <div class="row w-100">
                     <div class="col-sm-3">
-                        <h5> <i class="fas fa-list"></i> All Asset Allocation Order</h5>
+                        <h5> <i class="fas fa-list"></i> All Asset Allocation List </h5>
                     </div>
                 </div>
             </div>
@@ -59,15 +59,16 @@
                                     <td>@item.AssetAllocationStatusName </td>
                                     <td>@item.Remarks </td>
                                     @* <td>@item.TotalAmount</td> *@
-                                    @if (@item.AssetAllocationStatusId == (int)AasetAllocationStatusEnum.Receive || @item.AssetAllocationStatusId == (int)AasetAllocationStatusEnum.Reject)
+                                    @if (@item.AssetAllocationStatusId == (int)AssetAllocationStatusEnum.Receive || @item.AssetAllocationStatusId == (int)AssetAllocationStatusEnum.Reject)
                                     {
                                         <td class="text-center"> @Html.ActionLink("", "AssetAllocationDetails", new { id = item.Id }, new { @title = "Details", @class = "text-primary fas fa-eye"})</td>
                                     }
-                                    @if (@item.AssetAllocationStatusId == (int)AasetAllocationStatusEnum.Draft || @item.AssetAllocationStatusId == (int)AasetAllocationStatusEnum.Confirm)
+                                    @if (@item.AssetAllocationStatusId == (int)AssetAllocationStatusEnum.Draft || @item.AssetAllocationStatusId == (int)AssetAllocationStatusEnum.Confirm)
                                     {
                                         <td class="text-center">
 
-                                            <a id="@item.Id" onclick=" makeEditble(@item.Id);" class="linkPointer" data-toggle="modal" data-target="#editAssetAllocationModal" title="Edit" data-placement="top"><i class="text-warning fas fa-edit" aria-hidden="true"></i></a> |
+                                            <a id="@item.Id" onclick=" makeEditble(@item.Id);" asp-action="Edit" asp-controller="AssetAllocation" class="linkPointer" asp-route-id="@item.Id" data-toggle="modal" data-target="#editAssetAllocationModal" title="Edit" data-placement="top"><i class="text-warning fas fa-edit" aria-hidden="true"></i></a> |
+
                                             @Html.ActionLink("", "DeleteAssetAllocation", new { id = item.Id }, new { @title = "Delete", @class = "text-danger fas fa-trash", onclick = "return confirm('Are you sure you want to delete this?')" }) |
                                             @Html.ActionLink("", "AssetAllocationDetails", new { id = item.Id }, new { @title = "Details", @class = "text-primary fas fa-eye"})
                                         </td>
@@ -88,7 +89,7 @@
 <div class="modal fade" tabindex="-1" id="editAssetAllocationModal" data-toggle="modal" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form asp-action="UpdateAssetAllocation" method="post">
+            <form asp-action="UpdateAssetAllocationMaster" method="post">
 
 
                 <div class="modal-header">
@@ -173,7 +174,7 @@
         function makeEditble(rowId) {
             $.ajax({
                 type: "POST",
-                url: "@Url.Action("GetAssetAllocationById", "AssetAllocation")",
+                url: "@Url.Action("UpdateAssetAllocation", "AssetAllocation")",
                 datatype: "Json",
                 data: { id: rowId },
 

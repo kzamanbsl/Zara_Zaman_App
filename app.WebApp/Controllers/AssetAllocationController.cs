@@ -52,7 +52,7 @@ namespace app.WebApp.Controllers
 
             if (assetAllocationId == 0)
             {
-                viewModel.AssetAllocationStatusId = (int)AasetAllocationStatusEnum.Draft;
+                viewModel.AssetAllocationStatusId = (int)AssetAllocationStatusEnum.Draft;
             }
             else
             {

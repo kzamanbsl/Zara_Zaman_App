@@ -65,8 +65,8 @@
 
                                                 <th style="width:18%">Department Name</th>
                                                 <td style="width:30%">@Model.DepartmentName</td>
-                                                <th>Remarks  </th>
-                                                <td>@Model.Remarks </td>
+                                                @* <th>Remarks  </th>
+                                                <td>@Model.Remarks </td> *@
                                             </tr>
                                         </table>
                                     </div>
@@ -133,14 +133,14 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-12">
-                        @if (Model.Id > 0 && Model.AssetAllocationStatusId == (int)AasetAllocationStatusEnum.Draft || Model.Id > 0 && Model.AssetAllocationStatusId == (int)AasetAllocationStatusEnum.Confirm)
+                        @if (Model.Id > 0 && Model.AssetAllocationStatusId == (int)AssetAllocationStatusEnum.Draft || Model.Id > 0 && Model.AssetAllocationStatusId == (int)AssetAllocationStatusEnum.Confirm)
                         {
                             <div class="form-group" style="float:right">
                                 <button id="orderReceived" class="linkPointer btn btn-success btn-sm">Received</button>
                                 <button asp-action="RejectAssetAllocation" method="post" id="orderReject" class="linkPointer btn btn-danger btn-sm">Reject</button>
                             </div>
                         }
-                        @if (Model.Id > 0 && Model.AssetAllocationStatusId == (int)AasetAllocationStatusEnum.Reject)
+                        @if (Model.Id > 0 && Model.AssetAllocationStatusId == (int)AssetAllocationStatusEnum.Reject)
                         {
                             <div class="form-group" style="float:right">
                                 <h3><span style="color:red">Order Rejected</span></h3>
