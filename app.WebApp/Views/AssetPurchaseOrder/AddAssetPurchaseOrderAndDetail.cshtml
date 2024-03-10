@@ -12,7 +12,7 @@
                 <li class="breadcrumb-item"><a href="/Admin/Index">Home</a></li>
             </ol>
             <div>
-                <a asp-action="Index"><i class="fa fa-list"></i>Asset Purchase Order List </a>
+                <a asp-action="Search"><i class="fa fa-list"></i>Asset Purchase Order List </a>
             </div>
         </div>
     </div>
@@ -332,7 +332,7 @@
                 success: function (result) {
                     if (result) {
                         alert("Purchase confirmed successfully");
-                        window.location.href = "/AssetPurchaseOrder/Index/";
+                        window.location.href = "/AssetPurchaseOrder/Search/";
 
                     } else {
                         alert("Purchase confirmation failed");
@@ -354,7 +354,7 @@
                 success: function (data) {
                     if (data) {
                         alert("Delete successfully");
-                        window.location.href = "/AssetPurchaseOrder/Index/";
+                        window.location.href = "/AssetPurchaseOrder/Search/";
 
                     } else {
                         alert("Delete failed");
