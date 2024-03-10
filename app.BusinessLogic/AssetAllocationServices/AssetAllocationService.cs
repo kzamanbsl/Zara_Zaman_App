@@ -216,14 +216,6 @@ namespace app.Services.AssetAllocationServices
 
             return assetAllocationMasterModel;
         }
-<<<<<<< HEAD
-
-        //public async Task<DataTablePagination<AssetAllocationSearchDto>> SearchAsync(DataTablePagination<AssetAllocationSearchDto> searchDto)
-        //{
-        //    var searchResult = _dbContext.AssetAllocationDetail.Include(c => c.AssetAllocation.Storehouse).Include(c => c.AssetAllocation.Supplier).Where(c => c.IsActive == true).AsNoTracking();
-=======
->>>>>>> a93824d63d6d0587188dea9f41fbf740d2757e1f
-
         public async Task<DataTablePagination<AssetAllocationSearchDto>> SearchAsync(DataTablePagination<AssetAllocationSearchDto> searchDto)
         {
             var searchResult = _dbContext.AssetAllocation.Where(c => c.IsActive == true && c.AssetAllocationStatusId == (int)AasetAllocationStatusEnum.Draft).AsNoTracking();

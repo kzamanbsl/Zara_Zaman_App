@@ -151,9 +151,6 @@ namespace app.WebApp.Controllers
             return RedirectToAction("Index");
         }
 
-<<<<<<< HEAD
-
-
         [HttpPost]
         public async Task<IActionResult> UpdateAssetAllocation(AssetAllocationViewModel vm)
         {
@@ -169,11 +166,7 @@ namespace app.WebApp.Controllers
         }
 
 
-        //#region Search
-=======
         #region Search
->>>>>>> a93824d63d6d0587188dea9f41fbf740d2757e1f
-
         [HttpGet]
         public async Task<IActionResult> Search()
         {
