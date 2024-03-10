@@ -66,16 +66,14 @@
                                                 <th style="width:18%">Department Name </th>
                                                 <td style="width:30%">@Model.DepartmentName </td>
 
-                                                <th style="width:18%">Remarks </th>
-                                                <td style="width:30%">@Model.Remarks </td>
                                             </tr>
-                                            @*  <tr>
-                                        <th>OverAll Discount</th>
-                                        <td>@Model.OverallDiscount</td>
-                                        <th style="width:18%">Order Status</th>
-                                        <td style="width:30%">@Model.OrderStatusId</td>
 
-                                        </tr> *@
+                                             @* <tr>
+                                                <th>OverAll Discount</th>
+                                                <td>@Model.OverallDiscount</td>
+                                                <th style="width:18%">Order Status</th>
+                                                <td style="width:30%">@Model.AssetAllocationStatusId</td>
+                                            </tr> *@
 
                                         </table>
                                     </div>
@@ -129,17 +127,24 @@
                                     </div>
                                 </div> *@
                             }
-                            @if (Model.AssetAllocationStatusId == (int)AasetAllocationStatusEnum.Draft)
+                            @if (Model.AssetAllocationStatusId == (int)AssetAllocationStatusEnum.Draft)
                             {
                                 <div class="" style="padding-top:30px;">
                                     <div class="row">
                                         <div class="col-md-5">
                                             <div class="form-group">
                                                 <label>Product Name </label>
-                                                <select class="form-control" asp-for="AssetAllocationDetailVM.ProductId  " id="productId " asp-items="ViewBag.ProductList" required>
+
+                                                @* <select class="form-control" asp-for="AssetAllocationDetailVM.ProductName" id="productId" asp-items="ViewBag.ProductList" required>
                                                     <option value="0" selected>-- Select Product --</option>
-                                                    <span asp-validation-for="AssetAllocationDetailVM.ProductId " class="text-danger"></span>
+                                                    <span asp-validation-for="AssetAllocationDetailVM.ProductName" class="text-danger"></span>
+                                                </select> *@
+
+                                                <select class="form-control" asp-for="AssetAllocationDetailVM.ProductId" id="productId" asp-items="ViewBag.ProductList" required>
+                                                    <option value="0" selected>-- Select Product --</option>
+                                                    <span asp-validation-for="AssetAllocationDetailVM.ProductId" class="text-danger"></span>
                                                 </select>
+
                                             </div>
                                         </div>
 
@@ -204,7 +209,7 @@
                                                 <th style="padding: 5px; text-align: right; ">Sale Price</th>
                                                 <th style="padding: 5px; text-align: right; ">Total Price</th> *@
 
-                                                @if (Model.AssetAllocationStatusId == (int)AasetAllocationStatusEnum.Draft)
+                                                @if (Model.AssetAllocationStatusId == (int)AssetAllocationStatusEnum.Draft)
                                                 {
                                                     <th style="padding:5px;text-align:center;">Action</th>
                                                 }
@@ -229,7 +234,7 @@
                                                     <td style="padding: 5px; text-align: right;">@String.Format("{0:0.00}", item.TotalAmount)</td> *@
 
                                                     @{
-                                                        if (Model.AssetAllocationStatusId == (int)AasetAllocationStatusEnum.Draft)
+                                                        if (Model.AssetAllocationStatusId == (int)AssetAllocationStatusEnum.Draft)
                                                         {
                                                             <td style="padding:5px;text-align:center;">
                                                                 <a id="@item.Id" onclick="makeEditble(@item.Id);" class="linkPointer" title="Edit"><i class="text-warning fas fa-edit" aria-hidden="true"></i></a>
@@ -251,7 +256,7 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-12">
-                        @if (Model.Id > 0 && Model.AssetAllocationStatusId == (int)AasetAllocationStatusEnum.Draft)
+                        @if (Model.Id > 0 && Model.AssetAllocationStatusId == (int)AssetAllocationStatusEnum.Draft)
                         {
                             <div class="form-group" style="float:right">
                                 <button asp-action="ConfirmAssetAllocation" method="post" id="confirmButton" class="linkPointer btn btn-success  btn-block">Confirm</button>
@@ -285,7 +290,7 @@
                 datatype: "Json",
                 data: { id: rowId },
                 success: function (data) {
-                    $('#poCreateBtn').html("<i class='fas fa-edit'></i>&nbsp;Update");
+                    $('#aaCreateBtn').html("<i class='fas fa-edit'></i>&nbsp;Update");
                     $("#assetAllocationId").val(data.id);
                     $("#assetAllocationDetailsId").val(data.id);
                     $('#actionId').val(2);

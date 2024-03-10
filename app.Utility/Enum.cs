@@ -26,7 +26,7 @@
         Hold,
         Reject
     }
-    public enum AasetAllocationStatusEnum
+    public enum AssetAllocationStatusEnum
     {
         Draft = 1,
         Confirm,
