@@ -2,13 +2,8 @@
 using app.Infrastructure.Auth;
 using app.Infrastructure.Repository;
 using app.Infrastructure;
-using app.Services.LeaveBalanceServices;
 using Microsoft.EntityFrameworkCore;
-using app.Services.ShiftServices;
-using app.Utility;
-using app.Services.LeaveApplicationServices;
 using app.EntityModel.DataTablePaginationModels;
-using app.Services.ProductServices;
 
 namespace app.Services.EmployeeServices
 {
@@ -52,10 +47,12 @@ namespace app.Services.EmployeeServices
                     emp.BloodGroupId = vm.BloodGroupId > 0 ? vm.BloodGroupId : null;
                     emp.ReligionId = vm.ReligionId > 0 ? vm.ReligionId : null;
                     emp.TinNo = vm.TinNo;
-
+                    emp.EmergencyContactNo = vm.EmergencyContactNo;
+                    emp.ContactPerson = vm.ContactPerson;
 
                     emp.JoiningDate = vm.JoiningDate;
                     emp.ProbationEndDate = vm.ProbationEndDate;
+                    emp.RegineDate = vm.RegineDate;
                     emp.DepartmentId = vm.DepartmentId > 0 ? vm.DepartmentId : null;
                     emp.DesignationId = vm.DesignationId > 0 ? vm.DesignationId : null;
                     emp.EmployeeCategoryId = vm.EmployeeCategoryId > 0 ? vm.EmployeeCategoryId : null;
@@ -114,10 +111,12 @@ namespace app.Services.EmployeeServices
                 emp.BloodGroupId = vm.BloodGroupId > 0 ? vm.BloodGroupId : null;
                 emp.ReligionId = vm.ReligionId > 0 ? vm.ReligionId : null;
                 emp.TinNo = vm.TinNo;
-
+                emp.EmergencyContactNo = vm.EmergencyContactNo;
+                emp.ContactPerson = vm.ContactPerson;
 
                 emp.JoiningDate = vm.JoiningDate;
                 emp.ProbationEndDate = vm.ProbationEndDate;
+                emp.RegineDate = vm.RegineDate;
                 emp.DepartmentId = vm.DepartmentId > 0 ? vm.DepartmentId : null;
                 emp.DesignationId = vm.DesignationId > 0 ? vm.DesignationId : null;
                 emp.EmployeeCategoryId = vm.EmployeeCategoryId > 0 ? vm.EmployeeCategoryId : null;
@@ -167,10 +166,13 @@ namespace app.Services.EmployeeServices
             vm.BloodGroupId = (int?)(emp.BloodGroupId > 0 ? emp.BloodGroupId : null);
             vm.ReligionId = (int?)(emp.ReligionId > 0 ? emp.ReligionId : null);
             vm.TinNo = emp.TinNo;
+            vm.EmergencyContactNo = emp.EmergencyContactNo;
+            vm.ContactPerson = emp.ContactPerson;
 
 
             vm.JoiningDate = emp.JoiningDate;
             vm.ProbationEndDate = emp.ProbationEndDate;
+            vm.RegineDate = emp.RegineDate;
             vm.DepartmentId = emp.DepartmentId > 0 ? emp.DepartmentId : null;
             vm.DesignationId = emp.DesignationId > 0 ? emp.DesignationId : null;
             vm.EmployeeCategoryId = (emp.EmployeeCategoryId > 0 ? emp.EmployeeCategoryId : null);
@@ -230,10 +232,12 @@ namespace app.Services.EmployeeServices
             model.ReligionId = (int?)(result.ReligionId > 0 ? result.ReligionId : null);
             model.ReligionName = result.Religion?.Name;
             model.TinNo = result.TinNo;
-
+            model.EmergencyContactNo = result.EmergencyContactNo;
+            model.ContactPerson = result.ContactPerson;
 
             model.JoiningDate = result.JoiningDate;
             model.ProbationEndDate = result.ProbationEndDate;
+            model.RegineDate = result.RegineDate;
             model.DepartmentId = result.DepartmentId > 0 ? result.DepartmentId : null;
             model.DepartmentName = result.Department?.Name;
             model.DesignationId = result.DesignationId > 0 ? result.DesignationId : null;

@@ -266,13 +266,30 @@
                             return row.supplierName;
                         }
                     },
-
                     {
                         data: "OrderStatusName",
                         render: function (data, type, row, meta) {
                             return row.orderStatusName;
                         }
                     },
+        //             {
+        //                 data: "OrderStatusId",
+        //                 render: function (data, type, row, meta) {
+
+        //                     var result = "";
+        // if (row.orderStatusId == (int)PurchaseOrderStatusEnum.Receive || row.orderStatusId == (int)PurchaseOrderStatusEnum.Reject)
+        // {
+        //         var result = 'class="text-center"   Html.ActionLink("", "PurchaseDetails", new { id = row.Id }, new { title = "Details", class = "text-primary fas fa-eye" })'
+        // }
+        //  else if (row.orderStatusId == (int)PurchaseOrderStatusEnum.Draft || row.orderStatusId == (int)PurchaseOrderStatusEnum.Confirm)
+        // {
+        //         var result = 'class="text-center" <a id="row.Id" onclick = " makeEditble(row.Id);" class="linkPointer" data - toggle="modal" data - target="#editPurchaseOrderModal" title = "Edit" data - placement="top" > <i class="text-warning fas fa-edit" aria - hidden="true" > </i></a >' | 
+        //         'Html.ActionLink("", "DeletePurchaseOrder", new { id = row.Id }, new { title = "Delete", class = "text-danger fas fa-trash", onclick = "return confirm('Are you sure you want to delete this?')" })' |
+        //         'Html.ActionLink("", "PurchaseDetails", new { id = row.Id }, new { title = "Details", class = "text-primary fas fa-eye" })'
+        // }
+        //     return result;
+        //                 }
+        //             },
                     {
                         data: "Action",
                         render: function (data, type, row, meta) {
@@ -292,7 +309,7 @@
     <script>    
 
             
-        }
+        
 
     </script>
 }

@@ -151,6 +151,7 @@ namespace app.WebApp.Controllers
             return RedirectToAction("Index");
         }
 
+<<<<<<< HEAD
 
 
         [HttpPost]
@@ -169,23 +170,25 @@ namespace app.WebApp.Controllers
 
 
         //#region Search
+=======
+        #region Search
+>>>>>>> a93824d63d6d0587188dea9f41fbf740d2757e1f
 
-        //[HttpGet]
-        //public async Task<IActionResult> Search()
-        //{
-        //    ViewBag.Storehouses = new SelectList((await _iDropdownService.StorehouseSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
-        //    ViewBag.Suppliers = new SelectList((await _iDropdownService.SupplierSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
-        //    return View();
-        //}
+        [HttpGet]
+        public async Task<IActionResult> Search()
+        {
+            
+            return View();
+        }
 
-        //[HttpPost]
-        //public async Task<IActionResult> Search(DataTablePagination<AssetAllocationSearchDto> searchDto)
-        //{
-        //    var dataTable = await _iAssetAllocationService.SearchAsync(searchDto);
-        //    return Json(dataTable);
-        //}
+        [HttpPost]
+        public async Task<IActionResult> Search(DataTablePagination<AssetAllocationSearchDto> searchDto)
+        {
+            var dataTable = await _iAssetAllocationService.SearchAsync(searchDto);
+            return Json(dataTable);
+        }
 
-        //#endregion
+        #endregion
     }
 }
 
