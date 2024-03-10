@@ -39,7 +39,7 @@ namespace app.Services.SalesOrderDetailServices
                     //SerialNo = vm.SalesOrderDetailVM.SerialNo,
                     //ModelNo = vm.SalesOrderDetailVM.ModelNo,
                     Discount = vm.SalesOrderDetailVM.Discount,
-                    IsForService = vm.SalesOrderDetailVM.IsForService,
+                    //IsForService = vm.SalesOrderDetailVM.IsForService,
                     Remarks = vm.SalesOrderDetailVM.Remarks
                 };
                 var res = await _iEntityRepository.AddAsync(SalesOrderDetail); 
@@ -67,11 +67,11 @@ namespace app.Services.SalesOrderDetailServices
                 salesOrderDetail.UnitId = model.SalesOrderDetailVM.UnitId;
                 salesOrderDetail.SalesPrice = model.SalesOrderDetailVM.SalesPrice;
                 salesOrderDetail.SalesQty = model.SalesOrderDetailVM.SalesQty;
-                salesOrderDetail.WarrantyFormDate = model.SalesOrderDetailVM.WarrantyFormDate;
-                salesOrderDetail.WarrantyToDate = model.SalesOrderDetailVM.WarrantyToDate;
+                //salesOrderDetail.WarrantyFormDate = model.SalesOrderDetailVM.WarrantyFormDate;
+                //salesOrderDetail.WarrantyToDate = model.SalesOrderDetailVM.WarrantyToDate;
                 //salesOrderDetail.ModelNo = model.SalesOrderDetailVM.ModelNo;
                 //salesOrderDetail.SerialNo = model.SalesOrderDetailVM.SerialNo;
-                salesOrderDetail.IsForService = model.SalesOrderDetailVM.IsForService;
+                //salesOrderDetail.IsForService = model.SalesOrderDetailVM.IsForService;
                 salesOrderDetail.Discount = model.SalesOrderDetailVM.Discount;
                 salesOrderDetail.TotalAmount = ((decimal)model.SalesOrderDetailVM.SalesPrice * model.SalesOrderDetailVM.SalesQty) - model.SalesOrderDetailVM.Discount;
                 salesOrderDetail.Remarks = model.SalesOrderDetailVM.Remarks;
@@ -97,11 +97,11 @@ namespace app.Services.SalesOrderDetailServices
                                               SalesQty = t1.SalesQty,
                                               Discount = t1.Discount,
                                               TotalAmount = t1.TotalAmount,
-                                              WarrantyFormDate = t1.WarrantyFormDate,
-                                              WarrantyToDate = t1.WarrantyToDate,
+                                              //WarrantyFormDate = t1.WarrantyFormDate,
+                                              //WarrantyToDate = t1.WarrantyToDate,
                                               //SerialNo = t1.SerialNo,
                                               //ModelNo = t1.ModelNo,
-                                              IsForService = t1.IsForService,
+                                              //IsForService = t1.IsForService,
                                               Remarks = t1.Remarks,
                                           }).FirstOrDefault());
             return v;

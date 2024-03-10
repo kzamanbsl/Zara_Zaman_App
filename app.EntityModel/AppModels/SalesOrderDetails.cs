@@ -14,8 +14,8 @@
         public decimal TotalAmount { get; set; }
         public DateTime? WarrantyFormDate { get; set; }
         public DateTime? WarrantyToDate { get; set; }
-        public string SerialNo { get; set; }
-        public string ModelNo { get; set; }
+        //public string SerialNo { get; set; }
+        //public string ModelNo { get; set; }
         public bool IsForService { get; set; }
         public string Remarks { get; set; }
 

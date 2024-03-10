@@ -28,8 +28,8 @@ namespace app.Services.SalesProductDetailServices
                     SalesProductDetail salesDetail = new SalesProductDetail
                     {
                         SalesOrderDetailsId = vm.SalesOrderDetailVM.Id,
-                        WarrantyFormDate = vm.SalesOrderDetailVM.WarrantyFormDate,
-                        WarrantyToDate = vm.SalesOrderDetailVM.WarrantyToDate,
+                        WarrantyFormDate = vm.SalesProductDetailVM.WarrantyFormDate,
+                        WarrantyToDate = vm.SalesProductDetailVM.WarrantyToDate,
                         //IsForService = (bool)vm.SalesProductDetailVM.IsForService[i],
                         SerialNo = vm.SalesProductDetailVM.SerialNo[i],
                         ModelNo = vm.SalesProductDetailVM.ModelNo[i]

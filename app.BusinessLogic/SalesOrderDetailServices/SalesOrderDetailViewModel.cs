@@ -16,11 +16,11 @@ namespace app.Services.SalesOrderDetailServices
         public decimal SalesPrice { get; set; }
         public decimal Discount { get; set; }
         public decimal TotalAmount { get; set; }
-        public DateTime? WarrantyFormDate { get; set; }
-        public DateTime? WarrantyToDate { get; set; }
-        public string[] SerialNo { get; set; }
-        public string[] ModelNo { get; set; }
-        public bool IsForService { get; set; }
+        //public DateTime? WarrantyFormDate { get; set; }
+        //public DateTime? WarrantyToDate { get; set; }
+        //public string[] SerialNo { get; set; }
+        //public string[] ModelNo { get; set; }
+        //public bool[] IsForService { get; set; }
         public string Remarks { get; set; }
         //public ActionEnum ActionEum { get { return (ActionEnum)this.ActionId; } }
         //public int ActionId { get; set; } = 1;

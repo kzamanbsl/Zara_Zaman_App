@@ -88,11 +88,11 @@ namespace app.Services.SalesOrderServices
                                                                               SalesQty = t1.SalesQty,
                                                                               Discount = t1.Discount,
                                                                               TotalAmount = t1.TotalAmount,
-                                                                              WarrantyFormDate = t1.WarrantyFormDate,
-                                                                              WarrantyToDate = t1.WarrantyToDate,
+                                                                              //WarrantyFormDate = t1.WarrantyFormDate,
+                                                                              //WarrantyToDate = t1.WarrantyToDate,
                                                                               //SerialNo = t1.SerialNo,
                                                                               //ModelNo = t1.ModelNo,
-                                                                              IsForService = t1.IsForService,
+                                                                              //IsForService = t1.IsForService,
                                                                               Remarks = t1.Remarks,
                                                                           }).OrderByDescending(x => x.Id).AsQueryable());
 
