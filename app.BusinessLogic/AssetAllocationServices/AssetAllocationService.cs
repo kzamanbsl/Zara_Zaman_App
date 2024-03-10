@@ -57,10 +57,10 @@ namespace app.Services.AssetAllocationServices
             {
                 assetAllocation.Id = vm.Id;
                 assetAllocation.OrderNo = vm.OrderNo;
-                assetAllocation.AssetAllocationStatusId = vm.AssetAllocationStatusId;
+                assetAllocation.Date = vm.Date;
                 assetAllocation.EmployeeId = vm.EmployeeId;
                 assetAllocation.DepartmentId = vm.DepartmentId;
-                assetAllocation.Date = vm.Date;
+                assetAllocation.AssetAllocationStatusId = vm.AssetAllocationStatusId;
                 assetAllocation.Remarks = vm.Remarks;
                 await _iEntityRepository.UpdateAsync(assetAllocation);
                 return true;
@@ -136,14 +136,16 @@ namespace app.Services.AssetAllocationServices
             var result = await _dbContext.AssetAllocation.FirstOrDefaultAsync(x => x.Id == id);
             sendData.Id = result.Id;
             sendData.OrderNo = result.OrderNo;
+            sendData.Date = result.Date;
             sendData.EmployeeId = result.EmployeeId;
             sendData.DepartmentId = result.DepartmentId;
-            sendData.AssetAllocationStatusId = result.AssetAllocationStatusId;
-            sendData.Date = result.Date;
+            sendData.AssetAllocationStatusId = (int)(AssembleWorkStatusEnum)result.AssetAllocationStatusId;
             sendData.Remarks = result.Remarks;
 
             return sendData;
         }
+
+
         public async Task<bool> ConfirmAssetAllocation(long id)
         {
             var checkAssetAllocation = await _dbContext.AssetAllocation.FirstOrDefaultAsync(c => c.Id == id);
@@ -211,9 +213,10 @@ namespace app.Services.AssetAllocationServices
             //    );
             //    //master.TotalAmount = (double)(total ?? 0);
             //}
+
             return assetAllocationMasterModel;
         }
-     
+
         //public async Task<DataTablePagination<AssetAllocationSearchDto>> SearchAsync(DataTablePagination<AssetAllocationSearchDto> searchDto)
         //{
         //    var searchResult = _dbContext.AssetAllocationDetail.Include(c => c.AssetAllocation.Storehouse).Include(c => c.AssetAllocation.Supplier).Where(c => c.IsActive == true).AsNoTracking();
