@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using app.Services.IAssetnventoryServices;
 using app.EntityModel.DataTablePaginationModels;
+using app.Services.SalesOrderServices;
 
 namespace app.WebApp.Controllers
 {
@@ -149,6 +150,23 @@ namespace app.WebApp.Controllers
             var res = await _iAssetAllocationService.UpdateAssetAllocation(vm);
             return RedirectToAction("Index");
         }
+
+
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateAssetAllocation(AssetAllocationViewModel vm)
+        {
+            var res = await _iAssetAllocationService.UpdateAssetAllocation(vm);
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public async Task<JsonResult> GetAssetAllocationById(long id)
+        {
+            var viewData = await _iAssetAllocationService.AssetAllocationById(id);
+            return Json(viewData);
+        }
+
 
         //#region Search
 

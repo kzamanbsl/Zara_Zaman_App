@@ -88,11 +88,11 @@
 <div class="modal fade" tabindex="-1" id="editAssetAllocationModal" data-toggle="modal" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form asp-action="UpdateAssetAllocationMaster" method="post">
+            <form asp-action="UpdateAssetAllocation" method="post">
 
 
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Update Asset Allocation Order</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Update Asset Allocation </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -101,13 +101,13 @@
                 <div class="modal-body">
 
                     @Html.HiddenFor(model => model.Id, new { id = "hidPOID" })
-
+@* 
                     <div class="form-group">
                         <label>Order No </label>
                         <input asp-for="OrderNo" id="orderNo" class="form-control" autocomplete="off" required />
                         <span asp-validation-for="OrderNo" class="text-danger"></span>
                     </div>
-
+ *@
                     <div class="form-group">
                         <label>Asset Date </label>
                         <input asp-for="Date" id="assetdate" class="form-control" type="date" autocomplete="off" required />
@@ -173,9 +173,10 @@
         function makeEditble(rowId) {
             $.ajax({
                 type: "POST",
-                url: "@Url.Action("UpdateAssetAllocation", "AssetAllocation")",
+                url: "@Url.Action("GetAssetAllocationById", "AssetAllocation")",
                 datatype: "Json",
                 data: { id: rowId },
+
                 success: function (data) {
                     $("#hidPOID").val(data.id);
 
@@ -188,7 +189,7 @@
                     var formattedDate = purchaseDate.toISOString().split('T')[0];
 
                     // Set value
-                    $("#orderNo").val(data.orderNo);
+                    // $("#orderNo").val(data.orderNo);
                     $("#assetdate").val(assetdate);
                     $("#employeeId").val(data.employeeId);
                     $("#departmentId").val(data.departmentId);
