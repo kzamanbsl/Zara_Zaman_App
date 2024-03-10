@@ -18,6 +18,6 @@ namespace app.Services.AssetAllocationServices
         Task<bool> UpdateAssetAllocation(AssetAllocationViewModel vm);
         Task<AssetAllocationViewModel> AssetAllocationById(long id);
 
-        //Task<DataTablePagination<AssetAllocationSearchDto>> SearchAsync(DataTablePagination<AssetAllocationSearchDto> searchDto);
+        Task<DataTablePagination<AssetAllocationSearchDto>> SearchAsync(DataTablePagination<AssetAllocationSearchDto> searchDto);
     }
 }

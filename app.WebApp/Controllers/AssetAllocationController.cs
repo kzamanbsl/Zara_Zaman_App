@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using app.Services.IAssetnventoryServices;
 using app.EntityModel.DataTablePaginationModels;
+using app.Services.SalesOrderServices;
 
 namespace app.WebApp.Controllers
 {
@@ -58,6 +59,8 @@ namespace app.WebApp.Controllers
                 viewModel = await _iAssetAllocationService.GetAssetAllocation(assetAllocationId);
             }
 
+            ViewBag.EmployeeList = new SelectList((await _iDropdownService.EmployeeSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
+            ViewBag.DepartmentList = new SelectList((await _iDropdownService.DepartmentSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
             ViewBag.ProductList = new SelectList((await _iDropdownService.ProductSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
 
 
@@ -148,24 +151,44 @@ namespace app.WebApp.Controllers
             return RedirectToAction("Index");
         }
 
+<<<<<<< HEAD
+
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateAssetAllocation(AssetAllocationViewModel vm)
+        {
+            var res = await _iAssetAllocationService.UpdateAssetAllocation(vm);
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public async Task<JsonResult> GetAssetAllocationById(long id)
+        {
+            var viewData = await _iAssetAllocationService.AssetAllocationById(id);
+            return Json(viewData);
+        }
+
+
         //#region Search
+=======
+        #region Search
+>>>>>>> a93824d63d6d0587188dea9f41fbf740d2757e1f
 
-        //[HttpGet]
-        //public async Task<IActionResult> Search()
-        //{
-        //    ViewBag.Storehouses = new SelectList((await _iDropdownService.StorehouseSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
-        //    ViewBag.Suppliers = new SelectList((await _iDropdownService.SupplierSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
-        //    return View();
-        //}
+        [HttpGet]
+        public async Task<IActionResult> Search()
+        {
+            
+            return View();
+        }
 
-        //[HttpPost]
-        //public async Task<IActionResult> Search(DataTablePagination<AssetAllocationSearchDto> searchDto)
-        //{
-        //    var dataTable = await _iAssetAllocationService.SearchAsync(searchDto);
-        //    return Json(dataTable);
-        //}
+        [HttpPost]
+        public async Task<IActionResult> Search(DataTablePagination<AssetAllocationSearchDto> searchDto)
+        {
+            var dataTable = await _iAssetAllocationService.SearchAsync(searchDto);
+            return Json(dataTable);
+        }
 
-        //#endregion
+        #endregion
     }
 }
 

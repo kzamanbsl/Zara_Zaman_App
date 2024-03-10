@@ -57,10 +57,10 @@ namespace app.Services.AssetAllocationServices
             {
                 assetAllocation.Id = vm.Id;
                 assetAllocation.OrderNo = vm.OrderNo;
-                assetAllocation.AssetAllocationStatusId = vm.AssetAllocationStatusId;
+                assetAllocation.Date = vm.Date;
                 assetAllocation.EmployeeId = vm.EmployeeId;
                 assetAllocation.DepartmentId = vm.DepartmentId;
-                assetAllocation.Date = vm.Date;
+                assetAllocation.AssetAllocationStatusId = vm.AssetAllocationStatusId;
                 assetAllocation.Remarks = vm.Remarks;
                 await _iEntityRepository.UpdateAsync(assetAllocation);
                 return true;
@@ -136,14 +136,16 @@ namespace app.Services.AssetAllocationServices
             var result = await _dbContext.AssetAllocation.FirstOrDefaultAsync(x => x.Id == id);
             sendData.Id = result.Id;
             sendData.OrderNo = result.OrderNo;
+            sendData.Date = result.Date;
             sendData.EmployeeId = result.EmployeeId;
             sendData.DepartmentId = result.DepartmentId;
-            sendData.AssetAllocationStatusId = result.AssetAllocationStatusId;
-            sendData.Date = result.Date;
+            sendData.AssetAllocationStatusId = (int)(AssembleWorkStatusEnum)result.AssetAllocationStatusId;
             sendData.Remarks = result.Remarks;
 
             return sendData;
         }
+
+
         public async Task<bool> ConfirmAssetAllocation(long id)
         {
             var checkAssetAllocation = await _dbContext.AssetAllocation.FirstOrDefaultAsync(c => c.Id == id);
@@ -211,60 +213,70 @@ namespace app.Services.AssetAllocationServices
             //    );
             //    //master.TotalAmount = (double)(total ?? 0);
             //}
+
             return assetAllocationMasterModel;
         }
-     
+<<<<<<< HEAD
+
         //public async Task<DataTablePagination<AssetAllocationSearchDto>> SearchAsync(DataTablePagination<AssetAllocationSearchDto> searchDto)
         //{
         //    var searchResult = _dbContext.AssetAllocationDetail.Include(c => c.AssetAllocation.Storehouse).Include(c => c.AssetAllocation.Supplier).Where(c => c.IsActive == true).AsNoTracking();
+=======
+>>>>>>> a93824d63d6d0587188dea9f41fbf740d2757e1f
 
-        //    var searchModel = searchDto.SearchVm;
-        //    var filter = searchDto?.Search?.Value?.Trim();
-        //    if (searchModel?.StorehouseId is > 0)
-        //    {
-        //        searchResult = searchResult.Where(c => c.AssetAllocation.StorehouseId == searchModel.StorehouseId);
-        //    }
-        //    if (searchModel?.SupplierId is > 0)
-        //    {
-        //        searchResult = searchResult.Where(c => c.AssetAllocation.SupplierId == searchModel.SupplierId);
-        //    }
-        //    if (!string.IsNullOrEmpty(filter))
-        //    {
-        //        filter = filter.ToLower();
-        //        searchResult = searchResult.Where(c =>
-        //            c.AssetAllocation.OrderNo.ToString().Contains(filter)
-        //            || c.AssetAllocation.PurchaseDate.ToString().Contains(filter)
-        //            || c.AssetAllocation.Supplier.Name.ToLower().Contains(filter)
-        //            || c.AssetAllocation.Storehouse.Name.ToLower().Contains(filter)
-        //        );
-        //    }
+        public async Task<DataTablePagination<AssetAllocationSearchDto>> SearchAsync(DataTablePagination<AssetAllocationSearchDto> searchDto)
+        {
+            var searchResult = _dbContext.AssetAllocation.Where(c => c.IsActive == true && c.AssetAllocationStatusId == (int)AasetAllocationStatusEnum.Draft).AsNoTracking();
 
-        //    var pageSize = searchDto.Length ?? 0;
-        //    var skip = searchDto.Start ?? 0;
+            var searchModel = searchDto.SearchVm;
+            var filter = searchDto?.Search?.Value?.Trim();
+            //if (searchModel?.StorehouseId is > 0)
+            //{
+            //    searchResult = searchResult.Where(c => c.AssetAllocation.StorehouseId == searchModel.StorehouseId);
+            //}
+            //if (searchModel?.SupplierId is > 0)
+            //{
+            //    searchResult = searchResult.Where(c => c.AssetAllocation.SupplierId == searchModel.SupplierId);
+            //}
+            if (!string.IsNullOrEmpty(filter))
+            {
+                filter = filter.ToLower();
+                searchResult = searchResult.Where(c =>
+                    c.OrderNo.ToString().Contains(filter)
+                    || c.Date.ToString().Contains(filter)
+                    || c.Employee.Name.ToLower().Contains(filter)
+                    || c.Department.Name.ToLower().Contains(filter)
+                );
+            }
 
-        //    var totalRecords = searchResult.Count();
-        //    if (totalRecords <= 0) return searchDto;
+            var pageSize = searchDto.Length ?? 0;
+            var skip = searchDto.Start ?? 0;
 
-        //    searchDto.RecordsTotal = totalRecords;
-        //    searchDto.RecordsFiltered = totalRecords;
-        //    List<AssetAllocationDetail> filteredDataList = await searchResult.OrderByDescending(c => c.Id).Skip(skip).Take(pageSize).ToListAsync();
+            var totalRecords = searchResult.Count();
+            if (totalRecords <= 0) return searchDto;
 
-        //    var sl = searchDto.Start ?? 0;
-        //    searchDto.Data = filteredDataList.Select(c => new AssetAllocationSearchDto()
-        //    {
-        //        SerialNo = ++sl,
-        //        Id = c.AssetAllocation.Id,
-        //        OrderNo = c.AssetAllocation.OrderNo,
-        //        PurchaseDate = c.AssetAllocation.PurchaseDate,
-        //        StorehouseId = c.AssetAllocation.StorehouseId,
-        //        Storehouse = c.AssetAllocation.Storehouse,
-        //        OrderStatusId = (int)(AssetAllocationStatusEnum)c.AssetAllocation.OrderStatusId,
-        //        SupplierId = c.AssetAllocation.SupplierId,
-        //        Supplier = c.AssetAllocation.Supplier,
-        //        TotalAmount = (double)c.TotalAmount,
-        //    }).ToList();
+            searchDto.RecordsTotal = totalRecords;
+            searchDto.RecordsFiltered = totalRecords;
+            List<AssetAllocation> filteredDataList = await searchResult.OrderByDescending(c => c.Id).Skip(skip).Take(pageSize).ToListAsync();
 
-        //    return searchDto;
-        //}
+            var sl = searchDto.Start ?? 0;
+            searchDto.Data = filteredDataList.Select(c => new AssetAllocationSearchDto()
+            {
+                SerialNo = ++sl,
+                Id = c.Id,
+                OrderNo = c.OrderNo,
+                Date = c.Date,
+                EmployeeId = c.EmployeeId,
+                Employee = c.Employee,
+                EmployeeName = c.Employee.Name,
+                Department = c.Department,
+                DepartmentId = c.DepartmentId,
+                DepartmentName = c.Department.Name,
+                AssetAllocationStatusId = (int)(AasetAllocationStatusEnum)c.AssetAllocationStatusId,
+                Remarks = c.Remarks,
+            }).ToList();
+
+            return searchDto;
+        }
     }
 }
