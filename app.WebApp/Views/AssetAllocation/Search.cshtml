@@ -1,4 +1,4 @@
-﻿@model app.Services.AssetPurchaseOrderServices.AssetPurchaseOrderSearchDto
+﻿@model app.Services.AssetAllocationServices.AssetAllocationSearchDto
 @{
     ViewData["Title"] = "Search";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
@@ -9,10 +9,10 @@
         <div class="breadcrumb d-flex justify-content-between align-items-center  pl-3 pr-3">
             <ol class="breadcrumb mb-0 p-0">
                 <li class="breadcrumb-item"><a href="/Admin/Index">Home</a></li>
-                <li class="breadcrumb-item active"> Asset Purchase Order List </li>
+                <li class="breadcrumb-item active"> Asset Allocation List </li>
             </ol>
             <div>
-                <a asp-action="AddAssetPurchaseOrderAndDetail"><i class="fa fa-plus"></i>  Add Asset Purchase Order </a>
+                <a asp-action="AddAssetAllocationAndDetail"><i class="fa fa-plus"></i>  Add Asset Allocation </a>
             </div>
         </div>
     </div>
@@ -25,45 +25,12 @@
             <div class="card-header">
                 <div class="row w-100">
                     <div class="col-sm-3">
-                        <h5> <i class="fas fa-list"></i>  All Asset Purchase Order </h5>
+                        <h5> <i class="fas fa-list"></i>  All Asset Allocation </h5>
                     </div>
                 </div>
             </div>
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-sm-12">
-                        <form method="post" asp-controller="AssetPurchaseOrder" asp-action="Search">
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label>Store House</label>
-                                        <select class="form-control" asp-for="StorehouseId" asp-items="ViewBag.Storehouses">
-                                            <option value="0" selected>--Store House--</option>
-                                            <span asp-validation-for="StorehouseId" class="text-danger"></span>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label>Supplier</label>
-                                        <select class="form-control" asp-for="SupplierId" asp-items="ViewBag.Suppliers">
-                                            <option value="0" selected>--Supplier--</option>
-                                            <span asp-validation-for="SupplierId" class="text-danger"></span>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
 
-                            <div class="form-group text-right">
-                                @*<a href="@Url.Action("Search","Product")"><input type="submit" formtarget="_blank" value="Preview" class="btn btn-preview btn-width" /></a>*@
-                                @*<button asp-controller="Product" asp-action="Search" type="submit" title="Download" class="btn btn-report btn-width"><i class="fa fa-download"></i></button>*@
-                                <input id="AssetPurchaseOrderDTSearchBtn" type="button" value="Search" class="btn btn-info btn-width" />
-                                <a href="@Url.Action("Search","AssetPurchaseOrder")"><input type="button" value="Clear" class="btn btn-warning btn-width" /></a>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-                <hr />
+            <div class="card-body">
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="table-responsive">
@@ -77,19 +44,19 @@
                                             @Html.DisplayNameFor(model => model.OrderNo)
                                         </th>
                                         <th class="text-center">
-                                            @Html.DisplayNameFor(model => model.PurchaseDate)
+                                            @Html.DisplayNameFor(model => model.Date)
                                         </th>
                                         <th class="text-center">
-                                            @Html.DisplayNameFor(model => model.Storehouse)
+                                            @Html.DisplayNameFor(model => model.EmployeeName)
                                         </th>
                                         <th class="text-center">
-                                            @Html.DisplayNameFor(model => model.Supplier)
+                                            @Html.DisplayNameFor(model => model.DepartmentName)
                                         </th>
                                         <th class="text-center">
-                                            @Html.DisplayNameFor(model => model.OrderStatusId)
+                                            @Html.DisplayNameFor(model => model.AssetAllocationStatusId)
                                         </th>
                                         <th class="text-center">
-                                            @Html.DisplayNameFor(model => model.TotalAmount)
+                                            @Html.DisplayNameFor(model => model.Remarks)
                                         </th>
                                         <th class="text-center">
                                             @Html.DisplayNameFor(model => model.Action)
@@ -115,20 +82,18 @@
     <script>
         $(document).ready(function () {
             $('#Asset-Management').addClass('menu-open');
-            $('#AssetPurchaseOrderSearch').addClass('active');
+            $('#AssetAllocationSearch').addClass('active');
 
             search();
         });
 
-        $(document.body).on("click", "#AssetPurchaseOrderDTSearchBtn", function () {
+        $(document.body).on("click", "#AssetAllocationDTSearchBtn", function () {
             search();
         });
 
         function getSearchObject() {
 
             var searchVm = {
-                "StorehouseId": $("#StorehouseId").val(),
-                "SupplierId": $("#SupplierId").val(),
                 
             }
             return searchVm;
@@ -137,8 +102,8 @@
         function search() {
             var searchVm = getSearchObject();
 
-            if ($.fn.DataTable.isDataTable("#AssetPurchaseOrderSearchTable")) {
-                var table = $("#AssetPurchaseOrderSearchTable").DataTable();
+            if ($.fn.DataTable.isDataTable("#AssetAllocationSearchTable")) {
+                var table = $("#AssetAllocationSearchTable").DataTable();
                 table.destroy();
             }
 
@@ -147,14 +112,14 @@
                 params = { searchVm: searchVm }
             }
 
-            var oTable = $("#AssetPurchaseOrderSearchTable").DataTable({
+            var oTable = $("#AssetAllocationSearchTable").DataTable({
                 "aLengthMenu": [[25, 50, 100, 200], [25, 50, 100, 200]],
                 "iDisplayLength": 25,
                 "processing": true,
                 "serverSide": true,
                 "bSort": false,
                 "ajax": {
-                    url: "/AssetPurchaseOrder/Search",
+                    url: "/AssetAllocation/Search",
                     type: "POST",
                     data: params
                 },
@@ -173,43 +138,48 @@
                         }
                     },
                     {
-                        data: "PurchaseDate",
+                        data: "Date",
                         render: function (data, type, row, meta) {
-                            return row.purchaseDate;
+                            return row.date;
                         }
                     },
                     {
-                        data: "Storehouse",
+                        data: "EmployeeName",
                         render: function (data, type, row, meta) {
-                            return row.storehouse.name;
+                            return row.employeeName;
                         }
                     },
                     {
-                        data: "Supplier",
+                        data: "DepartmentName",
                         render: function (data, type, row, meta) {
-                            return row.supplier.name;
+                            return row.departmentName;
                         }
                     },
                     {
-                        data: "OrderStatusId",
+                        data: "AssetAllocationStatusId",
                         render: function (data, type, row, meta) {
-                         return row.orderStatusId;
+                         return row.assetAllocationStatusId;
                         }
                     },
-
                     {
-                        data: "TotalAmount",
+                        data: "Remarks",
                         render: function (data, type, row, meta) {
-                            var txt = '<div style="text-align: right">' + Number(row.totalAmount).toFixed(2) + '</div>';
-                            return txt;
+                            return row.remarks;
                         }
                     },
+                    // {
+                    //     data: "TotalAmount",
+                    //     render: function (data, type, row, meta) {
+                    //         var txt = '<div style="text-align: right">' + Number(row.totalAmount).toFixed(2) + '</div>';
+                    //         return txt;
+                    //     }
+                    // },
                     {
                         data: "Action",
                         render: function (data, type, row, meta) {
-                            var editBtn = "<a href='UpdateAssetPurchaseOrder/" + row.id + "'><i class='fas fa-pen text-warning m-1' title='Edit' aria-hidden='true'></i></a>";
-                            var detailsBtn = "<a href='AssetPurchaseDetails/" + row.id + "'><i class='fa fa-eye text-info m-1' title='Details' aria-hidden='true'></i></a>";
-                            var deleteBtn = "<a href='DeleteAssetPurchaseOrder/" + row.id + "'><i class='fas fa-trash text-danger m-1' title='Delete' aria-hidden='true'></i></a>";
+                            var editBtn = "<a href='UpdateAssetAllocation/" + row.id + "'><i class='fas fa-pen text-warning m-1' title='Edit' aria-hidden='true'></i></a>";
+                            var detailsBtn = "<a href='AssetAllocationDetails/" + row.id + "'><i class='fa fa-eye text-info m-1' title='Details' aria-hidden='true'></i></a>";
+                            var deleteBtn = "<a href='DeleteAssetAllocation/" + row.id + "'><i class='fas fa-trash text-danger m-1' title='Delete' aria-hidden='true'></i></a>";
                             var actionBtn = editBtn + detailsBtn + deleteBtn;
                             return actionBtn;
                         }
