@@ -69,8 +69,8 @@ namespace app.Services.EmployeeServices
 
         public string Remarks { get; set; }
 
-        [DisplayName("End Date")]
-        public DateTime EndDate { get; set; }
+        [DisplayName("Regine Date")]
+        public DateTime? RegineDate { get; set; }
 
         [DisplayName("End Reason")]
         public string EndReason { get; set; }
@@ -134,6 +134,11 @@ namespace app.Services.EmployeeServices
         [DisplayName("TIN No")]
         public string TinNo { get; set; }
 
+        [DisplayName("Emergency Contact No")]
+        public string EmergencyContactNo { get; set; }
+
+        [DisplayName("Contact Person")]
+        public string ContactPerson { get; set; }
         public string PhotoUrl { get; set; }
         public string SignUrl { get; set; }    
         public IEnumerable<EmployeeViewModel> EmployeeList { get; set; }

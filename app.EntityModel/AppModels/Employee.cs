@@ -31,12 +31,12 @@
         public DateTime JoiningDate { get; set; }
         public DateTime ProbationEndDate { get; set; }
         public DateTime? PermanentDate { get; set; }
+        public DateTime? RegineDate { get; set; }
         public long EmployeeOrder { get; set; }
-        public string Remarks { get; set; }      
-        public DateTime? EndDate { get; set; }
+        public string Remarks { get; set; }
         public string EndReason { get; set; }
-
-
+        public string EmergencyContactNo { get; set; }
+        public string ContactPerson { get; set; }
         public int? CountryId { get; set; }
         public Country Country { get; set; }
         public int? DivisionId { get; set; }
