@@ -202,7 +202,6 @@ namespace app.Services.AssetAllocationServices
             assetAllocationMasterModel.AssetAllocationList = await Task.Run(() => dataQuery.ToList());
             assetAllocationMasterModel.AssetAllocationList.ToList().ForEach((c => c.AssetAllocationStatusName = Enum.GetName(typeof(AssetAllocationStatusEnum), c.AssetAllocationStatusId)));
 
-<<<<<<< HEAD
 
             //var masterIds = assetAllocationMasterModel.AssetAllocationList.Select(x => x.Id);
 
@@ -217,8 +216,6 @@ namespace app.Services.AssetAllocationServices
             //    //master.TotalAmount = (double)(total ?? 0);
             //}
 
-=======
->>>>>>> 8bb49e796e5dbc5d83380be65144caa7810d1e8f
             return assetAllocationMasterModel;
         }
         public async Task<DataTablePagination<AssetAllocationSearchDto>> SearchAsync(DataTablePagination<AssetAllocationSearchDto> searchDto)

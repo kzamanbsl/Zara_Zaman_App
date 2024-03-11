@@ -137,7 +137,7 @@ namespace app.WebApp.Controllers
             return RedirectToAction("Index");
         }
 
-
+        [HttpGet]
         public async Task<JsonResult> UpdateAssetAllocation(long id)
         {
             var model = await _iAssetAllocationService.GetAssetAllocation(id);
