@@ -94,7 +94,7 @@ namespace app.Services.AssetAllocationServices
                                                                                         Quantity = t1.Quantity,
                                                                                         Tags = t1.Tags,
                                                                                         Description = t1.Description,
-                                                                                    }).OrderByDescending(x => x.Id).AsQueryable());
+                                                                                    }).OrderByDescending(x => x.Id).AsEnumerable());
 
 
             return assetAllocationModel;
@@ -127,7 +127,7 @@ namespace app.Services.AssetAllocationServices
                                                                                         Tags = t1.Tags,
                                                                                         Description = t1.Description,
 
-                                                                                    }).OrderByDescending(x => x.Id).AsQueryable());
+                                                                                    }).OrderByDescending(x => x.Id).AsEnumerable());
 
 
             return assetAllocationModel;
@@ -183,7 +183,7 @@ namespace app.Services.AssetAllocationServices
         {
             AssetAllocationViewModel assetAllocationMasterModel = new AssetAllocationViewModel();
             var dataQuery = await Task.Run(() => (from t1 in _dbContext.AssetAllocation
-                                                  where t1.IsActive == true && t1.AssetAllocationStatusId == (int)AssetAllocationStatusEnum.Draft
+                                                  where t1.IsActive == true 
 
                                                   select new AssetAllocationViewModel
                                                   {
@@ -202,36 +202,15 @@ namespace app.Services.AssetAllocationServices
             assetAllocationMasterModel.AssetAllocationList = await Task.Run(() => dataQuery.ToList());
             assetAllocationMasterModel.AssetAllocationList.ToList().ForEach((c => c.AssetAllocationStatusName = Enum.GetName(typeof(AssetAllocationStatusEnum), c.AssetAllocationStatusId)));
 
-
-            var masterIds = assetAllocationMasterModel.AssetAllocationList.Select(x => x.Id);
-
-            //var matchingDetails = await _dbContext.AssetAllocationDetail
-            //    .Where(detail => masterIds.Contains(detail.AssetAllocationStatusId) && detail.IsActive == true)
-            //    .ToListAsync();
-            //foreach (var master in assetAllocationMasterModel.AssetAllocationList)
-            //{
-            //    var detailsForMaster = matchingDetails.Where(detail => detail.AssetAllocationStatusId == master.Id);
-            //    decimal? total = detailsForMaster.Sum(detail => (detail.CostPrice * (decimal)detail.PurchaseQty)
-            //    );
-            //    //master.TotalAmount = (double)(total ?? 0);
-            //}
-
             return assetAllocationMasterModel;
         }
         public async Task<DataTablePagination<AssetAllocationSearchDto>> SearchAsync(DataTablePagination<AssetAllocationSearchDto> searchDto)
         {
-            var searchResult = _dbContext.AssetAllocation.Where(c => c.IsActive == true && c.AssetAllocationStatusId == (int)AssetAllocationStatusEnum.Draft).AsNoTracking();
+            var searchResult = _dbContext.AssetAllocation.Where(c => c.IsActive == true).AsNoTracking();
 
             var searchModel = searchDto.SearchVm;
             var filter = searchDto?.Search?.Value?.Trim();
-            //if (searchModel?.StorehouseId is > 0)
-            //{
-            //    searchResult = searchResult.Where(c => c.AssetAllocation.StorehouseId == searchModel.StorehouseId);
-            //}
-            //if (searchModel?.SupplierId is > 0)
-            //{
-            //    searchResult = searchResult.Where(c => c.AssetAllocation.SupplierId == searchModel.SupplierId);
-            //}
+           
             if (!string.IsNullOrEmpty(filter))
             {
                 filter = filter.ToLower();
