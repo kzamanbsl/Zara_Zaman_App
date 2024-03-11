@@ -16,6 +16,7 @@ namespace app.Services.AssetAllocationDetailServices
         public string ProductName { get; set; }
         public int Quantity { get; set; }
         public string Tags { get; set; }
+        //public List<string> Tags { get; set; }
         public string Description { get; set; }
         public ActionEnum ActionEum { get { return (ActionEnum)this.ActionId; } }
         public int ActionId { get; set; } = 1;

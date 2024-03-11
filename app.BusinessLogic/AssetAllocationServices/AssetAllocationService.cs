@@ -203,7 +203,7 @@ namespace app.Services.AssetAllocationServices
             assetAllocationMasterModel.AssetAllocationList.ToList().ForEach((c => c.AssetAllocationStatusName = Enum.GetName(typeof(AssetAllocationStatusEnum), c.AssetAllocationStatusId)));
 
 
-            var masterIds = assetAllocationMasterModel.AssetAllocationList.Select(x => x.Id);
+            //var masterIds = assetAllocationMasterModel.AssetAllocationList.Select(x => x.Id);
 
             //var matchingDetails = await _dbContext.AssetAllocationDetail
             //    .Where(detail => masterIds.Contains(detail.AssetAllocationStatusId) && detail.IsActive == true)
