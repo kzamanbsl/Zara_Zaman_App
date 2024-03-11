@@ -5,6 +5,13 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
     int sl = 0;
 }
+
+<style>
+    .bootstrap-tagsinput .tag {
+        margin-right: 2px;
+        color: red !important;
+    }
+</style>
 <div class="content-header">
     <div class="container-fluid ">
         <div class="breadcrumb d-flex justify-content-between align-items-center  pl-3 pr-3">
@@ -27,7 +34,7 @@
                 @if (Model.Id > 0)
                 {
                     <h3 class="card-title text-info">
-                       Asset Allocation Information
+                        Asset Allocation Information
                     </h3>
                 }
                 else
@@ -68,12 +75,12 @@
 
                                             </tr>
 
-                                             @* <tr>
-                                                <th>OverAll Discount</th>
-                                                <td>@Model.OverallDiscount</td>
-                                                <th style="width:18%">Order Status</th>
-                                                <td style="width:30%">@Model.AssetAllocationStatusId</td>
-                                            </tr> *@
+                                            @* <tr>
+                                        <th>OverAll Discount</th>
+                                        <td>@Model.OverallDiscount</td>
+                                        <th style="width:18%">Order Status</th>
+                                        <td style="width:30%">@Model.AssetAllocationStatusId</td>
+                                        </tr> *@
 
                                         </table>
                                     </div>
@@ -84,12 +91,12 @@
                             {
                                 <div class="row">
                                     @* <div class="col-md-2">
-                                        <div class="form-group">
-                                            <label>Order No </label>
-                                            <input asp-for="OrderNo" class="form-control" autocomplete="off" required />
-                                            <span asp-validation-for="OrderNo" class="text-danger"></span>
-                                        </div>
-                                    </div> *@
+                                <div class="form-group">
+                                <label>Order No </label>
+                                <input asp-for="OrderNo" class="form-control" autocomplete="off" required />
+                                <span asp-validation-for="OrderNo" class="text-danger"></span>
+                                </div>
+                                </div> *@
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label>Asset Date </label>
@@ -119,26 +126,26 @@
                                     </div>
                                 </div>
                                 @* <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label asp-for="Remarks  " class="control-label">Remarks </label>
-                                            <textarea asp-for="Remarks " class="form-control" rows="2"></textarea>
-                                        </div>
-                                    </div>
-                                </div> *@
+                            <div class="col-md-12">
+                            <div class="form-group">
+                            <label asp-for="Remarks  " class="control-label">Remarks </label>
+                            <textarea asp-for="Remarks " class="form-control" rows="2"></textarea>
+                            </div>
+                            </div>
+                            </div> *@
                             }
                             @if (Model.AssetAllocationStatusId == (int)AssetAllocationStatusEnum.Draft)
                             {
                                 <div class="" style="padding-top:30px;">
                                     <div class="row">
-                                        <div class="col-md-5">
-                                            <div class="form-group">
+                                        <div class="col-md-3">
+                                            <div class="form-group" w-100 >
                                                 <label>Product Name </label>
 
                                                 @* <select class="form-control" asp-for="AssetAllocationDetailVM.ProductName" id="productId" asp-items="ViewBag.ProductList" required>
-                                                    <option value="0" selected>-- Select Product --</option>
-                                                    <span asp-validation-for="AssetAllocationDetailVM.ProductName" class="text-danger"></span>
-                                                </select> *@
+                                            <option value="0" selected>-- Select Product --</option>
+                                            <span asp-validation-for="AssetAllocationDetailVM.ProductName" class="text-danger"></span>
+                                            </select> *@
 
                                                 <select class="form-control" asp-for="AssetAllocationDetailVM.ProductId" id="productId" asp-items="ViewBag.ProductList" required>
                                                     <option value="0" selected>-- Select Product --</option>
@@ -156,12 +163,17 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-md-2">
+                                        <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>Asset Tags  </label>
-                                                <input asp-for="AssetAllocationDetailVM.Tags" id="tags" class="form-control" required min="0" />
+                                                @* <input asp-for="AssetAllocationDetailVM.Tags" id="tags" class="form-control" required min="0" /> *@
 
                                                 @* <input asp-for="AssetAllocationDetailVM.Tags" id="tags" class="form-control" type="text" value="Amsterdam,Washington,Sydney,Beijing,Cairo" data-role="tagsinput" /> *@
+
+                                                <select multiple data-role="tagsinput" asp-for="AssetAllocationDetailVM.Tags" type="text" class="form-control" id="tags" placeholder="Enter Tags Number" data-role="tagsinput" required>
+                                                    @* <option value="0"></option> *@
+
+                                                </select>
 
                                                 <span asp-validation-for="AssetAllocationDetailVM.Tags" class="text-danger"></span>
                                             </div>
@@ -205,9 +217,9 @@
                                                 <th style="padding: 5px; text-align: left;">Description</th>
 
                                                 @* <th style="padding: 5px; text-align: right; ">Consumption</th>
-                                                <th style="padding: 5px; text-align: right; ">Cost Price</th>
-                                                <th style="padding: 5px; text-align: right; ">Sale Price</th>
-                                                <th style="padding: 5px; text-align: right; ">Total Price</th> *@
+                                            <th style="padding: 5px; text-align: right; ">Cost Price</th>
+                                            <th style="padding: 5px; text-align: right; ">Sale Price</th>
+                                            <th style="padding: 5px; text-align: right; ">Total Price</th> *@
 
                                                 @if (Model.AssetAllocationStatusId == (int)AssetAllocationStatusEnum.Draft)
                                                 {
@@ -228,10 +240,10 @@
                                                     <td style="padding: 5px; text-align: left;">@item.Description</td>
 
                                                     @* <td style="padding:5px;text-align:left;">@String.Format("{0:0.00}", item.UnitName)</td>
-                                                    <td style="padding: 5px; text-align: right;">@String.Format("{0:0.00}", item.Consumption)</td>
-                                                    <td style="padding: 5px; text-align: right;">@String.Format("{0:0.00}", item.CostPrice)</td>
-                                                    <td style="padding: 5px; text-align: right;">@String.Format("{0:0.00}", item.SalePrice)</td>
-                                                    <td style="padding: 5px; text-align: right;">@String.Format("{0:0.00}", item.TotalAmount)</td> *@
+                                            <td style="padding: 5px; text-align: right;">@String.Format("{0:0.00}", item.Consumption)</td>
+                                            <td style="padding: 5px; text-align: right;">@String.Format("{0:0.00}", item.CostPrice)</td>
+                                            <td style="padding: 5px; text-align: right;">@String.Format("{0:0.00}", item.SalePrice)</td>
+                                            <td style="padding: 5px; text-align: right;">@String.Format("{0:0.00}", item.TotalAmount)</td> *@
 
                                                     @{
                                                         if (Model.AssetAllocationStatusId == (int)AssetAllocationStatusEnum.Draft)
@@ -276,12 +288,37 @@
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.css" rel="stylesheet" />
+@*     <script>
+        $(document).ready(function () {
+            $('#Health').addClass('menu-open');
+            $('#NewGrade').addClass('active');
+
+            // Initialize Bootstrap Tags Input on the input field
+            $('#tags').tagsinput();
+        });
+
+        window.setTimeout(function () {
+            $(".alert").fadeTo(500,).slideUp(500, function () {
+                $(this).remove();
+            });
+        }, 4000);
+    </script> *@
     <script>
         $(document).ready(function () {
             $('#Asset-Management').addClass('menu-open');
             $('#AssetAllocationAddAssetAllocationAndDetail').addClass('active');
+            // Initialize Bootstrap Tags Input on the input field
+            $('#tags').tagsinput();
         });
 
+        window.setTimeout(function () {
+            $(".alert").fadeTo(500,).slideUp(500, function () {
+                $(this).remove();
+            });
+        }, 4000);
+        
         //Allocation Details Edit
         function makeEditble(rowId) {
             $.ajax({
@@ -298,7 +335,7 @@
                     $("#quantity").val(data.quantity);
                     $("#tags ").val(data.tags);
                     $("#txtDescription").val(data.txtDescription);
-                   
+
                     // $("#costPrice").val(data.costPrice);
                     // $("#salePrice").val(data.salePrice);
                     //$("#discount").val(data.discount);
