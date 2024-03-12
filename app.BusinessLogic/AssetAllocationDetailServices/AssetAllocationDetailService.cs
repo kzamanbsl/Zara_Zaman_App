@@ -50,24 +50,27 @@ namespace app.Services.AssetAllocationDetailServices
             }
 
         }
+
         public async Task<bool> UpdateAssetAllocationDetail(AssetAllocationViewModel model)
         {
 
             var assetAllocationDetail = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id == model.AssetAllocationDetailVM.Id);
             if (assetAllocationDetail != null)
             {
-                
+
                 model.Id = assetAllocationDetail.AssetAllocationId;
                 assetAllocationDetail.ProductId = model.AssetAllocationDetailVM.ProductId;
                 assetAllocationDetail.Quantity = model.AssetAllocationDetailVM.Quantity;
                 assetAllocationDetail.Tags = model.AssetAllocationDetailVM.Tags;
                 assetAllocationDetail.Description = model.AssetAllocationDetailVM.Description;
 
+
                 await _iEntityRepository.UpdateAsync(assetAllocationDetail);
                 return true;
             }
             return false;
         }
+
 
         public async Task<AssetAllocationDetailViewModel> SingleAssetAllocationDetails(long id)
         {
