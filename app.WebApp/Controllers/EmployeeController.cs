@@ -17,14 +17,6 @@ namespace app.WebApp.Controllers
             _iService = iService;
             _iDropdownService = iDropdownService;
         }
-
-        //[HttpGet]
-        //public async Task<IActionResult> Index()
-        //{
-        //    var result = await _iService.GetAllRecord();
-        //    return View(result);
-        //}
-
         public async Task<IActionResult> AddRecord()
         {
             ViewBag.ManagerList = new SelectList((await _iDropdownService.EmployeeSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");

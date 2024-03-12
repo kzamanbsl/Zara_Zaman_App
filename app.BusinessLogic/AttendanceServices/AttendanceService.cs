@@ -28,9 +28,7 @@ namespace app.Services.AttendanceServices
 
         public async Task<bool> AddRecord(AttendanceViewModel vm)
         {
-            //var user = await _iWorkContext.GetCurrentAdminUserAsync();
-            //var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id == vm.Id && f.EmployeeId == vm.EmployeeId);
-
+           
             bool result = false;
 
             Attendance model = new Attendance();
@@ -110,7 +108,6 @@ namespace app.Services.AttendanceServices
             AttendanceViewModel model = new AttendanceViewModel();
             model.Id = result.Id;
             model.EmployeeId = result.EmployeeId;
-            //model.AttendanceLogId = result.AttendanceLogId;
             model.ShiftId = result.ShiftId;
             model.AttendanceDate = result.AttendanceDate;
             model.LoginTime = result.LoginTime;

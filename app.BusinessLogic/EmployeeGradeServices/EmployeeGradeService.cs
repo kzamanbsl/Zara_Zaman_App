@@ -81,24 +81,13 @@ namespace app.Services.EmployeeGradeServices
 
             var searchModel = searchDto.SearchVm;
             var filter = searchDto?.Search?.Value?.Trim();
-            //if (searchModel?.CategoryId is > 0)
-            //{
-            //    searchResult = searchResult.Where(c => c.CategoryId == searchModel.CategoryId);
-            //}
-            //if (searchModel?.Name is > 0)
-            //{
-            //    searchResult = searchResult.Where(c => c.Name == searchModel.Name);
-            //}
+           
             if (!string.IsNullOrEmpty(filter))
             {
                 filter = filter.ToLower();
                 searchResult = searchResult.Where(c =>
-                    c.Name.ToLower().Contains(filter)
-                    //|| c.TradePrice.ToString().Contains(filter)
-                    //|| c.SalePrice.ToString().Contains(filter)
+                    c.Name.ToLower().Contains(filter)   
                     );
-                //    || c.Description.ToLower().Contains(filter)
-                //);
             }
 
             var pageSize = searchDto.Length ?? 0;

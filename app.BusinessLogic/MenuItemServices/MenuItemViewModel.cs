@@ -16,6 +16,7 @@ namespace app.Services.MenuItemServices
         public string Action { get; set; }
         public string Icon { get; set; }
         public long MenuId { get; set; }
+
         [DisplayName("Menu Name")]
         public string MenuName { get; set; }
         public bool IsActive { get; set; }

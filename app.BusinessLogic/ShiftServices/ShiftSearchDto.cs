@@ -6,6 +6,7 @@ namespace app.Services.ShiftServices
     public class ShiftSearchDto: BaseDataTableSearch
     {
         public string Name { get; set; }
+
         [DisplayName("Start At")]
         public DateTime StartAt { get; set; } = DateTime.Now;
 

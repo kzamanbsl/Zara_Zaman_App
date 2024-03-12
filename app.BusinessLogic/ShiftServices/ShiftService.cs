@@ -24,7 +24,6 @@ namespace app.Services.ShiftServices
 
         public async Task<bool> AddRecord(ShiftViewModel vm)
         {
-            // var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim());
             var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim() && f.IsActive == true);
             if (checkName == null)
             {
@@ -40,8 +39,6 @@ namespace app.Services.ShiftServices
         }
         public async Task<bool> UpdateRecord(ShiftViewModel vm)
         {
-
-            //var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim());
             var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim() && f.Id != vm.Id && f.IsActive == true);
             if (checkName == null)
             {

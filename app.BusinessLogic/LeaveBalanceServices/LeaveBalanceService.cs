@@ -94,10 +94,6 @@ namespace app.Services.LeaveBalanceServices
             {
                 searchResult = searchResult.Where(c => c.LeaveCategoryId == searchModel.LeaveCategoryId);
             }
-            //if (searchModel?.LeaveQty is > 0)
-            //{
-            //    searchResult = searchResult.Where(c => c.LeaveQty == searchModel.LeaveQty);
-            //}
             if (!string.IsNullOrEmpty(filter))
             {
                 filter = filter.ToLower();

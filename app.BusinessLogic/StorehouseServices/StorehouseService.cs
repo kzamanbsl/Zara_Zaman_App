@@ -23,7 +23,6 @@ namespace app.Services.StorehouseServices
 
         public async Task<bool> AddRecord(StorehouseViewModel vm)
         {
-            //var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim());
             var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim() && f.IsActive == true);
             if (checkName == null)
             {
@@ -41,8 +40,6 @@ namespace app.Services.StorehouseServices
         }
         public async Task<bool> UpdateRecord(StorehouseViewModel vm)
         {
-
-            // var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id == vm.Id);
             var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim() && f.Id != vm.Id && f.IsActive == true);
             if (checkName == null)
             {
