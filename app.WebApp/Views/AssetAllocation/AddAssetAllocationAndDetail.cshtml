@@ -173,12 +173,12 @@
 
                                                 @* <input asp-for="AssetAllocationDetailVM.Tags" id="tags" class="form-control" type="text" value="Amsterdam,Washington,Sydney,Beijing,Cairo" data-role="tagsinput" /> *@
 
-                                                <select id="tags" multiple data-role="tagsinput" asp-for="AssetAllocationDetailVM.Tags" type="text" class="form-control" placeholder="Enter Tags Number" data-role="tagsinput" required>
+                                                <select id="tags" multiple data-role="tagsinput" asp-for="AssetAllocationDetailVM.Tag" type="text" class="form-control" placeholder="Enter Tags Number" data-role="tagsinput" required>
                                                     @* <option value="0"></option> *@
 
                                                 </select>
 
-                                                <span asp-validation-for="AssetAllocationDetailVM.Tags" class="text-danger"></span>
+                                                <span asp-validation-for="AssetAllocationDetailVM.Tag" class="text-danger"></span>
                                             </div>
                                         </div>
 

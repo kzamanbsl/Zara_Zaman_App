@@ -23,17 +23,21 @@ namespace app.Services.AssetAllocationDetailServices
         {
             try
             {
-                //var assetAllocationTags=_dbContext.
-                AssetAllocationDetailViewModel assetAllocationDetail = new AssetAllocationDetailViewModel
-                {
+                string tags = "";
 
+                foreach(var index in vm.AssetAllocationDetailVM.Tag)
+                {
+                    tags += index + ", ";
+                }
+
+                AssetAllocationDetail assetAllocationDetail = new AssetAllocationDetail
+                {
                     AssetAllocationId = vm.Id,
                     Id = vm.AssetAllocationDetailVM.Id,
                     ProductId = vm.AssetAllocationDetailVM.ProductId,
                     Quantity = vm.AssetAllocationDetailVM.Quantity,
-                    Tags = vm.AssetAllocationDetailVM.Tags,
                     Description = vm.AssetAllocationDetailVM.Description,
-
+                    Tags = tags
                 };
 
                 var res = await _iEntityRepository.AddAsync(assetAllocationDetail);
@@ -46,18 +50,18 @@ namespace app.Services.AssetAllocationDetailServices
             }
 
         }
-
         public async Task<bool> UpdateAssetAllocationDetail(AssetAllocationViewModel model)
         {
+
             var assetAllocationDetail = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id == model.AssetAllocationDetailVM.Id);
             if (assetAllocationDetail != null)
             {
+                
                 model.Id = assetAllocationDetail.AssetAllocationId;
                 assetAllocationDetail.ProductId = model.AssetAllocationDetailVM.ProductId;
                 assetAllocationDetail.Quantity = model.AssetAllocationDetailVM.Quantity;
                 assetAllocationDetail.Tags = model.AssetAllocationDetailVM.Tags;
                 assetAllocationDetail.Description = model.AssetAllocationDetailVM.Description;
-
 
                 await _iEntityRepository.UpdateAsync(assetAllocationDetail);
                 return true;
