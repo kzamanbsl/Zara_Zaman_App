@@ -38,7 +38,6 @@
                             <div class="row" id="rowId">
                                 <div class="col-md-4" id="employeeName">
                                     <div class="form-group">
-                                        @* <label>Employee Name</label> *@
                                         <label asp-for="EmployeeName" class="control-label"></label>
                                         <select class="form-control" asp-for="EmployeeId" asp-items="ViewBag.Employees" onchange="CheckAttandanceData()">
                                             <option value="0" selected>-- Select Employee --</option>
@@ -47,7 +46,6 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        @* <label>Shift</label> *@
                                         <label asp-for="ShiftName" class="control-label"></label>
                                         <select class="form-control" asp-for="ShiftId" asp-items="ViewBag.Shifts">
                                             <option id="ddlChannel" value="0" selected>-- Select Shift --</option>
@@ -115,7 +113,6 @@
             var attendanceDate = $("#AttendanceDate").val();
             var loginTimeDiv = document.getElementById("LoginTimeDiv");
             var logoutTimeDiv = document.getElementById("LogoutTimeDiv");
-            // var formattedDate = moment(data.attendanceDate).format("YYYY-MM-DD");
             var submitButton = $("#saveButton");
 
             $.ajax({
@@ -128,13 +125,9 @@
                         $("#Id").val(data.id);
                         $("#EmployeeId").val(data.employeeId)/* .trigger() */;
                         $("#AttendanceDate").val(data.attendanceDate);
-                        // $("#AttendanceDate").val(formattedDate);
                         if (data.shiftId > 0) {
                             $("#ShiftId").val(data.shiftId)/* .trigger() */;
                         }
-                        // if (data.shiftId > 0) {
-                        //     $("#ShiftId").val(data.shiftId).trigger("change");
-                        // }
 
                         if (data.isLogin == true) {
                             loginTimeDiv.classList.remove("d-block");
