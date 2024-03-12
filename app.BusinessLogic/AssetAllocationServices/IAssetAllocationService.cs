@@ -11,7 +11,6 @@ namespace app.Services.AssetAllocationServices
         Task<AssetAllocationViewModel>GetAssetAllocation(long assetAllocationId);
         Task<AssetAllocationViewModel> GetAssetAllocationDetails(long id);
         Task<AssetAllocationViewModel> GetAllRecord();
-
         Task<bool> ConfirmAssetAllocation(long id);
         Task<bool> DeleteAssetAllocation(long id);
         Task<bool> RejectAssetAllocation(long id);
