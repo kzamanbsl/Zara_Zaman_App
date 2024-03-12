@@ -197,7 +197,7 @@ namespace app.Services.EmployeeServices
         public async Task<EmployeeViewModel> GetDetailsById(long id)
         {
 
-            //var result = await _iEntityRepository.GetByIdAsync(id);
+            
             var result = await _dbContext.Employee.Include(c => c.Manager).Include(c => c.MaritalType)
                 .Include(c => c.Gender).Include(c => c.BloodGroup).Include(c => c.Religion).Include(c => c.Department)
                 .Include(c => c.Designation).Include(c => c.EmployeeCategory).Include(c => c.EmployeeGrade)

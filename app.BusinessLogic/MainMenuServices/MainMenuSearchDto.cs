@@ -9,6 +9,7 @@ namespace app.Services.MainMenuServices
         public long Id { get; set; }    
         public string Name { get; set; }
         public string Icon { get; set; }
+
         [DisplayName("Order No")]
         public int OrderNo { get; set; }
         public bool IsActive { get; set; }

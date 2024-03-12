@@ -67,8 +67,6 @@ namespace app.Services.ATMAssemble.AssembleWorkServices
                 throw new Exception("Sorry, Assemble work item is not found!");
             }
 
-            //var bnTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Bangladesh Standard Time");
-            //DateTime baTime = TimeZoneInfo.ConvertTime(DateTime.Now, TimeZoneInfo.Local, bnTimeZone);
             DateTime baTime = _iWorkContext.GetBDStandardTime();
             var createdBy = _iWorkContext.GetCurrentUserAsync().Result.FullName;
 
@@ -460,8 +458,6 @@ namespace app.Services.ATMAssemble.AssembleWorkServices
 
         public async Task<object> MakeStatusComplete(long assembleWorkId)
         {
-            //var bnTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Bangladesh Standard Time");
-            //DateTime baTime = TimeZoneInfo.ConvertTime(DateTime.Now, TimeZoneInfo.Local, bnTimeZone);
             DateTime baTime = _iWorkContext.GetBDStandardTime();
             var updatedBy = _iWorkContext.GetCurrentUserAsync().Result.FullName;
             var unSuccessResult = new { IsSuccess = false, AssembleWorkId = assembleWorkId };

@@ -19,32 +19,22 @@ namespace app.Services.ATMAssemble.AssembleWorkDetailServices
 
         public async Task<bool> AddRecord(AssembleWorkDetailViewModel viewModel)
         {
-            //var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == viewModel.Name.Trim() && f.IsActive == true);
-            //if (checkName == null)
-            //{
+           
             AssembleWorkDetail data = new AssembleWorkDetail();
             data.AssembleWorkId = viewModel.AssembleWorkId;
             data.AssembleWorkStepItemId = viewModel.AssembleWorkStepItemId;
             data.Remarks = viewModel.Remarks;
             data.IsComplete = viewModel.IsComplete;
             data.IsActive = viewModel.IsActive;
-            //data.AssembleWorkItemName = viewModel.AssembleWorkItemName;
             var res = await _iEntityRepository.AddAsync(data);
             viewModel.Id = res.Id;
             return true;
-            //}
-            //else
-            //{
-            //    return false;
-            //}
+           
         }
 
         public async Task<bool> UpdateRecord(AssembleWorkDetailViewModel viewModel)
         {
-            //var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == viewModel.Name.Trim() && f.Id != viewModel.Id && f.IsActive == true);
-
-            //if (checkName == null)
-            //{
+           
             var result = await _iEntityRepository.GetByIdAsync(viewModel.Id);
             result.AssembleWorkId = viewModel.AssembleWorkId;
             result.AssembleWorkStepItemId = viewModel.AssembleWorkStepItemId;
@@ -52,11 +42,7 @@ namespace app.Services.ATMAssemble.AssembleWorkDetailServices
             result.IsComplete = viewModel.IsComplete;
             await _iEntityRepository.UpdateAsync(result);
             return true;
-            //}
-            //else
-            //{
-            //    return false;
-            //}
+         
         }
 
         public async Task<bool> DeleteRecord(long id)
@@ -90,7 +76,7 @@ namespace app.Services.ATMAssemble.AssembleWorkDetailServices
                                                                      AssembleWorkId = t1.AssembleWorkId,
                                                                      AssembleWorkStepItemId = t1.AssembleWorkStepItemId,
                                                                      AssembleWorkStepItemName = t1.AssembleWorkStepItem.Name,
-                                                                 }).AsQueryable());
+                                                                 }).AsEnumerable());
             return model;
         }
 

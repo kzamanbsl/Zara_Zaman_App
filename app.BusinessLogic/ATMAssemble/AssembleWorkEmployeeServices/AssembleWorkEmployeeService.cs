@@ -20,39 +20,22 @@ namespace app.Services.ATMAssemble.AssembleWorkEmployeeServices
 
         public async Task<bool> AddRecord(AssembleWorkEmployeeViewModel viewModel)
         {
-            //var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == viewModel.Name.Trim() && f.IsActive == true);
-            //if (checkName == null)
-            //{
             AssembleWorkEmployee data = new AssembleWorkEmployee();
             data.AssembleWorkId = viewModel.AssembleWorkId;
             data.EmployeeId = viewModel.EmployeeId;
             var res = await _iEntityRepository.AddAsync(data);
             viewModel.Id = res.Id;
             return true;
-            //}
-            //else
-            //{
-            //    return false;
-            //}
         }
 
         public async Task<bool> UpdateRecord(AssembleWorkEmployeeViewModel viewModel)
         {
-            //var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == viewModel.Name.Trim() && f.Id != viewModel.Id && f.IsActive == true);
-
-            //if (checkName == null)
-            //{
+            
             var result = await _iEntityRepository.GetByIdAsync(viewModel.Id);
-            //result.Name = viewModel.Name;
             result.AssembleWorkId = viewModel.AssembleWorkId;
             result.EmployeeId = viewModel.EmployeeId;
             await _iEntityRepository.UpdateAsync(result);
             return true;
-            //}
-            //else
-            //{
-            //    return false;
-            //}
         }
 
         public async Task<bool> DeleteRecord(long id)
@@ -85,7 +68,7 @@ namespace app.Services.ATMAssemble.AssembleWorkEmployeeServices
                                                                        AssembleWorkId = t1.AssembleWorkId,
                                                                        EmployeeId = t1.EmployeeId,
                                                                        EmployeeName = t1.Employee.Name
-                                                                   }).AsQueryable());
+                                                                   }).AsEnumerable());
             return model;
         }
 

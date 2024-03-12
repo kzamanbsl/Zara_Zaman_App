@@ -8,6 +8,7 @@ namespace app.Services.UserPermissionsServices
         public long Id { get; set; }
         public string TrackingId { get; set; }
         public string UserId { get; set; }
+
         [DisplayName("Menu Name")]
         public string MenuName { get; set; }
 

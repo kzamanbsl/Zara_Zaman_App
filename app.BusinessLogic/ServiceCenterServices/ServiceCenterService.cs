@@ -40,9 +40,6 @@ namespace app.Services.ServiceCenterServices
         }
         public async Task<bool> UpdateRecord(ServiceCenterViewModel vm)
         {
-
-            //var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim());
-            //var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id == vm.Id && f.IsActive == true);
             var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim() && f.Id != vm.Id && f.BusinessCenterTypeId == (int)BusinessCenterEnum.ServiceCenter && f.IsActive == true);
             if (checkName == null)
             {

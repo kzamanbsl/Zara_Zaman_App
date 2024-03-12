@@ -27,7 +27,6 @@ namespace app.Services.SupplierServices
 
         public async Task<bool> AddRecord(SupplierViewModel vm)
         {
-            //var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim());
             var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim() && f.IsActive == true);
             if (checkName == null)
             {
@@ -58,7 +57,6 @@ namespace app.Services.SupplierServices
 
         public async Task<bool> UpdateRecord(SupplierViewModel vm)
         {
-            //var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim());
             var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim() && f.Id != vm.Id && f.IsActive == true);
             if (checkName == null)
             {
@@ -86,8 +84,6 @@ namespace app.Services.SupplierServices
             var result = await _iEntityRepository.GetByIdAsync(id);
             SupplierViewModel model = new SupplierViewModel();
             model.Id = result.Id;
-            //model.LeaveCategoryId = result.LeaveCategoryId;
-            //model.LeaveQty = result.LeaveQty;
             model.Name = result.Name;
             model.Phone = result.Phone;
             model.Email = result.Email;
@@ -190,8 +186,7 @@ namespace app.Services.SupplierServices
                 Name = c.Name,
                 Description = c.Description,
                 Phone = c.Phone,
-                Email = c.Email,
-               
+                Email = c.Email,            
                 CountryId = c.CountryId,
                 CountryName = c.Country.Name,
                 DivisionId = c.DivisionId,
