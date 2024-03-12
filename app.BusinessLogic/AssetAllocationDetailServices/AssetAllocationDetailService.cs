@@ -17,11 +17,14 @@ namespace app.Services.AssetAllocationDetailServices
             _iEntityRepository = iEntityRepository;
             _dbContext = dbContext;
         }
+
+
         public async Task<bool> AddRecord(AssetAllocationViewModel vm)
         {
             try
             {
-                AssetAllocationDetail assetAllocationDetail = new AssetAllocationDetail
+                //var assetAllocationTags=_dbContext.
+                AssetAllocationDetailViewModel assetAllocationDetail = new AssetAllocationDetailViewModel
                 {
 
                     AssetAllocationId = vm.Id,
