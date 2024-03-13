@@ -5,6 +5,7 @@ namespace app.Services.ShiftServices
     public class ShiftViewModel:BaseViewModel
     {
         public string Name { get; set; }
+
         [DisplayName("Start At")]
         public DateTime StartAt { get; set; } = DateTime.Now;
 

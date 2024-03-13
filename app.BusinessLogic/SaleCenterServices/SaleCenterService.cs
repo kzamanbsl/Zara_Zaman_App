@@ -42,11 +42,9 @@ namespace app.Services.SaleCenterServices
         {
 
             var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id == vm.Id && f.IsActive == true);
-            //var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim());
 
             if (checkName != null)
             {
-                // var saleCenter = await _iEntityRepository.GetByIdAsync(vm.Id);
                 checkName.Id = vm.Id;
                 checkName.Name = vm.Name;
                 checkName.Code = vm.Code;

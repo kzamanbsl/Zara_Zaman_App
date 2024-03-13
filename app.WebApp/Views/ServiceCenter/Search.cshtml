@@ -30,41 +30,6 @@
                 </div>
             </div>
             <div class="card-body">
-             @*    <div class="row">
-                    <div class="col-sm-12">
-                        <form method="post" asp-controller="Product" asp-action="Search">
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label>Category</label>
-                                        <select class="form-control" asp-for="CategoryId" asp-items="ViewBag.ProductCategories">
-                                            <option value="0" selected>--Category--</option>
-                                            <span asp-validation-for="CategoryId" class="text-danger"></span>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label>Unit</label>
-                                        <select class="form-control" asp-for="UnitId" asp-items="ViewBag.Units">
-                                            <option value="0" selected>--Unit--</option>
-                                            <span asp-validation-for="UnitId" class="text-danger"></span>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="form-group text-right">
-                                @*<a href="@Url.Action("Search","Product")"><input type="submit" formtarget="_blank" value="Preview" class="btn btn-preview btn-width" /></a>*@
-                                @*<button asp-controller="Product" asp-action="Search" type="submit" title="Download" class="btn btn-report btn-width"><i class="fa fa-download"></i></button>*@
-                              @* <input id="ProductDTSearchBtn" type="button" value="Search" class="btn btn-info btn-width" />
-                                <a href="@Url.Action("Search","Product")"><input type="button" value="Clear" class="btn btn-warning btn-width" /></a>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-                <hr /> *@
-
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="table-responsive">
@@ -189,7 +154,6 @@
                         data: "Action",
                         render: function (data, type, row, meta) {
                             var editBtn = "<a href='UpdateRecord/" + row.id + "'><i class='fas fa-pen text-warning m-1' title='Edit' aria-hidden='true'></i></a>";
-                            //var detailsBtn = "<a href='Details/" + row.id + "'><i class='fa fa-eye text-info m-1' title='Details' aria-hidden='true'></i></a>";
                             var deleteBtn = "<a href='Delete/" + row.id + "'><i class='fas fa-trash text-danger m-1' title='Delete' aria-hidden='true'></i></a>";
                             var actionBtn = editBtn + deleteBtn;
                             return actionBtn;

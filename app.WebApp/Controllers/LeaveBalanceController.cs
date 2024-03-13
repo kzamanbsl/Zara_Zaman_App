@@ -72,7 +72,6 @@ namespace app.WebApp.Controllers
         public async Task<IActionResult> Search()
         {
             ViewBag.leaveCategory = new SelectList((await _iDropdownService.LeaveCategorySelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
-            //ViewBag.leaveQty = new SelectList((await _iDropdownService.LeaveCategorySelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
             return View();
         }
 

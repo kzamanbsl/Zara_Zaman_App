@@ -38,7 +38,6 @@
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        @* <label>Employee Name</label> *@
                                         <label asp-for="EmployeeName" class="control-label"></label>
                                         <select class="form-control" asp-for="EmployeeId" asp-items="ViewBag.Employees">
                                             <option value="0" selected>-- Select Employee --</option>
@@ -47,10 +46,9 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        @* <label>Shift</label> *@
-                                        <label asp-for="EmployeeName" class="control-label"></label>
+                                        <label asp-for="ShiftName" class="control-label"></label>
                                         <select class="form-control" asp-for="ShiftId" asp-items="ViewBag.Shifts">
-                                            <option value="0" selected>-- Select Employee Id Type --</option>
+                                            <option value="0" selected>-- Select Shift --</option>
                                         </select>
                                     </div>
                                 </div>

@@ -1,5 +1,6 @@
 ﻿using app.EntityModel.AppModels;
 using app.Services.AssetAllocationDetailServices;
+using app.Services.ATMAssemble.AssembleWorkDetailServices;
 using app.Services.PurchaseOrderDetailServices;
 using app.Utility;
 using System;
@@ -27,6 +28,9 @@ namespace app.Services.AssetAllocationServices
         public string Remarks { get; set; }
         public ActionEnum ActionEum { get { return (ActionEnum)this.ActionId; } }
         public int ActionId { get; set; } = 1;
+
+        //public List<AssembleWorkDetailViewModel> DetailList { get; set; }
+        public List<AssetAllocationDetailViewModel> DetailList { get; set; }
         public AssetAllocationDetailViewModel AssetAllocationDetailVM { get; set; } 
         public IEnumerable<AssetAllocationViewModel> AssetAllocationList { get; set; }
         public IEnumerable<AssetAllocationDetailViewModel> AssetAllocationDetailsList { get; set; }

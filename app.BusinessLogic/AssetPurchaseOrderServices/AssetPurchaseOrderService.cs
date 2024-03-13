@@ -82,7 +82,6 @@ namespace app.Services.AssetPurchaseOrderServices
                                                                                               UnitName = t1.Unit.Name,
                                                                                               CostPrice = t1.CostPrice,
                                                                                               SalePrice = t1.SalePrice,
-                                                                                              //Discount = t1.Discount,
                                                                                               TotalAmount = ((decimal)t1.PurchaseQty * t1.CostPrice) - t1.Discount,
                                                                                               Remarks = t1.Remarks,
                                                                                           }).OrderByDescending(x => x.Id).AsEnumerable());
@@ -143,7 +142,6 @@ namespace app.Services.AssetPurchaseOrderServices
                                                                                               UnitName = t1.Unit.Name,
                                                                                               CostPrice = t1.CostPrice,
                                                                                               SalePrice = t1.SalePrice,
-                                                                                              //Discount = t1.Discount,
                                                                                               TotalAmount = ((decimal)t1.PurchaseQty * t1.CostPrice) - t1.Discount,
                                                                                               Remarks = t1.Remarks,
                                                                                           }).OrderByDescending(x => x.Id).AsEnumerable());

@@ -64,7 +64,6 @@ namespace app.Services.LeaveApplicationServices
                 result.Reason = vm.Reason;
                 result.Remarks = vm.Remarks;
                 result.StatusId = (int)LeaveApplicationStatusEnum.Applied;
-                //result.Employee.Name = vm.StatusName;
                 result.ApplicationDate = vm.ApplicationDate;
                 await _iEntityRepository.UpdateAsync(result);
                 return true;
@@ -73,7 +72,6 @@ namespace app.Services.LeaveApplicationServices
         }
         public async Task<LeaveApplicationViewModel> GetRecordById(long id)
         {
-            //var result = await _iEntityRepository.GetByIdAsync(id);
             var result = await _dbContext.LeaveApplication.Include(c => c.Employee).Include(c => c.LeaveCategory).FirstOrDefaultAsync(c => c.Id == id);
             LeaveApplicationViewModel model = new LeaveApplicationViewModel();
             model.Id = result.Id;

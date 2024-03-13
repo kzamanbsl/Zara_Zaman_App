@@ -6,11 +6,14 @@ namespace app.Services.SupplierServices
     {
         [DisplayName("Name")]
         public string Name { get; set; }
+
         [DisplayName("Phone")]
         public string Phone { get; set; }
+
         [DisplayName("Email")]
         public string Email { get; set; }
         public string Description { get; set; }
+
         [DisplayName("Address")]
         public string Address { get; set; }
         public string BankName { get; set; }

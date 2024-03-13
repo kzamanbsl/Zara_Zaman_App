@@ -27,7 +27,6 @@ namespace app.Services.AttendanceLogServices
 
                 AttendanceLog model = new AttendanceLog();
                 model.AttendanceId = vm.AttendanceId;
-                //model.LoginTime = (DateTime)vm.LoginTime;
                 model.LoginTime = vm.LoginTime;
                 model.LogoutTime = null;
                 model.Remarks = vm.Remarks;
@@ -43,13 +42,12 @@ namespace app.Services.AttendanceLogServices
 
         public async Task<bool> UpdateRecord(AttendanceLogViewModel vm)
         {
-            //var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id == vm.Id && f.AttendanceId == vm.AttendanceId);
+            
             var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id == vm.Id && f.IsActive == true);
             if (checkName != null)
             {
                 var result = await _iEntityRepository.GetByIdAsync(vm.Id);
                 result.AttendanceId = vm.AttendanceId;
-                //result.LoginTime = (DateTime)vm.LoginTime;
                 result.LoginTime = vm.LoginTime;
                 result.LogoutTime = vm.LogoutTime;
                 result.Remarks = vm.Remarks;
@@ -61,13 +59,12 @@ namespace app.Services.AttendanceLogServices
 
         public async Task<AttendanceLogViewModel> GetRecordById(long id)
         {
-            //var DataTranfer = _dbContext.AttendanceLog.Include(x => x.Attendance).ToListAsync();
+            
             var result = await _iEntityRepository.GetByIdAsync(id);
             AttendanceLogViewModel model = new AttendanceLogViewModel();
             model.Id = result.Id;
             model.AttendanceId = result.AttendanceId;
             model.LoginTime = result.LoginTime;
-            //model.LogoutTime = (DateTime)result.LogoutTime;
             model.LogoutTime = result.LogoutTime;
             model.Remarks = result.Remarks;
             return model;
@@ -85,11 +82,10 @@ namespace app.Services.AttendanceLogServices
                                                                 EmployeeId = t1.Attendance.EmployeeId,
                                                                 ShiftId = t1.Attendance.ShiftId,
                                                                 LoginTime = t1.LoginTime,
-                                                                //LogoutTime = (DateTime)t1.LogoutTime,
                                                                 LogoutTime = t1.LogoutTime,
                                                                 Remarks = t1.Remarks,
 
-                                                            }).AsQueryable());
+                                                            }).AsEnumerable());
             return model;
         }
         public async Task<bool> DeleteRecord(long id)

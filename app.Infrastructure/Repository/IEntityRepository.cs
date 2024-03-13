@@ -17,6 +17,9 @@ namespace app.Infrastructure.Repository
         Task<int> CountAsync(CancellationToken cancellationToken = default);
         Task<T> FirstAsync(CancellationToken cancellationToken = default);
         Task<T> FirstOrDefaultAsync(CancellationToken cancellationToken = default);
-        Task<int> CountAsync();
+        //Task<int> CountAsync();
+        //Task<int?> AddAsync(app.Services.AssetAllocationDetailServices.AssetAllocationDetailViewModel assetAllocationDetail);
+        //Task<int?> AddAsync(app.Services.AssetAllocationDetailServices.AssetAllocationDetailViewModel assetAllocationDetail);
+        //Task<int?> AddAsync(string[] tags);
     }
 }

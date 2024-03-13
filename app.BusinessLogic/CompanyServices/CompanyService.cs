@@ -39,7 +39,6 @@ namespace app.Services.CompanyServices
         public async Task<bool> UpdateRecord(CompanyViewModel vm)
         {
 
-            //var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim());
             var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim() && f.Id != vm.Id && f.IsActive == true);
 
             if (checkName == null)

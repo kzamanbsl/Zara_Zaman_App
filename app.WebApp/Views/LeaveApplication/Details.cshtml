@@ -17,7 +17,7 @@
                 <li class="breadcrumb-item active"> Leave Application List </li>
             </ol>
             <div>
-                <a asp-action="Index"><i class="fa fa-list"></i>  Leave Application List </a>
+                <a asp-action="Search"><i class="fa fa-list"></i>  Leave Application List </a>
             </div>
         </div>
     </div>
@@ -122,96 +122,6 @@
     </div>
 
 </section>
-
-
-@* 
-<section class="content">
-    <div class="container-fluid">
-        <div class="card">
-            <div class="breadcrumb d-flex justify-content-between align-items-center  pl-3 pr-3">
-                <ol class="breadcrumb mb-0 p-0">
-                    <li class="breadcrumb-item"><a href="/Admin/Index">Home</a></li>
-                    <li class="breadcrumb-item active"> Leave Balance </li>
-                </ol>
-            </div>
-            <div style="border-radius: 5px; overflow: hidden;">
-                <table class="table table-sm table-bordered" style="border-radius: 5px;">
-                    <thead>
-                        <tr style="background-color:#4CAF50;color:#FFFFFF;">
-                            <th>
-                                Leave Type
-                            </th>
-                            <th>
-                                Leave Qty
-                            </th>
-                            <th>
-                                Leave Used Qty
-                            </th>
-                            <th>
-                                Leave Remaining Qty
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @if (Model.LeaveBalanceCountList?.Count() > 0)
-                        {
-                            @foreach (var item in Model.LeaveBalanceCountList)
-                            {
-                                <tr>
-                                    <td>@item.LeaveCategoryName</td>
-                                    <td><span class="badge" style="color:gray">@item.LeaveQty</span></td>
-                                    <td><span class="badge" style="color:orange">@item.LeaveUsedQty</span></td>
-                                    <td><span class="badge" style="color:green">@item.LeaveRemainingQty</span></td>
-                                </tr>
-                            }
-                        }
-                    </tbody>
-                </table>
-            </div>
-                    <h5 style="background-color:#4CAF50;color:#FFFFFF;"><b>Leave Balance Details</b></h5>
-                    <table class="table table-sm table-bordered">
-                        <tr>
-                            <td style="font-weight:bold">Employee</td>
-                            <td>@Model.EmployeeName</td>
-                            <td style="font-weight:bold">Category</td>
-                            <td>@Model.LeaveCategoryName</td>
-                        </tr>
-                        <tr>
-                            <td style="font-weight:bold">Application Date</td>
-                            <td>@Model.ApplicationDate</td>
-                            <td style="font-weight:bold">Start Date</td>
-                            <td>@Model.StartDate</td>
-                        </tr>
-                        <tr>
-                            <td style="font-weight:bold">End Date</td>
-                            <td>@Model.EndDate</td>
-                            <td style="font-weight:bold">Leave Days</td>
-                            <td>@Model.LeaveDays</td>
-                        </tr>
-                        <tr>
-                            <td style="font-weight:bold">Stay During Leave</td>
-                            <td>@Model.StayDuringLeave</td>
-                            <td style="font-weight:bold">Reason</td>
-                            <td>@Model.Reason</td>
-                        </tr>
-                    </table>
-                    <div class="text-right" style="padding-right:5px;padding-bottom:5px;">
-                        @if (Model.StatusId == (int)LeaveApplicationStatusEnum.Draft)
-                        {
-                            <button id="confirmButton" class="btn btn-outline-primary">Confirm</button>
-                            <button id="rejectButton" class="btn btn-outline-danger">Reject</button>
-                        }
-                        else if (Model.StatusId == (int)LeaveApplicationStatusEnum.Confirm)
-                        {
-                            <button id="approveButton" class="btn btn-outline-primary">Approve</button>
-                            <button id="rejectButton" class="btn btn-outline-danger">Reject</button>
-                        }
-
-                    </div>
-                </div>
-            </div>
-</section> *@
-
 
 @section Scripts{
     @{

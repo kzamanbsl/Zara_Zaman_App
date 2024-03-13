@@ -27,8 +27,6 @@ namespace app.Services.SupplierServices
 
         public async Task<bool> AddRecord(SupplierViewModel vm)
         {
-            try
-            {
                 var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim() && f.IsActive == true);
                 if (checkName == null)
                 {
@@ -56,13 +54,6 @@ namespace app.Services.SupplierServices
                     }
                     return false;
                 }
-            }
-            catch (Exception es)
-            {
-
-                throw;
-            }
-
             return false;
         }
 
@@ -207,8 +198,7 @@ namespace app.Services.SupplierServices
                 Email = c.Email,
                 BankName = c.BankName,
                 BranchName = c.BranchName,
-                BankAccountNo = c.BankAccountNo,
-               
+                BankAccountNo = c.BankAccountNo,         
                 Address = c.Address,
             }).ToList();
 
