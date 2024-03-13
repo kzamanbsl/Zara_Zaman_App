@@ -27,30 +27,40 @@ namespace app.Services.SupplierServices
 
         public async Task<bool> AddRecord(SupplierViewModel vm)
         {
-            //var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim());
-            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim() && f.IsActive == true);
-            if (checkName == null)
+            try
             {
-                Supplier model = new Supplier();
-                model.Name = vm.Name;
-                model.Phone = vm.Phone;
-                model.Email = vm.Email;
-                model.Description = vm.Description;
-                model.Address = vm.Address;
-                model.CountryId = vm.CountryId;
-                model.DivisionId = vm.DivisionId;
-                model.DistrictId = vm.DistrictId;
-                model.UpazilaId = vm.UpazilaId;
-                model.CreatedBy = _httpContextAccessor.HttpContext.User.Identity.Name;
-                model.CreatedOn = DateTime.Now;
-                model.IsActive = true;
-                var res = await _iEntityRepository.AddAsync(model);
-                if (res != null)
+                var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim() && f.IsActive == true);
+                if (checkName == null)
                 {
-                    vm.Id = res.Id;
-                    return true;
+                    Supplier model = new Supplier();
+                    model.Name = vm.Name;
+                    model.Phone = vm.Phone;
+                    model.Email = vm.Email;
+                    model.Description = vm.Description;
+                    model.Address = vm.Address;
+                    model.BankName = vm.BankName;
+                    model.BranchName = vm.BranchName;
+                    model.BankAccountNo = vm.BankAccountNo;
+                    //model.CountryId = vm.CountryId;
+                    //model.DivisionId = vm.DivisionId;
+                    //model.DistrictId = vm.DistrictId;
+                    //model.UpazilaId = vm.UpazilaId;
+                    model.CreatedBy = _httpContextAccessor.HttpContext.User.Identity.Name;
+                    model.CreatedOn = DateTime.Now;
+                    model.IsActive = true;
+                    var res = await _iEntityRepository.AddAsync(model);
+                    if (res != null)
+                    {
+                        vm.Id = res.Id;
+                        return true;
+                    }
+                    return false;
                 }
-                return false;
+            }
+            catch (Exception es)
+            {
+
+                throw;
             }
 
             return false;
@@ -58,7 +68,6 @@ namespace app.Services.SupplierServices
 
         public async Task<bool> UpdateRecord(SupplierViewModel vm)
         {
-            //var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim());
             var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim() && f.Id != vm.Id && f.IsActive == true);
             if (checkName == null)
             {
@@ -68,10 +77,13 @@ namespace app.Services.SupplierServices
                 result.Email = vm.Email;
                 result.Description = vm.Description;
                 result.Address = vm.Address;
-                result.CountryId = vm.CountryId;
-                result.DivisionId = vm.DivisionId;
-                result.DistrictId = vm.DistrictId;
-                result.UpazilaId = vm.UpazilaId;
+                result.BankAccountNo = vm.BankAccountNo;
+                result.BankName = vm.BankName;
+                result.BranchName = vm.BranchName;
+                //result.CountryId = vm.CountryId;
+                //result.DivisionId = vm.DivisionId;
+                //result.DistrictId = vm.DistrictId;
+                //result.UpazilaId = vm.UpazilaId;
                 result.UpdatedBy = _httpContextAccessor.HttpContext.User.Identity.Name;
                 result.UpdatedOn = DateTime.Now;
                 var res = await _iEntityRepository.UpdateAsync(result);
@@ -86,17 +98,18 @@ namespace app.Services.SupplierServices
             var result = await _iEntityRepository.GetByIdAsync(id);
             SupplierViewModel model = new SupplierViewModel();
             model.Id = result.Id;
-            //model.LeaveCategoryId = result.LeaveCategoryId;
-            //model.LeaveQty = result.LeaveQty;
             model.Name = result.Name;
             model.Phone = result.Phone;
             model.Email = result.Email;
             model.Description = result.Description;
             model.Address = result.Address;
-            model.CountryId = result.CountryId;
-            model.DivisionId = result.DivisionId;
-            model.DistrictId = result.DistrictId;
-            model.UpazilaId = result.UpazilaId;
+            model.BankAccountNo = result.BankAccountNo;
+            model.BankName = result.BankName;
+            model.BranchName = result.BranchName;
+            //model.CountryId = result.CountryId;
+            //model.DivisionId = result.DivisionId;
+            //model.DistrictId = result.DistrictId;
+            //model.UpazilaId = result.UpazilaId;
             return model;
         }
        
@@ -121,40 +134,43 @@ namespace app.Services.SupplierServices
                                                            Email = t1.Email,
                                                            Description = t1.Description,
                                                            Address = t1.Address,
-                                                           CountryId = t1.CountryId,
-                                                           CountryName = t1.Country.Name,
-                                                           DivisionId = t1.DivisionId,
-                                                           DivisionName = t1.Division.Name,
-                                                           DistrictId = t1.DistrictId,
-                                                           DistrictName = t1.District.Name,
-                                                           UpazilaId = t1.UpazilaId,
-                                                           UpazilaName = t1.Upazila.Name,
+                                                           BankName = t1.BankName,
+                                                           BranchName = t1.BranchName,
+                                                           BankAccountNo = t1.BankAccountNo,
+                                                           //CountryId = t1.CountryId,
+                                                           //CountryName = t1.Country.Name,
+                                                           //DivisionId = t1.DivisionId,
+                                                           //DivisionName = t1.Division.Name,
+                                                           //DistrictId = t1.DistrictId,
+                                                           //DistrictName = t1.District.Name,
+                                                           //UpazilaId = t1.UpazilaId,
+                                                           //UpazilaName = t1.Upazila.Name,
                                                        }).AsEnumerable());
             return model;
         }
 
         public async Task<DataTablePagination<SupplierSearchDto>> SearchAsync(DataTablePagination<SupplierSearchDto> searchDto)
         {
-            var searchResult = _dbContext.Supplier.Include(c => c.Upazila).Include(c => c.District).Include(c=>c.Division).Include(c => c.Country).Where(c=>c.IsActive==true).AsNoTracking();
+            var searchResult = _dbContext.Supplier.Where(c=>c.IsActive==true).AsNoTracking();
 
             var searchModel = searchDto.SearchVm;
             var filter = searchDto?.Search?.Value?.Trim();
-            if (searchModel?.CountryId is > 0)
-            {
-                searchResult = searchResult.Where(c => c.CountryId == searchModel.CountryId);
-            }
-            if (searchModel?.DivisionId is > 0)
-            {
-                searchResult = searchResult.Where(c => c.DivisionId == searchModel.DivisionId);
-            }
-            if (searchModel?.DistrictId is > 0)
-            {
-                searchResult = searchResult.Where(c => c.DistrictId == searchModel.DistrictId);
-            }
-            if (searchModel?.UpazilaId is > 0)
-            {
-                searchResult = searchResult.Where(c => c.UpazilaId == searchModel.UpazilaId);
-            }
+            //if (searchModel?.CountryId is > 0)
+            //{
+            //    searchResult = searchResult.Where(c => c.CountryId == searchModel.CountryId);
+            //}
+            //if (searchModel?.DivisionId is > 0)
+            //{
+            //    searchResult = searchResult.Where(c => c.DivisionId == searchModel.DivisionId);
+            //}
+            //if (searchModel?.DistrictId is > 0)
+            //{
+            //    searchResult = searchResult.Where(c => c.DistrictId == searchModel.DistrictId);
+            //}
+            //if (searchModel?.UpazilaId is > 0)
+            //{
+            //    searchResult = searchResult.Where(c => c.UpazilaId == searchModel.UpazilaId);
+            //}
             if (!string.IsNullOrEmpty(filter))
             {
                 filter = filter.ToLower();
@@ -162,10 +178,8 @@ namespace app.Services.SupplierServices
                     c.Name.ToLower().Contains(filter)
                     ||c.Phone.ToString().Contains(filter)
                     || c.Address.ToLower().Contains(filter)
-                    || c.Country.Name.ToLower().Contains(filter)
-                     || c.Division.Name.ToLower().Contains(filter)
-                     || c.District.Name.ToLower().Contains(filter)
-                      || c.Upazila.Name.ToLower().Contains(filter)
+                    || c.BankName.ToLower().Contains(filter)
+                    || c.BranchName.ToLower().Contains(filter)
                     || c.Email.ToLower().Contains(filter)
                     || c.Description.ToLower().Contains(filter)
                     || c.Address.ToLower().Contains(filter)
@@ -191,15 +205,10 @@ namespace app.Services.SupplierServices
                 Description = c.Description,
                 Phone = c.Phone,
                 Email = c.Email,
+                BankName = c.BankName,
+                BranchName = c.BranchName,
+                BankAccountNo = c.BankAccountNo,
                
-                CountryId = c.CountryId,
-                CountryName = c.Country.Name,
-                DivisionId = c.DivisionId,
-                DivisionName = c.Division.Name,
-                DistrictId = c.DistrictId,
-                DistrictName = c.District.Name,
-                UpazilaId = c.UpazilaId,
-                UpazilaName = c.Upazila.Name,
                 Address = c.Address,
             }).ToList();
 

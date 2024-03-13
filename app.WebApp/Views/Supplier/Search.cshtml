@@ -34,49 +34,50 @@
                     <div class="col-sm-12">
                         <form method="post" asp-controller="Supplier" asp-action="Search">
                             <div class="row">
-                                <div class="col-sm-3">
-                                    <div class="form-group">
-                                        <label>Division</label>
-                                        <select class="form-control" asp-for="DivisionId" asp-items="ViewBag.Divisions">
-                                            <option value="0" selected>--Division--</option>
-                                            <span asp-validation-for="DivisionId" class="text-danger"></span>
-                                        </select>
-                                    </div>
+                                @*              <div class="col-sm-3">
+                                <div class="form-group">
+                                <label>Division</label>
+                                <select class="form-control" asp-for="DivisionId" asp-items="ViewBag.Divisions">
+                                <option value="0" selected>--Division--</option>
+                                <span asp-validation-for="DivisionId" class="text-danger"></span>
+                                </select>
+                                </div>
                                 </div>
                                 <div class="col-sm-3">
-                                    <div class="form-group">
-                                        <label>District</label>
-                                        <select class="form-control" asp-for="DistrictId" asp-items="ViewBag.Districts">
-                                            <option value="0" selected>--District--</option>
-                                            <span asp-validation-for="DistrictId" class="text-danger"></span>
-                                        </select>
-                                    </div>
+                                <div class="form-group">
+                                <label>District</label>
+                                <select class="form-control" asp-for="DistrictId" asp-items="ViewBag.Districts">
+                                <option value="0" selected>--District--</option>
+                                <span asp-validation-for="DistrictId" class="text-danger"></span>
+                                </select>
+                                </div>
                                 </div>
                                 <div class="col-sm-3">
-                                    <div class="form-group">
-                                        <label>Upazila</label>
-                                        <select class="form-control" asp-for="UpazilaId" asp-items="ViewBag.Upazilas">
-                                            <option value="0" selected>--Upazila--</option>
-                                            <span asp-validation-for="UpazilaId" class="text-danger"></span>
-                                        </select>
-                                    </div>
+                                <div class="form-group">
+                                <label>Upazila</label>
+                                <select class="form-control" asp-for="UpazilaId" asp-items="ViewBag.Upazilas">
+                                <option value="0" selected>--Upazila--</option>
+                                <span asp-validation-for="UpazilaId" class="text-danger"></span>
+                                </select>
+                                </div>
                                 </div>
                                 <div class="col-sm-3">
-                                    <div class="form-group">
-                                        <label>Country</label>
-                                        <select class="form-control" asp-for="CountryId" asp-items="ViewBag.Countries">
-                                            <option value="0" selected>--Country--</option>
-                                            <span asp-validation-for="CountryId" class="text-danger"></span>
-                                        </select>
-                                    </div>
+                                <div class="form-group">
+                                <label>Country</label>
+                                <select class="form-control" asp-for="CountryId" asp-items="ViewBag.Countries">
+                                <option value="0" selected>--Country--</option>
+                                <span asp-validation-for="CountryId" class="text-danger"></span>
+                                </select>
                                 </div>
+                                </div> *@
                             </div>
 
                             <div class="form-group text-right">
                                 @*<a href="@Url.Action("Search","Product")"><input type="submit" formtarget="_blank" value="Preview" class="btn btn-preview btn-width" /></a>*@
                                 @*<button asp-controller="Product" asp-action="Search" type="submit" title="Download" class="btn btn-report btn-width"><i class="fa fa-download"></i></button>*@
-                                <input id="SupplierDTSearchBtn" type="button" value="Search" class="btn btn-info btn-width" />
+                                @*       <input id="SupplierDTSearchBtn" type="button" value="Search" class="btn btn-info btn-width" />
                                 <a href="@Url.Action("Search","Supplier")"><input type="button" value="Clear" class="btn btn-warning btn-width" /></a>
+                                *@
                             </div>
                         </form>
                     </div>
@@ -100,19 +101,20 @@
                                         <th class="text-center">
                                             @Html.DisplayNameFor(model => model.Email)
                                         </th>
-                                       
-                                        <th class="text-center">
-                                            @Html.DisplayNameFor(model => model.CountryName)
+
+                                        @*        <th class="text-center">
+                                        @Html.DisplayNameFor(model => model.CountryName)
                                         </th>
                                         <th class="text-center">
-                                            @Html.DisplayNameFor(model => model.DivisionName)
+                                        @Html.DisplayNameFor(model => model.DivisionName)
                                         </th>
                                         <th class="text-center">
-                                            @Html.DisplayNameFor(model => model.DistrictName)
+                                        @Html.DisplayNameFor(model => model.DistrictName)
                                         </th>
                                         <th class="text-center">
-                                            @Html.DisplayNameFor(model => model.UpazilaName)
-                                        </th>
+                                        @Html.DisplayNameFor(model => model.UpazilaName)
+                                        </th> *@
+
                                         <th class="text-center">
                                             @Html.DisplayNameFor(model => model.Address)
                                         </th>
@@ -150,7 +152,7 @@
         });
 
         //Bind District base on DivisionId Selection
-           $('#DivisionId').change(function () {
+        $('#DivisionId').change(function () {
             $.ajax({
                 type: "post",
                 url: "/Dropdown/GetDistrictSelectionList",
@@ -254,30 +256,30 @@
                             return row.email;
                         }
                     },
-                    {
-                        data: "CountryName",
-                        render: function (data, type, row, meta) {
-                            return row.countryName;
-                        }
-                    },
-                    {
-                        data: "DivisionName",
-                        render: function (data, type, row, meta) {
-                            return row.divisionName;
-                        }
-                    },
-                    {
-                        data: "DistrictName",
-                        render: function (data, type, row, meta) {
-                            return row.districtName;
-                        }
-                    },
-                    {
-                        data: "UpazilaName",
-                        render: function (data, type, row, meta) {
-                            return row.upazilaName;
-                        }
-                    },
+                    // {
+                    //     data: "CountryName",
+                    //     render: function (data, type, row, meta) {
+                    //         return row.countryName;
+                    //     }
+                    // },
+                    // {
+                    //     data: "DivisionName",
+                    //     render: function (data, type, row, meta) {
+                    //         return row.divisionName;
+                    //     }
+                    // },
+                    // {
+                    //     data: "DistrictName",
+                    //     render: function (data, type, row, meta) {
+                    //         return row.districtName;
+                    //     }
+                    // },
+                    // {
+                    //     data: "UpazilaName",
+                    //     render: function (data, type, row, meta) {
+                    //         return row.upazilaName;
+                    //     }
+                    // },
                     {
                         data: "Address",
                         render: function (data, type, row, meta) {
