@@ -2,9 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using app.Infrastructure.Auth;
 using Microsoft.AspNetCore.Identity;
-using app.EntityModel.AppModels;
 using app.EntityModel.DataTablePaginationModels;
-using app.Services.ProductServices;
 
 namespace app.Services.UserServices
 {
