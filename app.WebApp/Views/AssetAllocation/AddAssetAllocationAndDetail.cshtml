@@ -11,6 +11,12 @@
         margin-right: 2px;
         color: red !important;
     }
+    .bootstrap-tagsinput {
+        padding: 8px 78px !important;
+    }
+
+   
+
 </style>
 <div class="content-header">
     <div class="container-fluid ">
@@ -173,12 +179,12 @@
 
                                                 @* <input asp-for="AssetAllocationDetailVM.Tags" id="tags" class="form-control" type="text" value="Amsterdam,Washington,Sydney,Beijing,Cairo" data-role="tagsinput" /> *@
 
-                                                <select id="tags" multiple data-role="tagsinput" asp-for="AssetAllocationDetailVM.Tag" type="text" class="form-control" placeholder="Enter Tags Number" data-role="tagsinput" required>
-                                                    @* <option value="0"></option> *@
-
+                                                <select id="tag" multiple data-role="tagsinput" asp-for="AssetAllocationDetailVM.Tag" type="text" class="form-control" style="width:100%" placeholder="Enter Tags Number" data-role="tagsinput" required>
+                                                    @* <option value="@Html.ViewBag" selected></option> *@
+                                                    <option />
+                                                    <span asp-validation-for="AssetAllocationDetailVM.Tag" class="text-danger"></span>
                                                 </select>
 
-                                                <span asp-validation-for="AssetAllocationDetailVM.Tag" class="text-danger"></span>
                                             </div>
                                         </div>
 
@@ -338,7 +344,7 @@
                     $('#actionId').val(2);
                     $("#productId").val(data.productId);
                     $("#quantity").val(data.quantity);
-                    $("#tags ").val(data.tags);
+                    $("#tag").val(data.tag);
                     $("#txtDescription").val(data.txtDescription);
 
                     // $("#costPrice").val(data.costPrice);

@@ -27,7 +27,7 @@ namespace app.Services.AssetAllocationDetailServices
 
                 foreach(var index in vm.AssetAllocationDetailVM.Tag)
                 {
-                    tags += index + ", ";
+                    tags += index + ", " ;
                 }
 
                 AssetAllocationDetail assetAllocationDetail = new AssetAllocationDetail
@@ -54,6 +54,12 @@ namespace app.Services.AssetAllocationDetailServices
         public async Task<bool> UpdateAssetAllocationDetail(AssetAllocationViewModel model)
         {
 
+            string tags = "";
+
+            foreach (var index in model.AssetAllocationDetailVM.Tag)
+            {
+                tags += index + ", ";
+            }
             var assetAllocationDetail = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id == model.AssetAllocationDetailVM.Id);
             if (assetAllocationDetail != null)
             {
@@ -61,10 +67,9 @@ namespace app.Services.AssetAllocationDetailServices
                 model.Id = assetAllocationDetail.AssetAllocationId;
                 assetAllocationDetail.ProductId = model.AssetAllocationDetailVM.ProductId;
                 assetAllocationDetail.Quantity = model.AssetAllocationDetailVM.Quantity;
-                assetAllocationDetail.Tags = model.AssetAllocationDetailVM.Tags;
+                //assetAllocationDetail.Tags = model.AssetAllocationDetailVM.Tags;
                 assetAllocationDetail.Description = model.AssetAllocationDetailVM.Description;
-
-
+                assetAllocationDetail.Tags = tags;
                 await _iEntityRepository.UpdateAsync(assetAllocationDetail);
                 return true;
             }
@@ -85,7 +90,6 @@ namespace app.Services.AssetAllocationDetailServices
                                               Quantity= t1.Quantity,
                                               Tags = t1.Tags,
                                               Description = t1.Description,
-
 
                                           }).FirstOrDefault());
             return v;
