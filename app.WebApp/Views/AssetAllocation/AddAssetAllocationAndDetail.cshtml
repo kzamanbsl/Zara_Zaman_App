@@ -11,11 +11,10 @@
         margin-right: 2px;
         color: red !important;
     }
+
     .bootstrap-tagsinput {
         padding: 8px 78px !important;
     }
-
-   
 
 </style>
 <div class="content-header">
@@ -98,12 +97,12 @@
                                 <div class="row">
 
                                     @* <div class="col-md-2">
-                                        <div class="form-group">
-                                            <label>Order No </label>
-                                            <input asp-for="OrderNo" class="form-control" autocomplete="off" required />
-                                            <span asp-validation-for="OrderNo" class="text-danger"></span>
-                                        </div>
-                                    </div> *@
+                                <div class="form-group">
+                                <label>Order No </label>
+                                <input asp-for="OrderNo" class="form-control" autocomplete="off" required />
+                                <span asp-validation-for="OrderNo" class="text-danger"></span>
+                                </div>
+                                </div> *@
 
                                     <div class="col-md-3">
                                         <div class="form-group">
@@ -242,7 +241,7 @@
                                             {
 
                                                 <tr>
-                                                    <td style="padding:5px">@(++sl)</td> 
+                                                    <td style="padding:5px">@(++sl)</td>
                                                     <td style="padding:5px;text-align:left;">@item.ProductName</td>
                                                     <td style="padding: 5px; text-align: left;">@item.Quantity</td>
                                                     <td style="padding: 5px; text-align: left;">@item.Tags</td>
@@ -257,10 +256,10 @@
                                                     @{
                                                         if (Model.AssetAllocationStatusId == (int)AssetAllocationStatusEnum.Draft)
                                                         {
-                                                            <td style="padding:5px;text-align:center;">
-                                                                <a id="@item.Id" onclick="makeEditble(@item.Id);" class="linkPointer" title="Edit"><i class="text-warning fas fa-edit" aria-hidden="true"></i></a>
-                                                                <a id="@item.Id" onclick="makeDeletable(@item.Id)" class="linkPointer"><i class="text-danger fas fa-trash" aria-hidden="true"></i></a>
-                                                            </td>
+                                                                <td style="padding:5px;text-align:center;">
+                                                                    <a id="@item.Id" onclick="makeEditble(@item.Id);" class="linkPointer" title="Edit"><i class="text-warning fas fa-edit" aria-hidden="true"></i></a>
+                                                                    <a id="@item.Id" onclick="makeDeletable(@item.Id)" class="linkPointer"><i class="text-danger fas fa-trash" aria-hidden="true"></i></a>
+                                                                </td>
                                                         }
                                                     }
                                                 </tr>
@@ -321,7 +320,7 @@
             $('#Asset-Management').addClass('menu-open');
             $('#AssetAllocationAddAssetAllocationAndDetail').addClass('active');
             // Initialize Bootstrap Tags Input on the input field
-            $('#tags').tagsinput();
+            $('#tag').tagsinput();
         });
         window.setTimeout(function () {
             $(".alert").fadeTo(500,).slideUp(500, function () {
@@ -329,8 +328,28 @@
             });
         }, 4000);
 
+        // $('#aaCreateBtn').on('click', function () {
+        //     $.ajax({
+        //         url: '/AssetAllocation/UpdateSingleAssetAllocationDetails',
+        //         method: 'get',
+        //         data: {
+        //             code: $('#tag').val()
+        //         }
+        //     }).done(function (result) {
+        //         if (result) {
+        //             // code valid
+        //             $('form').submit();
+        //         } else {
+        //             // show error
+        //         }
+        //     }).fail(function () {
+        //         // ajax request failed
+        //     });
+        // });
 
-        //Allocation Details Edit
+        // Allocation Details Edit
+
+        //old code
         function makeEditble(rowId) {
             $.ajax({
                 type: "POST",
@@ -345,16 +364,56 @@
                     $("#productId").val(data.productId);
                     $("#quantity").val(data.quantity);
                     $("#tag").val(data.tag);
-                    $("#txtDescription").val(data.txtDescription);
+                    $("#txtDescription").val(data.description);
 
-                    // $("#costPrice").val(data.costPrice);
-                    // $("#salePrice").val(data.salePrice);
-                    //$("#discount").val(data.discount);
-                    // $("#txtRemarks").val(data.remarks);
+                    $("#costPrice").val(data.costPrice);
+                    $("#salePrice").val(data.salePrice);
+                    $("#discount").val(data.discount);
+                    $("#txtRemarks").val(data.remarks);
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                 }
             });
         }
+
+
+        // //new try: 1
+        // function makeEditable(rowId) {
+        //     $.ajax({
+        //         type: "POST",
+        //         url: "@Url.Action("UpdateSingleAssetAllocationDetails", "AssetAllocation")",
+        //         datatype: "Json",
+        //         data: { id: rowId },
+        //         success: function (data) {
+        //             // Get the existing Quantity and tag numbers from the form
+        //             var existingQuantity = $("#quantity").val();
+        //             var existingTags = $("#tag").val();
+
+        //             // Check if the new Quantity and tag numbers are the same as the existing ones
+        //             if (data.quantity === existingQuantity && data.tag === existingTags) {
+        //                 alert("Quantity and tag numbers are already the same. No changes made.");
+        //                 return;
+        //             }
+
+        //             $('#aaCreateBtn').html("<i class='fas fa-edit'></i>&nbsp;Update");
+        //             $("#assetAllocationId").val(data.id);
+        //             $("#assetAllocationDetailsId").val(data.id);
+        //             $('#actionId').val(2);
+        //             $("#productId").val(data.productId);
+        //             $("#quantity").val(data.quantity);
+        //             $("#tag").val(data.tag);
+        //             $("#txtDescription").val(data.txtDescription);
+        //             $("#costPrice").val(data.costPrice);
+        //             $("#salePrice").val(data.salePrice);
+        //             $("#discount").val(data.discount);
+        //             $("#txtRemarks").val(data.remarks);
+
+        //             window.scrollTo({ top: 0, behavior: 'smooth' });
+        //         }
+
+        //     });
+        // }
+
+
 
         //Confirm Allocation
         $("#confirmButton").on("click", function () {
@@ -398,6 +457,13 @@
                 }
             });
         }
+
+        $('#tag').on('change', function (event){
+            var data = $(this).val();
+            var qty = $('#quantity').val();
+            console.log(data);
+            console.log("Quantity: " + qty);
+        });
 
     </script>
 

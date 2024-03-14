@@ -4,6 +4,7 @@ using app.Infrastructure.Repository;
 using app.Infrastructure;
 using app.Services.AssetPurchaseOrderServices;
 using app.Services.AssetAllocationServices;
+using Microsoft.EntityFrameworkCore;
 
 namespace app.Services.AssetAllocationDetailServices
 {
@@ -19,16 +20,52 @@ namespace app.Services.AssetAllocationDetailServices
         }
 
 
+
+        //public async Task<bool> AddRecord(AssetAllocationViewModel vm)
+        //{
+        //    try
+        //    {
+
+        //        string tags = "";
+
+        //        foreach (var index in vm.AssetAllocationDetailVM.Tag)
+        //        {
+        //            tags += index + ", ";
+        //        }
+
+        //        AssetAllocationDetail assetAllocationDetail = new AssetAllocationDetail
+        //        {
+
+        //            AssetAllocationId = vm.Id,
+        //            Id = vm.AssetAllocationDetailVM.Id,
+        //            ProductId = vm.AssetAllocationDetailVM.ProductId,
+        //            Quantity = vm.AssetAllocationDetailVM.Quantity,
+        //            Description = vm.AssetAllocationDetailVM.Description,
+        //            Tags = tags
+        //        };
+
+        //        var res = await _iEntityRepository.AddAsync(assetAllocationDetail);
+        //        assetAllocationDetail.Id = res?.Id ?? 0;
+        //        return true;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw;
+        //    }
+
+        //}
+
         public async Task<bool> AddRecord(AssetAllocationViewModel vm)
         {
             try
             {
                 string tags = "";
 
-                foreach(var index in vm.AssetAllocationDetailVM.Tag)
+                foreach (var index in vm.AssetAllocationDetailVM.Tag)
                 {
-                    tags += index + ", " ;
+                    tags += index + ", ";
                 }
+
 
                 AssetAllocationDetail assetAllocationDetail = new AssetAllocationDetail
                 {
@@ -46,10 +83,12 @@ namespace app.Services.AssetAllocationDetailServices
             }
             catch (Exception ex)
             {
+                // Handle exceptions properly, perhaps log them
                 throw;
             }
-
         }
+
+
 
         public async Task<bool> UpdateAssetAllocationDetail(AssetAllocationViewModel model)
         {
@@ -60,6 +99,7 @@ namespace app.Services.AssetAllocationDetailServices
             {
                 tags += index + ", ";
             }
+          
             var assetAllocationDetail = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id == model.AssetAllocationDetailVM.Id);
             if (assetAllocationDetail != null)
             {
