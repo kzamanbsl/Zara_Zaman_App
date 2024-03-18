@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using app.Infrastructure;
 
@@ -11,9 +12,10 @@ using app.Infrastructure;
 namespace app.Infrastructure.Migrations
 {
     [DbContext(typeof(InventoryDbContext))]
-    partial class InventoryDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240318073731_modelChangesInCustomer")]
+    partial class modelChangesInCustomer
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1402,8 +1404,14 @@ namespace app.Infrastructure.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
-                    b.Property<string>("HasModelNo")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<bool>("HasModelNo")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("HasSerialNo")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("HasWarranty")
+                        .HasColumnType("bit");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
@@ -1414,6 +1422,12 @@ namespace app.Infrastructure.Migrations
 
                     b.Property<int>("ProductTypeId")
                         .HasColumnType("int");
+
+                    b.Property<decimal>("SalePrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("TradePrice")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<long>("UnitId")
                         .HasColumnType("bigint");
@@ -2545,14 +2559,14 @@ namespace app.Infrastructure.Migrations
                         new
                         {
                             Id = "8e445865-a24d-4543-a6c6-9443d048cdb9",
-                            ConcurrencyStamp = "07de033d-d379-47b7-b5b1-cfa07f1ad253",
+                            ConcurrencyStamp = "d6b101e9-90e1-4e8f-8aec-8f32ad68e308",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         },
                         new
                         {
                             Id = "2c5e174e-3b0e-446f-86af-483d56fd7210",
-                            ConcurrencyStamp = "3f2cc01d-3012-4331-8fe3-21359d661080",
+                            ConcurrencyStamp = "a825644f-063b-428d-b761-77ff29c25f44",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });

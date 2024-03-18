@@ -56,7 +56,7 @@ namespace app.Services.CustomerServices
                 result.Description = vm.Description;
                 result.Address = vm.Address;
                 result.BusinessIdNo = vm.BusinessIdNo;
-                result.BankName = vm.BankName;                    
+                result.BankName = vm.BankName;
                 //result.CountryId = vm.CountryId;
                 //result.DivisionId = vm.DivisionId;
                 //result.DistrictId= vm.DistrictId;
@@ -123,7 +123,7 @@ namespace app.Services.CustomerServices
         }
         public async Task<DataTablePagination<CustomerSearchDto>> SearchAsync(DataTablePagination<CustomerSearchDto> searchDto)
         {
-            var searchResult = _dbContext.Customer.Where(c=>c.IsActive==true).AsNoTracking();
+            var searchResult = _dbContext.Customer.Where(c => c.IsActive == true).AsNoTracking();
 
             var searchModel = searchDto.SearchVm;
             var filter = searchDto?.Search?.Value?.Trim();
@@ -151,11 +151,11 @@ namespace app.Services.CustomerServices
                     || c.Phone.ToLower().Contains(filter)
                     || c.Address.ToLower().Contains(filter)
                     || c.BankName.ToLower().Contains(filter)
-                    ||c.BusinessIdNo.ToLower().Contains(filter)
-                    ////|| c.Country.Name.ToString().Contains(filter)
+                    || c.BusinessIdNo.ToLower().Contains(filter)
+                    // || c.Country.Name.ToString().Contains(filter)
                     // || c.Division.Name.ToLower().Contains(filter)
                     // || c.District.Name.ToLower().Contains(filter)
-                    //  || c.Upazila.Name.ToLower().Contains(filter)
+                    // || c.Upazila.Name.ToLower().Contains(filter)
                     || c.Email.ToLower().Contains(filter)
                     || c.Description.ToLower().Contains(filter)
                     || c.Address.ToLower().Contains(filter)

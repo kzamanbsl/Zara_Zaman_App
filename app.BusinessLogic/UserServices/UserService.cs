@@ -147,13 +147,13 @@ namespace app.Services.UserServices
 
             var searchModel = searchDto.SearchVm;
             var filter = searchDto?.Search?.Value?.Trim();
-          
+
             if (!string.IsNullOrEmpty(filter))
             {
                 filter = filter.ToLower();
                 searchResult = searchResult.Where(c =>
                     c.FullName.ToLower().Contains(filter)
-                    || c.UserName.ToString().Contains(filter)
+                    || c.UserName.ToLower().Contains(filter)
                     || c.Email.ToLower().Contains(filter)
                 );
             }

@@ -3,17 +3,13 @@ using app.EntityModel.DataTableSearchModels;
 
 namespace app.Services.ProductServices
 {
-    public class ProductSearchDto:BaseDataTableSearch
+    public class ProductSearchDto : BaseDataTableSearch
     {
         public string Name { get; set; }
         public string Description { get; set; }
 
-        [DisplayName("Trade Price")]
-        public decimal TradePrice { get; set; }
-
-        [DisplayName("Sale Price")]
-        public decimal SalePrice { get; set; }
-
+        [DisplayName("Model No")]
+        public string HasModelNo { get; set; }
         public int ProductTypeId { get; set; }
 
         [DisplayName("Unit Name")]

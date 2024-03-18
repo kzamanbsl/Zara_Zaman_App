@@ -2,15 +2,8 @@
 using app.Infrastructure.Auth;
 using app.Infrastructure.Repository;
 using app.Infrastructure;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using app.Utility;
-using app.Services.AssetItemServices;
 using app.EntityModel.DataTablePaginationModels;
-using app.Services.ProductServices;
 using Microsoft.EntityFrameworkCore;
 
 namespace app.Services.AssetItemServices
@@ -37,9 +30,9 @@ namespace app.Services.AssetItemServices
                 com.Id = vm.Id;
                 com.Name = vm.Name;
                 com.Description = vm.Description;
-                com.TradePrice = vm.TP;
                 com.UnitId = vm.UnitId;
                 com.CategoryId = vm.CategoryId;
+                com.HasModelNo = vm.HasModelNo;
                 com.ProductTypeId = (int)ProductTypeEnum.Asset;
                 var res = await _iEntityRepository.AddAsync(com);
                 return true;
@@ -56,7 +49,7 @@ namespace app.Services.AssetItemServices
                 result.Id = vm.Id;
                 result.Name = vm.Name;
                 result.Description = vm.Description;
-                result.TradePrice = vm.TP;
+                result.HasModelNo = vm.HasModelNo;
                 result.UnitId = vm.UnitId;
                 result.CategoryId = vm.CategoryId;
                 result.ProductTypeId = (int)ProductTypeEnum.Asset;
@@ -72,7 +65,6 @@ namespace app.Services.AssetItemServices
             model.Id = result.Id;
             model.Name = result.Name;
             model.Description = result.Description;
-            model.TP = result.TradePrice;
             model.UnitId = result.UnitId;
             model.CategoryId = result.CategoryId;
             return model;
@@ -94,7 +86,6 @@ namespace app.Services.AssetItemServices
                                                             ProductTypeId = t1.ProductTypeId,
                                                             Name = t1.Name,
                                                             Description = t1.Description,
-                                                            TP = t1.TradePrice,
                                                             UnitId = t1.UnitId,
                                                             UnitName = t1.Unit.Name,
                                                             CategoryId = t1.CategoryId,
@@ -104,7 +95,7 @@ namespace app.Services.AssetItemServices
         }
         public async Task<DataTablePagination<AssetItemSearchDto>> SearchAsync(DataTablePagination<AssetItemSearchDto> searchDto)
         {
-            var searchResult = _dbContext.Product.Include(c => c.Category).Include(c => c.Unit).Where(c => c.IsActive == true).AsNoTracking();
+            var searchResult = _dbContext.Product.Include(c => c.Category).Include(c => c.Unit).Where(c => c.IsActive == true && c.ProductTypeId == (int)ProductTypeEnum.Asset).AsNoTracking();
 
             var searchModel = searchDto.SearchVm;
             var filter = searchDto?.Search?.Value?.Trim();
@@ -121,9 +112,8 @@ namespace app.Services.AssetItemServices
                 filter = filter.ToLower();
                 searchResult = searchResult.Where(c =>
                     c.Name.ToLower().Contains(filter)
-                    || c.TradePrice.ToString().Contains(filter)
                     || c.Unit.Name.ToLower().Contains(filter)
-                    || c.Description.ToLower().Contains(filter)
+                    || c.Category.Name.ToLower().Contains(filter)
                 );
             }
 
@@ -144,7 +134,6 @@ namespace app.Services.AssetItemServices
                 Id = c.Id,
                 Name = c.Name,
                 Description = c.Description,
-                TP = c.TradePrice,
                 UnitId = c.UnitId,
                 UnitName = c.Unit.Name,
                 CategoryId = c.CategoryId,

@@ -74,22 +74,16 @@
                                             @Html.DisplayNameFor(model => model.SerialNo)
                                         </th>
                                         <th class="text-center">
-                                            @Html.DisplayNameFor(model => model.CategoryName)
-                                        </th>
-                                        <th class="text-center">
                                             @Html.DisplayNameFor(model => model.Name)
                                         </th>
                                         <th class="text-center">
+                                            @Html.DisplayNameFor(model => model.CategoryName)
+                                        </th>                                       
+                                        <th class="text-center">
                                             @Html.DisplayNameFor(model => model.UnitName)
-                                        </th>
+                                        </th>                                      
                                         <th class="text-center">
-                                            @Html.DisplayNameFor(model => model.TradePrice)
-                                        </th>
-                                        <th class="text-center">
-                                            @Html.DisplayNameFor(model => model.SalePrice)
-                                        </th>
-                                        <th class="text-center">
-                                            @Html.DisplayNameFor(model => model.Description)
+                                            @Html.DisplayNameFor(model => model.HasModelNo)
                                         </th>
                                         <th class="text-center">
                                             @Html.DisplayNameFor(model => model.Action)
@@ -166,17 +160,17 @@
                         }
                     },
                     {
-                        data: "CategoryName",
-                        render: function (data, type, row, meta) {
-                            return row.categoryName;
-                        }
-                    },
-                    {
                         data: "Name",
                         render: function (data, type, row, meta) {
                             return row.name;
                         }
                     },
+                    {
+                        data: "CategoryName",
+                        render: function (data, type, row, meta) {
+                            return row.categoryName;
+                        }
+                    },                 
                     {
                         data: "UnitName",
                         render: function (data, type, row, meta) {
@@ -184,25 +178,25 @@
                         }
                     },
                     {
-                        data: "TradePrice",
+                        data: "HasModelNo",
                         render: function (data, type, row, meta) {
-                            var txt = '<div style="text-align: right">' + Number(row.tradePrice).toFixed(2) + '</div>';
-                            return txt ;
+                            return row.hasModelNo;
                         }
                     },
-                    {
-                        data: "SalePrice",
-                        render: function (data, type, row, meta) {
-                            var txt = '<div style="text-align: right">' + Number(row.salePrice).toFixed(2) + '</div>';
-                            return txt;
-                        }
-                    },
-                    {
-                        data: "Description",
-                        render: function (data, type, row, meta) {
-                            return row.description;
-                        }
-                    },
+                    // {
+                    //     data: "TradePrice",
+                    //     render: function (data, type, row, meta) {
+                    //         var txt = '<div style="text-align: right">' + Number(row.tradePrice).toFixed(2) + '</div>';
+                    //         return txt ;
+                    //     }
+                    // },
+                    // {
+                    //     data: "SalePrice",
+                    //     render: function (data, type, row, meta) {
+                    //         var txt = '<div style="text-align: right">' + Number(row.salePrice).toFixed(2) + '</div>';
+                    //         return txt;
+                    //     }
+                    // },
                     {
                         data: "Action",
                         render: function (data, type, row, meta) {

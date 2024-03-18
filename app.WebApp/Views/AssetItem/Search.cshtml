@@ -72,19 +72,13 @@
                                             @Html.DisplayNameFor(model => model.SerialNo)
                                         </th>
                                         <th class="text-center">
-                                            @Html.DisplayNameFor(model => model.CategoryName)
-                                        </th>
-                                        <th class="text-center">
                                             @Html.DisplayNameFor(model => model.Name)
                                         </th>
                                         <th class="text-center">
+                                            @Html.DisplayNameFor(model => model.CategoryName)
+                                        </th>                                       
+                                        <th class="text-center">
                                             @Html.DisplayNameFor(model => model.UnitName)
-                                        </th>
-                                        <th class="text-center">
-                                            @Html.DisplayNameFor(model => model.TP)
-                                        </th>
-                                        <th class="text-center">
-                                            @Html.DisplayNameFor(model => model.Description)
                                         </th>
                                         <th class="text-center">
                                             @Html.DisplayNameFor(model => model.Action)
@@ -161,36 +155,23 @@
                         }
                     },
                     {
-                        data: "CategoryName",
-                        render: function (data, type, row, meta) {
-                            return row.categoryName;
-                        }
-                    },
-                    {
                         data: "Name",
                         render: function (data, type, row, meta) {
                             return row.name;
                         }
                     },
                     {
+                        data: "CategoryName",
+                        render: function (data, type, row, meta) {
+                            return row.categoryName;
+                        }
+                    },                   
+                    {
                         data: "UnitName",
                         render: function (data, type, row, meta) {
                             return row.unitName;
                         }
-                    },
-                    {
-                        data: "TradePrice",
-                        render: function (data, type, row, meta) {
-                            var txt = '<div style="text-align: right">' + Number(row.tradePrice).toFixed(2) + '</div>';
-                            return txt;
-                        }
-                    },
-                    {
-                        data: "Description",
-                        render: function (data, type, row, meta) {
-                            return row.description;
-                        }
-                    },
+                    },                   
                     {
                         data: "Action",
                         render: function (data, type, row, meta) {

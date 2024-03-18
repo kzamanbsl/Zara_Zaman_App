@@ -28,14 +28,10 @@ namespace app.Services.ProductServices
                 Product com = new Product();
                 com.Name = vm.Name;
                 com.Description = vm.Description;
-                com.TradePrice = vm.TradePrice;
-                com.SalePrice = vm.SalePrice;
                 com.UnitId = vm.UnitId;
                 com.CategoryId = vm.CategoryId;
                 com.ProductTypeId = (int)ProductTypeEnum.Product;
                 com.HasModelNo = vm.HasModelNo;
-                com.HasSerialNo = vm.HasSerialNo;
-                com.HasWarranty = vm.HasWarranty;
                 var res = await _iEntityRepository.AddAsync(com);
                 vm.Id = res.Id;
                 return true;
@@ -51,14 +47,10 @@ namespace app.Services.ProductServices
                 var result = await _iEntityRepository.GetByIdAsync(vm.Id);
                 result.Name = vm.Name;
                 result.Description = vm.Description;
-                result.TradePrice = vm.TradePrice;
-                result.SalePrice = vm.SalePrice;
                 result.UnitId = vm.UnitId;
                 result.CategoryId = vm.CategoryId;
                 result.ProductTypeId = (int)ProductTypeEnum.Product;
                 result.HasModelNo = vm.HasModelNo;
-                result.HasSerialNo = vm.HasSerialNo;
-                result.HasWarranty = vm.HasWarranty;
                 await _iEntityRepository.UpdateAsync(result);
                 return true;
             }
@@ -72,16 +64,12 @@ namespace app.Services.ProductServices
             model.Id = result.Id;
             model.Name = result.Name;
             model.Description = result.Description;
-            model.TradePrice = result.TradePrice;
-            model.SalePrice = result.SalePrice;
             model.UnitId = result.UnitId;
             model.UnitName = result.Unit?.Name;
             model.CategoryId = result.CategoryId;
             model.CategoryName = result.Category?.Name;
             model.ProductTypeId = (int)ProductTypeEnum.Product;
             model.HasModelNo = result.HasModelNo;
-            model.HasSerialNo = result.HasSerialNo;
-            model.HasWarranty = result.HasWarranty;
             return model;
         }
 
@@ -103,8 +91,6 @@ namespace app.Services.ProductServices
                                                           Id = t1.Id,
                                                           Name = t1.Name,
                                                           Description = t1.Description,
-                                                          TradePrice = t1.TradePrice,
-                                                          SalePrice = t1.SalePrice,
                                                           UnitId = t1.UnitId,
                                                           UnitName = t1.Unit.Name,
                                                           CategoryId = t1.CategoryId,
@@ -116,7 +102,7 @@ namespace app.Services.ProductServices
 
         public async Task<DataTablePagination<ProductSearchDto>> SearchAsync(DataTablePagination<ProductSearchDto> searchDto)
         {
-            var searchResult = _dbContext.Product.Include(c => c.Category).Include(c => c.Unit).Where(c => c.IsActive == true).AsNoTracking();
+            var searchResult = _dbContext.Product.Include(c => c.Category).Include(c => c.Unit).Where(c => c.IsActive == true && c.ProductTypeId == (int)ProductTypeEnum.Product).AsNoTracking();
 
             var searchModel = searchDto.SearchVm;
             var filter = searchDto?.Search?.Value?.Trim();
@@ -133,8 +119,6 @@ namespace app.Services.ProductServices
                 filter = filter.ToLower();
                 searchResult = searchResult.Where(c =>
                     c.Name.ToLower().Contains(filter)
-                    || c.TradePrice.ToString().Contains(filter)
-                    || c.SalePrice.ToString().Contains(filter)
                     || c.Unit.Name.ToLower().Contains(filter)
                     || c.Description.ToLower().Contains(filter)
                 );
@@ -156,9 +140,8 @@ namespace app.Services.ProductServices
                 SerialNo = ++sl,
                 Id = c.Id,
                 Name = c.Name,
-                Description = c.Description,
-                TradePrice = c.TradePrice,
-                SalePrice = c.SalePrice,
+                HasModelNo = c.HasModelNo,
+                Description = c.Description,                
                 UnitId = c.UnitId,
                 UnitName = c.Unit.Name,
                 CategoryId = c.CategoryId,
