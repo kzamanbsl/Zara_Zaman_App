@@ -2,14 +2,7 @@
 using app.Infrastructure.Auth;
 using app.Infrastructure.Repository;
 using app.Infrastructure;
-using app.Services.CustomerServices;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using app.EntityModel.DataTablePaginationModels;
-using app.Services.SupplierServices;
 using Microsoft.EntityFrameworkCore;
 
 namespace app.Services.CustomerServices
@@ -37,10 +30,12 @@ namespace app.Services.CustomerServices
                 com.Email = vm.Email;
                 com.Description = vm.Description;
                 com.Address = vm.Address;
+                com.BusinessIdNo = vm.BusinessIdNo;
+                com.BankName = vm.BankName;
                 //com.c = vm.CountryId;
-                com.DivisionId = vm.DivisionId;
-                com.DistrictId = vm.DistrictId;
-                com.UpazilaId = vm.UpazilaId;
+                //com.DivisionId = vm.DivisionId;
+                //com.DistrictId = vm.DistrictId;
+                //com.UpazilaId = vm.UpazilaId;
                 var res = await _iEntityRepository.AddAsync(com);
                 vm.Id = res.Id;
                 return true;
@@ -60,10 +55,12 @@ namespace app.Services.CustomerServices
                 result.Email = vm.Email;
                 result.Description = vm.Description;
                 result.Address = vm.Address;
+                result.BusinessIdNo = vm.BusinessIdNo;
+                result.BankName = vm.BankName;                    
                 //result.CountryId = vm.CountryId;
-                result.DivisionId = vm.DivisionId;
-                result.DistrictId= vm.DistrictId;
-                result.UpazilaId= vm.UpazilaId;
+                //result.DivisionId = vm.DivisionId;
+                //result.DistrictId= vm.DistrictId;
+                //result.UpazilaId= vm.UpazilaId;
                 await _iEntityRepository.UpdateAsync(result);
                 return true;
             }
@@ -79,15 +76,16 @@ namespace app.Services.CustomerServices
             model.Email = result.Email;
             model.Description = result.Description;
             model.Address = result.Address;
-            model.Description = result.Description;
+            model.BusinessIdNo = result.BusinessIdNo;
+            model.BankName = result.BankName;
             //model.CountryId = result.CountryId;
             //model.CountryName = result.Country?.Name;
-            model.DivisionId = result.DivisionId;
-            model.DivisionName = result.Division?.Name;
-            model.DistrictId = result.DistrictId;
-            model.DistrictName = result.District?.Name;
-            model.UpazilaId = result.UpazilaId;
-            model.UpazilaName = result.Upazila?.Name;
+            //model.DivisionId = result.DivisionId;
+            //model.DivisionName = result.Division?.Name;
+            //model.DistrictId = result.DistrictId;
+            //model.DistrictName = result.District?.Name;
+            //model.UpazilaId = result.UpazilaId;
+            //model.UpazilaName = result.Upazila?.Name;
             return model;
         }
         public async Task<bool> DeleteRecord(long id)
@@ -110,20 +108,22 @@ namespace app.Services.CustomerServices
                                                            Email = t1.Email,
                                                            Description = t1.Description,
                                                            Address = t1.Address,
+                                                           BankName = t1.BankName,
+                                                           BusinessIdNo = t1.BusinessIdNo,
                                                            //CountryId = t1.CountryId,
                                                            //CountryName = t1.Country.Name,
-                                                           DistrictId = t1.DistrictId,
-                                                           DistrictName = t1.District.Name,
-                                                           DivisionId = t1.DivisionId,
-                                                           DivisionName = t1.Division.Name,
-                                                           UpazilaId = t1.UpazilaId,
-                                                           UpazilaName = t1.Upazila.Name,
+                                                           //DistrictId = t1.DistrictId,
+                                                           //DistrictName = t1.District.Name,
+                                                           //DivisionId = t1.DivisionId,
+                                                           //DivisionName = t1.Division.Name,
+                                                           //UpazilaId = t1.UpazilaId,
+                                                           //UpazilaName = t1.Upazila.Name,
                                                        }).AsEnumerable());
             return model;
         }
         public async Task<DataTablePagination<CustomerSearchDto>> SearchAsync(DataTablePagination<CustomerSearchDto> searchDto)
         {
-            var searchResult = _dbContext.Customer.Include(c => c.Upazila).Include(c => c.District).Include(c => c.Division).Where(c=>c.IsActive==true).AsNoTracking();
+            var searchResult = _dbContext.Customer.Where(c=>c.IsActive==true).AsNoTracking();
 
             var searchModel = searchDto.SearchVm;
             var filter = searchDto?.Search?.Value?.Trim();
@@ -131,29 +131,31 @@ namespace app.Services.CustomerServices
             //{
             //    searchResult = searchResult.Where(c => c.CountryId == searchModel.CountryId);
             //}
-            if (searchModel?.DivisionId is > 0)
-            {
-                searchResult = searchResult.Where(c => c.DivisionId == searchModel.DivisionId);
-            }
-            if (searchModel?.DistrictId is > 0)
-            {
-                searchResult = searchResult.Where(c => c.DistrictId == searchModel.DistrictId);
-            }
-            if (searchModel?.UpazilaId is > 0)
-            {
-                searchResult = searchResult.Where(c => c.UpazilaId == searchModel.UpazilaId);
-            }
+            //if (searchModel?.DivisionId is > 0)
+            //{
+            //    searchResult = searchResult.Where(c => c.DivisionId == searchModel.DivisionId);
+            //}
+            //if (searchModel?.DistrictId is > 0)
+            //{
+            //    searchResult = searchResult.Where(c => c.DistrictId == searchModel.DistrictId);
+            //}
+            //if (searchModel?.UpazilaId is > 0)
+            //{
+            //    searchResult = searchResult.Where(c => c.UpazilaId == searchModel.UpazilaId);
+            //}
             if (!string.IsNullOrEmpty(filter))
             {
                 filter = filter.ToLower();
                 searchResult = searchResult.Where(c =>
                     c.Name.ToLower().Contains(filter)
-                    || c.Phone.ToString().Contains(filter)
+                    || c.Phone.ToLower().Contains(filter)
                     || c.Address.ToLower().Contains(filter)
-                    //|| c.Country.Name.ToString().Contains(filter)
-                     || c.Division.Name.ToLower().Contains(filter)
-                     || c.District.Name.ToLower().Contains(filter)
-                      || c.Upazila.Name.ToLower().Contains(filter)
+                    || c.BankName.ToLower().Contains(filter)
+                    ||c.BusinessIdNo.ToLower().Contains(filter)
+                    ////|| c.Country.Name.ToString().Contains(filter)
+                    // || c.Division.Name.ToLower().Contains(filter)
+                    // || c.District.Name.ToLower().Contains(filter)
+                    //  || c.Upazila.Name.ToLower().Contains(filter)
                     || c.Email.ToLower().Contains(filter)
                     || c.Description.ToLower().Contains(filter)
                     || c.Address.ToLower().Contains(filter)
@@ -179,15 +181,17 @@ namespace app.Services.CustomerServices
                 Description = c.Description,
                 Phone = c.Phone,
                 Email = c.Email,
+                BusinessIdNo = c.BusinessIdNo,
+                BankName = c.BankName,               
 
                 //CountryId = c.CountryId,
                 //CountryName = c.Country.Name,
-                DivisionId = c.DivisionId,
-                DivisionName = c.Division.Name,
-                DistrictId = c.DistrictId,
-                DistrictName = c.District.Name,
-                UpazilaId = c.UpazilaId,
-                UpazilaName = c.Upazila.Name,
+                //DivisionId = c.DivisionId,
+                //DivisionName = c.Division.Name,
+                //DistrictId = c.DistrictId,
+                //DistrictName = c.District.Name,
+                //UpazilaId = c.UpazilaId,
+                //UpazilaName = c.Upazila.Name,
                 Address = c.Address,
             }).ToList();
 

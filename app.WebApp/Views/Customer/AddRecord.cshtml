@@ -36,25 +36,32 @@
                         <form asp-action="AddRecord" method="post">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                             <div class="row">
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="form-group">
                                         <label asp-for="Name" class="control-label"></label>
                                         <input asp-for="Name" class="form-control" required />
                                         <span asp-validation-for="Name" class="text-danger"></span>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="form-group">
                                         <label asp-for="Phone" class="control-label"></label>
                                         <input asp-for="Phone" class="form-control" required/>
                                         <span asp-validation-for="Phone" class="text-danger"></span>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="form-group">
                                         <label asp-for="Email" class="control-label"></label>
-                                        <input asp-for="Email" class="form-control" required/>
+                                        <input asp-for="Email" class="form-control"/>
                                         <span asp-validation-for="Email" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                 <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label asp-for="BusinessIdNo" class="control-label">Business ID No</label>
+                                        <input asp-for="BusinessIdNo" class="form-control" />
+                                        <span asp-validation-for="BusinessIdNo" class="text-danger"></span>
                                     </div>
                                 </div>
                             </div>
@@ -62,28 +69,26 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label asp-for="Description" class="control-label"></label>
-                                        <textarea asp-for="Description" class="form-control" required rows="2"></textarea>
+                                        <textarea asp-for="Description" class="form-control" rows="1"></textarea>
                                         <span asp-validation-for="Description" class="text-danger"></span>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label asp-for="Address" class="control-label"></label>
-                                        <textarea asp-for="Address" class="form-control" required rows="2"></textarea>
+                                        <textarea asp-for="Address" class="form-control" rows="1"></textarea>
                                         <span asp-validation-for="Address" class="text-danger"></span>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label>Division</label>
-                                        <select class="form-control" asp-for="DivisionId" id="divisionId" asp-items="ViewBag.Division" required>
-                                            <option value="0" selected>--Division--</option>
-                                            <span asp-validation-for="DivisionId" class="text-danger"></span>
-                                        </select>
+                                        <label asp-for="BankName" class="control-label">Bank Name</label>
+                                        <input asp-for="BankName" class="form-control" />
+                                        <span asp-validation-for="BankName" class="text-danger"></span>
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
+                           @*  <div class="row">
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>District</label>
@@ -102,7 +107,7 @@
                                         <span asp-validation-for="UpazilaId" class="text-danger"></span>
                                     </div>
                                 </div>
-                            </div>
+                            </div> *@
                             <div class="form-group" style="float:right">
                                 <input type="submit" value="Create" class="btn btn-primary" />
                             </div>
