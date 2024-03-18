@@ -1,13 +1,4 @@
-﻿using app.EntityModel.AppModels;
-using app.Services.ProductServices;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace app.Services.CustomerServices
+﻿namespace app.Services.CustomerServices
 {
     public class CustomerViewModel : BaseViewModel
     {

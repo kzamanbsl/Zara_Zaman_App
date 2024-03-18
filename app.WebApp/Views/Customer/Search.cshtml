@@ -104,9 +104,9 @@
                                         <th class="text-center">
                                             @Html.DisplayNameFor(model => model.Address)
                                         </th>
-                                        <th class="text-center">
+                                       @*  <th class="text-center">
                                             @Html.DisplayNameFor(model => model.Description)
-                                        </th>
+                                        </th> *@
                                         <th class="text-center">
                                             @Html.DisplayNameFor(model => model.Action)
                                         </th>
@@ -184,10 +184,10 @@
         function getSearchObject() {
 
             var searchVm = {
-                // "CountryId": $("#CountryId").val(),
-                "DivisionId": $("#DivisionId").val(),
-                "DistrictId": $("#DistrictId").val(),
-                "UpazilaId": $("#UpazilaId").val(),
+                // // "CountryId": $("#CountryId").val(),
+                // "DivisionId": $("#DivisionId").val(),
+                // "DistrictId": $("#DistrictId").val(),
+                // "UpazilaId": $("#UpazilaId").val(),
             }
             return searchVm;
         }
@@ -241,21 +241,7 @@
                         render: function (data, type, row, meta) {
                             return row.email;
                         }
-                    },
-                    // {
-                    //     data: "TradePrice",
-                    //     render: function (data, type, row, meta) {
-                    //         var txt = '<div style="text-align: right">' + Number(row.tradePrice).toFixed(2) + '</div>';
-                    //         return txt;
-                    //     }
-                    // },
-                    // {
-                    //     data: "SalePrice",
-                    //     render: function (data, type, row, meta) {
-                    //         var txt = '<div style="text-align: right">' + Number(row.salePrice).toFixed(2) + '</div>';
-                    //         return txt;
-                    //     }
-                    // },
+                    },                   
 
                     // {
                     //     data: "CountryName",
@@ -263,36 +249,36 @@
                     //         return row.countryName;
                     //     }
                     // },
-                    {
-                        data: "DivisionName",
-                        render: function (data, type, row, meta) {
-                            return row.divisionName;
-                        }
-                    },
-                    {
-                        data: "DistrictName",
-                        render: function (data, type, row, meta) {
-                            return row.districtName;
-                        }
-                    },
-                    {
-                        data: "UpazilaName",
-                        render: function (data, type, row, meta) {
-                            return row.upazilaName;
-                        }
-                    },
+                    // {
+                    //     data: "DivisionName",
+                    //     render: function (data, type, row, meta) {
+                    //         return row.divisionName;
+                    //     }
+                    // },
+                    // {
+                    //     data: "DistrictName",
+                    //     render: function (data, type, row, meta) {
+                    //         return row.districtName;
+                    //     }
+                    // },
+                    // {
+                    //     data: "UpazilaName",
+                    //     render: function (data, type, row, meta) {
+                    //         return row.upazilaName;
+                    //     }
+                    // },
                     {
                         data: "Address",
                         render: function (data, type, row, meta) {
                             return row.address;
                         }
                     },
-                    {
-                        data: "Description",
-                        render: function (data, type, row, meta) {
-                            return row.description;
-                        }
-                    },
+                    // {
+                    //     data: "Description",
+                    //     render: function (data, type, row, meta) {
+                    //         return row.description;
+                    //     }
+                    // },
                     {
                         data: "Action",
                         render: function (data, type, row, meta) {

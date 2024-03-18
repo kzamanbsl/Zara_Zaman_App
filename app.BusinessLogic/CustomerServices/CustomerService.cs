@@ -182,7 +182,8 @@ namespace app.Services.CustomerServices
                 Phone = c.Phone,
                 Email = c.Email,
                 BusinessIdNo = c.BusinessIdNo,
-                BankName = c.BankName,               
+                BankName = c.BankName,
+                Address = c.Address,
 
                 //CountryId = c.CountryId,
                 //CountryName = c.Country.Name,
@@ -192,7 +193,7 @@ namespace app.Services.CustomerServices
                 //DistrictName = c.District.Name,
                 //UpazilaId = c.UpazilaId,
                 //UpazilaName = c.Upazila.Name,
-                Address = c.Address,
+
             }).ToList();
 
             return searchDto;

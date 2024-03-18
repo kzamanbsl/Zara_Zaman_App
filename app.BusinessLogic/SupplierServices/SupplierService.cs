@@ -167,7 +167,7 @@ namespace app.Services.SupplierServices
                 filter = filter.ToLower();
                 searchResult = searchResult.Where(c =>
                     c.Name.ToLower().Contains(filter)
-                    ||c.Phone.ToString().Contains(filter)
+                    ||c.Phone.ToLower().Contains(filter)
                     || c.Address.ToLower().Contains(filter)
                     || c.BankName.ToLower().Contains(filter)
                     || c.BranchName.ToLower().Contains(filter)
