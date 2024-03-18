@@ -166,7 +166,7 @@
                                         <div class="col-md-2">
                                             <div class="form-group">
                                                 <label>Asset Quantity</label>
-                                                <input asp-for="AssetAllocationDetailVM.Quantity" id="quantity" class="form-control" required min="0" />
+                                                <input asp-for="AssetAllocationDetailVM.Quantity" id="quantity" class="form-control" required min="1" />
                                                 <span asp-validation-for="AssetAllocationDetailVM.Quantity" class="text-danger"></span>
                                             </div>
                                         </div>
@@ -199,7 +199,7 @@
                                 </div>
                             }
                             <div class="form-group" style="float:right">
-                                <button type="submit" id="aaCreateBtn" class="btn btn-primary btn-block">
+                                <button type="submit" id="aaCreateBtn" onclick="generateTags()" class="btn btn-primary btn-block">
                                     <i class='fa fa-plus'></i>
                                     @if (Model.Id > 0)
                                     {
@@ -329,28 +329,8 @@
             });
         }, 4000);
 
-        // $('#aaCreateBtn').on('click', function () {
-        //     $.ajax({
-        //         url: '/AssetAllocation/UpdateSingleAssetAllocationDetails',
-        //         method: 'get',
-        //         data: {
-        //             code: $('#tag').val()
-        //         }
-        //     }).done(function (result) {
-        //         if (result) {
-        //             // code valid
-        //             $('form').submit();
-        //         } else {
-        //             // show error
-        //         }
-        //     }).fail(function () {
-        //         // ajax request failed
-        //     });
-        // });
-
         // Allocation Details Edit
 
-        //old code
         function makeEditble(rowId) {
             $.ajax({
                 type: "POST",
@@ -375,45 +355,6 @@
                 }
             });
         }
-
-
-        // //new try: 1
-        // function makeEditable(rowId) {
-        //     $.ajax({
-        //         type: "POST",
-        //         url: "@Url.Action("UpdateSingleAssetAllocationDetails", "AssetAllocation")",
-        //         datatype: "Json",
-        //         data: { id: rowId },
-        //         success: function (data) {
-        //             // Get the existing Quantity and tag numbers from the form
-        //             var existingQuantity = $("#quantity").val();
-        //             var existingTags = $("#tag").val();
-
-        //             // Check if the new Quantity and tag numbers are the same as the existing ones
-        //             if (data.quantity === existingQuantity && data.tag === existingTags) {
-        //                 alert("Quantity and tag numbers are already the same. No changes made.");
-        //                 return;
-        //             }
-
-        //             $('#aaCreateBtn').html("<i class='fas fa-edit'></i>&nbsp;Update");
-        //             $("#assetAllocationId").val(data.id);
-        //             $("#assetAllocationDetailsId").val(data.id);
-        //             $('#actionId').val(2);
-        //             $("#productId").val(data.productId);
-        //             $("#quantity").val(data.quantity);
-        //             $("#tag").val(data.tag);
-        //             $("#txtDescription").val(data.txtDescription);
-        //             $("#costPrice").val(data.costPrice);
-        //             $("#salePrice").val(data.salePrice);
-        //             $("#discount").val(data.discount);
-        //             $("#txtRemarks").val(data.remarks);
-
-        //             window.scrollTo({ top: 0, behavior: 'smooth' });
-        //         }
-
-        //     });
-        // }
-
 
 
         //Confirm Allocation
@@ -467,21 +408,77 @@
         //     console.log("Quantity: " + qty);
         // });
 
-        $('#tag').on('change', function (event) {
-            var data = $(this).val();
-            var qty = $('#quantity').val();
-            // let fixedArray = new Array(qty);
-            // if (quantity => 0 && tag=> 0)
-            // {
-                
-            // }
+        $(document).ready(function () {
+            $('#tag').on('change', function (event) {
+                var data = $(this).val();
+                var qty = $('#quantity').val();
+                let fixedArray = new Array(qty);
 
-            console.log(data);
-            console.log("Quantity: " + qty);
-            // console.log(fixedArray); // Output: array with length equal to qty
+                if (qty <= data.length) { // Corrected the if statement condition
+                    console.log("Quantity: " + qty);
+                    console.log("Tag: " + data);
+                    // Perform additional checks or actions here
+                } else {
+                    console.log("Quantity and Tag are not equal."); // Log if quantity and tag are not equal
+                }
+
+                console.log(data);
+                console.log("Quantity: " + qty);
+                console.log(fixedArray); // Output: array with length equal to qty
+            });
+
+            // Other code...
         });
 
 
+
+        // $('#tag').on('change', function (event) {
+        //     var tagValue = $(this).val(); Getting the value of the tag input
+        //     var quantityValue = $('#quantity').val(); Getting the value of the quantity input
+
+        //     Checking if both quantity and tag are greater than or equal to 0
+        //     if (quantityValue >= 0 && tagValue >= 0) {
+        //         If quantity and tag are equal, log the data and perform a check
+        //         if (quantityValue === tagValue) {
+        //             console.log("Quantity: " + quantityValue);
+        //             console.log("Tag: " + tagValue);
+        //             Perform additional checks or actions here
+        //         } else {
+        //             console.log("Quantity and Tag are not equal."); Log if quantity and tag are not equal
+        //         }
+        //     } else {
+        //         console.log("Quantity or Tag is less than 0."); Log if quantity or tag is less than 0
+        //     }
+        // });
+
+
+        // function generateTags() {
+        //     Get the quantity value from the input field
+        //     var quantity = parseInt(document.getElementById("quantity").value);
+
+        //     Get the tags input field
+        //     var tagsInput = document.getElementById("tag");
+
+        //     Enable the tags input field
+        //     tagsInput.disabled = false;
+
+        //     Clear the tags input field
+        //     tagsInput.value = "";
+
+        //     Set the maximum length for the tags input field based on the quantity
+        //     tagsInput.maxLength = quantity;
+
+        //     Set focus to the tags input field
+        //     tagsInput.focus();
+        // }
+
+        // Optional: Prevent typing more characters than allowed in the tags input field
+        // document.getElementById("tagsInput").addEventListener("input", function () {
+        //     var maxLength = parseInt(this.maxLength);
+        //     if (this.value.length > maxLength) {
+        //         this.value = this.value.slice(0, maxLength);
+        //     }
+        // });
 
 
     </script>
