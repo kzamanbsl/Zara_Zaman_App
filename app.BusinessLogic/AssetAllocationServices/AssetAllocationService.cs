@@ -93,6 +93,7 @@ namespace app.Services.AssetAllocationServices
                                                                                         ProductName= t1.Product.Name,
                                                                                         Quantity = t1.Quantity,
                                                                                         Tags = t1.Tags,
+
                                                                                         Description = t1.Description,
                                                                                     }).OrderByDescending(x => x.Id).AsEnumerable());
 

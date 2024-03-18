@@ -6,7 +6,6 @@ using app.Utility;
 using app.Services.PurchaseOrderDetailServices;
 using Microsoft.EntityFrameworkCore;
 using app.EntityModel.DataTablePaginationModels;
-using app.Services.AssetPurchaseOrderServices;
 
 
 namespace app.Services.PurchaseOrderServices
