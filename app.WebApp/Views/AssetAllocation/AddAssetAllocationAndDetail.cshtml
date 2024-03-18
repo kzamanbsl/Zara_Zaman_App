@@ -256,10 +256,10 @@
                                                     @{
                                                         if (Model.AssetAllocationStatusId == (int)AssetAllocationStatusEnum.Draft)
                                                         {
-                                                                <td style="padding:5px;text-align:center;">
-                                                                    <a id="@item.Id" onclick="makeEditble(@item.Id);" class="linkPointer" title="Edit"><i class="text-warning fas fa-edit" aria-hidden="true"></i></a>
-                                                                    <a id="@item.Id" onclick="makeDeletable(@item.Id)" class="linkPointer"><i class="text-danger fas fa-trash" aria-hidden="true"></i></a>
-                                                                </td>
+                                                                    <td style="padding:5px;text-align:center;">
+                                                                        <a id="@item.Id" onclick="makeEditble(@item.Id);" class="linkPointer" title="Edit"><i class="text-warning fas fa-edit" aria-hidden="true"></i></a>
+                                                                        <a id="@item.Id" onclick="makeDeletable(@item.Id)" class="linkPointer"><i class="text-danger fas fa-trash" aria-hidden="true"></i></a>
+                                                                    </td>
                                                         }
                                                     }
                                                 </tr>
@@ -325,6 +325,7 @@
         window.setTimeout(function () {
             $(".alert").fadeTo(500,).slideUp(500, function () {
                 $(this).remove();
+
             });
         }, 4000);
 
@@ -458,12 +459,30 @@
             });
         }
 
-        $('#tag').on('change', function (event){
+        // $('#tag').on('change', function (event){
+        //     var data = $(this).val();
+        //     var qty = $('#quantity').val();
+        //     let fixedArray = new Array(qty);
+        //     console.log(data);
+        //     console.log("Quantity: " + qty);
+        // });
+
+        $('#tag').on('change', function (event) {
             var data = $(this).val();
             var qty = $('#quantity').val();
+            // let fixedArray = new Array(qty);
+            // if (quantity => 0 && tag=> 0)
+            // {
+                
+            // }
+
             console.log(data);
             console.log("Quantity: " + qty);
+            // console.log(fixedArray); // Output: array with length equal to qty
         });
+
+
+
 
     </script>
 
