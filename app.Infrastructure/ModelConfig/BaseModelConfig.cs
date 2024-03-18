@@ -41,15 +41,12 @@ namespace app.Infrastructure.ModelConfig
             new ProductConfig()?.Configure(builder.Entity<Product>());
             new CustomerConfig()?.Configure(builder.Entity<Customer>());
             new SupplierConfig()?.Configure(builder.Entity<Supplier>());
-            new PurchaseOrderConfig()?.Configure(builder.Entity<PurchaseOrder>());
+            new PurchaseOrderConfig()?.Configure(builder.Entity<PurchaseOrderList>());
             new PurchaseOrderDetailConfig()?.Configure(builder.Entity<PurchaseOrderDetail>());
             new InventoryConfig()?.Configure(builder.Entity<Inventory>());
             new AssetInventoryConfig()?.Configure(builder.Entity<AssetInventory>());
             new SalesTermsAndConditionConfig()?.Configure(builder.Entity<SalesTermsAndCondition>());
-            new SalesOrderConfig()?.Configure(builder.Entity<SalesOrder>());
-            new SalesOrderDetailsConfig()?.Configure(builder.Entity<SalesOrderDetails>()); 
-            new AssetAllocationConfig()?.Configure(builder.Entity<AssetAllocation>());
-            new AssetAllocationDetailConfig()?.Configure(builder.Entity<AssetAllocationDetail>());
+           
 
             #region   AssembleWorkCategory,
 
