@@ -9,7 +9,7 @@
 <style>
     .bootstrap-tagsinput .tag {
         margin-right: 2px;
-        color: red !important;
+        color: blue !important;
     }
 
     .bootstrap-tagsinput {
@@ -180,7 +180,7 @@
 
                                                 <select id="tag" multiple data-role="tagsinput" asp-for="AssetAllocationDetailVM.Tag" type="text" class="form-control" style="width:100%" placeholder="Enter Tags Number" data-role="tagsinput" required>
                                                     @* <option value="@Html.ViewBag" selected></option> *@
-                                                    <option />
+                                                    
                                                     <span asp-validation-for="AssetAllocationDetailVM.Tag" class="text-danger"></span>
                                                 </select>
 
@@ -400,85 +400,186 @@
             });
         }
 
-        // $('#tag').on('change', function (event){
-        //     var data = $(this).val();
-        //     var qty = $('#quantity').val();
-        //     let fixedArray = new Array(qty);
-        //     console.log(data);
-        //     console.log("Quantity: " + qty);
+        // $(document).ready(function () {
+        //     $('#tag').on('change', function (event) {
+                
+        //         var AssetQuantity = $('#quantity').val();
+        //         var getTags = new Array[AssetQuantity];
+
+        //         if (getTags == AssetQuantity) {
+        //             getTags.push($(this).val());
+        //         }else{
+        //             $('.bootstrap-tagsinput input').attr('readonly', false);
+        //         }
+        //         console.log(getTags);
+        //     });
         // });
+
+
+        // Shakib --1
+
+       
+
 
         $(document).ready(function () {
             $('#tag').on('change', function (event) {
-                var data = $(this).val();
-                var qty = $('#quantity').val();
-                let fixedArray = new Array(qty);
+                var AssetQuantity = parseInt($('#quantity').val()); // Parse quantity input value as integer
+                var getTags = $('.bootstrap-tagsinput').find('span.tag').length; // Count existing tags
 
-                if (qty <= data.length) { // Corrected the if statement condition
-                    console.log("Quantity: " + qty);
-                    console.log("Tag: " + data);
-                    // Perform additional checks or actions here
+                if (getTags != AssetQuantity) { // Check if the number of tags exceeds the quantity
+                    // Prevent adding more tags and show a message
+                    alert("Change your value to add more tags.");
+                    // Reset the input field value or handle it as needed
+                    // $('#tag').val('');
                 } else {
-                    console.log("Quantity and Tag are not equal."); // Log if quantity and tag are not equal
+                    // Allow adding tags
+                    $('.bootstrap-tagsinput input').attr('readonly', false);
                 }
-
-                console.log(data);
-                console.log("Quantity: " + qty);
-                console.log(fixedArray); // Output: array with length equal to qty
             });
-
-            // Other code...
         });
 
 
 
-        // $('#tag').on('change', function (event) {
-        //     var tagValue = $(this).val(); Getting the value of the tag input
-        //     var quantityValue = $('#quantity').val(); Getting the value of the quantity input
+        // Shakib -2 -------
+        // $(document).ready(function () {
+        //     $('#tag').on('change', function (event) {
+        //         var AssetQuantity = parseInt($('#quantity').val()); // Parse quantity input value as integer
+        //         var existingTags = $('.bootstrap-tagsinput').find('span.tag').map(function () {
+        //             return $(this).text().trim(); // Extract text content of existing tags
+        //         }).get();
 
-        //     Checking if both quantity and tag are greater than or equal to 0
-        //     if (quantityValue >= 0 && tagValue >= 0) {
-        //         If quantity and tag are equal, log the data and perform a check
-        //         if (quantityValue === tagValue) {
-        //             console.log("Quantity: " + quantityValue);
-        //             console.log("Tag: " + tagValue);
-        //             Perform additional checks or actions here
+        //         var newTag = $(this).val().trim(); // Get the new tag value
+
+        //         // Check if the new tag already exists
+        //         if (existingTags.includes(newTag)) {
+        //             // Display a popup message for duplicate tag
+        //             alert("Tag already added.");
+        //             // Clear the input field
+        //             $(this).val('');
         //         } else {
-        //             console.log("Quantity and Tag are not equal."); Log if quantity and tag are not equal
+        //             var currentTagsCount = existingTags.length; // Count existing tags
+        //             // Check if the number of existing tags equals or exceeds the quantity
+        //             if (currentTagsCount >= AssetQuantity) {
+        //                 // Display a popup message to stop input based on the quantity
+        //                 alert("Quantity limit reached. Change your value to add more tags.");
+        //                 // Clear the input field
+        //                 $(this).val('');
+        //             } else {
+        //                 // Allow adding the new tag
+        //                 $('.bootstrap-tagsinput input').attr('readonly', false);
+        //             }
         //         }
-        //     } else {
-        //         console.log("Quantity or Tag is less than 0."); Log if quantity or tag is less than 0
-        //     }
+        //     });
         // });
 
 
-        // function generateTags() {
-        //     Get the quantity value from the input field
-        //     var quantity = parseInt(document.getElementById("quantity").value);
 
-        //     Get the tags input field
-        //     var tagsInput = document.getElementById("tag");
+        // $(document).ready(function () {
+        //     $('#tag').on('keypress', function (event) {
+        //         // Check if the key pressed is Enter (keyCode 13)
+        //         if (event.keyCode === 13) {
+        //             event.preventDefault(); // Prevent the default form submission behavior
 
-        //     Enable the tags input field
-        //     tagsInput.disabled = false;
+        //             var AssetQuantity = parseInt($('#quantity').val()); // Parse quantity input value as integer
+        //             var existingTags = $('.bootstrap-tagsinput').find('span.tag').map(function () {
+        //                 return $(this).text().trim(); // Extract text content of existing tags
+        //             }).get();
 
-        //     Clear the tags input field
-        //     tagsInput.value = "";
+        //             var newTag = $(this).val().trim(); // Get the new tag value
 
-        //     Set the maximum length for the tags input field based on the quantity
-        //     tagsInput.maxLength = quantity;
-
-        //     Set focus to the tags input field
-        //     tagsInput.focus();
-        // }
-
-        // Optional: Prevent typing more characters than allowed in the tags input field
-        // document.getElementById("tagsInput").addEventListener("input", function () {
-        //     var maxLength = parseInt(this.maxLength);
-        //     if (this.value.length > maxLength) {
-        //         this.value = this.value.slice(0, maxLength);
-        //     }
+        //             // Check if the new tag already exists
+        //             if (existingTags.includes(newTag)) {
+        //                 // Display a popup message for duplicate tag
+        //                 alert("Tag already added.");
+        //                 // Clear the input field
+        //                 $(this).val('');
+        //             } else {
+        //                 var currentTagsCount = existingTags.length; // Count existing tags
+        //                 // Check if the number of existing tags equals or exceeds the quantity
+        //                 if (currentTagsCount >= AssetQuantity) {
+        //                     // Display a popup message to stop input based on the quantity
+        //                     alert("Quantity limit reached. Change your value to add more tags.");
+        //                     // Clear the input field
+        //                     $(this).val('');
+        //                 } else {
+        //                     // Allow adding the new tag
+        //                     $('.bootstrap-tagsinput input').attr('readonly', false);
+        //                 }
+        //             }
+        //         }
+        //     });
         // });
+
+
+        // $(document).ready(function () {
+        //     $('#tag').on('change', function (event) {
+        //         var AssetQuantity = parseInt($('#quantity').val()); // Parse quantity input value as integer
+        //         var existingTags = $('.bootstrap-tagsinput').find('span.tag').map(function () {
+        //             return $(this).text().trim(); // Extract text content of existing tags
+        //         }).get();
+
+        //         var newTag = $(this).val().trim(); // Get the new tag value
+
+        //         // Check if the new tag already exists or is empty
+        //         if (existingTags.includes(newTag) || newTag === "") {
+        //             // Display a popup message for duplicate tag or empty tag
+        //             alert("Please enter a unique tag value.");
+        //             // Clear the input field
+        //             $(this).val('');
+        //         } else {
+        //             var currentTagsCount = existingTags.length; // Count existing tags
+        //             // Check if the number of existing tags equals or exceeds the quantity
+        //             if (currentTagsCount >= AssetQuantity) {
+        //                 // Display a popup message to stop input based on the quantity
+        //                 alert("Quantity limit reached. Change your value to add more tags.");
+        //                 // Clear the input field
+        //                 $(this).val('');
+        //             } else {
+        //                 // Allow adding the new tag
+        //                 $('.bootstrap-tagsinput input').attr('readonly', false);
+        //             }
+        //         }
+        //     });
+        // });
+
+
+
+        // $(document).ready(function () {
+            
+
+        //     $('#tag').on('change', function (event) {
+        //         var AssetQuantity = parseInt($('#quantity').val()); // Parse quantity input value as integer
+        //         var existingTags = $('.bootstrap-tagsinput').find('span.tag').map(function () {
+        //             return $(this).text().trim(); // Extract text content of existing tags
+        //         }).get();
+
+        //         var newTag = $(this).val().trim(); // Get the new tag value
+
+        //         // Check if the new tag already exists or is empty
+        //         if (existingTags.includes(newTag) || newTag === "") {
+        //             // Display a popup message for duplicate tag or empty tag
+        //             alert("Please enter a unique tag value.");
+        //             // Clear the input field
+        //             $(this).val('');
+        //         } else {
+        //             var currentTagsCount = existingTags.length; // Count existing tags
+        //             // Check if the number of existing tags equals or exceeds the quantity
+        //             if (currentTagsCount >= AssetQuantity) {
+        //                 // Display a popup message to stop input based on the quantity
+        //                 alert("Quantity limit reached. Change your value to add more tags.");
+        //                 // Clear the input field
+        //                 $(this).val('');
+        //             } else {
+        //                 // Allow adding the new tag
+        //                 $('.bootstrap-tagsinput input').attr('readonly', false);
+        //             }
+        //         }
+        //     });
+        // });
+
+
+
+
 
 
     </script>
