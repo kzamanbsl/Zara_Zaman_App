@@ -2,12 +2,6 @@
 using app.Infrastructure.Auth;
 using app.Infrastructure.Repository;
 using app.Infrastructure;
-using app.Services.AssetInventoryServices;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using app.Services.AssetPurchaseOrderServices;
 using app.Services.AssetPurchaseOrderDetailServices;
 using app.Utility;
@@ -44,7 +38,6 @@ namespace app.Services.AssetInventoryServices
                      SupplierName = t1.Supplier.Name,
                      StorehouseId = t1.StorehouseId,
                      StoreName = t1.Storehouse.Name,
-                     OverallDiscount = t1.OverallDiscount,
                      PurchaseTypeId = t1.PurchaseTypeId,
                      Description = t1.Description,
                  }).FirstOrDefault());
@@ -59,13 +52,9 @@ namespace app.Services.AssetInventoryServices
                      ProductId = t1.ProductId,
                      ProductName = t1.Product.Name,
                      PurchaseQty = t1.PurchaseQty,
-                     Consumption = t1.Consumption,
                      UnitId = t1.UnitId,
                      UnitName = t1.Unit.Name,
-                     CostPrice = t1.CostPrice,
-                     SalePrice = t1.SalePrice,
-                     Discount = t1.Discount,
-                     TotalAmount = ((decimal)t1.PurchaseQty * t1.CostPrice) - t1.Discount,
+                     //TotalAmount = ((decimal)t1.PurchaseQty 
                      Remarks = t1.Remarks,
                  }).OrderByDescending(x => x.Id).ToListAsync());
 
@@ -79,8 +68,7 @@ namespace app.Services.AssetInventoryServices
                     StorehouseId = assetPurchaseOrderModel.StorehouseId ?? 0,
                     ProductId = detail?.ProductId ?? 0,
                     UnitId = detail?.UnitId ?? 0,
-                    CostPrice = detail?.CostPrice ?? 0,
-                    SalePrice = detail?.SalePrice ?? 0,
+                    //SalePrice = detail?.SalePrice ?? 0,
                     Consumption = detail?.Consumption ?? 0,
                     Remarks = detail.Remarks,
                 };

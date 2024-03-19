@@ -22,9 +22,6 @@ namespace app.Services.PurchaseOrderServices
         [DisplayName("Status")]
         public string OrderStatusName { get; set; }
 
-        [DisplayName("Overall Discount")]
-        public decimal OverallDiscount { get; set; }
-
         [DisplayName("Total Amount")]
         public double TotalAmount { get; set; }
 

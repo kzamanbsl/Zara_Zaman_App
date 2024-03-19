@@ -11,10 +11,9 @@ namespace app.Services.PurchaseOrderServices
         public string OrderNo { get; set; }
         public int OrderStatusId { get; set; }
         public string OrderStatusName { get; set; }
-        public decimal OverallDiscount { get; set; }
         public double TotalAmount { get; set; }
         public int PurchaseTypeId { get; set; }
-        public bool IsOpening { get; set; } = false;
+        //public bool IsOpening { get; set; } = false;
         public long? SupplierId { get; set; }
         public Supplier Supplier { get; set; }
         public string SupplierName { get; set; } 

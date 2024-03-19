@@ -26,12 +26,9 @@ namespace app.Services.PurchaseOrderDetailServices
                     Id = vm.PurchaseOrderDetailVM.Id,
                     ProductId = vm.PurchaseOrderDetailVM.ProductId,
                     PurchaseQty = vm.PurchaseOrderDetailVM.PurchaseQty,
-                    Consumption = vm.PurchaseOrderDetailVM.Consumption,
                     UnitId = vm.PurchaseOrderDetailVM.UnitId,
-                    CostPrice = vm.PurchaseOrderDetailVM.CostPrice,
                     SalePrice = vm.PurchaseOrderDetailVM.SalePrice,
-                    Discount = vm.PurchaseOrderDetailVM.Discount,
-                    TotalAmount = (vm.PurchaseOrderDetailVM.CostPrice * (decimal)vm.PurchaseOrderDetailVM.PurchaseQty) - vm.PurchaseOrderDetailVM.Discount,
+                    TotalAmount = (vm.PurchaseOrderDetailVM.SalePrice * (decimal)vm.PurchaseOrderDetailVM.PurchaseQty),
                     Remarks = vm.PurchaseOrderDetailVM.Remarks
                 };
 
@@ -54,12 +51,9 @@ namespace app.Services.PurchaseOrderDetailServices
                 model.Id = purchaseOrderDetail.PurchaseOrderId;
                 purchaseOrderDetail.ProductId = model.PurchaseOrderDetailVM.ProductId;
                 purchaseOrderDetail.UnitId = model.PurchaseOrderDetailVM.UnitId;
-                purchaseOrderDetail.Consumption = model.PurchaseOrderDetailVM.Consumption;
-                purchaseOrderDetail.Discount = model.PurchaseOrderDetailVM.Discount;
                 purchaseOrderDetail.PurchaseQty = model.PurchaseOrderDetailVM.PurchaseQty;
                 purchaseOrderDetail.SalePrice = model.PurchaseOrderDetailVM.SalePrice;
-                purchaseOrderDetail.CostPrice = model.PurchaseOrderDetailVM.CostPrice;
-                purchaseOrderDetail.TotalAmount = ((decimal)model.PurchaseOrderDetailVM.PurchaseQty * model.PurchaseOrderDetailVM.CostPrice) - model.PurchaseOrderDetailVM.Discount;
+                purchaseOrderDetail.TotalAmount = ((decimal)model.PurchaseOrderDetailVM.PurchaseQty * model.PurchaseOrderDetailVM.SalePrice);
                 purchaseOrderDetail.Remarks = model.PurchaseOrderDetailVM.Remarks;
                 await _iEntityRepository.UpdateAsync(purchaseOrderDetail);
                 return true;
@@ -78,13 +72,10 @@ namespace app.Services.PurchaseOrderDetailServices
                                               ProductId = t1.ProductId,
                                               ProductName = t1.Product.Name,
                                               PurchaseQty = t1.PurchaseQty,
-                                              Consumption = t1.Consumption,
                                               UnitId = t1.UnitId,
                                               UnitName = t1.Unit.Name,
-                                              CostPrice = t1.CostPrice,
                                               SalePrice = t1.SalePrice,
-                                              Discount = t1.Discount,
-                                              TotalAmount = ((decimal)t1.PurchaseQty * t1.CostPrice) - t1.Discount,
+                                              TotalAmount = ((decimal)t1.PurchaseQty * t1.SalePrice),
                                               Remarks = t1.Remarks,
                                           }).FirstOrDefault());
             return v;

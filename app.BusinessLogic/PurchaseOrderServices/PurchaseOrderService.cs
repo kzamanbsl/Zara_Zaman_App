@@ -41,7 +41,6 @@ namespace app.Services.PurchaseOrderServices
             purchaseOrder.PurchaseDate = vm.PurchaseDate;
             purchaseOrder.SupplierId = vm.SupplierId;
             purchaseOrder.StorehouseId = vm.StorehouseId;
-            purchaseOrder.OverallDiscount = vm.OverallDiscount;
             purchaseOrder.Description = vm.Description;
             purchaseOrder.OrderStatusId = (int)PurchaseOrderStatusEnum.Draft;
             purchaseOrder.PurchaseTypeId = (int)PurchaseTypeEnum.Purchase;
@@ -79,7 +78,6 @@ namespace app.Services.PurchaseOrderServices
                                                            SupplierName = t1.Supplier.Name,
                                                            StorehouseId = t1.StorehouseId,
                                                            StoreName = t1.Storehouse.Name,
-                                                           OverallDiscount = t1.OverallDiscount,
                                                            PurchaseTypeId = t1.PurchaseTypeId,
                                                            Description = t1.Description,
                                                        }).FirstOrDefault());
@@ -92,13 +90,11 @@ namespace app.Services.PurchaseOrderServices
                                                                                     ProductId = t1.ProductId,
                                                                                     ProductName = t1.Product.Name,
                                                                                     PurchaseQty = t1.PurchaseQty,
-                                                                                    Consumption = t1.Consumption,
                                                                                     UnitId = t1.UnitId,
                                                                                     UnitName = t1.Unit.Name,
-                                                                                    CostPrice = t1.CostPrice,
                                                                                     SalePrice = t1.SalePrice,
                                                                                     //Discount = t1.Discount,
-                                                                                    TotalAmount = ((decimal)t1.PurchaseQty * t1.CostPrice) - t1.Discount,
+                                                                                    TotalAmount = ((decimal)t1.PurchaseQty * t1.SalePrice),
                                                                                     Remarks = t1.Remarks,
                                                                                 }).OrderByDescending(x => x.Id).AsEnumerable());
 
@@ -120,7 +116,6 @@ namespace app.Services.PurchaseOrderServices
                                                            SupplierName = t1.Supplier.Name,
                                                            StorehouseId = t1.StorehouseId,
                                                            StoreName = t1.Storehouse.Name,
-                                                           OverallDiscount = t1.OverallDiscount,
                                                            PurchaseTypeId = t1.PurchaseTypeId,
                                                            Description = t1.Description,
                                                        }).FirstOrDefault());
@@ -133,13 +128,11 @@ namespace app.Services.PurchaseOrderServices
                                                                                     ProductId = t1.ProductId,
                                                                                     ProductName = t1.Product.Name,
                                                                                     PurchaseQty = t1.PurchaseQty,
-                                                                                    Consumption = t1.Consumption,
                                                                                     UnitId = t1.UnitId,
                                                                                     UnitName = t1.Unit.Name,
-                                                                                    CostPrice = t1.CostPrice,
                                                                                     SalePrice = t1.SalePrice,
                                                                                     //Discount = t1.Discount,
-                                                                                    TotalAmount = ((decimal)t1.PurchaseQty * t1.CostPrice) - t1.Discount,
+                                                                                    TotalAmount = ((decimal)t1.PurchaseQty * t1.SalePrice),
                                                                                     Remarks = t1.Remarks,
                                                                                 }).OrderByDescending(x => x.Id).AsEnumerable());
 
@@ -205,7 +198,7 @@ namespace app.Services.PurchaseOrderServices
             foreach (var master in purchaseMasterModel.PurchaseOrderList)
             {
                 var detailsForMaster = matchingDetails.Where(detail => detail.PurchaseOrderId == master.Id);
-                decimal? total = detailsForMaster.Sum(detail => (detail.CostPrice * (decimal)detail.PurchaseQty)
+                decimal? total = detailsForMaster.Sum(detail => (detail.SalePrice * (decimal)detail.PurchaseQty)
                 );
                 master.TotalAmount = (double)(total ?? 0);
             }
@@ -214,7 +207,7 @@ namespace app.Services.PurchaseOrderServices
 
         public async Task<DataTablePagination<PurchaseOrderSearchDto>> SearchAsync(DataTablePagination<PurchaseOrderSearchDto> searchDto)
         {
-            var searchResult = _dbContext.PurchaseOrder.Include(c => c.Storehouse).Include(c => c.Supplier).Where(c=>c.IsActive == true && c.PurchaseTypeId == (int)PurchaseTypeEnum.Purchase).AsNoTracking(); ;
+            var searchResult = _dbContext.PurchaseOrder.Include(c => c.Storehouse).Include(c => c.Supplier).Where(c => c.IsActive == true && c.PurchaseTypeId == (int)PurchaseTypeEnum.Purchase).AsNoTracking(); ;
 
             var searchModel = searchDto.SearchVm;
             var filter = searchDto?.Search?.Value?.Trim();
@@ -262,10 +255,10 @@ namespace app.Services.PurchaseOrderServices
                 SupplierId = c.SupplierId,
                 SupplierName = c.Supplier.Name,
                 OrderStatusId = (int)(PurchaseOrderStatusEnum)c.OrderStatusId,
-                OrderStatusName = Enum.GetName(typeof(PurchaseOrderStatusEnum),c.OrderStatusId),
+                OrderStatusName = Enum.GetName(typeof(PurchaseOrderStatusEnum), c.OrderStatusId),
 
-            //TotalAmount = (double)c.TotalAmount,
-        }).ToList();
+                //TotalAmount = (double)c.TotalAmount,
+            }).ToList();
 
             return searchDto;
         }

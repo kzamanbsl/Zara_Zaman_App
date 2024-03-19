@@ -15,10 +15,8 @@ namespace app.Services.PurchaseOrderDetailServices
         public long UnitId { get; set; }
         public Unit Unit { get; set; }
         public string UnitName { get; set; }
-        public double Consumption { get; set; }
-        public double PurchaseQty { get; set; }
-        public decimal CostPrice { get; set; }
         public decimal SalePrice { get; set; }
+        public double PurchaseQty { get; set; }
         public decimal Discount { get; set; }
         public decimal TotalAmount { get; set; }
         public string Remarks { get; set; }

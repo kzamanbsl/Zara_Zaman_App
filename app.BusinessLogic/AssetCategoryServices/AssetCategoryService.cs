@@ -2,15 +2,8 @@
 using app.Infrastructure.Auth;
 using app.Infrastructure.Repository;
 using app.Infrastructure;
-using app.Services.AssetCategoryServices;
 using app.Utility;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using app.EntityModel.DataTablePaginationModels;
-using app.Services.SaleCenterServices;
 using Microsoft.EntityFrameworkCore;
 
 namespace app.Services.AssetCategoryServices
@@ -88,7 +81,7 @@ namespace app.Services.AssetCategoryServices
 
         public async Task<DataTablePagination<AssetCategorySearchDto>> SearchAsync(DataTablePagination<AssetCategorySearchDto> searchDto)
         {
-            var searchResult = _dbContext.ProductCategory.Where(c => c.IsActive == true).AsNoTracking();
+            var searchResult = _dbContext.ProductCategory.Where(c => c.IsActive == true && c.ProductCategoryTypeId == (int)ProductCategoryTypeEnum.AssetCategory).AsNoTracking();
 
             var searchModel = searchDto.SearchVm;
             var filter = searchDto?.Search?.Value?.Trim();
@@ -117,7 +110,7 @@ namespace app.Services.AssetCategoryServices
                 SerialNo = ++sl,
                 Id = c.Id,
                 Name = c.Name,
-               
+
             }).ToList();
 
             return searchDto;

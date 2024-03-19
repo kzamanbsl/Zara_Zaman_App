@@ -81,7 +81,7 @@ namespace app.Services.ProductCategoryServices
 
         public async Task<DataTablePagination<ProductCategorySearchDto>> SearchAsync(DataTablePagination<ProductCategorySearchDto> searchDto)
         {
-            var searchResult = _dbContext.ProductCategory.Where(c=>c.IsActive==true).AsNoTracking();
+            var searchResult = _dbContext.ProductCategory.Where(c=>c.IsActive==true && c.ProductCategoryTypeId == (int)ProductCategoryTypeEnum.ProductCategory).AsNoTracking();
 
             var searchModel = searchDto.SearchVm;
             var filter = searchDto?.Search?.Value?.Trim();

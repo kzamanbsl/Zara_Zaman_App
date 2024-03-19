@@ -1,6 +1,4 @@
-﻿using app.EntityModel.AppModels;
-
-namespace app.Services.ProductServices
+﻿namespace app.Services.ProductServices
 {
     public class ProductViewModel : BaseViewModel
     {

@@ -86,8 +86,6 @@
                                                 <th style="padding: 5px; text-align: left;">Product</th>
                                                 <th style="padding: 5px; text-align: left;">Purchase Qty</th>
                                                 <th style="padding: 5px; text-align: left;">Unit</th>
-                                                <th style="padding: 5px; text-align: right; ">Consumption</th>
-                                                <th style="padding: 5px; text-align: right; ">Cost Price</th>
                                                 <th style="padding: 5px; text-align: right; ">Sale Price</th>
                                                 <th style="padding: 5px; text-align: right; ">Total Price</th>
                                             </tr>
@@ -101,8 +99,6 @@
                                                     <td style="padding:5px;text-align:left;">@item.ProductName</td>
                                                     <td style="padding: 5px; text-align: left;">@item.PurchaseQty</td>
                                                     <td style="padding:5px;text-align:left;">@String.Format("{0:0.00}", item.UnitName)</td>
-                                                    <td style="padding: 5px; text-align: right;">@String.Format("{0:0.00}", item.Consumption)</td>
-                                                    <td style="padding: 5px; text-align: right;">@String.Format("{0:0.00}", item.CostPrice)</td>
                                                     <td style="padding: 5px; text-align: right;">@String.Format("{0:0.00}", item.SalePrice)</td>
                                                     <td style="padding: 5px; text-align: right;">@String.Format("{0:0.00}", item.TotalAmount)</td>
                                                 </tr>

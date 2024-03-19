@@ -42,7 +42,6 @@ namespace app.Services.AssetPurchaseOrderServices
             assetPurchaseOrder.PurchaseDate = vm.PurchaseDate;
             assetPurchaseOrder.SupplierId = vm.SupplierId;
             assetPurchaseOrder.StorehouseId = vm.StorehouseId;
-            assetPurchaseOrder.OverallDiscount = vm.OverallDiscount;
             assetPurchaseOrder.Description = vm.Description;
             assetPurchaseOrder.OrderStatusId = (int)PurchaseOrderStatusEnum.Draft;
             assetPurchaseOrder.PurchaseTypeId = (int)PurchaseTypeEnum.AssetPurchase;
@@ -64,7 +63,6 @@ namespace app.Services.AssetPurchaseOrderServices
                                                                 SupplierName = t1.Supplier.Name,
                                                                 StorehouseId = t1.StorehouseId,
                                                                 StoreName = t1.Storehouse.Name,
-                                                                OverallDiscount = t1.OverallDiscount,
                                                                 PurchaseTypeId = t1.PurchaseTypeId,
                                                                 Description = t1.Description,
                                                             }).FirstOrDefault());
@@ -77,12 +75,10 @@ namespace app.Services.AssetPurchaseOrderServices
                                                                                               ProductId = t1.ProductId,
                                                                                               ProductName = t1.Product.Name,
                                                                                               PurchaseQty = t1.PurchaseQty,
-                                                                                              Consumption = t1.Consumption,
                                                                                               UnitId = t1.UnitId,
                                                                                               UnitName = t1.Unit.Name,
-                                                                                              CostPrice = t1.CostPrice,
-                                                                                              SalePrice = t1.SalePrice,
-                                                                                              TotalAmount = ((decimal)t1.PurchaseQty * t1.CostPrice) - t1.Discount,
+                                                                                              //SalePrice = t1.SalePrice,
+                                                                                              TotalAmount = ((decimal)t1.PurchaseQty),
                                                                                               Remarks = t1.Remarks,
                                                                                           }).OrderByDescending(x => x.Id).AsEnumerable());
 
@@ -124,7 +120,6 @@ namespace app.Services.AssetPurchaseOrderServices
                                                                 SupplierName = t1.Supplier.Name,
                                                                 StorehouseId = t1.StorehouseId,
                                                                 StoreName = t1.Storehouse.Name,
-                                                                OverallDiscount = t1.OverallDiscount,
                                                                 PurchaseTypeId = t1.PurchaseTypeId,
                                                                 Description = t1.Description,
                                                             }).FirstOrDefault());
@@ -137,12 +132,10 @@ namespace app.Services.AssetPurchaseOrderServices
                                                                                               ProductId = t1.ProductId,
                                                                                               ProductName = t1.Product.Name,
                                                                                               PurchaseQty = t1.PurchaseQty,
-                                                                                              Consumption = t1.Consumption,
                                                                                               UnitId = t1.UnitId,
                                                                                               UnitName = t1.Unit.Name,
-                                                                                              CostPrice = t1.CostPrice,
-                                                                                              SalePrice = t1.SalePrice,
-                                                                                              TotalAmount = ((decimal)t1.PurchaseQty * t1.CostPrice) - t1.Discount,
+                                                                                              //SalePrice = t1.SalePrice,
+                                                                                              //TotalAmount = ((decimal)t1.PurchaseQty),
                                                                                               Remarks = t1.Remarks,
                                                                                           }).OrderByDescending(x => x.Id).AsEnumerable());
 
@@ -207,7 +200,7 @@ namespace app.Services.AssetPurchaseOrderServices
             foreach (var master in assetPurchaseMasterModel.AssetPurchaseOrderList)
             {
                 var detailsForMaster = matchingDetails.Where(detail => detail.PurchaseOrderId == master.Id);
-                decimal? total = detailsForMaster.Sum(detail => (detail.CostPrice * (decimal)detail.PurchaseQty)
+                decimal? total = detailsForMaster.Sum(detail => (detail.SalePrice * (decimal)detail.PurchaseQty)
                 );
                 master.TotalAmount = (double)(total ?? 0);
             }
