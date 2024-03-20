@@ -208,7 +208,8 @@ namespace app.Services.AssetAllocationServices
         }
         public async Task<DataTablePagination<AssetAllocationSearchDto>> SearchAsync(DataTablePagination<AssetAllocationSearchDto> searchDto)
         {
-            var searchResult = _dbContext.AssetAllocation.Where(c => c.IsActive == true).AsNoTracking();
+            //var searchResult = _dbContext.PurchaseOrder.Include(c => c.Storehouse).Include(c => c.Supplier).Where(c => c.IsActive == true && c.PurchaseTypeId == (int)PurchaseTypeEnum.Purchase).AsNoTracking(); ;
+            var searchResult = _dbContext.AssetAllocation.Include(c=>c.Employee).Include(c=>c.Department).Where(c => c.IsActive == true).AsNoTracking();
 
             var searchModel = searchDto.SearchVm;
             var filter = searchDto?.Search?.Value?.Trim();
@@ -216,9 +217,9 @@ namespace app.Services.AssetAllocationServices
             if (!string.IsNullOrEmpty(filter))
             {
                 filter = filter.ToLower();
-                searchResult = searchResult.Where(c =>
-                    c.OrderNo.ToString().Contains(filter)
-                    || c.Date.ToString().Contains(filter)
+                searchResult = searchResult.Where(c => 
+                    c.OrderNo.ToLower().Contains(filter)
+                    //|| c.Date.ToLower().Contains(filter)
                     || c.Employee.Name.ToLower().Contains(filter)
                     || c.Department.Name.ToLower().Contains(filter)
                 );

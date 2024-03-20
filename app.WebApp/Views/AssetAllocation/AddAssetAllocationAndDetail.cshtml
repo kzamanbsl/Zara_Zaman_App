@@ -418,25 +418,63 @@
 
         // Shakib --1
 
-       
-
-
         $(document).ready(function () {
             $('#tag').on('change', function (event) {
                 var AssetQuantity = parseInt($('#quantity').val()); // Parse quantity input value as integer
                 var getTags = $('.bootstrap-tagsinput').find('span.tag').length; // Count existing tags
 
-                if (getTags != AssetQuantity) { // Check if the number of tags exceeds the quantity
+                if (getTags <= AssetQuantity) { // Check if the number of tags exceeds the quantity
                     // Prevent adding more tags and show a message
-                    alert("Change your value to add more tags.");
+                    $('.bootstrap-tagsinput input').attr('readonly', false);
+
                     // Reset the input field value or handle it as needed
                     // $('#tag').val('');
                 } else {
                     // Allow adding tags
-                    $('.bootstrap-tagsinput input').attr('readonly', false);
+                    alert("Change your value to add more tags.");
+
                 }
             });
         });
+
+        // $(document).ready(function () {
+        //     $('#quantity').on('input', function () {
+        //         var quantity = parseInt($(this).val());
+        //         var tagsContainer = $('#tag');
+        //         tagsContainer.empty(); // Clear previous tags
+
+        //         for (var i = 1; i <= quantity; i++) {
+        //             var input = $('<input>').attr({
+        //                 type: 'text',
+        //                 name: 'tag' + i,
+        //                 class: 'form-control',
+        //                 placeholder: 'Enter Tag ' + i,
+        //                 required: true
+        //             });
+
+        //             var span = $('<span>').addClass('text-danger');
+
+        //             var div = $('<div>').addClass('form-group').append(input).append(span);
+
+        //             tagsContainer.append(div);
+        //         }
+        //     });
+        // });
+
+        //checkArrays
+
+        // const arr1 = document.getElementById("quantity");
+        // const arr2 = document.getElementById("tag");
+        // const checkArrays = function (arr1, arr2) {
+        //     if (arr1.length !== arr2.length) {
+        //         return false;
+        //     }
+        //     return arr1.every((val) => arr2.includes(val));
+        // };
+        // console.log(checkArrays(arr1, arr2));
+
+
+
 
 
 
