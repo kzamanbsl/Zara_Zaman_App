@@ -10,7 +10,7 @@
         public string BankName { get; set; }       
         public string BranchName { get; set; }
         public string BankAccountNo { get; set; }
-        public long SupplierId { get; set; }
+        public long SupplierId { get; set; } // SupplierCategoryId
         public SupplierCategory SupplierCategory { get; set; }
 
         //public int? UpazilaId { get; set; }

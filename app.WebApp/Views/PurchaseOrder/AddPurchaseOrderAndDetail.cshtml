@@ -66,14 +66,6 @@
                                                 <th style="width:18%">Store Information</th>
                                                 <td style="width:30%">@Model.StoreName</td>
                                             </tr>
-                                            @*  <tr>
-                                        <th>OverAll Discount</th>
-                                        <td>@Model.OverallDiscount</td>
-                                        <th style="width:18%">Order Status</th>
-                                        <td style="width:30%">@Model.OrderStatusId</td>
-
-                                        </tr> *@
-
                                         </table>
                                     </div>
                                 </div>
@@ -97,12 +89,12 @@
                                                 <span asp-validation-for="StorehouseId" class="text-danger"></span>
                                             </select>
                                         </div>
-                                    </div>                                  
+                                    </div>
 
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label>Supplier</label>
-                                            <select class="form-control" asp-for="SupplierId" asp-items="ViewBag.SupplierList">
+                                            <select class="form-control" asp-for="SupplierId" id="supplierSelect" asp-items="ViewBag.SupplierList">
                                                 <option value="0" selected>-- Select Supplier --</option>
                                                 <span asp-validation-for="SupplierId" class="text-danger"></span>
                                             </select>
@@ -112,13 +104,12 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label class="control-label">Supplier Information</label>
-                                            <textarea class="form-control" rows="4"></textarea>
+                                            <textarea class="form-control" id="supplierInfo"></textarea>
                                         </div>
                                     </div>
-
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-12">
+                                    <div class="col-md-5">
                                         <div class="form-group">
                                             <label asp-for="Description" class="control-label"></label>
                                             <textarea asp-for="Description" class="form-control" rows="1"></textarea>
@@ -130,7 +121,7 @@
                             {
                                 <div class="" style="padding-top:30px;">
                                     <div class="row">
-                                        <div class="col-md-5">
+                                        <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>Product</label>
                                                 <select class="form-control" asp-for="PurchaseOrderDetailVM.ProductId" id="productId" asp-items="ViewBag.ProductList">
@@ -148,7 +139,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-md-3">
+                                        <div class="col-md-2">
                                             <div class="form-group">
                                                 <label>Unit</label>
                                                 <select class="form-control" asp-for="PurchaseOrderDetailVM.UnitId" id="unitId" asp-items="ViewBag.UnitList">
@@ -157,22 +148,19 @@
                                                 </select>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-3">
-                                        <div class="form-group">
-                                            <label>Sale Price</label>
-                                            <input asp-for="PurchaseOrderDetailVM.SalePrice" id="salePrice" class="form-control" min="0" />
-                                            <span asp-validation-for="PurchaseOrderDetailVM.SalePrice" class="text-danger"></span>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label>Unit Price</label>
+                                                <input asp-for="PurchaseOrderDetailVM.SalePrice" id="salePrice" class="form-control" min="0" />
+                                                <span asp-validation-for="PurchaseOrderDetailVM.SalePrice" class="text-danger"></span>
+                                            </div>
                                         </div>
-                                    </div>
-
-                                    <div class="col-md-3">
-                                        <div class="form-group">
-                                            <label>Remarks</label>
-                                            <input asp-for="PurchaseOrderDetailVM.Remarks" id="txtRemarks" class="form-control" />
-                                            <span asp-validation-for="PurchaseOrderDetailVM.Remarks" class="text-danger"></span>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label>Remarks</label>
+                                                <input asp-for="PurchaseOrderDetailVM.Remarks" id="txtRemarks" class="form-control" />
+                                                <span asp-validation-for="PurchaseOrderDetailVM.Remarks" class="text-danger"></span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -256,6 +244,7 @@
             </div>
         </div>
     </div>
+
 </section>
 
 
@@ -269,7 +258,32 @@
         $(document).ready(function () {
             $('#Purchases').addClass('menu-open');
             $('#PurchaseOrderAddPurchaseOrderAndDetail').addClass('active');
+
+
+            $('#supplierSelect').change(function () {
+                var supplierId = $(this).val();
+                if (supplierId != 0) {
+                    $.ajax({
+                        url: '/PurchaseOrder/GetSupplierInformation?id=' + supplierId,
+                        type: 'GET',
+                        success: function (data) {
+                            //var supplierInformation = data.name + " " + data.phone + " " + data.email + " " + data.address;
+                            var supplierInformation = "Supplier Name : " + data.name + "\n" +
+                                "Mobile : " + data.phone + "\n" +
+                                "Email : " + data.email + "\n" +
+                                "Address : " + data.address;
+                            $('#supplierInfo').val(supplierInformation);
+                        },
+                        error: function () {
+                            alert('Error fetching supplier information.');
+                        }
+                    });
+                } else {
+                    $('#supplierInfo').val('');
+                }
+            });
         });
+
 
         //Purchase Order Details Edit
         function makeEditble(rowId) {
@@ -293,6 +307,8 @@
             });
         }
 
+
+
         //Confirm Purchase Order
         $("#confirmButton").on("click", function () {
             var id = @Model.Id;
@@ -303,7 +319,7 @@
                 success: function (result) {
                     if (result) {
                         alert("Purchase confirmed successfully");
-                        window.location.href = "/PurchaseOrder/Search/";
+                        window.location.replace("/PurchaseOrder/Search");
 
                     } else {
                         alert("Purchase confirmation failed");

@@ -6,7 +6,8 @@ using app.Utility;
 using app.Services.PurchaseOrderDetailServices;
 using Microsoft.EntityFrameworkCore;
 using app.EntityModel.DataTablePaginationModels;
-
+using app.Services.SupplierServices;
+using app.Services.SalesTermsAndConditonServices;
 
 namespace app.Services.PurchaseOrderServices
 {
@@ -24,29 +25,37 @@ namespace app.Services.PurchaseOrderServices
         public async Task<bool> AddRecord(PurchaseOrderViewModel vm)
         {
 
-            if (vm.OrderStatusId == 0)
+            try
             {
-                vm.OrderStatusId = (int)PurchaseOrderStatusEnum.Draft;
+                if (vm.OrderStatusId == 0)
+                {
+                    vm.OrderStatusId = (int)PurchaseOrderStatusEnum.Draft;
+                }
+
+                var poMax = _dbContext.PurchaseOrder.Count() + 1;
+                string poCid = @"PO-" +
+                               DateTime.Now.ToString("yy") +
+                               DateTime.Now.ToString("MM") +
+                               DateTime.Now.ToString("dd") + "-" +
+                               poMax.ToString().PadLeft(2, '0');
+
+                PurchaseOrder purchaseOrder = new PurchaseOrder();
+                purchaseOrder.OrderNo = poCid;
+                purchaseOrder.PurchaseDate = vm.PurchaseDate;
+                purchaseOrder.SupplierId = vm.SupplierId;
+                purchaseOrder.StorehouseId = vm.StorehouseId;
+                purchaseOrder.Description = vm.Description;
+                purchaseOrder.OrderStatusId = (int)PurchaseOrderStatusEnum.Draft;
+                purchaseOrder.PurchaseTypeId = (int)PurchaseTypeEnum.Purchase;
+                var res = await _iEntityRepository.AddAsync(purchaseOrder);
+                vm.Id = res?.Id ?? 0;
+                return true;
             }
+            catch (Exception esx)
+            {
 
-            var poMax = _dbContext.PurchaseOrder.Count() + 1;
-            string poCid = @"PO-" +
-                           DateTime.Now.ToString("yy") +
-                           DateTime.Now.ToString("MM") +
-                           DateTime.Now.ToString("dd") + "-" +
-                           poMax.ToString().PadLeft(2, '0');
-
-            PurchaseOrder purchaseOrder = new PurchaseOrder();
-            purchaseOrder.OrderNo = poCid;
-            purchaseOrder.PurchaseDate = vm.PurchaseDate;
-            purchaseOrder.SupplierId = vm.SupplierId;
-            purchaseOrder.StorehouseId = vm.StorehouseId;
-            purchaseOrder.Description = vm.Description;
-            purchaseOrder.OrderStatusId = (int)PurchaseOrderStatusEnum.Draft;
-            purchaseOrder.PurchaseTypeId = (int)PurchaseTypeEnum.Purchase;
-            var res = await _iEntityRepository.AddAsync(purchaseOrder);
-            vm.Id = res?.Id ?? 0;
-            return true;
+                throw;
+            }
         }
 
         public async Task<bool> UpdatePurchaseOrder(PurchaseOrderViewModel vm)
@@ -263,5 +272,18 @@ namespace app.Services.PurchaseOrderServices
             return searchDto;
         }
 
+        public async Task<SupplierViewModel> GetSupplierInformation(long id)
+        {
+            var item = await(from t1 in _dbContext.Supplier.Where(t => t.IsActive == true && t.Id == id)
+                             select new SupplierViewModel
+                             {
+                                 Name = t1.Name,
+                                 Phone = t1.Phone,
+                                 Email = t1.Email,
+                                 Address = t1.Address,                                 
+                                 Id = t1.Id
+                             }).FirstOrDefaultAsync();
+            return item;
+        }
     }
 }
