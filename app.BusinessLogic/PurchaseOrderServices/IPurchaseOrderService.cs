@@ -1,5 +1,5 @@
-
 using app.EntityModel.DataTablePaginationModels;
+using app.Services.SupplierServices;
 
 namespace app.Services.PurchaseOrderServices
 
@@ -10,6 +10,7 @@ namespace app.Services.PurchaseOrderServices
         Task<bool> UpdatePurchaseOrder(PurchaseOrderViewModel vm);
         Task<PurchaseOrderViewModel>GetPurchaseOrder(long purchaseOrderId);
         Task<PurchaseOrderViewModel> GetPurchaseOrderDetails(long id);
+        Task<SupplierViewModel> GetSupplierInformation(long id);
         Task<bool> ConfirmPurchaseOrder(long id);
         Task<bool> RejectPurchaseOrder(long id);
         Task<bool> DeletePurchaseOrder(long id);

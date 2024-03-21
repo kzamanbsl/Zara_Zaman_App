@@ -17,7 +17,7 @@ namespace app.Services.PurchaseOrderDetailServices
         public string UnitName { get; set; }
         public decimal SalePrice { get; set; }
         public double PurchaseQty { get; set; }
-        public decimal Discount { get; set; }
+        //public decimal Discount { get; set; }
         public decimal TotalAmount { get; set; }
         public string Remarks { get; set; }
     }

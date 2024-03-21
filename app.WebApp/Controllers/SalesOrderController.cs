@@ -106,20 +106,6 @@ namespace app.WebApp.Controllers
             return RedirectToAction(nameof(AddSalesOrderAndDetail), new { id = vm.Id });
         }
 
-        #region Get Terms And Condition
-
-
-        public async Task<JsonResult> GetTermsAndCondition(long id)
-        {
-            if (id != 0)
-            {
-                var model = await _isalesOrderService.GetSOTermsAndCondition(id);
-                return Json(model);
-            }
-            return Json(null);
-        }
-
-
         [HttpPost]
         public async Task<IActionResult> UpdateSalesOrder(SalesOrderViewModel vm)
         {
@@ -133,6 +119,18 @@ namespace app.WebApp.Controllers
             var viewData = await _isalesOrderService.SalesOrderById(id);
             return Json(viewData);
         }
+
+        #region Get Terms And Condition
+
+        public async Task<JsonResult> GetTermsAndCondition(long id)
+        {
+            if (id != 0)
+            {
+                var model = await _isalesOrderService.GetSOTermsAndCondition(id);
+                return Json(model);
+            }
+            return Json(null);
+        }  
 
         #endregion
 

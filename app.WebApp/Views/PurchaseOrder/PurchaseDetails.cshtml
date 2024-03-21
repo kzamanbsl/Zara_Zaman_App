@@ -156,8 +156,7 @@
                 success: function (result) {
                     if (result) {
                         alert("Reject successfully");
-                        
-                        window.location.href = "/PurchaseOrder/Search/";
+                        window.location.replace("/PurchaseOrder/Search");
 
                     } else {
                         alert("Reject failed");
@@ -180,8 +179,7 @@
                 success: function (result) {
                     if (result) {
                         alert("Purchase Store In successfully");
-
-                        window.location.href = "/PurchaseOrder/Search/";
+                        window.location.replace("/PurchaseOrder/Search");
 
                     } else {
                         alert("Store In failed");
