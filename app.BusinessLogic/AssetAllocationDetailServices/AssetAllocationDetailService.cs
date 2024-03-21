@@ -73,6 +73,7 @@ namespace app.Services.AssetAllocationDetailServices
                     Id = vm.AssetAllocationDetailVM.Id,
                     ProductId = vm.AssetAllocationDetailVM.ProductId,
                     Quantity = vm.AssetAllocationDetailVM.Quantity,
+                    //Tags = vm.AssetAllocationDetailVM.Tags,
                     Description = vm.AssetAllocationDetailVM.Description,
                     Tags = tags
                 };
@@ -99,7 +100,7 @@ namespace app.Services.AssetAllocationDetailServices
             {
                 tags += index + ", ";
             }
-          
+
             var assetAllocationDetail = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id == model.AssetAllocationDetailVM.Id);
             if (assetAllocationDetail != null)
             {
