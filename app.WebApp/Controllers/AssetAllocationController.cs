@@ -106,7 +106,7 @@ namespace app.WebApp.Controllers
         public async Task<IActionResult> DeleteAssetAllocation(long id)
         {
             var res = await _iAssetAllocationService.DeleteAssetAllocation(id);
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Search));
         }
 
 
