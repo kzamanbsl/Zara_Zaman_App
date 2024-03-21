@@ -99,7 +99,7 @@ namespace app.WebApp.Controllers
         public async Task<IActionResult> ConfirmAssetAllocation(long id)
         {
             var res = await _iAssetAllocationService.ConfirmAssetAllocation(id);
-            return RedirectToAction("Index");
+            return RedirectToAction("Search");
         }
 
         [HttpGet]
@@ -127,14 +127,14 @@ namespace app.WebApp.Controllers
         public async Task<IActionResult> RejectAssetAllocation(long id)
         {
             var res = await _iAssetAllocationService.RejectAssetAllocation(id);
-            return RedirectToAction("Index");
+            return RedirectToAction("Search");
         }
 
         [HttpPost]
         public async Task<IActionResult> AddAssetInventory(long id)
         {
             var res = await _iassetInventoryService.AddAssetInventory(id);
-            return RedirectToAction("Index");
+            return RedirectToAction("Search");
         }
 
         [HttpGet]
@@ -148,14 +148,14 @@ namespace app.WebApp.Controllers
         public async Task<IActionResult> UpdateAssetAllocationMaster(AssetAllocationViewModel vm)
         {
             var res = await _iAssetAllocationService.UpdateAssetAllocation(vm);
-            return RedirectToAction("Index");
+            return RedirectToAction("Search");
         }
 
         [HttpPost]
         public async Task<IActionResult> UpdateAssetAllocation(AssetAllocationViewModel vm)
         {
             var res = await _iAssetAllocationService.UpdateAssetAllocation(vm);
-            return RedirectToAction("Index");
+            return RedirectToAction("Search");
         }
 
         [HttpGet]

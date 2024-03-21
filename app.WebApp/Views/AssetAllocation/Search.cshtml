@@ -109,11 +109,99 @@
 
 </section>
 
+<div class="modal fade" tabindex="-1" id="editAssetAllocationModal" data-toggle="modal" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form asp-action="UpdateAssetAllocationMaster" method="post">
+
+
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Update Asset Allocation </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+
+                    @Html.HiddenFor(model => model.Id, new { id = "hidPOID" })
+                    @*
+                    <div class="form-group">
+                    <label>Order No </label>
+                    <input asp-for="OrderNo" id="orderNo" class="form-control" autocomplete="off" required />
+                    <span asp-validation-for="OrderNo" class="text-danger"></span>
+                    </div>
+                    *@
+                    <div class="form-group">
+                        <label>Asset Date </label>
+                        <input asp-for="Date" id="assetdate" class="form-control" type="date" autocomplete="off" required />
+                        <span asp-validation-for="Date" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Employee Name</label>
+                        <select class="form-control" id="employeeId" asp-for="EmployeeId" asp-items="ViewBag.EmployeeList" required>
+                            <option value="0" selected>-- Select Employee --</option>
+                            <span asp-validation-for="Employee" class="text-danger"></span>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Department  Name</label>
+                        <select class="form-control" id="departmentId" asp-for="DepartmentId" asp-items="ViewBag.DepartmentList" required>
+                            <option value="0" selected>-- Select Department --</option>
+                            <span asp-validation-for="DepartmentId" class="text-danger"></span>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Remarks" id="remarks" class="control-label">Remarks</label>
+                        <textarea asp-for="Remarks" class="form-control" rows="2"></textarea>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Update</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
     <script>
+
+        function makeEditble(rowId) {
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("UpdateAssetAllocation", "AssetAllocation")",
+                datatype: "Json",
+                data: { id: rowId },
+
+                success: function (data) {
+                    $("#hidPOID").val(data.id);
+
+                    // Parse date if needed and adjust for timezone
+                    var assetdate = new Date(data.assetdate);
+                    var offset = assetdate.getTimezoneOffset();
+                    assetdate = new Date(assetdate.getTime() - (offset * 60 * 1000));
+
+                    // Format date as YYYY-MM-DD
+                    var formattedDate = purchaseDate.toISOString().split('T')[0];
+
+                    // Set value
+                    // $("#orderNo").val(data.orderNo);
+                    $("#assetdate").val(assetdate);
+                    $("#employeeId").val(data.employeeId);
+                    $("#departmentId").val(data.departmentId);
+                    $("#remarks").val(data.Tags);
+                }
+            });
+        }
+
         $(document).ready(function () {
             $('#Asset-Management').addClass('menu-open');
             $('#AssetAllocationSearch').addClass('active');
@@ -211,7 +299,7 @@
                     {
                         data: "Action",
                         render: function (data, type, row, meta) {
-                            var editBtn = "<a href='UpdateAssetAllocation/" + row.id + "'><i class='fas fa-pen text-warning m-1' title='Edit' aria-hidden='true'></i></a>";
+                            var editBtn = "<a onclick='MakeEditable(" + row.id + ");' data-toggle='modal' data-target='#editAssetAllocationModal' data-placement='top'><i class='fas fa-pen text-warning m-1' title='Edit' aria-hidden='true'></i></a>";
                             var detailsBtn = "<a href='AssetAllocationDetails/" + row.id + "'><i class='fa fa-eye text-info m-1' title='Details' aria-hidden='true'></i></a>";
                             var deleteBtn = "<a href='DeleteAssetAllocation/" + row.id + "'><i class='fas fa-trash text-danger m-1' title='Delete' aria-hidden='true'></i></a>";
                             var actionBtn = editBtn + detailsBtn + deleteBtn;
