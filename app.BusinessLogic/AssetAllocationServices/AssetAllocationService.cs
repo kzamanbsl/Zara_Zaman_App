@@ -33,7 +33,7 @@ namespace app.Services.AssetAllocationServices
             }
 
             var poMax = _dbContext.AssetAllocation.Count() + 1;
-            string poCid = @"ALNO" +
+            string poCid = @"ALNO-" +
                            DateTime.Now.ToString("yy") +
                            DateTime.Now.ToString("MM") +
                            DateTime.Now.ToString("dd") + "-" +
@@ -41,9 +41,9 @@ namespace app.Services.AssetAllocationServices
 
             AssetAllocation assetAllocation =new AssetAllocation();
             assetAllocation.OrderNo = poCid;
+            assetAllocation.Date = vm.Date;
             assetAllocation.EmployeeId = vm.EmployeeId;
             assetAllocation.DepartmentId = vm.DepartmentId;
-            assetAllocation.Date = vm.Date;
             assetAllocation.Remarks = vm.Remarks;
             assetAllocation.AssetAllocationStatusId = (int)AssetAllocationStatusEnum.Draft;
             var res = await _iEntityRepository.AddAsync(assetAllocation);
