@@ -117,9 +117,9 @@ namespace app.WebApp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> RejectPurchaseOrder(long id)
+        public async Task<IActionResult> RejectPurchaseOrder(PurchaseOrderViewModel vm)
         {
-            var res = await _iPurchaseOrderService.RejectPurchaseOrder(id);
+            var res = await _iPurchaseOrderService.RejectPurchaseOrder(vm);
             return RedirectToAction("Search");
         }
 

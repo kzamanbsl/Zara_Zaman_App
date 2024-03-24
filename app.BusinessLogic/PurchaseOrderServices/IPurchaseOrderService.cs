@@ -12,7 +12,8 @@ namespace app.Services.PurchaseOrderServices
         Task<PurchaseOrderViewModel> GetPurchaseOrderDetails(long id);
         Task<SupplierViewModel> GetSupplierInformation(long id);
         Task<bool> ConfirmPurchaseOrder(long id);
-        Task<bool> RejectPurchaseOrder(long id);
+        Task<bool> RejectPurchaseOrder(PurchaseOrderViewModel vm);
+        //Task<bool> RejectPurchaseOrder(long id);
         Task<bool> DeletePurchaseOrder(long id);
         Task<PurchaseOrderViewModel> GetAllRecord();
         Task<DataTablePagination<PurchaseOrderSearchDto>> SearchAsync(DataTablePagination<PurchaseOrderSearchDto> searchDto);

@@ -7,7 +7,6 @@ using app.Services.PurchaseOrderDetailServices;
 using Microsoft.EntityFrameworkCore;
 using app.EntityModel.DataTablePaginationModels;
 using app.Services.SupplierServices;
-using app.Services.SalesTermsAndConditonServices;
 
 namespace app.Services.PurchaseOrderServices
 {
@@ -51,7 +50,7 @@ namespace app.Services.PurchaseOrderServices
                 vm.Id = res?.Id ?? 0;
                 return true;
             }
-            catch (Exception esx)
+            catch (Exception ex)
             {
 
                 throw;
@@ -159,17 +158,31 @@ namespace app.Services.PurchaseOrderServices
             }
             return false;
         }
-        public async Task<bool> RejectPurchaseOrder(long id)
+        public async Task<bool> RejectPurchaseOrder(PurchaseOrderViewModel vm)
         {
-            var checkPurchaseOrder = await _dbContext.PurchaseOrder.FirstOrDefaultAsync(c => c.Id == id);
-            if (checkPurchaseOrder != null || checkPurchaseOrder.OrderStatusId == (int)PurchaseOrderStatusEnum.Draft || checkPurchaseOrder.OrderStatusId == (int)PurchaseOrderStatusEnum.Confirm)
+            var purchaseOrder = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id == vm.Id);
+            if (purchaseOrder != null || purchaseOrder.OrderStatusId == (int)PurchaseOrderStatusEnum.Draft || purchaseOrder.OrderStatusId == (int)PurchaseOrderStatusEnum.Confirm)
             {
-                checkPurchaseOrder.OrderStatusId = (int)PurchaseOrderStatusEnum.Reject;
-                await _iEntityRepository.UpdateAsync(checkPurchaseOrder);
+                purchaseOrder.RejectionCause = vm.RejectionCause;
+                purchaseOrder.OrderStatusId = (int)PurchaseOrderStatusEnum.Reject;
+                await _iEntityRepository.UpdateAsync(purchaseOrder);
                 return true;
             }
             return false;
         }
+
+        //public async Task<bool> RejectPurchaseOrder(PurchaseOrderViewModel vm)
+        //{
+        //    var checkPurchaseOrder = await _dbContext.PurchaseOrder.FirstOrDefaultAsync(c => c.Id == id);
+        //    if (checkPurchaseOrder != null || checkPurchaseOrder.OrderStatusId == (int)PurchaseOrderStatusEnum.Draft || checkPurchaseOrder.OrderStatusId == (int)PurchaseOrderStatusEnum.Confirm)
+        //    {
+        //        checkPurchaseOrder.RejectionCause = 
+        //        checkPurchaseOrder.OrderStatusId = (int)PurchaseOrderStatusEnum.Reject;
+        //        await _iEntityRepository.UpdateAsync(checkPurchaseOrder);
+        //        return true;
+        //    }
+        //    return false;
+        //}
         public async Task<bool> DeletePurchaseOrder(long id)
         {
             var result = await _iEntityRepository.GetByIdAsync(id);

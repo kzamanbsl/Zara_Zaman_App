@@ -13,6 +13,8 @@
         public Supplier Supplier { get; set; }
         public long? StorehouseId { get; set;}
         public BusinessCenter Storehouse { get; set; }
+        public string RejectionCause { get; set; }
+        
 
     }
 }

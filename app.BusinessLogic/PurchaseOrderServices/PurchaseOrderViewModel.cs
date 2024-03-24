@@ -20,6 +20,7 @@ namespace app.Services.PurchaseOrderServices
         public long? StorehouseId { get; set; }
         public BusinessCenter Storehouse { get; set; }
         public string StoreName { get; set; }
+        public string RejectionCause { get; set; }
         public ActionEnum ActionEum { get { return (ActionEnum)this.ActionId; } }
         public int ActionId { get; set; } = 1;
         public PurchaseOrderDetailViewModel PurchaseOrderDetailVM { get; set; } 
