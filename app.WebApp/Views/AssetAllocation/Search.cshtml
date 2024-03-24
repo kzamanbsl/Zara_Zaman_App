@@ -1,4 +1,5 @@
-﻿@model app.Services.AssetAllocationServices.AssetAllocationSearchDto
+﻿@using app.Utility;
+@model app.Services.AssetAllocationServices.AssetAllocationSearchDto
 @{
     ViewData["Title"] = "Search";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
@@ -39,7 +40,7 @@
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label>Employee</label>
-                                        <select class="form-control" asp-for="EmployeeId" asp-items="ViewBag.EmployeeList" required>
+                                        <select class="form-control" asp-for="EmployeeId" asp-items="ViewBag.EmployeeList">
                                             <option value="0" selected>-- Select Employee --</option>
                                             <span asp-validation-for="EmployeeId" class="text-danger"></span>
                                         </select>
@@ -48,7 +49,7 @@
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label>Department</label>
-                                        <select class="form-control" asp-for="DepartmentId" asp-items="ViewBag.DepartmentList" required>
+                                        <select class="form-control" asp-for="DepartmentId" asp-items="ViewBag.DepartmentList">
                                             <option value="0" selected>-- Select Department --</option>
                                             <span asp-validation-for="DepartmentId" class="text-danger"></span>
                                         </select>
@@ -134,7 +135,7 @@
                     *@
                     <div class="form-group">
                         <label>Asset Date </label>
-                        <input asp-for="Date" id="assetdate" class="form-control" type="date" autocomplete="off" required />
+                        <input asp-for="Date" id="date" class="form-control" type="date" autocomplete="off" required />
                         <span asp-validation-for="Date" class="text-danger"></span>
                     </div>
 
@@ -185,16 +186,16 @@
                     $("#hidPOID").val(data.id);
 
                     // Parse date if needed and adjust for timezone
-                    var assetdate = new Date(data.assetdate);
-                    var offset = assetdate.getTimezoneOffset();
-                    assetdate = new Date(assetdate.getTime() - (offset * 60 * 1000));
+                    var date = new Date(data.date);
+                    var offset = date.getTimezoneOffset();
+                    date = new Date(date.getTime() - (offset * 60 * 1000));
 
                     // Format date as YYYY-MM-DD
                     var formattedDate = purchaseDate.toISOString().split('T')[0];
 
                     // Set value
                     // $("#orderNo").val(data.orderNo);
-                    $("#assetdate").val(assetdate);
+                    $("#date").val(date);
                     $("#employeeId").val(data.employeeId);
                     $("#departmentId").val(data.departmentId);
                     $("#remarks").val(data.Tags);
