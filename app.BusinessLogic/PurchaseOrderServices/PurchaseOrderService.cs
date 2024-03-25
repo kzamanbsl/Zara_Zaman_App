@@ -126,6 +126,7 @@ namespace app.Services.PurchaseOrderServices
                                                            StoreName = t1.Storehouse.Name,
                                                            PurchaseTypeId = t1.PurchaseTypeId,
                                                            Description = t1.Description,
+                                                           RejectionCause = t1.RejectionCause,
                                                        }).FirstOrDefault());
 
             purchaseOrderModel.PurchaseOrderDetailsList = await Task.Run(() => (from t1 in _dbContext.PurchaseOrderDetail.Where(x => x.IsActive && x.PurchaseOrder.Id == id)
