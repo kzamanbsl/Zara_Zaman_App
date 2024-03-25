@@ -1,5 +1,4 @@
-﻿@using app.Utility;
-@model app.Services.AssetAllocationServices.AssetAllocationSearchDto
+﻿@model app.Services.AssetAllocationServices.AssetAllocationSearchDto
 @{
     ViewData["Title"] = "Search";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
@@ -10,10 +9,10 @@
         <div class="breadcrumb d-flex justify-content-between align-items-center  pl-3 pr-3">
             <ol class="breadcrumb mb-0 p-0">
                 <li class="breadcrumb-item"><a href="/Admin/Index">Home</a></li>
-                <li class="breadcrumb-item active"> Asset Allocation List </li>
+                <li class="breadcrumb-item active">  Asset Allocation  List </li>
             </ol>
             <div>
-                <a asp-action="AddAssetAllocationAndDetail"><i class="fa fa-plus"></i>  Add Asset Allocation </a>
+                <a asp-action="AddAssetAllocationAndDetail"><i class="fa fa-plus"></i>  Add  Asset Allocation  </a>
             </div>
         </div>
     </div>
@@ -26,50 +25,15 @@
             <div class="card-header">
                 <div class="row w-100">
                     <div class="col-sm-3">
-                        <h5> <i class="fas fa-list"></i>  All Asset Allocation </h5>
+                        <h5> <i class="fas fa-list"></i>  All  Asset Allocation  </h5>
                     </div>
                 </div>
             </div>
-
             <div class="card-body">
-
-                <div class="row">
-                    <div class="col-sm-12">
-                        <form method="post" asp-controller="AssetAllocation" asp-action="Search">
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label>Employee</label>
-                                        <select class="form-control" asp-for="EmployeeId" asp-items="ViewBag.EmployeeList">
-                                            <option value="0" selected>-- Select Employee --</option>
-                                            <span asp-validation-for="EmployeeId" class="text-danger"></span>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label>Department</label>
-                                        <select class="form-control" asp-for="DepartmentId" asp-items="ViewBag.DepartmentList">
-                                            <option value="0" selected>-- Select Department --</option>
-                                            <span asp-validation-for="DepartmentId" class="text-danger"></span>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="form-group text-right">
-                                <input id="AssetAllocationDTSearchBtn" type="button" value="Search" class="btn btn-info btn-width" />
-                                <a href="@Url.Action("Search","AssetAllocation")"><input type="button" value="Clear" class="btn btn-warning btn-width" /></a>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-                <hr />
-
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="table-responsive">
-                            <table id="AssetPurchaseOrderSearchTable" class="table table-bordered table-sm">
+                            <table id="AssetAllocationSearchTable" class="table table-bordered table-sm">
                                 <thead>
                                     <tr>
                                         <th class="text-center">
@@ -93,6 +57,9 @@
                                         <th class="text-center">
                                             @Html.DisplayNameFor(model => model.Remarks)
                                         </th>
+                                        @* <th class="text-center">
+                                        @Html.DisplayNameFor(model => model.TotalAmount)
+                                        </th> *@
                                         <th class="text-center">
                                             @Html.DisplayNameFor(model => model.Action)
                                         </th>
@@ -113,11 +80,11 @@
 <div class="modal fade" tabindex="-1" id="editAssetAllocationModal" data-toggle="modal" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form asp-action="UpdateAssetAllocationMaster" method="post">
+            <form asp-action="UpdateAssetAllocation" method="post">
 
 
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Update Asset Allocation </h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Update  Asset Allocation </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -125,17 +92,11 @@
 
                 <div class="modal-body">
 
-                    @Html.HiddenFor(model => model.Id, new { id = "hidPOID" })
-                    @*
+                    @Html.HiddenFor(model => model.Id, new { id = "assetAllocationIdModal" })
+
                     <div class="form-group">
-                    <label>Order No </label>
-                    <input asp-for="OrderNo" id="orderNo" class="form-control" autocomplete="off" required />
-                    <span asp-validation-for="OrderNo" class="text-danger"></span>
-                    </div>
-                    *@
-                    <div class="form-group">
-                        <label>Asset Date </label>
-                        <input asp-for="Date" id="date" class="form-control" type="date" autocomplete="off" required />
+                        <label>Asset Date</label>
+                        <input id="assetAllocationDateModal" asp-for="Date" value="@DateTime.Today.ToString("yyyy-MM-dd")" type="date" class="form-control" autocomplete="off" required />
                         <span asp-validation-for="Date" class="text-danger"></span>
                     </div>
 
@@ -154,6 +115,7 @@
                             <span asp-validation-for="DepartmentId" class="text-danger"></span>
                         </select>
                     </div>
+
                     <div class="form-group">
                         <label asp-for="Remarks" id="remarks" class="control-label">Remarks</label>
                         <textarea asp-for="Remarks" class="form-control" rows="2"></textarea>
@@ -174,35 +136,6 @@
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
     <script>
-
-        function makeEditble(rowId) {
-            $.ajax({
-                type: "POST",
-                url: "@Url.Action("UpdateAssetAllocation", "AssetAllocation")",
-                datatype: "Json",
-                data: { id: rowId },
-
-                success: function (data) {
-                    $("#hidPOID").val(data.id);
-
-                    // Parse date if needed and adjust for timezone
-                    var date = new Date(data.date);
-                    var offset = date.getTimezoneOffset();
-                    date = new Date(date.getTime() - (offset * 60 * 1000));
-
-                    // Format date as YYYY-MM-DD
-                    var formattedDate = purchaseDate.toISOString().split('T')[0];
-
-                    // Set value
-                    // $("#orderNo").val(data.orderNo);
-                    $("#date").val(date);
-                    $("#employeeId").val(data.employeeId);
-                    $("#departmentId").val(data.departmentId);
-                    $("#remarks").val(data.Tags);
-                }
-            });
-        }
-
         $(document).ready(function () {
             $('#Asset-Management').addClass('menu-open');
             $('#AssetAllocationSearch').addClass('active');
@@ -217,7 +150,7 @@
         function getSearchObject() {
 
             var searchVm = {
-                
+
             }
             return searchVm;
         }
@@ -267,21 +200,21 @@
                         }
                     },
                     {
-                        data: "EmployeeName",
+                        data: "Employee",
                         render: function (data, type, row, meta) {
-                            return row.employeeName;
+                            return row.employee;
                         }
                     },
                     {
-                        data: "DepartmentName",
+                        data: "Department",
                         render: function (data, type, row, meta) {
-                            return row.departmentName;
+                            return row.department;
                         }
                     },
                     {
                         data: "AssetAllocationStatusId",
                         render: function (data, type, row, meta) {
-                         return row.assetAllocationStatusId;
+                            return row.assetAllocationStatusId;
                         }
                     },
                     {

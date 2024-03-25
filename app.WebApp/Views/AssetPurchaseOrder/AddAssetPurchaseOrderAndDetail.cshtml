@@ -84,9 +84,9 @@
                                     </div>
                                     <div class="col-md-3">
                                         <div class="form-group">
-                                            <label>Storehouse</label>
+                                            <label>Warehouse</label>
                                             <select class="form-control" asp-for="StorehouseId" asp-items="ViewBag.StorehouseList" required>
-                                                <option value="0" selected>-- Select Storehouse --</option>
+                                                <option value="0" selected>-- Select Warehouse --</option>
                                                 <span asp-validation-for="StorehouseId" class="text-danger"></span>
                                             </select>
                                         </div>
@@ -101,13 +101,13 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-md-2">
+                                    @* <div class="col-md-2">
                                         <div class="form-group">
                                             <label>OverAll Discount (Taka)</label>
                                             <input asp-for="OverallDiscount" class="form-control" />
                                             <span asp-validation-for="OverallDiscount" class="text-danger"></span>
                                         </div>
-                                    </div>
+                                    </div> *@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12">
@@ -169,7 +169,7 @@
 
                                     <div class="col-md-3">
                                         <div class="form-group">
-                                            <label>Sale Price</label>
+                                            <label>Unit Price</label>
                                             <input asp-for="AssetPurchaseOrderDetailVM.SalePrice" id="salePrice" class="form-control" required min="0" />
                                             <span asp-validation-for="AssetPurchaseOrderDetailVM.SalePrice" class="text-danger"></span>
                                         </div>

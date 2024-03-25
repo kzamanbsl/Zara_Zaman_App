@@ -61,7 +61,7 @@ namespace app.WebApp.Controllers
 
             ViewBag.EmployeeList = new SelectList((await _iDropdownService.EmployeeSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
             ViewBag.DepartmentList = new SelectList((await _iDropdownService.DepartmentSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
-            ViewBag.ProductList = new SelectList((await _iDropdownService.ProductSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
+            ViewBag.ProductList = new SelectList((await _iDropdownService.AssetSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
 
 
 
@@ -170,15 +170,16 @@ namespace app.WebApp.Controllers
         [HttpGet]
         public async Task<IActionResult> Search()
         {
+            var model = new AssetAllocationSearchDto();
             ViewBag.EmployeeList = new SelectList((await _iDropdownService.EmployeeSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
             ViewBag.DepartmentList = new SelectList((await _iDropdownService.DepartmentSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
-            return View();
+            return View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Search(DataTablePagination<AssetAllocationSearchDto> searchDto)
+        public async Task<IActionResult> Search(DataTablePagination<AssetAllocationSearchDto> searchVm)
         {
-            var dataTable = await _iAssetAllocationService.SearchAsync(searchDto);
+            var dataTable = await _iAssetAllocationService.SearchAsync(searchVm);
             return Json(dataTable);
         }
 
