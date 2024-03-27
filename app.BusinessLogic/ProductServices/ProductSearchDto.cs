@@ -12,16 +12,16 @@ namespace app.Services.ProductServices
         public string HasModelNo { get; set; }
         public int ProductTypeId { get; set; }
 
-        [DisplayName("Unit Name")]
+        [DisplayName("Unit")]
         public long UnitId { get; set; }
 
-        [DisplayName("Unit Name")]
+        [DisplayName("Unit")]
         public string UnitName { get; set; }
 
-        [DisplayName("Category Name")]
+        [DisplayName("Category")]
         public long CategoryId { get; set; }
 
-        [DisplayName("Category Name")]
+        [DisplayName("Category")]
         public string CategoryName { get; set; }
     }
 }

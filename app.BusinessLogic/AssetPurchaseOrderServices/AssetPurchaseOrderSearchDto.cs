@@ -14,7 +14,7 @@ namespace app.Services.AssetPurchaseOrderServices
         public DateTime PurchaseDate { get; set; }
         public string Description { get; set; }
 
-        [DisplayName("PO No")]
+        [DisplayName("Asset-PO No")]
         public string OrderNo { get; set; }
 
         [DisplayName("Status")]
@@ -32,19 +32,22 @@ namespace app.Services.AssetPurchaseOrderServices
         [DisplayName("Supplier")]
         public long? SupplierId { get; set; }
 
+
         [DisplayName("Supplier")]
         public Supplier Supplier { get; set; }
+
 
         [DisplayName("Supplier")]
         public string SupplierName { get; set; }
 
-        [DisplayName("Store House")]
+
+        [DisplayName("Warehouse")]
         public long? StorehouseId { get; set; }
 
-        [DisplayName("Store House")]
+        [DisplayName("Warehouse")]
         public BusinessCenter Storehouse { get; set; }
 
-        [DisplayName("Store House")]
+        [DisplayName("Warehouse")]
         public string StoreName { get; set; }
         public ActionEnum ActionEum { get { return (ActionEnum)this.ActionId; } }
         public int ActionId { get; set; } = 1;

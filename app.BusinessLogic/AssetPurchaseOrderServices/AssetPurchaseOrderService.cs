@@ -8,6 +8,7 @@ using app.EntityModel.AppModels;
 using app.EntityModel.DataTablePaginationModels;
 using app.Services.ProductServices;
 using app.Services.PurchaseOrderServices;
+using app.Services.SupplierServices;
 
 namespace app.Services.AssetPurchaseOrderServices
 {
@@ -49,6 +50,20 @@ namespace app.Services.AssetPurchaseOrderServices
             vm.Id = res?.Id ?? 0;
             return true;
         }
+        public async Task<bool> UpdateAssetPurchaseOrder(AssetPurchaseOrderViewModel vm)
+        {
+            var assetPurchaseOrder = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id == vm.Id);
+            if (assetPurchaseOrder != null)
+            {
+                assetPurchaseOrder.Id = vm.Id;
+                assetPurchaseOrder.PurchaseDate = vm.PurchaseDate;
+                assetPurchaseOrder.SupplierId = vm.SupplierId;
+                assetPurchaseOrder.StorehouseId = vm.StorehouseId;
+                await _iEntityRepository.UpdateAsync(assetPurchaseOrder);
+                return true;
+            }
+            return false;
+        }
         public async Task<AssetPurchaseOrderViewModel> GetAssetPurchaseOrder(long assetPurchaseOrderId = 0)
         {
             AssetPurchaseOrderViewModel assetPurchaseOrderModel = new AssetPurchaseOrderViewModel();
@@ -77,8 +92,10 @@ namespace app.Services.AssetPurchaseOrderServices
                                                                                               PurchaseQty = t1.PurchaseQty,
                                                                                               UnitId = t1.UnitId,
                                                                                               UnitName = t1.Unit.Name,
-                                                                                              //SalePrice = t1.SalePrice,
-                                                                                              TotalAmount = ((decimal)t1.PurchaseQty),
+                                                                                              SalePrice = t1.SalePrice,
+                                                                                              //Discount = t1.Discount,
+                                                                                              TotalAmount = ((decimal)t1.PurchaseQty * t1.SalePrice),
+
                                                                                               Remarks = t1.Remarks,
                                                                                           }).OrderByDescending(x => x.Id).AsEnumerable());
 
@@ -121,6 +138,7 @@ namespace app.Services.AssetPurchaseOrderServices
                                                                 StorehouseId = t1.StorehouseId,
                                                                 StoreName = t1.Storehouse.Name,
                                                                 PurchaseTypeId = t1.PurchaseTypeId,
+                                                                
                                                                 Description = t1.Description,
                                                             }).FirstOrDefault());
 
@@ -134,8 +152,9 @@ namespace app.Services.AssetPurchaseOrderServices
                                                                                               PurchaseQty = t1.PurchaseQty,
                                                                                               UnitId = t1.UnitId,
                                                                                               UnitName = t1.Unit.Name,
-                                                                                              //SalePrice = t1.SalePrice,
-                                                                                              //TotalAmount = ((decimal)t1.PurchaseQty),
+                                                                                              SalePrice = t1.SalePrice,
+                                                                                              //Discount = t1.Discount,
+                                                                                              TotalAmount = ((decimal)t1.PurchaseQty * t1.SalePrice),
                                                                                               Remarks = t1.Remarks,
                                                                                           }).OrderByDescending(x => x.Id).AsEnumerable());
 
@@ -155,20 +174,7 @@ namespace app.Services.AssetPurchaseOrderServices
             return false;
         }
 
-        public async Task<bool> UpdateAssetPurchaseOrder(AssetPurchaseOrderViewModel vm)
-        {
-            var assetPurchaseOrder = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id == vm.Id);
-            if (assetPurchaseOrder != null)
-            {
-                assetPurchaseOrder.Id = vm.Id;
-                assetPurchaseOrder.PurchaseDate = vm.PurchaseDate;
-                assetPurchaseOrder.SupplierId = vm.SupplierId;
-                assetPurchaseOrder.StorehouseId = vm.StorehouseId;
-                await _iEntityRepository.UpdateAsync(assetPurchaseOrder);
-                return true;
-            }
-            return false;
-        }
+        
 
         public async Task<AssetPurchaseOrderViewModel> GetAllRecord()
         {
@@ -209,11 +215,20 @@ namespace app.Services.AssetPurchaseOrderServices
 
         public async Task<DataTablePagination<AssetPurchaseOrderSearchDto>> SearchAsync(DataTablePagination<AssetPurchaseOrderSearchDto> searchDto)
         {
-            var searchResult = _dbContext.PurchaseOrder.Where(c=>c.IsActive==true && c.PurchaseTypeId == (int)PurchaseTypeEnum.AssetPurchase).AsNoTracking();
+            var searchResult = _dbContext.PurchaseOrder.Include(c => c.Storehouse).Include(c => c.Supplier).Where(c => c.IsActive == true && c.PurchaseTypeId == (int)PurchaseTypeEnum.AssetPurchase).AsNoTracking(); ;
 
             var searchModel = searchDto.SearchVm;
             var filter = searchDto?.Search?.Value?.Trim();
-         
+
+            if (searchModel?.StorehouseId is > 0)
+            {
+                searchResult = searchResult.Where(c => c.StorehouseId == searchModel.StorehouseId);
+            }
+            if (searchModel?.SupplierId is > 0)
+            {
+                searchResult = searchResult.Where(c => c.SupplierId == searchModel.SupplierId);
+            }
+
             if (!string.IsNullOrEmpty(filter))
             {
                 filter = filter.ToLower();
@@ -222,6 +237,7 @@ namespace app.Services.AssetPurchaseOrderServices
                     || c.PurchaseDate.ToString().Contains(filter)
                     || c.Supplier.Name.ToLower().Contains(filter)
                     || c.Storehouse.Name.ToLower().Contains(filter)
+                    || Enum.GetName(typeof(PurchaseOrderStatusEnum), c.OrderStatusId).ToLower().Contains(filter)
                 );
             }
 
@@ -243,14 +259,30 @@ namespace app.Services.AssetPurchaseOrderServices
                 OrderNo = c.OrderNo,
                 PurchaseDate = c.PurchaseDate,
                 StorehouseId = c.StorehouseId,
-                Storehouse = c.Storehouse,
-                OrderStatusId = (int)(PurchaseOrderStatusEnum)c.OrderStatusId,
+                StoreName = c.Storehouse.Name,
                 SupplierId = c.SupplierId,
-                Supplier = c.Supplier,
+                SupplierName = c.Supplier.Name,
+                OrderStatusId = (int)(PurchaseOrderStatusEnum)c.OrderStatusId,
+                OrderStatusName = Enum.GetName(typeof(PurchaseOrderStatusEnum), c.OrderStatusId),
+
                 //TotalAmount = (double)c.TotalAmount,
             }).ToList();
 
             return searchDto;
+        }
+
+        public async Task<SupplierViewModel> GetSupplierInformation(long id)
+        {
+            var item = await (from t1 in _dbContext.Supplier.Where(t => t.IsActive == true && t.Id == id)
+                              select new SupplierViewModel
+                              {
+                                  Name = t1.Name,
+                                  Phone = t1.Phone,
+                                  Email = t1.Email,
+                                  Address = t1.Address,
+                                  Id = t1.Id
+                              }).FirstOrDefaultAsync();
+            return item;
         }
     }
 }

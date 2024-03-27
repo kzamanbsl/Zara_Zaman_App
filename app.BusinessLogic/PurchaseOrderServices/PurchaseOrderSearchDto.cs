@@ -41,7 +41,7 @@ namespace app.Services.PurchaseOrderServices
         [DisplayName("Supplier")]
         public string SupplierName { get; set; }
 
-        [DisplayName("Store House")]
+        [DisplayName("Warehouse")]
         public long? StorehouseId { get; set; }
 
         [DisplayName("Warehouse")]
