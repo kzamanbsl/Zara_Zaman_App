@@ -62,7 +62,7 @@
                                             <tr>
                                                 <th>Supplier Name</th>
                                                 <td>@Model.SupplierName</td>
-                                                <th style="width:18%">Store Information</th>
+                                                <th style="width:18%">Warehouse Information</th>
                                                 <td style="width:30%">@Model.StoreName</td>
                                             </tr>
                                         </table>
@@ -153,7 +153,7 @@
                         <label class="control-label">Reason for Rejection:</label>
                         <textarea asp-for="RejectionCause" class="form-control" required></textarea>
                         <span asp-validation-for="RejectionCause" class="text-danger"></span>
-                        <span></span>
+                        <h5 class="text-danger font-weight-bold" style="display: none;" id="errorMessage">Please enter reject reason</h5>
                     </div>
                 </div>
 
@@ -177,12 +177,16 @@
             $('#Purchases').addClass('menu-open');
             $('#PurchaseOrderAddPurchaseOrderAndDetail').addClass('active');
 
-
-        
             $("#confirmReject").on("click", function () {
                 var id = @Model.Id;
                 var reason = $("#RejectionCause").val();
-                console.log(reason);
+
+                // Check if reason is empty
+                if (reason.trim() === "") {
+                    $("#errorMessage").show(); 
+                    return;
+                }
+
                 $.ajax({
                     type: "POST",
                     url: "/PurchaseOrder/RejectPurchaseOrder",
@@ -201,6 +205,30 @@
                     }
                 });
             });
+
+        
+            // $("#confirmReject").on("click", function () {
+            //     var id = @Model.Id;
+            //     var reason = $("#RejectionCause").val();
+            //     console.log(reason);
+            //     $.ajax({
+            //         type: "POST",
+            //         url: "/PurchaseOrder/RejectPurchaseOrder",
+            //         data: {
+            //             id: id,
+            //             rejectionCause: reason
+            //         },
+            //         success: function (result) {
+            //             if (result) {
+            //                 window.location.replace("/PurchaseOrder/Search");
+            //             }
+            //         },
+            //         error: function (error) {
+            //             // Handle the error case here
+            //             console.error("Error occurred during AJAX request:", error);
+            //         }
+            //     });
+            // });
         });
 
 

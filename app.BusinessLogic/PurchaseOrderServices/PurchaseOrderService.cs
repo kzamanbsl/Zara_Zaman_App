@@ -248,12 +248,11 @@ namespace app.Services.PurchaseOrderServices
             {
                 filter = filter.ToLower();
                 searchResult = searchResult.Where(c =>
-                    c.OrderNo.ToString().Contains(filter)
+                    c.OrderNo.ToLower().Contains(filter)
                     || c.PurchaseDate.ToString().Contains(filter)
                     || c.Supplier.Name.ToLower().Contains(filter)
                     || c.Storehouse.Name.ToLower().Contains(filter)
-                    || Enum.GetName(typeof(PurchaseOrderStatusEnum), c.OrderStatusId).ToLower().Contains(filter)
-                );
+                    );
             }
 
             var pageSize = searchDto.Length ?? 0;
@@ -288,15 +287,15 @@ namespace app.Services.PurchaseOrderServices
 
         public async Task<SupplierViewModel> GetSupplierInformation(long id)
         {
-            var item = await(from t1 in _dbContext.Supplier.Where(t => t.IsActive == true && t.Id == id)
-                             select new SupplierViewModel
-                             {
-                                 Name = t1.Name,
-                                 Phone = t1.Phone,
-                                 Email = t1.Email,
-                                 Address = t1.Address,                                 
-                                 Id = t1.Id
-                             }).FirstOrDefaultAsync();
+            var item = await (from t1 in _dbContext.Supplier.Where(t => t.IsActive == true && t.Id == id)
+                              select new SupplierViewModel
+                              {
+                                  Name = t1.Name,
+                                  Phone = t1.Phone,
+                                  Email = t1.Email,
+                                  Address = t1.Address,
+                                  Id = t1.Id
+                              }).FirstOrDefaultAsync();
             return item;
         }
     }
