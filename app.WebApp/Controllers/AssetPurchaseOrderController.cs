@@ -148,6 +148,19 @@ namespace app.WebApp.Controllers
             return RedirectToAction("Search");
         }
 
+       
+
+        public async Task<JsonResult> GetSupplierInformation(long id)
+        {
+            if (id != 0)
+            {
+                var model = await _iAssetPurchaseOrderService.GetSupplierInformation(id);
+                return Json(model);
+            }
+            return Json(null);
+        }
+
+
         #region Search
 
         [HttpGet]

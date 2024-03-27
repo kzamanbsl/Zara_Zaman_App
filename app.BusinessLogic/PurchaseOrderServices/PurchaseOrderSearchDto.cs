@@ -42,13 +42,13 @@ namespace app.Services.PurchaseOrderServices
         public string SupplierName { get; set; }
 
 
-        [DisplayName("Store House")]
+        [DisplayName("Warehouse")]
         public long? StorehouseId { get; set; }
 
-        [DisplayName("Store House")]
+        [DisplayName("Warehouse")]
         public BusinessCenter Storehouse { get; set; }
 
-        [DisplayName("Store Name")]
+        [DisplayName("Warehouse")]
         public string StoreName { get; set; }
         public ActionEnum ActionEum { get { return (ActionEnum)this.ActionId; } }
         public int ActionId { get; set; } = 1;

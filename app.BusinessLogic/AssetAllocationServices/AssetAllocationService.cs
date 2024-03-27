@@ -209,11 +209,18 @@ namespace app.Services.AssetAllocationServices
         public async Task<DataTablePagination<AssetAllocationSearchDto>> SearchAsync(DataTablePagination<AssetAllocationSearchDto> searchDto)
         {
             //var searchResult = _dbContext.PurchaseOrder.Include(c => c.Storehouse).Include(c => c.Supplier).Where(c => c.IsActive == true && c.PurchaseTypeId == (int)PurchaseTypeEnum.Purchase).AsNoTracking(); ;
-            var searchResult = _dbContext.AssetAllocation.Include(c=>c.Employee).Include(c=>c.Department).Where(c => c.IsActive == true).AsNoTracking();
+            var searchResult = _dbContext.AssetAllocation.Include(c=>c.Employee).Include(c=>c.Department).Where(c => c.IsActive == true && c.AssetAllocationStatusId==(int)AssembleWorkStatusEnum.Draft).AsNoTracking();
 
             var searchModel = searchDto.SearchVm;
             var filter = searchDto?.Search?.Value?.Trim();
-           
+            if (searchModel?.EmployeeId is > 0)
+            {
+                searchResult = searchResult.Where(c => c.EmployeeId == searchModel.EmployeeId);
+            }
+            if (searchModel?.DepartmentId is > 0)
+            {
+                searchResult = searchResult.Where(c => c.DepartmentId == searchModel.DepartmentId);
+            }
             if (!string.IsNullOrEmpty(filter))
             {
                 filter = filter.ToLower();

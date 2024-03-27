@@ -15,15 +15,16 @@ namespace app.Services.AssetItemServices
         public string Name { get; set; }
         public string Description { get; set; }
         public int ProductTypeId { get; set; }
-        [DisplayName("Unit Name")]
+        [DisplayName("Unit ")]
         public Unit Unit { get; set; }
-        [DisplayName("Unit Name")]
+        [DisplayName("Unit ")]
         public long UnitId { get; set; }
         public string UnitName { get; set; }
-        [DisplayName("Category Name")]
+        [DisplayName("Category ")]
         public ProductCategory Category { get; set; }
-        [DisplayName("Category Name")]
+        [DisplayName("Category ")]
         public long CategoryId { get; set; }
+        [DisplayName("Category ")]
         public string CategoryName { get; set; }
     }
 }

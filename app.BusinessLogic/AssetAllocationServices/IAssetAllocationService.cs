@@ -18,5 +18,6 @@ namespace app.Services.AssetAllocationServices
         Task<AssetAllocationViewModel> AssetAllocationById(long id);
 
         Task<DataTablePagination<AssetAllocationSearchDto>> SearchAsync(DataTablePagination<AssetAllocationSearchDto> searchDto);
+
     }
 }
