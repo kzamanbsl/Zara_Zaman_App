@@ -33,12 +33,12 @@ namespace app.Services.SalesOrderDetailServices
                     UnitId = vm.SalesOrderDetailVM.UnitId,
                     SalesPrice = vm.SalesOrderDetailVM.SalesPrice,
                     SalesQty = vm.SalesOrderDetailVM.SalesQty,
-                    TotalAmount = ((decimal)vm.SalesOrderDetailVM.SalesPrice * vm.SalesOrderDetailVM.SalesQty) - vm.SalesOrderDetailVM.Discount,
+                    TotalAmount = ((decimal)vm.SalesOrderDetailVM.SalesPrice * vm.SalesOrderDetailVM.SalesQty),
                     //WarrantyFormDate = vm.SalesOrderDetailVM.WarrantyFormDate,
                     //WarrantyToDate = vm.SalesOrderDetailVM.WarrantyToDate,
                     //SerialNo = vm.SalesOrderDetailVM.SerialNo,
                     //ModelNo = vm.SalesOrderDetailVM.ModelNo,
-                    Discount = vm.SalesOrderDetailVM.Discount,
+                    //Discount = vm.SalesOrderDetailVM.Discount,
                     //IsForService = vm.SalesOrderDetailVM.IsForService,
                     Remarks = vm.SalesOrderDetailVM.Remarks
                 };
@@ -72,8 +72,8 @@ namespace app.Services.SalesOrderDetailServices
                 //salesOrderDetail.ModelNo = model.SalesOrderDetailVM.ModelNo;
                 //salesOrderDetail.SerialNo = model.SalesOrderDetailVM.SerialNo;
                 //salesOrderDetail.IsForService = model.SalesOrderDetailVM.IsForService;
-                salesOrderDetail.Discount = model.SalesOrderDetailVM.Discount;
-                salesOrderDetail.TotalAmount = ((decimal)model.SalesOrderDetailVM.SalesPrice * model.SalesOrderDetailVM.SalesQty) - model.SalesOrderDetailVM.Discount;
+                //salesOrderDetail.Discount = model.SalesOrderDetailVM.Discount;
+                salesOrderDetail.TotalAmount = ((decimal)model.SalesOrderDetailVM.SalesPrice * model.SalesOrderDetailVM.SalesQty);
                 salesOrderDetail.Remarks = model.SalesOrderDetailVM.Remarks;
                 await _iEntityRepository.UpdateAsync(salesOrderDetail);
                 return true;
@@ -94,9 +94,9 @@ namespace app.Services.SalesOrderDetailServices
                                               UnitId = t1.UnitId,
                                               UnitName = t1.Unit.Name,
                                               SalesPrice = t1.SalesPrice,
-                                              SalesQty = t1.SalesQty,
-                                              Discount = t1.Discount,
+                                              SalesQty = t1.SalesQty,                                              
                                               TotalAmount = t1.TotalAmount,
+                                              //Discount = t1.Discount,
                                               //WarrantyFormDate = t1.WarrantyFormDate,
                                               //WarrantyToDate = t1.WarrantyToDate,
                                               //SerialNo = t1.SerialNo,

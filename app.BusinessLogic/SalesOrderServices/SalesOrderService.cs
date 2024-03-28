@@ -39,11 +39,11 @@ namespace app.Services.SalesOrderServices
             salesOrder.OrderNo = soCid;
             salesOrder.SalesDate = vm.SalesDate;
             salesOrder.StorehouseId = vm.StorehouseId;
-            salesOrder.CustomerId = vm.CustomerId;
-            salesOrder.OverallDiscount = vm.OverallDiscount;
+            salesOrder.CustomerId = vm.CustomerId;            
             salesOrder.Description = vm.Description;
-            salesOrder.TermsAndCondition = vm.TermsAndCondition;
-            salesOrder.DeliveryDate = vm.DeliveryDate;
+            //salesOrder.OverallDiscount = vm.OverallDiscount;
+            //salesOrder.TermsAndCondition = vm.TermsAndCondition;
+            //salesOrder.DeliveryDate = vm.DeliveryDate;
             salesOrder.DeliveryAddress = vm.DeliveryAddress;
             salesOrder.PaymentStatusId = (int)PaymentStatusEnum.Due;
             salesOrder.OrderStatusId = (int)SalesOrderStatusEnum.Draft;
@@ -65,12 +65,12 @@ namespace app.Services.SalesOrderServices
                                                         StoreName = t1.Storehouse.Name,
                                                         CustomerId = t1.CustomerId,
                                                         CustomerName = t1.Customer.Name,
-                                                        CustomerPhoneNo = t1.Customer.Phone,
-                                                        DeliveryDate = t1.DeliveryDate,
+                                                        CustomerPhoneNo = t1.Customer.Phone,                                                        
                                                         DeliveryAddress = t1.DeliveryAddress,
                                                         PaymentStatusId = (int)(PaymentStatusEnum)t1.PaymentStatusId,
-                                                        TermsAndCondition = t1.TermsAndCondition,
-                                                        OverallDiscount = t1.OverallDiscount,
+                                                        //DeliveryDate = t1.DeliveryDate,
+                                                        //TermsAndCondition = t1.TermsAndCondition,
+                                                        //OverallDiscount = t1.OverallDiscount,
                                                         Description = t1.Description,
                                                     }).FirstOrDefault());
 
@@ -85,9 +85,9 @@ namespace app.Services.SalesOrderServices
                                                                               UnitId = t1.UnitId,
                                                                               UnitName = t1.Unit.Name,
                                                                               SalesPrice = t1.SalesPrice,
-                                                                              SalesQty = t1.SalesQty,
-                                                                              Discount = t1.Discount,
+                                                                              SalesQty = t1.SalesQty,                                                                              
                                                                               TotalAmount = t1.TotalAmount,
+                                                                              //Discount = t1.Discount,
                                                                               //WarrantyFormDate = t1.WarrantyFormDate,
                                                                               //WarrantyToDate = t1.WarrantyToDate,
                                                                               //SerialNo = t1.SerialNo,
@@ -109,12 +109,12 @@ namespace app.Services.SalesOrderServices
             sendData.OrderNo = result.OrderNo;
             sendData.OrderStatusId = (int)(SalesOrderStatusEnum)result.OrderStatusId;
             sendData.StorehouseId = result.StorehouseId;
-            sendData.CustomerId = result.CustomerId;
-            sendData.DeliveryDate = result.DeliveryDate;
+            sendData.CustomerId = result.CustomerId;   
             sendData.DeliveryAddress = result.DeliveryAddress;
             sendData.PaymentStatusId = (int)(PaymentStatusEnum)result.PaymentStatusId;
-            sendData.TermsAndCondition = result.TermsAndCondition;
-            sendData.OverallDiscount = result.OverallDiscount;
+            //sendData.DeliveryDate = result.DeliveryDate;
+            //sendData.TermsAndCondition = result.TermsAndCondition;
+            //sendData.OverallDiscount = result.OverallDiscount;
             sendData.Description = result.Description;
             return sendData;
         }
@@ -133,7 +133,7 @@ namespace app.Services.SalesOrderServices
                                                       SalesDate = t1.SalesDate,
                                                       CustomerId = t1.CustomerId,
                                                       CustomerName = t1.Customer.Name,
-                                                      DeliveryDate = t1.DeliveryDate,
+                                                      //DeliveryDate = t1.DeliveryDate,
                                                       PaymentStatusId = (int)(PaymentStatusEnum)t1.PaymentStatusId,
                                                       OrderStatusId = (int)(SalesOrderStatusEnum)t1.OrderStatusId,
                                                   }).OrderByDescending(x => x.Id).AsQueryable());
@@ -151,7 +151,7 @@ namespace app.Services.SalesOrderServices
             foreach (var master in salesMaster.SalesOrderList)
             {
                 var detailsForMaster = matchingDetails.Where(detail => detail.SalesOrderId == master.Id);
-                decimal? total = detailsForMaster.Sum(detail => (detail.SalesPrice * (decimal)detail.SalesQty) - detail.Discount);
+                decimal? total = detailsForMaster.Sum(detail => (detail.SalesPrice * (decimal)detail.SalesQty));
                 master.TotalAmount = (double)(total ?? 0);
             }
             return salesMaster;
@@ -219,7 +219,7 @@ namespace app.Services.SalesOrderServices
             if (salesOrder != null)
             {
                 salesOrder.Id = vm.Id;
-                salesOrder.DeliveryDate = vm.DeliveryDate;
+                //salesOrder.DeliveryDate = vm.DeliveryDate;
                 salesOrder.StorehouseId = (int)vm.StorehouseId;
                 salesOrder.CustomerId = vm.CustomerId;
                 salesOrder.DeliveryAddress = vm.DeliveryAddress;
@@ -230,16 +230,16 @@ namespace app.Services.SalesOrderServices
         }
 
 
-        public async Task<SalesTermsAndConditionViewModel> GetSOTermsAndCondition(long id)
-        {
-            var item = await (from t1 in _dbContext.SalesTermsAndCondition.Where(t => t.IsActive == true && t.Id == id)
-                              select new SalesTermsAndConditionViewModel
-                              {
-                                  Value = t1.Value,
-                                  Key = t1.Key,
-                                  Id = t1.Id
-                              }).FirstOrDefaultAsync();
-            return item;
-        }
+        //public async Task<SalesTermsAndConditionViewModel> GetSOTermsAndCondition(long id)
+        //{
+        //    var item = await (from t1 in _dbContext.SalesTermsAndCondition.Where(t => t.IsActive == true && t.Id == id)
+        //                      select new SalesTermsAndConditionViewModel
+        //                      {
+        //                          Value = t1.Value,
+        //                          Key = t1.Key,
+        //                          Id = t1.Id
+        //                      }).FirstOrDefaultAsync();
+        //    return item;
+        //}
     }
 }
