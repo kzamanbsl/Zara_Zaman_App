@@ -13,9 +13,9 @@ namespace app.Services.SalesOrderDetailServices
         public Unit Unit { get; set; }
         public string UnitName { get; set; }
         public int SalesQty { get; set; }
-        public decimal SalesPrice { get; set; }
-        public decimal Discount { get; set; }
+        public decimal SalesPrice { get; set; }        
         public decimal TotalAmount { get; set; }
+        //public decimal Discount { get; set; }
         //public DateTime? WarrantyFormDate { get; set; }
         //public DateTime? WarrantyToDate { get; set; }
         //public string[] SerialNo { get; set; }

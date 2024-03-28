@@ -205,13 +205,13 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-md-3">
+                                   @*  <div class="col-md-3">
                                         <div class="form-group">
                                             <label>Discount</label>
                                             <input asp-for="SalesOrderDetailVM.Discount" id="discount" class="form-control" min="0" />
                                             <span asp-validation-for="SalesOrderDetailVM.Discount" class="text-danger"></span>
                                         </div>
-                                    </div>
+                                    </div> *@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Remarks</label>
@@ -270,11 +270,11 @@
 
                                                     <td style="padding: 5px">@(++sl)</td>
                                                     <td style="padding: 5px;text-align:left;">@item.ProductName</td>
-                                                    <td style="padding: 5px;text-align:left;">@item.UnitName</td>
-                                                    @* <td style="padding: 5px;text-align:left;">@String.Format("{0:0.00}", item.UnitName)</td> *@
+                                                    <td style="padding: 5px;text-align:left;">@item.UnitName</td>                                                    
                                                     <td style="padding: 5px; text-align: right;">@String.Format("{0:0.00}", item.SalesPrice)</td>
                                                     <td style="padding: 5px; text-align: right;">@String.Format("{0:0.00}", item.SalesQty)</td>
-                                                    <td style="padding: 5px; text-align: right;">@String.Format("{0:0.00}", item.Discount)</td>
+                                                    @* <td style="padding: 5px;text-align:left;">@String.Format("{0:0.00}", item.UnitName)</td> *@
+                                                    @* <td style="padding: 5px; text-align: right;">@String.Format("{0:0.00}", item.Discount)</td> *@
                                                     @* <td style="padding: 5px; text-align: right;">@item.WarrantyFormDate?.ToString("dd-MM-yyyy")</td> *@
                                                     @* <td style="padding: 5px; text-align: right;">@item.WarrantyToDate?.ToString("dd-MM-yyyy")</td> *@
                                                     @* <td style="padding: 5px; text-align: right;">@String.Format("{0:0.00}", item.SerialNo)</td> *@

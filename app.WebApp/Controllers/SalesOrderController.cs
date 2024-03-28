@@ -122,15 +122,15 @@ namespace app.WebApp.Controllers
 
         #region Get Terms And Condition
 
-        public async Task<JsonResult> GetTermsAndCondition(long id)
-        {
-            if (id != 0)
-            {
-                var model = await _isalesOrderService.GetSOTermsAndCondition(id);
-                return Json(model);
-            }
-            return Json(null);
-        }  
+        //public async Task<JsonResult> GetTermsAndCondition(long id)
+        //{
+        //    if (id != 0)
+        //    {
+        //        var model = await _isalesOrderService.GetSOTermsAndCondition(id);
+        //        return Json(model);
+        //    }
+        //    return Json(null);
+        //}  
 
         #endregion
 

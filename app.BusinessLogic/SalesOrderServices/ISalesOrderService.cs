@@ -13,7 +13,7 @@ namespace app.Services.SalesOrderServices
         Task<bool> AddSalesOrder(SalesOrderViewModel vm);      
         Task<SalesOrderViewModel> GetSalesOrder(long salesOrderId);
         Task<SalesOrderViewModel> GetSalesOrderDetails(long id);
-        Task<SalesTermsAndConditionViewModel> GetSOTermsAndCondition(long id);
+        //Task<SalesTermsAndConditionViewModel> GetSOTermsAndCondition(long id);
         Task<SalesOrderViewModel> GetAllSalesRecord();
         //Task<SalesOrderViewModel> GetAllRecord();
         Task<bool> ConfirmSalesOrder(long id);
