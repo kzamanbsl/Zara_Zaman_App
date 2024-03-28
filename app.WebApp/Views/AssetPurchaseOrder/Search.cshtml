@@ -50,7 +50,7 @@
                                             @Html.DisplayNameFor(model => model.SupplierName)
                                         </th>
                                         <th class="text-center">
-                                            @Html.DisplayNameFor(model => model.OrderStatusId)
+                                            @Html.DisplayNameFor(model => model.OrderStatusName)
                                         </th>
                                         @* <th class="text-center">
                                         @Html.DisplayNameFor(model => model.TotalAmount)
@@ -87,25 +87,25 @@
 
                 <div class="modal-body">
 
-                    @Html.HiddenFor(model => model.Id, new { id = "assetPurchaseOrderIdModal" })
+                    @Html.HiddenFor(model => model.Id, new { id = "hidPOID" })
 
                     <div class="form-group">
-                        <label>Purchase Date</label>
-                        <input id="purchaseDateModal" asp-for="PurchaseDate" value="@DateTime.Today.ToString("yyyy-MM-dd")" type="date" class="form-control" autocomplete="off" required />
+                        <label>Purchase Date </label>
+                        <input asp-for="PurchaseDate" id="purchaseDate" class="form-control" type="date" autocomplete="off" required />
                         <span asp-validation-for="PurchaseDate" class="text-danger"></span>
                     </div>
 
                     <div class="form-group">
-                        <label>Storehouse</label>
-                        <select class="form-control" id="storehouseIdModal" asp-for="StorehouseId" asp-items="ViewBag.StorehouseList" required>
-                            <option value="0" selected>-- Select Storehouse --</option>
+                        <label>Warehouse</label>
+                        <select class="form-control" id="storehouseId" asp-for="StorehouseId" asp-items="ViewBag.StorehouseList" required>
+                            <option value="0" selected>-- Select Warehouse --</option>
                             <span asp-validation-for="StorehouseId" class="text-danger"></span>
                         </select>
                     </div>
 
                     <div class="form-group">
-                        <label>Customer</label>
-                        <select class="form-control" id="supplierIdModal" asp-for="SupplierId" asp-items="ViewBag.SupplierList" required>
+                        <label>Supplier</label>
+                        <select class="form-control" id="supplierId" asp-for="SupplierId" asp-items="ViewBag.SupplierList" required>
                             <option value="0" selected>-- Select Supplier --</option>
                             <span asp-validation-for="SupplierId" class="text-danger"></span>
                         </select>
@@ -125,6 +125,31 @@
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
     <script>
+        function makeEditble(rowId) {
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("UpdateAssetPurchaseOrder", "AssetPurchaseOrder")",
+                datatype: "Json",
+                data: { id: rowId },
+                success: function (data) {
+                    $("#hidPOID").val(data.id);
+
+                    // Parse date if needed and adjust for timezone
+                    var purchaseDate = new Date(data.purchaseDate);
+                    var offset = purchaseDate.getTimezoneOffset();
+                    purchaseDate = new Date(purchaseDate.getTime() - (offset * 60 * 1000));
+
+                    // Format date as YYYY-MM-DD
+                    var formattedDate = purchaseDate.toISOString().split('T')[0];
+
+                    // Set value
+                    $("#purchaseDate").val(formattedDate);
+                    $("#storehouseId").val(data.storeName);
+                    $("#supplierId").val(data.supplierName);
+                }
+            });
+        }
+
         $(document).ready(function () {
             $('#Asset-Management').addClass('menu-open');
             $('#AssetPurchaseOrderSearch').addClass('active');
@@ -185,25 +210,27 @@
                     {
                         data: "PurchaseDate",
                         render: function (data, type, row, meta) {
-                            return row.purchaseDate;
+                            var date = new Date(row.purchaseDate);
+                            var formattedDate = (date.getDate().toString().padStart(2, '0')) + '-' + ((date.getMonth() + 1).toString().padStart(2, '0')) + '-' + date.getFullYear();
+                            return formattedDate;
                         }
                     },
                     {
-                        data: "Storehouse",
+                        data: "StoreName",
                         render: function (data, type, row, meta) {
-                            return row.storehouse;
+                            return row.storeName;
                         }
                     },
                     {
-                        data: "Supplier",
+                        data: "SupplierName",
                         render: function (data, type, row, meta) {
-                            return row.supplier;
+                            return row.supplierName;
                         }
                     },
                     {
-                        data: "OrderStatusId",
+                        data: "OrderStatusName",
                         render: function (data, type, row, meta) {
-                            return row.orderStatusId;
+                            return row.orderStatusName;
                         }
                     },
                     // {

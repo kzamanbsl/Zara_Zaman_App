@@ -32,7 +32,7 @@ namespace app.Services.AssetPurchaseOrderServices
             }
 
             var poMax = _dbContext.PurchaseOrder.Count() + 1;
-            string poCid = @"PO-" +
+            string poCid = @"Asset-PO-" +
                            DateTime.Now.ToString("yy") +
                            DateTime.Now.ToString("MM") +
                            DateTime.Now.ToString("dd") + "-" +

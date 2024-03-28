@@ -135,6 +135,7 @@ namespace app.WebApp.Controllers
         }
 
 
+        
         public async Task<JsonResult> UpdateAssetPurchaseOrder(long id)
         {
             var model = await _iAssetPurchaseOrderService.GetAssetPurchaseOrder(id);
@@ -148,7 +149,7 @@ namespace app.WebApp.Controllers
             return RedirectToAction("Search");
         }
 
-       
+
 
         public async Task<JsonResult> GetSupplierInformation(long id)
         {
@@ -168,8 +169,7 @@ namespace app.WebApp.Controllers
         {
             ViewBag.StorehouseList = new SelectList((await _iDropdownService.StorehouseSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
             ViewBag.SupplierList = new SelectList((await _iDropdownService.SupplierSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
-            AssetPurchaseOrderViewModel viewModel = await _iAssetPurchaseOrderService.GetAllRecord();
-            return View(viewModel);
+            return View();
         }
 
         [HttpPost]
