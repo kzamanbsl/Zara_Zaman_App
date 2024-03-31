@@ -45,6 +45,7 @@
         AssetAllocation,
         AssetAllocationDetail,
         SalesProductDetail,
+        SupplierCategory,
         #region ATMAssemble
         AssembleWorkCategory,
         AssembleWorkStep,
