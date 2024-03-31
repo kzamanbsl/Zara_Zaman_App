@@ -175,6 +175,7 @@
             </div>
         </div>
     </div>
+
 </section>
 
 
@@ -215,30 +216,33 @@
                     }
                 });
             });
+
+
+
+            // Reject Purchase Order
+            // $("#orderReject").on("click", function () {
+            //     var id = @Model.Id;
+            //     $.ajax({
+            //         type: "POST",
+            //         url: "/AssetPurchaseOrder/RejectAssetPurchaseOrder",
+            //         data: { id: id },
+            //         success: function (result) {
+            //             if (result) {
+            //                 alert("Reject successfully");
+            //                 window.location.href = "/AssetPurchaseOrder/Search/";
+
+            //             } else {
+            //                 alert("Reject failed");
+            //             }
+            //         },
+            //     error: function (error) {
+            //         // Handle the error case here
+            //         console.error("Error occurred during AJAX request:", error);
+            //     }
+            //     });
+            // });
+
         });
-
-        // Reject Purchase Order
-        // $("#orderReject").on("click", function () {
-        //     var id = @Model.Id;
-        //     $.ajax({
-        //         type: "POST",
-        //         url: "/AssetPurchaseOrder/RejectAssetPurchaseOrder",
-        //         data: { id: id },
-        //         success: function (result) {
-        //             if (result) {
-        //                 alert("Reject successfully");
-        //                 window.location.href = "/AssetPurchaseOrder/Search/";
-
-        //             } else {
-        //                 alert("Reject failed");
-        //             }
-        //         },
-        //     error: function (error) {
-        //         // Handle the error case here
-        //         console.error("Error occurred during AJAX request:", error);
-        //     }
-        //     });
-        // });
 
 
         // Purchase Order Received
