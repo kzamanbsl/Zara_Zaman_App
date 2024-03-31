@@ -138,8 +138,8 @@ namespace app.Services.AssetPurchaseOrderServices
                                                                 StorehouseId = t1.StorehouseId,
                                                                 StoreName = t1.Storehouse.Name,
                                                                 PurchaseTypeId = t1.PurchaseTypeId,
-                                                                
                                                                 Description = t1.Description,
+                                                                RejectionCause = t1.RejectionCause,
                                                             }).FirstOrDefault());
 
             assetPurchaseOrderModel.AssetPurchaseOrderDetailsList = await Task.Run(() => (from t1 in _dbContext.PurchaseOrderDetail.Where(x => x.IsActive && x.PurchaseOrder.Id == id)
@@ -162,19 +162,32 @@ namespace app.Services.AssetPurchaseOrderServices
             return assetPurchaseOrderModel;
         }
 
-        public async Task<bool> RejectAssetPurchaseOrder(long id)
+        public async Task<bool> RejectAssetPurchaseOrder(AssetPurchaseOrderViewModel vm)
         {
-            var checkAssetPurchaseOrder = await _dbContext.PurchaseOrder.FirstOrDefaultAsync(c => c.Id == id);
-            if (checkAssetPurchaseOrder != null || checkAssetPurchaseOrder.OrderStatusId == (int)PurchaseOrderStatusEnum.Draft || checkAssetPurchaseOrder.OrderStatusId == (int)PurchaseOrderStatusEnum.Confirm)
+            var assetPurchaseOrder = await _dbContext.PurchaseOrder.FirstOrDefaultAsync(f => f.Id == vm.Id);
+            if (assetPurchaseOrder != null || assetPurchaseOrder.OrderStatusId == (int)PurchaseOrderStatusEnum.Draft || assetPurchaseOrder.OrderStatusId == (int)PurchaseOrderStatusEnum.Confirm)
             {
-                checkAssetPurchaseOrder.OrderStatusId = (int)PurchaseOrderStatusEnum.Reject;
-                await _iEntityRepository.UpdateAsync(checkAssetPurchaseOrder);
+                assetPurchaseOrder.RejectionCause = vm.RejectionCause;
+                assetPurchaseOrder.OrderStatusId = (int)PurchaseOrderStatusEnum.Reject;
+                await _iEntityRepository.UpdateAsync(assetPurchaseOrder);
                 return true;
             }
             return false;
         }
 
-        
+        //public async Task<bool> RejectAssetPurchaseOrder(long id)
+        //{
+        //    var checkAssetPurchaseOrder = await _dbContext.PurchaseOrder.FirstOrDefaultAsync(c => c.Id == id);
+        //    if (checkAssetPurchaseOrder != null || checkAssetPurchaseOrder.OrderStatusId == (int)PurchaseOrderStatusEnum.Draft || checkAssetPurchaseOrder.OrderStatusId == (int)PurchaseOrderStatusEnum.Confirm)
+        //    {
+        //        checkAssetPurchaseOrder.OrderStatusId = (int)PurchaseOrderStatusEnum.Reject;
+        //        await _iEntityRepository.UpdateAsync(checkAssetPurchaseOrder);
+        //        return true;
+        //    }
+        //    return false;
+        //}
+
+
 
         public async Task<AssetPurchaseOrderViewModel> GetAllRecord()
         {
