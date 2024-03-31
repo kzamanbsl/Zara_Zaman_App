@@ -120,13 +120,17 @@ namespace app.WebApp.Controllers
             return View(viewModel);
         }
 
+        //public async Task<IActionResult> RejectAssetPurchaseOrder(long id)
+        //{
+        //    var res = await _iAssetPurchaseOrderService.RejectAssetPurchaseOrder(id);
+        //    return RedirectToAction("Search");
+        //}
         [HttpPost]
-        public async Task<IActionResult> RejectAssetPurchaseOrder(long id)
+        public async Task<IActionResult> RejectAssetPurchaseOrder(AssetPurchaseOrderViewModel vm)
         {
-            var res = await _iAssetPurchaseOrderService.RejectAssetPurchaseOrder(id);
+            var res = await _iAssetPurchaseOrderService.RejectAssetPurchaseOrder(vm);
             return RedirectToAction("Search");
         }
-
         [HttpPost]
         public async Task<IActionResult> AddAssetInventory(long id)
         {
