@@ -50,6 +50,7 @@ namespace app.Infrastructure.ModelConfig
             new SalesOrderDetailsConfig()?.Configure(builder.Entity<SalesOrderDetails>());
             new AssetAllocationConfig()?.Configure(builder.Entity<AssetAllocation>());
             new AssetAllocationDetailConfig()?.Configure(builder.Entity<AssetAllocationDetail>());
+            new SupplierCategoryConfig()?.Configure(builder.Entity<SupplierCategory>());
 
 
             #region   AssembleWorkCategory,
