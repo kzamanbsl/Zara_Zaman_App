@@ -278,17 +278,17 @@
                     //     }
                     // },
 
-                    // {
-                    //     data: "Action",
-                    //     render: function (data, type, row, meta) {
+                    {
+                        data: "Action",
+                        render: function (data, type, row, meta) {
 
-                    //         var editBtn = "<a onclick='MakeEditable(" + row.id + ");' data-toggle='modal' data-target='#editAssetPuchaseOrderModal' data-placement='top'><i class='fas fa-pen text-warning m-1' title='Edit' aria-hidden='true'></i></a>";
-                    //         var detailsBtn = "<a href='AssetPurchaseDetails/" + row.id + "'><i class='fa fa-eye text-info m-1' title='Details' aria-hidden='true'></i></a>";
-                    //         var deleteBtn = "<a href='DeleteAssetPurchaseOrder/" + row.id + "'><i class='fas fa-trash text-danger m-1' title='Delete' aria-hidden='true'></i></a>";
-                    //         var actionBtn = editBtn + detailsBtn + deleteBtn;
-                    //         return actionBtn;
-                    //     }
-                    // }
+                            var editBtn = "<a onclick='MakeEditable(" + row.id + ");' data-toggle='modal' data-target='#editAssetPuchaseOrderModal' data-placement='top'><i class='fas fa-pen text-warning m-1' title='Edit' aria-hidden='true'></i></a>";
+                            var detailsBtn = "<a href='AssetPurchaseDetails/" + row.id + "'><i class='fa fa-eye text-info m-1' title='Details' aria-hidden='true'></i></a>";
+                            var deleteBtn = "<a href='DeleteAssetPurchaseOrder/" + row.id + "'><i class='fas fa-trash text-danger m-1' title='Delete' aria-hidden='true'></i></a>";
+                            var actionBtn = editBtn + detailsBtn + deleteBtn;
+                            return actionBtn;
+                        }
+                    }
                     
 
                     
