@@ -1,4 +1,5 @@
-﻿@model app.Services.AssetPurchaseOrderServices.AssetPurchaseOrderSearchDto
+﻿@using app.Utility
+@model app.Services.AssetPurchaseOrderServices.AssetPurchaseOrderSearchDto
 @{
     ViewData["Title"] = "Search";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
@@ -86,9 +87,7 @@
                                         <th class="text-center">
                                             @Html.DisplayNameFor(model => model.OrderStatusName)
                                         </th>
-                                        @* <th class="text-center">
-                                        @Html.DisplayNameFor(model => model.TotalAmount)
-                                        </th> *@
+                                       
                                         <th class="text-center">
                                             @Html.DisplayNameFor(model => model.Action)
                                         </th>
@@ -109,7 +108,7 @@
 <div class="modal fade" tabindex="-1" id="editAssetPuchaseOrderModal" data-toggle="modal" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form asp-action="UpdateAssetPurchaseOrder" method="post">
+            <form asp-action="UpdateAssetPurchaseMaster" method="post">
 
 
                 <div class="modal-header">
@@ -198,7 +197,8 @@
         function getSearchObject() {
 
             var searchVm = {
-
+                "StorehouseId": $("#StorehouseId").val(),
+                "SupplierId": $("#SupplierId").val(),
             }
             return searchVm;
         }
@@ -267,31 +267,28 @@
                             return row.orderStatusName;
                         }
                     },
-
-
-
-                    // {
-                    //     data: "TotalAmount",
-                    //     render: function (data, type, row, meta) {
-                    //         var txt = '<div style="text-align: right">' + Number(row.totalAmount).toFixed(2) + '</div>';
-                    //         return txt;
-                    //     }
-                    // },
+                    
 
                     {
                         data: "Action",
                         render: function (data, type, row, meta) {
 
-                            var editBtn = "<a onclick='MakeEditable(" + row.id + ");' data-toggle='modal' data-target='#editAssetPuchaseOrderModal' data-placement='top'><i class='fas fa-pen text-warning m-1' title='Edit' aria-hidden='true'></i></a>";
-                            var detailsBtn = "<a href='AssetPurchaseDetails/" + row.id + "'><i class='fa fa-eye text-info m-1' title='Details' aria-hidden='true'></i></a>";
-                            var deleteBtn = "<a href='DeleteAssetPurchaseOrder/" + row.id + "'><i class='fas fa-trash text-danger m-1' title='Delete' aria-hidden='true'></i></a>";
+                            var editBtn = "";
+                            var deleteBtn = "";
+                            var detailsBtn = "";
+
+                            if (row.orderStatusId == @((int)PurchaseOrderStatusEnum.Draft) || row.orderStatusId == @((int)PurchaseOrderStatusEnum.Confirm)) {
+                                detailsBtn = "<a href='AssetPurchaseDetails/" + row.id + "'><i class='fa fa-eye text-info m-1' title='Details' aria-hidden='true'></i></a>";
+                                editBtn = "<a onclick='makeEditble(" + row.id + ");' data-toggle='modal' data-target='#editPurchaseOrderModal' data-placement='top'><i class='fas fa-pen text-warning m-1' title='Edit' aria-hidden='true'></i></a>";
+                                deleteBtn = "<a href='RejectAssetPurchaseOrder/" + row.id + "'><i class='fas fa-trash text-danger m-1' title='Delete' aria-hidden='true'></i></a>";
+                            } else if (row.orderStatusId == @((int)PurchaseOrderStatusEnum.Reject) || row.orderStatusId == @((int)PurchaseOrderStatusEnum.Receive)) {
+                                detailsBtn = "<a href='AssetPurchaseDetails/" + row.id + "'><i class='fa fa-eye text-info m-1' title='Details' aria-hidden='true'></i></a>";
+                            }
+
                             var actionBtn = editBtn + detailsBtn + deleteBtn;
                             return actionBtn;
                         }
                     }
-                    
-
-                    
 
                 ]
             });
