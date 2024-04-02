@@ -3,7 +3,6 @@
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
-    int sn = 1;
 }
 
 <div class="content-header">
@@ -45,11 +44,11 @@
                                         </select>
                                     </div>
                                 </div>
-                            
+
                             </div>
 
                             <div class="form-group text-right">
-                              
+
                                 <input id="ProductDTSearchBtn" type="button" value="Search" class="btn btn-info btn-width" />
                                 <a href="@Url.Action("Search","AssembleWork")"><input type="button" value="Clear" class="btn btn-warning btn-width" /></a>
                             </div>
@@ -68,19 +67,19 @@
                                         </th>
                                         <th class="text-center">
                                             @Html.DisplayNameFor(model => model.AssembleDate)
-                                            
+
                                         </th>
                                         <th class="text-center">
                                             @Html.DisplayNameFor(model => model.AssembleWorkCategoryName)
-                                           
+
                                         </th>
-                                       
+
                                         <th class="text-center">
                                             @Html.DisplayNameFor(model => model.Description)
                                         </th>
                                         <th class="text-center">
                                             @Html.DisplayNameFor(model => model.StatusName)
-                                           
+
                                         </th>
                                         <th class="text-center">
                                             @Html.DisplayNameFor(model => model.Action)
@@ -158,7 +157,8 @@
                     {
                         data: "AssembleDate",
                         render: function (data, type, row, meta) {
-                            return row.assembleDate;
+                            var result = FormatDateForView(row.assembleDate);
+                            return result;
                         }
                     },
                     {
@@ -167,7 +167,7 @@
                             return row.assembleWorkCategoryName;
                         }
                     },
-                  
+
                     {
                         data: "Description",
                         render: function (data, type, row, meta) {

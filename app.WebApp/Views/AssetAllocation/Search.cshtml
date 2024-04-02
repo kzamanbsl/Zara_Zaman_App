@@ -57,9 +57,6 @@
                                         <th class="text-center">
                                             @Html.DisplayNameFor(model => model.Remarks)
                                         </th>
-                                        @* <th class="text-center">
-                                        @Html.DisplayNameFor(model => model.TotalAmount)
-                                        </th> *@
                                         <th class="text-center">
                                             @Html.DisplayNameFor(model => model.Action)
                                         </th>
@@ -196,17 +193,18 @@
                     {
                         data: "Date",
                         render: function (data, type, row, meta) {
-                            return row.date;
+                            var result = FormatDateForView(row.date);
+                            return result;
                         }
                     },
                     {
-                        data: "Employee",
+                        data: "EmployeeName",
                         render: function (data, type, row, meta) {
                             return row.employeeName;
                         }
                     },
                     {
-                        data: "Department",
+                        data: "DepartmentName",
                         render: function (data, type, row, meta) {
                             return row.departmentName;
                         }
@@ -214,7 +212,7 @@
                     {
                         data: "AssetAllocationStatusId",
                         render: function (data, type, row, meta) {
-                            return row.assetAllocationStatusId;
+                            return row.assetAllocationStatusName;
                         }
                     },
                     {
@@ -223,13 +221,6 @@
                             return row.remarks;
                         }
                     },
-                    // {
-                    //     data: "TotalAmount",
-                    //     render: function (data, type, row, meta) {
-                    //         var txt = '<div style="text-align: right">' + Number(row.totalAmount).toFixed(2) + '</div>';
-                    //         return txt;
-                    //     }
-                    // },
                     {
                         data: "Action",
                         render: function (data, type, row, meta) {

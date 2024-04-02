@@ -32,7 +32,6 @@ namespace app.Services.ATMAssemble.AssembleWorkServices
             _iAssembleWorkCategoryService = iAssembleWorkCategoryService;
             _iHttpContextAccessor = iHttpContextAccessor;
             _iAssembleWorkDetailService = iAssembleWorkDetailService;
-            ;
         }
 
         public async Task<bool> AddRecord(AssembleWorkViewModel viewModel)

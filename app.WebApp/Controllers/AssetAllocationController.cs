@@ -16,16 +16,15 @@ namespace app.WebApp.Controllers
     {
         private readonly IAssetAllocationService _iAssetAllocationService;
         private readonly IAssetAllocationDetailService _iAssetAllocationDetailService;
-        private readonly IAssetInventoryService _iassetInventoryService;
+        private readonly IAssetInventoryService _iAssetInventoryService;
         private readonly IDropdownService _iDropdownService;
 
-        public AssetAllocationController(IAssetAllocationService iAssetAllocationService, IAssetAllocationDetailService iAssetAllocationDetailService, IDropdownService iDropdownService, IAssetInventoryService iassetInventoryService)
+        public AssetAllocationController(IAssetAllocationService iAssetAllocationService, IAssetAllocationDetailService iAssetAllocationDetailService, IDropdownService iDropdownService, IAssetInventoryService iAssetInventoryService)
         {
             _iAssetAllocationService = iAssetAllocationService;
             _iAssetAllocationDetailService = iAssetAllocationDetailService;
             _iDropdownService = iDropdownService;
-            //_inventoryService = inventoryService;
-            _iassetInventoryService = iassetInventoryService;
+            _iAssetInventoryService = iAssetInventoryService;
         }
 
         public async Task<IActionResult> Index()
@@ -133,7 +132,7 @@ namespace app.WebApp.Controllers
         [HttpPost]
         public async Task<IActionResult> AddAssetInventory(long id)
         {
-            var res = await _iassetInventoryService.AddAssetInventory(id);
+            var res = await _iAssetInventoryService.AddAssetInventory(id);
             return RedirectToAction("Search");
         }
 

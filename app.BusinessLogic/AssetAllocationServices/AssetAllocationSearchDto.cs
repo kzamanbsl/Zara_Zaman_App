@@ -1,15 +1,6 @@
-﻿using app.EntityModel.AppModels;
-using app.EntityModel.DataTableSearchModels;
-using app.Services.AssetAllocationDetailServices;
-using app.Services.PurchaseOrderDetailServices;
+﻿using app.EntityModel.DataTableSearchModels;
 using app.Utility;
-using System;
-using System.Buffers.Text;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace app.Services.AssetAllocationServices
 {
@@ -37,9 +28,10 @@ namespace app.Services.AssetAllocationServices
         public int AssetAllocationStatusId { get; set; }
 
         [DisplayName("Status")]
-        public string AssetAllocationStatusName { get; set; }
+        public string AssetAllocationStatusName => GlobalVariable.GetEnumDescription((AssetAllocationStatusEnum)AssetAllocationStatusId);
 
         public string Remarks { get; set; }
+
         public int ActionId { get; set; } = 1;
         public ActionEnum ActionEum { get { return (ActionEnum)this.ActionId; } }
 

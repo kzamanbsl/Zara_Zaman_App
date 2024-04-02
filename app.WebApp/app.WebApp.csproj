@@ -7,10 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="Views\AssetAllocation\Search.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Remove="Views\Sales\wiobhmcp.ech~" />
   </ItemGroup>
 
@@ -76,7 +72,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="Views\AssetAllocation\Search.cshtml" />
     <None Include="Views\AssetPurchaseOrder\AddAssetPurchaseOrderAndDetail.cshtml" />
     <None Include="Views\AssetPurchaseOrder\AssetPurchaseDetails.cshtml" />
     <None Include="Views\AssetPurchaseOrder\Index.cshtml" />
