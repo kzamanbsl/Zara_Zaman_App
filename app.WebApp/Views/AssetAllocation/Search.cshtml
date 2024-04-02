@@ -104,7 +104,7 @@
                         <label>Employee Name</label>
                         <select class="form-control" id="employeeId" asp-for="EmployeeId" asp-items="ViewBag.EmployeeList" required>
                             <option value="0" selected>-- Select Employee --</option>
-                            <span asp-validation-for="Employee" class="text-danger"></span>
+                            <span asp-validation-for="EmployeeId" class="text-danger"></span>
                         </select>
                     </div>
 
@@ -202,13 +202,13 @@
                     {
                         data: "Employee",
                         render: function (data, type, row, meta) {
-                            return row.employee;
+                            return row.employeeName;
                         }
                     },
                     {
                         data: "Department",
                         render: function (data, type, row, meta) {
-                            return row.department;
+                            return row.departmentName;
                         }
                     },
                     {

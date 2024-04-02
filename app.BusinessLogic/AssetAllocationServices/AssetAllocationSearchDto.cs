@@ -25,16 +25,10 @@ namespace app.Services.AssetAllocationServices
         public long? EmployeeId { get; set; }
 
         [DisplayName("Employee Name")]
-        public Employee Employee { get; set; }
-
-        [DisplayName("Employee Name")]
         public string EmployeeName { get; set; }
 
         [DisplayName("Department Name")]
         public long? DepartmentId { get; set; }
-
-        [DisplayName("Department Name")]
-        public Department Department { get; set; }
 
         [DisplayName("Department Name")]
         public string DepartmentName { get; set; }
@@ -48,8 +42,7 @@ namespace app.Services.AssetAllocationServices
         public string Remarks { get; set; }
         public int ActionId { get; set; } = 1;
         public ActionEnum ActionEum { get { return (ActionEnum)this.ActionId; } }
-        
-        public AssetAllocationDetailViewModel AssetAllocationDetailVM { get; set; } 
+
       
     }
 }

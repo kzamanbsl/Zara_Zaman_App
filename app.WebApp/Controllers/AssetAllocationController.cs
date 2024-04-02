@@ -173,6 +173,7 @@ namespace app.WebApp.Controllers
             var model = new AssetAllocationSearchDto();
             ViewBag.EmployeeList = new SelectList((await _iDropdownService.EmployeeSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
             ViewBag.DepartmentList = new SelectList((await _iDropdownService.DepartmentSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
+
             return View(model);
         }
 
