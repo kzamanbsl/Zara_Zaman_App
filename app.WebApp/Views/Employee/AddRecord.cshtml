@@ -29,7 +29,7 @@
             <ul class="nav nav-tabs sidebar-tabs" id="sidebar" role="tablist">
 
                 <li class="nav-item">
-                    <a class="nav-link active" role="tab" data-toggle="tab" href="#tab1">Employee Basic Information</a>
+                    <a class="nav-link active" role="tab" data-toggle="tab" href="#tab1"> Basic Information</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" role="tab" data-toggle="tab" href="#tab2">Personal Information</a>
@@ -41,10 +41,13 @@
                     <a class="nav-link" role="tab" data-toggle="tab" href="#tab4">Contact Information</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" role="tab" data-toggle="tab" href="#tab5">Picture</a>
+                    <a class="nav-link" role="tab" data-toggle="tab" href="#tab5">User Information</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" role="tab" data-toggle="tab" href="#tab6">Signature</a>
+                    <a class="nav-link" role="tab" data-toggle="tab" href="#tab6">Picture</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" role="tab" data-toggle="tab" href="#tab7">Signature</a>
                 </li>
             </ul>
 
@@ -85,7 +88,6 @@
                                                 </div>
                                             </div>
                                         </div>
-<<<<<<< HEAD
                                     @*<div class="col-md-6">
                                             <div class="form-group">
                                                 <div class="col-md-8">
@@ -95,8 +97,6 @@
                                                 </div>
                                             </div>
                                         </div> *@
-=======
->>>>>>> cf666204a4750951d2ccf185aefdf01c5173d7bf
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <div class="col-md-8">
@@ -476,8 +476,30 @@
                         </div>
                     </div>
                 </div>
-
                 <div id="tab5" class="tab-pane">
+                    <div class="panel panel-info">
+                        <div class="card-header" style="color:darkgreen"><b>Contact Information</b></div>
+                        <div class="panel-body">
+                            <div class="card-body">
+                                <div class="form-group row">
+                                    <div class="form-group row" style="padding-top:10px;">
+                                        
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                    <label asp-for="UserName">User Name</label>
+                                                    <input asp-for="UserName" class="form-control" />
+                                                    <span asp-validation-for="UserName" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="tab6" class="tab-pane">
                     <div class="panel panel-info">
                         <div class="card-header" style="color:darkgreen"><b>Picture</b></div>
                         <div class="panel-body">
@@ -503,7 +525,7 @@
                     </div>
                 </div>
 
-                <div id="tab6" class="tab-pane">
+                <div id="tab7" class="tab-pane">
                     <div class="panel panel-info">
                         <div class="card-header" style="color:darkgreen"><b>Picture</b></div>
                         <div class="panel-body">
