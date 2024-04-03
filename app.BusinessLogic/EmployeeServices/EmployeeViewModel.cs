@@ -1,5 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
+using Microsoft.AspNetCore.Identity;
+using app.Services.PurchaseOrderDetailServices;
+using app.Services.PurchaseOrderServices;
+using app.Services.UserServices;
 
 namespace app.Services.EmployeeServices
 {
@@ -13,8 +17,28 @@ namespace app.Services.EmployeeServices
 
         [DisplayName("Employee Code")]
         public string EmployeeCode { get; set; }
+        // login 
 
+        public string UserId { get; set; }
+
+        [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
+
+        [Required]
+        [StringLength(10, ErrorMessage = "Must be between 6 and 10 characters", MinimumLength = 6)]
+        [DataType(DataType.Password)]
+        public string Password { get; set; }
+
+        [Display(Name = "Confirm Password")]
+        public string ConfirmPassword { get; set; }
+
+        [Display(Name = "User Name")]
+        public string UserName { get; set; }
+        public string IncorrectInput { get; set; }
+        // END
+
+
+        //public string Email { get; set; }
 
         [DisplayName("Mobile No")]
         public string MobileNo { get; set; }
@@ -140,7 +164,10 @@ namespace app.Services.EmployeeServices
         [DisplayName("Contact Person")]
         public string ContactPerson { get; set; }
         public string PhotoUrl { get; set; }
-        public string SignUrl { get; set; }    
+        public string SignUrl { get; set; }
+        public UserViewModel UserViewModelVM { get; set; }
+        public IEnumerable<UserViewModel> UserViewModelList { get; set; }
         public IEnumerable<EmployeeViewModel> EmployeeList { get; set; }
     }
 }
+

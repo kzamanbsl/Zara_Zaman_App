@@ -24,68 +24,80 @@ namespace app.Services.EmployeeServices
         {
             try
             {
-                var existingEmployee = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.EmployeeCode == vm.EmployeeCode && f.IsActive == true);
-                if (existingEmployee == null)
+                // Check if the username is already taken
+                var existingEmployee = await _iEntityRepository.AllIQueryableAsync().FirstOrDefaultAsync(c => c.UserName.Trim() == vm.UserName.Trim() && c.IsActive);
+
+                if (existingEmployee != null)
                 {
-                    Employee emp = new Employee();
-                    emp.Name = vm.Name;
-                    emp.EmployeeCode = vm.EmployeeCode;
-                    emp.ShortName = vm.ShortName;
-                    emp.EmployeeOrder = vm.EmployeeOrder;
-                    emp.ManagerId = vm.ManagerId > 0 ? vm.ManagerId : null;
-                    emp.Remarks = vm.Remarks;
-
-
-                    emp.FatherName = vm.FatherName;
-                    emp.MotherName = vm.MotherName;
-                    emp.DateOfMarriage = vm.DateOfMarriage;
-                    emp.MaritalTypeId = vm.MaritalTypeId > 0 ? vm.MaritalTypeId : null;
-                    emp.SpouseName = vm.SpouseName;
-                    emp.DateOfBirth = vm.DateOfBirth;
-                    emp.NationalIdNo = vm.NationalIdNo;
-                    emp.GenderId = vm.GenderId > 0 ? vm.GenderId : null;
-                    emp.BloodGroupId = vm.BloodGroupId > 0 ? vm.BloodGroupId : null;
-                    emp.ReligionId = vm.ReligionId > 0 ? vm.ReligionId : null;
-                    emp.TinNo = vm.TinNo;
-                    emp.EmergencyContactNo = vm.EmergencyContactNo;
-                    emp.ContactPerson = vm.ContactPerson;
-
-                    emp.JoiningDate = vm.JoiningDate;
-                    emp.ProbationEndDate = vm.ProbationEndDate;
-                    emp.RegineDate = vm.RegineDate;
-                    emp.DepartmentId = vm.DepartmentId > 0 ? vm.DepartmentId : null;
-                    emp.DesignationId = vm.DesignationId > 0 ? vm.DesignationId : null;
-                    emp.EmployeeCategoryId = vm.EmployeeCategoryId > 0 ? vm.EmployeeCategoryId : null;
-                    emp.JobStatusId = vm.JobStatusId > 0 ? vm.JobStatusId : null;
-                    emp.ServiceTypeId = vm.ServiceTypeId > 0 ? vm.ServiceTypeId : null;
-                    emp.OfficeTypeId = vm.OfficeTypeId > 0 ? vm.OfficeTypeId : null;
-                    emp.ShiftId = vm.ShiftId > 0 ? vm.ShiftId : null;
-                    emp.EmployeeGradeId = vm.EmployeeGradeId > 0 ? vm.EmployeeGradeId : null;
-                    emp.PresentAddress = vm.PresentAddress;
-                    emp.PermanentAddress = vm.PermanentAddress;
-                    emp.CountryId = vm.CountryId > 0 ? vm.CountryId : null;
-                    emp.DivisionId = vm.DivisionId > 0 ? vm.DivisionId : null;
-                    emp.DistrictId = vm.DistrictId > 0 ? vm.DistrictId : null;
-                    emp.UpazilaId = vm.UpazilaId > 0 ? vm.UpazilaId : null;
-                    emp.MobileNo = vm.MobileNo;
-                    emp.Email = vm.Email;
-
-                    emp.SignUrl = vm.SignUrl;
-                    emp.PhotoUrl = vm.PhotoUrl;
-
-                    var res = await _iEntityRepository.AddAsync(emp);
-
-                    vm.Id = res?.Id ?? 0;
-                    return true;
+                    // Username is already taken, return false
+                    return false;
                 }
-                return false;
+
+                // Username is available, proceed to add the new record
+
+                
+                Employee emp = new Employee();
+                // Populate emp with data from vm...
+                emp.Name = vm.Name;
+                emp.EmployeeCode = vm.EmployeeCode;
+                emp.ShortName = vm.ShortName;
+                emp.EmployeeOrder = vm.EmployeeOrder;
+                emp.ManagerId = vm.ManagerId > 0 ? vm.ManagerId : null;
+                emp.Remarks = vm.Remarks;
+                
+                emp.FatherName = vm.FatherName;
+                emp.MotherName = vm.MotherName;
+                emp.DateOfMarriage = vm.DateOfMarriage;
+                emp.MaritalTypeId = vm.MaritalTypeId > 0 ? vm.MaritalTypeId : null;
+                emp.SpouseName = vm.SpouseName;
+                emp.DateOfBirth = vm.DateOfBirth;
+                emp.NationalIdNo = vm.NationalIdNo;
+                emp.GenderId = vm.GenderId > 0 ? vm.GenderId : null;
+                emp.BloodGroupId = vm.BloodGroupId > 0 ? vm.BloodGroupId : null;
+                emp.ReligionId = vm.ReligionId > 0 ? vm.ReligionId : null;
+                emp.TinNo = vm.TinNo;
+                emp.EmergencyContactNo = vm.EmergencyContactNo;
+                emp.ContactPerson = vm.ContactPerson;
+
+                emp.JoiningDate = vm.JoiningDate;
+                emp.ProbationEndDate = vm.ProbationEndDate;
+                emp.RegineDate = vm.RegineDate;
+                emp.DepartmentId = vm.DepartmentId > 0 ? vm.DepartmentId : null;
+                emp.DesignationId = vm.DesignationId > 0 ? vm.DesignationId : null;
+                emp.EmployeeCategoryId = vm.EmployeeCategoryId > 0 ? vm.EmployeeCategoryId : null;
+                emp.JobStatusId = vm.JobStatusId > 0 ? vm.JobStatusId : null;
+                emp.ServiceTypeId = vm.ServiceTypeId > 0 ? vm.ServiceTypeId : null;
+                emp.OfficeTypeId = vm.OfficeTypeId > 0 ? vm.OfficeTypeId : null;
+                emp.ShiftId = vm.ShiftId > 0 ? vm.ShiftId : null;
+                emp.EmployeeGradeId = vm.EmployeeGradeId > 0 ? vm.EmployeeGradeId : null;
+                emp.PresentAddress = vm.PresentAddress;
+                emp.PermanentAddress = vm.PermanentAddress;
+                emp.CountryId = vm.CountryId > 0 ? vm.CountryId : null;
+                emp.DivisionId = vm.DivisionId > 0 ? vm.DivisionId : null;
+                emp.DistrictId = vm.DistrictId > 0 ? vm.DistrictId : null;
+                emp.UpazilaId = vm.UpazilaId > 0 ? vm.UpazilaId : null;
+                emp.MobileNo = vm.MobileNo;
+                emp.Email = vm.Email;
+
+                emp.SignUrl = vm.SignUrl;
+                emp.PhotoUrl = vm.PhotoUrl;
+
+                var res = await _iEntityRepository.AddAsync(emp);
+
+                vm.Id = res?.Id ?? 0;
+                return true;
+                // Save the new employee record
+                //var res = await _iEntityRepository.AddAsync(emp);
+
+                
             }
             catch (Exception ex)
             {
-
+                // Handle exceptions appropriately
                 throw;
             }
         }
+
         public async Task<bool> UpdateRecord(EmployeeViewModel vm)
         {
             var existingEmployee = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.EmployeeCode == vm.EmployeeCode && f.IsActive == true);
