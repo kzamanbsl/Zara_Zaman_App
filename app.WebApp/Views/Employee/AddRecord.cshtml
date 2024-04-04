@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
 
 
-<form asp-controller="Employee" asp-action="AddOrUpdateRecord" method="post" enctype="multipart/form-data">
+<form asp-controller="Employee" asp-action="AddRecord" method="post" enctype="multipart/form-data">
     @Html.AntiForgeryToken()
     <div class="card">
         <div class="form-horizontal" style="padding-left:20px">
@@ -559,14 +559,14 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-md-6">
+                                        @* <div class="col-md-6">
                                             <div class="form-group">
                                                 <label asp-for="Email">Email</label>
                                                 <input type="text" class="form-control" required placeholder="Email address" asp-for="Email" />
                                                 <span asp-validation-for="Email" class="text-danger"></span>
                                                 <span></span>
                                             </div>
-                                        </div>
+                                        </div> *@
 
                                         <div class="col-md-6">
                                             <div class="form-group">

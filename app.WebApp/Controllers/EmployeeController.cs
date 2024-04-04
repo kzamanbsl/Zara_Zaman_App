@@ -2,6 +2,8 @@
 using app.Services.DropdownServices;
 using app.Services.EmployeeServices;
 using app.Services.ProductServices;
+using app.Services.UserServices;
+using app.Utility;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -12,10 +14,13 @@ namespace app.WebApp.Controllers
     {
         private readonly IEmployeeService _iService;
         private readonly IDropdownService _iDropdownService;
-        public EmployeeController(IEmployeeService iService, IDropdownService iDropdownService)
+        private readonly IUserService _iUserService;
+
+        public EmployeeController(IEmployeeService iService, IDropdownService iDropdownService,IUserService iUserService)
         {
             _iService = iService;
             _iDropdownService = iDropdownService;
+            _iUserService = iUserService;
         }
         public async Task<IActionResult> AddRecord()
         {
@@ -41,15 +46,30 @@ namespace app.WebApp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddRecord(EmployeeViewModel viewModel)
+        public async Task<IActionResult> AddRecord(EmployeeViewModel viewModel, UserViewModel vm)
         {
-            var result = await _iService.AddRecord(viewModel);
-            if (result == true)
+            if (viewModel.ActionEum == ActionEnum.Add)
             {
-                return RedirectToAction("Search");
+                if (viewModel.Id == 0)
+                {
+                    await _iService.AddRecord(viewModel); //Adding Purchase Master
+                }
+                await _iUserService.AddUser(vm); //Adding Purchase Details
+                
             }
-            ModelState.AddModelError(string.Empty, "Same Employee already exists!");
-            return View(viewModel);
+            //This is for Purchase Details single Edit
+            //else if (viewModel.ActionEum == ActionEnum.Edit)
+            //{
+            //    await _iUserService.UserViewModelVM(vm);
+            //}
+            return RedirectToAction(nameof(Search));
+            //var result = await _iService.AddRecord(viewModel);
+            //if (result == true)
+            //{
+            //    return RedirectToAction("Search");
+            //}
+            //ModelState.AddModelError(string.Empty, "Same Employee already exists!");
+            //return View(viewModel);
         }
 
         [HttpGet]

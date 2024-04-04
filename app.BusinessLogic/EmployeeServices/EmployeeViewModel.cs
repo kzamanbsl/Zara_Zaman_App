@@ -4,6 +4,9 @@ using Microsoft.AspNetCore.Identity;
 using app.Services.PurchaseOrderDetailServices;
 using app.Services.PurchaseOrderServices;
 using app.Services.UserServices;
+using app.Services.AssetPurchaseOrderDetailServices;
+using app.Services.AssetPurchaseOrderServices;
+using app.Utility;
 
 namespace app.Services.EmployeeServices
 {
@@ -165,6 +168,13 @@ namespace app.Services.EmployeeServices
         public string ContactPerson { get; set; }
         public string PhotoUrl { get; set; }
         public string SignUrl { get; set; }
+
+
+        public ActionEnum ActionEum { get { return (ActionEnum)this.ActionId; } }
+        public int ActionId { get; set; } = 1;
+        //public AssetPurchaseOrderDetailViewModel AssetPurchaseOrderDetailVM { get; set; }
+        //public IEnumerable<AssetPurchaseOrderViewModel> AssetPurchaseOrderList { get; set; }
+        //public IEnumerable<AssetPurchaseOrderDetailViewModel> AssetPurchaseOrderDetailsList { get; set; }
         public UserViewModel UserViewModelVM { get; set; }
         public IEnumerable<UserViewModel> UserViewModelList { get; set; }
         public IEnumerable<EmployeeViewModel> EmployeeList { get; set; }
