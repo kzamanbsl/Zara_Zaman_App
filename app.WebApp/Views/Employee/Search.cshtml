@@ -1,4 +1,5 @@
-﻿@model app.Services.EmployeeServices.EmployeeSearchDto
+﻿@using app.Utility
+@model app.Services.EmployeeServices.EmployeeSearchDto
 @{
     ViewData["Title"] = "Search";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
@@ -92,6 +93,7 @@
                                         <th class="text-center">
                                             @Html.DisplayNameFor(model => model.Email)
                                         </th>
+                                            
                                         <th class="text-center">
                                             @Html.DisplayNameFor(model => model.Action)
                                         </th>

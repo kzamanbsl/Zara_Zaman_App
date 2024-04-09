@@ -543,52 +543,61 @@
                             <div class="card-body">
                                 <div class="form-group row">
                                     <div class="form-group row" style="padding-top: 10px;">
-                                        <div class="col-md-12">
-                                            <!-- Add a checkbox -->
-                                            <div class="form-group form-check">
-                                                <input type="checkbox" class="form-check-input" id="submitCheckbox">
-                                                <label class="form-check-label" for="submitCheckbox">Check to submit data</label>
-                                            </div>
-                                        </div>
+                                        <form asp-action="AddRecord" asp-controller="Employee" method="post" enctype="multipart/form-data">
+                                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                            <input asp-for="Id" class="form-control" hidden id="purchaseorderId" />
+                                            <input asp-for="ActionId" hidden id="actionId" />
+                                            <input asp-for="UserViewModelVM.UserId" class="form-control" id="purchaseOrderDetailsId" hidden />
 
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label asp-for="UserName">User Name</label>
-                                                <input asp-for="UserName" class="form-control" />
-                                                <span asp-validation-for="UserName" class="text-danger"></span>
-                                            </div>
-                                        </div>
-
-                                        @* <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label asp-for="Email">Email</label>
-                                                <input type="text" class="form-control" required placeholder="Email address" asp-for="Email" />
-                                                <span asp-validation-for="Email" class="text-danger"></span>
-                                                <span></span>
-                                            </div>
-                                        </div> *@
-
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label asp-for="Password">Password</label>
-                                                <div style="display:flex;">
-                                                    <input id="id_password" type="password" class="form-control" placeholder="******" required asp-for="Password" />
-                                                    <i style="margin-left: -30px;cursor: pointer; padding-top:15px;" class="far fa-eye text-info" id="togglePassword"></i>
+                                            <div class="col-md-12">
+                                                <!-- Add a checkbox -->
+                                                <div class="form-group form-check">
+                                                    <input type="checkbox" class="form-check-input" id="submitCheckbox">
+                                                    <label class="form-check-label" for="submitCheckbox">Check to submit data</label>
                                                 </div>
-                                                <span asp-validation-for="Password" class="text-danger"></span>
                                             </div>
-                                        </div>
 
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label asp-for="ConfirmPassword">Confirm Password</label>
-                                                <div style="display:flex;">
-                                                    <input id="id_confirmPassword" type="password" class="form-control" placeholder="******" required asp-for="ConfirmPassword" />
-                                                    <i style="margin-left: -30px;cursor: pointer; padding-top:15px;" class="far fa-eye text-info" id="toggleConfirmPassword"></i>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label asp-for="UserName">User Name</label>
+                                                    <input asp-for="UserName" class="form-control" />
+                                                    <span asp-validation-for="UserName" class="text-danger"></span>
                                                 </div>
-                                                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
                                             </div>
-                                        </div>
+
+                                            @* <div class="col-md-6">
+                                            <div class="form-group">
+                                            <label asp-for="Email">Email</label>
+                                            <input type="text" class="form-control" required placeholder="Email address" asp-for="Email" />
+                                            <span asp-validation-for="Email" class="text-danger"></span>
+                                            <span></span>
+                                            </div>
+                                            </div> *@
+
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label asp-for="Password">Password</label>
+                                                    <div style="display:flex;">
+                                                        <input id="id_password" type="password" class="form-control" placeholder="******" required asp-for="Password" />
+                                                        <i style="margin-left: -30px;cursor: pointer; padding-top:15px;" class="far fa-eye text-info" id="togglePassword"></i>
+                                                    </div>
+                                                    <span asp-validation-for="Password" class="text-danger"></span>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label asp-for="ConfirmPassword">Confirm Password</label>
+                                                    <div style="display:flex;">
+                                                        <input id="id_confirmPassword" type="password" class="form-control" placeholder="******" required asp-for="ConfirmPassword" />
+                                                        <i style="margin-left: -30px;cursor: pointer; padding-top:15px;" class="far fa-eye text-info" id="toggleConfirmPassword"></i>
+                                                    </div>
+                                                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                                                </div>
+                                            </div>
+
+
+                                            </form>
                                     </div>
                                 </div>
                             </div>

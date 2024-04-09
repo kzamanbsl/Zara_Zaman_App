@@ -44,7 +44,7 @@ namespace app.Services.EmployeeServices
                     emp.EmployeeOrder = vm.EmployeeOrder;
                     emp.ManagerId = vm.ManagerId > 0 ? vm.ManagerId : null;
                     emp.Remarks = vm.Remarks;
-
+                    
 
                     emp.FatherName = vm.FatherName;
                     emp.MotherName = vm.MotherName;

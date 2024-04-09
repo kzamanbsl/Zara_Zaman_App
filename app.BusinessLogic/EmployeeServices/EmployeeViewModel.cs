@@ -176,8 +176,9 @@ namespace app.Services.EmployeeServices
         //public IEnumerable<AssetPurchaseOrderViewModel> AssetPurchaseOrderList { get; set; }
         //public IEnumerable<AssetPurchaseOrderDetailViewModel> AssetPurchaseOrderDetailsList { get; set; }
         public UserViewModel UserViewModelVM { get; set; }
-        public IEnumerable<UserViewModel> UserViewModelList { get; set; }
         public IEnumerable<EmployeeViewModel> EmployeeList { get; set; }
+        public IEnumerable<UserViewModel> UserViewModelList { get; set; }
+
     }
 }
 
