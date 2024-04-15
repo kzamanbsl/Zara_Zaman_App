@@ -10,6 +10,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace app.WebApp.Controllers
 {
+
+    //testc Line 
     public class EmployeeController : Controller
     {
         private readonly IEmployeeService _iService;
@@ -55,14 +57,15 @@ namespace app.WebApp.Controllers
                     await _iService.AddRecord(viewModel); //Adding Purchase Master
                 }
                 await _iUserService.AddUser(vm); //Adding Purchase Details
-                
+            return RedirectToAction(nameof(Search));
+
             }
+            return View(viewModel);
             //This is for Purchase Details single Edit
             //else if (viewModel.ActionEum == ActionEnum.Edit)
             //{
             //    await _iUserService.UserViewModelVM(vm);
             //}
-            return RedirectToAction(nameof(Search));
             //var result = await _iService.AddRecord(viewModel);
             //if (result == true)
             //{
