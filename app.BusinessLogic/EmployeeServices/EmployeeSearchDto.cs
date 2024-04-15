@@ -16,7 +16,23 @@ namespace app.Services.EmployeeServices
         [DisplayName("Employee Code")]
         public string EmployeeCode { get; set; }
 
+
+        public string UserId { get; set; }
+
+        [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
+
+        [Required]
+        [StringLength(10, ErrorMessage = "Must be between 6 and 10 characters", MinimumLength = 6)]
+        [DataType(DataType.Password)]
+        public string Password { get; set; }
+
+        [Display(Name = "Confirm Password")]
+        public string ConfirmPassword { get; set; }
+
+        [Display(Name = "User Name")]
+        public string UserName { get; set; }
+        public string IncorrectInput { get; set; }
 
         [DisplayName("Mobile No")]
         public string MobileNo { get; set; }

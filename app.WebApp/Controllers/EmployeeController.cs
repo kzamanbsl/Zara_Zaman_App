@@ -58,7 +58,6 @@ namespace app.WebApp.Controllers
                 }
                 await _iUserService.AddUser(vm); //Adding Purchase Details
             return RedirectToAction(nameof(Search));
-
             }
             return View(viewModel);
             //This is for Purchase Details single Edit
