@@ -28,17 +28,18 @@ namespace app.Services.EmployeeServices
         {
             try
             {
-                var userCheck = _dbContext.Users.FirstOrDefault(f => f.UserName == vm.UserName);
-                if (userCheck == null)
-                {
-                    UserViewModel userViewModel = new UserViewModel();
-                    userViewModel.Email = null;
-                    userViewModel.UserName = vm.UserName;
-                    userViewModel.Password = vm.Password;
-                    userViewModel.ConfirmPassword= vm.ConfirmPassword;
-                    return true;
+                //var userCheck = _dbContext.Users.FirstOrDefault(f => f.UserName == vm.UserName);
+                //if (userCheck == null)
+                //{
+                //    UserViewModel userViewModel = new UserViewModel();
+                //    userViewModel.Email = null;
+                //    userViewModel.UserName = vm.UserName;
+                //    userViewModel.Password = vm.Password;
+                //    userViewModel.ConfirmPassword= vm.ConfirmPassword;
+                //    return true;
 
-                }
+                //}
+
                 //var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim() && f.Id != vm.Id && f.IsActive == true);
                 //var userCheck = _dbContext.Users.FirstOrDefault(f => f.UserName == vm.UserName);
                 //ApplicationUser users = new ApplicationUser();

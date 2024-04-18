@@ -758,6 +758,27 @@
         });
     </script>
 
+    @* <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Get the checkbox element
+        var checkbox = document.getElementById('submitCheckbox');
+        // Get all the input fields
+        var inputFields = document.querySelectorAll('input[type="text"], input[type="password"]');
+
+        // Function to enable or disable input fields based on checkbox state
+        function toggleFields() {
+            inputFields.forEach(function (input) {
+                input.disabled = !checkbox.checked;
+            });
+        }
+
+        // Add event listener to checkbox
+        checkbox.addEventListener('click', toggleFields);
+
+        // Call the function initially to set the state based on the checkbox
+        toggleFields();
+    });
+</script> *@
 
 
 
