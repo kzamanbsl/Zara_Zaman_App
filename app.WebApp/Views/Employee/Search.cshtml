@@ -78,9 +78,7 @@
                                         <th class="text-center">
                                             @Html.DisplayNameFor(model => model.Name)
                                         </th>
-                                        <th class="text-center">
-                                            @Html.DisplayNameFor(model => model.UserName)
-                                        </th>
+                                        
                                         <th class="text-center">
                                             @Html.DisplayNameFor(model => model.DepartmentName)
                                         </th>
@@ -96,7 +94,6 @@
                                         <th class="text-center">
                                             @Html.DisplayNameFor(model => model.Email)
                                         </th>
-                                       
                                        
                                         <th class="text-center">
                                             @Html.DisplayNameFor(model => model.Action)
@@ -184,12 +181,7 @@
                             return row.name;
                         }
                     },
-                    {
-                        data: "UserName",
-                        render: function (data, type, row, meta) {
-                            return row.userName;
-                        }
-                    },
+                   
                     {
                         data: "DepartmentName",
                         render: function (data, type, row, meta) {

@@ -1,5 +1,6 @@
-﻿@model app.Services.EmployeeServices.EmployeeViewModel
-@using app.Utility
+﻿@using app.Utility
+@model app.Services.EmployeeServices.EmployeeViewModel
+
 @{
     ViewData["Title"] = "AddRecord";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
@@ -40,14 +41,12 @@
                 <li class="nav-item">
                     <a class="nav-link" role="tab" data-toggle="tab" href="#tab4">Contact Information</a>
                 </li>
+                
                 <li class="nav-item">
-                    <a class="nav-link" role="tab" data-toggle="tab" href="#tab5">User Information</a>
+                    <a class="nav-link" role="tab" data-toggle="tab" href="#tab5">Picture</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" role="tab" data-toggle="tab" href="#tab6">Picture</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" role="tab" data-toggle="tab" href="#tab7">Signature</a>
+                    <a class="nav-link" role="tab" data-toggle="tab" href="#tab6">Signature</a>
                 </li>
             </ul>
 
@@ -477,138 +476,8 @@
                     </div>
                 </div>
 
-                @* Form Start  *@
-
-               @*  <div id="tab5" class="tab-pane">
-                    <div class="panel panel-info">
-                        <div class="card-header" style="color:darkgreen"><b>Contact Information</b></div>
-                        <div class="panel-body">
-                            <div class="card-body">
-                                <div class="form-group row">
-                                    <div class="form-group row" style="padding-top:10px;">
-                                        
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                    <label asp-for="UserName">User Name</label>
-                                                    <input asp-for="UserName" class="form-control" />
-                                                    <span asp-validation-for="UserName" class="text-danger"></span>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label asp-for="Email">Email</label>
-                                                <input type="text" class="form-control" required placeholder="Email address" asp-for="Email" />
-                                                <span asp-validation-for="Email" class="text-danger"></span>
-                                                <span></span>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-6"> 
-                                            <div class="form-group">
-                                                <label asp-for="Password">Password</label>
-                                                <div style="display:flex;">
-                                                    <input id="id_password" type="password" class="form-control" placeholder="******" required asp-for="Password" />
-                                                    <i style="margin-left: -30px;cursor: pointer; padding-top:15px;" class="far fa-eye text-info" id="togglePassword"></i>
-
-                                                </div>
-                                                <span asp-validation-for="Password" class="text-danger"></span>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-6"> 
-                                            <div class="form-group">
-                                                <label asp-for="Password">Confirm Password</label>
-                                                <div style="display:flex;">
-                                                    <input id="id_password" type="password" class="form-control" placeholder="******" required asp-for="Password" />
-                                                    <i style="margin-left: -30px;cursor: pointer; padding-top:15px;" class="far fa-eye text-info" id="togglePassword"></i>
-
-                                                </div>
-                                                <span asp-validation-for="Password" class="text-danger"></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
- *@
-
 
                 <div id="tab5" class="tab-pane">
-                    <div class="panel panel-info">
-                        <div class="card-header" style="color: darkgreen"><b>Contact Information</b></div>
-                        <div class="panel-body">
-                            <div class="card-body">
-                                <div class="form-group row">
-                                    <div class="form-group row" style="padding-top: 10px;">
-                                        <form asp-action="AddRecord" asp-controller="Employee" method="post" enctype="multipart/form-data">
-                                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                                            <input asp-for="Id" class="form-control" hidden id="purchaseorderId" />
-                                            <input asp-for="ActionId" hidden id="actionId" />
-                                            <input asp-for="UserViewModelVM.UserId" class="form-control" id="purchaseOrderDetailsId" hidden />
-
-                                            <div class="col-md-12">
-                                                <!-- Add a checkbox -->
-                                                <div class="form-group form-check">
-                                                    <input type="checkbox" class="form-check-input" id="submitCheckbox">
-                                                    <label class="form-check-label" for="submitCheckbox">Check to submit data</label>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label asp-for="UserName">User Name</label>
-                                                    <input asp-for="UserName" class="form-control" />
-                                                    <span asp-validation-for="UserName" class="text-danger"></span>
-                                                </div>
-                                            </div>
-
-                                            @* <div class="col-md-6">
-                                            <div class="form-group">
-                                            <label asp-for="Email">Email</label>
-                                            <input type="text" class="form-control" required placeholder="Email address" asp-for="Email" />
-                                            <span asp-validation-for="Email" class="text-danger"></span>
-                                            <span></span>
-                                            </div>
-                                            </div> *@
-
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label asp-for="Password">Password</label>
-                                                    <div style="display:flex;">
-                                                        <input id="id_password" type="password" class="form-control" placeholder="******" required asp-for="Password" />
-                                                        <i style="margin-left: -30px;cursor: pointer; padding-top:15px;" class="far fa-eye text-info" id="togglePassword"></i>
-                                                    </div>
-                                                    <span asp-validation-for="Password" class="text-danger"></span>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label asp-for="ConfirmPassword">Confirm Password</label>
-                                                    <div style="display:flex;">
-                                                        <input id="id_confirmPassword" type="password" class="form-control" placeholder="******" required asp-for="ConfirmPassword" />
-                                                        <i style="margin-left: -30px;cursor: pointer; padding-top:15px;" class="far fa-eye text-info" id="toggleConfirmPassword"></i>
-                                                    </div>
-                                                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
-                                                </div>
-                                            </div>
-
-
-                                            </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-    
-                @* Form End  *@
-
-                <div id="tab6" class="tab-pane">
                     <div class="panel panel-info">
                         <div class="card-header" style="color:darkgreen"><b>Picture</b></div>
                         <div class="panel-body">
@@ -634,7 +503,7 @@
                     </div>
                 </div>
 
-                <div id="tab7" class="tab-pane">
+                <div id="tab6" class="tab-pane">
                     <div class="panel panel-info">
                         <div class="card-header" style="color:darkgreen"><b>Picture</b></div>
                         <div class="panel-body">

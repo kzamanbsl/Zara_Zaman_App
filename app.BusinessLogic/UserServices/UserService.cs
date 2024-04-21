@@ -29,7 +29,7 @@ namespace app.Services.UserServices
             ApplicationUser users = new ApplicationUser();
             users.FullName = vm.FullName;
             users.UserName = vm.Email;
-            users.UserName = vm.UserName;
+            //users.UserName = vm.UserName;
             users.PhoneNumber = vm.Mobile;
             users.Email = vm.Email;
             users.Address = vm.Address;

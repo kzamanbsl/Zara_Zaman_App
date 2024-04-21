@@ -48,32 +48,15 @@ namespace app.WebApp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddRecord(EmployeeViewModel viewModel, UserViewModel vm)
+        public async Task<IActionResult> AddRecord(EmployeeViewModel viewModel)
         {
-            if (viewModel.ActionEum == ActionEnum.Add)
+            var result = await _iService.AddRecord(viewModel);
+            if (result == true)
             {
-                if (viewModel.Id == 0)
-                {
-                    await _iService.AddRecord(viewModel); //Adding Purchase Master
-                }
-                await _iUserService.AddUser(vm); //Adding Purchase Details
-                return RedirectToAction(nameof(Search));
+                return RedirectToAction("Search");
             }
+            ModelState.AddModelError(string.Empty, "Same Employee already exists!");
             return View(viewModel);
-
-            //This is for Purchase Details single Edit
-            //else if (viewModel.ActionEum == ActionEnum.Edit)
-            //{
-            //    await _iUserService.UserViewModelVM(vm);
-            //}
-            //var result = await _iService.AddRecord(viewModel);
-
-            //if (result == true)
-            //{
-            //    return RedirectToAction("Search");
-            //}
-            //ModelState.AddModelError(string.Empty, "Same Employee already exists!");
-            //return View(viewModel);
         }
 
         [HttpGet]
