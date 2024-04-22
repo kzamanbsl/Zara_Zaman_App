@@ -4,12 +4,6 @@
     ViewData["Title"] = "AddRecord";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
-<style>
-
-</style>
-
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
-
 
 <form asp-controller="Employee" asp-action="AddRecord" method="post" enctype="multipart/form-data">
     @Html.AntiForgeryToken()

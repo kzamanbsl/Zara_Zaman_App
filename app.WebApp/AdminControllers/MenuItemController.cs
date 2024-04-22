@@ -46,13 +46,6 @@ namespace app.WebApp.AdminControllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Delete(long id)
-        {
-            var res = await _iService.DeleteRecord(id);
-            return RedirectToAction("Search");
-        }
-
-        [HttpGet]
         public async Task<IActionResult> UpdateRecord(long id)
         {
             MenuItemViewModel menuItemViewModel = new MenuItemViewModel();
@@ -83,6 +76,13 @@ namespace app.WebApp.AdminControllers
         {
             var res = await _iService.MenuShowSideBar(id);
             return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(long id)
+        {
+            var res = await _iService.DeleteRecord(id);
+            return RedirectToAction("Search");
         }
 
         #region Search

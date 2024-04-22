@@ -46,7 +46,7 @@
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label asp-for="Phone" class="control-label"></label>
-                                        <input asp-for="Phone" class="form-control" required/>
+                                        <input asp-for="Phone" class="form-control" required />
                                         <span asp-validation-for="Phone" class="text-danger"></span>
                                     </div>
                                 </div>
@@ -59,7 +59,7 @@
                                 </div>
                                  <div class="col-md-3">
                                     <div class="form-group">
-                                        <label asp-for="BusinessIdNo" class="control-label">Business ID No</label>
+                                        <label asp-for="BusinessIdNo" class="control-label">BIN</label>
                                         <input asp-for="BusinessIdNo" class="form-control" />
                                         <span asp-validation-for="BusinessIdNo" class="text-danger"></span>
                                     </div>
@@ -123,50 +123,51 @@
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
+
     <script>
         $(document).ready(function () {
             $('#Configuration').addClass('menu-open');
             $('#CustomerAddRecord').addClass('active');
         });
 
-    </script>
-    <script type="text/javascript">
-        $('#divisionId').change(function () {
-            $.ajax({
-                type: "post",
-                url: "/Dropdown/GetDistrictSelectionList",
-                data: { divisionId: $('#divisionId').val() },
-                dataType: "json",
-                success: function (data) {
-                    var district = "<select>";
-                    district = district + '<option value="">--Select--</option>';
-                    for (var i = 0; i < data.length; i++) {
-                        district = district + '<option value=' + data[i].id + '>' + data[i].name + '</option>';
-                    }
-                    district = district + '</select>';
-                    $('#districtId').html(district);
-                }
-            });
-        });
-        $('#districtId').change(function () {
-            $.ajax({
-                type: "post",
-                url: "/Dropdown/GetUpazilaSelectionList",
-                data: { districtId: $('#districtId').val() },
+        // $('#divisionId').change(function () {
+        //     $.ajax({
+        //         type: "post",
+        //         url: "/Dropdown/GetDistrictSelectionList",
+        //         data: { divisionId: $('#divisionId').val() },
+        //         dataType: "json",
+        //         success: function (data) {
+        //             var district = "<select>";
+        //             district = district + '<option value="">--Select--</option>';
+        //             for (var i = 0; i < data.length; i++) {
+        //                 district = district + '<option value=' + data[i].id + '>' + data[i].name + '</option>';
+        //             }
+        //             district = district + '</select>';
+        //             $('#districtId').html(district);
+        //         }
+        //     });
+        // });
 
-                datatype: "json",
-                traditional: true,
-                success: function (data) {
-                    var upazila = "<select>";
-                    upazila = upazila + '<option value="">--Select--</option>';
-                    for (var i = 0; i < data.length; i++) {
-                        upazila = upazila + '<option value=' + data[i].id + '>' + data[i].name + '</option>';
-                    }
-                    upazila = upazila + '</select>';
-                    $('#upazilaId').html(upazila);
-                }
-            });
-        });
+        // $('#districtId').change(function () {
+        //     $.ajax({
+        //         type: "post",
+        //         url: "/Dropdown/GetUpazilaSelectionList",
+        //         data: { districtId: $('#districtId').val() },
+
+        //         datatype: "json",
+        //         traditional: true,
+        //         success: function (data) {
+        //             var upazila = "<select>";
+        //             upazila = upazila + '<option value="">--Select--</option>';
+        //             for (var i = 0; i < data.length; i++) {
+        //                 upazila = upazila + '<option value=' + data[i].id + '>' + data[i].name + '</option>';
+        //             }
+        //             upazila = upazila + '</select>';
+        //             $('#upazilaId').html(upazila);
+        //         }
+        //     });
+        // });
+
     </script>
 }
     

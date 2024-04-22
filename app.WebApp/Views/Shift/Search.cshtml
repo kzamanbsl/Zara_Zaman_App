@@ -132,13 +132,15 @@
                     {
                         data: "StartAt",
                         render: function (data, type, row, meta) {
-                            return row.startAt;
+                            var result = FormatTimeForView(row.startAt);
+                            return result;
                         }
                     },
                     {
                         data: "EndAt",
                         render: function (data, type, row, meta) {
-                            return row.endAt;
+                            var result = FormatTimeForView(row.endAt);
+                            return result;
                         }
                     },
                     {

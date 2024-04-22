@@ -96,8 +96,6 @@
                                         <th class="text-center">
                                             @Html.DisplayNameFor(model => model.Email)
                                         </th>
-                                       
-                                       
                                         <th class="text-center">
                                             @Html.DisplayNameFor(model => model.Action)
                                         </th>
@@ -211,7 +209,8 @@
                     {
                         data: "JoiningDate",
                         render: function (data, type, row, meta) {
-                            return row.joiningDate;
+                            var result = FormatDateForView(row.joiningDate);
+                            return result;
                         }
                     },
                     {
