@@ -1,11 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
-using Microsoft.AspNetCore.Identity;
-using app.Services.PurchaseOrderDetailServices;
-using app.Services.PurchaseOrderServices;
 using app.Services.UserServices;
-using app.Services.AssetPurchaseOrderDetailServices;
-using app.Services.AssetPurchaseOrderServices;
 using app.Utility;
 
 namespace app.Services.EmployeeServices
@@ -20,28 +15,9 @@ namespace app.Services.EmployeeServices
 
         [DisplayName("Employee Code")]
         public string EmployeeCode { get; set; }
-        // login 
-
-        public string UserId { get; set; }
 
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
-
-        [Required]
-        [StringLength(10, ErrorMessage = "Must be between 6 and 10 characters", MinimumLength = 6)]
-        [DataType(DataType.Password)]
-        public string Password { get; set; }
-
-        [Display(Name = "Confirm Password")]
-        public string ConfirmPassword { get; set; }
-
-        [Display(Name = "User Name")]
-        public string UserName { get; set; }
-        public string IncorrectInput { get; set; }
-        // END
-
-
-        //public string Email { get; set; }
 
         [DisplayName("Mobile No")]
         public string MobileNo { get; set; }
@@ -137,6 +113,7 @@ namespace app.Services.EmployeeServices
         public int? GenderId { get; set; }
         [DisplayName("Gender Name")]
         public string GenderName { get; set; }
+
         public int? ReligionId { get; set; }
         [DisplayName("Religion Name")]
         public string ReligionName { get; set; }
@@ -166,18 +143,40 @@ namespace app.Services.EmployeeServices
 
         [DisplayName("Contact Person")]
         public string ContactPerson { get; set; }
+
         public string PhotoUrl { get; set; }
         public string SignUrl { get; set; }
+
+        #region User Create Prop
+
+        [StringLength(10, ErrorMessage = "Must be between 6 to 10 characters", MinimumLength = 6)]
+        [DataType(DataType.Password)]
+        public string Password { get; set; }
+
+        [DisplayName("Confirm Password")]
+        [Compare("Password")]
+        public string ConfirmPassword { get; set; }
+
+        [DisplayName("Is Create User")]
+        public bool IsCreateUser { get; set; }
+
+        [DisplayName("Is Disable User")]
+        public bool IsDisableUser { get; set; }
+        
+        [DisplayName("Is Enable User")]
+        public bool IsEnableUser { get; set; }
+
+        #endregion
 
 
         public ActionEnum ActionEum { get { return (ActionEnum)this.ActionId; } }
         public int ActionId { get; set; } = 1;
+
+
         //public AssetPurchaseOrderDetailViewModel AssetPurchaseOrderDetailVM { get; set; }
         //public IEnumerable<AssetPurchaseOrderViewModel> AssetPurchaseOrderList { get; set; }
         //public IEnumerable<AssetPurchaseOrderDetailViewModel> AssetPurchaseOrderDetailsList { get; set; }
-        public UserViewModel UserViewModelVM { get; set; }
         public IEnumerable<EmployeeViewModel> EmployeeList { get; set; }
-        public IEnumerable<UserViewModel> UserViewModelList { get; set; }
 
     }
 }
