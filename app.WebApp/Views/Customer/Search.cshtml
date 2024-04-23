@@ -12,7 +12,7 @@
                 <li class="breadcrumb-item active"> Customer List </li>
             </ol>
             <div>
-                <a asp-action="AddRecord"><i class="fa fa-plus"></i>  Add Customer </a>
+                <a asp-action="AddRecord"><i class="fa fa-plus"></i> Add Customer </a>
             </div>
         </div>
     </div>
@@ -25,7 +25,7 @@
             <div class="card-header">
                 <div class="row w-100">
                     <div class="col-sm-3">
-                        <h5> <i class="fas fa-list"></i>  All Customer </h5>
+                        <h5> <i class="fas fa-list"></i> All Customers </h5>
                     </div>
                 </div>
             </div>
@@ -69,8 +69,8 @@
                             </div>
                         </form>
                     </div>
-                </div> *@
-                <hr />
+                </div> 
+                <hr />*@
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="table-responsive">
@@ -88,6 +88,9 @@
                                         </th>
                                         <th class="text-center">
                                             @Html.DisplayNameFor(model => model.Email)
+                                        </th>
+                                        <th class="text-center">
+                                            @Html.DisplayNameFor(model => model.BusinessIdNo)
                                         </th>
                                        @*  <th class="text-center">
                                             @Html.DisplayNameFor(model => model.CountryName)
@@ -240,6 +243,12 @@
                         data: "Email",
                         render: function (data, type, row, meta) {
                             return row.email;
+                        }
+                    },
+                    {
+                        data: "Email",
+                        render: function (data, type, row, meta) {
+                            return row.businessIdNo;
                         }
                     },                   
 

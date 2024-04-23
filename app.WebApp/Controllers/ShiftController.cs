@@ -1,11 +1,6 @@
 ﻿using app.EntityModel.DataTablePaginationModels;
-using app.Services.CompanyServices;
-using app.Services.DropdownServices;
-using app.Services.EmployeeServiceTypeServices;
-using app.Services.ProductServices;
 using app.Services.ShiftServices;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace app.WebApp.Controllers
 {

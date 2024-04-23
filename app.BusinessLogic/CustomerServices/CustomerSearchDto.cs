@@ -22,6 +22,8 @@ namespace app.Services.CustomerServices
         public string Email { get; set; }
         public string Description { get; set; }
         public string Address { get; set; }
+
+        [DisplayName("BIN")]
         public string BusinessIdNo { get; set; }
         public string BankName { get; set; }
 

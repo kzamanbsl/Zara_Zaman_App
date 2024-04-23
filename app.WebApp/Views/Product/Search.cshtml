@@ -12,7 +12,7 @@
                 <li class="breadcrumb-item active"> Product List </li>
             </ol>
             <div>
-                <a asp-action="AddRecord"><i class="fa fa-plus"></i>  Add Product </a>
+                <a asp-action="AddRecord"><i class="fa fa-plus"></i> Add Product </a>
             </div>
         </div>
     </div>
@@ -25,7 +25,7 @@
             <div class="card-header">
                 <div class="row w-100">
                     <div class="col-sm-3">
-                        <h5> <i class="fas fa-list"></i>  All Product </h5>
+                        <h5> <i class="fas fa-list"></i> All Products </h5>
                     </div>
                 </div>
             </div>
@@ -38,7 +38,7 @@
                                     <div class="form-group">
                                         <label>Category</label>
                                         <select class="form-control" asp-for="CategoryId" asp-items="ViewBag.ProductCategories">
-                                            <option value="0" selected>--Category--</option>
+                                            <option value="0" selected>--Select Category--</option>
                                             <span asp-validation-for="CategoryId" class="text-danger"></span>
                                         </select>
                                     </div>
@@ -47,7 +47,7 @@
                                     <div class="form-group">
                                         <label>Unit</label>
                                         <select class="form-control" asp-for="UnitId" asp-items="ViewBag.Units">
-                                            <option value="0" selected>--Unit--</option>
+                                            <option value="0" selected>--Select Unit--</option>
                                             <span asp-validation-for="UnitId" class="text-danger"></span>
                                         </select>
                                     </div>
@@ -74,11 +74,11 @@
                                             @Html.DisplayNameFor(model => model.SerialNo)
                                         </th>
                                         <th class="text-center">
-                                            @Html.DisplayNameFor(model => model.Name)
+                                            @Html.DisplayNameFor(model => model.CategoryName)
                                         </th>
                                         <th class="text-center">
-                                            @Html.DisplayNameFor(model => model.CategoryName)
-                                        </th>                                       
+                                            @Html.DisplayNameFor(model => model.Name)
+                                        </th>                               
                                         <th class="text-center">
                                             @Html.DisplayNameFor(model => model.UnitName)
                                         </th>                                      
@@ -160,17 +160,18 @@
                         }
                     },
                     {
+                        data: "CategoryName",
+                        render: function (data, type, row, meta) {
+                            return row.categoryName;
+                        }
+                    },
+                    {
                         data: "Name",
                         render: function (data, type, row, meta) {
                             return row.name;
                         }
                     },
-                    {
-                        data: "CategoryName",
-                        render: function (data, type, row, meta) {
-                            return row.categoryName;
-                        }
-                    },                 
+                                  
                     {
                         data: "UnitName",
                         render: function (data, type, row, meta) {
