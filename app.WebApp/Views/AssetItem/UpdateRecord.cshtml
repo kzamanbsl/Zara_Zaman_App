@@ -8,10 +8,10 @@
         <div class="breadcrumb d-flex justify-content-between align-items-center  pl-3 pr-3">
             <ol class="breadcrumb mb-0 p-0">
                 <li class="breadcrumb-item"><a href="/Admin/Index">Home</a></li>
-                <li class="breadcrumb-item active"> AssetItem List </li>
+                <li class="breadcrumb-item active"> Asset Item List </li>
             </ol>
             <div>
-                <a asp-action="Search"><i class="fa fa-list"></i>  AssetItem List </a>
+                <a asp-action="Search"><i class="fa fa-list"></i>  Asset Item List </a>
             </div>
         </div>
     </div>
@@ -25,7 +25,7 @@
             <div class="card-header">
                 <h3 class="card-title text-info">
                     <i class="fas fa-plus"></i>
-                    Update AssetItem
+                    Update Asset Item
                 </h3>
             </div>
             <div class="card-body">
@@ -34,14 +34,8 @@
                         <form asp-action="UpdateRecord" method="post">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                             @Html.HiddenFor(model => model.ProductTypeId)
+
                             <div class="row">
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label asp-for="Name" class="control-label"></label>
-                                        <input asp-for="Name" class="form-control" required />
-                                        <span asp-validation-for="Name" class="text-danger"></span>
-                                    </div>
-                                </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label>Category</label>
@@ -54,6 +48,14 @@
 
                                 <div class="col-md-3">
                                     <div class="form-group">
+                                        <label asp-for="Name" class="control-label"></label>
+                                        <input asp-for="Name" class="form-control" required />
+                                        <span asp-validation-for="Name" class="text-danger"></span>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <div class="form-group">
                                         <label>Unit</label>
                                         <select class="form-control" asp-for="UnitId" asp-items="ViewBag.Unit">
                                             <option value="0" selected>--Unit--</option>
@@ -61,6 +63,7 @@
                                         </select>
                                     </div>
                                 </div>
+
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label asp-for="Description" class="control-label"></label>
@@ -69,6 +72,7 @@
                                     </div>
                                 </div>
                             </div>
+
                             <div class="form-group" style="float:right">
                                 <input type="submit" value="Update" class="btn btn-warning" />
                             </div>
@@ -81,17 +85,16 @@
 </section>
 
 @section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
     <script>
         $(document).ready(function () {
             $('#Asset-Management').addClass('menu-open');
             $('#AssetItemSearch').addClass('active');
-
         });
     </script>
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
-    }
+}
 
 
 

@@ -188,19 +188,22 @@
                     {
                         data: "ApplicaionDate",
                         render: function (data, type, row, meta) {
-                            return row.applicationDate;
+                            var result = FormatDateForView(row.applicationDate);
+                            return result;
                         }
                     },
                     {
                         data: "StartDate",
                         render: function (data, type, row, meta) {
-                            return row.startDate;
+                            var result = FormatDateForView(row.startDate);
+                            return result;
                         }
                     },
                     {
                         data: "EndDate",
                         render: function (data, type, row, meta) {
-                            return row.endDate;
+                            var result = FormatDateForView(row.endDate);
+                            return result;
                         }
                     },
                     {

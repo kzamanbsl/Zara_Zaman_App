@@ -178,22 +178,24 @@
                     {
                         data: "AttendanceDate",
                         render: function (data, type, row, meta) {
-                            return row.attendanceDate;
+                            var result = FormatDateForView(row.attendanceDate);
+                            return result;
                         }
                     },
                     {
                         data: "LoginTime",
                         render: function (data, type, row, meta) {
-                            return row.loginTime;
+                            var result = FormatTimeForView(row.loginTime);
+                            return result;
                         }
                     },
                     {
                         data: "LogoutTime",
                         render: function (data, type, row, meta) {
-                            return row.logoutTime;
+                            var result = FormatTimeForView(row.logoutTime);
+                            return result;
                         }
                     },
-                   
                     {
                         data: "Remarks",
                         render: function (data, type, row, meta) {
