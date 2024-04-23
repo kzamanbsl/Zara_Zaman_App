@@ -13,7 +13,7 @@
                 <li class="breadcrumb-item active"> Employee List </li>
             </ol>
             <div>
-                <a asp-action="AddRecord"><i class="fa fa-plus"></i>  Add Employee </a>
+                <a asp-action="AddRecord"><i class="fa fa-plus"></i> Add Employee </a>
             </div>
         </div>
     </div>
@@ -39,7 +39,7 @@
                                     <div class="form-group">
                                         <label>Department</label>
                                         <select class="form-control" asp-for="DepartmentId" asp-items="ViewBag.Departments">
-                                            <option value="0" selected>--Department--</option>
+                                            <option value="0" selected>--Select Department--</option>
                                             <span asp-validation-for="DepartmentId" class="text-danger"></span>
                                         </select>
                                     </div>
@@ -48,7 +48,7 @@
                                     <div class="form-group">
                                         <label>Designation</label>
                                         <select class="form-control" asp-for="DesignationId" asp-items="ViewBag.Designations">
-                                            <option value="0" selected>--Designation--</option>
+                                            <option value="0" selected>--Select Designation--</option>
                                             <span asp-validation-for="DesignationId" class="text-danger"></span>
                                         </select>
                                     </div>
@@ -91,10 +91,10 @@
                                             @Html.DisplayNameFor(model => model.MobileNo)
                                         </th>
                                         <th class="text-center">
-                                            @Html.DisplayNameFor(model => model.JoiningDate)
+                                            @Html.DisplayNameFor(model => model.Email)
                                         </th>
                                         <th class="text-center">
-                                            @Html.DisplayNameFor(model => model.Email)
+                                            @Html.DisplayNameFor(model => model.JoiningDate)
                                         </th>
                                         <th class="text-center">
                                             @Html.DisplayNameFor(model => model.Action)
@@ -207,16 +207,16 @@
                         }
                     },
                     {
+                        data: "Email",
+                        render: function (data, type, row, meta) {
+                            return row.email;
+                        }
+                    },
+                    {
                         data: "JoiningDate",
                         render: function (data, type, row, meta) {
                             var result = FormatDateForView(row.joiningDate);
                             return result;
-                        }
-                    },
-                    {
-                        data: "Email",
-                        render: function (data, type, row, meta) {
-                            return row.email;
                         }
                     },
                     {

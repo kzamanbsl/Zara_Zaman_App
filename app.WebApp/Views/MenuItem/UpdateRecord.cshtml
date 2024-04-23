@@ -37,6 +37,7 @@
                         <form asp-action="UpdateRecord" method="post">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                             @Html.HiddenFor(model => model.Id)
+                            @Html.HiddenFor(model => model.IsActive)
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="form-group">

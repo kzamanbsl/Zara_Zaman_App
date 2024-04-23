@@ -33,14 +33,9 @@ namespace app.Services.MenuItemServices
                 item.OrderNo = vm.OrderNo;
                 item.IsMenuShow = vm.IsMenuShow;
                 var result = await _iEntityRepository.AddAsync(item);
-                if (result.Id > 0)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+
+                return result.Id > 0 ? true : false;
+
             }
             return false;
 
@@ -58,17 +53,12 @@ namespace app.Services.MenuItemServices
                 item.Action = vm.Action;
                 item.Controller = vm.Controller;
                 item.OrderNo = vm.OrderNo;
-                item.IsActive = vm.IsActive;
+                //item.IsActive = vm.IsActive;
                 item.IsMenuShow = vm.IsMenuShow;
                 var result = await _iEntityRepository.UpdateAsync(item);
-                if (result)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+
+                return result;
+
             }
             return false;
 
@@ -142,7 +132,7 @@ namespace app.Services.MenuItemServices
 
         public async Task<DataTablePagination<MenuItemSearchDto>> SearchAsync(DataTablePagination<MenuItemSearchDto> searchDto)
         {
-            var searchResult = _dbContext.MenuItem.Include(c => c.Menu).Where(c=>c.IsActive==true).AsNoTracking();
+            var searchResult = _dbContext.MenuItem.Include(c => c.Menu).Where(c => c.IsActive == true).AsNoTracking();
 
             var searchModel = searchDto.SearchVm;
             var filter = searchDto?.Search?.Value?.Trim();
@@ -181,8 +171,8 @@ namespace app.Services.MenuItemServices
                 Icon = c.Icon,
                 MenuId = c.MenuId,
                 MenuName = c.Menu?.Name,
-                Controller=c.Controller,
-                ControllerAction=c.Action,
+                Controller = c.Controller,
+                ControllerAction = c.Action,
                 IsMenuShow = c.IsMenuShow,
                 IsActive = c.IsActive,
             }).ToList();
