@@ -17,10 +17,17 @@ namespace app.WebApp.Controllers
             {
                 ViewBag.ExceptionMessage = exceptionDetails.Error.Message;
             }
+            else if (errorMessage.StartsWith("Timeout expired"))
+            {
+                ViewBag.ExceptionMessage ="Request Timeout. Please try again!";
+            }
+            else if (errorMessage.StartsWith("A network"))
+            {
+                ViewBag.ExceptionMessage = "A Network related problem occurred. Please check your internet connection and try again!";
+            }
             else
             {
-                ViewBag.ExceptionMessage =
-                    "An error occurred while processing your request. Please contact with support team!";
+                ViewBag.ExceptionMessage ="An error occurred while processing your request. Please contact with support team!";
             }
             
             //ViewBag.ExceptionStackTrace = exceptionDetails.Error.StackTrace;
