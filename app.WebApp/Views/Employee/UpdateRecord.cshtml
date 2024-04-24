@@ -9,7 +9,7 @@
         <div class="breadcrumb d-flex justify-content-between align-items-center  pl-3 pr-3">
             <ol class="breadcrumb mb-0 p-0">
                 <li class="breadcrumb-item"><a href="/Admin/Index">Home</a></li>
-                <li class="breadcrumb-item active"> Employee</li>
+                <li class="breadcrumb-item active">Employee</li>
             </ol>
             <div>
                 <a asp-action="Search"><i class="fa fa-list"></i> Employee List</a>
@@ -23,8 +23,8 @@
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title text-info">
-                    <i class="fas fa-plus"></i>
-                    Add Employee
+                    <i class="fas fa-edit"></i>
+                    Update Employee
                 </h3>
 
             </div>
@@ -439,58 +439,82 @@
                                             <div class="card-header" style="color: darkgreen"><b>User Information</b></div>
                                             <div class="panel-body">
                                                 <div class="card-body">
-
-                                                    <div class="row">
-                                                        <div class="col-md-4">
-                                                            <div class="form-group">
-                                                                <div class="form-check">
-                                                                    <input asp-for="IsCreateUser" type="checkbox" class="form-check-input" id="flexCheckChecked">
-                                                                    <label class="form-check-label" for="flexCheckChecked">Is User Create?</label>
-                                                                    <span asp-validation-for="IsCreateUser" class="text-danger"></span>
+                                                    @if (string.IsNullOrEmpty(Model.UserName))
+                                                    {
+                                                        <div class="row">
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <div class="form-check">
+                                                                        <input asp-for="IsCreateUser" type="checkbox" class="form-check-input" id="flexCheckChecked">
+                                                                        <label class="form-check-label" for="flexCheckChecked">Is User Create?</label>
+                                                                        <span asp-validation-for="IsCreateUser" class="text-danger"></span>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div>
 
-                                                    <div class="row">
-                                                        <div class="col-md-3">
-                                                            <div class="form-group">
-                                                                <label asp-for="UserName">User Name</label>
-                                                                <input asp-for="UserName" class="form-control" />
-                                                                <span asp-validation-for="UserName" class="text-danger"></span>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="col-md-3">
-                                                            <div class="form-group">
-                                                                <label asp-for="Email">Email</label>
-                                                                <input asp-for="Email" type="email" class="form-control" />
-                                                                <span asp-validation-for="Email" class="text-danger"></span>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="col-md-3">
-                                                            <div class="form-group">
-                                                                <label asp-for="Password">Password</label>
-                                                                <div style="display:flex;">
-                                                                    <input id="id_password" type="password" asp-for="Password" class="form-control" placeholder="******" />
-                                                                    <i style="margin-left: -30px;cursor: pointer; padding-top:15px;" class="far fa-eye text-info" id="togglePassword"></i>
+                                                        <div class="row">
+                                                            <div class="col-md-3">
+                                                                <div class="form-group">
+                                                                    <label asp-for="UserName">User Name</label>
+                                                                    <input asp-for="UserName" class="form-control" />
+                                                                    <span asp-validation-for="UserName" class="text-danger"></span>
                                                                 </div>
-                                                                <span asp-validation-for="Password" class="text-danger"></span>
                                                             </div>
-                                                        </div>
 
-                                                        <div class="col-md-3">
-                                                            <div class="form-group">
-                                                                <label asp-for="ConfirmPassword">Confirm Password</label>
-                                                                <div style="display:flex;">
-                                                                    <input id="id_confirmPassword" type="password" asp-for="ConfirmPassword" class="form-control" placeholder="******" />
-                                                                    <i style="margin-left: -30px;cursor: pointer; padding-top:15px;" class="far fa-eye text-info" id="toggleConfirmPassword"></i>
+                                                            <div class="col-md-3">
+                                                                <div class="form-group">
+                                                                    <label asp-for="Email">Email</label>
+                                                                    <input asp-for="Email" type="email" class="form-control" />
+                                                                    <span asp-validation-for="Email" class="text-danger"></span>
                                                                 </div>
-                                                                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                                                            </div>
+
+                                                            <div class="col-md-3">
+                                                                <div class="form-group">
+                                                                    <label asp-for="Password">Password</label>
+                                                                    <div style="display:flex;">
+                                                                        <input id="id_password" type="password" asp-for="Password" class="form-control" placeholder="******" />
+                                                                        <i style="margin-left: -30px;cursor: pointer; padding-top:15px;" class="far fa-eye text-info" id="togglePassword"></i>
+                                                                    </div>
+                                                                    <span asp-validation-for="Password" class="text-danger"></span>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-3">
+                                                                <div class="form-group">
+                                                                    <label asp-for="ConfirmPassword">Confirm Password</label>
+                                                                    <div style="display:flex;">
+                                                                        <input id="id_confirmPassword" type="password" asp-for="ConfirmPassword" class="form-control" placeholder="******" />
+                                                                        <i style="margin-left: -30px;cursor: pointer; padding-top:15px;" class="far fa-eye text-info" id="toggleConfirmPassword"></i>
+                                                                    </div>
+                                                                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
+                                                    }
+                                                    else
+                                                    {
+                                                        <div class="row">
+                                                            <div class="col-md-3">
+                                                                <div class="form-group">
+                                                                    <label asp-for="UserName">User Name</label>
+                                                                    <input asp-for="UserName" class="form-control"  readonly="readonly" />
+                                                                    <span asp-validation-for="UserName" class="text-danger"></span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <div class="form-group">
+                                                                    <label asp-for="Email">Email</label>
+                                                                    <input asp-for="Email" type="email" class="form-control" />
+                                                                    <span asp-validation-for="Email" class="text-danger"></span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                            </div>
+                                                        </div>
+                                                    }
+
 
                                                 </div>
                                             </div>

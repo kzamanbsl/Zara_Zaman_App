@@ -91,6 +91,7 @@ namespace app.Services.EmployeeServices
                 userVm.Address = vm.PresentAddress;
                 userVm.Prefix = vm.Password;
                 userVm.RoleName = "Customer";
+                userVm.Password = vm.Password;
 
                 var result = await _iUserService.AddUser(userVm);
                 if (result == true)
@@ -174,6 +175,7 @@ namespace app.Services.EmployeeServices
                 userVm.Address = vm.PresentAddress;
                 userVm.Prefix = vm.Password;
                 userVm.RoleName = "Customer";
+                userVm.Password = vm.Password;
 
                 var result = await _iUserService.AddUser(userVm);
                 if (result == true)
@@ -192,8 +194,6 @@ namespace app.Services.EmployeeServices
 
         public async Task<EmployeeViewModel> GetRecordById(long id)
         {
-
-
             var result = await _dbContext.Employee.Include(c => c.Manager).Include(c => c.MaritalType)
                 .Include(c => c.Gender).Include(c => c.BloodGroup).Include(c => c.Religion).Include(c => c.Department)
                 .Include(c => c.Designation).Include(c => c.EmployeeCategory).Include(c => c.EmployeeGrade)
@@ -262,6 +262,7 @@ namespace app.Services.EmployeeServices
             model.UpazilaName = result.Upazila?.Name;
             model.MobileNo = result.MobileNo;
             model.Email = result.Email;
+            model.UserName = result.UserName;
 
             model.SignUrl = result.SignUrl;
             model.PhotoUrl = result.PhotoUrl;
