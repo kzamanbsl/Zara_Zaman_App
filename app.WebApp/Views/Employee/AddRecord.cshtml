@@ -105,7 +105,14 @@
                                                                 <span asp-validation-for="ManagerId" class="text-danger"></span>
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-8">
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label asp-for="MobileNo">Mobile No</label>
+                                                                <input asp-for="MobileNo" class="form-control" />
+                                                                <span asp-validation-for="MobileNo" class="text-danger"></span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
                                                             <div class="form-group">
                                                                 <label asp-for="Remarks">Remarks</label>
                                                                 <textarea asp-for="Remarks" class="form-control" rows="1"> </textarea>
@@ -405,20 +412,6 @@
                                                     <div class="row">
                                                         <div class="col-md-3">
                                                             <div class="form-group">
-                                                                <label asp-for="MobileNo">Mobile No</label>
-                                                                <input asp-for="MobileNo" class="form-control" />
-                                                                <span asp-validation-for="MobileNo" class="text-danger"></span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-3">
-                                                            <div class="form-group">
-                                                                <label asp-for="Email">Email</label>
-                                                                <input asp-for="Email" type="email" class="form-control" />
-                                                                <span asp-validation-for="Email" class="text-danger"></span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-3">
-                                                            <div class="form-group">
                                                                 <label asp-for="ContactPerson">Contact Person</label>
                                                                 <input asp-for="ContactPerson" class="form-control" />
                                                                 <span asp-validation-for="ContactPerson" class="text-danger"></span>
@@ -431,6 +424,11 @@
                                                                 <span asp-validation-for="EmergencyContactNo" class="text-danger"></span>
                                                             </div>
                                                         </div>
+                                                        <div class="col-md-3">
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                        </div>
+
                                                     </div>
                                                 </div>
                                             </div>
@@ -442,42 +440,21 @@
                                             <div class="card-header" style="color: darkgreen"><b>User Information</b></div>
                                             <div class="panel-body">
                                                 <div class="card-body">
-                                                    <div class="row">
-                                                        @if (string.IsNullOrEmpty(Model.UserName))
-                                                        {
-                                                            <div class="col-md-4">
-                                                                <div class="form-group">
-                                                                    <label asp-for="IsCreateUser">Is User Create?</label>
-                                                                    <input asp-for="IsCreateUser" type="checkbox" class="form-control"/>
-                                                                    <span asp-validation-for="IsCreateUser" class="text-danger"></span>
-                                                                </div>
-                                                            </div>
-                                                        }
-                                                        else if(Model.IsDisableUser==true)
-                                                        {
-                                                            <div class="col-md-4">
-                                                                <div class="form-group">
-                                                                    <label asp-for="IsEnableUser">Is Enable User?</label>
-                                                                    <input asp-for="IsEnableUser" type="checkbox" class="form-control" />
-                                                                    <span asp-validation-for="IsEnableUser" class="text-danger"></span>
-                                                                </div>
-                                                            </div>
-                                                        }
-                                                        else
-                                                        {
-                                                            <div class="col-md-4">
-                                                                <div class="form-group">
-                                                                    <label asp-for="IsDisableUser">Is Disable User?</label>
-                                                                    <input asp-for="IsDisableUser" type="checkbox" class="form-control"/>
-                                                                    <span asp-validation-for="IsDisableUser" class="text-danger"></span>
-                                                                </div>
-                                                            </div>
-                                                        }
-                                                        
-                                                    </div>
 
                                                     <div class="row">
                                                         <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <div class="form-check">
+                                                                    <input asp-for="IsCreateUser" type="checkbox" class="form-check-input" id="flexCheckChecked">
+                                                                    <label class="form-check-label" for="flexCheckChecked">Is User Create?</label>
+                                                                    <span asp-validation-for="IsCreateUser" class="text-danger"></span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-md-3">
                                                             <div class="form-group">
                                                                 <label asp-for="UserName">User Name</label>
                                                                 <input asp-for="UserName" class="form-control" />
@@ -485,7 +462,15 @@
                                                             </div>
                                                         </div>
 
-                                                        <div class="col-md-4">
+                                                        <div class="col-md-3">
+                                                            <div class="form-group">
+                                                                <label asp-for="Email">Email</label>
+                                                                <input asp-for="Email" type="email" class="form-control" />
+                                                                <span asp-validation-for="Email" class="text-danger"></span>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-3">
                                                             <div class="form-group">
                                                                 <label asp-for="Password">Password</label>
                                                                 <div style="display:flex;">
@@ -496,7 +481,7 @@
                                                             </div>
                                                         </div>
 
-                                                        <div class="col-md-4">
+                                                        <div class="col-md-3">
                                                             <div class="form-group">
                                                                 <label asp-for="ConfirmPassword">Confirm Password</label>
                                                                 <div style="display:flex;">
@@ -581,7 +566,7 @@
     <script>
         $(document).ready(function () {
             $('#HR-\\&-Admin-').addClass('menu-open');
-            $('#EmployeeAddOrUpdateRecord').addClass('active');
+            $('#EmployeeAddRecord').addClass('active');
         });
 
         $('#divisionId').change(function () {

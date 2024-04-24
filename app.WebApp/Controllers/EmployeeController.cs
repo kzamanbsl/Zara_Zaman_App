@@ -48,32 +48,15 @@ namespace app.WebApp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddRecord(EmployeeViewModel viewModel, UserViewModel vm)
+        public async Task<IActionResult> AddRecord(EmployeeViewModel model)
         {
-            if (viewModel.ActionEum == ActionEnum.Add)
+            var result = await _iService.AddRecord(model);
+            if (result == true)
             {
-                if (viewModel.Id == 0)
-                {
-                    await _iService.AddRecord(viewModel); //Adding Purchase Master
-                }
-                await _iUserService.AddUser(vm); //Adding Purchase Details
-                return RedirectToAction(nameof(Search));
+                return RedirectToAction("Search");
             }
-            return View(viewModel);
-
-            //This is for Purchase Details single Edit
-            //else if (viewModel.ActionEum == ActionEnum.Edit)
-            //{
-            //    await _iUserService.UserViewModelVM(vm);
-            //}
-            //var result = await _iService.AddRecord(viewModel);
-
-            //if (result == true)
-            //{
-            //    return RedirectToAction("Search");
-            //}
-            //ModelState.AddModelError(string.Empty, "Same Employee already exists!");
-            //return View(viewModel);
+            ModelState.AddModelError(string.Empty, "Same Employee Code already exists!");
+            return View(model);
         }
 
         [HttpGet]
@@ -117,10 +100,16 @@ namespace app.WebApp.Controllers
         [HttpGet]
         public async Task<IActionResult> Details(long id)
         {            
-            var result = await _iService.GetDetailsById(id);
+            var result = await _iService.GetRecordById(id);
             return View(result);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Delete(long id)
+        {
+            var res = await _iService.DeleteRecord(id);
+            return RedirectToAction("Search");
+        }
 
         #region Search
 
