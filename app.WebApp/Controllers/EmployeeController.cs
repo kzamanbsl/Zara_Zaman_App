@@ -1,17 +1,13 @@
 ﻿using app.EntityModel.DataTablePaginationModels;
 using app.Services.DropdownServices;
 using app.Services.EmployeeServices;
-using app.Services.ProductServices;
 using app.Services.UserServices;
-using app.Utility;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace app.WebApp.Controllers
 {
-
-    //testc Line 
+ 
     public class EmployeeController : Controller
     {
         private readonly IEmployeeService _iService;

@@ -33,6 +33,6 @@
         Task<IEnumerable<DropdownViewModel>> AssetSelectionList();
         Task<IEnumerable<DropdownViewModel>> AssembleWorkCategorySelectionList();
         Task<IEnumerable<DropdownViewModel>> AssembleWorkStepSelectionList();
-        Task<IEnumerable<DropdownViewModel>> TermsandconditionsSelectionList();
+        Task<IEnumerable<DropdownViewModel>> TermsAndConditionsSelectionList();
     }
 }

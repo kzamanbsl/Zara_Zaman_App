@@ -61,7 +61,7 @@ namespace app.WebApp.Controllers
             ViewBag.StorehouseList = new SelectList((await _iDropdownService.StorehouseSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
             ViewBag.ProductList = new SelectList((await _iDropdownService.ProductSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
             ViewBag.UnitList = new SelectList((await _iDropdownService.UnitSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
-            ViewBag.TermsandconditionList = new SelectList((await _iDropdownService.TermsandconditionsSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
+            ViewBag.TermsandconditionList = new SelectList((await _iDropdownService.TermsAndConditionsSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
 
             return View(viewModel);
         }
