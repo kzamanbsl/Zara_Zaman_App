@@ -95,7 +95,7 @@ namespace app.Services.LeaveApplicationServices
         {
             var result = new List<LeaveBalanceCountViewModel>();
 
-            var leaveBalanceList = await _dbContext.LeaveBalance.Include(c=>c.LeaveCategory).Where(c => c.IsActive == true).ToListAsync();
+            var leaveBalanceList = await _dbContext.LeaveBalance.Include(c => c.LeaveCategory).Where(c => c.IsActive == true).ToListAsync();
 
             var leaveApplication = await _dbContext.LeaveApplication.Include(c => c.LeaveCategory).Where(c => c.EmployeeId == employeeId && c.StatusId == (int)LeaveApplicationStatusEnum.Approve).ToListAsync();
 
@@ -109,9 +109,9 @@ namespace app.Services.LeaveApplicationServices
                     LeaveCategoryId = lb.LeaveCategoryId,
                     LeaveCategoryName = lb.LeaveCategory?.Name,
                     Description = lb.Description,
-                    LeaveQty=lb.LeaveQty,
-                    LeaveUsedQty= useLeaveQty,
-                    LeaveRemainingQty=(lb.LeaveQty-useLeaveQty)
+                    LeaveQty = lb.LeaveQty,
+                    LeaveUsedQty = useLeaveQty,
+                    LeaveRemainingQty = (lb.LeaveQty - useLeaveQty)
                 };
                 result.Add(obj);
             }
@@ -124,7 +124,7 @@ namespace app.Services.LeaveApplicationServices
 
             if (leaveApplication != null && leaveApplication.StatusId == (int)LeaveApplicationStatusEnum.Applied)
             {
-                leaveApplication.StatusId = (int)LeaveApplicationStatusEnum.Confirm; 
+                leaveApplication.StatusId = (int)LeaveApplicationStatusEnum.Confirm;
                 await _iEntityRepository.UpdateAsync(leaveApplication);
                 return true;
             }
@@ -146,7 +146,7 @@ namespace app.Services.LeaveApplicationServices
         {
             var leaveApplication = await _dbContext.LeaveApplication.FirstOrDefaultAsync(c => c.Id == id);
 
-            if (leaveApplication != null && (leaveApplication.StatusId != (int)LeaveApplicationStatusEnum.Approve|| leaveApplication.StatusId != (int)LeaveApplicationStatusEnum.Reject))
+            if (leaveApplication != null && (leaveApplication.StatusId != (int)LeaveApplicationStatusEnum.Approve || leaveApplication.StatusId != (int)LeaveApplicationStatusEnum.Reject))
             {
                 leaveApplication.StatusId = (int)LeaveApplicationStatusEnum.Reject;
                 await _iEntityRepository.UpdateAsync(leaveApplication);
@@ -194,10 +194,11 @@ namespace app.Services.LeaveApplicationServices
 
         public async Task<DataTablePagination<LeaveApplicationSearchDto>> SearchAsync(DataTablePagination<LeaveApplicationSearchDto> searchDto)
         {
-            var searchResult = _dbContext.LeaveApplication.Include(c => c.Employee).Include(c => c.LeaveCategory).Where(c=>c.IsActive==true).AsNoTracking();
+            var searchResult = _dbContext.LeaveApplication.Include(c => c.Employee).Include(c => c.LeaveCategory).Where(c => c.IsActive == true).AsNoTracking();
 
             var searchModel = searchDto.SearchVm;
             var filter = searchDto?.Search?.Value?.Trim();
+
             if (searchModel?.EmployeeId is > 0)
             {
                 searchResult = searchResult.Where(c => c.EmployeeId == searchModel.EmployeeId);
@@ -206,13 +207,18 @@ namespace app.Services.LeaveApplicationServices
             {
                 searchResult = searchResult.Where(c => c.LeaveCategoryId == searchModel.LeaveCategoryId);
             }
+            if (searchModel?.StatusId is > 0)
+            {
+                searchResult = searchResult.Where(c => c.StatusId == searchModel.StatusId);
+            }
+
             if (!string.IsNullOrEmpty(filter))
             {
                 filter = filter.ToLower();
                 searchResult = searchResult.Where(c =>
                     c.Employee.Name.ToLower().Contains(filter)
-                    || c.LeaveCategory.ToString().Contains(filter)
-                    || c.Manager.Name.ToString().Contains(filter)
+                    || c.LeaveCategory.Name.ToLower().Contains(filter)
+                    || c.Manager.Name.ToLower().Contains(filter)
                     || c.StayDuringLeave.ToLower().Contains(filter)
                     || c.Reason.ToLower().Contains(filter)
                 );
@@ -234,9 +240,9 @@ namespace app.Services.LeaveApplicationServices
                 SerialNo = ++sl,
                 Id = c.Id,
                 EmployeeId = c.EmployeeId,
-                EmployeeName = c.Employee.Name,
+                EmployeeName = c.Employee?.Name,
                 LeaveCategoryId = c.LeaveCategoryId,
-                LeaveCategoryName = c.LeaveCategory.Name,
+                LeaveCategoryName = c.LeaveCategory?.Name,
                 ApplicationDate = c.ApplicationDate,
                 StartDate = c.StartDate,
                 EndDate = c.EndDate,

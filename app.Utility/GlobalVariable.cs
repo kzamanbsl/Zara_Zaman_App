@@ -31,5 +31,40 @@ namespace app.Utility
             return list;
            
         }
+
+        public static string FormatDateForView(DateTime? date)
+        {
+            var strDate = "";
+            if (date == null) { return strDate; }
+
+            var dt=(DateTime) date;
+            strDate = dt.ToString("dd-MM-yyyy");
+
+            return strDate;
+
+        }
+
+        public static string FormatDateTimeForView(DateTime? date)
+        {
+            var strDateTime = "";
+            if (date == null) { return strDateTime; }
+
+            var dt = (DateTime)date;
+            strDateTime = dt.ToString("dd-MM-yyyy hh:mm tt");
+            return strDateTime;
+
+        }
+
+        public static string FormatTimeForView(DateTime? date)
+        {
+            var strTime = "";
+            if (date == null) { return strTime; }
+
+            var dt = (DateTime)date;
+            //strTime = dt.ToString("hh:mm:ss tt");
+            strTime = dt.ToString("hh:mm tt");
+            return strTime;
+
+        }
     }
 }
