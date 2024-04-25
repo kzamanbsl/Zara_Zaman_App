@@ -8,7 +8,7 @@
         <div class="breadcrumb d-flex justify-content-between align-items-center pl-3 pr-3">
             <ol class="breadcrumb mb-0 p-0">
                 <li class="breadcrumb-item"><a href="/Admin/Index">Home</a></li>
-                <li class="breadcrumb-item active"> Assemble Work Step List </li>
+                <li class="breadcrumb-item active"> Assemble Work Step </li>
             </ol>
             <div>
                 <a asp-action="Search"><i class="fa fa-list"></i> Assemble Work Step List</a>
@@ -22,7 +22,7 @@
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title text-info">
-                    <i class="fas fa-plus"></i> Update Assemble Work Step
+                    <i class="fas fa-edit"></i> Update Assemble Work Step
                 </h3>
             </div>
             <div class="card-body">
@@ -37,7 +37,7 @@
                                         <div class="form-group">
                                             <label class="form-label">Select Assemble</label>
                                             <select asp-for="AssembleWorkCategoryId" asp-items="ViewBag.AssembleWorkCategoryList" class="form-control" id="ddlAssembleId" required>
-                                                <option selected disabled>=Select Assemble=</option>
+                                                <option selected>--Select Assemble--</option>
                                             </select>
                                             <span asp-validation-for="AssembleWorkCategoryId" class="text-danger"></span>
                                         </div>
@@ -77,8 +77,6 @@
     }
     <script>
         $(document).ready(function () {
-            "use strict"
-
             $('#ddlAssembleId').val(@(Model.AssembleWorkCategoryId)).trigger('change');
             $('#ATM-Assemble').addClass('menu-open');
             $('#AssembleWorkStepSearch').addClass('active');

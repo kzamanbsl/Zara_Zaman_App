@@ -531,7 +531,6 @@ namespace app.Services.ATMAssemble.AssembleWorkServices
                 filter = filter.ToLower();
                 searchResult = searchResult.Where(c =>
                     c.AssembleWorkCategory.Name.ToLower().Contains(filter)
-                    || c.AssembleDate.ToString().Contains(filter)
                     || c.Description.ToLower().Contains(filter)
                 );
             }

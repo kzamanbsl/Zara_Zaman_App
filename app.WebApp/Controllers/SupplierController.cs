@@ -26,6 +26,7 @@ namespace app.WebApp.Controllers
             SupplierViewModel viewModel = new SupplierViewModel();
             return View(viewModel);
         }
+
         [HttpPost]
         public async Task<IActionResult> AddRecord(SupplierViewModel viewModel)
         {
@@ -59,6 +60,16 @@ namespace app.WebApp.Controllers
             }
             ModelState.AddModelError(string.Empty, "Same Name already exists!");
             return View(model);
+        }
+
+        public async Task<JsonResult> GetSupplierInformation(long id)
+        {
+            if (id != 0)
+            {
+                var model = await _iService.GetRecordById(id);
+                return Json(model);
+            }
+            return Json(null);
         }
 
         [HttpGet]

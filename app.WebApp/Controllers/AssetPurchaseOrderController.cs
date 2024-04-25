@@ -28,22 +28,6 @@ namespace app.WebApp.Controllers
             _iassetInventoryService = iassetInventoryService;
         }
 
-        public async Task<IActionResult> Index()
-        {
-            try
-            {
-                ViewBag.StorehouseList = new SelectList((await _iDropdownService.StorehouseSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
-                ViewBag.SupplierList = new SelectList((await _iDropdownService.SupplierSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
-                AssetPurchaseOrderViewModel viewModel = await _iAssetPurchaseOrderService.GetAllRecord();
-                return View(viewModel);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message, ex);
-            }
-        }
-
-
         [HttpGet]
         public async Task<IActionResult> AddAssetPurchaseOrderAndDetail(long assetPurchaseOrderId = 0)
         {
@@ -120,25 +104,19 @@ namespace app.WebApp.Controllers
             return View(viewModel);
         }
 
-        //public async Task<IActionResult> RejectAssetPurchaseOrder(long id)
-        //{
-        //    var res = await _iAssetPurchaseOrderService.RejectAssetPurchaseOrder(id);
-        //    return RedirectToAction("Search");
-        //}
         [HttpPost]
         public async Task<IActionResult> RejectAssetPurchaseOrder(AssetPurchaseOrderViewModel vm)
         {
             var res = await _iAssetPurchaseOrderService.RejectAssetPurchaseOrder(vm);
             return RedirectToAction("Search");
         }
+
         [HttpPost]
         public async Task<IActionResult> AddAssetInventory(long id)
         {
             var res = await _iassetInventoryService.AddAssetInventory(id);
             return RedirectToAction("Search");
         }
-
-
         
         public async Task<JsonResult> UpdateAssetPurchaseOrder(long id)
         {
@@ -152,19 +130,6 @@ namespace app.WebApp.Controllers
             var res = await _iAssetPurchaseOrderService.UpdateAssetPurchaseOrder(vm);
             return RedirectToAction("Search");
         }
-
-
-
-        public async Task<JsonResult> GetSupplierInformation(long id)
-        {
-            if (id != 0)
-            {
-                var model = await _iAssetPurchaseOrderService.GetSupplierInformation(id);
-                return Json(model);
-            }
-            return Json(null);
-        }
-
 
         #region Search
 

@@ -20,13 +20,13 @@ namespace app.Utility
             
         }
 
-        public static List<object> GetEnumSelectionList<T>()
+        public static List<EnumSelectListModel> GetEnumSelectionList<T>()
         {
-            var list = new List<object>();
+            var list = new List<EnumSelectListModel>();
 
             foreach (var item in Enum.GetValues(typeof(T)))
             {
-                list.Add(new { Value = (int)item, Text = GetEnumDescription((Enum)Enum.Parse(typeof(T), item.ToString())) });
+                list.Add(new EnumSelectListModel() { Value = (int)item, Text = GetEnumDescription((Enum)Enum.Parse(typeof(T), item.ToString())) });
             }
             return list;
            

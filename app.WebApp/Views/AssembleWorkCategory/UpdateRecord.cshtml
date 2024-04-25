@@ -8,7 +8,7 @@
         <div class="breadcrumb d-flex justify-content-between align-items-center pl-3 pr-3">
             <ol class="breadcrumb mb-0 p-0">
                 <li class="breadcrumb-item"><a href="/Admin/Index">Home</a></li>
-                <li class="breadcrumb-item active"> Assemble Work Category List</li>
+                <li class="breadcrumb-item active"> Assemble Work Category</li>
             </ol>
             <div>
                 <a asp-action="Search"><i class="fa fa-list"></i> Assemble Work Category List</a>
@@ -22,7 +22,7 @@
         <div class="card">
             <div class="card-header">
                 <h5 class="card-title text-info">
-                    <i class="fas fa-plus"></i> Update Assemble Work Category
+                    <i class="fas fa-edit"></i> Update Assemble Work Category
                 </h5>
             </div>
             <div class="card-body">
@@ -69,8 +69,6 @@
     }
     <script>
         $(document).ready(function () {
-            "use strict"
-
             $('#ATM-Assemble').addClass('menu-open');
             $('#AssembleWorkCategorySearch').addClass('active');
         });

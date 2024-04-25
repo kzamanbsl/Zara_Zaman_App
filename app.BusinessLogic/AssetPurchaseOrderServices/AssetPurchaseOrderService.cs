@@ -23,6 +23,7 @@ namespace app.Services.AssetPurchaseOrderServices
             _dbContext = dbContext;
             _iWorkContext = iWorkContext;
         }
+        
         public async Task<bool> AddRecord(AssetPurchaseOrderViewModel vm)
         {
 
@@ -50,6 +51,7 @@ namespace app.Services.AssetPurchaseOrderServices
             vm.Id = res?.Id ?? 0;
             return true;
         }
+        
         public async Task<bool> UpdateAssetPurchaseOrder(AssetPurchaseOrderViewModel vm)
         {
             var assetPurchaseOrder = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id == vm.Id);
@@ -64,6 +66,7 @@ namespace app.Services.AssetPurchaseOrderServices
             }
             return false;
         }
+        
         public async Task<AssetPurchaseOrderViewModel> GetAssetPurchaseOrder(long assetPurchaseOrderId = 0)
         {
             AssetPurchaseOrderViewModel assetPurchaseOrderModel = new AssetPurchaseOrderViewModel();
@@ -123,45 +126,6 @@ namespace app.Services.AssetPurchaseOrderServices
             return true;
         }
 
-        //public async Task<AssetPurchaseOrderViewModel> GetAssetPurchaseOrderDetails(long id = 0)
-        //{
-        //    AssetPurchaseOrderViewModel assetPurchaseOrderModel = new AssetPurchaseOrderViewModel();
-        //    assetPurchaseOrderModel = await Task.Run(() => (from t1 in _dbContext.PurchaseOrder.Where(x => x.IsActive && x.Id == id)
-        //                                                    select new AssetPurchaseOrderViewModel
-        //                                                    {
-        //                                                        Id = t1.Id,
-        //                                                        PurchaseDate = t1.PurchaseDate,
-        //                                                        OrderNo = t1.OrderNo,
-        //                                                        OrderStatusId = (int)(PurchaseOrderStatusEnum)t1.OrderStatusId,
-        //                                                        SupplierId = t1.SupplierId,
-        //                                                        SupplierName = t1.Supplier.Name,
-        //                                                        StorehouseId = t1.StorehouseId,
-        //                                                        StoreName = t1.Storehouse.Name,
-        //                                                        PurchaseTypeId = t1.PurchaseTypeId,
-        //                                                        Description = t1.Description,
-        //                                                        RejectionCause = t1.RejectionCause,
-        //                                                    }).FirstOrDefault());
-
-        //    assetPurchaseOrderModel.AssetPurchaseOrderDetailsList = await Task.Run(() => (from t1 in _dbContext.PurchaseOrderDetail.Where(x => x.IsActive && x.PurchaseOrder.Id == id)
-        //                                                                                  select new AssetPurchaseOrderDetailViewModel
-        //                                                                                  {
-        //                                                                                      Id = t1.Id,
-        //                                                                                      PurchaseOrderId = t1.PurchaseOrderId,
-        //                                                                                      ProductId = t1.ProductId,
-        //                                                                                      ProductName = t1.Product.Name,
-        //                                                                                      PurchaseQty = t1.PurchaseQty,
-        //                                                                                      UnitId = t1.UnitId,
-        //                                                                                      UnitName = t1.Unit.Name,
-        //                                                                                      SalePrice = t1.SalePrice,
-        //                                                                                      //Discount = t1.Discount,
-        //                                                                                      TotalAmount = ((decimal)t1.PurchaseQty * t1.SalePrice),
-        //                                                                                      Remarks = t1.Remarks,
-        //                                                                                  }).OrderByDescending(x => x.Id).AsEnumerable());
-
-
-        //    return assetPurchaseOrderModel;
-        //}
-
         public async Task<AssetPurchaseOrderViewModel> GetAssetPurchaseOrderDetails(long id = 0)
         {
             AssetPurchaseOrderViewModel assetPurchaseOrderModel = new AssetPurchaseOrderViewModel();
@@ -213,20 +177,6 @@ namespace app.Services.AssetPurchaseOrderServices
             }
             return false;
         }
-
-        //public async Task<bool> RejectAssetPurchaseOrder(long id)
-        //{
-        //    var checkAssetPurchaseOrder = await _dbContext.PurchaseOrder.FirstOrDefaultAsync(c => c.Id == id);
-        //    if (checkAssetPurchaseOrder != null || checkAssetPurchaseOrder.OrderStatusId == (int)PurchaseOrderStatusEnum.Draft || checkAssetPurchaseOrder.OrderStatusId == (int)PurchaseOrderStatusEnum.Confirm)
-        //    {
-        //        checkAssetPurchaseOrder.OrderStatusId = (int)PurchaseOrderStatusEnum.Reject;
-        //        await _iEntityRepository.UpdateAsync(checkAssetPurchaseOrder);
-        //        return true;
-        //    }
-        //    return false;
-        //}
-
-
 
         public async Task<AssetPurchaseOrderViewModel> GetAllRecord()
         {
@@ -281,15 +231,18 @@ namespace app.Services.AssetPurchaseOrderServices
                 searchResult = searchResult.Where(c => c.SupplierId == searchModel.SupplierId);
             }
 
+            if (searchModel?.OrderStatusId is > 0)
+            {
+                searchResult = searchResult.Where(c => c.OrderStatusId == searchModel.OrderStatusId);
+            }
+
             if (!string.IsNullOrEmpty(filter))
             {
                 filter = filter.ToLower();
                 searchResult = searchResult.Where(c =>
-                    c.OrderNo.ToString().Contains(filter)
-                    || c.PurchaseDate.ToString().Contains(filter)
+                    c.OrderNo.ToLower().Contains(filter)
                     || c.Supplier.Name.ToLower().Contains(filter)
                     || c.Storehouse.Name.ToLower().Contains(filter)
-                    || Enum.GetName(typeof(PurchaseOrderStatusEnum), c.OrderStatusId).ToLower().Contains(filter)
                 );
             }
 
@@ -311,30 +264,14 @@ namespace app.Services.AssetPurchaseOrderServices
                 OrderNo = c.OrderNo,
                 PurchaseDate = c.PurchaseDate,
                 StorehouseId = c.StorehouseId,
-                StoreName = c.Storehouse.Name,
+                StoreName = c.Storehouse?.Name,
                 SupplierId = c.SupplierId,
-                SupplierName = c.Supplier.Name,
-                OrderStatusId = (int)(PurchaseOrderStatusEnum)c.OrderStatusId,
-                OrderStatusName = Enum.GetName(typeof(PurchaseOrderStatusEnum), c.OrderStatusId),
-
+                SupplierName = c.Supplier?.Name,
+                OrderStatusId = c.OrderStatusId
                 //TotalAmount = (double)c.TotalAmount,
             }).ToList();
 
             return searchDto;
-        }
-
-        public async Task<SupplierViewModel> GetSupplierInformation(long id)
-        {
-            var item = await (from t1 in _dbContext.Supplier.Where(t => t.IsActive == true && t.Id == id)
-                              select new SupplierViewModel
-                              {
-                                  Name = t1.Name,
-                                  Phone = t1.Phone,
-                                  Email = t1.Email,
-                                  Address = t1.Address,
-                                  Id = t1.Id
-                              }).FirstOrDefaultAsync();
-            return item;
         }
     }
 }

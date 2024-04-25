@@ -77,7 +77,7 @@
                                         <th class="text-center">
                                             @Html.DisplayNameFor(model => model.OrderNo)
                                         </th>
-                                       <th class="text-center">
+                                        <th class="text-center">
                                             @Html.DisplayNameFor(model => model.PurchaseDate)
                                         </th>
                                         <th class="text-center">
@@ -208,7 +208,7 @@
 
         function search() {
             var searchVm = getSearchObject();
-                
+
 
             if ($.fn.DataTable.isDataTable("#PurchaseOrderSearchTable")) {
                 var table = $("#PurchaseOrderSearchTable").DataTable();
@@ -280,12 +280,11 @@
                             var detailsBtn = "";
 
                             if (row.orderStatusId == @((int)PurchaseOrderStatusEnum.Draft) || row.orderStatusId == @((int)PurchaseOrderStatusEnum.Confirm)) {
-                                detailsBtn = "<a href='PurchaseDetails/" + row.id + "'><i class='fa fa-eye text-info m-1' title='Details' aria-hidden='true'></i></a>";
                                 editBtn = "<a onclick='makeEditble(" + row.id + ");' data-toggle='modal' data-target='#editPurchaseOrderModal' data-placement='top'><i class='fas fa-pen text-warning m-1' title='Edit' aria-hidden='true'></i></a>";
                                 deleteBtn = "<a href='DeletePurchaseOrder/" + row.id + "'><i class='fas fa-trash text-danger m-1' title='Delete' aria-hidden='true'></i></a>";
-                            } else if (row.orderStatusId == @((int)PurchaseOrderStatusEnum.Reject) || row.orderStatusId == @((int)PurchaseOrderStatusEnum.Receive)) {
-                                detailsBtn = "<a href='PurchaseDetails/" + row.id + "'><i class='fa fa-eye text-info m-1' title='Details' aria-hidden='true'></i></a>";
                             }
+                            detailsBtn = "<a href='PurchaseDetails/" + row.id + "'><i class='fa fa-eye text-info m-1' title='Details' aria-hidden='true'></i></a>";
+
 
                             var actionBtn = editBtn + detailsBtn + deleteBtn;
                             return actionBtn;

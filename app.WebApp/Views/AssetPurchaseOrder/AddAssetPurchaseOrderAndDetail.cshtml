@@ -294,7 +294,7 @@
                 var supplierId = $(this).val();
                 if (supplierId != 0) {
                     $.ajax({
-                        url: '/AssetPurchaseOrder/GetSupplierInformation?id=' + supplierId,
+                        url: '/Supplier/GetSupplierInformation?id=' + supplierId,
                         type: 'GET',
                         success: function (data) {
                             //var supplierInformation = data.name + " " + data.phone + " " + data.email + " " + data.address;

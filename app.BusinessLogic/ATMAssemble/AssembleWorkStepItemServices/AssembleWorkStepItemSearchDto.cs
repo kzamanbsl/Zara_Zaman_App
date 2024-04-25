@@ -7,16 +7,16 @@ namespace app.Services.ATMAssemble.AssembleWorkStepItemServices
     public class AssembleWorkStepItemSearchDto : BaseDataTableSearch
     {
 
-        [DisplayName("Step Name")]
+        [DisplayName("Step Item")]
         public string Name { get; set; }
 
         [DisplayName("Description")]
         public string Description { get; set; }
 
-        [DisplayName("Step Work Name")]
+        [DisplayName("Work Step")]
         public long AssembleWorkStepId { get; set; }
 
-        [DisplayName("Step Work Name")]
+        [DisplayName("Work Step")]
         public string AssembleWorkStepName { get; set; }
 
         [DisplayName("Work Category")]

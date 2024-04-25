@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace app.Utility.UtilityServices
+﻿namespace app.Utility.UtilityServices
 {
     public class UtilityService : IUtilityService
     {
@@ -16,7 +8,7 @@ namespace app.Utility.UtilityServices
             return result;
         }
 
-        public List<object> GetEnumSelectionList<T>()
+        public List<EnumSelectListModel> GetEnumSelectionList<T>()
         {
             var result = GlobalVariable.GetEnumSelectionList<T>();
             return result;
