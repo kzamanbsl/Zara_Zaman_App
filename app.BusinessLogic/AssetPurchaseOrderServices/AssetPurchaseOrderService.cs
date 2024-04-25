@@ -198,7 +198,6 @@ namespace app.Services.AssetPurchaseOrderServices
                                                   }).OrderByDescending(x => x.Id).AsQueryable());
 
             assetPurchaseMasterModel.AssetPurchaseOrderList = await Task.Run(() => dataQuery.ToList());
-            assetPurchaseMasterModel.AssetPurchaseOrderList.ToList().ForEach((c => c.OrderStatusName = Enum.GetName(typeof(PurchaseOrderStatusEnum), c.OrderStatusId)));
 
             var masterIds = assetPurchaseMasterModel.AssetPurchaseOrderList.Select(x => x.Id);
 

@@ -24,20 +24,20 @@ namespace app.WebApp.Controllers
             _inventoryService = inventoryService;
         }
 
-        public async Task<IActionResult> Index()
-        {
-            try
-            {
-                ViewBag.StorehouseList = new SelectList((await _iDropdownService.StorehouseSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
-                ViewBag.SupplierList = new SelectList((await _iDropdownService.SupplierSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
-                PurchaseOrderViewModel viewModel = await _iPurchaseOrderService.GetAllRecord();
-                return View(viewModel);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message, ex);
-            }
-        }
+        //public async Task<IActionResult> Index()
+        //{
+        //    try
+        //    {
+        //        ViewBag.StorehouseList = new SelectList((await _iDropdownService.StorehouseSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
+        //        ViewBag.SupplierList = new SelectList((await _iDropdownService.SupplierSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
+        //        PurchaseOrderViewModel viewModel = await _iPurchaseOrderService.GetAllRecord();
+        //        return View(viewModel);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw new Exception(ex.Message, ex);
+        //    }
+        //}
 
 
         [HttpGet]
@@ -143,20 +143,6 @@ namespace app.WebApp.Controllers
             var res = await _iPurchaseOrderService.UpdatePurchaseOrder(vm);            
             return RedirectToAction("Search");
         }
-
-        #region Get Supplier
-
-        public async Task<JsonResult> GetSupplierInformation(long id)
-        {
-            if (id != 0)
-            {
-                var model = await _iPurchaseOrderService.GetSupplierInformation(id);
-                return Json(model);
-            }
-            return Json(null);
-        }
-        #endregion
-
 
         #region Search
 

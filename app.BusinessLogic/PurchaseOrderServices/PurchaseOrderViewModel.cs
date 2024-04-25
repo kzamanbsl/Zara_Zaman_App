@@ -10,7 +10,7 @@ namespace app.Services.PurchaseOrderServices
         public string Description { get; set; }
         public string OrderNo { get; set; }
         public int OrderStatusId { get; set; }
-        public string OrderStatusName { get; set; }
+        public string OrderStatusName => GlobalVariable.GetEnumDescription((PurchaseOrderStatusEnum)OrderStatusId);
         public double TotalAmount { get; set; }
         public int PurchaseTypeId { get; set; }
         //public bool IsOpening { get; set; } = false;

@@ -525,7 +525,10 @@ namespace app.Services.ATMAssemble.AssembleWorkServices
             {
                 searchResult = searchResult.Where(c => c.AssembleWorkCategoryId == searchModel.AssembleWorkCategoryId);
             }
-          
+            if (searchModel?.StatusId is > 0)
+            {
+                searchResult = searchResult.Where(c => c.StatusId == searchModel.StatusId);
+            }
             if (!string.IsNullOrEmpty(filter))
             {
                 filter = filter.ToLower();

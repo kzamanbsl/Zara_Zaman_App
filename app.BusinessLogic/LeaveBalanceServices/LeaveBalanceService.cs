@@ -21,7 +21,7 @@ namespace app.Services.LeaveBalanceServices
 
         public async Task<bool> AddRecord(LeaveBalanceViewModel vm)
         {
-            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id==vm.Id && f.LeaveCategoryId ==vm.LeaveCategoryId);
+            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id==vm.Id && f.IsActive==true && f.LeaveCategoryId ==vm.LeaveCategoryId);
             if (checkName == null)
             {
                 LeaveBalance com = new LeaveBalance();
@@ -35,9 +35,10 @@ namespace app.Services.LeaveBalanceServices
 
             return false;
         }
+
         public async Task<bool> UpdateRecord(LeaveBalanceViewModel vm)
         {
-            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id == vm.Id && f.LeaveCategoryId == vm.LeaveCategoryId);
+            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id != vm.Id && f.IsActive==true && f.LeaveCategoryId == vm.LeaveCategoryId);
             if (checkName == null)
             {
                 var result = await _iEntityRepository.GetByIdAsync(vm.Id);
@@ -60,6 +61,7 @@ namespace app.Services.LeaveBalanceServices
             model.Description = result.Description;
             return model;
         }
+
         public async Task<bool> DeleteRecord(long id)
         {
             var result = await _iEntityRepository.GetByIdAsync(id);
@@ -83,6 +85,7 @@ namespace app.Services.LeaveBalanceServices
                                                            }).AsEnumerable());
             return model;
         }
+
         public async Task<DataTablePagination<LeaveBalanceSearchDto>> SearchAsync(DataTablePagination<LeaveBalanceSearchDto> searchDto)
         {
             var searchResult = _dbContext.LeaveBalance.Include(c => c.LeaveCategory).Where(c => c.IsActive == true).AsNoTracking();
@@ -98,7 +101,7 @@ namespace app.Services.LeaveBalanceServices
                 filter = filter.ToLower();
                 searchResult = searchResult.Where(c =>
                     c.LeaveCategory.Name.ToLower().Contains(filter)
-                    || c.LeaveQty.ToString().Contains(filter)
+                    || c.LeaveQty.ToString().ToLower().Contains(filter)
                     || c.Description.ToLower().Contains(filter)
                 );
             }
@@ -119,7 +122,7 @@ namespace app.Services.LeaveBalanceServices
                 SerialNo = ++sl,
                 Id = c.Id,
                 LeaveCategoryId = c.LeaveCategoryId,
-                LeaveCategoryName = c.LeaveCategory.Name,
+                LeaveCategoryName = c.LeaveCategory?.Name,
                 LeaveQty = c.LeaveQty,
                 Description = c.Description,
             }).ToList();

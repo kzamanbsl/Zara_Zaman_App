@@ -20,7 +20,7 @@ namespace app.Services.PurchaseOrderServices
         public int OrderStatusId { get; set; }
 
         [DisplayName("Status")]
-        public string OrderStatusName { get; set; }
+        public string OrderStatusName => GlobalVariable.GetEnumDescription((PurchaseOrderStatusEnum)OrderStatusId);
 
         [DisplayName("Total Amount")]
         public double TotalAmount { get; set; }
