@@ -2,11 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using app.Services.DropdownServices;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using app.Services.AttendanceLogServices;
-using app.EntityModel.AppModels;
-using app.WebApp.Models;
 using app.EntityModel.DataTablePaginationModels;
-using app.Services.ProductServices;
 
 namespace app.WebApp.Controllers
 {
