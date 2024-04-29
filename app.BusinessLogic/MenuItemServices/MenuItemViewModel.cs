@@ -21,6 +21,8 @@ namespace app.Services.MenuItemServices
         public string MenuName { get; set; }
         public bool IsActive { get; set; }
         public bool IsPermission { get; set; }
+
+        [DisplayName("Is Menu Show")]
         public bool IsMenuShow { get; set; } = true;
 
         public IEnumerable<MenuItemViewModel> DataList { get; set; }

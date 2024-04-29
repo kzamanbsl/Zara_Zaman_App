@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace app.WebApp.AdminControllers
 {
-    [Authorize("kgecomAuthorizatio")]
+   // [Authorize("kgecomAuthorizatio")]
     public class MainMenuController : Controller
     {
         private readonly IMainMenuService _iService;
@@ -35,13 +35,6 @@ namespace app.WebApp.AdminControllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Delete(long id)
-        {
-            var res = await _iService.DeleteRecord(id);
-            return RedirectToAction("Search");
-        }
-
-        [HttpGet]
         public async Task<IActionResult> UpdateRecord(long id)
         {
             MainMenuViewModel viewModel = new MainMenuViewModel();
@@ -61,12 +54,17 @@ namespace app.WebApp.AdminControllers
             return View(viewModel);
         }
 
-        #region Search
+        [HttpGet]
+        public async Task<IActionResult> Delete(long id)
+        {
+            var res = await _iService.DeleteRecord(id);
+            return RedirectToAction("Search");
+        }
+
 
         [HttpGet]
         public async Task<IActionResult> Search()
         {
-
             return View();
         }
 
@@ -76,8 +74,6 @@ namespace app.WebApp.AdminControllers
             var dataTable = await _iService.SearchAsync(searchDto);
             return Json(dataTable);
         }
-
-        #endregion
 
     }
 }

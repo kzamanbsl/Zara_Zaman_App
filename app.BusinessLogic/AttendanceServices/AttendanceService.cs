@@ -103,15 +103,14 @@ namespace app.Services.AttendanceServices
 
         public async Task<AttendanceViewModel> GetRecordById(long id)
         {
-            var result = await _iEntityRepository.GetByIdAsync(id)
-;
+            var result = await _iEntityRepository.GetByIdAsync(id);
             AttendanceViewModel model = new AttendanceViewModel();
             model.Id = result.Id;
             model.EmployeeId = result.EmployeeId;
             model.ShiftId = result.ShiftId;
             model.AttendanceDate = result.AttendanceDate;
             model.LoginTime = result.LoginTime;
-            model.LogoutTime = (DateTime)result.LogoutTime;
+            model.LogoutTime = result.LogoutTime;
             model.Remarks = result.Remarks;
             return model;
         }

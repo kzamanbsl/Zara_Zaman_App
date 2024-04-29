@@ -27,6 +27,7 @@ namespace app.Services.DropdownServices
         public async Task<IEnumerable<DropdownViewModel>> CompanySelectionList()
         {
             IEnumerable<DropdownViewModel> dropDownViewModels = await Task.Run(() => (from t1 in _dbContext.Company
+                                                                                      where t1.IsActive==true
                                                                                       select new DropdownViewModel
                                                                                       {
                                                                                           Id = t1.Id,
@@ -48,6 +49,7 @@ namespace app.Services.DropdownServices
         public async Task<IEnumerable<DropdownViewModel>> DesignationSelectionList()
         {
             IEnumerable<DropdownViewModel> dropDownViewModels = await Task.Run(() => (from t1 in _dbContext.Designation
+                                                                                      where t1.IsActive == true
                                                                                       select new DropdownViewModel
                                                                                       {
                                                                                           Id = t1.Id,
@@ -59,6 +61,7 @@ namespace app.Services.DropdownServices
         public async Task<IEnumerable<DropdownViewModel>> ShiftSelectionList()
         {
             IEnumerable<DropdownViewModel> dropDownViewModels = await Task.Run(() => (from t1 in _dbContext.Shift
+                                                                                      where t1.IsActive == true
                                                                                       select new DropdownViewModel
                                                                                       {
                                                                                           Id = t1.Id,
@@ -70,6 +73,7 @@ namespace app.Services.DropdownServices
         public async Task<IEnumerable<DropdownViewModel>> LeaveCategorySelectionList()
         {
             IEnumerable<DropdownViewModel> dropDownViewModels = await Task.Run(() => (from t1 in _dbContext.LeaveCategory
+                                                                                      where t1.IsActive == true
                                                                                       select new DropdownViewModel
                                                                                       {
                                                                                           Id = t1.Id,
@@ -79,7 +83,8 @@ namespace app.Services.DropdownServices
         }
         public async Task<IEnumerable<DropdownViewModel>> EmployeeSelectionList(long managerId = 0)
         {
-            IEnumerable<DropdownViewModel> dropDownViewModels = await Task.Run(() => (from t1 in _dbContext.Employee.Where(e => e.IsActive)
+            IEnumerable<DropdownViewModel> dropDownViewModels = await Task.Run(() => (from t1 in _dbContext.Employee
+                                                                                      where t1.IsActive == true
                                                                                       select new DropdownViewModel
                                                                                       {
                                                                                           Id = t1.Id,

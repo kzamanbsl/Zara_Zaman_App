@@ -1,12 +1,5 @@
-﻿using app.EntityModel.AppModels;
-using app.EntityModel.DataTableSearchModels;
-using app.Services.ProductServices;
-using System;
-using System.Collections.Generic;
+﻿using app.EntityModel.DataTableSearchModels;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace app.Services.CustomerServices
 {
@@ -22,6 +15,8 @@ namespace app.Services.CustomerServices
         public string Email { get; set; }
         public string Description { get; set; }
         public string Address { get; set; }
+
+        [DisplayName("BIN")]
         public string BusinessIdNo { get; set; }
         public string BankName { get; set; }
 

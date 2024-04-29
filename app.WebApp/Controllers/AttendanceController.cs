@@ -70,6 +70,7 @@ namespace app.WebApp.Controllers
             var result = await _iService.GetRecordById(id);
             return View(result);
         }
+
         [HttpPost]
         public async Task<IActionResult> UpdateRecord(AttendanceViewModel model)
         {

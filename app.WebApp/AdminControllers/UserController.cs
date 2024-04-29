@@ -72,6 +72,20 @@ namespace app.WebApp.AdminControllers
             var res = await _iUserService.SoftDelete(id);
             return RedirectToAction("Search");
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Search()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Search(DataTablePagination<UserSearchDto> searchDto)
+        {
+            var dataTable = await _iUserService.SearchAsync(searchDto);
+            return Json(dataTable);
+        }
+
         #endregion
 
         #region Role Section   
@@ -86,23 +100,6 @@ namespace app.WebApp.AdminControllers
 
         #endregion
 
-        #region Search
-
-        [HttpGet]
-        public async Task<IActionResult> Search()
-        {
-            
-            return View();
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Search(DataTablePagination<UserSearchDto> searchDto)
-        {
-            var dataTable = await _iUserService.SearchAsync(searchDto);
-            return Json(dataTable);
-        }
-
-        #endregion
 
     }
 }

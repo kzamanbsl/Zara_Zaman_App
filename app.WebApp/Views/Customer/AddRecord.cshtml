@@ -9,10 +9,10 @@
         <div class="breadcrumb d-flex justify-content-between align-items-center  pl-3 pr-3">
             <ol class="breadcrumb mb-0 p-0">
                 <li class="breadcrumb-item"><a href="/Admin/Index">Home</a></li>
-                <li class="breadcrumb-item active"> Customer List </li>
+                <li class="breadcrumb-item active"> Customer </li>
             </ol>
             <div>
-                <a asp-action="Search"><i class="fa fa-list"></i>  Customer List </a>
+                <a asp-action="Search"><i class="fa fa-list"></i> Customer List </a>
             </div>
         </div>
     </div>
@@ -36,48 +36,34 @@
                         <form asp-action="AddRecord" method="post">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                             <div class="row">
-                                <div class="col-md-3">
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <label asp-for="Name" class="control-label"></label>
                                         <input asp-for="Name" class="form-control" required />
                                         <span asp-validation-for="Name" class="text-danger"></span>
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <label asp-for="Phone" class="control-label"></label>
-                                        <input asp-for="Phone" class="form-control" required/>
+                                        <input asp-for="Phone" class="form-control" required />
                                         <span asp-validation-for="Phone" class="text-danger"></span>
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <label asp-for="Email" class="control-label"></label>
-                                        <input asp-for="Email" class="form-control"/>
+                                        <input asp-for="Email" class="form-control" />
                                         <span asp-validation-for="Email" class="text-danger"></span>
-                                    </div>
-                                </div>
-                                 <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label asp-for="BusinessIdNo" class="control-label">Business ID No</label>
-                                        <input asp-for="BusinessIdNo" class="form-control" />
-                                        <span asp-validation-for="BusinessIdNo" class="text-danger"></span>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label asp-for="Description" class="control-label"></label>
-                                        <textarea asp-for="Description" class="form-control" rows="1"></textarea>
-                                        <span asp-validation-for="Description" class="text-danger"></span>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label asp-for="Address" class="control-label"></label>
-                                        <textarea asp-for="Address" class="form-control" rows="1"></textarea>
-                                        <span asp-validation-for="Address" class="text-danger"></span>
+                                        <label asp-for="BusinessIdNo" class="control-label">BIN</label>
+                                        <input asp-for="BusinessIdNo" class="form-control" />
+                                        <span asp-validation-for="BusinessIdNo" class="text-danger"></span>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
@@ -87,27 +73,37 @@
                                         <span asp-validation-for="BankName" class="text-danger"></span>
                                     </div>
                                 </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label asp-for="Address" class="control-label"></label>
+                                        <textarea asp-for="Address" class="form-control" rows="1"></textarea>
+                                        <span asp-validation-for="Address" class="text-danger"></span>
+                                    </div>
+                                </div>
                             </div>
-                           @*  <div class="row">
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label>District</label>
-                                        <select class="form-control" asp-for="DistrictId" id="districtId" asp-items=" ViewBag.District" required>
-                                            <option value="0" selected>--District--</option>
-                                            <span asp-validation-for="DistrictId" class="text-danger"></span>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label asp-for="UpazilaId">Upzilla</label>
-                                        <select asp-for="UpazilaId" class="form-control" id="upazilaId">
-                                            <option value="">-- Upzilla --</option>
-                                        </select>
-                                        <span asp-validation-for="UpazilaId" class="text-danger"></span>
-                                    </div>
-                                </div>
+
+
+                            @*  <div class="row">
+                            <div class="col-md-4">
+                            <div class="form-group">
+                            <label>District</label>
+                            <select class="form-control" asp-for="DistrictId" id="districtId" asp-items=" ViewBag.District" required>
+                            <option value="0" selected>--District--</option>
+                            <span asp-validation-for="DistrictId" class="text-danger"></span>
+                            </select>
+                            </div>
+                            </div>
+                            <div class="col-md-4">
+                            <div class="form-group">
+                            <label asp-for="UpazilaId">Upzilla</label>
+                            <select asp-for="UpazilaId" class="form-control" id="upazilaId">
+                            <option value="">-- Upzilla --</option>
+                            </select>
+                            <span asp-validation-for="UpazilaId" class="text-danger"></span>
+                            </div>
+                            </div>
                             </div> *@
+
                             <div class="form-group" style="float:right">
                                 <input type="submit" value="Create" class="btn btn-primary" />
                             </div>
@@ -123,50 +119,50 @@
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
+
     <script>
         $(document).ready(function () {
             $('#Configuration').addClass('menu-open');
             $('#CustomerAddRecord').addClass('active');
         });
 
-    </script>
-    <script type="text/javascript">
-        $('#divisionId').change(function () {
-            $.ajax({
-                type: "post",
-                url: "/Dropdown/GetDistrictSelectionList",
-                data: { divisionId: $('#divisionId').val() },
-                dataType: "json",
-                success: function (data) {
-                    var district = "<select>";
-                    district = district + '<option value="">--Select--</option>';
-                    for (var i = 0; i < data.length; i++) {
-                        district = district + '<option value=' + data[i].id + '>' + data[i].name + '</option>';
-                    }
-                    district = district + '</select>';
-                    $('#districtId').html(district);
-                }
-            });
-        });
-        $('#districtId').change(function () {
-            $.ajax({
-                type: "post",
-                url: "/Dropdown/GetUpazilaSelectionList",
-                data: { districtId: $('#districtId').val() },
+        // $('#divisionId').change(function () {
+        //     $.ajax({
+        //         type: "post",
+        //         url: "/Dropdown/GetDistrictSelectionList",
+        //         data: { divisionId: $('#divisionId').val() },
+        //         dataType: "json",
+        //         success: function (data) {
+        //             var district = "<select>";
+        //             district = district + '<option value="">--Select--</option>';
+        //             for (var i = 0; i < data.length; i++) {
+        //                 district = district + '<option value=' + data[i].id + '>' + data[i].name + '</option>';
+        //             }
+        //             district = district + '</select>';
+        //             $('#districtId').html(district);
+        //         }
+        //     });
+        // });
 
-                datatype: "json",
-                traditional: true,
-                success: function (data) {
-                    var upazila = "<select>";
-                    upazila = upazila + '<option value="">--Select--</option>';
-                    for (var i = 0; i < data.length; i++) {
-                        upazila = upazila + '<option value=' + data[i].id + '>' + data[i].name + '</option>';
-                    }
-                    upazila = upazila + '</select>';
-                    $('#upazilaId').html(upazila);
-                }
-            });
-        });
+        // $('#districtId').change(function () {
+        //     $.ajax({
+        //         type: "post",
+        //         url: "/Dropdown/GetUpazilaSelectionList",
+        //         data: { districtId: $('#districtId').val() },
+
+        //         datatype: "json",
+        //         traditional: true,
+        //         success: function (data) {
+        //             var upazila = "<select>";
+        //             upazila = upazila + '<option value="">--Select--</option>';
+        //             for (var i = 0; i < data.length; i++) {
+        //                 upazila = upazila + '<option value=' + data[i].id + '>' + data[i].name + '</option>';
+        //             }
+        //             upazila = upazila + '</select>';
+        //             $('#upazilaId').html(upazila);
+        //         }
+        //     });
+        // });
+
     </script>
 }
-    
