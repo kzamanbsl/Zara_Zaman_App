@@ -4,6 +4,7 @@ namespace app.Services.SupplierServices
 {
     public class SupplierViewModel:BaseViewModel
     {
+        public long SupplierCategoryId { get; set; }
         [DisplayName("Name")]
         public string Name { get; set; }
 

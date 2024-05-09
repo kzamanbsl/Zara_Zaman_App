@@ -1,11 +1,11 @@
-﻿using app.EntityModel.AppModels;
-using app.Infrastructure.Auth;
+﻿using app.Infrastructure.Auth;
 using app.Infrastructure.Repository;
 using app.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using app.EntityModel.DataTablePaginationModels;
 using Microsoft.AspNetCore.Identity;
 using app.Services.UserServices;
+using app.EntityModel.AppModels.EmployeeManage;
 
 namespace app.Services.EmployeeServices
 {

@@ -9,7 +9,7 @@ namespace app.Infrastructure.SeedData
     {
         public static void SeedData(ModelBuilder builder)
         {
-            var dateString = "11/21/2023 09:00:00";
+            var dateString = "11/01/2023 09:00:00";
 
             builder.Entity<IdentityRole>().HasData(
                 new IdentityRole { Id = "8e445865-a24d-4543-a6c6-9443d048cdb9", Name = "Customer", NormalizedName = "CUSTOMER" },

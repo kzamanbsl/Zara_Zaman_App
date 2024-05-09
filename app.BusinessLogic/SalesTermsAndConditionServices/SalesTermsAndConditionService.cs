@@ -1,10 +1,10 @@
-﻿using app.EntityModel.AppModels;
-using app.Infrastructure.Auth;
+﻿using app.Infrastructure.Auth;
 using app.Infrastructure.Repository;
 using app.Infrastructure;
 using app.EntityModel.DataTablePaginationModels;
 using app.Services.ProductServices;
 using Microsoft.EntityFrameworkCore;
+using app.EntityModel.AppModels.Sales;
 
 namespace app.Services.SalesTermsAndConditonServices
 {

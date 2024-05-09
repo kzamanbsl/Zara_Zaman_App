@@ -23,7 +23,114 @@ namespace app.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("app.EntityModel.AppModels.AssetAllocation", b =>
+            modelBuilder.Entity("app.EntityModel.AppModels.Address.Country", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Code")
+                        .HasMaxLength(4)
+                        .HasColumnType("nvarchar(4)");
+
+                    b.Property<string>("ISOCode")
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Country", "dbo");
+                });
+
+            modelBuilder.Entity("app.EntityModel.AppModels.Address.District", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("BnName")
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.Property<int>("DivisionId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Lat")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Lon")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<string>("Website")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DivisionId");
+
+                    b.ToTable("District", "dbo");
+                });
+
+            modelBuilder.Entity("app.EntityModel.AppModels.Address.Division", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("BnName")
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Division", "dbo");
+                });
+
+            modelBuilder.Entity("app.EntityModel.AppModels.Address.Upazila", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("BnName")
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.Property<int>("DistrictId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DistrictId");
+
+                    b.ToTable("Upazila", "dbo");
+                });
+
+            modelBuilder.Entity("app.EntityModel.AppModels.AssetManage.AssetAllocation", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -74,7 +181,7 @@ namespace app.Infrastructure.Migrations
                     b.ToTable("AssetAllocation", "dbo");
                 });
 
-            modelBuilder.Entity("app.EntityModel.AppModels.AssetAllocationDetail", b =>
+            modelBuilder.Entity("app.EntityModel.AppModels.AssetManage.AssetAllocationDetail", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -122,7 +229,7 @@ namespace app.Infrastructure.Migrations
                     b.ToTable("AssetAllocationDetail", "dbo");
                 });
 
-            modelBuilder.Entity("app.EntityModel.AppModels.AssetInventory", b =>
+            modelBuilder.Entity("app.EntityModel.AppModels.AssetManage.AssetInventory", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -431,7 +538,7 @@ namespace app.Infrastructure.Migrations
                     b.ToTable("AssembleWorkStepItem", "dbo");
                 });
 
-            modelBuilder.Entity("app.EntityModel.AppModels.Attendance", b =>
+            modelBuilder.Entity("app.EntityModel.AppModels.Attendance.Attendance", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -482,7 +589,7 @@ namespace app.Infrastructure.Migrations
                     b.ToTable("Attendance", "dbo");
                 });
 
-            modelBuilder.Entity("app.EntityModel.AppModels.AttendanceLog", b =>
+            modelBuilder.Entity("app.EntityModel.AppModels.Attendance.AttendanceLog", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -571,31 +678,6 @@ namespace app.Infrastructure.Migrations
                     b.ToTable("BusinessCenter", "dbo");
                 });
 
-            modelBuilder.Entity("app.EntityModel.AppModels.Country", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Code")
-                        .HasMaxLength(4)
-                        .HasColumnType("nvarchar(4)");
-
-                    b.Property<string>("ISOCode")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Country", "dbo");
-                });
-
             modelBuilder.Entity("app.EntityModel.AppModels.Customer", b =>
                 {
                     b.Property<long>("Id")
@@ -650,130 +732,6 @@ namespace app.Infrastructure.Migrations
                     b.ToTable("Customer", "dbo");
                 });
 
-            modelBuilder.Entity("app.EntityModel.AppModels.Department", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("UpdatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Department", "dbo");
-                });
-
-            modelBuilder.Entity("app.EntityModel.AppModels.Designation", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("UpdatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Designation", "dbo");
-                });
-
-            modelBuilder.Entity("app.EntityModel.AppModels.District", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("BnName")
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
-
-                    b.Property<int>("DivisionId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Lat")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Lon")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
-
-                    b.Property<string>("Website")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DivisionId");
-
-                    b.ToTable("District", "dbo");
-                });
-
-            modelBuilder.Entity("app.EntityModel.AppModels.Division", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("BnName")
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Division", "dbo");
-                });
-
             modelBuilder.Entity("app.EntityModel.AppModels.DropdownItem", b =>
                 {
                     b.Property<long>("Id")
@@ -813,7 +771,7 @@ namespace app.Infrastructure.Migrations
                     b.ToTable("DropdownItem", "dbo");
                 });
 
-            modelBuilder.Entity("app.EntityModel.AppModels.Employee", b =>
+            modelBuilder.Entity("app.EntityModel.AppModels.EmployeeManage.Employee", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -1010,7 +968,7 @@ namespace app.Infrastructure.Migrations
                     b.ToTable("Employee", "dbo");
                 });
 
-            modelBuilder.Entity("app.EntityModel.AppModels.EmployeeCategory", b =>
+            modelBuilder.Entity("app.EntityModel.AppModels.EmployeeManage.EmployeeCategory", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -1042,7 +1000,7 @@ namespace app.Infrastructure.Migrations
                     b.ToTable("EmployeeCategory", "dbo");
                 });
 
-            modelBuilder.Entity("app.EntityModel.AppModels.EmployeeGrade", b =>
+            modelBuilder.Entity("app.EntityModel.AppModels.EmployeeManage.EmployeeGrade", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -1078,7 +1036,7 @@ namespace app.Infrastructure.Migrations
                     b.ToTable("EmployeeGrade", "dbo");
                 });
 
-            modelBuilder.Entity("app.EntityModel.AppModels.EmployeeServiceType", b =>
+            modelBuilder.Entity("app.EntityModel.AppModels.EmployeeManage.EmployeeServiceType", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -1175,7 +1133,7 @@ namespace app.Infrastructure.Migrations
                     b.ToTable("Inventory", "dbo");
                 });
 
-            modelBuilder.Entity("app.EntityModel.AppModels.JobStatus", b =>
+            modelBuilder.Entity("app.EntityModel.AppModels.Job.JobStatus", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -1207,7 +1165,7 @@ namespace app.Infrastructure.Migrations
                     b.ToTable("JobStatus", "dbo");
                 });
 
-            modelBuilder.Entity("app.EntityModel.AppModels.LeaveApplication", b =>
+            modelBuilder.Entity("app.EntityModel.AppModels.Leave.LeaveApplication", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -1277,7 +1235,7 @@ namespace app.Infrastructure.Migrations
                     b.ToTable("LeaveApplication", "dbo");
                 });
 
-            modelBuilder.Entity("app.EntityModel.AppModels.LeaveBalance", b =>
+            modelBuilder.Entity("app.EntityModel.AppModels.Leave.LeaveBalance", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -1317,7 +1275,7 @@ namespace app.Infrastructure.Migrations
                     b.ToTable("LeaveBalance", "dbo");
                 });
 
-            modelBuilder.Entity("app.EntityModel.AppModels.LeaveCategory", b =>
+            modelBuilder.Entity("app.EntityModel.AppModels.Leave.LeaveCategory", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -1349,7 +1307,75 @@ namespace app.Infrastructure.Migrations
                     b.ToTable("LeaveCategory", "dbo");
                 });
 
-            modelBuilder.Entity("app.EntityModel.AppModels.OfficeType", b =>
+            modelBuilder.Entity("app.EntityModel.AppModels.Office.Department", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Department", "dbo");
+                });
+
+            modelBuilder.Entity("app.EntityModel.AppModels.Office.Designation", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Designation", "dbo");
+                });
+
+            modelBuilder.Entity("app.EntityModel.AppModels.Office.OfficeType", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -1379,6 +1405,44 @@ namespace app.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("OfficeType", "dbo");
+                });
+
+            modelBuilder.Entity("app.EntityModel.AppModels.Office.Shift", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("EndAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<DateTime>("StartAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Shift", "dbo");
                 });
 
             modelBuilder.Entity("app.EntityModel.AppModels.Product", b =>
@@ -1433,7 +1497,7 @@ namespace app.Infrastructure.Migrations
                     b.ToTable("Product", "dbo");
                 });
 
-            modelBuilder.Entity("app.EntityModel.AppModels.ProductCategory", b =>
+            modelBuilder.Entity("app.EntityModel.AppModels.Purchase.ProductCategory", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -1472,7 +1536,7 @@ namespace app.Infrastructure.Migrations
                     b.ToTable("ProductCategory", "dbo");
                 });
 
-            modelBuilder.Entity("app.EntityModel.AppModels.PurchaseOrder", b =>
+            modelBuilder.Entity("app.EntityModel.AppModels.Purchase.PurchaseOrder", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -1529,7 +1593,7 @@ namespace app.Infrastructure.Migrations
                     b.ToTable("PurchaseOrder", "dbo");
                 });
 
-            modelBuilder.Entity("app.EntityModel.AppModels.PurchaseOrderDetail", b =>
+            modelBuilder.Entity("app.EntityModel.AppModels.Purchase.PurchaseOrderDetail", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -1585,7 +1649,7 @@ namespace app.Infrastructure.Migrations
                     b.ToTable("PurchaseOrderDetail", "dbo");
                 });
 
-            modelBuilder.Entity("app.EntityModel.AppModels.SalesOrder", b =>
+            modelBuilder.Entity("app.EntityModel.AppModels.Sales.SalesOrder", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -1605,9 +1669,6 @@ namespace app.Infrastructure.Migrations
                     b.Property<string>("DeliveryAddress")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("DeliveryDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("Description")
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
@@ -1621,9 +1682,6 @@ namespace app.Infrastructure.Migrations
                     b.Property<int>("OrderStatusId")
                         .HasColumnType("int");
 
-                    b.Property<decimal>("OverallDiscount")
-                        .HasColumnType("decimal(18,2)");
-
                     b.Property<int>("PaymentStatusId")
                         .HasColumnType("int");
 
@@ -1632,9 +1690,6 @@ namespace app.Infrastructure.Migrations
 
                     b.Property<long>("StorehouseId")
                         .HasColumnType("bigint");
-
-                    b.Property<string>("TermsAndCondition")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
@@ -1651,7 +1706,7 @@ namespace app.Infrastructure.Migrations
                     b.ToTable("SalesOrder", "dbo");
                 });
 
-            modelBuilder.Entity("app.EntityModel.AppModels.SalesOrderDetails", b =>
+            modelBuilder.Entity("app.EntityModel.AppModels.Sales.SalesOrderDetails", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -1665,13 +1720,7 @@ namespace app.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<decimal>("Discount")
-                        .HasColumnType("decimal(18,2)");
-
                     b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsForService")
                         .HasColumnType("bit");
 
                     b.Property<long>("ProductId")
@@ -1719,7 +1768,7 @@ namespace app.Infrastructure.Migrations
                     b.ToTable("SalesOrderDetails", "dbo");
                 });
 
-            modelBuilder.Entity("app.EntityModel.AppModels.SalesProductDetail", b =>
+            modelBuilder.Entity("app.EntityModel.AppModels.Sales.SalesProductDetail", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -1767,7 +1816,7 @@ namespace app.Infrastructure.Migrations
                     b.ToTable("SalesProductDetail", "dbo");
                 });
 
-            modelBuilder.Entity("app.EntityModel.AppModels.SalesTermsAndCondition", b =>
+            modelBuilder.Entity("app.EntityModel.AppModels.Sales.SalesTermsAndCondition", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -1803,45 +1852,7 @@ namespace app.Infrastructure.Migrations
                     b.ToTable("SalesTermsAndCondition", "dbo");
                 });
 
-            modelBuilder.Entity("app.EntityModel.AppModels.Shift", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("EndAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<DateTime>("StartAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("UpdatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Shift", "dbo");
-                });
-
-            modelBuilder.Entity("app.EntityModel.AppModels.Supplier", b =>
+            modelBuilder.Entity("app.EntityModel.AppModels.SupplierManage.Supplier", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -1887,10 +1898,7 @@ namespace app.Infrastructure.Migrations
                         .HasMaxLength(11)
                         .HasColumnType("nvarchar(11)");
 
-                    b.Property<long?>("SupplierCategoryId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("SupplierId")
+                    b.Property<long>("SupplierCategoryId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("UpdatedBy")
@@ -1906,7 +1914,7 @@ namespace app.Infrastructure.Migrations
                     b.ToTable("Supplier", "dbo");
                 });
 
-            modelBuilder.Entity("app.EntityModel.AppModels.SupplierCategory", b =>
+            modelBuilder.Entity("app.EntityModel.AppModels.SupplierManage.SupplierCategory", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -1924,7 +1932,8 @@ namespace app.Infrastructure.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
@@ -1971,32 +1980,6 @@ namespace app.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Unit", "dbo");
-                });
-
-            modelBuilder.Entity("app.EntityModel.AppModels.Upazila", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("BnName")
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
-
-                    b.Property<int>("DistrictId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DistrictId");
-
-                    b.ToTable("Upazila", "dbo");
                 });
 
             modelBuilder.Entity("app.EntityModel.CoreModel.Company", b =>
@@ -2077,7 +2060,7 @@ namespace app.Infrastructure.Migrations
                         {
                             Id = 1L,
                             CreatedBy = "System Admin",
-                            CreatedOn = new DateTime(2023, 11, 21, 9, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 1, 11, 9, 0, 0, 0, DateTimeKind.Unspecified),
                             Icon = "<i class=\"fas fa-user\"></i>",
                             IsActive = true,
                             Name = "User Management",
@@ -2087,7 +2070,7 @@ namespace app.Infrastructure.Migrations
                         {
                             Id = 2L,
                             CreatedBy = "System Admin",
-                            CreatedOn = new DateTime(2023, 11, 21, 9, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 1, 11, 9, 0, 0, 0, DateTimeKind.Unspecified),
                             Icon = "<i class=\"fas fa-cog\"></i>",
                             IsActive = true,
                             Name = "Configuration",
@@ -2157,7 +2140,7 @@ namespace app.Infrastructure.Migrations
                             Action = "AddRecord",
                             Controller = "MainMenu",
                             CreatedBy = "System Admin",
-                            CreatedOn = new DateTime(2023, 11, 21, 9, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 1, 11, 9, 0, 0, 0, DateTimeKind.Unspecified),
                             Icon = "<i class=\"fas fa-plus\"></i>",
                             IsActive = true,
                             IsMenuShow = true,
@@ -2172,7 +2155,7 @@ namespace app.Infrastructure.Migrations
                             Action = "Index",
                             Controller = "MainMenu",
                             CreatedBy = "System Admin",
-                            CreatedOn = new DateTime(2023, 11, 21, 9, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 1, 11, 9, 0, 0, 0, DateTimeKind.Unspecified),
                             Icon = "<i class=\"fas fa-list\"></i>",
                             IsActive = true,
                             IsMenuShow = true,
@@ -2187,7 +2170,7 @@ namespace app.Infrastructure.Migrations
                             Action = "AddRecord",
                             Controller = "MenuItem",
                             CreatedBy = "System Admin",
-                            CreatedOn = new DateTime(2023, 11, 21, 9, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 1, 11, 9, 0, 0, 0, DateTimeKind.Unspecified),
                             Icon = "<i class=\"fas fa-plus\"></i>",
                             IsActive = true,
                             IsMenuShow = true,
@@ -2202,7 +2185,7 @@ namespace app.Infrastructure.Migrations
                             Action = "Index",
                             Controller = "MenuItem",
                             CreatedBy = "System Admin",
-                            CreatedOn = new DateTime(2023, 11, 21, 9, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 1, 11, 9, 0, 0, 0, DateTimeKind.Unspecified),
                             Icon = "<i class=\"fas fa-list\"></i>",
                             IsActive = true,
                             IsMenuShow = true,
@@ -2217,7 +2200,7 @@ namespace app.Infrastructure.Migrations
                             Action = "AddPermission",
                             Controller = "UserPermission",
                             CreatedBy = "System Admin",
-                            CreatedOn = new DateTime(2023, 11, 21, 9, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 1, 11, 9, 0, 0, 0, DateTimeKind.Unspecified),
                             Icon = "<i class=\"fas fa-plus\"></i>",
                             IsActive = true,
                             IsMenuShow = true,
@@ -2232,7 +2215,7 @@ namespace app.Infrastructure.Migrations
                             Action = "AddRecord",
                             Controller = "Company",
                             CreatedBy = "System Admin",
-                            CreatedOn = new DateTime(2023, 11, 21, 9, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 1, 11, 9, 0, 0, 0, DateTimeKind.Unspecified),
                             Icon = "<i class=\"fas fa-plus\"></i>",
                             IsActive = true,
                             IsMenuShow = true,
@@ -2247,7 +2230,7 @@ namespace app.Infrastructure.Migrations
                             Action = "Index",
                             Controller = "Company",
                             CreatedBy = "System Admin",
-                            CreatedOn = new DateTime(2023, 11, 21, 9, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 1, 11, 9, 0, 0, 0, DateTimeKind.Unspecified),
                             Icon = "<i class=\"fas fa-list\"></i>",
                             IsActive = true,
                             IsMenuShow = true,
@@ -2299,7 +2282,7 @@ namespace app.Infrastructure.Migrations
                         {
                             Id = 1L,
                             CreatedBy = "System Admin",
-                            CreatedOn = new DateTime(2023, 11, 21, 9, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 1, 11, 9, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             MenuItemId = 1L,
                             OrderNo = 0,
@@ -2309,7 +2292,7 @@ namespace app.Infrastructure.Migrations
                         {
                             Id = 2L,
                             CreatedBy = "System Admin",
-                            CreatedOn = new DateTime(2023, 11, 21, 9, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 1, 11, 9, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             MenuItemId = 2L,
                             OrderNo = 0,
@@ -2319,7 +2302,7 @@ namespace app.Infrastructure.Migrations
                         {
                             Id = 3L,
                             CreatedBy = "System Admin",
-                            CreatedOn = new DateTime(2023, 11, 21, 9, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 1, 11, 9, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             MenuItemId = 3L,
                             OrderNo = 0,
@@ -2329,7 +2312,7 @@ namespace app.Infrastructure.Migrations
                         {
                             Id = 4L,
                             CreatedBy = "System Admin",
-                            CreatedOn = new DateTime(2023, 11, 21, 9, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 1, 11, 9, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             MenuItemId = 4L,
                             OrderNo = 0,
@@ -2339,7 +2322,7 @@ namespace app.Infrastructure.Migrations
                         {
                             Id = 5L,
                             CreatedBy = "System Admin",
-                            CreatedOn = new DateTime(2023, 11, 21, 9, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 1, 11, 9, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             MenuItemId = 5L,
                             OrderNo = 0,
@@ -2349,7 +2332,7 @@ namespace app.Infrastructure.Migrations
                         {
                             Id = 6L,
                             CreatedBy = "System Admin",
-                            CreatedOn = new DateTime(2023, 11, 21, 9, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 1, 11, 9, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             MenuItemId = 6L,
                             OrderNo = 0,
@@ -2359,7 +2342,7 @@ namespace app.Infrastructure.Migrations
                         {
                             Id = 7L,
                             CreatedBy = "System Admin",
-                            CreatedOn = new DateTime(2023, 11, 21, 9, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 1, 11, 9, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             MenuItemId = 7L,
                             OrderNo = 0,
@@ -2533,14 +2516,14 @@ namespace app.Infrastructure.Migrations
                         new
                         {
                             Id = "8e445865-a24d-4543-a6c6-9443d048cdb9",
-                            ConcurrencyStamp = "471af33d-a2ea-48b7-80aa-fee5bf343188",
+                            ConcurrencyStamp = "2003ad37-d2ac-469c-b527-85d59161d0ec",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         },
                         new
                         {
                             Id = "2c5e174e-3b0e-446f-86af-483d56fd7210",
-                            ConcurrencyStamp = "f6aeec2e-6c69-4fa2-a7b6-734fada608cc",
+                            ConcurrencyStamp = "59d31a72-f656-42d0-87ba-3bcf3c0a7b07",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -2664,13 +2647,35 @@ namespace app.Infrastructure.Migrations
                     b.ToTable("AspNetUserTokens", "dbo");
                 });
 
-            modelBuilder.Entity("app.EntityModel.AppModels.AssetAllocation", b =>
+            modelBuilder.Entity("app.EntityModel.AppModels.Address.District", b =>
                 {
-                    b.HasOne("app.EntityModel.AppModels.Department", "Department")
+                    b.HasOne("app.EntityModel.AppModels.Address.Division", "Division")
+                        .WithMany()
+                        .HasForeignKey("DivisionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Division");
+                });
+
+            modelBuilder.Entity("app.EntityModel.AppModels.Address.Upazila", b =>
+                {
+                    b.HasOne("app.EntityModel.AppModels.Address.District", "District")
+                        .WithMany()
+                        .HasForeignKey("DistrictId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("District");
+                });
+
+            modelBuilder.Entity("app.EntityModel.AppModels.AssetManage.AssetAllocation", b =>
+                {
+                    b.HasOne("app.EntityModel.AppModels.Office.Department", "Department")
                         .WithMany()
                         .HasForeignKey("DepartmentId");
 
-                    b.HasOne("app.EntityModel.AppModels.Employee", "Employee")
+                    b.HasOne("app.EntityModel.AppModels.EmployeeManage.Employee", "Employee")
                         .WithMany()
                         .HasForeignKey("EmployeeId");
 
@@ -2679,9 +2684,9 @@ namespace app.Infrastructure.Migrations
                     b.Navigation("Employee");
                 });
 
-            modelBuilder.Entity("app.EntityModel.AppModels.AssetAllocationDetail", b =>
+            modelBuilder.Entity("app.EntityModel.AppModels.AssetManage.AssetAllocationDetail", b =>
                 {
-                    b.HasOne("app.EntityModel.AppModels.AssetAllocation", "AssetAllocation")
+                    b.HasOne("app.EntityModel.AppModels.AssetManage.AssetAllocation", "AssetAllocation")
                         .WithMany()
                         .HasForeignKey("AssetAllocationId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -2696,7 +2701,7 @@ namespace app.Infrastructure.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("app.EntityModel.AppModels.AssetInventory", b =>
+            modelBuilder.Entity("app.EntityModel.AppModels.AssetManage.AssetInventory", b =>
                 {
                     b.HasOne("app.EntityModel.AppModels.Product", "Product")
                         .WithMany()
@@ -2761,7 +2766,7 @@ namespace app.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("app.EntityModel.AppModels.Employee", "Employee")
+                    b.HasOne("app.EntityModel.AppModels.EmployeeManage.Employee", "Employee")
                         .WithMany()
                         .HasForeignKey("EmployeeId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -2794,15 +2799,15 @@ namespace app.Infrastructure.Migrations
                     b.Navigation("AssembleWorkStep");
                 });
 
-            modelBuilder.Entity("app.EntityModel.AppModels.Attendance", b =>
+            modelBuilder.Entity("app.EntityModel.AppModels.Attendance.Attendance", b =>
                 {
-                    b.HasOne("app.EntityModel.AppModels.Employee", "Employee")
+                    b.HasOne("app.EntityModel.AppModels.EmployeeManage.Employee", "Employee")
                         .WithMany()
                         .HasForeignKey("EmployeeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("app.EntityModel.AppModels.Shift", "Shift")
+                    b.HasOne("app.EntityModel.AppModels.Office.Shift", "Shift")
                         .WithMany()
                         .HasForeignKey("ShiftId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -2813,9 +2818,9 @@ namespace app.Infrastructure.Migrations
                     b.Navigation("Shift");
                 });
 
-            modelBuilder.Entity("app.EntityModel.AppModels.AttendanceLog", b =>
+            modelBuilder.Entity("app.EntityModel.AppModels.Attendance.AttendanceLog", b =>
                 {
-                    b.HasOne("app.EntityModel.AppModels.Attendance", "Attendance")
+                    b.HasOne("app.EntityModel.AppModels.Attendance.Attendance", "Attendance")
                         .WithMany()
                         .HasForeignKey("AttendanceId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -2824,48 +2829,37 @@ namespace app.Infrastructure.Migrations
                     b.Navigation("Attendance");
                 });
 
-            modelBuilder.Entity("app.EntityModel.AppModels.District", b =>
-                {
-                    b.HasOne("app.EntityModel.AppModels.Division", "Division")
-                        .WithMany()
-                        .HasForeignKey("DivisionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Division");
-                });
-
-            modelBuilder.Entity("app.EntityModel.AppModels.Employee", b =>
+            modelBuilder.Entity("app.EntityModel.AppModels.EmployeeManage.Employee", b =>
                 {
                     b.HasOne("app.EntityModel.AppModels.DropdownItem", "BloodGroup")
                         .WithMany()
                         .HasForeignKey("BloodGroupId");
 
-                    b.HasOne("app.EntityModel.AppModels.Country", "Country")
+                    b.HasOne("app.EntityModel.AppModels.Address.Country", "Country")
                         .WithMany()
                         .HasForeignKey("CountryId");
 
-                    b.HasOne("app.EntityModel.AppModels.Department", "Department")
+                    b.HasOne("app.EntityModel.AppModels.Office.Department", "Department")
                         .WithMany()
                         .HasForeignKey("DepartmentId");
 
-                    b.HasOne("app.EntityModel.AppModels.Designation", "Designation")
+                    b.HasOne("app.EntityModel.AppModels.Office.Designation", "Designation")
                         .WithMany()
                         .HasForeignKey("DesignationId");
 
-                    b.HasOne("app.EntityModel.AppModels.District", "District")
+                    b.HasOne("app.EntityModel.AppModels.Address.District", "District")
                         .WithMany()
                         .HasForeignKey("DistrictId");
 
-                    b.HasOne("app.EntityModel.AppModels.Division", "Division")
+                    b.HasOne("app.EntityModel.AppModels.Address.Division", "Division")
                         .WithMany()
                         .HasForeignKey("DivisionId");
 
-                    b.HasOne("app.EntityModel.AppModels.EmployeeCategory", "EmployeeCategory")
+                    b.HasOne("app.EntityModel.AppModels.EmployeeManage.EmployeeCategory", "EmployeeCategory")
                         .WithMany()
                         .HasForeignKey("EmployeeCategoryId");
 
-                    b.HasOne("app.EntityModel.AppModels.EmployeeGrade", "EmployeeGrade")
+                    b.HasOne("app.EntityModel.AppModels.EmployeeManage.EmployeeGrade", "EmployeeGrade")
                         .WithMany()
                         .HasForeignKey("EmployeeGradeId");
 
@@ -2873,11 +2867,11 @@ namespace app.Infrastructure.Migrations
                         .WithMany()
                         .HasForeignKey("GenderId");
 
-                    b.HasOne("app.EntityModel.AppModels.JobStatus", "JobStatus")
+                    b.HasOne("app.EntityModel.AppModels.Job.JobStatus", "JobStatus")
                         .WithMany()
                         .HasForeignKey("JobStatusId");
 
-                    b.HasOne("app.EntityModel.AppModels.Employee", "Manager")
+                    b.HasOne("app.EntityModel.AppModels.EmployeeManage.Employee", "Manager")
                         .WithMany()
                         .HasForeignKey("ManagerId");
 
@@ -2885,7 +2879,7 @@ namespace app.Infrastructure.Migrations
                         .WithMany()
                         .HasForeignKey("MaritalTypeId");
 
-                    b.HasOne("app.EntityModel.AppModels.OfficeType", "OfficeType")
+                    b.HasOne("app.EntityModel.AppModels.Office.OfficeType", "OfficeType")
                         .WithMany()
                         .HasForeignKey("OfficeTypeId");
 
@@ -2893,15 +2887,15 @@ namespace app.Infrastructure.Migrations
                         .WithMany()
                         .HasForeignKey("ReligionId");
 
-                    b.HasOne("app.EntityModel.AppModels.EmployeeServiceType", "ServiceType")
+                    b.HasOne("app.EntityModel.AppModels.EmployeeManage.EmployeeServiceType", "ServiceType")
                         .WithMany()
                         .HasForeignKey("ServiceTypeId");
 
-                    b.HasOne("app.EntityModel.AppModels.Shift", "Shift")
+                    b.HasOne("app.EntityModel.AppModels.Office.Shift", "Shift")
                         .WithMany()
                         .HasForeignKey("ShiftId");
 
-                    b.HasOne("app.EntityModel.AppModels.Upazila", "Upazila")
+                    b.HasOne("app.EntityModel.AppModels.Address.Upazila", "Upazila")
                         .WithMany()
                         .HasForeignKey("UpazilaId");
 
@@ -2967,21 +2961,21 @@ namespace app.Infrastructure.Migrations
                     b.Navigation("Unit");
                 });
 
-            modelBuilder.Entity("app.EntityModel.AppModels.LeaveApplication", b =>
+            modelBuilder.Entity("app.EntityModel.AppModels.Leave.LeaveApplication", b =>
                 {
-                    b.HasOne("app.EntityModel.AppModels.Employee", "Employee")
+                    b.HasOne("app.EntityModel.AppModels.EmployeeManage.Employee", "Employee")
                         .WithMany()
                         .HasForeignKey("EmployeeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("app.EntityModel.AppModels.LeaveCategory", "LeaveCategory")
+                    b.HasOne("app.EntityModel.AppModels.Leave.LeaveCategory", "LeaveCategory")
                         .WithMany()
                         .HasForeignKey("LeaveCategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("app.EntityModel.AppModels.Employee", "Manager")
+                    b.HasOne("app.EntityModel.AppModels.EmployeeManage.Employee", "Manager")
                         .WithMany()
                         .HasForeignKey("ManagerId");
 
@@ -2992,9 +2986,9 @@ namespace app.Infrastructure.Migrations
                     b.Navigation("Manager");
                 });
 
-            modelBuilder.Entity("app.EntityModel.AppModels.LeaveBalance", b =>
+            modelBuilder.Entity("app.EntityModel.AppModels.Leave.LeaveBalance", b =>
                 {
-                    b.HasOne("app.EntityModel.AppModels.LeaveCategory", "LeaveCategory")
+                    b.HasOne("app.EntityModel.AppModels.Leave.LeaveCategory", "LeaveCategory")
                         .WithMany()
                         .HasForeignKey("LeaveCategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -3005,7 +2999,7 @@ namespace app.Infrastructure.Migrations
 
             modelBuilder.Entity("app.EntityModel.AppModels.Product", b =>
                 {
-                    b.HasOne("app.EntityModel.AppModels.ProductCategory", "Category")
+                    b.HasOne("app.EntityModel.AppModels.Purchase.ProductCategory", "Category")
                         .WithMany()
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -3022,13 +3016,13 @@ namespace app.Infrastructure.Migrations
                     b.Navigation("Unit");
                 });
 
-            modelBuilder.Entity("app.EntityModel.AppModels.PurchaseOrder", b =>
+            modelBuilder.Entity("app.EntityModel.AppModels.Purchase.PurchaseOrder", b =>
                 {
                     b.HasOne("app.EntityModel.AppModels.BusinessCenter", "Storehouse")
                         .WithMany()
                         .HasForeignKey("StorehouseId");
 
-                    b.HasOne("app.EntityModel.AppModels.Supplier", "Supplier")
+                    b.HasOne("app.EntityModel.AppModels.SupplierManage.Supplier", "Supplier")
                         .WithMany()
                         .HasForeignKey("SupplierId");
 
@@ -3037,7 +3031,7 @@ namespace app.Infrastructure.Migrations
                     b.Navigation("Supplier");
                 });
 
-            modelBuilder.Entity("app.EntityModel.AppModels.PurchaseOrderDetail", b =>
+            modelBuilder.Entity("app.EntityModel.AppModels.Purchase.PurchaseOrderDetail", b =>
                 {
                     b.HasOne("app.EntityModel.AppModels.Product", "Product")
                         .WithMany()
@@ -3045,7 +3039,7 @@ namespace app.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("app.EntityModel.AppModels.PurchaseOrder", "PurchaseOrder")
+                    b.HasOne("app.EntityModel.AppModels.Purchase.PurchaseOrder", "PurchaseOrder")
                         .WithMany()
                         .HasForeignKey("PurchaseOrderId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -3064,7 +3058,7 @@ namespace app.Infrastructure.Migrations
                     b.Navigation("Unit");
                 });
 
-            modelBuilder.Entity("app.EntityModel.AppModels.SalesOrder", b =>
+            modelBuilder.Entity("app.EntityModel.AppModels.Sales.SalesOrder", b =>
                 {
                     b.HasOne("app.EntityModel.AppModels.Customer", "Customer")
                         .WithMany()
@@ -3083,7 +3077,7 @@ namespace app.Infrastructure.Migrations
                     b.Navigation("Storehouse");
                 });
 
-            modelBuilder.Entity("app.EntityModel.AppModels.SalesOrderDetails", b =>
+            modelBuilder.Entity("app.EntityModel.AppModels.Sales.SalesOrderDetails", b =>
                 {
                     b.HasOne("app.EntityModel.AppModels.Product", "Product")
                         .WithMany()
@@ -3091,7 +3085,7 @@ namespace app.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("app.EntityModel.AppModels.SalesOrder", "SalesOrder")
+                    b.HasOne("app.EntityModel.AppModels.Sales.SalesOrder", "SalesOrder")
                         .WithMany()
                         .HasForeignKey("SalesOrderId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -3110,9 +3104,9 @@ namespace app.Infrastructure.Migrations
                     b.Navigation("Unit");
                 });
 
-            modelBuilder.Entity("app.EntityModel.AppModels.SalesProductDetail", b =>
+            modelBuilder.Entity("app.EntityModel.AppModels.Sales.SalesProductDetail", b =>
                 {
-                    b.HasOne("app.EntityModel.AppModels.SalesOrderDetails", "SalesOrderDetails")
+                    b.HasOne("app.EntityModel.AppModels.Sales.SalesOrderDetails", "SalesOrderDetails")
                         .WithMany()
                         .HasForeignKey("SalesOrderDetailsId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -3121,24 +3115,15 @@ namespace app.Infrastructure.Migrations
                     b.Navigation("SalesOrderDetails");
                 });
 
-            modelBuilder.Entity("app.EntityModel.AppModels.Supplier", b =>
+            modelBuilder.Entity("app.EntityModel.AppModels.SupplierManage.Supplier", b =>
                 {
-                    b.HasOne("app.EntityModel.AppModels.SupplierCategory", "SupplierCategory")
+                    b.HasOne("app.EntityModel.AppModels.SupplierManage.SupplierCategory", "SupplierCategory")
                         .WithMany()
-                        .HasForeignKey("SupplierCategoryId");
-
-                    b.Navigation("SupplierCategory");
-                });
-
-            modelBuilder.Entity("app.EntityModel.AppModels.Upazila", b =>
-                {
-                    b.HasOne("app.EntityModel.AppModels.District", "District")
-                        .WithMany()
-                        .HasForeignKey("DistrictId")
+                        .HasForeignKey("SupplierCategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("District");
+                    b.Navigation("SupplierCategory");
                 });
 
             modelBuilder.Entity("app.EntityModel.CoreModel.MenuItem", b =>

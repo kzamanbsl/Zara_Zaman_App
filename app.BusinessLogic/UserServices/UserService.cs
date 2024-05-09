@@ -97,7 +97,16 @@ namespace app.Services.UserServices
 
         public async Task<ApplicationUser> GetUserByEmail(string email)
         {
-            var result = await _dbContext.Users.FirstOrDefaultAsync(d => d.Email == email && d.IsActive == true);
+            var result = new ApplicationUser();
+            try
+            {
+                result = await _dbContext.Users.FirstOrDefaultAsync(d => d.Email == email && d.IsActive == true);
+                return result;
+            }
+            catch(Exception ex) 
+            {
+                var error = ex.Message;
+            }
             return result;
         }
 

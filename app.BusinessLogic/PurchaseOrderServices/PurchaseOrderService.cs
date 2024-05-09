@@ -1,5 +1,4 @@
-﻿using app.EntityModel.AppModels;
-using app.Infrastructure.Auth;
+﻿using app.Infrastructure.Auth;
 using app.Infrastructure.Repository;
 using app.Infrastructure;
 using app.Utility;
@@ -7,6 +6,7 @@ using app.Services.PurchaseOrderDetailServices;
 using Microsoft.EntityFrameworkCore;
 using app.EntityModel.DataTablePaginationModels;
 using app.Services.SupplierServices;
+using app.EntityModel.AppModels.Purchase;
 
 namespace app.Services.PurchaseOrderServices
 {

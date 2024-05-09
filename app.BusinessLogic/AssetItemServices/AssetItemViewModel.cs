@@ -1,4 +1,5 @@
 ﻿using app.EntityModel.AppModels;
+using app.EntityModel.AppModels.Purchase;
 
 namespace app.Services.AssetItemServices
 {

@@ -1,4 +1,4 @@
-﻿using app.EntityModel.AppModels;
+﻿using app.EntityModel.AppModels.Sales;
 
 namespace app.Services.SalesProductDetailServices
 {

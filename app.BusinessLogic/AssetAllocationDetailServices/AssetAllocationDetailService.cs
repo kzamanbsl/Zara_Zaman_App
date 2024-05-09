@@ -1,10 +1,10 @@
-﻿using app.EntityModel.AppModels;
-using app.Infrastructure.Auth;
+﻿using app.Infrastructure.Auth;
 using app.Infrastructure.Repository;
 using app.Infrastructure;
 using app.Services.AssetPurchaseOrderServices;
 using app.Services.AssetAllocationServices;
 using Microsoft.EntityFrameworkCore;
+using app.EntityModel.AppModels.AssetManage;
 
 namespace app.Services.AssetAllocationDetailServices
 {

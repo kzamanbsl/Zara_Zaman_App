@@ -1,4 +1,4 @@
-﻿using app.EntityModel.AppModels;
+﻿using app.EntityModel.AppModels.SupplierManage;
 using app.EntityModel.DataTablePaginationModels;
 using app.Infrastructure;
 using app.Infrastructure.Auth;
@@ -31,6 +31,7 @@ namespace app.Services.SupplierServices
                 if (checkName == null)
                 {
                     Supplier model = new Supplier();
+                    model.SupplierCategoryId = vm.SupplierCategoryId;
                     model.Name = vm.Name;
                     model.Phone = vm.Phone;
                     model.Email = vm.Email;
@@ -63,6 +64,7 @@ namespace app.Services.SupplierServices
             if (checkName == null)
             {
                 var result = await _iEntityRepository.GetByIdAsync(vm.Id);
+                result.SupplierCategoryId=vm.SupplierCategoryId;
                 result.Name = vm.Name;
                 result.Phone = vm.Phone;
                 result.Email = vm.Email;
@@ -77,9 +79,16 @@ namespace app.Services.SupplierServices
                 //result.UpazilaId = vm.UpazilaId;
                 result.UpdatedBy = _httpContextAccessor.HttpContext.User.Identity.Name;
                 result.UpdatedOn = DateTime.Now;
-                var res = await _iEntityRepository.UpdateAsync(result);
+                try
+                {
+                    var res = await _iEntityRepository.UpdateAsync(result);
+                    return true;
 
-                return true;
+                }catch(Exception ex)
+                {
+
+                }
+
             }
             return false;
         }
@@ -89,6 +98,7 @@ namespace app.Services.SupplierServices
             var result = await _iEntityRepository.GetByIdAsync(id);
             SupplierViewModel model = new SupplierViewModel();
             model.Id = result.Id;
+            model.SupplierCategoryId = result.SupplierCategoryId;
             model.Name = result.Name;
             model.Phone = result.Phone;
             model.Email = result.Email;
@@ -142,7 +152,7 @@ namespace app.Services.SupplierServices
 
         public async Task<DataTablePagination<SupplierSearchDto>> SearchAsync(DataTablePagination<SupplierSearchDto> searchDto)
         {
-            var searchResult = _dbContext.Supplier.Where(c=>c.IsActive==true).AsNoTracking();
+            var searchResult = _dbContext.Supplier.Where(c=>c.IsActive==true).Include(c=>c.SupplierCategory).AsNoTracking();
 
             var searchModel = searchDto.SearchVm;
             var filter = searchDto?.Search?.Value?.Trim();
@@ -166,7 +176,8 @@ namespace app.Services.SupplierServices
             {
                 filter = filter.ToLower();
                 searchResult = searchResult.Where(c =>
-                    c.Name.ToLower().Contains(filter)
+                    c.SupplierCategory.Name.ToLower().Contains(filter)
+                    ||c.Name.ToLower().Contains(filter)
                     ||c.Phone.ToLower().Contains(filter)
                     || c.Address.ToLower().Contains(filter)
                     || c.BankName.ToLower().Contains(filter)
@@ -192,6 +203,7 @@ namespace app.Services.SupplierServices
             {
                 SerialNo = ++sl,
                 Id = c.Id,
+                SupplierCategoryName=c.SupplierCategory.Name,
                 Name = c.Name,
                 Description = c.Description,
                 Phone = c.Phone,

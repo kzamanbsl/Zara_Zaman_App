@@ -1,4 +1,5 @@
 ﻿using app.EntityModel.AppModels;
+using app.EntityModel.AppModels.AssetManage;
 using app.Services.AssetAllocationServices;
 using app.Services.AssetPurchaseOrderServices;
 using app.Utility;

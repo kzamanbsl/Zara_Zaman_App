@@ -1,5 +1,4 @@
-﻿using app.EntityModel.AppModels;
-using app.Infrastructure.Auth;
+﻿using app.Infrastructure.Auth;
 using app.Infrastructure.Repository;
 using app.Infrastructure;
 using System;
@@ -10,6 +9,7 @@ using System.Threading.Tasks;
 using app.Services.AssetPurchaseOrderServices;
 using Microsoft.EntityFrameworkCore;
 using app.Services.AssetPurchaseOrderDetailServices;
+using app.EntityModel.AppModels.Purchase;
 
 namespace app.Services.AssetPurchaseOrderDetailServices
 {

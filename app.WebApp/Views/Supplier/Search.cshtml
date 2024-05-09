@@ -93,6 +93,9 @@
                                             @Html.DisplayNameFor(model => model.SerialNo)
                                         </th>
                                         <th class="text-center">
+                                            @Html.DisplayNameFor(model => model.SupplierCategoryName)
+                                        </th> 
+                                        <th class="text-center">
                                             @Html.DisplayNameFor(model => model.Name)
                                         </th>
                                         <th class="text-center">
@@ -239,11 +242,18 @@
                         }
                     },
                     {
+                        data: "SupplierCategory",
+                        render: function (data, type, row, meta) {
+                            return row.supplierCategoryName;
+                        }
+                    },
+                    {
                         data: "Name",
                         render: function (data, type, row, meta) {
                             return row.name;
                         }
                     },
+                    
                     {
                         data: "Phone",
                         render: function (data, type, row, meta) {

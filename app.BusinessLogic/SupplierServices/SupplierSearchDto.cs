@@ -6,6 +6,8 @@ namespace app.Services.SupplierServices
 {
     public class SupplierSearchDto: BaseDataTableSearch
     {
+        [DisplayName("Supplier Category")]
+        public string SupplierCategoryName { get; set; }
         [DisplayName("Name")]
         public string Name { get; set; }
 

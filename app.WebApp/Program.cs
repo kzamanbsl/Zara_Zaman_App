@@ -18,7 +18,7 @@ namespace app.WebApp
             // Add services to the container.
             builder.Services.AddControllersWithViews();
             // var config = new  IConfiguration();
-
+            var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
             builder.Services.AddServiceModel(builder.Configuration);
             builder.Services.AddScoped(typeof(IEntityRepository<>), typeof(EntityRepository<>));
             builder.Services.AddScoped<IWorkContext, WorkContextsService>();
@@ -27,7 +27,7 @@ namespace app.WebApp
             builder.Services.AddScoped<IAuthorizationHandler, PermissionHandler>();
             builder.Services.AddSingleton<IAuthorizationPolicyProvider, AuthorizationPolicyProvider>();
             builder.Services.AddDbContext<InventoryDbContext>(options =>
-            options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")),ServiceLifetime.Scoped);
+            options.UseSqlServer(connectionString),ServiceLifetime.Scoped);
             builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
             {
                 options.Password.RequireDigit = false;
@@ -59,7 +59,7 @@ namespace app.WebApp
             var app = builder.Build();
             //if (!app.Environment.IsDevelopment())
             //{
-            //    app.UseExceptionHandler("/Home/Error");            
+            //    app.UseExceptionHandler("/Home/Error");
             //    app.UseHsts();
             //}
             if (app.Environment.IsDevelopment())

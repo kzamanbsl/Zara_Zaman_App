@@ -1,4 +1,5 @@
 ﻿using app.EntityModel.AppModels;
+using app.EntityModel.AppModels.Purchase;
 using System.ComponentModel.DataAnnotations;
 
 namespace app.Services.PurchaseOrderDetailServices

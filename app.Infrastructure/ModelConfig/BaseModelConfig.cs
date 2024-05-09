@@ -1,5 +1,15 @@
 ﻿using app.EntityModel.AppModels;
+using app.EntityModel.AppModels.Address;
+using app.EntityModel.AppModels.AssetManage;
 using app.EntityModel.AppModels.ATMAssemble;
+using app.EntityModel.AppModels.Attendance;
+using app.EntityModel.AppModels.EmployeeManage;
+using app.EntityModel.AppModels.Job;
+using app.EntityModel.AppModels.Leave;
+using app.EntityModel.AppModels.Office;
+using app.EntityModel.AppModels.Purchase;
+using app.EntityModel.AppModels.Sales;
+using app.EntityModel.AppModels.SupplierManage;
 using app.EntityModel.CoreModel;
 using app.Infrastructure.ModelConfig.ATMAssemble;
 using Microsoft.EntityFrameworkCore;

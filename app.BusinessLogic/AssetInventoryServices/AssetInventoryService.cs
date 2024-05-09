@@ -1,5 +1,4 @@
-﻿using app.EntityModel.AppModels;
-using app.Infrastructure.Auth;
+﻿using app.Infrastructure.Auth;
 using app.Infrastructure.Repository;
 using app.Infrastructure;
 using app.Services.AssetPurchaseOrderServices;
@@ -7,6 +6,7 @@ using app.Services.AssetPurchaseOrderDetailServices;
 using app.Utility;
 using Microsoft.EntityFrameworkCore;
 using app.Services.IAssetnventoryServices;
+using app.EntityModel.AppModels.AssetManage;
 
 namespace app.Services.AssetInventoryServices
 {

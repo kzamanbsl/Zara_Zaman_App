@@ -4,11 +4,11 @@ using app.Infrastructure;
 using app.Utility;
 using app.Services.AssetPurchaseOrderDetailServices;
 using Microsoft.EntityFrameworkCore;
-using app.EntityModel.AppModels;
 using app.EntityModel.DataTablePaginationModels;
 using app.Services.ProductServices;
 using app.Services.PurchaseOrderServices;
 using app.Services.SupplierServices;
+using app.EntityModel.AppModels.Purchase;
 
 namespace app.Services.AssetPurchaseOrderServices
 {

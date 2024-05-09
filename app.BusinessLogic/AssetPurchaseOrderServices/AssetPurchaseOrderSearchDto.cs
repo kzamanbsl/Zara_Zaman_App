@@ -1,4 +1,5 @@
 ﻿using app.EntityModel.AppModels;
+using app.EntityModel.AppModels.SupplierManage;
 using app.EntityModel.DataTableSearchModels;
 using app.Services.AssetPurchaseOrderDetailServices;
 using app.Utility;

@@ -36,21 +36,28 @@
                         <form asp-action="AddRecord" method="post">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                             <div class="row">
-                                <div class="col-md-4">
+
+                                <div class="col-md-3">
+                                    <label class="control-label">Supplier Category</label>
+                                    <select asp-for="SupplierCategoryId" asp-items="ViewBag.SupplierCatgoryList" class="form-control" required>
+                                        <option>Select Category </option>
+                                    </select>
+                                </div>
+                                <div class="col-md-3">
                                     <div class="form-group">
                                         <label asp-for="Name" class="control-label"></label>
                                         <input asp-for="Name" class="form-control" required />
                                         <span asp-validation-for="Name" class="text-danger"></span>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="form-group">
                                         <label asp-for="Phone" class="control-label"></label>
                                         <input asp-for="Phone" class="form-control" required />
                                         <span asp-validation-for="Phone" class="text-danger"></span>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="form-group">
                                         <label asp-for="Email" class="control-label"></label>
                                         <input asp-for="Email" class="form-control" />
@@ -150,6 +157,8 @@
         $(document).ready(function () {
             $('#Configuration').addClass('menu-open');
             $('#SupplierAddRecord').addClass('active');
+
+
         });
 
         $('#divisionId').change(function () {

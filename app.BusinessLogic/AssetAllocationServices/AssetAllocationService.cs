@@ -4,12 +4,12 @@ using app.Infrastructure;
 using app.Utility;
 using app.Services.AssetAllocationDetailServices;
 using Microsoft.EntityFrameworkCore;
-using app.EntityModel.AppModels;
 using app.EntityModel.DataTablePaginationModels;
 using app.Services.ProductServices;
 using app.Services.AssetAllocationServices;
 using app.Services.SalesOrderServices;
 using app.Services.AssetPurchaseOrderServices;
+using app.EntityModel.AppModels.AssetManage;
 
 namespace app.Services.AssetAllocationServices
 {
