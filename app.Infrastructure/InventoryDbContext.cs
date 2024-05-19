@@ -17,6 +17,7 @@ using app.EntityModel.AppModels.Address;
 using app.EntityModel.AppModels.Attendance;
 using app.EntityModel.AppModels.EmployeeManage;
 using app.EntityModel.AppModels.SupplierManage;
+using app.EntityModel.AppModels.BankManage;
 
 namespace app.Infrastructure
 {
@@ -42,6 +43,8 @@ namespace app.Infrastructure
         public virtual DbSet<Department> Department { get; set; }
         public virtual DbSet<EmployeeCategory> EmployeeCategory { get; set; }
         public virtual DbSet<EmployeeGrade> EmployeeGrade { get; set; }
+        public virtual DbSet<Bank> Bank { get; set; }
+        public virtual DbSet<BankBranch> BankBranch { get; set; }
         public virtual DbSet<Shift> Shift { get; set; }
         public virtual DbSet<EmployeeServiceType> EmployeeServiceType { get; set; }
         public virtual DbSet<OfficeType> OfficeType { get; set; }

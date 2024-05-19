@@ -8,6 +8,7 @@ namespace app.Infrastructure.Repository
     {
         private readonly IWorkContext _iWorkContext;
         protected readonly InventoryDbContext Db;
+         
         public EntityRepository(IWorkContext iWorkContext, InventoryDbContext context)
         {
             this.Db = context;

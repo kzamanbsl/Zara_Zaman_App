@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using app.Infrastructure;
 
@@ -11,9 +12,10 @@ using app.Infrastructure;
 namespace app.Infrastructure.Migrations
 {
     [DbContext(typeof(InventoryDbContext))]
-    partial class InventoryDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240516082906_BankBranchCreate")]
+    partial class BankBranchCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -663,7 +665,7 @@ namespace app.Infrastructure.Migrations
                     b.ToTable("Bank", "dbo");
                 });
 
-            modelBuilder.Entity("app.EntityModel.AppModels.BankManage.BankBranch", b =>
+            modelBuilder.Entity("app.EntityModel.AppModels.BankManage.Branch", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -699,7 +701,7 @@ namespace app.Infrastructure.Migrations
 
                     b.HasIndex("BankId");
 
-                    b.ToTable("BankBranch", "dbo");
+                    b.ToTable("Branch", "dbo");
                 });
 
             modelBuilder.Entity("app.EntityModel.AppModels.BusinessCenter", b =>
@@ -2586,14 +2588,14 @@ namespace app.Infrastructure.Migrations
                         new
                         {
                             Id = "8e445865-a24d-4543-a6c6-9443d048cdb9",
-                            ConcurrencyStamp = "5a568d9c-8970-49bc-bcfa-fa1fe06ac323",
+                            ConcurrencyStamp = "bcd416bb-0000-48eb-a979-58af3a3ac508",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         },
                         new
                         {
                             Id = "2c5e174e-3b0e-446f-86af-483d56fd7210",
-                            ConcurrencyStamp = "738d835c-8705-4f65-97f6-94d3fa17e711",
+                            ConcurrencyStamp = "4de42fe7-d924-479a-a17c-9d76baf21fa8",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -2899,7 +2901,7 @@ namespace app.Infrastructure.Migrations
                     b.Navigation("Attendance");
                 });
 
-            modelBuilder.Entity("app.EntityModel.AppModels.BankManage.BankBranch", b =>
+            modelBuilder.Entity("app.EntityModel.AppModels.BankManage.Branch", b =>
                 {
                     b.HasOne("app.EntityModel.AppModels.BankManage.Bank", "Bank")
                         .WithMany()
