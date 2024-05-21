@@ -1,4 +1,6 @@
-﻿namespace app.EntityModel.AppModels
+﻿using app.EntityModel.AppModels.Purchase;
+
+namespace app.EntityModel.AppModels
 {
     public class Product : BaseEntity
     {

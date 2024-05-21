@@ -1,11 +1,11 @@
-﻿using app.EntityModel.AppModels;
-using app.Infrastructure.Auth;
+﻿using app.Infrastructure.Auth;
 using app.Infrastructure.Repository;
 using app.Infrastructure;
 using app.Utility;
 using app.Services.SalesOrderDetailServices;
 using Microsoft.EntityFrameworkCore;
 using app.Services.SalesTermsAndConditonServices;
+using app.EntityModel.AppModels.Sales;
 
 namespace app.Services.SalesOrderServices
 {

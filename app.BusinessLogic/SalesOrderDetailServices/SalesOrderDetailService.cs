@@ -1,10 +1,10 @@
-﻿using app.EntityModel.AppModels;
-using app.Infrastructure.Auth;
+﻿using app.Infrastructure.Auth;
 using app.Infrastructure.Repository;
 using app.Infrastructure;
 using app.Services.SalesOrderServices;
 using app.Services.SalesProductDetailServices;
 using app.Services.InventoryServices;
+using app.EntityModel.AppModels.Sales;
 
 namespace app.Services.SalesOrderDetailServices
 {

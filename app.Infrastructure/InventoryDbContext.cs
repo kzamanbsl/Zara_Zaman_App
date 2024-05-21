@@ -7,6 +7,17 @@ using app.Infrastructure.ModelConfig;
 using app.Infrastructure.SeedData;
 using app.EntityModel.AppModels;
 using app.EntityModel.AppModels.ATMAssemble;
+using app.EntityModel.AppModels.AssetManage;
+using app.EntityModel.AppModels.Purchase;
+using app.EntityModel.AppModels.Sales;
+using app.EntityModel.AppModels.Job;
+using app.EntityModel.AppModels.Leave;
+using app.EntityModel.AppModels.Office;
+using app.EntityModel.AppModels.Address;
+using app.EntityModel.AppModels.Attendance;
+using app.EntityModel.AppModels.EmployeeManage;
+using app.EntityModel.AppModels.SupplierManage;
+using app.EntityModel.AppModels.BankManage;
 
 namespace app.Infrastructure
 {
@@ -32,6 +43,8 @@ namespace app.Infrastructure
         public virtual DbSet<Department> Department { get; set; }
         public virtual DbSet<EmployeeCategory> EmployeeCategory { get; set; }
         public virtual DbSet<EmployeeGrade> EmployeeGrade { get; set; }
+        public virtual DbSet<Bank> Bank { get; set; }
+        public virtual DbSet<BankBranch> BankBranch { get; set; }
         public virtual DbSet<Shift> Shift { get; set; }
         public virtual DbSet<EmployeeServiceType> EmployeeServiceType { get; set; }
         public virtual DbSet<OfficeType> OfficeType { get; set; }

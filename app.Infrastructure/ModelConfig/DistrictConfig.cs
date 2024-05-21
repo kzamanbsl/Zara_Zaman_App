@@ -1,4 +1,4 @@
-﻿using app.EntityModel.AppModels;
+﻿using app.EntityModel.AppModels.Address;
 using app.EntityModel.CoreModel;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;

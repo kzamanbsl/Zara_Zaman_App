@@ -1,4 +1,4 @@
-﻿using app.EntityModel.AppModels;
+﻿using app.EntityModel.AppModels.SupplierManage;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

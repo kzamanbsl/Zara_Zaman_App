@@ -1,4 +1,4 @@
-﻿using app.EntityModel.AppModels;
+﻿using app.EntityModel.AppModels.Purchase;
 using app.EntityModel.DataTablePaginationModels;
 using app.Infrastructure;
 using app.Infrastructure.Auth;

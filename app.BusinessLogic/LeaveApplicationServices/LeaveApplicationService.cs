@@ -1,5 +1,4 @@
-﻿using app.EntityModel.AppModels;
-using app.Infrastructure.Auth;
+﻿using app.Infrastructure.Auth;
 using app.Infrastructure.Repository;
 using app.Infrastructure;
 using app.Utility;
@@ -8,6 +7,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using app.Services.LeaveBalanceServices;
 using app.EntityModel.DataTablePaginationModels;
 using app.Services.ProductServices;
+using app.EntityModel.AppModels.Leave;
 
 namespace app.Services.LeaveApplicationServices
 {

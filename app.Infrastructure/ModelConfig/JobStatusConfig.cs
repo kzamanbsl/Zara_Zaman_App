@@ -1,4 +1,4 @@
-﻿using app.EntityModel.AppModels;
+﻿using app.EntityModel.AppModels.Job;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

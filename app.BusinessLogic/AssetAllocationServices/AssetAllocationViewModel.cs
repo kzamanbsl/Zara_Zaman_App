@@ -1,4 +1,5 @@
-﻿using app.EntityModel.AppModels;
+﻿using app.EntityModel.AppModels.EmployeeManage;
+using app.EntityModel.AppModels.Office;
 using app.Services.AssetAllocationDetailServices;
 using app.Services.ATMAssemble.AssembleWorkDetailServices;
 using app.Services.PurchaseOrderDetailServices;

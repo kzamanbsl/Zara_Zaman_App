@@ -1,4 +1,5 @@
 ﻿using app.EntityModel.AppModels;
+using app.EntityModel.AppModels.Purchase;
 using app.Services.AssetPurchaseOrderServices;
 using app.Utility;
 using System.ComponentModel.DataAnnotations;
