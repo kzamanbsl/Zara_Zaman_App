@@ -22,9 +22,10 @@
         <div class="breadcrumb d-flex justify-content-between align-items-center  pl-3 pr-3">
             <ol class="breadcrumb mb-0 p-0">
                 <li class="breadcrumb-item"><a href="/Admin/Index">Home</a></li>
+                <li class="breadcrumb-item active"> Asset Allocation </li>
             </ol>
             <div>
-                <a asp-action="Searchx"><i class="fa fa-list"></i>Asset Allocation List </a>
+                <a asp-action="Search"><i class="fa fa-list"></i> Asset Allocation List </a>
             </div>
         </div>
     </div>
@@ -39,12 +40,14 @@
                 @if (Model.Id > 0)
                 {
                     <h3 class="card-title text-info">
+                        <i class="fas fa-plus"></i>
                         Asset Allocation Information
                     </h3>
                 }
                 else
                 {
                     <h3 class="card-title text-info">
+                        <i class="fas fa-plus"></i>
                         Asset Allocation
                     </h3>
                 }
@@ -180,7 +183,7 @@
 
                                                 <select id="tag" multiple data-role="tagsinput" asp-for="AssetAllocationDetailVM.Tag" type="text" class="form-control" style="width:100%" placeholder="Enter Tags Number" data-role="tagsinput" required>
                                                     @* <option value="@Html.ViewBag" selected></option> *@
-                                                    
+
                                                     <span asp-validation-for="AssetAllocationDetailVM.Tag" class="text-danger"></span>
                                                 </select>
 
@@ -256,10 +259,10 @@
                                                     @{
                                                         if (Model.AssetAllocationStatusId == (int)AssetAllocationStatusEnum.Draft)
                                                         {
-                                                                        <td style="padding:5px;text-align:center;">
-                                                                            <a id="@item.Id" onclick="makeEditble(@item.Id);" class="linkPointer" title="Edit"><i class="text-warning fas fa-edit" aria-hidden="true"></i></a>
-                                                                            <a id="@item.Id" onclick="makeDeletable(@item.Id)" class="linkPointer"><i class="text-danger fas fa-trash" aria-hidden="true"></i></a>
-                                                                        </td>
+                                                            <td style="padding:5px;text-align:center;">
+                                                                <a id="@item.Id" onclick="makeEditble(@item.Id);" class="linkPointer" title="Edit"><i class="text-warning fas fa-edit" aria-hidden="true"></i></a>
+                                                                <a id="@item.Id" onclick="makeDeletable(@item.Id)" class="linkPointer"><i class="text-danger fas fa-trash" aria-hidden="true"></i></a>
+                                                            </td>
                                                         }
                                                     }
                                                 </tr>
@@ -417,7 +420,7 @@
 
         // $(document).ready(function () {
         //     $('#tag').on('change', function (event) {
-                
+
         //         var AssetQuantity = $('#quantity').val();
         //         var getTags = new Array[AssetQuantity];
 

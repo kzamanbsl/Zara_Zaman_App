@@ -63,7 +63,6 @@ namespace app.WebApp.Controllers
         [HttpGet]
         public async Task<IActionResult> Search()
         {
-
             return View();
         }
 

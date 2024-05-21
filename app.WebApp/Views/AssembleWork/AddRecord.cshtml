@@ -12,7 +12,7 @@
                 <li class="breadcrumb-item active">Assemble Work</li>
             </ol>
             <div>
-                <a asp-action="Search"><i class="fa fa-list"></i> Assemble Work</a>
+                <a asp-action="Search"><i class="fa fa-list"></i> Assemble Work List</a>
             </div>
         </div>
     </div>
@@ -39,9 +39,9 @@
                         </div>
                         <div class="col-4">
                             <div class="form-group">
-                                <label class="form-label">Select Assemble</label>
+                                <label class="form-label">Assemble Category</label>
                                 <select asp-for="AssembleWorkCategoryId" asp-items="ViewBag.AssembleWorkCategoryList" class="form-control" required>
-                                    <option selected disabled>=Select Assemble=</option>
+                                    <option selected>--Select Assemble Category--</option>
                                 </select>
                                 <span asp-validation-for="AssembleWorkCategoryId" class="text-danger"></span>
                             </div>
@@ -57,9 +57,9 @@
                     <div class="row">
                         <div class="col-4">
                             <div class="form-group">
-                                <label class="form-label">Select Employees</label>
+                                <label class="form-label">Employees</label>
                                 <select asp-for="EmployeeIds" asp-items="ViewBag.EmployeeList" class="form-control" required>
-                                    <option selected disabled>=Select Employee=</option>
+                                    <option selected>--Select Employees--</option>
                                 </select>
                                 <span asp-validation-for="EmployeeIds" class="text-danger"></span>
                             </div>
@@ -89,7 +89,6 @@
     }
     <script>
         $(document).ready(function () {
-            "use strict"
             $('#ATM-Assemble').addClass('menu-open');
             $('#AssembleWorkAddRecord').addClass('active');
         });

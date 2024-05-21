@@ -12,7 +12,7 @@
                 <li class="breadcrumb-item active"> Attendance List </li>
             </ol>
             <div>
-                <a asp-action="AddRecord"><i class="fa fa-plus"></i>  Add Attendance </a>
+                <a asp-action="AddRecord"><i class="fa fa-plus"></i> Add Attendance </a>
             </div>
         </div>
     </div>
@@ -24,7 +24,7 @@
         <div class="card">
             <div class="card-header">
                 <div class="row w-100">
-                    <div class="col-sm-3">
+                    <div class="col-sm-6">
                         <h5> <i class="fas fa-list"></i>  All Attendance </h5>
                     </div>
                 </div>
@@ -38,7 +38,7 @@
                                     <div class="form-group">
                                         <label>Employee</label>
                                         <select class="form-control" asp-for="EmployeeId" asp-items="ViewBag.Employees">
-                                            <option value="0" selected>--Employee--</option>
+                                            <option value="0" selected>--Select Employee--</option>
                                             <span asp-validation-for="EmployeeId" class="text-danger"></span>
                                         </select>
                                     </div>
@@ -47,7 +47,7 @@
                                     <div class="form-group">
                                         <label>Shift</label>
                                         <select class="form-control" asp-for="ShiftId" asp-items="ViewBag.Shifts">
-                                            <option value="0" selected>--Shift--</option>
+                                            <option value="0" selected>--Select Shift--</option>
                                             <span asp-validation-for="ShiftId" class="text-danger"></span>
                                         </select>
                                     </div>

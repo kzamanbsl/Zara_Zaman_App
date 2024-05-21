@@ -525,13 +525,15 @@ namespace app.Services.ATMAssemble.AssembleWorkServices
             {
                 searchResult = searchResult.Where(c => c.AssembleWorkCategoryId == searchModel.AssembleWorkCategoryId);
             }
-          
+            if (searchModel?.StatusId is > 0)
+            {
+                searchResult = searchResult.Where(c => c.StatusId == searchModel.StatusId);
+            }
             if (!string.IsNullOrEmpty(filter))
             {
                 filter = filter.ToLower();
                 searchResult = searchResult.Where(c =>
                     c.AssembleWorkCategory.Name.ToLower().Contains(filter)
-                    || c.AssembleDate.ToString().Contains(filter)
                     || c.Description.ToLower().Contains(filter)
                 );
             }

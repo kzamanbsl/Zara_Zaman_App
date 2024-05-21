@@ -13,10 +13,10 @@ namespace app.WebApp.Controllers
 
         private readonly ISupplierService _iService;
         private readonly IDropdownService _dropdownService;
-        public SupplierController(ISupplierService iService,IDropdownService iDropdownService)
+        public SupplierController(ISupplierService iService, IDropdownService iDropdownService)
         {
             _iService = iService;
-            _dropdownService = iDropdownService; 
+            _dropdownService = iDropdownService;
         }
 
 
@@ -26,11 +26,12 @@ namespace app.WebApp.Controllers
             SupplierViewModel viewModel = new SupplierViewModel();
             return View(viewModel);
         }
+
         [HttpPost]
         public async Task<IActionResult> AddRecord(SupplierViewModel viewModel)
         {
             var result = await _iService.AddRecord(viewModel);
-            if (result ==true)
+            if (result == true)
             {
                 return RedirectToAction("Search");
             }
@@ -59,6 +60,13 @@ namespace app.WebApp.Controllers
             }
             ModelState.AddModelError(string.Empty, "Same Name already exists!");
             return View(model);
+        }
+
+        public async Task<JsonResult> GetSupplierInformation(long id)
+        {
+            if (id == 0) { return Json(null); }
+            var model = await _iService.GetRecordById(id);
+            return Json(model);
         }
 
         [HttpGet]

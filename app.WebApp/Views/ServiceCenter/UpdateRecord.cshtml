@@ -9,10 +9,10 @@
         <div class="breadcrumb d-flex justify-content-between align-items-center  pl-3 pr-3">
             <ol class="breadcrumb mb-0 p-0">
                 <li class="breadcrumb-item"><a href="/Admin/Index">Home</a></li>
-                <li class="breadcrumb-item active"> ServiceCenter List </li>
+                <li class="breadcrumb-item active"> Service Center </li>
             </ol>
             <div>
-                <a asp-action="Search"><i class="fa fa-list"></i>  ServiceCenter List </a>
+                <a asp-action="Search"><i class="fa fa-list"></i> Service Center List </a>
             </div>
         </div>
     </div>
@@ -25,10 +25,9 @@
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title text-info">
-                    <i class="fas fa-plus"></i>
-                    Update ServiceCenter
+                    <i class="fas fa-edit"></i>
+                    Update Service Center
                 </h3>
-
             </div>
             <div class="card-body">
                 <div class="row">
@@ -36,6 +35,7 @@
                         <form asp-action="UpdateRecord" method="post">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                             @Html.HiddenFor(model => model.Id)
+
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="form-group">
@@ -58,7 +58,9 @@
                                         <span asp-validation-for="Location" class="text-danger"></span>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
                                     <label asp-for="Description" class="control-label"></label>
                                     <textarea asp-for="Description" class="form-control" required rows="2"></textarea>
                                     <span asp-validation-for="Description" class="text-danger"></span>
@@ -76,6 +78,9 @@
 </section>
 
 @section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
     <script>
         $(document).ready(function () {
             $('#Inventory').addClass('menu-open');
@@ -83,10 +88,7 @@
 
         });
     </script>
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
-    }
+}
 
 
 

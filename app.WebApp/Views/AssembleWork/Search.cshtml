@@ -10,10 +10,10 @@
         <div class="breadcrumb d-flex justify-content-between align-items-center  pl-3 pr-3">
             <ol class="breadcrumb mb-0 p-0">
                 <li class="breadcrumb-item"><a href="/Admin/Index">Home</a></li>
-                <li class="breadcrumb-item active"> Work List </li>
+                <li class="breadcrumb-item active"> Assemble Work List </li>
             </ol>
             <div>
-                <a asp-action="AddRecord"><i class="fa fa-plus"></i>  Add Assemble Work </a>
+                <a asp-action="AddRecord"><i class="fa fa-plus"></i> Add Assemble Work </a>
             </div>
         </div>
     </div>
@@ -25,8 +25,8 @@
         <div class="card">
             <div class="card-header">
                 <div class="row w-100">
-                    <div class="col-sm-3">
-                        <h5> <i class="fas fa-list"></i>  All Works </h5>
+                    <div class="col-sm-6">
+                        <h5> <i class="fas fa-list"></i> All Assemble Works </h5>
                     </div>
                 </div>
             </div>
@@ -37,19 +37,26 @@
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label>Category</label>
+                                        <label>Work Category</label>
                                         <select class="form-control" asp-for="AssembleWorkCategoryId" asp-items="ViewBag.AssembleWorkCategoryList">
-                                            <option value="0" selected>--Work Category--</option>
+                                            <option value="0" selected>--Select Work Category--</option>
                                             <span asp-validation-for="AssembleWorkCategoryId" class="text-danger"></span>
                                         </select>
                                     </div>
                                 </div>
-
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>Status</label>
+                                        <select class="form-control" asp-for="StatusId" asp-items="ViewBag.StatusList">
+                                            <option value="0" selected>--Select Status--</option>
+                                            <span asp-validation-for="StatusId" class="text-danger"></span>
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="form-group text-right">
-
-                                <input id="ProductDTSearchBtn" type="button" value="Search" class="btn btn-info btn-width" />
+                                <input id="AssembleWorkDTSearchBtn" type="button" value="Search" class="btn btn-info btn-width" />
                                 <a href="@Url.Action("Search","AssembleWork")"><input type="button" value="Clear" class="btn btn-warning btn-width" /></a>
                             </div>
                         </form>
@@ -71,7 +78,6 @@
                                         </th>
                                         <th class="text-center">
                                             @Html.DisplayNameFor(model => model.AssembleWorkCategoryName)
-
                                         </th>
 
                                         <th class="text-center">
@@ -110,14 +116,15 @@
             search();
         });
 
-        $(document.body).on("click", "#AssemleWorkDTSearchBtn", function () {
+        $(document.body).on("click", "#AssembleWorkDTSearchBtn", function () {
             search();
         });
 
         function getSearchObject() {
 
             var searchVm = {
-                "AssembleWorkCategoryId": $("#AssemblWorkCategoryId").val(),
+                "AssembleWorkCategoryId": $("#AssembleWorkCategoryId").val(),
+                "StatusId": $("#StatusId").val()
             }
             return searchVm;
         }
@@ -178,22 +185,23 @@
                     {
                         data: "StatusId",
                         render: function (data, type, row, meta) {
-                            var result = "";
-                            if (row.isMenuShow == false) {
-                                var result = '<b class="text-danger" > <i class="fas fa-times-circle fa-2x" style = "font-size:20px" > </i></b >';
-                            }
-                            else {
-                                var result = '<b class="text-success" > <i class="fas fa-check-square" style = "font-size:20px" > </i></b >';
-                            }
-                            return result;
+                            return row.statusName;
                         }
                     },
                     {
                         data: "Action",
                         render: function (data, type, row, meta) {
-                            var editBtn = "<a href='UpdateRecord/" + row.id + "'><i class='fas fa-pen text-warning m-1' title='Edit' aria-hidden='true'></i></a>";
-                            var deleteBtn = "<a href='Delete/" + row.id + "'><i class='fas fa-trash text-danger m-1' title='Delete' aria-hidden='true'></i></a>";
-                            var actionBtn = editBtn + deleteBtn;
+                            var editBtn = "";
+                            var detailsBtn = "";
+                            var deleteBtn = "";
+
+                            if (row.statusId <= @((int)AssembleWorkStatusEnum.Confirm)) {
+                                editBtn = "<a href='UpdateRecord/" + row.id + "'><i class='fas fa-pen text-warning m-1' title='Edit' aria-hidden='true'></i></a>";
+                                deleteBtn = "<a href='Delete/" + row.id + "'><i class='fas fa-trash text-danger m-1' title='Delete' aria-hidden='true'></i></a>";
+                            }
+                            detailsBtn = "<a href='Details/" + row.id + "'><i class='fa fa-eye text-info m-1' title='Details' aria-hidden='true'></i></a>";
+
+                            var actionBtn = editBtn + detailsBtn + deleteBtn;
                             return actionBtn;
                         }
                     }

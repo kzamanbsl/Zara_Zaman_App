@@ -10,7 +10,7 @@ namespace app.Services.LeaveBalanceServices
         public string Description { get; set; }
         public long LeaveCategoryId { get; set; }
 
-        [DisplayName("Leave Category Name")]
+        [DisplayName("Leave Category")]
         public string LeaveCategoryName { get; set; }
     }
 }

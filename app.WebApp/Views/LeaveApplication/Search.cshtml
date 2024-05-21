@@ -1,4 +1,5 @@
-﻿@model app.Services.LeaveApplicationServices.LeaveApplicationSearchDto
+﻿@using app.Utility
+@model app.Services.LeaveApplicationServices.LeaveApplicationSearchDto
 @{
     ViewData["Title"] = "Search";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
@@ -9,10 +10,10 @@
         <div class="breadcrumb d-flex justify-content-between align-items-center  pl-3 pr-3">
             <ol class="breadcrumb mb-0 p-0">
                 <li class="breadcrumb-item"><a href="/Admin/Index">Home</a></li>
-                <li class="breadcrumb-item active"> Leave List </li>
+                <li class="breadcrumb-item active"> Leave Application List </li>
             </ol>
             <div>
-                <a asp-action="AddRecord"><i class="fa fa-plus"></i>  Add Leave </a>
+                <a asp-action="AddRecord"><i class="fa fa-plus"></i> Add Leave Application </a>
             </div>
         </div>
     </div>
@@ -24,8 +25,8 @@
         <div class="card">
             <div class="card-header">
                 <div class="row w-100">
-                    <div class="col-sm-3">
-                        <h5> <i class="fas fa-list"></i>  All Leave Application </h5>
+                    <div class="col-sm-6">
+                        <h5> <i class="fas fa-list"></i> All Leave Applications </h5>
                     </div>
                 </div>
             </div>
@@ -38,7 +39,7 @@
                                     <div class="form-group">
                                         <label>Employee</label>
                                         <select class="form-control" asp-for="EmployeeId" asp-items="ViewBag.Employees">
-                                            <option value="0" selected>--Employee--</option>
+                                            <option value="0" selected>--Select Employee--</option>
                                             <span asp-validation-for="EmployeeId" class="text-danger"></span>
                                         </select>
                                     </div>
@@ -47,10 +48,24 @@
                                     <div class="form-group">
                                         <label>Leave Category</label>
                                         <select class="form-control" asp-for="LeaveCategoryId" asp-items="ViewBag.LeaveCategories">
-                                            <option value="0" selected>--Leave Category--</option>
+                                            <option value="0" selected>--Select Leave Category--</option>
                                             <span asp-validation-for="LeaveCategoryId" class="text-danger"></span>
                                         </select>
                                     </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>Status</label>
+                                        <select class="form-control" asp-for="StatusId" asp-items="ViewBag.Status">
+                                            <option value="0" selected>--Select Status--</option>
+                                            <span asp-validation-for="StatusId" class="text-danger"></span>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
                                 </div>
                             </div>
 
@@ -96,7 +111,7 @@
                                             @Html.DisplayNameFor(model => model.Reason)
                                         </th>
                                         <th class="text-center">
-                                            @Html.DisplayNameFor(model => model.Remarks)
+                                            @Html.DisplayNameFor(model => model.StatusName)
                                         </th>
                                         <th class="text-center">
                                             @Html.DisplayNameFor(model => model.Action)
@@ -136,7 +151,7 @@
             var searchVm = {
                 "EmployeeId": $("#EmployeeId").val(),
                 "LeaveCategoryId": $("#LeaveCategoryId").val(),
-                
+                "StatusId": $("#StatusId").val()
             }
             return searchVm;
         }
@@ -144,7 +159,7 @@
         function search() {
             var searchVm = getSearchObject();
 
-            if ($.fn.DataTable.isDataTable("#LeaveApplcationSearchTable")) {
+            if ($.fn.DataTable.isDataTable("#LeaveApplicationSearchTable")) {
                 var table = $("#LeaveApplicationSearchTable").DataTable();
                 table.destroy();
             }
@@ -225,17 +240,25 @@
                         }
                     },
                     {
-                        data: "Remarks",
+                        data: "StatusName",
                         render: function (data, type, row, meta) {
-                            return row.remarks;
+                            return row.statusName;
                         }
                     },
                     {
                         data: "Action",
                         render: function (data, type, row, meta) {
-                            var editBtn = "<a href='UpdateRecord/" + row.id + "'><i class='fas fa-pen text-warning m-1' title='Edit' aria-hidden='true'></i></a>";
-                            var deleteBtn = "<a href='Delete/" + row.id + "'><i class='fas fa-trash text-danger m-1' title='Delete' aria-hidden='true'></i></a>";
-                            var actionBtn = editBtn + deleteBtn;
+                            var editBtn = "";
+                            var deleteBtn = "";
+                            var detailsBtn = "";
+
+                            if (row.statusId == @((int)LeaveApplicationStatusEnum.Applied) || row.statusId == @((int)LeaveApplicationStatusEnum.Confirm)) {
+                                editBtn = "<a href='UpdateRecord/" + row.id + "'><i class='fas fa-pen text-warning m-1' title='Edit' aria-hidden='true'></i></a>";
+                                deleteBtn = "<a href='Delete/" + row.id + "'><i class='fas fa-trash text-danger m-1' title='Delete' aria-hidden='true'></i></a>";
+                            }
+                            detailsBtn = "<a href='Details/" + row.id + "'><i class='fa fa-eye text-info m-1' title='Details' aria-hidden='true'></i></a>";
+
+                            var actionBtn = editBtn + detailsBtn + deleteBtn;
                             return actionBtn;
                         }
                     }

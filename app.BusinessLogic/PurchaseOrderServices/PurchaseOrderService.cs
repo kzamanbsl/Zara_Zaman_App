@@ -211,7 +211,6 @@ namespace app.Services.PurchaseOrderServices
                                                   }).OrderByDescending(x => x.Id).AsQueryable());
 
             purchaseMasterModel.PurchaseOrderList = await Task.Run(() => dataQuery.ToList());
-            purchaseMasterModel.PurchaseOrderList.ToList().ForEach((c => c.OrderStatusName = Enum.GetName(typeof(PurchaseOrderStatusEnum), c.OrderStatusId)));
 
             var masterIds = purchaseMasterModel.PurchaseOrderList.Select(x => x.Id);
 
@@ -249,7 +248,6 @@ namespace app.Services.PurchaseOrderServices
                 filter = filter.ToLower();
                 searchResult = searchResult.Where(c =>
                     c.OrderNo.ToLower().Contains(filter)
-                    || c.PurchaseDate.ToString().Contains(filter)
                     || c.Supplier.Name.ToLower().Contains(filter)
                     || c.Storehouse.Name.ToLower().Contains(filter)
                     );
@@ -276,27 +274,13 @@ namespace app.Services.PurchaseOrderServices
                 StoreName = c.Storehouse.Name,
                 SupplierId = c.SupplierId,
                 SupplierName = c.Supplier.Name,
-                OrderStatusId = (int)(PurchaseOrderStatusEnum)c.OrderStatusId,
-                OrderStatusName = Enum.GetName(typeof(PurchaseOrderStatusEnum), c.OrderStatusId),
+                OrderStatusId = c.OrderStatusId,
+                //OrderStatusName = Enum.GetName(typeof(PurchaseOrderStatusEnum), c.OrderStatusId),
 
                 //TotalAmount = (double)c.TotalAmount,
             }).ToList();
 
             return searchDto;
-        }
-
-        public async Task<SupplierViewModel> GetSupplierInformation(long id)
-        {
-            var item = await (from t1 in _dbContext.Supplier.Where(t => t.IsActive == true && t.Id == id)
-                              select new SupplierViewModel
-                              {
-                                  Name = t1.Name,
-                                  Phone = t1.Phone,
-                                  Email = t1.Email,
-                                  Address = t1.Address,
-                                  Id = t1.Id
-                              }).FirstOrDefaultAsync();
-            return item;
         }
     }
 }

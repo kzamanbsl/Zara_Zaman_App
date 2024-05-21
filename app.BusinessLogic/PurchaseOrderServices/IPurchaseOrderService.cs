@@ -10,7 +10,6 @@ namespace app.Services.PurchaseOrderServices
         Task<bool> UpdatePurchaseOrder(PurchaseOrderViewModel vm);
         Task<PurchaseOrderViewModel>GetPurchaseOrder(long purchaseOrderId);
         Task<PurchaseOrderViewModel> GetPurchaseOrderDetails(long id);
-        Task<SupplierViewModel> GetSupplierInformation(long id);
         Task<bool> ConfirmPurchaseOrder(long id);
         Task<bool> RejectPurchaseOrder(PurchaseOrderViewModel vm);
         //Task<bool> RejectAssetPurchaseOrder(long id);

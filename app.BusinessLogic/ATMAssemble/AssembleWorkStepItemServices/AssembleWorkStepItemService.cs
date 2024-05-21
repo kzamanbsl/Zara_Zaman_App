@@ -99,10 +99,11 @@ namespace app.Services.ATMAssemble.AssembleWorkStepItemServices
 
         public async Task<DataTablePagination<AssembleWorkStepItemSearchDto>> SearchAsync(DataTablePagination<AssembleWorkStepItemSearchDto> searchDto)
         {
-            var searchResult = _dbContext.AssembleWorkStepItem.Include(c => c.AssembleWorkStep).Include(c => c.AssembleWorkStep.AssembleWorkCategory).Where(c => c.IsActive == true).AsNoTracking();
+            var searchResult = _dbContext.AssembleWorkStepItem.Include(c => c.AssembleWorkStep).ThenInclude(c => c.AssembleWorkCategory).Where(c => c.IsActive == true).AsNoTracking();
 
             var searchModel = searchDto.SearchVm;
             var filter = searchDto?.Search?.Value?.Trim();
+
             if (searchModel?.AssembleWorkStepId is > 0)
             {
                 searchResult = searchResult.Where(c => c.AssembleWorkStepId == searchModel.AssembleWorkStepId);
@@ -111,6 +112,7 @@ namespace app.Services.ATMAssemble.AssembleWorkStepItemServices
             {
                 searchResult = searchResult.Where(c => c.AssembleWorkStep.AssembleWorkCategoryId == searchModel.AssembleWorkCategoryId);
             }
+
             if (!string.IsNullOrEmpty(filter))
             {
                 filter = filter.ToLower();
@@ -138,11 +140,11 @@ namespace app.Services.ATMAssemble.AssembleWorkStepItemServices
                 SerialNo = ++sl,
                 Id = c.Id,
                 Name = c.Name,
-                AssembleWorkStepId = c.AssembleWorkStepId,
-                AssembleWorkStepName = c.AssembleWorkStep.Name,
-                AssembleWorkCategoryId = c.AssembleWorkStep.AssembleWorkCategory.Id,
-                AssembleWorkCategoryName = c.AssembleWorkStep.AssembleWorkCategory.Name,
                 Description = c.Description,
+                AssembleWorkStepId = c.AssembleWorkStepId,
+                AssembleWorkStepName = c.AssembleWorkStep?.Name,
+                AssembleWorkCategoryId = c.AssembleWorkStep.AssembleWorkCategoryId,
+                AssembleWorkCategoryName = c.AssembleWorkStep?.AssembleWorkCategory?.Name
 
             }).ToList();
 

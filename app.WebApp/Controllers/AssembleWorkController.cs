@@ -3,6 +3,8 @@ using app.EntityModel.DataTablePaginationModels;
 using app.Services.ATMAssemble.AssembleWorkServices;
 using app.Services.DropdownServices;
 using app.Services.ProductServices;
+using app.Utility;
+using app.Utility.UtilityServices;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -12,11 +14,13 @@ namespace app.WebApp.Controllers
     {
         private readonly IAssembleWorkService _iService;
         private readonly IDropdownService _iDropdownService;
+        private readonly IUtilityService _iUtilityService;
 
-        public AssembleWorkController(IAssembleWorkService iService, IDropdownService iDropdownService)
+        public AssembleWorkController(IAssembleWorkService iService, IDropdownService iDropdownService, IUtilityService iUtilityService)
         {
             _iService = iService;
             _iDropdownService = iDropdownService;
+            _iUtilityService= iUtilityService;
         }
 
         [HttpGet]
@@ -120,8 +124,9 @@ namespace app.WebApp.Controllers
         [HttpGet]
         public async Task<IActionResult> Search()
         {
-            ViewBag.AssembleWorkCategoryList = new SelectList((await _iDropdownService.AssembleWorkCategorySelectionList())
-                .Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
+            ViewBag.AssembleWorkCategoryList = new SelectList((await _iDropdownService.AssembleWorkCategorySelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
+            ViewBag.StatusList = new SelectList((_iUtilityService.GetEnumSelectionList<AssembleWorkStatusEnum>()).Select(s => new { Id = s.Value, Name = s.Text }), "Id", "Name");
+
             return View();
         }
 

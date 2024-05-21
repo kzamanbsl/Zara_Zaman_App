@@ -1,6 +1,4 @@
-﻿using app.EntityModel.AppModels;
-using app.Services.DropdownServices;
-using app.Services.InventoryServices;
+﻿using app.Services.DropdownServices;
 using app.Services.AssetAllocationDetailServices;
 using app.Services.AssetAllocationServices;
 using app.Utility;
@@ -8,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using app.Services.IAssetnventoryServices;
 using app.EntityModel.DataTablePaginationModels;
-using app.Services.SalesOrderServices;
 
 namespace app.WebApp.Controllers
 {
@@ -26,23 +23,6 @@ namespace app.WebApp.Controllers
             _iDropdownService = iDropdownService;
             _iAssetInventoryService = iAssetInventoryService;
         }
-
-        public async Task<IActionResult> Index()
-        {
-            try
-            {
-                ViewBag.EmployeeList = new SelectList((await _iDropdownService.EmployeeSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
-                ViewBag.DepartmentList = new SelectList((await _iDropdownService.DepartmentSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
-
-                AssetAllocationViewModel viewModel = await _iAssetAllocationService.GetAllRecord();
-                return View(viewModel);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message, ex);
-            }
-        }
-
 
         [HttpGet]
         public async Task<IActionResult> AddAssetAllocationAndDetail(long assetAllocationId = 0)
@@ -66,7 +46,6 @@ namespace app.WebApp.Controllers
 
             return View(viewModel);
         }
-
 
         [HttpPost]
         public async Task<IActionResult> AddAssetAllocationAndDetail(AssetAllocationViewModel vm)
@@ -93,7 +72,6 @@ namespace app.WebApp.Controllers
             return Json(model);
         }
 
-
         [HttpPost]
         public async Task<IActionResult> ConfirmAssetAllocation(long id)
         {
@@ -107,7 +85,6 @@ namespace app.WebApp.Controllers
             var res = await _iAssetAllocationService.DeleteAssetAllocation(id);
             return RedirectToAction(nameof(Search));
         }
-
 
         public async Task<IActionResult> DeleteAssetAllocationDetailsById(long id, AssetAllocationViewModel vm)
         {

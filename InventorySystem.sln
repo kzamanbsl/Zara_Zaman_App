@@ -6,6 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "app.EntityModel", "app.EntityModel\app.EntityModel.csproj", "{9F9AA343-70DE-4B0F-8732-367C9B4FCE04}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "app.Infrastructure", "app.Infrastructure\app.Infrastructure.csproj", "{1D70984D-E84A-4051-94FD-0015AF646379}"
+	ProjectSection(ProjectDependencies) = postProject
+		{32244A98-9C6E-4FF1-8A3C-B8FCCED01E40} = {32244A98-9C6E-4FF1-8A3C-B8FCCED01E40}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "app.Services", "app.BusinessLogic\app.Services.csproj", "{45A09FE4-BC3D-4862-99D2-98C82AAB69F7}"
 	ProjectSection(ProjectDependencies) = postProject

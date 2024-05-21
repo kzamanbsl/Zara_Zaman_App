@@ -1,17 +1,13 @@
 ﻿using app.EntityModel.DataTablePaginationModels;
 using app.Services.DropdownServices;
 using app.Services.EmployeeServices;
-using app.Services.ProductServices;
 using app.Services.UserServices;
-using app.Utility;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace app.WebApp.Controllers
 {
-
-    //testc Line 
+ 
     public class EmployeeController : Controller
     {
         private readonly IEmployeeService _iService;
@@ -48,15 +44,22 @@ namespace app.WebApp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddRecord(EmployeeViewModel viewModel)
+        //public async Task<IActionResult> AddRecord(EmployeeViewModel viewModel)
+        //{
+        //    var result = await _iService.AddRecord(viewModel);
+        public async Task<IActionResult> AddRecord(EmployeeViewModel model)
         {
-            var result = await _iService.AddRecord(viewModel);
+            var result = await _iService.AddRecord(model);
             if (result == true)
             {
                 return RedirectToAction("Search");
             }
-            ModelState.AddModelError(string.Empty, "Same Employee already exists!");
-            return View(viewModel);
+
+            //ModelState.AddModelError(string.Empty, "Same Employee already exists!");
+            //return View(viewModel);
+
+            ModelState.AddModelError(string.Empty, "Same Employee Code already exists!");
+            return View(model);
         }
 
         [HttpGet]
@@ -100,10 +103,16 @@ namespace app.WebApp.Controllers
         [HttpGet]
         public async Task<IActionResult> Details(long id)
         {            
-            var result = await _iService.GetDetailsById(id);
+            var result = await _iService.GetRecordById(id);
             return View(result);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Delete(long id)
+        {
+            var res = await _iService.DeleteRecord(id);
+            return RedirectToAction("Search");
+        }
 
         #region Search
 

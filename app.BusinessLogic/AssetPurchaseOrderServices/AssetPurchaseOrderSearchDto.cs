@@ -8,8 +8,6 @@ namespace app.Services.AssetPurchaseOrderServices
 {
     public class AssetPurchaseOrderSearchDto : BaseDataTableSearch
     {
-
-
         [DisplayName("Purchase Date")]
         public DateTime PurchaseDate { get; set; }
         public string Description { get; set; }
@@ -21,7 +19,8 @@ namespace app.Services.AssetPurchaseOrderServices
         public int OrderStatusId { get; set; }
 
         [DisplayName("Status")]
-        public string OrderStatusName { get; set; }
+        public string OrderStatusName => GlobalVariable.GetEnumDescription((PurchaseOrderStatusEnum)OrderStatusId);
+
         public decimal OverallDiscount { get; set; }
 
         [DisplayName("Total Amount")]

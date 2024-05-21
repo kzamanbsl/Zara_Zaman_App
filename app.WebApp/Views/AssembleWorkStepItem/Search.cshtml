@@ -9,10 +9,10 @@
         <div class="breadcrumb d-flex justify-content-between align-items-center  pl-3 pr-3">
             <ol class="breadcrumb mb-0 p-0">
                 <li class="breadcrumb-item"><a href="/Admin/Index">Home</a></li>
-                <li class="breadcrumb-item active"> AssembleWork Step Item List </li>
+                <li class="breadcrumb-item active"> Assemble Work Step Item List </li>
             </ol>
             <div>
-                <a asp-action="AddRecord"><i class="fa fa-plus"></i>  Add AssembleWork Step Items </a>
+                <a asp-action="AddRecord"><i class="fa fa-plus"></i> Add Assemble Work Step Item </a>
             </div>
         </div>
     </div>
@@ -24,8 +24,8 @@
         <div class="card">
             <div class="card-header">
                 <div class="row w-100">
-                    <div class="col-sm-3">
-                        <h5> <i class="fas fa-list"></i>  All AssembleWork Step Items </h5>
+                    <div class="col-sm-6">
+                        <h5> <i class="fas fa-list"></i> All Assemble Work Step Items </h5>
                     </div>
                 </div>
             </div>
@@ -38,16 +38,16 @@
                                     <div class="form-group">
                                         <label>Category</label>
                                         <select class="form-control" asp-for="AssembleWorkCategoryId" asp-items="ViewBag.AssembleWorkCategoryList">
-                                            <option value="0" selected>--Work Category--</option>
+                                            <option value="0" selected>--Select Work Category--</option>
                                             <span asp-validation-for="AssembleWorkCategoryId" class="text-danger"></span>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label>Work Steps</label>
+                                        <label>Work Step</label>
                                         <select class="form-control" asp-for="AssembleWorkStepId" asp-items="ViewBag.AssembleWorkStepList">
-                                            <option value="0" selected>--Work Step--</option>
+                                            <option value="0" selected>--Select Work Step--</option>
                                             <span asp-validation-for="AssembleWorkStepId" class="text-danger"></span>
                                         </select>
                                     </div>
@@ -75,10 +75,10 @@
                                             @Html.DisplayNameFor(model => model.AssembleWorkCategoryName)
                                         </th>
                                         <th class="text-center">
-                                            @Html.DisplayNameFor(model => model.Name)
+                                            @Html.DisplayNameFor(model => model.AssembleWorkStepName)
                                         </th>
                                         <th class="text-center">
-                                            @Html.DisplayNameFor(model => model.AssembleWorkStepName)
+                                            @Html.DisplayNameFor(model => model.Name)
                                         </th>
                                         <th class="text-center">
                                             @Html.DisplayNameFor(model => model.Description)
@@ -164,15 +164,15 @@
                         }
                     },
                     {
-                        data: "Name",
-                        render: function (data, type, row, meta) {
-                            return row.name;
-                        }
-                    },
-                    {
                         data: "AssembleWorkStepName",
                         render: function (data, type, row, meta) {
                             return row.assembleWorkStepName;
+                        }
+                    },
+                    {
+                        data: "Name",
+                        render: function (data, type, row, meta) {
+                            return row.name;
                         }
                     },
                     {

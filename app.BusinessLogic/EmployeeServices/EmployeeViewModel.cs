@@ -160,12 +160,6 @@ namespace app.Services.EmployeeServices
         [DisplayName("Is Create User")]
         public bool IsCreateUser { get; set; }
 
-        [DisplayName("Is Disable User")]
-        public bool IsDisableUser { get; set; }
-        
-        [DisplayName("Is Enable User")]
-        public bool IsEnableUser { get; set; }
-
         #endregion
 
 

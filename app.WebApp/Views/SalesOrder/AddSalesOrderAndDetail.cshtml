@@ -10,6 +10,7 @@
         <div class="breadcrumb d-flex justify-content-between align-items-center  pl-3 pr-3">
             <ol class="breadcrumb mb-0 p-0">
                 <li class="breadcrumb-item"><a href="/Admin/Index">Home</a></li>
+                <li class="breadcrumb-item active"> Sales Order </li>
             </ol>
             <div>
                 <a asp-action="Index"><i class="fa fa-list"></i> Sales Order List </a>
@@ -27,12 +28,14 @@
                 @if (Model.Id > 0)
                 {
                     <h3 class="card-title text-info">
+                        <i class="fas fa-plus"></i>
                         Sales Order Information
                     </h3>
                 }
                 else
                 {
                     <h3 class="card-title text-info">
+                        <i class="fas fa-plus"></i>
                         Sales Order
                     </h3>
                 }
@@ -56,7 +59,7 @@
                                                 <th style="width:18%">Invoice No</th>
                                                 <td style="width:30%">@Model.OrderNo</td>
                                                 <th style="width:18%">Invoice Date</th>
-                                                <td style="width:30%">@Model.SalesDate.ToString("dd-MM-yyyy")</td>
+                                                <td style="width:30%">@GlobalVariable.FormatDateForView(Model.SalesDate)</td>
                                             </tr>
                                             <tr>
                                                 <th>Customer Name</th>
@@ -66,14 +69,13 @@
                                             </tr>
                                             <tr>
                                                 <th>Delivery Date</th>
-                                                <td>@Model.DeliveryDate?.ToString("dd-MM-yyyy")</td>
+                                                <td>@GlobalVariable.FormatDateForView(Model.DeliveryDate)</td>
                                                 <th style="width:18%">Delivery Address</th>
                                                 <td style="width:30%">@Model.DeliveryAddress</td>
                                             </tr>
                                         </table>
                                     </div>
                                 </div>
-
                             }
 
                             @if (Model.Id == 0)
@@ -136,13 +138,13 @@
                                         <div class="form-group">
                                             <label>T&C Type</label>
                                             <select class="form-control" id="TermsAndConditionId" asp-for="TermsAndConditionId" asp-items="ViewBag.TermsandconditionList">
-                                                <option value="0" selected>-- Terms & Condition --</option>
+                                                <option value="0" selected>-- Select Terms & Condition --</option>
                                             </select>
                                             <span asp-validation-for="TermsAndConditionId" class="text-danger"></span>
                                         </div>
                                     </div>
-
                                 </div>
+
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
@@ -191,12 +193,10 @@
                                                 <span asp-validation-for="SalesOrderDetailVM.SalesQty" class="text-danger"></span>
                                             </div>
                                         </div>
-
-
                                     </div>
                                 </div>
+
                                 <div class="row">
-                                 
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label>Sale Price</label>
@@ -221,10 +221,10 @@
                                     </div>
                                 </div>
                                 <div id="product-details"></div>
-
-
                             }
+
                             <hr style="margin-top: 10px;">
+
                             <div class="form-group" style="float:right;">
                                 <button type="submit" id="poCreateBtn" class="btn btn-primary btn-block">
                                     <i class='fa fa-plus'></i>
@@ -238,6 +238,7 @@
                                     }
                                 </button>
                             </div>
+
                             @if (Model.Id > 0)
                             {
                                 <input asp-for="Id" class="form-control" hidden />
@@ -299,6 +300,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="row">
                 <div class="card-body">
                     <div class="col-md-12">
@@ -311,66 +313,38 @@
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 </section>
 
 
 @section Scripts {
+
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
 
     <script>
-        document.getElementById('salesQty').addEventListener('input', function () {
-            const quantity = parseInt(this.value);
-            const productDetailsDiv = document.getElementById('product-details');
-            productDetailsDiv.innerHTML = '';
 
-            for (let i = 1; i <= quantity; i++) {
-                productDetailsDiv.innerHTML += `
-            <div class="row">
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <label for="serialNo_${i}">Serial No</label>
-                        <input type="text" id="serialNo_${i}" name="SalesProductDetailVM.SerialNo[${i - 1}]" class="form-control" required>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <label for="modelNo_${i}">Model No</label>
-                        <input type="text" id="modelNo_${i}" name="SalesProductDetailVM.ModelNo[${i - 1}]" class="form-control" required>
-                    </div>
-                </div>               
-            </div>
-        `;
-            }
-        });
-
-    </script>
-
-
-    <script>
         $(document).ready(function () {
             $('#Sales').addClass('menu-open');
             $('#PurchaseOrderAddPurchaseOrderAndDetail').addClass('active');
         });
 
-        $(document).ready(function () {
-            $("#TermsAndConditionId").change(function () {
-                var termsAndConditionId = $(this).val();
-                $.ajax({
-                    type: "GET",
-                    url: "@Url.Action("GetTermsAndCondition", "SalesOrder")",
-                    data: { id: termsAndConditionId },
-                    success: function (data) {
-                        $('#txtTermsAndCondition').val(data.value);
+        $("#TermsAndConditionId").change(function () {
+            var termsAndConditionId = $(this).val();
+            $.ajax({
+                type: "GET",
+                url: "@Url.Action("GetTermsAndCondition", "SalesOrder")",
+                data: { id: termsAndConditionId },
+                success: function (data) {
+                    $('#txtTermsAndCondition').val(data.value);
 
-                    },
-                    error: function () {
-                        console.log('Error fetching terms and condition.');
-                    }
-                });
+                },
+                error: function () {
+                    console.log('Error fetching terms and condition.');
+                }
             });
         });
 
@@ -417,8 +391,6 @@
             });
         }
 
-
-
         function makeDeletable(rowId) {
             $.ajax({
                 type: "GET",
@@ -438,6 +410,30 @@
             });
         }
 
+        document.getElementById('salesQty').addEventListener('input', function () {
+            const quantity = parseInt(this.value);
+            const productDetailsDiv = document.getElementById('product-details');
+            productDetailsDiv.innerHTML = '';
+
+            for (let i = 1; i <= quantity; i++) {
+                productDetailsDiv.innerHTML += `
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="serialNo_${i}">Serial No</label>
+                                <input type="text" id="serialNo_${i}" name="SalesProductDetailVM.SerialNo[${i - 1}]" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="modelNo_${i}">Model No</label>
+                                <input type="text" id="modelNo_${i}" name="SalesProductDetailVM.ModelNo[${i - 1}]" class="form-control" required>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+        });
 
     </script>
 

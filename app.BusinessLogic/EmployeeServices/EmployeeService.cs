@@ -14,214 +14,186 @@ namespace app.Services.EmployeeServices
 
         private readonly IEntityRepository<Employee> _iEntityRepository;
         private readonly InventoryDbContext _dbContext;
-        private readonly UserManager<ApplicationUser> _userManager;
         private readonly IWorkContext _iWorkContext;
-        public EmployeeService(IEntityRepository<Employee> iEntityRepository, InventoryDbContext dbContext, IWorkContext iWorkContext, UserManager<ApplicationUser> userManager)
+        private readonly IUserService _iUserService;
+        public EmployeeService(IEntityRepository<Employee> iEntityRepository, InventoryDbContext dbContext, IWorkContext iWorkContext, IUserService iUserService)
         {
             _iEntityRepository = iEntityRepository;
             _dbContext = dbContext;
             _iWorkContext = iWorkContext;
-            _userManager = userManager;
+            _iUserService = iUserService;
         }
 
         public async Task<bool> AddRecord(EmployeeViewModel vm)
         {
-            try
+
+            var existingEmployee = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.EmployeeCode == vm.EmployeeCode && f.IsActive == true);
+            if (existingEmployee != null) { return false; }
+
+            #region Employee Obj
+            Employee emp = new Employee();
+            emp.Name = vm.Name;
+            emp.EmployeeCode = vm.EmployeeCode;
+            emp.ShortName = vm.ShortName;
+            emp.EmployeeOrder = vm.EmployeeOrder;
+            emp.ManagerId = vm.ManagerId > 0 ? vm.ManagerId : null;
+            emp.Remarks = vm.Remarks;
+
+
+            emp.FatherName = vm.FatherName;
+            emp.MotherName = vm.MotherName;
+            emp.DateOfMarriage = vm.DateOfMarriage;
+            emp.MaritalTypeId = vm.MaritalTypeId > 0 ? vm.MaritalTypeId : null;
+            emp.SpouseName = vm.SpouseName;
+            emp.DateOfBirth = vm.DateOfBirth;
+            emp.NationalIdNo = vm.NationalIdNo;
+            emp.GenderId = vm.GenderId > 0 ? vm.GenderId : null;
+            emp.BloodGroupId = vm.BloodGroupId > 0 ? vm.BloodGroupId : null;
+            emp.ReligionId = vm.ReligionId > 0 ? vm.ReligionId : null;
+            emp.TinNo = vm.TinNo;
+            emp.EmergencyContactNo = vm.EmergencyContactNo;
+            emp.ContactPerson = vm.ContactPerson;
+
+            emp.JoiningDate = vm.JoiningDate;
+            emp.ProbationEndDate = vm.ProbationEndDate;
+            emp.RegineDate = vm.RegineDate;
+            emp.DepartmentId = vm.DepartmentId > 0 ? vm.DepartmentId : null;
+            emp.DesignationId = vm.DesignationId > 0 ? vm.DesignationId : null;
+            emp.EmployeeCategoryId = vm.EmployeeCategoryId > 0 ? vm.EmployeeCategoryId : null;
+            emp.JobStatusId = vm.JobStatusId > 0 ? vm.JobStatusId : null;
+            emp.ServiceTypeId = vm.ServiceTypeId > 0 ? vm.ServiceTypeId : null;
+            emp.OfficeTypeId = vm.OfficeTypeId > 0 ? vm.OfficeTypeId : null;
+            emp.ShiftId = vm.ShiftId > 0 ? vm.ShiftId : null;
+            emp.EmployeeGradeId = vm.EmployeeGradeId > 0 ? vm.EmployeeGradeId : null;
+            emp.PresentAddress = vm.PresentAddress;
+            emp.PermanentAddress = vm.PermanentAddress;
+            emp.CountryId = vm.CountryId > 0 ? vm.CountryId : null;
+            emp.DivisionId = vm.DivisionId > 0 ? vm.DivisionId : null;
+            emp.DistrictId = vm.DistrictId > 0 ? vm.DistrictId : null;
+            emp.UpazilaId = vm.UpazilaId > 0 ? vm.UpazilaId : null;
+            emp.MobileNo = vm.MobileNo;
+            emp.Email = vm.Email;
+
+            emp.SignUrl = vm.SignUrl;
+            emp.PhotoUrl = vm.PhotoUrl;
+
+            #endregion
+
+            #region UserCreate
+
+            if (vm.IsCreateUser == true)
             {
-                //var userCheck = _dbContext.Users.FirstOrDefault(f => f.UserName == vm.UserName);
-                //if (userCheck == null)
-                //{
-                //    UserViewModel userViewModel = new UserViewModel();
-                //    userViewModel.Email = null;
-                //    userViewModel.UserName = vm.UserName;
-                //    userViewModel.Password = vm.Password;
-                //    userViewModel.ConfirmPassword= vm.ConfirmPassword;
-                //    return true;
+                UserViewModel userVm = new UserViewModel();
+                userVm.FullName = vm.Name;
+                userVm.UserName = vm.UserName;
+                userVm.Mobile = vm.MobileNo;
+                userVm.Email = vm.Email;
+                userVm.Address = vm.PresentAddress;
+                userVm.Prefix = vm.Password;
+                userVm.RoleName = "Customer";
+                userVm.Password = vm.Password;
 
-                //}
-
-                //var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim() && f.Id != vm.Id && f.IsActive == true);
-                //var userCheck = _dbContext.Users.FirstOrDefault(f => f.UserName == vm.UserName);
-                //ApplicationUser users = new ApplicationUser();
-                //users.UserName = vm.UserName;
-                //users.Prefix = vm.Password;
-                //var result = await _userManager.CreateAsync(users, vm.Password);
-                //return true;
-                var existingEmployee = _iEntityRepository.AllIQueryableAsync().FirstOrDefault( f => f.EmployeeCode == vm.EmployeeCode && f.IsActive == true);
-                if (existingEmployee == null)
+                var result = await _iUserService.AddUser(userVm);
+                if (result == true)
                 {
-                    Employee emp = new Employee();
-                    emp.Name = vm.Name;
-                    emp.EmployeeCode = vm.EmployeeCode;
-                    emp.ShortName = vm.ShortName;
-                    emp.EmployeeOrder = vm.EmployeeOrder;
-                    emp.ManagerId = vm.ManagerId > 0 ? vm.ManagerId : null;
-                    emp.Remarks = vm.Remarks;
-                    
-
-                    emp.FatherName = vm.FatherName;
-                    emp.MotherName = vm.MotherName;
-                    emp.DateOfMarriage = vm.DateOfMarriage;
-                    emp.MaritalTypeId = vm.MaritalTypeId > 0 ? vm.MaritalTypeId : null;
-                    emp.SpouseName = vm.SpouseName;
-                    emp.DateOfBirth = vm.DateOfBirth;
-                    emp.NationalIdNo = vm.NationalIdNo;
-                    emp.GenderId = vm.GenderId > 0 ? vm.GenderId : null;
-                    emp.BloodGroupId = vm.BloodGroupId > 0 ? vm.BloodGroupId : null;
-                    emp.ReligionId = vm.ReligionId > 0 ? vm.ReligionId : null;
-                    emp.TinNo = vm.TinNo;
-                    emp.EmergencyContactNo = vm.EmergencyContactNo;
-                    emp.ContactPerson = vm.ContactPerson;
-
-                    emp.JoiningDate = vm.JoiningDate;
-                    emp.ProbationEndDate = vm.ProbationEndDate;
-                    emp.RegineDate = vm.RegineDate;
-                    emp.DepartmentId = vm.DepartmentId > 0 ? vm.DepartmentId : null;
-                    emp.DesignationId = vm.DesignationId > 0 ? vm.DesignationId : null;
-                    emp.EmployeeCategoryId = vm.EmployeeCategoryId > 0 ? vm.EmployeeCategoryId : null;
-                    emp.JobStatusId = vm.JobStatusId > 0 ? vm.JobStatusId : null;
-                    emp.ServiceTypeId = vm.ServiceTypeId > 0 ? vm.ServiceTypeId : null;
-                    emp.OfficeTypeId = vm.OfficeTypeId > 0 ? vm.OfficeTypeId : null;
-                    emp.ShiftId = vm.ShiftId > 0 ? vm.ShiftId : null;
-                    emp.EmployeeGradeId = vm.EmployeeGradeId > 0 ? vm.EmployeeGradeId : null;
-                    emp.PresentAddress = vm.PresentAddress;
-                    emp.PermanentAddress = vm.PermanentAddress;
-                    emp.CountryId = vm.CountryId > 0 ? vm.CountryId : null;
-                    emp.DivisionId = vm.DivisionId > 0 ? vm.DivisionId : null;
-                    emp.DistrictId = vm.DistrictId > 0 ? vm.DistrictId : null;
-                    emp.UpazilaId = vm.UpazilaId > 0 ? vm.UpazilaId : null;
-                    emp.MobileNo = vm.MobileNo;
-                    emp.Email = vm.Email;
-
-                    emp.SignUrl = vm.SignUrl;
-                    emp.PhotoUrl = vm.PhotoUrl;
-
-                    var res = await _iEntityRepository.AddAsync(emp);
-
-                    vm.Id = res?.Id ?? 0;
-                    return true;
+                    emp.UserName = userVm.Email;
                 }
-                return false;
             }
-            catch (Exception ex)
-            {
 
-                throw;
-            }
+            #endregion
+
+            var res = await _iEntityRepository.AddAsync(emp);
+
+            vm.Id = res?.Id ?? 0;
+            return true;
         }
 
         public async Task<bool> UpdateRecord(EmployeeViewModel vm)
         {
             var existingEmployee = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.EmployeeCode == vm.EmployeeCode && f.IsActive == true);
-            if (existingEmployee != null)
+            if (existingEmployee == null) { return false; }
+
+            #region Employe
+
+            var emp = await _iEntityRepository.GetByIdAsync(vm.Id);
+            emp.Name = vm.Name;
+            emp.EmployeeCode = vm.EmployeeCode;
+            emp.ShortName = vm.ShortName;
+            emp.EmployeeOrder = vm.EmployeeOrder;
+            emp.ManagerId = vm.ManagerId > 0 ? vm.ManagerId : null;
+            emp.Remarks = vm.Remarks;
+
+
+            emp.FatherName = vm.FatherName;
+            emp.MotherName = vm.MotherName;
+            emp.DateOfMarriage = vm.DateOfMarriage;
+            emp.MaritalTypeId = vm.MaritalTypeId > 0 ? vm.MaritalTypeId : null;
+            emp.SpouseName = vm.SpouseName;
+            emp.DateOfBirth = vm.DateOfBirth;
+            emp.NationalIdNo = vm.NationalIdNo;
+            emp.GenderId = vm.GenderId > 0 ? vm.GenderId : null;
+            emp.BloodGroupId = vm.BloodGroupId > 0 ? vm.BloodGroupId : null;
+            emp.ReligionId = vm.ReligionId > 0 ? vm.ReligionId : null;
+            emp.TinNo = vm.TinNo;
+            emp.EmergencyContactNo = vm.EmergencyContactNo;
+            emp.ContactPerson = vm.ContactPerson;
+
+            emp.JoiningDate = vm.JoiningDate;
+            emp.ProbationEndDate = vm.ProbationEndDate;
+            emp.RegineDate = vm.RegineDate;
+            emp.DepartmentId = vm.DepartmentId > 0 ? vm.DepartmentId : null;
+            emp.DesignationId = vm.DesignationId > 0 ? vm.DesignationId : null;
+            emp.EmployeeCategoryId = vm.EmployeeCategoryId > 0 ? vm.EmployeeCategoryId : null;
+            emp.JobStatusId = vm.JobStatusId > 0 ? vm.JobStatusId : null;
+            emp.ServiceTypeId = vm.ServiceTypeId > 0 ? vm.ServiceTypeId : null;
+            emp.OfficeTypeId = vm.OfficeTypeId > 0 ? vm.OfficeTypeId : null;
+            emp.ShiftId = vm.ShiftId > 0 ? vm.ShiftId : null;
+            emp.EmployeeGradeId = vm.EmployeeGradeId > 0 ? vm.EmployeeGradeId : null;
+            emp.PresentAddress = vm.PresentAddress;
+            emp.PermanentAddress = vm.PermanentAddress;
+            emp.CountryId = vm.CountryId > 0 ? vm.CountryId : null;
+            emp.DivisionId = vm.DivisionId > 0 ? vm.DivisionId : null;
+            emp.DistrictId = vm.DistrictId > 0 ? vm.DistrictId : null;
+            emp.UpazilaId = vm.UpazilaId > 0 ? vm.UpazilaId : null;
+            emp.MobileNo = vm.MobileNo;
+            emp.Email = vm.Email;
+
+            emp.SignUrl = vm.SignUrl;
+            emp.PhotoUrl = vm.PhotoUrl;
+
+            #endregion
+
+            #region UserCreate
+
+            if (vm.IsCreateUser == true)
             {
-                var emp = await _iEntityRepository.GetByIdAsync(vm.Id);
-                emp.Name = vm.Name;
-                emp.EmployeeCode = vm.EmployeeCode;
-                emp.ShortName = vm.ShortName;
-                emp.EmployeeOrder = vm.EmployeeOrder;
-                emp.ManagerId = vm.ManagerId > 0 ? vm.ManagerId : null;
-                emp.Remarks = vm.Remarks;
+                UserViewModel userVm = new UserViewModel();
+                userVm.FullName = vm.Name;
+                userVm.UserName = vm.UserName;
+                userVm.Mobile = vm.MobileNo;
+                userVm.Email = vm.Email;
+                userVm.Address = vm.PresentAddress;
+                userVm.Prefix = vm.Password;
+                userVm.RoleName = "Customer";
+                userVm.Password = vm.Password;
 
-
-                emp.FatherName = vm.FatherName;
-                emp.MotherName = vm.MotherName;
-                emp.DateOfMarriage = vm.DateOfMarriage;
-                emp.MaritalTypeId = vm.MaritalTypeId > 0 ? vm.MaritalTypeId : null;
-                emp.SpouseName = vm.SpouseName;
-                emp.DateOfBirth = vm.DateOfBirth;
-                emp.NationalIdNo = vm.NationalIdNo;
-                emp.GenderId = vm.GenderId > 0 ? vm.GenderId : null;
-                emp.BloodGroupId = vm.BloodGroupId > 0 ? vm.BloodGroupId : null;
-                emp.ReligionId = vm.ReligionId > 0 ? vm.ReligionId : null;
-                emp.TinNo = vm.TinNo;
-                emp.EmergencyContactNo = vm.EmergencyContactNo;
-                emp.ContactPerson = vm.ContactPerson;
-
-                emp.JoiningDate = vm.JoiningDate;
-                emp.ProbationEndDate = vm.ProbationEndDate;
-                emp.RegineDate = vm.RegineDate;
-                emp.DepartmentId = vm.DepartmentId > 0 ? vm.DepartmentId : null;
-                emp.DesignationId = vm.DesignationId > 0 ? vm.DesignationId : null;
-                emp.EmployeeCategoryId = vm.EmployeeCategoryId > 0 ? vm.EmployeeCategoryId : null;
-                emp.JobStatusId = vm.JobStatusId > 0 ? vm.JobStatusId : null;
-                emp.ServiceTypeId = vm.ServiceTypeId > 0 ? vm.ServiceTypeId : null;
-                emp.OfficeTypeId = vm.OfficeTypeId > 0 ? vm.OfficeTypeId : null;
-                emp.ShiftId = vm.ShiftId > 0 ? vm.ShiftId : null;
-                emp.EmployeeGradeId = vm.EmployeeGradeId > 0 ? vm.EmployeeGradeId : null;
-                emp.PresentAddress = vm.PresentAddress;
-                emp.PermanentAddress = vm.PermanentAddress;
-                emp.CountryId = vm.CountryId > 0 ? vm.CountryId : null;
-                emp.DivisionId = vm.DivisionId > 0 ? vm.DivisionId : null;
-                emp.DistrictId = vm.DistrictId > 0 ? vm.DistrictId : null;
-                emp.UpazilaId = vm.UpazilaId > 0 ? vm.UpazilaId : null;
-                emp.MobileNo = vm.MobileNo;
-                emp.Email = vm.Email;
-
-                emp.SignUrl = vm.SignUrl;
-                emp.PhotoUrl = vm.PhotoUrl;
-                await _iEntityRepository.UpdateAsync(emp);
-                return true;
+                var result = await _iUserService.AddUser(userVm);
+                if (result == true)
+                {
+                    emp.UserName = userVm.Email;
+                }
             }
-            return false;
+
+            #endregion
+
+            await _iEntityRepository.UpdateAsync(emp);
+
+            return true;
+
         }
+
         public async Task<EmployeeViewModel> GetRecordById(long id)
         {
-            var emp = await _iEntityRepository.GetByIdAsync(id);
-            EmployeeViewModel vm = new EmployeeViewModel();
-            vm.Name = emp.Name;
-            vm.UserName = emp.UserName;
-            vm.EmployeeCode = emp.EmployeeCode;
-            vm.ShortName = emp.ShortName;
-            vm.EmployeeOrder = emp.EmployeeOrder;
-            vm.ManagerId = emp.ManagerId;
-            vm.Remarks = emp.Remarks;
-
-
-            vm.FatherName = emp.FatherName;
-            vm.MotherName = emp.MotherName;
-            vm.DateOfMarriage = emp.DateOfMarriage;
-            vm.MaritalTypeId = emp.MaritalTypeId;
-
-            vm.SpouseName = emp.SpouseName;
-            vm.DateOfBirth = emp.DateOfBirth;
-            vm.NationalIdNo = emp.NationalIdNo;
-            vm.GenderId = (int?)(emp.GenderId > 0 ? emp.GenderId : null);
-            vm.BloodGroupId = (int?)(emp.BloodGroupId > 0 ? emp.BloodGroupId : null);
-            vm.ReligionId = (int?)(emp.ReligionId > 0 ? emp.ReligionId : null);
-            vm.TinNo = emp.TinNo;
-            vm.EmergencyContactNo = emp.EmergencyContactNo;
-            vm.ContactPerson = emp.ContactPerson;
-
-
-            vm.JoiningDate = emp.JoiningDate;
-            vm.ProbationEndDate = emp.ProbationEndDate;
-            vm.RegineDate = emp.RegineDate;
-            vm.DepartmentId = emp.DepartmentId > 0 ? emp.DepartmentId : null;
-            vm.DesignationId = emp.DesignationId > 0 ? emp.DesignationId : null;
-            vm.EmployeeCategoryId = (emp.EmployeeCategoryId > 0 ? emp.EmployeeCategoryId : null);
-            vm.JobStatusId = emp.JobStatusId > 0 ? emp.JobStatusId : null;
-            vm.ServiceTypeId = emp.ServiceTypeId > 0 ? emp.ServiceTypeId : null;
-            vm.OfficeTypeId = emp.OfficeTypeId > 0 ? emp.OfficeTypeId : null;
-            vm.ShiftId = emp.ShiftId > 0 ? emp.ShiftId : null;
-            vm.EmployeeGradeId = (emp.EmployeeGradeId > 0 ? emp.EmployeeGradeId : null);
-            vm.PresentAddress = emp.PresentAddress;
-            vm.PermanentAddress = emp.PermanentAddress;
-            vm.CountryId = emp.CountryId > 0 ? emp.CountryId : null;
-            vm.DivisionId = emp.DivisionId > 0 ? emp.DivisionId : null;
-            vm.DistrictId = emp.DistrictId > 0 ? emp.DistrictId : null;
-            vm.UpazilaId = emp.UpazilaId > 0 ? emp.UpazilaId : null;
-            vm.MobileNo = emp.MobileNo;
-            vm.Email = emp.Email;
-
-            vm.SignUrl = emp.SignUrl;
-            vm.PhotoUrl = emp.PhotoUrl;
-            return vm;
-        }
-        public async Task<EmployeeViewModel> GetDetailsById(long id)
-        {
-
-            
             var result = await _dbContext.Employee.Include(c => c.Manager).Include(c => c.MaritalType)
                 .Include(c => c.Gender).Include(c => c.BloodGroup).Include(c => c.Religion).Include(c => c.Department)
                 .Include(c => c.Designation).Include(c => c.EmployeeCategory).Include(c => c.EmployeeGrade)
@@ -290,11 +262,21 @@ namespace app.Services.EmployeeServices
             model.UpazilaName = result.Upazila?.Name;
             model.MobileNo = result.MobileNo;
             model.Email = result.Email;
+            model.UserName = result.UserName;
 
             model.SignUrl = result.SignUrl;
             model.PhotoUrl = result.PhotoUrl;
             return model;
         }
+
+        public async Task<bool> DeleteRecord(long id)
+        {
+            var result = await _iEntityRepository.GetByIdAsync(id);
+            result.IsActive = false;
+            await _iEntityRepository.UpdateAsync(result);
+            return true;
+        }
+
         public async Task<EmployeeViewModel> GetAllRecord()
         {
             EmployeeViewModel model = new EmployeeViewModel();
@@ -316,9 +298,10 @@ namespace app.Services.EmployeeServices
                                                        }).AsEnumerable());
             return model;
         }
+
         public async Task<DataTablePagination<EmployeeSearchDto>> SearchAsync(DataTablePagination<EmployeeSearchDto> searchDto)
         {
-            var searchResult = _dbContext.Employee.Include(c => c.Department).Include(c => c.Designation).Where(c=>c.IsActive==true).AsNoTracking();
+            var searchResult = _dbContext.Employee.Include(c => c.Department).Include(c => c.Designation).Where(c => c.IsActive == true).AsNoTracking();
 
             var searchModel = searchDto.SearchVm;
             var filter = searchDto?.Search?.Value?.Trim();
@@ -339,7 +322,7 @@ namespace app.Services.EmployeeServices
                     || c.Designation.Name.ToLower().Contains(filter)
                     || c.EmployeeCode.ToLower().Contains(filter)
                     || c.MobileNo.ToLower().Contains(filter)
-                    || c.Email.ToLower().Contains(filter)    
+                    || c.Email.ToLower().Contains(filter)
                 );
             }
 
@@ -368,11 +351,12 @@ namespace app.Services.EmployeeServices
                 Email = c.Email,
                 UserName = c.UserName,
                 JoiningDate = c.JoiningDate,
-                
+
             }).ToList();
 
             return searchDto;
         }
+
     }
 }
 

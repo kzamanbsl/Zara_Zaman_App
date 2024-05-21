@@ -1,14 +1,10 @@
-﻿using app.EntityModel.AppModels;
-using app.EntityModel.DataTablePaginationModels;
-using app.Infrastructure.Migrations;
+﻿using app.EntityModel.DataTablePaginationModels;
 using app.Services.DropdownServices;
 using app.Services.LeaveApplicationServices;
-using app.Services.LeaveBalanceServices;
-using app.Services.ProductServices;
 using app.Utility;
+using app.Utility.UtilityServices;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 
 namespace app.WebApp.Controllers
 {
@@ -16,11 +12,13 @@ namespace app.WebApp.Controllers
     {
 
         private readonly ILeaveApplicationService _iService;
-        private readonly IDropdownService _dropdownService;
-        public LeaveApplicationController(ILeaveApplicationService iService, IDropdownService dropdownService)
+        private readonly IDropdownService _iDropdownService;
+        private readonly IUtilityService _iUtilityService;
+        public LeaveApplicationController(ILeaveApplicationService iService, IDropdownService dropdownService, IUtilityService iUtilityService)
         {
             _iService = iService;
-            _dropdownService = dropdownService;
+            _iDropdownService = dropdownService;
+            _iUtilityService = iUtilityService;
         }
 
         [HttpGet]
@@ -43,32 +41,29 @@ namespace app.WebApp.Controllers
         public async Task<IActionResult> AddRecord()
         {
 
-            ViewBag.LeaveCategories = new SelectList((await _dropdownService.LeaveCategorySelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
-            ViewBag.Employees = new SelectList((await _dropdownService.EmployeeSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
-            ViewBag.Managers = new SelectList((await _dropdownService.EmployeeSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
-            ViewBag.Status = new SelectList(Enum.GetValues(typeof(LeaveApplicationStatusEnum))
-                                   .Cast<LeaveApplicationStatusEnum>()
-                                   .Select(e => new SelectListItem
-                                   {
-                                       Value = ((int)e).ToString(),
-                                       Text = e.ToString()
-                                   }), "Value", "Text");
-
+            ViewBag.LeaveCategories = new SelectList((await _iDropdownService.LeaveCategorySelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
+            ViewBag.Employees = new SelectList((await _iDropdownService.EmployeeSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
+            ViewBag.Managers = new SelectList((await _iDropdownService.EmployeeSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
+            ViewBag.Status = new SelectList((_iUtilityService.GetEnumSelectionList<LeaveApplicationStatusEnum>()).Select(s => new { Id = s.Value, Name = s.Text }), "Id", "Name");
+            
             var leaveApplicationVm = new LeaveApplicationViewModel(); 
             var empLeaveBalanceList = await _iService.GetLeaveBalanceByEmployeeId(leaveApplicationVm.EmployeeId);
             leaveApplicationVm.LeaveBalanceCountList = empLeaveBalanceList;
             return View(leaveApplicationVm);
         }
+
         [HttpPost]
         public async Task<IActionResult> AddRecord(LeaveApplicationViewModel viewModel)
         {
-            ViewBag.Status = new SelectList(Enum.GetValues(typeof(LeaveApplicationStatusEnum))
-                                  .Cast<LeaveApplicationStatusEnum>()
-                                  .Select(e => new SelectListItem
-                                  {
-                                      Value = ((int)e).ToString(),
-                                      Text = e.ToString()
-                                  }), "Value", "Text", viewModel.StatusName);
+            //ViewBag.Status = new SelectList(Enum.GetValues(typeof(LeaveApplicationStatusEnum))
+            //                      .Cast<LeaveApplicationStatusEnum>()
+            //                      .Select(e => new SelectListItem
+            //                      {
+            //                          Value = ((int)e).ToString(),
+            //                          Text = e.ToString()
+            //                      }), "Value", "Text", viewModel.StatusName);
+            ViewBag.Status = new SelectList((_iUtilityService.GetEnumSelectionList<LeaveApplicationStatusEnum>()).Select(s => new { Id = s.Value, Name = s.Text }), "Id", "Name");
+
             var result = await _iService.AddRecord(viewModel);
             if (result == true)
             {
@@ -81,10 +76,13 @@ namespace app.WebApp.Controllers
         [HttpGet]
         public async Task<IActionResult> UpdateRecord(long id)
         {
-            ViewBag.LeaveCategories = new SelectList((await _dropdownService.LeaveCategorySelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
-            ViewBag.Employees = new SelectList((await _dropdownService.EmployeeSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
-            ViewBag.Managers = new SelectList((await _dropdownService.EmployeeSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
+            ViewBag.LeaveCategories = new SelectList((await _iDropdownService.LeaveCategorySelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
+            ViewBag.Employees = new SelectList((await _iDropdownService.EmployeeSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
+            ViewBag.Managers = new SelectList((await _iDropdownService.EmployeeSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
+            
             var result = await _iService.GetRecordById(id);
+            var empLeaveBalanceList = await _iService.GetLeaveBalanceByEmployeeId(result.EmployeeId);
+            result.LeaveBalanceCountList = empLeaveBalanceList;
             return View(result);
         }
 
@@ -100,16 +98,12 @@ namespace app.WebApp.Controllers
             return View(model);
         }
 
-
         [HttpPost]
         public async Task<IActionResult> ConfirmRecord(long id)
         {
-
             var res = await _iService.ConfirmRecord(id);
             return RedirectToAction(nameof(Details), new {id=id});
         }
-
-
 
         [HttpPost]
         public async Task<ActionResult> ApproveRecord(long id)
@@ -137,8 +131,10 @@ namespace app.WebApp.Controllers
         [HttpGet]
         public async Task<IActionResult> Search()
         {
-            ViewBag.Employees = new SelectList((await _dropdownService.EmployeeSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
-            ViewBag.LeaveCategories = new SelectList((await _dropdownService.LeaveCategorySelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
+            ViewBag.Employees = new SelectList((await _iDropdownService.EmployeeSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
+            ViewBag.LeaveCategories = new SelectList((await _iDropdownService.LeaveCategorySelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
+            ViewBag.Status = new SelectList((_iUtilityService.GetEnumSelectionList<LeaveApplicationStatusEnum>()).Select(s => new { Id = s.Value, Name = s.Text }), "Id", "Name");
+
             return View();
         }
 

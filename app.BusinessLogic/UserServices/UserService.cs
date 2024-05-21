@@ -24,12 +24,14 @@ namespace app.Services.UserServices
         public async Task<bool> AddUser(UserViewModel vm)
         {
             var userCheck = _dbContext.Users.FirstOrDefault(f => f.Email == vm.Email);
-            var loginUser = await _iWorkContext.GetCurrentUserAsync();
             if (userCheck != null) { return false; }
+
+            var loginUser = await _iWorkContext.GetCurrentUserAsync();
+           
             ApplicationUser users = new ApplicationUser();
             users.FullName = vm.FullName;
             users.UserName = vm.Email;
-            //users.UserName = vm.UserName;
+            users.UserName = vm.UserName;
             users.PhoneNumber = vm.Mobile;
             users.Email = vm.Email;
             users.Address = vm.Address;
@@ -57,6 +59,7 @@ namespace app.Services.UserServices
             }
             return true;
         }
+
         public async Task<bool> UpdateUser(UserViewModel vm)
         {
             var userCheck = _dbContext.Users.FirstOrDefault(f => f.Email == vm.Email && f.Id != vm.UserId);
@@ -92,11 +95,13 @@ namespace app.Services.UserServices
             }
             return false;
         }
+
         public async Task<ApplicationUser> GetUserByEmail(string email)
         {
             var result = await _dbContext.Users.FirstOrDefaultAsync(d => d.Email == email && d.IsActive == true);
             return result;
         }
+
         public async Task<UserViewModel> GetUserById(string userId)
         {
             var model = await _dbContext.Users.FirstOrDefaultAsync(d => d.Id == userId);
@@ -112,6 +117,7 @@ namespace app.Services.UserServices
             users.RoleId = _dbContext.UserRoles.FirstOrDefault(g => g.UserId == model.Id)?.RoleId;
             return users;
         }
+
         public async Task<bool> SoftDelete(string userId)
         {
             var model = await _dbContext.Users.FirstOrDefaultAsync(d => d.Id == userId);
@@ -126,6 +132,7 @@ namespace app.Services.UserServices
             }
             return false;
         }
+
         public async Task<UserViewModel> GetAllRecord()
         {
             UserViewModel model = new UserViewModel();
@@ -182,5 +189,6 @@ namespace app.Services.UserServices
 
             return searchDto;
         }
+
     }
 }

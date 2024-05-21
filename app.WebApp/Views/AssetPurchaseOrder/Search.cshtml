@@ -13,7 +13,7 @@
                 <li class="breadcrumb-item active"> Asset Purchase Order List </li>
             </ol>
             <div>
-                <a asp-action="AddAssetPurchaseOrderAndDetail"><i class="fa fa-plus"></i>  Add Asset Purchase Order </a>
+                <a asp-action="AddAssetPurchaseOrderAndDetail"><i class="fa fa-plus"></i> Add Asset Purchase Order </a>
             </div>
         </div>
     </div>
@@ -25,7 +25,7 @@
         <div class="card">
             <div class="card-header">
                 <div class="row w-100">
-                    <h5> <i class="fas fa-list"></i>  All Asset Purchase Order </h5>
+                    <h5> <i class="fas fa-list"></i> All Asset Purchase Order </h5>
                 </div>
             </div>
             <div class="card-body">
@@ -278,12 +278,11 @@
                             var detailsBtn = "";
 
                             if (row.orderStatusId == @((int)PurchaseOrderStatusEnum.Draft) || row.orderStatusId == @((int)PurchaseOrderStatusEnum.Confirm)) {
-                                detailsBtn = "<a href='AssetPurchaseDetails/" + row.id + "'><i class='fa fa-eye text-info m-1' title='Details' aria-hidden='true'></i></a>";
                                 editBtn = "<a onclick='makeEditble(" + row.id + ");' data-toggle='modal' data-target='#editPurchaseOrderModal' data-placement='top'><i class='fas fa-pen text-warning m-1' title='Edit' aria-hidden='true'></i></a>";
                                 deleteBtn = "<a href='RejectAssetPurchaseOrder/" + row.id + "'><i class='fas fa-trash text-danger m-1' title='Delete' aria-hidden='true'></i></a>";
-                            } else if (row.orderStatusId == @((int)PurchaseOrderStatusEnum.Reject) || row.orderStatusId == @((int)PurchaseOrderStatusEnum.Receive)) {
-                                detailsBtn = "<a href='AssetPurchaseDetails/" + row.id + "'><i class='fa fa-eye text-info m-1' title='Details' aria-hidden='true'></i></a>";
-                            }
+                            } 
+                            detailsBtn = "<a href='AssetPurchaseDetails/" + row.id + "'><i class='fa fa-eye text-info m-1' title='Details' aria-hidden='true'></i></a>";
+                            
 
                             var actionBtn = editBtn + detailsBtn + deleteBtn;
                             return actionBtn;
