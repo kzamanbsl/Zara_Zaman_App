@@ -33,6 +33,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Update="Views\BankBranch\AddRecord.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
     <Content Update="Views\MainMenu\UpdateRecord.cshtml">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>

@@ -40,6 +40,11 @@ namespace app.WebApp.Controllers
             var res = await _iService.UpazilaSelectionList(divisionId, districtId);
             return Ok(res);
         }
-
+        [HttpGet]
+        public async Task<JsonResult> GetBankBranchListByBankId(long bankId)
+        {
+            var res = await _iService.BankBranchSelectionList(bankId);
+            return Json(res);
+        }
     }
 }

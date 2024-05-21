@@ -14,16 +14,17 @@ using app.EntityModel.AppModels.Office;
 using app.Services.DepartmentServices;
 using Microsoft.EntityFrameworkCore;
 using app.EntityModel.AppModels;
+using app.EntityModel.AppModels.BankManage;
 namespace app.Services.BankServices
 {
     public class BankService : IBankService
     {
-        private readonly IEntityRepository<EntityModel.AppModels.BankManage.Bank> _iEntityRepository;
+        private readonly IEntityRepository<Bank> _iEntityRepository;
         private readonly InventoryDbContext _dbContext;
         private readonly IWorkContext _iWorkContext;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public BankService(IEntityRepository<EntityModel.AppModels.BankManage.Bank> iEntityRepository, InventoryDbContext dbContext, IHttpContextAccessor httpContextAccessor, IWorkContext iWorkContext)
+        public BankService(IEntityRepository<Bank> iEntityRepository, InventoryDbContext dbContext, IHttpContextAccessor httpContextAccessor, IWorkContext iWorkContext)
         {
             _iEntityRepository = iEntityRepository;
             _dbContext = dbContext;
@@ -87,7 +88,7 @@ namespace app.Services.BankServices
 
         public async Task<DataTablePagination<BankSearchDto>> SearchAsync(DataTablePagination<BankSearchDto> searchDto)
         {
-            var searchResult = _dbContext.Department.Where(c => c.IsActive == true).AsNoTracking();
+            var searchResult = _dbContext.Bank.Where(c => c.IsActive == true).AsNoTracking();
 
             var searchModel = searchDto.SearchVm;
             var filter = searchDto?.Search?.Value?.Trim();
@@ -108,7 +109,7 @@ namespace app.Services.BankServices
 
             searchDto.RecordsTotal = totalRecords;
             searchDto.RecordsFiltered = totalRecords;
-            List<Department> filteredDataList = await searchResult.OrderByDescending(c => c.Id).Skip(skip).Take(pageSize).ToListAsync();
+            List<Bank> filteredDataList = await searchResult.OrderByDescending(c => c.Id).Skip(skip).Take(pageSize).ToListAsync();
 
             var sl = searchDto.Start ?? 0;
             searchDto.Data = filteredDataList.Select(c => new BankSearchDto()

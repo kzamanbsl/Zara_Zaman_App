@@ -25,6 +25,7 @@ namespace app.WebApp.Controllers.Supplier
         {
             SupplierViewModel viewModel = new SupplierViewModel();
             ViewBag.SupplierCatgoryList = new SelectList((await _dropdownService.SupplierCategorySelectionList()).Select(s => new { s.Id, s.Name }), "Id", "Name");
+            ViewBag.BankList = new SelectList(await _dropdownService.BankSelectionList(), "Id", "Name");
 
             return View(viewModel);
         }
@@ -45,10 +46,11 @@ namespace app.WebApp.Controllers.Supplier
         public async Task<IActionResult> UpdateRecord(long id)
         {
             ViewBag.SupplierCatgoryList = new SelectList((await _dropdownService.SupplierCategorySelectionList()).Select(s => new { s.Id, s.Name }), "Id", "Name");
-            ViewBag.Country = new SelectList((await _dropdownService.CountrySelectionList()).Select(s => new { s.Id, s.Name }), "Id", "Name");
-            ViewBag.Division = new SelectList((await _dropdownService.DivisionSelectionList()).Select(s => new { s.Id, s.Name }), "Id", "Name");
-            ViewBag.District = new SelectList((await _dropdownService.DistrictSelectionList()).Select(s => new { s.Id, s.Name }), "Id", "Name");
-            ViewBag.Upazila = new SelectList((await _dropdownService.UpazilaSelectionList()).Select(s => new { s.Id, s.Name }), "Id", "Name");
+            ViewBag.BankList = new SelectList(await _dropdownService.BankSelectionList(), "Id", "Name");
+            //ViewBag.Country = new SelectList((await _dropdownService.CountrySelectionList()).Select(s => new { s.Id, s.Name }), "Id", "Name");
+            //ViewBag.Division = new SelectList((await _dropdownService.DivisionSelectionList()).Select(s => new { s.Id, s.Name }), "Id", "Name");
+            //ViewBag.District = new SelectList((await _dropdownService.DistrictSelectionList()).Select(s => new { s.Id, s.Name }), "Id", "Name");
+            //ViewBag.Upazila = new SelectList((await _dropdownService.UpazilaSelectionList()).Select(s => new { s.Id, s.Name }), "Id", "Name");
             var result = await _iService.GetRecordById(id);
             return View(result);
         }

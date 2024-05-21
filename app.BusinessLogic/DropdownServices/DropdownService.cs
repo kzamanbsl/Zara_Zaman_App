@@ -397,5 +397,30 @@ namespace app.Services.DropdownServices
                                                                                       }).AsEnumerable());
             return dropDownViewModels;
         }
+        public async Task<IEnumerable<DropdownViewModel>> BankSelectionList()
+        {
+            IEnumerable<DropdownViewModel> dropDownViewModels = await Task.Run(() => (from t1 in _dbContext.Bank
+                                                                                      where t1.IsActive == true
+                                                                                      select new DropdownViewModel
+                                                                                      {
+                                                                                          Id = t1.Id,
+                                                                                          Name = t1.Name,
+
+                                                                                      }).AsEnumerable());
+            return dropDownViewModels;
+        } 
+        public async Task<IEnumerable<DropdownViewModel>> BankBranchSelectionList(long? BankId=0)
+        {
+            IEnumerable<DropdownViewModel> dropDownViewModels = await Task.Run(() => (from t1 in _dbContext.BankBranch
+                                                                                      where t1.IsActive == true
+                                                                                      &&(BankId>0?t1.BankId==BankId:true)
+                                                                                      select new DropdownViewModel
+                                                                                      {
+                                                                                          Id = t1.Id,
+                                                                                          Name = t1.Name,
+
+                                                                                      }).AsEnumerable());
+            return dropDownViewModels;
+        }
     }
 }

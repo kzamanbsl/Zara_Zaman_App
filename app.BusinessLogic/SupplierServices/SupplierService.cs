@@ -37,8 +37,7 @@ namespace app.Services.SupplierServices
                     model.Email = vm.Email;
                     model.Description = vm.Description;
                     model.Address = vm.Address;
-                    model.BankName = vm.BankName;
-                    model.BranchName = vm.BranchName;
+                    model.BranchId = vm.BankBranchId;
                     model.BankAccountNo = vm.BankAccountNo;
                     //model.CountryId = vm.CountryId;
                     //model.DivisionId = vm.DivisionId;
@@ -71,8 +70,7 @@ namespace app.Services.SupplierServices
                 result.Description = vm.Description;
                 result.Address = vm.Address;
                 result.BankAccountNo = vm.BankAccountNo;
-                result.BankName = vm.BankName;
-                result.BranchName = vm.BranchName;
+                result.BranchId = vm.BankBranchId;
                 //result.CountryId = vm.CountryId;
                 //result.DivisionId = vm.DivisionId;
                 //result.DistrictId = vm.DistrictId;
@@ -105,8 +103,7 @@ namespace app.Services.SupplierServices
             model.Description = result.Description;
             model.Address = result.Address;
             model.BankAccountNo = result.BankAccountNo;
-            model.BankName = result.BankName;
-            model.BranchName = result.BranchName;
+            model.BankBranchId = result.BranchId??0;
             //model.CountryId = result.CountryId;
             //model.DivisionId = result.DivisionId;
             //model.DistrictId = result.DistrictId;
@@ -135,8 +132,7 @@ namespace app.Services.SupplierServices
                                                            Email = t1.Email,
                                                            Description = t1.Description,
                                                            Address = t1.Address,
-                                                           BankName = t1.BankName,
-                                                           BranchName = t1.BranchName,
+                                                           BankBranchId = t1.BranchId ?? 0,
                                                            BankAccountNo = t1.BankAccountNo,
                                                            //CountryId = t1.CountryId,
                                                            //CountryName = t1.Country.Name,
@@ -152,7 +148,7 @@ namespace app.Services.SupplierServices
 
         public async Task<DataTablePagination<SupplierSearchDto>> SearchAsync(DataTablePagination<SupplierSearchDto> searchDto)
         {
-            var searchResult = _dbContext.Supplier.Where(c=>c.IsActive==true).Include(c=>c.SupplierCategory).AsNoTracking();
+            var searchResult = _dbContext.Supplier.Where(c=>c.IsActive==true).Include(c=>c.SupplierCategory).Include(c=>c.Branch).ThenInclude(c=>c.Bank).AsNoTracking();
 
             var searchModel = searchDto.SearchVm;
             var filter = searchDto?.Search?.Value?.Trim();
@@ -180,8 +176,8 @@ namespace app.Services.SupplierServices
                     ||c.Name.ToLower().Contains(filter)
                     ||c.Phone.ToLower().Contains(filter)
                     || c.Address.ToLower().Contains(filter)
-                    || c.BankName.ToLower().Contains(filter)
-                    || c.BranchName.ToLower().Contains(filter)
+                    || c.Branch.Bank.Name.ToLower().Contains(filter)
+                    || c.Branch.Name.ToLower().Contains(filter)
                     || c.Email.ToLower().Contains(filter)
                     || c.Description.ToLower().Contains(filter)
                     || c.Address.ToLower().Contains(filter)
@@ -208,8 +204,8 @@ namespace app.Services.SupplierServices
                 Description = c.Description,
                 Phone = c.Phone,
                 Email = c.Email,
-                BankName = c.BankName,
-                BranchName = c.BranchName,
+                BankName = c.Branch.Bank.Name,
+                BranchName = c.Branch.Name,
                 BankAccountNo = c.BankAccountNo,         
                 Address = c.Address,
             }).ToList();

@@ -13,6 +13,7 @@ using app.Services.ATMAssemble.AssembleWorkStepItemServices;
 using app.Services.ATMAssemble.AssembleWorkStepServices;
 using app.Services.AttendanceLogServices;
 using app.Services.AttendanceServices;
+using app.Services.BankBranchServices;
 using app.Services.BankServices;
 using app.Services.CompanyServices;
 using app.Services.CustomerServices;
@@ -110,6 +111,7 @@ namespace app.Services
             services.AddTransient<IAssetAllocationDetailService, AssetAllocationDetailService>();
             services.AddTransient<ISupplierCategoryService, SupplierCategoryService>();
             services.AddTransient<IBankService, BankService>();
+            services.AddTransient<IBankBranchService, BankBranchService>();
 
 
             #region ATM Assemble

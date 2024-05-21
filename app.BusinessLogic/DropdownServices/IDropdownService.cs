@@ -35,5 +35,7 @@
         Task<IEnumerable<DropdownViewModel>> AssembleWorkStepSelectionList();
         Task<IEnumerable<DropdownViewModel>> TermsAndConditionsSelectionList();
         Task<IEnumerable<DropdownViewModel>> SupplierCategorySelectionList();
+        Task<IEnumerable<DropdownViewModel>> BankSelectionList();
+        Task<IEnumerable<DropdownViewModel>> BankBranchSelectionList(long? BankId = 0);
     }
 }

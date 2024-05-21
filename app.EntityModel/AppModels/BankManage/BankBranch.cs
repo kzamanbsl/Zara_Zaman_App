@@ -1,4 +1,5 @@
-﻿using System;
+﻿using app.EntityModel.AppModels.SupplierManage;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,6 +14,8 @@ namespace app.EntityModel.AppModels.BankManage
         public string Address { get; set; }
         public long BankId { get; set; }
         public Bank Bank { get; set; }
+        public Supplier Supplier { get; set; }
+
 
     }
 }

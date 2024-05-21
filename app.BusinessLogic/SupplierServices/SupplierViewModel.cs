@@ -20,6 +20,9 @@ namespace app.Services.SupplierServices
         public string BankName { get; set; }
         public string BranchName { get; set; }
         public string BankAccountNo { get; set; }
+        public long BankId { get; set; }
+        public long BankBranchId { get; set; }
+
 
         //public int? CountryId { get; set; }
         //[DisplayName("Country Name")]
