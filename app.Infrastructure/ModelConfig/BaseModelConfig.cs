@@ -3,6 +3,7 @@ using app.EntityModel.AppModels.Address;
 using app.EntityModel.AppModels.AssetManage;
 using app.EntityModel.AppModels.ATMAssemble;
 using app.EntityModel.AppModels.Attendance;
+using app.EntityModel.AppModels.BankManage;
 using app.EntityModel.AppModels.EmployeeManage;
 using app.EntityModel.AppModels.Job;
 using app.EntityModel.AppModels.Leave;
@@ -61,6 +62,7 @@ namespace app.Infrastructure.ModelConfig
             new AssetAllocationConfig()?.Configure(builder.Entity<AssetAllocation>());
             new AssetAllocationDetailConfig()?.Configure(builder.Entity<AssetAllocationDetail>());
             new SupplierCategoryConfig()?.Configure(builder.Entity<SupplierCategory>());
+            new BankConfig()?.Configure(builder.Entity<Bank>());
 
 
             #region   AssembleWorkCategory,

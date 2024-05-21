@@ -46,6 +46,7 @@
         AssetAllocationDetail,
         SalesProductDetail,
         SupplierCategory,
+        Bank,
         #region ATMAssemble
         AssembleWorkCategory,
         AssembleWorkStep,

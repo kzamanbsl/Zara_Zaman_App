@@ -1,33 +1,23 @@
-﻿using app.EntityModel.AppModels.Attendance;
+﻿using app.EntityModel.AppModels.BankManage;
+using app.EntityModel.AppModels.Office;
+using app.EntityModel.DataTablePaginationModels;
+using app.Infrastructure;
 using app.Infrastructure.Auth;
 using app.Infrastructure.Repository;
-using app.Infrastructure;
-using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using app.EntityModel.AppModels.BankManage;
-using app.EntityModel.DataTablePaginationModels;
-using app.EntityModel.AppModels.Office;
-using app.Services.DepartmentServices;
+using app.Services.DesignationServices;
 using Microsoft.EntityFrameworkCore;
-using app.EntityModel.AppModels;
+
 namespace app.Services.BankServices
 {
     public class BankService : IBankService
     {
-        private readonly IEntityRepository<EntityModel.AppModels.BankManage.Bank> _iEntityRepository;
+        private readonly IEntityRepository<Bank> _iEntityRepository;
         private readonly InventoryDbContext _dbContext;
         private readonly IWorkContext _iWorkContext;
-        private readonly IHttpContextAccessor _httpContextAccessor;
-
-        public BankService(IEntityRepository<EntityModel.AppModels.BankManage.Bank> iEntityRepository, InventoryDbContext dbContext, IHttpContextAccessor httpContextAccessor, IWorkContext iWorkContext)
+        public BankService(IEntityRepository<Bank> iEntityRepository, InventoryDbContext dbContext, IWorkContext iWorkContext)
         {
             _iEntityRepository = iEntityRepository;
             _dbContext = dbContext;
-            _httpContextAccessor = httpContextAccessor;
             _iWorkContext = iWorkContext;
         }
 
@@ -36,10 +26,10 @@ namespace app.Services.BankServices
             var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim() && f.IsActive == true);
             if (checkName == null)
             {
-                var com = new Bank();
+                Bank com = new Bank();
                 com.Name = vm.Name;
                 var res = await _iEntityRepository.AddAsync(com);
-                vm.Id = res.Id;
+                vm.Id=res.Id;
                 return true;
             }
             return false;
@@ -75,19 +65,19 @@ namespace app.Services.BankServices
         public async Task<BankViewModel> GetAllRecord()
         {
             BankViewModel model = new BankViewModel();
-            //model.DepartmentList = await Task.Run(() => (from t1 in _dbContext.Department
-            //                                             where t1.IsActive == true
-            //                                             select new DepartmentViewModel
-            //                                             {
-            //                                                 Id = t1.Id,
-            //                                                 Name = t1.Name,
-            //                                             }).AsEnumerable());
+            model.BankList = await Task.Run(() => (from t1 in _dbContext.Bank
+                                                                where t1.IsActive == true
+                                                                select new BankViewModel
+                                                                {
+                                                                    Id = t1.Id,
+                                                                    Name = t1.Name,
+                                                                }).AsEnumerable());
             return model;
         }
 
         public async Task<DataTablePagination<BankSearchDto>> SearchAsync(DataTablePagination<BankSearchDto> searchDto)
         {
-            var searchResult = _dbContext.Department.Where(c => c.IsActive == true).AsNoTracking();
+            var searchResult = _dbContext.Bank.Where(c => c.IsActive == true).AsNoTracking();
 
             var searchModel = searchDto.SearchVm;
             var filter = searchDto?.Search?.Value?.Trim();
@@ -108,7 +98,7 @@ namespace app.Services.BankServices
 
             searchDto.RecordsTotal = totalRecords;
             searchDto.RecordsFiltered = totalRecords;
-            List<Department> filteredDataList = await searchResult.OrderByDescending(c => c.Id).Skip(skip).Take(pageSize).ToListAsync();
+            List<Bank> filteredDataList = await searchResult.OrderByDescending(c => c.Id).Skip(skip).Take(pageSize).ToListAsync();
 
             var sl = searchDto.Start ?? 0;
             searchDto.Data = filteredDataList.Select(c => new BankSearchDto()
