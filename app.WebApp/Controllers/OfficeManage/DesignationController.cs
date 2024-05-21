@@ -51,8 +51,8 @@ namespace app.WebApp.Controllers.OfficeManage
             ModelState.AddModelError(string.Empty, "Same Name already exists!");
             return View(model);
         }
-
-        [HttpGet]
+        
+        [HttpPost]
         public async Task<IActionResult> Delete(long id)
         {
             var res = await _iService.DeleteRecord(id);

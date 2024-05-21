@@ -44,6 +44,9 @@ namespace app.WebApp.Controllers.EmployeeMangement
         }
 
         [HttpPost]
+        //public async Task<IActionResult> AddRecord(EmployeeViewModel viewModel)
+        //{
+        //    var result = await _iService.AddRecord(viewModel);
         public async Task<IActionResult> AddRecord(EmployeeViewModel model)
         {
             var result = await _iService.AddRecord(model);
@@ -51,6 +54,10 @@ namespace app.WebApp.Controllers.EmployeeMangement
             {
                 return RedirectToAction("Search");
             }
+
+            //ModelState.AddModelError(string.Empty, "Same Employee already exists!");
+            //return View(viewModel);
+
             ModelState.AddModelError(string.Empty, "Same Employee Code already exists!");
             return View(model);
         }

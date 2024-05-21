@@ -1,20 +1,14 @@
-﻿using app.EntityModel.AppModels.Attendance;
+﻿using app.EntityModel.AppModels.BankManage;
+using app.EntityModel.AppModels.Office;
+using app.EntityModel.DataTablePaginationModels;
+using app.Infrastructure;
 using app.Infrastructure.Auth;
 using app.Infrastructure.Repository;
-using app.Infrastructure;
-using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using app.EntityModel.AppModels.BankManage;
-using app.EntityModel.DataTablePaginationModels;
-using app.EntityModel.AppModels.Office;
-using app.Services.DepartmentServices;
+using app.Services.DesignationServices;
 using Microsoft.EntityFrameworkCore;
 using app.EntityModel.AppModels;
 using app.EntityModel.AppModels.BankManage;
+
 namespace app.Services.BankServices
 {
     public class BankService : IBankService
@@ -28,7 +22,6 @@ namespace app.Services.BankServices
         {
             _iEntityRepository = iEntityRepository;
             _dbContext = dbContext;
-            _httpContextAccessor = httpContextAccessor;
             _iWorkContext = iWorkContext;
         }
 
@@ -37,10 +30,10 @@ namespace app.Services.BankServices
             var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim() && f.IsActive == true);
             if (checkName == null)
             {
-                var com = new Bank();
+                Bank com = new Bank();
                 com.Name = vm.Name;
                 var res = await _iEntityRepository.AddAsync(com);
-                vm.Id = res.Id;
+                vm.Id=res.Id;
                 return true;
             }
             return false;
@@ -76,13 +69,13 @@ namespace app.Services.BankServices
         public async Task<BankViewModel> GetAllRecord()
         {
             BankViewModel model = new BankViewModel();
-            //model.DepartmentList = await Task.Run(() => (from t1 in _dbContext.Department
-            //                                             where t1.IsActive == true
-            //                                             select new DepartmentViewModel
-            //                                             {
-            //                                                 Id = t1.Id,
-            //                                                 Name = t1.Name,
-            //                                             }).AsEnumerable());
+            model.BankList = await Task.Run(() => (from t1 in _dbContext.Bank
+                                                                where t1.IsActive == true
+                                                                select new BankViewModel
+                                                                {
+                                                                    Id = t1.Id,
+                                                                    Name = t1.Name,
+                                                                }).AsEnumerable());
             return model;
         }
 

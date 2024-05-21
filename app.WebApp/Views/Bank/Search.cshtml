@@ -1,4 +1,4 @@
-﻿@model app.Services.DesignationServices.DesignationSearchDto
+﻿@model app.Services.BankServices.BankSearchDto
 @{
     ViewData["Title"] = "Search";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
@@ -9,10 +9,10 @@
         <div class="breadcrumb d-flex justify-content-between align-items-center  pl-3 pr-3">
             <ol class="breadcrumb mb-0 p-0">
                 <li class="breadcrumb-item"><a href="/Admin/Index">Home</a></li>
-                <li class="breadcrumb-item active"> Designation List </li>
+                <li class="breadcrumb-item active"> Bank List</li>
             </ol>
             <div>
-                <a asp-action="AddRecord"><i class="fa fa-plus"></i> Add Designation </a>
+                <a asp-action="AddRecord"><i class="fa fa-plus"></i> Add Bank </a>
             </div>
         </div>
     </div>
@@ -25,7 +25,7 @@
             <div class="card-header">
                 <div class="row w-100">
                     <div class="col-sm-6">
-                        <h5> <i class="fas fa-list"></i> All Designations </h5>
+                        <h5> <i class="fas fa-list"></i> All Banks </h5>
                     </div>
                 </div>
             </div>
@@ -33,7 +33,7 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="table-responsive">
-                            <table id="DesignationSearchTable" class="table table-bordered table-sm">
+                            <table id="BankSearchTable" class="table table-bordered table-sm">
                                 <thead>
                                     <tr>
                                         <th class="text-center">
@@ -66,12 +66,12 @@
     <script>
         $(document).ready(function () {
             $('#HR-\\&-Admin-').addClass('menu-open');
-            $('#DesignationSearch').addClass('active');
+            $('#BankSearch').addClass('active');
 
             search();
         });
 
-        $(document.body).on("click", "#DesignationDTSearchBtn", function () {
+        $(document.body).on("click", "#BankDTSearchBtn", function () {
             search();
         });
 
@@ -87,8 +87,8 @@
         function search() {
             var searchVm = getSearchObject();
 
-            if ($.fn.DataTable.isDataTable("#DesignationSearchTable")) {
-                var table = $("#DesignationSearchTable").DataTable();
+            if ($.fn.DataTable.isDataTable("#BankSearchTable")) {
+                var table = $("#BankSearchTable").DataTable();
                 table.destroy();
             }
 
@@ -97,14 +97,14 @@
                 params = { searchVm: searchVm }
             }
 
-            var oTable = $("#DesignationSearchTable").DataTable({
+            var oTable = $("#BankSearchTable").DataTable({
                 "aLengthMenu": [[25, 50, 100, 200], [25, 50, 100, 200]],
                 "iDisplayLength": 25,
                 "processing": true,
                 "serverSide": true,
                 "bSort": false,
                 "ajax": {
-                    url: "/Designation/Search",
+                    url: "/Bank/Search",
                     type: "POST",
                     data: params
                 },
@@ -126,7 +126,7 @@
                         data: "Action",
                         render: function (data, type, row, meta) {
                             var editBtn = "<a href='UpdateRecord/" + row.id + "'><i class='fas fa-pen text-warning m-1' title='Edit' aria-hidden='true'></i></a>";
-                            var deleteBtn = "<a href='Delete/" + row.id + "' data-toggle='modal' data-target='#deleteModal' data-id='" + row.id + "' onclick='SetDeleteId(" + row.id + ")'><i class='fas fa-trash text-danger m-1' title='Delete' aria-hidden='true' ></i></a>";
+                            var deleteBtn = "<a href='Delete/" + row.id + "'><i class='fas fa-trash text-danger m-1' title='Delete' aria-hidden='true'></i></a>";
                             var actionBtn = editBtn + deleteBtn;
                             return actionBtn;
                         }
@@ -134,9 +134,5 @@
                 ]
             });
         }
-        
     </script>
-    <!-- Delete Modal -->
-
-    
 }
