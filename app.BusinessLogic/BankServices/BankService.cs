@@ -8,7 +8,7 @@ using app.Services.DesignationServices;
 using Microsoft.EntityFrameworkCore;
 using app.EntityModel.AppModels;
 using app.EntityModel.AppModels.BankManage;
-
+using Microsoft.AspNetCore.Http;
 namespace app.Services.BankServices
 {
     public class BankService : IBankService
