@@ -15,7 +15,6 @@ namespace app.Infrastructure.ModelConfig
             builder.Property(c => c.Email).HasMaxLength(250);
             builder.Property(c => c.Description).HasMaxLength(500);
             builder.Property(c => c.Address).HasMaxLength(500);
-
             builder.ToTable(TableNameEnum.Supplier.ToString());
         }
     }
