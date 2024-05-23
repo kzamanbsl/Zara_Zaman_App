@@ -1,5 +1,6 @@
 ﻿using app.EntityModel.DataTablePaginationModels;
 using app.Services.CompanyServices;
+using app.Services.DesignationServices;
 using app.Services.EmployeeGradeServices;
 using app.Services.ProductServices;
 using Microsoft.AspNetCore.Mvc;
@@ -54,11 +55,12 @@ namespace app.WebApp.Controllers.EmployeeMangement
             return View(model);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Delete(long id)
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(EmployeeGradeSearchDto model)
         {
-            var res = await _iService.DeleteRecord(id);
-            return RedirectToAction(nameof(Search));
+            var res = await _iService.DeleteRecord(model.Id ?? 0);
+            return RedirectToAction("Search");
         }
 
         #region Search

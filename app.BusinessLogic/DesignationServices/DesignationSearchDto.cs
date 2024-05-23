@@ -6,6 +6,5 @@ namespace app.Services.DesignationServices
     public class DesignationSearchDto: BaseDataTableSearch
     {
         public string Name { get; set; }
-        
     }
 }

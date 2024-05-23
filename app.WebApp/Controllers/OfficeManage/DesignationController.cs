@@ -53,9 +53,9 @@ namespace app.WebApp.Controllers.OfficeManage
         }
         
         [HttpPost]
-        public async Task<IActionResult> Delete(long id)
+        public async Task<IActionResult> Delete(DesignationSearchDto model)
         {
-            var res = await _iService.DeleteRecord(id);
+            var res = await _iService.DeleteRecord(model.Id??0);
             return RedirectToAction("Search");
         }
 
