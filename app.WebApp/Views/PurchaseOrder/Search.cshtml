@@ -106,7 +106,6 @@
     </div>
 </section>
 
-
 <div class="modal fade" tabindex="-1" id="editPurchaseOrderModal" data-toggle="modal" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -153,7 +152,6 @@
     </div>
 </div>
 
-
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
@@ -161,35 +159,9 @@
 
     <script>
 
-        function makeEditble(rowId) {
-            $.ajax({
-                type: "POST",
-                url: "@Url.Action("UpdatePurchaseOrder", "PurchaseOrder")",
-                datatype: "Json",
-                data: { id: rowId },
-                success: function (data) {
-                    $("#hidPOID").val(data.id);
-
-                    // Parse date if needed and adjust for timezone
-                    var purchaseDate = new Date(data.purchaseDate);
-                    var offset = purchaseDate.getTimezoneOffset();
-                    purchaseDate = new Date(purchaseDate.getTime() - (offset * 60 * 1000));
-
-                    // Format date as YYYY-MM-DD
-                    var formattedDate = purchaseDate.toISOString().split('T')[0];
-
-                    // Set value
-                    $("#purchaseDate").val(formattedDate);
-                    $("#storehouseId").val(data.storehouseId);
-                    $("#supplierId").val(data.supplierId);
-                }
-            });
-        }
-
         $(document).ready(function () {
             $('#Purchases').addClass('menu-open');
             $('#PurchaseOrderSearch').addClass('active');
-
             search();
         });
 
@@ -293,5 +265,32 @@
                 ]
             });
         }
+
+
+        function makeEditble(rowId) {
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("UpdatePurchaseOrder", "PurchaseOrder")",
+                datatype: "Json",
+                data: { id: rowId },
+                success: function (data) {
+                    $("#hidPOID").val(data.id);
+
+                    // Parse date if needed and adjust for timezone
+                    var purchaseDate = new Date(data.purchaseDate);
+                    var offset = purchaseDate.getTimezoneOffset();
+                    purchaseDate = new Date(purchaseDate.getTime() - (offset * 60 * 1000));
+
+                    // Format date as YYYY-MM-DD
+                    var formattedDate = purchaseDate.toISOString().split('T')[0];
+
+                    // Set value
+                    $("#purchaseDate").val(formattedDate);
+                    $("#storehouseId").val(data.storehouseId);
+                    $("#supplierId").val(data.supplierId);
+                }
+            });
+        }
+
     </script>
 }
