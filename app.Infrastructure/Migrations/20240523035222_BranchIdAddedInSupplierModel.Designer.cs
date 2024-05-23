@@ -12,8 +12,8 @@ using app.Infrastructure;
 namespace app.Infrastructure.Migrations
 {
     [DbContext(typeof(InventoryDbContext))]
-    [Migration("20240521114401_UpdateSupplier")]
-    partial class UpdateSupplier
+    [Migration("20240523035222_BranchIdAddedInSupplierModel")]
+    partial class BranchIdAddedInSupplierModel
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -652,7 +652,8 @@ namespace app.Infrastructure.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
@@ -1939,7 +1940,7 @@ namespace app.Infrastructure.Migrations
                     b.Property<string>("BankAccountNo")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long>("BranchId")
+                    b.Property<long?>("BranchId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("CreatedBy")
@@ -1978,7 +1979,9 @@ namespace app.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BranchId");
+                    b.HasIndex("BranchId")
+                        .IsUnique()
+                        .HasFilter("[BranchId] IS NOT NULL");
 
                     b.HasIndex("SupplierCategoryId");
 
@@ -2587,14 +2590,14 @@ namespace app.Infrastructure.Migrations
                         new
                         {
                             Id = "8e445865-a24d-4543-a6c6-9443d048cdb9",
-                            ConcurrencyStamp = "cd085047-0ec5-4ccb-a443-9a1788283dfa",
+                            ConcurrencyStamp = "65b8a0d1-46bf-488b-b9f9-0e99b5d4bb11",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         },
                         new
                         {
                             Id = "2c5e174e-3b0e-446f-86af-483d56fd7210",
-                            ConcurrencyStamp = "0543b962-76e1-433d-a68b-c67da5fd0633",
+                            ConcurrencyStamp = "defe5603-47e1-4cd2-a711-3b6a8d3d8df4",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -3200,10 +3203,8 @@ namespace app.Infrastructure.Migrations
             modelBuilder.Entity("app.EntityModel.AppModels.SupplierManage.Supplier", b =>
                 {
                     b.HasOne("app.EntityModel.AppModels.BankManage.BankBranch", "Branch")
-                        .WithMany()
-                        .HasForeignKey("BranchId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithOne("Supplier")
+                        .HasForeignKey("app.EntityModel.AppModels.SupplierManage.Supplier", "BranchId");
 
                     b.HasOne("app.EntityModel.AppModels.SupplierManage.SupplierCategory", "SupplierCategory")
                         .WithMany()
@@ -3283,6 +3284,11 @@ namespace app.Infrastructure.Migrations
                     b.Navigation("WorkDetails");
 
                     b.Navigation("WorkEmployees");
+                });
+
+            modelBuilder.Entity("app.EntityModel.AppModels.BankManage.BankBranch", b =>
+                {
+                    b.Navigation("Supplier");
                 });
 #pragma warning restore 612, 618
         }

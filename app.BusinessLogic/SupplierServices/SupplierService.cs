@@ -204,8 +204,8 @@ namespace app.Services.SupplierServices
                 Description = c.Description,
                 Phone = c.Phone,
                 Email = c.Email,
-                BankName = c.Branch.Bank.Name,
-                BranchName = c.Branch.Name,
+                BankName = c.Branch?.Bank.Name??"",
+                BranchName = c.Branch?.Name??"",
                 BankAccountNo = c.BankAccountNo,         
                 Address = c.Address,
             }).ToList();

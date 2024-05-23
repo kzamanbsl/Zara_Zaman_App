@@ -4,7 +4,7 @@
 
 namespace app.Infrastructure.Migrations
 {
-    public partial class UpdateSupplier : Migration
+    public partial class BranchIdAddedInSupplierModel : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -23,8 +23,18 @@ namespace app.Infrastructure.Migrations
                 schema: "dbo",
                 table: "Supplier",
                 type: "bigint",
-                nullable: false,
-                defaultValue: 0L);
+                nullable: true);
+
+            migrationBuilder.AlterColumn<string>(
+                name: "Name",
+                schema: "dbo",
+                table: "Bank",
+                type: "nvarchar(100)",
+                maxLength: 100,
+                nullable: true,
+                oldClrType: typeof(string),
+                oldType: "nvarchar(max)",
+                oldNullable: true);
 
             migrationBuilder.UpdateData(
                 schema: "dbo",
@@ -32,7 +42,7 @@ namespace app.Infrastructure.Migrations
                 keyColumn: "Id",
                 keyValue: "2c5e174e-3b0e-446f-86af-483d56fd7210",
                 column: "ConcurrencyStamp",
-                value: "0543b962-76e1-433d-a68b-c67da5fd0633");
+                value: "defe5603-47e1-4cd2-a711-3b6a8d3d8df4");
 
             migrationBuilder.UpdateData(
                 schema: "dbo",
@@ -40,13 +50,15 @@ namespace app.Infrastructure.Migrations
                 keyColumn: "Id",
                 keyValue: "8e445865-a24d-4543-a6c6-9443d048cdb9",
                 column: "ConcurrencyStamp",
-                value: "cd085047-0ec5-4ccb-a443-9a1788283dfa");
+                value: "65b8a0d1-46bf-488b-b9f9-0e99b5d4bb11");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Supplier_BranchId",
                 schema: "dbo",
                 table: "Supplier",
-                column: "BranchId");
+                column: "BranchId",
+                unique: true,
+                filter: "[BranchId] IS NOT NULL");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Supplier_BankBranch_BranchId",
@@ -55,8 +67,7 @@ namespace app.Infrastructure.Migrations
                 column: "BranchId",
                 principalSchema: "dbo",
                 principalTable: "BankBranch",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
+                principalColumn: "Id");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -89,6 +100,17 @@ namespace app.Infrastructure.Migrations
                 table: "Supplier",
                 type: "nvarchar(max)",
                 nullable: true);
+
+            migrationBuilder.AlterColumn<string>(
+                name: "Name",
+                schema: "dbo",
+                table: "Bank",
+                type: "nvarchar(max)",
+                nullable: true,
+                oldClrType: typeof(string),
+                oldType: "nvarchar(100)",
+                oldMaxLength: 100,
+                oldNullable: true);
 
             migrationBuilder.UpdateData(
                 schema: "dbo",

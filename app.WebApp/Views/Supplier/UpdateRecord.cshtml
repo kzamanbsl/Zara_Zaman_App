@@ -69,16 +69,20 @@
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label asp-for="BankName" class="control-label">Bank Name</label>
-                                        <input asp-for="BankName" class="form-control" />
-                                        <span asp-validation-for="BankName" class="text-danger"></span>
+                                        <label asp-for="BankId" class="control-label">Bank Name</label>
+                                        <select asp-for="BankId" asp-items="ViewBag.BankList" class="form-control">
+                                            <option value="0">Select Bank </option>
+                                        </select>
+                                        <span asp-validation-for="BankId" class="text-danger"></span>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label asp-for="BranchName" class="control-label">Branch Name</label>
-                                        <input asp-for="BranchName" class="form-control" />
-                                        <span asp-validation-for="BranchName" class="text-danger"></span>
+                                        <label asp-for="BankBranchId" class="control-label">Branch Name</label>
+                                        <select asp-for="BankBranchId" id="BankBranchId" class="form-control">
+                                            <option>Select Branch</option>
+                                        </select>
+                                        <span asp-validation-for="BankBranchId" class="text-danger"></span>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
