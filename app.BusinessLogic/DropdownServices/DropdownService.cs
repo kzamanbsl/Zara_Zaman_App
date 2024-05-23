@@ -1,4 +1,5 @@
-﻿using app.Infrastructure;
+﻿using app.EntityModel.AppModels.BankManage;
+using app.Infrastructure;
 using app.Infrastructure.Auth;
 using app.Utility;
 
@@ -27,7 +28,7 @@ namespace app.Services.DropdownServices
         public async Task<IEnumerable<DropdownViewModel>> CompanySelectionList()
         {
             IEnumerable<DropdownViewModel> dropDownViewModels = await Task.Run(() => (from t1 in _dbContext.Company
-                                                                                      where t1.IsActive==true
+                                                                                      where t1.IsActive == true
                                                                                       select new DropdownViewModel
                                                                                       {
                                                                                           Id = t1.Id,
@@ -408,12 +409,26 @@ namespace app.Services.DropdownServices
 
                                                                                       }).AsEnumerable());
             return dropDownViewModels;
-        } 
-        public async Task<IEnumerable<DropdownViewModel>> BankBranchSelectionList(long? BankId=0)
+        }
+        public async Task<IEnumerable<DropdownViewModel>> BankBranchSelectionList(long? BankId = 0)
         {
             IEnumerable<DropdownViewModel> dropDownViewModels = await Task.Run(() => (from t1 in _dbContext.BankBranch
                                                                                       where t1.IsActive == true
-                                                                                      &&(BankId>0?t1.BankId==BankId:true)
+                                                                                      && (BankId > 0 ? t1.BankId == BankId : true)
+                                                                                      select new DropdownViewModel
+                                                                                      {
+                                                                                          Id = t1.Id,
+                                                                                          Name = t1.Name,
+
+                                                                                      }).AsEnumerable());
+            return dropDownViewModels;
+        }
+
+        public async  Task<IEnumerable<DropdownViewModel>> EmployeeByDepartmentSelectionList(long? department = 0)
+        {
+            IEnumerable<DropdownViewModel> dropDownViewModels = await Task.Run(() => (from t1 in _dbContext.Employee
+                                                                                      where t1.IsActive == true
+                                                                                      && (department > 0 ? t1.DepartmentId == department : true)
                                                                                       select new DropdownViewModel
                                                                                       {
                                                                                           Id = t1.Id,

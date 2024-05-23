@@ -71,7 +71,7 @@
                                                 <td style="width:30%">@Model.OrderNo</td>
 
                                                 <th style="width:18%"> Date</th>
-                                                <td style="width:30%">@Model.Date </td>
+                                                <td style="width:30%">@(Model?.Date.ToString("dd/MM/yyyy")) </td>
                                             </tr>
                                             <tr>
                                                 <th>Employee Name </th>
@@ -114,6 +114,15 @@
                                             <span asp-validation-for="Date" class="text-danger"></span>
                                         </div>
                                     </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>Department Name</label>
+                                            <select class="form-control" asp-for="DepartmentId" asp-items="ViewBag.DepartmentList" required>
+                                                <option value="0" selected>-- Select Department --</option>
+                                                <span asp-validation-for="DepartmentId" class="text-danger"></span>
+                                            </select>
+                                        </div>
+                                    </div>
 
                                     <div class="col-md-3">
                                         <div class="form-group">
@@ -125,15 +134,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-md-3">
-                                        <div class="form-group">
-                                            <label>Department Name</label>
-                                            <select class="form-control" asp-for="DepartmentId" asp-items="ViewBag.DepartmentList" required>
-                                                <option value="0" selected>-- Select Department --</option>
-                                                <span asp-validation-for="DepartmentId" class="text-danger"></span>
-                                            </select>
-                                        </div>
-                                    </div>
+                                    
                                 </div>
                                 @*
                             <div class="row">
@@ -151,7 +152,7 @@
                                     <div class="row">
                                         <div class="col-md-3">
                                             <div class="form-group" w-100>
-                                                <label>Product Name </label>
+                                                <label>Item Name </label>
 
                                                 @* <select class="form-control" asp-for="AssetAllocationDetailVM.ProductName" id="productId" asp-items="ViewBag.ProductList" required>
                                             <option value="0" selected>-- Select Product --</option>
@@ -168,7 +169,7 @@
 
                                         <div class="col-md-2">
                                             <div class="form-group">
-                                                <label>Asset Quantity</label>
+                                                <label> Quantity</label>
                                                 <input asp-for="AssetAllocationDetailVM.Quantity" id="quantity" class="form-control" required min="1" />
                                                 <span asp-validation-for="AssetAllocationDetailVM.Quantity" class="text-danger"></span>
                                             </div>
@@ -176,7 +177,7 @@
 
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label>Asset Tags  </label>
+                                                <label>Item Tags  </label>
                                                 @* <input asp-for="AssetAllocationDetailVM.Tags" id="tags" class="form-control" required min="0" /> *@
 
                                                 @* <input asp-for="AssetAllocationDetailVM.Tags" id="tags" class="form-control" type="text" value="Amsterdam,Washington,Sydney,Beijing,Cairo" data-role="tagsinput" /> *@
@@ -193,7 +194,7 @@
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <label>Description</label>
-                                                <input asp-for="AssetAllocationDetailVM.Description" id="txtDescription" class="form-control" />
+                                                <textarea rows="2" asp-for="AssetAllocationDetailVM.Description" id="txtDescription" class="form-control"></textarea> 
                                                 <span asp-validation-for="AssetAllocationDetailVM.Description" class="text-danger"></span>
                                             </div>
                                         </div>
@@ -222,9 +223,9 @@
                                         <thead class="table-light table-bordered border-primary">
                                             <tr>
                                                 <th style="padding:5px;text-align:center;">SL</th>
-                                                <th style="padding: 5px; text-align: left;">Product Name</th>
+                                                <th style="padding: 5px; text-align: left;">Item Name</th>
                                                 <th style="padding: 5px; text-align: left;">Quantity </th>
-                                                <th style="padding: 5px; text-align: left;">Asset Tags </th>
+                                                <th style="padding: 5px; text-align: left;">Item Tags </th>
                                                 <th style="padding: 5px; text-align: left;">Description</th>
 
                                                 @* <th style="padding: 5px; text-align: right; ">Consumption</th>
@@ -385,11 +386,32 @@
                 success: function (result) {
                     if (result) {
                         alert("AssetAllocation confirmed successfully");
-                        window.location.href = "/AssetAllocation/Index/";
+                        window.location.href = "/AssetAllocation/Search/";
 
                     } else {
                         alert("AssetAllocation confirmation failed");
                     }
+                },
+                error: function (error) {
+                    // Handle the error case here
+                    console.error("Error occurred during AJAX request:", error);
+                }
+            });
+        });
+        $("#DepartmentId").on("change", function () {
+            var departmentId = $(this).val();
+            $.ajax({
+                type: "GET",
+                url: "/Dropdown/GetEmployeeListByDepartment",
+                data: { department: departmentId },
+                success: function (data) {
+                    var employee = "<select>";
+                    employee = employee + '<option value="">--Select--</option>';
+                    for (var i = 0; i < data.length; i++) {
+                        employee = employee + '<option value=' + data[i].id + '>' + data[i].name + '</option>';
+                    }
+                    employee = employee + '</select>';
+                    $('#EmployeeId').html(employee);
                 },
                 error: function (error) {
                     // Handle the error case here

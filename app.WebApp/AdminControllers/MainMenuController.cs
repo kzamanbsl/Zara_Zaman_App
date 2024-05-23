@@ -39,6 +39,8 @@ namespace app.WebApp.AdminControllers
         {
             MainMenuViewModel viewModel = new MainMenuViewModel();
             viewModel= await _iService.GetRecordById(id);
+
+
             return View(viewModel);
         }
 

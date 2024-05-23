@@ -78,14 +78,14 @@
                             @if (Model.Id == 0)
                             {
                                 <div class="row">
-                                    <div class="col-md-2">
+                                    <div class="col-md-4">
                                         <div class="form-group">
                                             <label>Purchase Date </label>
                                             <input asp-for="PurchaseDate" value="@DateTime.Today.ToString("yyyy-MM-dd")" class="form-control" type="date" autocomplete="off" required />
                                             <span asp-validation-for="PurchaseDate" class="text-danger"></span>
                                         </div>
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col-md-4">
                                         <div class="form-group">
                                             <label>Warehouse</label>
                                             <select class="form-control" asp-for="StorehouseId" asp-items="ViewBag.StorehouseList" required>
@@ -95,22 +95,24 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-md-3">
+                                    <div class="col-md-4">
                                         <div class="form-group">
                                             <label>Supplier</label>
                                             <select class="form-control" asp-for="SupplierId" id="supplierSelect" asp-items="ViewBag.SupplierList">
                                                 <option value="0" selected>-- Select Supplier --</option>
                                                 <span asp-validation-for="SupplierId" class="text-danger"></span>
                                             </select>
+
+                                           
                                         </div>
                                     </div>
 
-                                    <div class="col-md-4">
+                                   @*  <div class="col-md-4">
                                         <div class="form-group">
                                             <label class="control-label">Supplier Information</label>
                                             <textarea class="form-control" id="supplierInfo"></textarea>
                                         </div>
-                                    </div>
+                                    </div> *@
 
                                     @* <div class="col-md-2">
                                         <div class="form-group">
@@ -121,11 +123,15 @@
                                     </div> *@
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-5">
+                                    <div class="col-md-8">
                                         <div class="form-group">
                                             <label asp-for="Description " class="control-label"></label>
                                             <textarea asp-for="Description" class="form-control" rows="2"></textarea>
                                         </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                     
+                                        <span id="supplierInfo"></span>
                                     </div>
                                 </div>
                             }
@@ -151,7 +157,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-md-2">
+                                        <div class="col-md-3">
                                             <div class="form-group">
                                                 <label>Unit</label>
                                                 <select class="form-control" asp-for="AssetPurchaseOrderDetailVM.UnitId" id="unitId" asp-items="ViewBag.UnitList">
@@ -160,20 +166,14 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-md-2">
+                                        <div class="col-md-3">
                                             <div class="form-group">
                                                 <label>Unit Price</label>
                                                 <input asp-for="AssetPurchaseOrderDetailVM.SalePrice" id="salePrice" class="form-control" min="0" />
                                                 <span asp-validation-for="AssetPurchaseOrderDetailVM.SalePrice" class="text-danger"></span>
                                             </div>
                                         </div>
-                                        <div class="col-md-2">
-                                            <div class="form-group">
-                                                <label>Remarks</label>
-                                                <input asp-for="AssetPurchaseOrderDetailVM.Remarks" id="txtRemarks" class="form-control" />
-                                                <span asp-validation-for="AssetPurchaseOrderDetailVM.Remarks" class="text-danger"></span>
-                                            </div>
-                                        </div>
+                                        
 
 
                                         @* <div class="col-md-2">
@@ -183,6 +183,16 @@
                                             </div>
                                         </div> *@
 
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Remarks</label>
+                                                <textarea rows="2" asp-for="AssetPurchaseOrderDetailVM.Remarks" id="txtRemarks" class="form-control"></textarea>
+                                                <span asp-validation-for="AssetPurchaseOrderDetailVM.Remarks" class="text-danger"></span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -298,11 +308,11 @@
                         type: 'GET',
                         success: function (data) {
                             //var supplierInformation = data.name + " " + data.phone + " " + data.email + " " + data.address;
-                            var supplierInformation = "Supplier Name : " + data.name + "\n" +
-                                "Mobile : " + data.phone + "\n" +
-                                "Email : " + data.email + "\n" +
+                            var supplierInformation = "Supplier Name : " + data.name + "<br>" +
+                                "Mobile : " + data.phone + "<br>" +
+                                "Email : " + data.email + "<br>" +
                                 "Address : " + data.address;
-                            $('#supplierInfo').val(supplierInformation);
+                            $('#supplierInfo').html(supplierInformation);
                         },
                         error: function () {
                             alert('Error fetching supplier information.');

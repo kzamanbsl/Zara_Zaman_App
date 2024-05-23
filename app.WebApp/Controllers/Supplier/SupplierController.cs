@@ -52,6 +52,8 @@ namespace app.WebApp.Controllers.Supplier
             //ViewBag.District = new SelectList((await _dropdownService.DistrictSelectionList()).Select(s => new { s.Id, s.Name }), "Id", "Name");
             //ViewBag.Upazila = new SelectList((await _dropdownService.UpazilaSelectionList()).Select(s => new { s.Id, s.Name }), "Id", "Name");
             var result = await _iService.GetRecordById(id);
+            ViewBag.BranchList = new SelectList(await _dropdownService.BankBranchSelectionList(result?.BankId??0), "Id", "Name");
+
             return View(result);
         }
 

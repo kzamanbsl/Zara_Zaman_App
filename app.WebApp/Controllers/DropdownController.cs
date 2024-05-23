@@ -46,5 +46,11 @@ namespace app.WebApp.Controllers
             var res = await _iService.BankBranchSelectionList(bankId);
             return Json(res);
         }
+        [HttpGet]
+        public async Task<JsonResult> GetEmployeeListByDepartment(long department)
+        {
+            var res = await _iService.EmployeeByDepartmentSelectionList(department);
+            return Json(res);
+        }
     }
 }

@@ -79,7 +79,7 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label asp-for="BankBranchId" class="control-label">Branch Name</label>
-                                        <select asp-for="BankBranchId" id="BankBranchId" class="form-control">
+                                        <select asp-items="ViewBag.BranchList" asp-for="BankBranchId" id="BankBranchId" class="form-control">
                                             <option>Select Branch</option>
                                         </select>
                                         <span asp-validation-for="BankBranchId" class="text-danger"></span>
@@ -159,6 +159,25 @@
             $('#Configuration').addClass('menu-open');
             $('#SupplierSearch').addClass('active');
 
+        });
+
+
+        $('#BankId').change(function () {
+            $.ajax({
+                type: "GET",
+                url: "/Dropdown/GetBankBranchListByBankId",
+                data: { bankId: $('#BankId').val() },
+                dataType: "json",
+                success: function (data) {
+                    var branch = "<select>";
+                    branch = branch + '<option value="">--Select--</option>';
+                    for (var i = 0; i < data.length; i++) {
+                        branch = branch + '<option value=' + data[i].id + '>' + data[i].name + '</option>';
+                    }
+                    branch = branch + '</select>';
+                    $('#BankBranchId').html(branch);
+                }
+            });
         });
     </script>
     @{

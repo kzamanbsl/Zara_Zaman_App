@@ -94,6 +94,7 @@ namespace app.Services.SupplierServices
         public async Task<SupplierViewModel> GetRecordById(long id)
         {
             var result = await _iEntityRepository.GetByIdAsync(id);
+            var branch = _dbContext.BankBranch.FirstOrDefault(b => b.Id == result.BranchId);
             SupplierViewModel model = new SupplierViewModel();
             model.Id = result.Id;
             model.SupplierCategoryId = result.SupplierCategoryId;
@@ -103,7 +104,8 @@ namespace app.Services.SupplierServices
             model.Description = result.Description;
             model.Address = result.Address;
             model.BankAccountNo = result.BankAccountNo;
-            model.BankBranchId = result.BranchId??0;
+            model.BankId = branch?.BankId??0;
+            model.BankBranchId = result?.BranchId??0;
             //model.CountryId = result.CountryId;
             //model.DivisionId = result.DivisionId;
             //model.DistrictId = result.DistrictId;

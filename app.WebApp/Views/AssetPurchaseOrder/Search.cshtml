@@ -215,7 +215,7 @@
             if (searchVm != undefined && searchVm !== "") {
                 params = { searchVm: searchVm }
             }
-
+            var currentDomain = window.location.origin;
             var oTable = $("#AssetPurchaseOrderSearchTable").DataTable({
                 "aLengthMenu": [[25, 50, 100, 200], [25, 50, 100, 200]],
                 "iDisplayLength": 25,
@@ -280,8 +280,8 @@
                             if (row.orderStatusId == @((int)PurchaseOrderStatusEnum.Draft) || row.orderStatusId == @((int)PurchaseOrderStatusEnum.Confirm)) {
                                 editBtn = "<a onclick='makeEditble(" + row.id + ");' data-toggle='modal' data-target='#editPurchaseOrderModal' data-placement='top'><i class='fas fa-pen text-warning m-1' title='Edit' aria-hidden='true'></i></a>";
                                 deleteBtn = "<a href='RejectAssetPurchaseOrder/" + row.id + "'><i class='fas fa-trash text-danger m-1' title='Delete' aria-hidden='true'></i></a>";
-                            } 
-                            detailsBtn = "<a href='AssetPurchaseDetails/" + row.id + "'><i class='fa fa-eye text-info m-1' title='Details' aria-hidden='true'></i></a>";
+                            }
+                            detailsBtn = "<a href='" + currentDomain + "AssetPurchaseOrder/AssetPurchaseDetails/" + row.id + "'><i class='fa fa-eye text-info m-1' title='Details' aria-hidden='true'></i></a>";
                             
 
                             var actionBtn = editBtn + detailsBtn + deleteBtn;
