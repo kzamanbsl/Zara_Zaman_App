@@ -1,5 +1,6 @@
 ﻿using app.EntityModel.DataTablePaginationModels;
 using app.Services.BankServices;
+using app.Services.DesignationServices;
 using app.Services.EmployeeCategoryServices;
 using app.Services.ShiftServices;
 using Microsoft.AspNetCore.Mvc;
@@ -53,10 +54,10 @@ namespace app.WebApp.Controllers.BankManagment
             return View(model);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Delete(long id)
+        [HttpPost]
+        public async Task<IActionResult> Delete(BankSearchDto model)
         {
-            var res = await _iService.DeleteRecord(id);
+            var res = await _iService.DeleteRecord(model.Id ?? 0);
             return RedirectToAction("Search");
         }
 

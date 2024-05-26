@@ -1,4 +1,5 @@
 ﻿using app.EntityModel.DataTablePaginationModels;
+using app.Services.DesignationServices;
 using app.Services.EmployeeCategoryServices;
 using app.Services.ShiftServices;
 using Microsoft.AspNetCore.Mvc;
@@ -51,13 +52,13 @@ namespace app.WebApp.Controllers.EmployeeMangement
             ModelState.AddModelError(string.Empty, "Same Name already exists!");
             return View(model);
         }
-
-        [HttpGet]
-        public async Task<IActionResult> Delete(long id)
+        [HttpPost]
+        public async Task<IActionResult> Delete(EmployeeCategorySearchDto model)
         {
-            var res = await _iService.DeleteRecord(id);
+            var res = await _iService.DeleteRecord(model.Id ?? 0);
             return RedirectToAction("Search");
         }
+
 
         #region Search
         [HttpGet]

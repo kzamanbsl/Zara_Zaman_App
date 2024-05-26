@@ -1,4 +1,5 @@
 ﻿using app.EntityModel.DataTablePaginationModels;
+using app.Services.DesignationServices;
 using app.Services.EmployeeCategoryServices;
 using app.Services.OfficeTypeServices;
 using Microsoft.AspNetCore.Mvc;
@@ -51,10 +52,10 @@ namespace app.WebApp.Controllers.OfficeManage
             return View(model);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Delete(long id)
+        [HttpPost]
+        public async Task<IActionResult> Delete(OfficeTypeSearchDto model)
         {
-            var res = await _iService.DeleteRecord(id);
+            var res = await _iService.DeleteRecord(model.Id ?? 0);
             return RedirectToAction("Search");
         }
 

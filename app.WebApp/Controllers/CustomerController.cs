@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using app.EntityModel.DataTablePaginationModels;
 using app.Services.SupplierServices;
+using app.Services.DesignationServices;
 
 namespace app.WebApp.Controllers
 {
@@ -64,10 +65,10 @@ namespace app.WebApp.Controllers
             return View(model);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Delete(long id)
+        [HttpPost]
+        public async Task<IActionResult> Delete(CustomerSearchDto model)
         {
-            var res = await _iService.DeleteRecord(id);
+            var res = await _iService.DeleteRecord(model.Id ?? 0);
             return RedirectToAction("Search");
         }
 
