@@ -1,4 +1,5 @@
 ﻿using app.EntityModel.DataTablePaginationModels;
+using app.Services.DesignationServices;
 using app.Services.DropdownServices;
 using app.Services.EmployeeServices;
 using app.Services.UserServices;
@@ -107,10 +108,10 @@ namespace app.WebApp.Controllers.EmployeeMangement
             return View(result);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Delete(long id)
+        [HttpPost]
+        public async Task<IActionResult> Delete(EmployeeSearchDto model)
         {
-            var res = await _iService.DeleteRecord(id);
+            var res = await _iService.DeleteRecord(model.Id ?? 0);
             return RedirectToAction("Search");
         }
 

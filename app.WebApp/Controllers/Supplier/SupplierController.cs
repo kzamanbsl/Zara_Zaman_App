@@ -1,5 +1,6 @@
 ﻿using app.EntityModel.DataTablePaginationModels;
 using app.Services.CompanyServices;
+using app.Services.DesignationServices;
 using app.Services.DropdownServices;
 using app.Services.ProductServices;
 using app.Services.SupplierServices;
@@ -76,10 +77,10 @@ namespace app.WebApp.Controllers.Supplier
             return Json(model);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Delete(long id)
+        [HttpPost]
+        public async Task<IActionResult> Delete(SupplierSearchDto model)
         {
-            var res = await _iService.DeleteRecord(id);
+            var res = await _iService.DeleteRecord(model.Id ?? 0);
             return RedirectToAction("Search");
         }
 

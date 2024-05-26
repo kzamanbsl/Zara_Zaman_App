@@ -1,5 +1,6 @@
 ﻿using app.EntityModel.DataTablePaginationModels;
 using app.Services.BankBranchServices;
+using app.Services.DesignationServices;
 using app.Services.DropdownItemServices;
 using app.Services.DropdownServices;
 using app.Services.JobStatusServices;
@@ -61,13 +62,13 @@ namespace app.WebApp.Controllers.BankManagment
             return View(model);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Delete(long id)
+        [HttpPost]
+        public async Task<IActionResult> Delete(BankBranchSearchDto model)
         {
-            var res = await _bankBranchService.DeleteRecord(id);
+            var res = await _bankBranchService.DeleteRecord(model.Id ?? 0);
             return RedirectToAction("Search");
-        } 
-        
+        }
+
 
         #region Search
         [HttpGet]

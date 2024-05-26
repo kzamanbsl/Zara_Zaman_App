@@ -1,6 +1,7 @@
 ﻿using app.EntityModel.DataTablePaginationModels;
 using app.Services.ATMAssemble.AssembleWorkStepItemServices;
 using app.Services.ATMAssemble.AssembleWorkStepServices;
+using app.Services.DesignationServices;
 using app.Services.DropdownServices;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -60,10 +61,10 @@ namespace app.WebApp.Controllers.Assemble
             return View(model);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Delete(long id)
+        [HttpPost]
+        public async Task<IActionResult> Delete(AssembleWorkStepItemSearchDto model)
         {
-            var res = await _iService.DeleteRecord(id);
+            var res = await _iService.DeleteRecord(model.Id ?? 0);
             return RedirectToAction("Search");
         }
 

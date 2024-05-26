@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using app.Services.IAssetnventoryServices;
 using app.EntityModel.DataTablePaginationModels;
+using app.Services.DesignationServices;
 
 namespace app.WebApp.Controllers.AssetManage
 {
@@ -79,10 +80,10 @@ namespace app.WebApp.Controllers.AssetManage
             return RedirectToAction(nameof(Search));
         }
 
-        [HttpGet]
-        public async Task<IActionResult> DeleteAssetAllocation(long id)
+        [HttpPost]
+        public async Task<IActionResult> DeleteAssetAllocation(AssetAllocationSearchDto model)
         {
-            var res = await _iAssetAllocationService.DeleteAssetAllocation(id);
+            var res = await _iAssetAllocationService.DeleteAssetAllocation(model.Id ?? 0);
             return RedirectToAction(nameof(Search));
         }
 

@@ -1,4 +1,5 @@
 ﻿using app.EntityModel.DataTablePaginationModels;
+using app.Services.DesignationServices;
 using app.Services.DropdownServices;
 using app.Services.InventoryServices;
 using app.Services.PurchaseOrderDetailServices;
@@ -56,6 +57,8 @@ namespace app.WebApp.Controllers
             ViewBag.SupplierList = new SelectList((await _iDropdownService.SupplierSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
             ViewBag.StorehouseList = new SelectList((await _iDropdownService.StorehouseSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
             ViewBag.ProductList = new SelectList((await _iDropdownService.ProductSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
+            //ViewBag.ProductList = new SelectList((await _iDropdownService.AssetSelectionList()).Select(s => new { s.Id, s.Name }), "Id", "Name");
+
             ViewBag.UnitList = new SelectList((await _iDropdownService.UnitSelectionList()).Select(s => new { Id = s.Id, Name = s.Name }), "Id", "Name");
 
             return View(viewModel);
@@ -95,13 +98,20 @@ namespace app.WebApp.Controllers
             return RedirectToAction("Search");
         }
 
-        [HttpGet]
-        public async Task<IActionResult> DeletePurchaseOrder(long id)
+        [HttpPost]
+        public async Task<IActionResult> DeletePurchaseOrder(PurchaseOrderSearchDto model)
         {
-            var res = await _iPurchaseOrderService.DeletePurchaseOrder(id);
+            var res = await _iPurchaseOrderService.DeletePurchaseOrder(model.Id ?? 0);
             return RedirectToAction(nameof(Search));
         }
 
+
+        //[HttpPost]
+        //public async Task<IActionResult> Delete(DesignationSearchDto model)
+        //{
+        //    var res = await _iService.DeleteRecord(model.Id ?? 0);
+        //    return RedirectToAction("Search");
+        //}
 
         public async Task<IActionResult> DeletePurchaseOrderDetailsById(long id, PurchaseOrderViewModel vm)
         {

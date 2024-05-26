@@ -1,4 +1,5 @@
 ﻿using app.EntityModel.DataTablePaginationModels;
+using app.Services.DesignationServices;
 using app.Services.DropdownServices;
 using app.Services.ProductServices;
 using Microsoft.AspNetCore.Mvc;
@@ -60,10 +61,11 @@ namespace app.WebApp.Controllers.Product
             return View(model);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Delete(long id)
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(ProductSearchDto model)
         {
-            var res = await _iService.DeleteRecord(id);
+            var res = await _iService.DeleteRecord(model.Id ?? 0);
             return RedirectToAction("Search");
         }
 

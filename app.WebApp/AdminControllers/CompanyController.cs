@@ -1,5 +1,6 @@
 ﻿using app.EntityModel.DataTablePaginationModels;
 using app.Services.CompanyServices;
+using app.Services.DesignationServices;
 using app.Services.StorehouseServices;
 using Microsoft.AspNetCore.Mvc;
 
@@ -51,10 +52,10 @@ namespace app.WebApp.AdminControllers
             return View(model);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Delete(long id)
+        [HttpPost]
+        public async Task<IActionResult> Delete(CompanySearchDto model)
         {
-            var res = await _iService.DeleteRecord(id);
+            var res = await _iService.DeleteRecord(model.Id ?? 0);
             return RedirectToAction("Search");
         }
 

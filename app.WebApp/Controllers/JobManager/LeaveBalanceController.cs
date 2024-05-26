@@ -1,5 +1,6 @@
 ﻿using app.EntityModel.DataTablePaginationModels;
 using app.Services.CompanyServices;
+using app.Services.DesignationServices;
 using app.Services.DropdownServices;
 using app.Services.LeaveBalanceServices;
 using app.Services.ProductServices;
@@ -59,10 +60,10 @@ namespace app.WebApp.Controllers.JobManager
             return View(model);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Delete(long id)
+        [HttpPost]
+        public async Task<IActionResult> Delete(LeaveBalanceSearchDto model)
         {
-            var res = await _iService.DeleteRecord(id);
+            var res = await _iService.DeleteRecord(model.Id ?? 0);
             return RedirectToAction("Search");
         }
 
