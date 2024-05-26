@@ -4,7 +4,7 @@ using app.Infrastructure;
 using app.Services.AssetPurchaseOrderServices;
 using app.Services.AssetAllocationServices;
 using Microsoft.EntityFrameworkCore;
-using app.EntityModel.AppModels.AssetManage;
+using app.EntityModel.AppModels.AssetModels;
 
 namespace app.Services.AssetAllocationDetailServices
 {
@@ -28,7 +28,7 @@ namespace app.Services.AssetAllocationDetailServices
 
         //        string tags = "";
 
-        //        foreach (var index in vm.AssetAllocationDetailVM.Tag)
+        //        foreach (var index in vm.AssetAllocationDetailVm.Tag)
         //        {
         //            tags += index + ", ";
         //        }
@@ -36,11 +36,11 @@ namespace app.Services.AssetAllocationDetailServices
         //        AssetAllocationDetail assetAllocationDetail = new AssetAllocationDetail
         //        {
 
-        //            AssetAllocationId = vm.Id,
-        //            Id = vm.AssetAllocationDetailVM.Id,
-        //            ProductId = vm.AssetAllocationDetailVM.ProductId,
-        //            Quantity = vm.AssetAllocationDetailVM.Quantity,
-        //            Description = vm.AssetAllocationDetailVM.Description,
+        //            AllocationId = vm.Id,
+        //            Id = vm.AssetAllocationDetailVm.Id,
+        //            ProductId = vm.AssetAllocationDetailVm.ProductId,
+        //            Qty = vm.AssetAllocationDetailVm.Qty,
+        //            Description = vm.AssetAllocationDetailVm.Description,
         //            Tags = tags
         //        };
 
@@ -61,7 +61,7 @@ namespace app.Services.AssetAllocationDetailServices
             {
                 string tags = "";
 
-                foreach (var index in vm.AssetAllocationDetailVM.Tag)
+                foreach (var index in vm.AssetAllocationDetailVm.Tag)
                 {
                     tags += index + ", ";
                 }
@@ -69,12 +69,12 @@ namespace app.Services.AssetAllocationDetailServices
 
                 AssetAllocationDetail assetAllocationDetail = new AssetAllocationDetail
                 {
-                    AssetAllocationId = vm.Id,
-                    Id = vm.AssetAllocationDetailVM.Id,
-                    ProductId = vm.AssetAllocationDetailVM.ProductId,
-                    Quantity = vm.AssetAllocationDetailVM.Quantity,
-                    //Tags = vm.AssetAllocationDetailVM.Tags,
-                    Description = vm.AssetAllocationDetailVM.Description,
+                    AllocationId = vm.Id,
+                    Id = vm.AssetAllocationDetailVm.Id,
+                    ProductId = vm.AssetAllocationDetailVm.ProductId,
+                    Qty = vm.AssetAllocationDetailVm.Qty,
+                    //Tags = vm.AssetAllocationDetailVm.Tags,
+                    Remarks = vm.AssetAllocationDetailVm.Remarks,
                     Tags = tags
                 };
 
@@ -96,20 +96,20 @@ namespace app.Services.AssetAllocationDetailServices
 
             string tags = "";
 
-            foreach (var index in model.AssetAllocationDetailVM.Tag)
+            foreach (var index in model.AssetAllocationDetailVm.Tag)
             {
                 tags += index + ", ";
             }
 
-            var assetAllocationDetail = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id == model.AssetAllocationDetailVM.Id);
+            var assetAllocationDetail = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id == model.AssetAllocationDetailVm.Id);
             if (assetAllocationDetail != null)
             {
 
-                model.Id = assetAllocationDetail.AssetAllocationId;
-                assetAllocationDetail.ProductId = model.AssetAllocationDetailVM.ProductId;
-                assetAllocationDetail.Quantity = model.AssetAllocationDetailVM.Quantity;
-                //assetAllocationDetail.Tags = model.AssetAllocationDetailVM.Tags;
-                assetAllocationDetail.Description = model.AssetAllocationDetailVM.Description;
+                model.Id = assetAllocationDetail.AllocationId;
+                assetAllocationDetail.ProductId = model.AssetAllocationDetailVm.ProductId;
+                assetAllocationDetail.Qty = model.AssetAllocationDetailVm.Qty;
+                //assetAllocationDetail.Tags = model.AssetAllocationDetailVm.Tags;
+                assetAllocationDetail.Remarks = model.AssetAllocationDetailVm.Remarks;
                 assetAllocationDetail.Tags = tags;
                 await _iEntityRepository.UpdateAsync(assetAllocationDetail);
                 return true;
@@ -125,12 +125,12 @@ namespace app.Services.AssetAllocationDetailServices
                                           select new AssetAllocationDetailViewModel
                                           {
                                               Id = t1.Id,
-                                              AssetAllocationId = t1.AssetAllocationId,
+                                              AllocationId = t1.AllocationId,
                                               ProductId = t1.ProductId,
                                               ProductName=t1.Product.Name,
-                                              Quantity= t1.Quantity,
+                                              Qty= t1.Qty,
                                               Tags = t1.Tags,
-                                              Description = t1.Description,
+                                              Remarks = t1.Remarks,
 
                                           }).FirstOrDefault());
             return v;

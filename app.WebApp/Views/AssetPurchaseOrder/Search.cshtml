@@ -36,9 +36,9 @@
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label>Warehouse</label>
+                                        <label>Store</label>
                                         <select class="form-control" asp-for="StorehouseId" asp-items="ViewBag.StorehouseList" required>
-                                            <option value="0" selected>-- Select Warehouse --</option>
+                                            <option value="0" selected>-- Select Store --</option>
                                             <span asp-validation-for="StorehouseId" class="text-danger"></span>
                                         </select>
                                     </div>
@@ -129,9 +129,9 @@
                     </div>
 
                     <div class="form-group">
-                        <label>Warehouse</label>
+                        <label>Store</label>
                         <select class="form-control" id="storehouseId" asp-for="StorehouseId" asp-items="ViewBag.StorehouseList" required>
-                            <option value="0" selected>-- Select Warehouse --</option>
+                            <option value="0" selected>-- Select Store --</option>
                             <span asp-validation-for="StorehouseId" class="text-danger"></span>
                         </select>
                     </div>
@@ -278,11 +278,11 @@
                             var detailsBtn = "";
 
                             if (row.orderStatusId == @((int)PurchaseOrderStatusEnum.Draft) || row.orderStatusId == @((int)PurchaseOrderStatusEnum.Confirm)) {
-                                editBtn = "<a onclick='makeEditble(" + row.id + ");' data-toggle='modal' data-target='#editPurchaseOrderModal' data-placement='top'><i class='fas fa-pen text-warning m-1' title='Edit' aria-hidden='true'></i></a>";
-                                deleteBtn = "<a href='RejectAssetPurchaseOrder/" + row.id + "'><i class='fas fa-trash text-danger m-1' title='Delete' aria-hidden='true'></i></a>";
+                                editBtn = "<a href=\"/AssetPurchaseOrder/AddOrUpdateRecord?assetPurchaseOrderId=" + row.id + "\"><i class='fas fa-pen text-warning m-1' title='Edit' aria-hidden='true'></i></a>";
+                                deleteBtn = "<a href='DeleteOrder?id=" + row.id + "'><i class='fas fa-trash text-danger m-1' title='Delete' aria-hidden='true'></i></a>";
                             }
-                            detailsBtn = "<a href='" + currentDomain + "AssetPurchaseOrder/AssetPurchaseDetails/" + row.id + "'><i class='fa fa-eye text-info m-1' title='Details' aria-hidden='true'></i></a>";
-                            
+                            detailsBtn = "<a href=\"/AssetPurchaseOrder/AssetPurchaseDetails/" + row.id + "\"><i class='fa fa-eye text-info m-1' title='Details' aria-hidden='true'></i></a>";
+
 
                             var actionBtn = editBtn + detailsBtn + deleteBtn;
                             return actionBtn;

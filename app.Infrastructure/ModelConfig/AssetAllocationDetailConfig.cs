@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
-using app.EntityModel.AppModels.AssetManage;
+using app.EntityModel.AppModels.AssetModels;
 
 namespace app.Infrastructure.ModelConfig
 {

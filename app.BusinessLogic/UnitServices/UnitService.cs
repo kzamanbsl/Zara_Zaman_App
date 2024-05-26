@@ -1,5 +1,4 @@
-﻿using app.EntityModel.AppModels;
-using app.Infrastructure.Auth;
+﻿using app.Infrastructure.Auth;
 using app.Infrastructure.Repository;
 using app.Infrastructure;
 using app.Services.UnitServices;
@@ -12,6 +11,7 @@ using app.Utility;
 using app.EntityModel.DataTablePaginationModels;
 using app.Services.JobStatusServices;
 using Microsoft.EntityFrameworkCore;
+using app.EntityModel.AppModels.ProductModels;
 
 namespace app.Services.UnitServices
 {

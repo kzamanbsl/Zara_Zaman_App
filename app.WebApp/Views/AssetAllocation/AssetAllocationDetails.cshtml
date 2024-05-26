@@ -45,7 +45,7 @@
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                             <input asp-for="Id" class="form-control" hidden id="assetAllocationId" />
                             <input asp-for="ActionId" hidden id="actionId" />
-                            <input asp-for="AssetAllocationDetailVM.Id" class="form-control" id="assetAllocationDetailsId" hidden />
+                            <input asp-for="AssetAllocationDetailVm.Id" class="form-control" id="assetAllocationDetailsId" hidden />
 
                             @if (Model.Id > 0)
                             {
@@ -54,10 +54,10 @@
                                         <table class="table table-bordered border-primary">
                                             <tr>
                                                 <th style="width:18%">Allocation No</th>
-                                                <td style="width:30%">@Model.OrderNo</td>
+                                                <td style="width:30%">@Model.AllocationNo</td>
 
                                                 <th style="width:18%"> Asset Allocation Date </th>
-                                                <td style="width:30%">@Model.Date</td>
+                                                <td style="width:30%">@Model.Date.ToString("dd/MM/yyyy")</td>
                                             </tr>
                                             <tr>
                                                 <th>Employee Name </th>
@@ -108,9 +108,9 @@
                                                 <tr>
                                                     <td style="padding:5px">@(++sl)</td>
                                                     <td style="padding:5px;text-align:left;">@item.ProductName</td>
-                                                    <td style="padding: 5px; text-align: left;">@item.Quantity</td>
+                                                    <td style="padding: 5px; text-align: left;">@item.Qty</td>
                                                     <td style="padding: 5px; text-align: left;">@item.Tags </td>
-                                                    <td style="padding: 5px; text-align: left;">@item.Description </td>
+                                                    <td style="padding: 5px; text-align: left;">@item.Remarks </td>
 
 
                                                     @* <td style="padding:5px;text-align:left;">@String.Format("{0:0.00}", item.UnitName)</td>
@@ -133,14 +133,14 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-12">
-                        @if (Model.Id > 0 && Model.AssetAllocationStatusId == (int)AssetAllocationStatusEnum.Draft || Model.Id > 0 && Model.AssetAllocationStatusId == (int)AssetAllocationStatusEnum.Confirm)
+                        @if (Model.Id > 0 && Model.StatusId == (int)AssetAllocationStatusEnum.Draft || Model.Id > 0 && Model.StatusId == (int)AssetAllocationStatusEnum.Confirm)
                         {
                             <div class="form-group" style="float:right">
                                 <button id="orderReceived" class="linkPointer btn btn-success btn-sm">Received</button>
                                 <button asp-action="RejectAssetAllocation" method="post" id="orderReject" class="linkPointer btn btn-danger btn-sm">Reject</button>
                             </div>
                         }
-                        @if (Model.Id > 0 && Model.AssetAllocationStatusId == (int)AssetAllocationStatusEnum.Reject)
+                        @if (Model.Id > 0 && Model.StatusId == (int)AssetAllocationStatusEnum.Reject)
                         {
                             <div class="form-group" style="float:right">
                                 <h3><span style="color:red">Order Rejected</span></h3>

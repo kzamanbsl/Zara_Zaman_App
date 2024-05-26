@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using app.Services.AssetPurchaseOrderServices;
 using Microsoft.EntityFrameworkCore;
 using app.Services.AssetPurchaseOrderDetailServices;
-using app.EntityModel.AppModels.Purchase;
+using app.EntityModel.AppModels.PurchaseModels;
 
 namespace app.Services.AssetPurchaseOrderDetailServices
 {
@@ -70,7 +70,7 @@ namespace app.Services.AssetPurchaseOrderDetailServices
             return false;
         }
 
-        public async Task<AssetPurchaseOrderDetailViewModel> SingleAssetPurchaseOrderDetails(long id)
+        public async Task<AssetPurchaseOrderDetailViewModel> GetDetailById(long id)
         {
             var v = await Task.Run(() => (from t1 in _dbContext.PurchaseOrderDetail.Where(x => x.IsActive && x.Id == id)
 

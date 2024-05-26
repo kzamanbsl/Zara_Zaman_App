@@ -1,4 +1,4 @@
-﻿using app.EntityModel.AppModels.BankManage;
+﻿using app.EntityModel.AppModels.BankModels;
 using app.Infrastructure;
 using app.Infrastructure.Auth;
 using app.Utility;
@@ -300,7 +300,7 @@ namespace app.Services.DropdownServices
         public async Task<IEnumerable<DropdownViewModel>> StorehouseSelectionList()
         {
             IEnumerable<DropdownViewModel> dropDownViewModels = await Task.Run(() => (from t1 in _dbContext.BusinessCenter
-                                                                                      where t1.BusinessCenterTypeId == (int)BusinessCenterEnum.Storehouse && t1.IsActive == true
+                                                                                      where t1.BusinessCenterTypeId == (int)BusinessCenterTypeEnum.Storehouse && t1.IsActive == true
                                                                                       select new DropdownViewModel
                                                                                       {
                                                                                           Id = t1.Id,

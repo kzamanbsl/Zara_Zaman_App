@@ -1,6 +1,5 @@
-﻿using app.EntityModel.AppModels.BankManage;
-using app.EntityModel.AppModels.Office;
-using app.EntityModel.AppModels.SupplierManage;
+﻿using app.EntityModel.AppModels.BankModels;
+using app.EntityModel.AppModels.SupplierModels;
 using app.EntityModel.DataTablePaginationModels;
 using app.Infrastructure;
 using app.Infrastructure.Repository;

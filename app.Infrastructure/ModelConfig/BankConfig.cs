@@ -1,5 +1,4 @@
-﻿using app.EntityModel.AppModels.BankManage;
-using app.EntityModel.AppModels.Office;
+﻿using app.EntityModel.AppModels.BankModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

@@ -1,5 +1,5 @@
 ﻿using System.Text.RegularExpressions;
-using app.EntityModel.CoreModel;
+using app.EntityModel.CoreModels;
 using app.Infrastructure;
 using app.Infrastructure.Auth;
 using app.Infrastructure.Repository;

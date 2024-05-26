@@ -67,7 +67,7 @@
         Delete
     }
 
-    public enum BusinessCenterEnum
+    public enum BusinessCenterTypeEnum
     {
         Storehouse = 1,
         SaleCenter,
@@ -97,6 +97,15 @@
         Confirm,
         Complete,
         Fault,
+        Hold,
+        Reject
+    }
+     public enum AssetTransferStatusEnum
+    {
+        Draft = 1,
+        Confirm,
+        Delivery,
+        Receive,
         Hold,
         Reject
     }

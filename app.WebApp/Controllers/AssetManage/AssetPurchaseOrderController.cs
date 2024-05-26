@@ -16,20 +16,20 @@ namespace app.WebApp.Controllers.AssetManage
     {
         private readonly IAssetPurchaseOrderService _iAssetPurchaseOrderService;
         private readonly IAssetPurchaseOrderDetailService _iAssetPurchaseOrderDetailService;
-        private readonly IAssetInventoryService _iassetInventoryService;
+        private readonly IAssetInventoryService _iAssetInventoryService;
         private readonly IDropdownService _iDropdownService;
 
-        public AssetPurchaseOrderController(IAssetPurchaseOrderService iAssetPurchaseOrderService, IAssetPurchaseOrderDetailService iAssetPurchaseOrderDetailService, IDropdownService iDropdownService, IAssetInventoryService iassetInventoryService)
+        public AssetPurchaseOrderController(IAssetPurchaseOrderService iAssetPurchaseOrderService, IAssetPurchaseOrderDetailService iAssetPurchaseOrderDetailService, IDropdownService iDropdownService, IAssetInventoryService iAssetInventoryService)
         {
             _iAssetPurchaseOrderService = iAssetPurchaseOrderService;
             _iAssetPurchaseOrderDetailService = iAssetPurchaseOrderDetailService;
             _iDropdownService = iDropdownService;
             //_inventoryService = inventoryService;
-            _iassetInventoryService = iassetInventoryService;
+            _iAssetInventoryService = iAssetInventoryService;
         }
 
         [HttpGet]
-        public async Task<IActionResult> AddAssetPurchaseOrderAndDetail(long assetPurchaseOrderId = 0)
+        public async Task<IActionResult> AddOrUpdateRecord(long assetPurchaseOrderId = 0)
         {
             AssetPurchaseOrderViewModel viewModel = new AssetPurchaseOrderViewModel();
 
@@ -51,7 +51,7 @@ namespace app.WebApp.Controllers.AssetManage
 
 
         [HttpPost]
-        public async Task<IActionResult> AddAssetPurchaseOrderAndDetail(AssetPurchaseOrderViewModel vm)
+        public async Task<IActionResult> AddOrUpdateRecord(AssetPurchaseOrderViewModel vm)
         {
             if (vm.ActionEum == ActionEnum.Add)
             {
@@ -66,35 +66,35 @@ namespace app.WebApp.Controllers.AssetManage
             {
                 await _iAssetPurchaseOrderDetailService.UpdateAssetPurchaseDetail(vm);
             }
-            return RedirectToAction(nameof(AddAssetPurchaseOrderAndDetail), new { assetPurchaseOrderId = vm.Id });
+            return RedirectToAction(nameof(AddOrUpdateRecord), new { assetPurchaseOrderId = vm.Id });
         }
 
-        public async Task<JsonResult> UpdateSingleAssetPurchaseOrderDetails(long id)
+        public async Task<JsonResult> GetOrderDetailById(long id)
         {
-            var model = await _iAssetPurchaseOrderDetailService.SingleAssetPurchaseOrderDetails(id);
+            var model = await _iAssetPurchaseOrderDetailService.GetDetailById(id);
             return Json(model);
         }
 
 
         [HttpPost]
-        public async Task<IActionResult> ConfirmAssetPurchaseOrder(long id)
+        public async Task<IActionResult> ConfirmOrder(long id)
         {
             var res = await _iAssetPurchaseOrderService.ConfirmAssetPurchaseOrder(id);
-            return RedirectToAction("Search");
+            return RedirectToAction(nameof(Search));
         }
 
         [HttpGet]
-        public async Task<IActionResult> DeleteAssetPurchaseOrder(long id)
+        public async Task<IActionResult> DeleteOrder(long id)
         {
             var res = await _iAssetPurchaseOrderService.DeleteAssetPurchaseOrder(id);
             return RedirectToAction(nameof(Search));
         }
 
 
-        public async Task<IActionResult> DeleteAssetPurchaseOrderDetailsById(long id, AssetPurchaseOrderViewModel vm)
+        public async Task<IActionResult> DeleteDetailById(long id, AssetPurchaseOrderViewModel vm)
         {
             var res = await _iAssetPurchaseOrderDetailService.DeleteAssetPurchaseDetail(id);
-            return RedirectToAction(nameof(AddAssetPurchaseOrderAndDetail), new { id = vm.Id });
+            return RedirectToAction(nameof(AddOrUpdateRecord), new { id = vm.Id });
         }
 
         [HttpGet]
@@ -108,16 +108,18 @@ namespace app.WebApp.Controllers.AssetManage
         public async Task<IActionResult> RejectAssetPurchaseOrder(AssetPurchaseOrderViewModel vm)
         {
             var res = await _iAssetPurchaseOrderService.RejectAssetPurchaseOrder(vm);
-            return RedirectToAction("Search");
+            return RedirectToAction(nameof(Search));
         }
 
         [HttpPost]
         public async Task<IActionResult> AddAssetInventory(long id)
         {
-            var res = await _iassetInventoryService.AddAssetInventory(id);
-            return RedirectToAction("Search");
+            var res = await _iAssetInventoryService.AddAssetInventory(id);
+            return RedirectToAction(nameof(Search));
         }
 
+
+        // update Asset not in functional
         public async Task<JsonResult> UpdateAssetPurchaseOrder(long id)
         {
             var model = await _iAssetPurchaseOrderService.GetAssetPurchaseOrder(id);
@@ -128,7 +130,7 @@ namespace app.WebApp.Controllers.AssetManage
         public async Task<IActionResult> UpdateAssetPurchaseMaster(AssetPurchaseOrderViewModel vm)
         {
             var res = await _iAssetPurchaseOrderService.UpdateAssetPurchaseOrder(vm);
-            return RedirectToAction("Search");
+            return RedirectToAction(nameof(Search));
         }
 
         #region Search

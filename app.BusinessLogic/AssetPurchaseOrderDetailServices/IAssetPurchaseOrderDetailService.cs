@@ -12,7 +12,7 @@ namespace app.Services.AssetPurchaseOrderDetailServices
         Task<bool> AddRecord(AssetPurchaseOrderViewModel vm);
         Task<bool> UpdateAssetPurchaseDetail(AssetPurchaseOrderViewModel vm);
         Task<bool> DeleteAssetPurchaseDetail(long id);
-        Task<AssetPurchaseOrderDetailViewModel> SingleAssetPurchaseOrderDetails(long id);
+        Task<AssetPurchaseOrderDetailViewModel> GetDetailById(long id);
 
     }
 }

@@ -9,7 +9,7 @@ using app.Services.ProductServices;
 using app.Services.AssetAllocationServices;
 using app.Services.SalesOrderServices;
 using app.Services.AssetPurchaseOrderServices;
-using app.EntityModel.AppModels.AssetManage;
+using app.EntityModel.AppModels.AssetModels;
 
 namespace app.Services.AssetAllocationServices
 {
@@ -28,9 +28,9 @@ namespace app.Services.AssetAllocationServices
         public async Task<bool> AddRecord(AssetAllocationViewModel vm)
         {
 
-            if (vm.AssetAllocationStatusId == 0)
+            if (vm.StatusId == 0)
             {
-                vm.AssetAllocationStatusId = (int)AssetAllocationStatusEnum.Draft;
+                vm.StatusId = (int)AssetAllocationStatusEnum.Draft;
             }
 
             var poMax = _dbContext.AssetAllocation.Count() + 1;
@@ -41,12 +41,12 @@ namespace app.Services.AssetAllocationServices
                            poMax.ToString().PadLeft(2, '0');
 
             AssetAllocation assetAllocation = new AssetAllocation();
-            assetAllocation.OrderNo = poCid;
+            assetAllocation.AllocationNo = poCid;
             assetAllocation.Date = vm.Date;
             assetAllocation.EmployeeId = vm.EmployeeId;
             assetAllocation.DepartmentId = vm.DepartmentId;
-            assetAllocation.Remarks = vm.Remarks;
-            assetAllocation.AssetAllocationStatusId = (int)AssetAllocationStatusEnum.Draft;
+            assetAllocation.Description = vm.Description;
+            assetAllocation.StatusId = (int)AssetAllocationStatusEnum.Draft;
             var res = await _iEntityRepository.AddAsync(assetAllocation);
             vm.Id = res?.Id ?? 0;
             return true;
@@ -58,12 +58,12 @@ namespace app.Services.AssetAllocationServices
             if (assetAllocation != null)
             {
                 assetAllocation.Id = vm.Id;
-                assetAllocation.OrderNo = vm.OrderNo;
+                assetAllocation.AllocationNo = vm.AllocationNo;
                 assetAllocation.Date = vm.Date;
                 assetAllocation.EmployeeId = vm.EmployeeId;
                 assetAllocation.DepartmentId = vm.DepartmentId;
-                assetAllocation.AssetAllocationStatusId = vm.AssetAllocationStatusId;
-                assetAllocation.Remarks = vm.Remarks;
+                assetAllocation.StatusId = vm.StatusId;
+                assetAllocation.Description = vm.Description;
                 await _iEntityRepository.UpdateAsync(assetAllocation);
                 return true;
             }
@@ -77,28 +77,28 @@ namespace app.Services.AssetAllocationServices
                                                          select new AssetAllocationViewModel
                                                          {
                                                              Id = t1.Id,
-                                                             OrderNo = t1.OrderNo,
-                                                             AssetAllocationStatusId = (int)(AssetAllocationStatusEnum)t1.AssetAllocationStatusId,
+                                                             AllocationNo = t1.AllocationNo,
+                                                             StatusId = (int)(AssetAllocationStatusEnum)t1.StatusId,
                                                              EmployeeId = t1.EmployeeId,
                                                              EmployeeName = t1.Employee.Name,
                                                              DepartmentId = t1.DepartmentId,
                                                              DepartmentName = t1.Department.Name,
                                                              Date = t1.Date,
-                                                             //Quantity = t1.Quantity,
-                                                             Remarks = t1.Remarks,
+                                                             //Qty = t1.Qty,
+                                                             Description = t1.Description,
                                                          }).FirstOrDefault()); ;
 
-            assetAllocationModel.AssetAllocationDetailsList = await Task.Run(() => (from t1 in _dbContext.AssetAllocationDetail.Where(x => x.IsActive && x.AssetAllocation.Id == assetAllocationId)
+            assetAllocationModel.AssetAllocationDetailsList = await Task.Run(() => (from t1 in _dbContext.AssetAllocationDetail.Where(x => x.IsActive && x.Allocation.Id == assetAllocationId)
                                                                                     select new AssetAllocationDetailViewModel
                                                                                     {
                                                                                         Id = t1.Id,
-                                                                                        AssetAllocationId = t1.AssetAllocationId,
+                                                                                        AllocationId = t1.AllocationId,
                                                                                         ProductId = t1.ProductId,
                                                                                         ProductName = t1.Product.Name,
-                                                                                        Quantity = t1.Quantity,
+                                                                                        Qty = t1.Qty,
                                                                                         Tags = t1.Tags,
 
-                                                                                        Description = t1.Description,
+                                                                                        Remarks = t1.Remarks,
                                                                                     }).OrderByDescending(x => x.Id).AsEnumerable());
 
 
@@ -112,27 +112,27 @@ namespace app.Services.AssetAllocationServices
                                                          select new AssetAllocationViewModel
                                                          {
                                                              Id = t1.Id,
-                                                             OrderNo = t1.OrderNo,
+                                                             AllocationNo = t1.AllocationNo,
                                                              Date = t1.Date,
                                                              EmployeeId = t1.EmployeeId,
                                                              EmployeeName = t1.Employee.Name,
                                                              DepartmentId = t1.DepartmentId,
                                                              DepartmentName = t1.Department.Name,
-                                                             AssetAllocationStatusId = (int)(AssetAllocationStatusEnum)t1.AssetAllocationStatusId,
-                                                             Remarks = t1.Remarks,
+                                                             StatusId = (int)(AssetAllocationStatusEnum)t1.StatusId,
+                                                             Description = t1.Description,
                                                          }).FirstOrDefault());
 
-            assetAllocationModel.AssetAllocationDetailsList = await Task.Run(() => (from t1 in _dbContext.AssetAllocationDetail.Where(x => x.IsActive && x.AssetAllocation.Id == id)
+            assetAllocationModel.AssetAllocationDetailsList = await Task.Run(() => (from t1 in _dbContext.AssetAllocationDetail.Where(x => x.IsActive && x.Allocation.Id == id)
                                                                                     select new AssetAllocationDetailViewModel
                                                                                     {
                                                                                         Id = t1.Id,
-                                                                                        AssetAllocationId = t1.AssetAllocationId,
+                                                                                        AllocationId = t1.AllocationId,
                                                                                         ProductId = t1.ProductId,
                                                                                         ProductName = t1.Product.Name,
-                                                                                        Quantity = t1.Quantity,
+                                                                                        Qty = t1.Qty,
                                                                                         Tags = t1.Tags,
 
-                                                                                        Description = t1.Description,
+                                                                                        Remarks = t1.Remarks,
 
                                                                                     }).OrderByDescending(x => x.Id).AsEnumerable());
 
@@ -145,12 +145,12 @@ namespace app.Services.AssetAllocationServices
             AssetAllocationViewModel sendData = new AssetAllocationViewModel();
             var result = await _dbContext.AssetAllocation.FirstOrDefaultAsync(x => x.Id == id);
             sendData.Id = result.Id;
-            sendData.OrderNo = result.OrderNo;
+            sendData.AllocationNo = result.AllocationNo;
             sendData.Date = result.Date;
             sendData.EmployeeId = result.EmployeeId;
             sendData.DepartmentId = result.DepartmentId;
-            sendData.AssetAllocationStatusId = (int)(AssembleWorkStatusEnum)result.AssetAllocationStatusId;
-            sendData.Remarks = result.Remarks;
+            sendData.StatusId = (int)(AssembleWorkStatusEnum)result.StatusId;
+            sendData.Description = result.Description;
 
             return sendData;
         }
@@ -160,7 +160,7 @@ namespace app.Services.AssetAllocationServices
             var checkAssetAllocation = await _dbContext.AssetAllocation.FirstOrDefaultAsync(c => c.Id == id);
             if (checkAssetAllocation != null && checkAssetAllocation.Id == id)
             {
-                checkAssetAllocation.AssetAllocationStatusId = (int)AssetAllocationStatusEnum.Confirm;
+                checkAssetAllocation.StatusId = (int)AssetAllocationStatusEnum.Confirm;
                 await _iEntityRepository.UpdateAsync(checkAssetAllocation);
                 return true;
             }
@@ -171,9 +171,9 @@ namespace app.Services.AssetAllocationServices
         {
             var checkAssetAllocation = await _dbContext.AssetAllocation.FirstOrDefaultAsync(c => c.Id == id);
 
-            if (checkAssetAllocation != null || checkAssetAllocation.AssetAllocationStatusId == (int)AssetAllocationStatusEnum.Draft || checkAssetAllocation.AssetAllocationStatusId == (int)AssetAllocationStatusEnum.Confirm)
+            if (checkAssetAllocation != null || checkAssetAllocation.StatusId == (int)AssetAllocationStatusEnum.Draft || checkAssetAllocation.StatusId == (int)AssetAllocationStatusEnum.Confirm)
             {
-                checkAssetAllocation.AssetAllocationStatusId = (int)AssetAllocationStatusEnum.Reject;
+                checkAssetAllocation.StatusId = (int)AssetAllocationStatusEnum.Reject;
                 await _iEntityRepository.UpdateAsync(checkAssetAllocation);
                 return true;
             }
@@ -198,19 +198,19 @@ namespace app.Services.AssetAllocationServices
                                                   select new AssetAllocationViewModel
                                                   {
                                                       Id = t1.Id,
-                                                      OrderNo = t1.OrderNo,
-                                                      AssetAllocationStatusId = (int)(AssetAllocationStatusEnum)t1.AssetAllocationStatusId,
+                                                      AllocationNo = t1.AllocationNo,
+                                                      StatusId = (int)(AssetAllocationStatusEnum)t1.StatusId,
                                                       EmployeeId = t1.EmployeeId,
                                                       EmployeeName = t1.Employee.Name,
                                                       DepartmentId = t1.DepartmentId,
                                                       DepartmentName = t1.Department.Name,
                                                       Date = t1.Date,
-                                                      Remarks = t1.Remarks,
+                                                      Description = t1.Description,
 
                                                   }).OrderByDescending(x => x.Id).AsQueryable());
 
             assetAllocationMasterModel.AssetAllocationList = await Task.Run(() => dataQuery.ToList());
-            assetAllocationMasterModel.AssetAllocationList.ToList().ForEach((c => c.AssetAllocationStatusName = Enum.GetName(typeof(AssetAllocationStatusEnum), c.AssetAllocationStatusId)));
+            //assetAllocationMasterModel.AssetAllocationList.ToList().ForEach((c => c.AssetAllocationStatusName = Enum.GetName(typeof(AssetAllocationStatusEnum), c.StatusId)));
 
             return assetAllocationMasterModel;
         }
@@ -229,15 +229,15 @@ namespace app.Services.AssetAllocationServices
             {
                 searchResult = searchResult.Where(c => c.DepartmentId == searchModel.DepartmentId);
             }
-            if (searchModel?.AssetAllocationStatusId is > 0)
+            if (searchModel?.StatusId is > 0)
             {
-                searchResult = searchResult.Where(c => c.AssetAllocationStatusId == searchModel.AssetAllocationStatusId);
+                searchResult = searchResult.Where(c => c.StatusId == searchModel.StatusId);
             }
             if (!string.IsNullOrEmpty(filter))
             {
                 filter = filter.ToLower();
                 searchResult = searchResult.Where(c =>
-                    c.OrderNo.ToLower().Contains(filter)
+                    c.AllocationNo.ToLower().Contains(filter)
                     //|| c.Date.ToLower().Contains(filter)
                     || c.Employee.Name.ToLower().Contains(filter)
                     || c.Department.Name.ToLower().Contains(filter)
@@ -259,14 +259,14 @@ namespace app.Services.AssetAllocationServices
             {
                 SerialNo = ++sl,
                 Id = c.Id,
-                OrderNo = c.OrderNo,
+                AllocationNo = c.AllocationNo,
                 Date = c.Date,
                 EmployeeId = c.EmployeeId,
                 EmployeeName = c.Employee?.Name,
                 DepartmentId = c.DepartmentId,
                 DepartmentName = c.Department?.Name,
-                AssetAllocationStatusId = c.AssetAllocationStatusId,
-                Remarks = c.Remarks,
+                StatusId = c.StatusId,
+                Description = c.Description,
             }).ToList();
 
             return searchDto;

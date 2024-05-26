@@ -4,7 +4,7 @@ using app.Infrastructure;
 using app.Utility;
 using app.EntityModel.DataTablePaginationModels;
 using Microsoft.EntityFrameworkCore;
-using app.EntityModel.AppModels.Purchase;
+using app.EntityModel.AppModels.ProductModels;
 
 namespace app.Services.AssetCategoryServices
 {

@@ -5,7 +5,7 @@ using app.Utility;
 using app.EntityModel.DataTablePaginationModels;
 using app.Services.ProductServices;
 using Microsoft.EntityFrameworkCore;
-using app.EntityModel.AppModels.Leave;
+using app.EntityModel.AppModels.LeaveModels;
 
 namespace app.Services.LeaveCategoryServices
 {

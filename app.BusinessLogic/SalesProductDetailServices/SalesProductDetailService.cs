@@ -2,7 +2,7 @@
 using app.Infrastructure.Repository;
 using app.Infrastructure;
 using app.Services.SalesOrderServices;
-using app.EntityModel.AppModels.Sales;
+using app.EntityModel.AppModels.SalesModels;
 
 namespace app.Services.SalesProductDetailServices
 {

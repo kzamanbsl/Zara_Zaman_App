@@ -1,23 +1,24 @@
-﻿using app.EntityModel.CoreModel;
-using app.Infrastructure.Auth;
+﻿using app.Infrastructure.Auth;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 using app.Infrastructure.ModelConfig;
 using app.Infrastructure.SeedData;
 using app.EntityModel.AppModels;
-using app.EntityModel.AppModels.ATMAssemble;
-using app.EntityModel.AppModels.AssetManage;
-using app.EntityModel.AppModels.Purchase;
-using app.EntityModel.AppModels.Sales;
-using app.EntityModel.AppModels.Job;
-using app.EntityModel.AppModels.Leave;
-using app.EntityModel.AppModels.Office;
-using app.EntityModel.AppModels.Address;
-using app.EntityModel.AppModels.Attendance;
-using app.EntityModel.AppModels.EmployeeManage;
-using app.EntityModel.AppModels.SupplierManage;
-using app.EntityModel.AppModels.BankManage;
+using app.EntityModel.AppModels.AssetModels;
+using app.EntityModel.AppModels.CustomerModels;
+using app.EntityModel.AppModels.BankModels;
+using app.EntityModel.AppModels.EmployeeModels;
+using app.EntityModel.AppModels.InventoryModels;
+using app.EntityModel.AppModels.ProductModels;
+using app.EntityModel.AppModels.SupplierModels;
+using app.EntityModel.AppModels.AddressModels;
+using app.EntityModel.AppModels.ATMAssembleModels;
+using app.EntityModel.AppModels.AttendanceModels;
+using app.EntityModel.AppModels.LeaveModels;
+using app.EntityModel.AppModels.PurchaseModels;
+using app.EntityModel.AppModels.SalesModels;
+using app.EntityModel.CoreModels;
 
 namespace app.Infrastructure
 {
@@ -72,7 +73,7 @@ namespace app.Infrastructure
         public virtual DbSet<Inventory> Inventory { get; set; }
         public virtual DbSet<SalesTermsAndCondition> SalesTermsAndCondition { get; set; }
         public virtual DbSet<SalesOrder> SalesOrder { get; set; }
-        public virtual DbSet<SalesOrderDetails> SalesOrderDetails { get; set; }
+        public virtual DbSet<SalesOrderDetail> SalesOrderDetails { get; set; }
         public virtual DbSet<AssetAllocation> AssetAllocation { get; set; }
         public virtual DbSet<AssetAllocationDetail> AssetAllocationDetail { get; set; }
         public virtual DbSet<SalesProductDetail> SalesProductDetail { get; set; }

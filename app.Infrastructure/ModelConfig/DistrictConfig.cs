@@ -1,5 +1,5 @@
-﻿using app.EntityModel.AppModels.Address;
-using app.EntityModel.CoreModel;
+﻿using app.EntityModel.AppModels.AddressModels;
+using app.EntityModel.CoreModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

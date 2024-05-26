@@ -31,7 +31,7 @@ namespace app.WebApp.Controllers.AssetManage
 
             if (assetAllocationId == 0)
             {
-                viewModel.AssetAllocationStatusId = (int)AssetAllocationStatusEnum.Draft;
+                viewModel.StatusId = (int)AssetAllocationStatusEnum.Draft;
             }
             else
             {
@@ -76,7 +76,7 @@ namespace app.WebApp.Controllers.AssetManage
         public async Task<IActionResult> ConfirmAssetAllocation(long id)
         {
             var res = await _iAssetAllocationService.ConfirmAssetAllocation(id);
-            return RedirectToAction("Search");
+            return RedirectToAction(nameof(Search));
         }
 
         [HttpGet]

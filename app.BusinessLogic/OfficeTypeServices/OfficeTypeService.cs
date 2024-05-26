@@ -5,7 +5,7 @@ using app.Utility;
 using app.EntityModel.DataTablePaginationModels;
 using app.Services.EmployeeCategoryServices;
 using Microsoft.EntityFrameworkCore;
-using app.EntityModel.AppModels.Office;
+using app.EntityModel.AppModels.EmployeeModels;
 
 namespace app.Services.OfficeTypeServices
 {

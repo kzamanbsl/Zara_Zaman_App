@@ -1,4 +1,4 @@
-﻿using app.EntityModel.CoreModel;
+﻿using app.EntityModel.CoreModels;
 using app.Infrastructure.Auth;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;

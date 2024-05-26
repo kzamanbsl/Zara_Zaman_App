@@ -1,4 +1,4 @@
-﻿using app.EntityModel.AppModels.AssetManage;
+﻿using app.EntityModel.AppModels.AssetModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

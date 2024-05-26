@@ -6,7 +6,7 @@ using app.Services.AssetPurchaseOrderDetailServices;
 using app.Utility;
 using Microsoft.EntityFrameworkCore;
 using app.Services.IAssetnventoryServices;
-using app.EntityModel.AppModels.AssetManage;
+using app.EntityModel.AppModels.AssetModels;
 
 namespace app.Services.AssetInventoryServices
 {

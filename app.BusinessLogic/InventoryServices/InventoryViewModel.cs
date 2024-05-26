@@ -1,4 +1,4 @@
-﻿using app.EntityModel.AppModels;
+﻿using app.EntityModel.AppModels.ProductModels;
 using app.Services.PurchaseOrderDetailServices;
 using app.Services.PurchaseOrderServices;
 

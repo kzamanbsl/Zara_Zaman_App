@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel;
-using app.EntityModel.CoreModel;
+using app.EntityModel.CoreModels;
 
 namespace app.Services.MainMenuServices
 {

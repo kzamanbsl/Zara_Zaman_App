@@ -1,4 +1,4 @@
-﻿using app.EntityModel.CoreModel;
+﻿using app.EntityModel.CoreModels;
 using app.EntityModel.DataTablePaginationModels;
 using app.Services.UserServices;
 

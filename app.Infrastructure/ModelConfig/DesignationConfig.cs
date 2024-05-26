@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using app.EntityModel.AppModels.Office;
+using app.EntityModel.AppModels.EmployeeModels;
 
 namespace app.Infrastructure.ModelConfig
 {

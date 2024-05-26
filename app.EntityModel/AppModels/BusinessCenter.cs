@@ -13,7 +13,7 @@ namespace app.EntityModel.AppModels
         public string Code { get; set; }
         public string Location { get; set; }
         public string Description { get; set; }
-        public int BusinessCenterTypeId { get; set; }
+        public int BusinessCenterTypeId { get; set; } //enum
         
        
     }

@@ -1,5 +1,5 @@
 ﻿using System;
-using app.EntityModel.AppModels.BankManage;
+using app.EntityModel.AppModels.BankModels;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable

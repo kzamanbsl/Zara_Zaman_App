@@ -1,4 +1,4 @@
-﻿using app.EntityModel.AppModels.Attendance;
+﻿using app.EntityModel.AppModels.AttendanceModels;
 using app.Infrastructure;
 using app.Infrastructure.Auth;
 using app.Infrastructure.Repository;

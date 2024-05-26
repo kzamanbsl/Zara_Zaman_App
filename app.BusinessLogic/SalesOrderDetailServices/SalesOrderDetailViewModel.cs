@@ -1,5 +1,5 @@
-﻿using app.EntityModel.AppModels;
-using app.EntityModel.AppModels.Sales;
+﻿using app.EntityModel.AppModels.ProductModels;
+using app.EntityModel.AppModels.SalesModels;
 
 namespace app.Services.SalesOrderDetailServices
 {

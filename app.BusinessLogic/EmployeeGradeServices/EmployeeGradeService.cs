@@ -1,4 +1,4 @@
-﻿using app.EntityModel.AppModels.EmployeeManage;
+﻿using app.EntityModel.AppModels.EmployeeModels;
 using app.EntityModel.DataTablePaginationModels;
 using app.Infrastructure;
 using app.Infrastructure.Auth;

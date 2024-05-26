@@ -1,9 +1,9 @@
-﻿using app.EntityModel.AppModels;
-using app.Infrastructure.Auth;
+﻿using app.Infrastructure.Auth;
 using app.Infrastructure.Repository;
 using app.Infrastructure;
 using app.EntityModel.DataTablePaginationModels;
 using Microsoft.EntityFrameworkCore;
+using app.EntityModel.AppModels.CustomerModels;
 
 namespace app.Services.CustomerServices
 {

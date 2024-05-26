@@ -1,4 +1,4 @@
-﻿using app.EntityModel.AppModels.Purchase;
+﻿using app.EntityModel.AppModels.ProductModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

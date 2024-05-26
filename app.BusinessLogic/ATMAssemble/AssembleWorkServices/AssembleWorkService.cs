@@ -1,5 +1,5 @@
 ﻿using app.EntityModel.AppModels;
-using app.EntityModel.AppModels.ATMAssemble;
+using app.EntityModel.AppModels.ATMAssembleModels;
 using app.EntityModel.DataTablePaginationModels;
 using app.Infrastructure;
 using app.Infrastructure.Auth;

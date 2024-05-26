@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using app.Services.LeaveBalanceServices;
 using app.EntityModel.DataTablePaginationModels;
 using app.Services.ProductServices;
-using app.EntityModel.AppModels.Leave;
+using app.EntityModel.AppModels.LeaveModels;
 
 namespace app.Services.LeaveApplicationServices
 {

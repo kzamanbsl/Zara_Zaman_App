@@ -5,7 +5,7 @@ using app.Utility;
 using app.Services.SalesOrderDetailServices;
 using Microsoft.EntityFrameworkCore;
 using app.Services.SalesTermsAndConditonServices;
-using app.EntityModel.AppModels.Sales;
+using app.EntityModel.AppModels.SalesModels;
 
 namespace app.Services.SalesOrderServices
 {

@@ -1,5 +1,5 @@
-﻿using app.EntityModel.AppModels.Attendance;
-using app.EntityModel.AppModels.BankManage;
+﻿using app.EntityModel.AppModels.AttendanceModels;
+using app.EntityModel.AppModels.BankModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;

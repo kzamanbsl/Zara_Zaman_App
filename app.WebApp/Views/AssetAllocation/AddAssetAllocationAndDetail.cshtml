@@ -59,7 +59,7 @@
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                             <input asp-for="Id" class="form-control" hidden id="assetAllocationId" />
                             <input asp-for="ActionId" hidden id="actionId" />
-                            <input asp-for="AssetAllocationDetailVM.Id" class="form-control" id="assetAllocationDetailsId" hidden />
+                            <input asp-for="AssetAllocationDetailVm.Id" class="form-control" id="assetAllocationDetailsId" hidden />
 
                             @if (Model.Id > 0)
                             {
@@ -68,7 +68,7 @@
                                         <table class="table table-bordered border-primary">
                                             <tr>
                                                 <th style="width:18%">Asset No</th>
-                                                <td style="width:30%">@Model.OrderNo</td>
+                                                <td style="width:30%">@Model.AllocationNo</td>
 
                                                 <th style="width:18%"> Date</th>
                                                 <td style="width:30%">@(Model?.Date.ToString("dd/MM/yyyy")) </td>
@@ -146,7 +146,7 @@
                             </div>
                             </div> *@
                             }
-                            @if (Model.AssetAllocationStatusId == (int)AssetAllocationStatusEnum.Draft)
+                            @if (Model.StatusId == (int)AssetAllocationStatusEnum.Draft)
                             {
                                 <div class="" style="padding-top:30px;">
                                     <div class="row">
@@ -159,9 +159,9 @@
                                             <span asp-validation-for="AssetAllocationDetailVM.ProductName" class="text-danger"></span>
                                             </select> *@
 
-                                                <select class="form-control" asp-for="AssetAllocationDetailVM.ProductId" id="productId" asp-items="ViewBag.ProductList" required>
-                                                    <option value="0" selected>-- Select Product --</option>
-                                                    <span asp-validation-for="AssetAllocationDetailVM.ProductId" class="text-danger"></span>
+                                                <select class="form-control" asp-for="AssetAllocationDetailVm.ProductId" id="productId" asp-items="ViewBag.ProductList" required>
+                                                    <option value="0" selected>-- Select Item --</option>
+                                                    <span asp-validation-for="AssetAllocationDetailVm.ProductId" class="text-danger"></span>
                                                 </select>
 
                                             </div>
@@ -170,8 +170,8 @@
                                         <div class="col-md-2">
                                             <div class="form-group">
                                                 <label> Quantity</label>
-                                                <input asp-for="AssetAllocationDetailVM.Quantity" id="quantity" class="form-control" required min="1" />
-                                                <span asp-validation-for="AssetAllocationDetailVM.Quantity" class="text-danger"></span>
+                                                <input asp-for="AssetAllocationDetailVm.Qty" id="quantity" class="form-control" required min="1" />
+                                                <span asp-validation-for="AssetAllocationDetailVm.Qty" class="text-danger"></span>
                                             </div>
                                         </div>
 
@@ -182,10 +182,10 @@
 
                                                 @* <input asp-for="AssetAllocationDetailVM.Tags" id="tags" class="form-control" type="text" value="Amsterdam,Washington,Sydney,Beijing,Cairo" data-role="tagsinput" /> *@
 
-                                                <select id="tag" multiple data-role="tagsinput" asp-for="AssetAllocationDetailVM.Tag" type="text" class="form-control" style="width:100%" placeholder="Enter Tags Number" data-role="tagsinput" required>
+                                                <select id="tag" multiple data-role="tagsinput" asp-for="AssetAllocationDetailVm.Tag" type="text" class="form-control" style="width:100%" placeholder="Enter Tags Number" data-role="tagsinput" required>
                                                     @* <option value="@Html.ViewBag" selected></option> *@
 
-                                                    <span asp-validation-for="AssetAllocationDetailVM.Tag" class="text-danger"></span>
+                                                    <span asp-validation-for="AssetAllocationDetailVm.Tag" class="text-danger"></span>
                                                 </select>
 
                                             </div>
@@ -194,8 +194,8 @@
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <label>Description</label>
-                                                <textarea rows="2" asp-for="AssetAllocationDetailVM.Description" id="txtDescription" class="form-control"></textarea> 
-                                                <span asp-validation-for="AssetAllocationDetailVM.Description" class="text-danger"></span>
+                                                <textarea rows="2" asp-for="AssetAllocationDetailVm.Remarks" id="txtDescription" class="form-control"></textarea> 
+                                                <span asp-validation-for="AssetAllocationDetailVm.Remarks" class="text-danger"></span>
                                             </div>
                                         </div>
 
@@ -233,7 +233,7 @@
                                             <th style="padding: 5px; text-align: right; ">Sale Price</th>
                                             <th style="padding: 5px; text-align: right; ">Total Price</th> *@
 
-                                                @if (Model.AssetAllocationStatusId == (int)AssetAllocationStatusEnum.Draft)
+                                                @if (Model.StatusId == (int)AssetAllocationStatusEnum.Draft)
                                                 {
                                                     <th style="padding:5px;text-align:center;">Action</th>
                                                 }
@@ -247,9 +247,9 @@
                                                 <tr>
                                                     <td style="padding:5px">@(++sl)</td>
                                                     <td style="padding:5px;text-align:left;">@item.ProductName</td>
-                                                    <td style="padding: 5px; text-align: left;">@item.Quantity</td>
+                                                    <td style="padding: 5px; text-align: left;">@item.Qty</td>
                                                     <td style="padding: 5px; text-align: left;">@item.Tags</td>
-                                                    <td style="padding: 5px; text-align: left;">@item.Description</td>
+                                                    <td style="padding: 5px; text-align: left;">@item.Remarks</td>
 
                                                     @* <td style="padding:5px;text-align:left;">@String.Format("{0:0.00}", item.UnitName)</td>
                                             <td style="padding: 5px; text-align: right;">@String.Format("{0:0.00}", item.Consumption)</td>
@@ -258,7 +258,7 @@
                                             <td style="padding: 5px; text-align: right;">@String.Format("{0:0.00}", item.TotalAmount)</td> *@
 
                                                     @{
-                                                        if (Model.AssetAllocationStatusId == (int)AssetAllocationStatusEnum.Draft)
+                                                        if (Model.StatusId == (int)AssetAllocationStatusEnum.Draft)
                                                         {
                                                             <td style="padding:5px;text-align:center;">
                                                                 <a id="@item.Id" onclick="makeEditble(@item.Id);" class="linkPointer" title="Edit"><i class="text-warning fas fa-edit" aria-hidden="true"></i></a>
@@ -280,7 +280,7 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-12">
-                        @if (Model.Id > 0 && Model.AssetAllocationStatusId == (int)AssetAllocationStatusEnum.Draft)
+                        @if (Model.Id > 0 && Model.StatusId == (int)AssetAllocationStatusEnum.Draft)
                         {
                             <div class="form-group" style="float:right">
                                 <button asp-action="ConfirmAssetAllocation" method="post" id="confirmButton" class="linkPointer btn btn-success  btn-block">Confirm</button>

@@ -1,4 +1,4 @@
-﻿using app.EntityModel.AppModels.Attendance;
+﻿using app.EntityModel.AppModels.AttendanceModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

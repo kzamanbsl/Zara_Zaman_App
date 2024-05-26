@@ -76,7 +76,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="Views\AssetPurchaseOrder\AddAssetPurchaseOrderAndDetail.cshtml" />
+    <None Include="Views\AssetPurchaseOrder\AddOrUpdateRecord.cshtml" />
     <None Include="Views\AssetPurchaseOrder\AssetPurchaseDetails.cshtml" />
     <None Include="Views\AssetPurchaseOrder\Index.cshtml" />
     <None Include="Views\AssetPurchaseOrder\Search.cshtml" />

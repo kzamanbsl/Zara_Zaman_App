@@ -1,4 +1,4 @@
-﻿using app.EntityModel.AppModels.Leave;
+﻿using app.EntityModel.AppModels.LeaveModels;
 using app.EntityModel.DataTablePaginationModels;
 using app.Infrastructure;
 using app.Infrastructure.Auth;

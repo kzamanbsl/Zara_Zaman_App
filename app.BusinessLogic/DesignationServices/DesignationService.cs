@@ -1,11 +1,11 @@
 ﻿using app.Infrastructure.Auth;
 using app.Infrastructure.Repository;
 using app.Infrastructure;
-using app.EntityModel.CoreModel;
+using app.EntityModel.CoreModels;
 using app.EntityModel.DataTablePaginationModels;
 using app.Services.CompanyServices;
 using Microsoft.EntityFrameworkCore;
-using app.EntityModel.AppModels.Office;
+using app.EntityModel.AppModels.EmployeeModels;
 
 namespace app.Services.DesignationServices
 {

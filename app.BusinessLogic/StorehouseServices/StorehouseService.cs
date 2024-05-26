@@ -31,7 +31,7 @@ namespace app.Services.StorehouseServices
                 storehouse.Code = vm.Code;
                 storehouse.Location = vm.Location;
                 storehouse.Description = vm.Description;
-                storehouse.BusinessCenterTypeId=(int)BusinessCenterEnum.Storehouse;
+                storehouse.BusinessCenterTypeId=(int)BusinessCenterTypeEnum.Storehouse;
                 var res = await _iEntityRepository.AddAsync(storehouse);
                 vm.Id = res.Id;
                 return true;
@@ -48,7 +48,7 @@ namespace app.Services.StorehouseServices
                 storehouse.Code = vm.Code;
                 storehouse.Location = vm.Location;
                 storehouse.Description = vm.Description;
-                storehouse.BusinessCenterTypeId = (int)BusinessCenterEnum.Storehouse;
+                storehouse.BusinessCenterTypeId = (int)BusinessCenterTypeEnum.Storehouse;
                 await _iEntityRepository.UpdateAsync(storehouse);
                 return true;
             }
@@ -76,7 +76,7 @@ namespace app.Services.StorehouseServices
         {
             StorehouseViewModel model = new StorehouseViewModel();
             model.StorehouseList = await Task.Run(() => (from t1 in _dbContext.BusinessCenter
-                                                         where t1.BusinessCenterTypeId == (int)BusinessCenterEnum.Storehouse && t1.IsActive == true
+                                                         where t1.BusinessCenterTypeId == (int)BusinessCenterTypeEnum.Storehouse && t1.IsActive == true
                                                          select new StorehouseViewModel
                                                          {
                                                              Id = t1.Id,
@@ -90,7 +90,7 @@ namespace app.Services.StorehouseServices
 
         public async Task<DataTablePagination<StorehouseSearchDto>> SearchAsync(DataTablePagination<StorehouseSearchDto> searchDto)
         {
-           var  searchResult = _dbContext.BusinessCenter.Where(c=>c.IsActive==true && c.BusinessCenterTypeId == (int)BusinessCenterEnum.Storehouse).AsNoTracking();
+           var  searchResult = _dbContext.BusinessCenter.Where(c=>c.IsActive==true && c.BusinessCenterTypeId == (int)BusinessCenterTypeEnum.Storehouse).AsNoTracking();
 
             var searchModel = searchDto.SearchVm;
             var filter = searchDto?.Search?.Value?.Trim();

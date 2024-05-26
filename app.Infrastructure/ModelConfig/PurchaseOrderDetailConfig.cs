@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
-using app.EntityModel.AppModels.Purchase;
+using app.EntityModel.AppModels.PurchaseModels;
 
 namespace app.Infrastructure.ModelConfig
 {

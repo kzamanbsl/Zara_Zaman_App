@@ -1,13 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
-using app.EntityModel.AppModels.Sales;
+using app.EntityModel.AppModels.SalesModels;
 
 namespace app.Infrastructure.ModelConfig
 {
 
-    public class SalesOrderDetailsConfig : IEntityTypeConfiguration<SalesOrderDetails>
+    public class SalesOrderDetailsConfig : IEntityTypeConfiguration<SalesOrderDetail>
     {
-        public void Configure(EntityTypeBuilder<SalesOrderDetails> builder)
+        public void Configure(EntityTypeBuilder<SalesOrderDetail> builder)
         {
             builder.HasKey(c => c.Id);
             builder.Property(c => c.Remarks).HasMaxLength(250);

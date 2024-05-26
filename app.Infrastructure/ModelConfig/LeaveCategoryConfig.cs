@@ -1,4 +1,4 @@
-﻿using app.EntityModel.AppModels.Leave;
+﻿using app.EntityModel.AppModels.LeaveModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;

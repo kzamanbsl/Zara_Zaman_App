@@ -1,4 +1,4 @@
-﻿using app.EntityModel.AppModels.ATMAssemble;
+﻿using app.EntityModel.AppModels.ATMAssembleModels;
 using app.EntityModel.DataTablePaginationModels;
 using app.Services.ATMAssemble.AssembleWorkServices;
 using app.Services.DropdownServices;

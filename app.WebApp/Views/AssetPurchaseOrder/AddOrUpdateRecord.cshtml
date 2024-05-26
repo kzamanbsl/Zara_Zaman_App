@@ -1,0 +1,400 @@
+﻿@model app.Services.AssetPurchaseOrderServices.AssetPurchaseOrderViewModel
+@using app.Utility
+@{
+    ViewData["Title"] = "AddAssetPurchaseOrderAndDetail";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    int sl = 0;
+}
+<div class="content-header">
+    <div class="container-fluid ">
+        <div class="breadcrumb d-flex justify-content-between align-items-center  pl-3 pr-3">
+            <ol class="breadcrumb mb-0 p-0">
+                <li class="breadcrumb-item"><a href="/Admin/Index">Home</a></li>
+                <li class="breadcrumb-item active"> Asset Purchase Order </li>
+            </ol>
+            <div>
+                <a asp-action="Search"><i class="fa fa-list"></i> Asset Purchase Order List </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="card">
+            <div class="card-header">
+
+                @if (Model.Id > 0)
+                {
+                    <h3 class="card-title text-info">
+                        <i class="fas fa-plus"></i>
+                        Asset Purchase Order Information
+                    </h3>
+                }
+                else
+                {
+                    <h3 class="card-title text-info">
+                        <i class="fas fa-plus"></i>
+                        Asset Purchase Order
+                    </h3>
+                }
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form asp-action="AddOrUpdateRecord" method="post">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <input asp-for="Id" class="form-control" hidden id="purchaseorderId" />
+                            <input asp-for="ActionId" hidden id="actionId" />
+                            <input asp-for="AssetPurchaseOrderDetailVM.Id" class="form-control" id="purchaseOrderDetailsId" hidden />
+
+                            @if (Model.Id > 0)
+                            {
+                                <div class="">
+                                    <div class="row rounded">
+                                        <table class="table table-bordered border-primary">
+                                            <tr>
+                                                <th style="width:18%">Purchase No</th>
+                                                <td style="width:30%">@Model.OrderNo</td>
+
+                                                <th style="width:18%"> Purchase Date</th>
+                                                <td style="width:30%">@Model.PurchaseDate.ToString("dd-MM-yyyy")</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Supplier Name</th>
+                                                <td>@Model.SupplierName</td>
+
+
+                                                <th style="width:18%">Store Information</th>
+                                                <td style="width:30%">@Model.StoreName</td>
+                                            </tr>
+
+                                        </table>
+                                    </div>
+                                </div>
+
+                            }
+                            @if (Model.Id == 0)
+                            {
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Purchase Date </label>
+                                            <input asp-for="PurchaseDate" value="@DateTime.Today.ToString("yyyy-MM-dd")" class="form-control" type="date" autocomplete="off" required />
+                                            <span asp-validation-for="PurchaseDate" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Store</label>
+                                            <select class="form-control" asp-for="StorehouseId" asp-items="ViewBag.StorehouseList" required>
+                                                <option value="0" selected>-- Select Warehouse --</option>
+                                                <span asp-validation-for="StorehouseId" class="text-danger"></span>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Supplier</label>
+                                            <select class="form-control" asp-for="SupplierId" id="supplierSelect" asp-items="ViewBag.SupplierList">
+                                                <option value="0" selected>-- Select Supplier --</option>
+                                                <span asp-validation-for="SupplierId" class="text-danger"></span>
+                                            </select>
+
+                                           
+                                        </div>
+                                    </div>
+
+                                   @*  <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="control-label">Supplier Information</label>
+                                            <textarea class="form-control" id="supplierInfo"></textarea>
+                                        </div>
+                                    </div> *@
+
+                                    @* <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label>OverAll Discount (Taka)</label>
+                                            <input asp-for="OverallDiscount" class="form-control" />
+                                            <span asp-validation-for="OverallDiscount" class="text-danger"></span>
+                                        </div>
+                                    </div> *@
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <div class="form-group">
+                                            <label asp-for="Description " class="control-label"></label>
+                                            <textarea asp-for="Description" class="form-control" rows="2"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                     
+                                        <span id="supplierInfo"></span>
+                                    </div>
+                                </div>
+                            }
+                            @if (Model.OrderStatusId == (int)PurchaseOrderStatusEnum.Draft)
+                            {
+                                <div class="" style="padding-top:30px;">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>Product</label>
+                                                <select class="form-control" asp-for="AssetPurchaseOrderDetailVM.ProductId" id="productId" asp-items="ViewBag.ProductList" required>
+                                                    <option value="0" selected>-- Select Product --</option>
+                                                    <span asp-validation-for="AssetPurchaseOrderDetailVM.ProductId" class="text-danger"></span>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label> Purchase Qty</label>
+                                                <input asp-for="AssetPurchaseOrderDetailVM.PurchaseQty" id="purchaseQty" class="form-control" required min="0" />
+                                                <span asp-validation-for="AssetPurchaseOrderDetailVM.PurchaseQty" class="text-danger"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label>Unit</label>
+                                                <select class="form-control" asp-for="AssetPurchaseOrderDetailVM.UnitId" id="unitId" asp-items="ViewBag.UnitList">
+                                                    <option value="0" selected>-- Select Unit --</option>
+                                                    <span asp-validation-for="AssetPurchaseOrderDetailVM.UnitId" class="text-danger"></span>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label>Unit Price</label>
+                                                <input asp-for="AssetPurchaseOrderDetailVM.SalePrice" id="salePrice" class="form-control" min="0" />
+                                                <span asp-validation-for="AssetPurchaseOrderDetailVM.SalePrice" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        
+
+
+                                        @* <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label>Consumption</label>
+                                                <input asp-for="AssetPurchaseOrderDetailVM.Consumption" id="consumption" class="form-control" required min="0" />
+                                            </div>
+                                        </div> *@
+
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Remarks</label>
+                                                <textarea rows="2" asp-for="AssetPurchaseOrderDetailVM.Remarks" id="txtRemarks" class="form-control"></textarea>
+                                                <span asp-validation-for="AssetPurchaseOrderDetailVM.Remarks" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+
+                                    @* <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>Cost Price</label>
+                                            <input asp-for="AssetPurchaseOrderDetailVM.CostPrice" id="costPrice" class="form-control" required min="0" />
+                                            <span asp-validation-for="AssetPurchaseOrderDetailVM.CostPrice" class="text-danger"></span>
+                                        </div>
+                                    </div> *@
+
+                                </div>
+                            }
+                            <div class="form-group" style="float:right">
+                                <button type="submit" id="poCreateBtn" class="btn btn-primary btn-block">
+                                    <i class='fa fa-plus'></i>
+                                    @if (Model.Id > 0)
+                                    {
+                                        <span>Add Another</span>
+                                    }
+                                    else
+                                    {
+                                        <span>Create</span>
+                                    }
+                                </button>
+                            </div>
+                            @if (Model.Id > 0)
+                            {
+                                <input asp-for="Id" class="form-control" hidden />
+                                <div class="table-responsive col-md-12  text-nowrap">
+                                    <table id="KgErpDataTable" class="table caption-top">
+                                        <thead class="table-light table-bordered border-primary">
+                                            <tr>
+                                                <th style="padding:5px;text-align:center;">SL</th>
+                                                <th style="padding: 5px; text-align: left;">Product</th>
+                                                <th style="padding: 5px; text-align: left;">Purchase Qty</th>
+                                                <th style="padding: 5px; text-align: left;">Unit</th>
+                                                @* <th style="padding: 5px; text-align: right; ">Sale Price</th> *@
+                                                <th style="padding: 5px; text-align: right; ">Total Price</th>
+                                                @if (Model.OrderStatusId == (int)PurchaseOrderStatusEnum.Draft)
+                                                {
+                                                    <th style="padding:5px;text-align:center;">Action</th>
+                                                }
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                            @foreach (var item in Model.AssetPurchaseOrderDetailsList)
+                                            {
+
+                                                <tr>
+                                                    <td style="padding:5px">@(++sl)</td>
+                                                    <td style="padding:5px;text-align:left;">@item.ProductName</td>
+                                                    <td style="padding: 5px; text-align: left;">@item.PurchaseQty</td>
+                                                    <td style="padding:5px;text-align:left;">@String.Format("{0:0.00}", item.UnitName)</td>
+                                                    @* <td style="padding: 5px; text-align: right;">@String.Format("{0:0.00}", item.SalePrice)</td> *@
+                                                    <td style="padding: 5px; text-align: right;">@String.Format("{0:0.00}", item.TotalAmount)</td>
+
+                                                    @{
+                                                        if (Model.OrderStatusId == (int)PurchaseOrderStatusEnum.Draft)
+                                                        {
+                                                            <td style="padding:5px;text-align:center;">
+                                                                <a id="@item.Id" onclick="makeEditble(@item.Id);" class="linkPointer" title="Edit"><i class="text-warning fas fa-edit" aria-hidden="true"></i></a>
+                                                                <a id="@item.Id" onclick="makeDeletable(@item.Id)" class="linkPointer"><i class="text-danger fas fa-trash" aria-hidden="true"></i></a>
+                                                            </td>
+                                                        }
+                                                    }
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            }
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        @if (Model.Id > 0 && Model.OrderStatusId == (int)PurchaseOrderStatusEnum.Draft)
+                        {
+                            <div class="form-group" style="float:right">
+                                <button asp-action="ConfirmAssetPurchaseOrder" method="post" id="confirmButton" class="linkPointer btn btn-success  btn-block">Confirm</button>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        $(document).ready(function () {
+            $('#Asset-Management').addClass('menu-open');
+            $('#AssetPurchaseOrderAddAssetPurchaseOrderAndDetail').addClass('active');
+
+            $('#supplierSelect').change(function () {
+                var supplierId = $(this).val();
+                if (supplierId != 0) {
+                    $.ajax({
+                        url: '/Supplier/GetSupplierInformation?id=' + supplierId,
+                        type: 'GET',
+                        success: function (data) {
+                            //var supplierInformation = data.name + " " + data.phone + " " + data.email + " " + data.address;
+                            var supplierInformation = "Supplier Name : " + data.name + "<br>" +
+                                "Mobile : " + data.phone + "<br>" +
+                                "Email : " + data.email + "<br>" +
+                                "Address : " + data.address;
+                            $('#supplierInfo').html(supplierInformation);
+                        },
+                        error: function () {
+                            alert('Error fetching supplier information.');
+                        }
+                    });
+                } else {
+                    $('#supplierInfo').val('');
+                }
+            });
+        });
+
+        //Purchase Order Details Edit
+        function makeEditble(rowId) {
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("GetOrderDetailById", "AssetPurchaseOrder")",
+                datatype: "Json",
+                data: { id: rowId },
+                success: function (data) {
+                    $('#poCreateBtn').html("<i class='fas fa-edit'></i>&nbsp;Update");
+                    $("#purchaseorderId").val(data.id);
+                    $("#purchaseOrderDetailsId").val(data.id);
+                    $('#actionId').val(2);
+                    $("#productId").val(data.productId);
+                    $("#unitId").val(data.unitId);
+                    $("#purchaseQty").val(data.purchaseQty);
+                    $("#consumption").val(data.consumption);
+                    $("#costPrice").val(data.costPrice);
+                    $("#salePrice").val(data.salePrice);
+                    //$("#discount").val(data.discount);
+                    $("#txtRemarks").val(data.remarks);
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+            });
+        }
+
+        //Confirm Purchase Order
+        $("#confirmButton").on("click", function () {
+            var id = @Model.Id;
+            $.ajax({
+                type: "POST",
+                url: "/AssetPurchaseOrder/ConfirmOrder",
+                data: { id: id },
+                success: function (result) {
+                    if (result) {
+                        alert("Purchase confirmed successfully");
+                        window.location.href = "/AssetPurchaseOrder/Search/";
+
+                    } else {
+                        alert("Purchase confirmation failed");
+                    }
+                },
+                error: function (error) {
+                    // Handle the error case here
+                    console.error("Error occurred during AJAX request:", error);
+                }
+            });
+        });
+
+
+        function makeDeletable(rowId) {
+            $.ajax({
+                type: "GET",
+                url: "@Url.Action("DeleteDetailById", "AssetPurchaseOrder")",
+                data: { id: rowId },
+                success: function (data) {
+                    if (data) {
+                        alert("Delete successfully");
+                        window.location.href = "/AssetPurchaseOrder/Search/";
+
+                    } else {
+                        alert("Delete failed");
+                    }
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    location.reload();
+                }
+            });
+        }
+
+    </script>
+
+}
+
+
+

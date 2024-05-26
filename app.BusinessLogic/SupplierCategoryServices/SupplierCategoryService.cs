@@ -1,4 +1,4 @@
-﻿using app.EntityModel.AppModels.SupplierManage;
+﻿using app.EntityModel.AppModels.SupplierModels;
 using app.EntityModel.DataTablePaginationModels;
 using app.Infrastructure;
 using app.Infrastructure.Auth;

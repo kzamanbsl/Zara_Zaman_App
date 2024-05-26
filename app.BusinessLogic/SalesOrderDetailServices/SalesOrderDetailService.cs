@@ -4,17 +4,17 @@ using app.Infrastructure;
 using app.Services.SalesOrderServices;
 using app.Services.SalesProductDetailServices;
 using app.Services.InventoryServices;
-using app.EntityModel.AppModels.Sales;
+using app.EntityModel.AppModels.SalesModels;
 
 namespace app.Services.SalesOrderDetailServices
 {
     public class SalesOrderDetailService : ISalesOrderDetailService
     {
-        private readonly IEntityRepository<SalesOrderDetails> _iEntityRepository;
+        private readonly IEntityRepository<SalesOrderDetail> _iEntityRepository;
         private readonly InventoryDbContext _dbContext;
         private readonly IWorkContext _iWorkContext;
         private readonly ISalesProductDetailService _isalesProductDetailService;
-        public SalesOrderDetailService(IEntityRepository<SalesOrderDetails> iEntityRepository, InventoryDbContext dbContext, IWorkContext iWorkContext, ISalesProductDetailService isalesProductDetailService)
+        public SalesOrderDetailService(IEntityRepository<SalesOrderDetail> iEntityRepository, InventoryDbContext dbContext, IWorkContext iWorkContext, ISalesProductDetailService isalesProductDetailService)
         {
             _iEntityRepository = iEntityRepository;
             _dbContext = dbContext;
@@ -25,7 +25,7 @@ namespace app.Services.SalesOrderDetailServices
         {
             try
             {
-                SalesOrderDetails SalesOrderDetail = new SalesOrderDetails
+                SalesOrderDetail SalesOrderDetail = new SalesOrderDetail
                 {
                     SalesOrderId = vm.Id,
                     //Id = vm.SalesOrderDetailVM.Id,
@@ -110,7 +110,7 @@ namespace app.Services.SalesOrderDetailServices
         public async Task<bool> DeleteSalesDetail(long id)
         {
 
-            SalesOrderDetails salesDetails = await _dbContext.SalesOrderDetails.FindAsync(id);
+            SalesOrderDetail salesDetails = await _dbContext.SalesOrderDetails.FindAsync(id);
             if (salesDetails == null)
             {
                 throw new Exception("Sorry! Order not found!");

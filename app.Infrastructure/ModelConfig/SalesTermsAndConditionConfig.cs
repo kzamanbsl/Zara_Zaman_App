@@ -1,4 +1,4 @@
-﻿using app.EntityModel.AppModels.Sales;
+﻿using app.EntityModel.AppModels.SalesModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;

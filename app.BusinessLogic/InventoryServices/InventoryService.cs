@@ -1,11 +1,11 @@
-﻿using app.EntityModel.AppModels;
-using app.Infrastructure.Auth;
+﻿using app.Infrastructure.Auth;
 using app.Infrastructure.Repository;
 using app.Infrastructure;
 using app.Services.PurchaseOrderServices;
 using app.Services.PurchaseOrderDetailServices;
 using app.Utility;
 using Microsoft.EntityFrameworkCore;
+using app.EntityModel.AppModels.InventoryModels;
 
 namespace app.Services.InventoryServices
 {

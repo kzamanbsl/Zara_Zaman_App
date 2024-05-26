@@ -1,14 +1,12 @@
-﻿using app.EntityModel.AppModels.BankManage;
-using app.EntityModel.AppModels.Office;
-using app.EntityModel.DataTablePaginationModels;
+﻿using app.EntityModel.DataTablePaginationModels;
 using app.Infrastructure;
 using app.Infrastructure.Auth;
 using app.Infrastructure.Repository;
 using app.Services.DesignationServices;
 using Microsoft.EntityFrameworkCore;
 using app.EntityModel.AppModels;
-using app.EntityModel.AppModels.BankManage;
 using Microsoft.AspNetCore.Http;
+using app.EntityModel.AppModels.BankModels;
 namespace app.Services.BankServices
 {
     public class BankService : IBankService

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using app.EntityModel.DataTablePaginationModels;
 using Microsoft.AspNetCore.Identity;
 using app.Services.UserServices;
-using app.EntityModel.AppModels.EmployeeManage;
+using app.EntityModel.AppModels.EmployeeModels;
 
 namespace app.Services.EmployeeServices
 {

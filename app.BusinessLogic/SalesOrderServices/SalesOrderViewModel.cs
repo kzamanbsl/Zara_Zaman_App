@@ -1,4 +1,5 @@
 ﻿using app.EntityModel.AppModels;
+using app.EntityModel.AppModels.CustomerModels;
 using app.Services.SalesOrderDetailServices;
 using app.Services.SalesProductDetailServices;
 using app.Utility;

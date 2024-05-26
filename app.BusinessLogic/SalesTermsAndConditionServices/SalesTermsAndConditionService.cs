@@ -4,7 +4,7 @@ using app.Infrastructure;
 using app.EntityModel.DataTablePaginationModels;
 using app.Services.ProductServices;
 using Microsoft.EntityFrameworkCore;
-using app.EntityModel.AppModels.Sales;
+using app.EntityModel.AppModels.SalesModels;
 
 namespace app.Services.SalesTermsAndConditonServices
 {

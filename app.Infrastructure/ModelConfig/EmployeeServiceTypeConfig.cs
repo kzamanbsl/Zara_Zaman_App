@@ -1,4 +1,4 @@
-﻿using app.EntityModel.AppModels.EmployeeManage;
+﻿using app.EntityModel.AppModels.EmployeeModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

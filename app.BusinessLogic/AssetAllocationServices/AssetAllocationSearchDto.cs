@@ -6,8 +6,8 @@ namespace app.Services.AssetAllocationServices
 {
     public class AssetAllocationSearchDto : BaseDataTableSearch
     {
-        [DisplayName("Order No")]
-        public string OrderNo { get; set; }
+        [DisplayName("Allocation No")]
+        public string AllocationNo { get; set; }
 
         [DisplayName("Allocation Date")]
         public DateTime Date { get; set; }
@@ -25,15 +25,12 @@ namespace app.Services.AssetAllocationServices
         public string DepartmentName { get; set; }
 
         [DisplayName("Status")]
-        public int AssetAllocationStatusId { get; set; }
+        public int StatusId { get; set; }
 
         [DisplayName("Status")]
-        public string AssetAllocationStatusName => GlobalVariable.GetEnumDescription((AssetAllocationStatusEnum)AssetAllocationStatusId);
+        public string StatusName => GlobalVariable.GetEnumDescription((AssetAllocationStatusEnum)StatusId);
 
-        public string Remarks { get; set; }
-
-        public int ActionId { get; set; } = 1;
-        public ActionEnum ActionEum { get { return (ActionEnum)this.ActionId; } }
+        public string Description { get; set; }
 
       
     }

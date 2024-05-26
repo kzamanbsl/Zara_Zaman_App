@@ -2,7 +2,7 @@
 using app.Infrastructure.Repository;
 using app.Infrastructure;
 using app.Services.PurchaseOrderServices;
-using app.EntityModel.AppModels.Purchase;
+using app.EntityModel.AppModels.PurchaseModels;
 
 namespace app.Services.PurchaseOrderDetailServices
 {

@@ -31,7 +31,7 @@ namespace app.Services.ServiceCenterServices
                 serviceCenter.Code = vm.Code;
                 serviceCenter.Location = vm.Location;
                 serviceCenter.Description = vm.Description;
-                serviceCenter.BusinessCenterTypeId=(int)BusinessCenterEnum.ServiceCenter;
+                serviceCenter.BusinessCenterTypeId=(int)BusinessCenterTypeEnum.ServiceCenter;
                 var res = await _iEntityRepository.AddAsync(serviceCenter);
                 vm.Id = res.Id;
                 return true;
@@ -40,7 +40,7 @@ namespace app.Services.ServiceCenterServices
         }
         public async Task<bool> UpdateRecord(ServiceCenterViewModel vm)
         {
-            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim() && f.Id != vm.Id && f.BusinessCenterTypeId == (int)BusinessCenterEnum.ServiceCenter && f.IsActive == true);
+            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim() && f.Id != vm.Id && f.BusinessCenterTypeId == (int)BusinessCenterTypeEnum.ServiceCenter && f.IsActive == true);
             if (checkName == null)
             {
                 var serviceCenter = await _iEntityRepository.GetByIdAsync(vm.Id);
@@ -48,7 +48,7 @@ namespace app.Services.ServiceCenterServices
                 serviceCenter.Code = vm.Code;
                 serviceCenter.Location = vm.Location;
                 serviceCenter.Description = vm.Description;
-                serviceCenter.BusinessCenterTypeId = (int)BusinessCenterEnum.ServiceCenter;
+                serviceCenter.BusinessCenterTypeId = (int)BusinessCenterTypeEnum.ServiceCenter;
                 await _iEntityRepository.UpdateAsync(serviceCenter);
                 return true;
             }
@@ -77,7 +77,7 @@ namespace app.Services.ServiceCenterServices
         {
             ServiceCenterViewModel model = new ServiceCenterViewModel();
             model.ServiceCenterList = await Task.Run(() => (from t1 in _dbContext.BusinessCenter
-                                                            where t1.BusinessCenterTypeId == (int)BusinessCenterEnum.ServiceCenter && t1.IsActive == true
+                                                            where t1.BusinessCenterTypeId == (int)BusinessCenterTypeEnum.ServiceCenter && t1.IsActive == true
                                                             select new ServiceCenterViewModel
                                                             {
                                                                 Id = t1.Id,
@@ -91,7 +91,7 @@ namespace app.Services.ServiceCenterServices
         }
         public async Task<DataTablePagination<ServiceCenterSearchDto>> SearchAsync(DataTablePagination<ServiceCenterSearchDto> searchDto)
         {
-            var searchResult = _dbContext.BusinessCenter.Where(c => c.IsActive == true && c.BusinessCenterTypeId == (int)BusinessCenterEnum.ServiceCenter).AsNoTracking();
+            var searchResult = _dbContext.BusinessCenter.Where(c => c.IsActive == true && c.BusinessCenterTypeId == (int)BusinessCenterTypeEnum.ServiceCenter).AsNoTracking();
 
             var searchModel = searchDto.SearchVm;
             var filter = searchDto?.Search?.Value?.Trim();

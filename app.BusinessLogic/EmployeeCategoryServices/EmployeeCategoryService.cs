@@ -4,7 +4,7 @@ using app.Infrastructure;
 using app.EntityModel.DataTablePaginationModels;
 using app.Services.ShiftServices;
 using Microsoft.EntityFrameworkCore;
-using app.EntityModel.AppModels.EmployeeManage;
+using app.EntityModel.AppModels.EmployeeModels;
 
 namespace app.Services.EmployeeCategoryServices
 {
