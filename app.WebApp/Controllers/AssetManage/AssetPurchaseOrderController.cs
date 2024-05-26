@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using app.Services.IAssetnventoryServices;
 using app.EntityModel.DataTablePaginationModels;
 using app.Services.PurchaseOrderServices;
+using app.Services.DesignationServices;
 
 namespace app.WebApp.Controllers.AssetManage
 {
@@ -83,13 +84,12 @@ namespace app.WebApp.Controllers.AssetManage
             return RedirectToAction("Search");
         }
 
-        [HttpGet]
-        public async Task<IActionResult> DeleteAssetPurchaseOrder(long id)
+        [HttpPost]
+        public async Task<IActionResult> DeleteAssetPurchaseOrder(AssetPurchaseOrderSearchDto model)
         {
-            var res = await _iAssetPurchaseOrderService.DeleteAssetPurchaseOrder(id);
+            var res = await _iAssetPurchaseOrderService.DeleteAssetPurchaseOrder(model.Id ?? 0);
             return RedirectToAction(nameof(Search));
         }
-
 
         public async Task<IActionResult> DeleteAssetPurchaseOrderDetailsById(long id, AssetPurchaseOrderViewModel vm)
         {

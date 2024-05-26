@@ -1,6 +1,7 @@
 ﻿using app.EntityModel.AppModels.ATMAssemble;
 using app.EntityModel.DataTablePaginationModels;
 using app.Services.ATMAssemble.AssembleWorkServices;
+using app.Services.DesignationServices;
 using app.Services.DropdownServices;
 using app.Services.ProductServices;
 using app.Utility;
@@ -76,13 +77,12 @@ namespace app.WebApp.Controllers.Assemble
             //return View(model);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Delete(long id)
+        [HttpPost]
+        public async Task<IActionResult> Delete(AssembleWorkSearchDto model)
         {
-            var res = await _iService.DeleteRecord(id);
-            return RedirectToAction(nameof(Search));
+            var res = await _iService.DeleteRecord(model.Id ?? 0);
+            return RedirectToAction("Search");
         }
-
 
         [HttpGet]
         public async Task<IActionResult> MainDashboard()

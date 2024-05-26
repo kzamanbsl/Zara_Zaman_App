@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using app.Services.AssetItemServices;
 using app.EntityModel.DataTablePaginationModels;
 using app.Services.ProductServices;
+using app.Services.DesignationServices;
 
 namespace app.WebApp.Controllers.AssetManage
 {
@@ -60,10 +61,10 @@ namespace app.WebApp.Controllers.AssetManage
             return View(model);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Delete(long id)
+        [HttpPost]
+        public async Task<IActionResult> Delete(AssetItemSearchDto model)
         {
-            var res = await _iService.DeleteRecord(id);
+            var res = await _iService.DeleteRecord(model.Id ?? 0);
             return RedirectToAction("Search");
         }
 
