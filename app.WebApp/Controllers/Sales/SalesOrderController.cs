@@ -93,7 +93,7 @@ namespace app.WebApp.Controllers.Sales
             return Json(model);
         }
 
-        [HttpGet]
+        [HttpPost]
         public async Task<IActionResult> DeleteSalesOrder(long id)
         {
             var res = await _isalesOrderService.DeleteSalesOrder(id);
