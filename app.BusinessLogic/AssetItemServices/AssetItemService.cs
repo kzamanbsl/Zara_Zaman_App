@@ -19,45 +19,50 @@ namespace app.Services.AssetItemServices
             _dbContext = dbContext;
             _iWorkContext = iWorkContext;
         }
-        
+
         public async Task<bool> AddRecord(AssetItemViewModel vm)
         {
-           
-            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim() && f.IsActive == true);
-            if (checkName == null)
+            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim() && f.CategoryId == vm.CategoryId && f.IsActive == true);
+            if (checkName != null)
             {
-                Product com = new Product();
-                com.Id = vm.Id;
-                com.Name = vm.Name;
-                com.Description = vm.Description;
-                com.UnitId = vm.UnitId;
-                com.CategoryId = vm.CategoryId;
-                com.HasModelNo = vm.HasModelNo;
-                com.ProductTypeId = (int)ProductTypeEnum.Asset;
-                var res = await _iEntityRepository.AddAsync(com);
-                return true;
+                return false;
             }
-            return false;
+
+            Product prod = new Product();
+            prod.Id = vm.Id;
+            prod.Name = vm.Name;
+            prod.Description = vm.Description;
+            prod.UnitId = vm.UnitId;
+            prod.CategoryId = vm.CategoryId;
+            prod.HasModelNo = vm.HasModelNo;
+            prod.ProductTypeId = (int)ProductTypeEnum.Asset;
+            var res = await _iEntityRepository.AddAsync(prod);
+            return true;
+
         }
+
         public async Task<bool> UpdateRecord(AssetItemViewModel vm)
         {
 
-            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim() && f.Id != vm.Id && f.IsActive == true);
-            if (checkName == null)
+            var checkName = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Name.Trim() == vm.Name.Trim() && f.Id != vm.Id && f.CategoryId == vm.CategoryId && f.IsActive == true);
+            if (checkName != null)
             {
-                var result = await _iEntityRepository.GetByIdAsync(vm.Id);
-                result.Id = vm.Id;
-                result.Name = vm.Name;
-                result.Description = vm.Description;
-                result.HasModelNo = vm.HasModelNo;
-                result.UnitId = vm.UnitId;
-                result.CategoryId = vm.CategoryId;
-                result.ProductTypeId = (int)ProductTypeEnum.Asset;
-                await _iEntityRepository.UpdateAsync(result);
-                return true;
+                return false;
             }
-            return false;
+
+            var result = await _iEntityRepository.GetByIdAsync(vm.Id);
+            result.Id = vm.Id;
+            result.Name = vm.Name;
+            result.Description = vm.Description;
+            result.HasModelNo = vm.HasModelNo;
+            result.UnitId = vm.UnitId;
+            result.CategoryId = vm.CategoryId;
+            result.ProductTypeId = (int)ProductTypeEnum.Asset;
+            var res = await _iEntityRepository.UpdateAsync(result);
+            return true;
+
         }
+
         public async Task<AssetItemViewModel> GetRecordById(long id)
         {
             var result = await _iEntityRepository.GetByIdAsync(id);
@@ -66,16 +71,21 @@ namespace app.Services.AssetItemServices
             model.Name = result.Name;
             model.Description = result.Description;
             model.UnitId = result.UnitId;
+            model.UnitName = result.Unit?.Name;
             model.CategoryId = result.CategoryId;
+            model.CategoryName = result.Category?.Name;
+            model.HasModelNo = result.HasModelNo;
             return model;
         }
+
         public async Task<bool> DeleteRecord(long id)
         {
             var result = await _iEntityRepository.GetByIdAsync(id);
             result.IsActive = false;
-            await _iEntityRepository.UpdateAsync(result);
+            var res = await _iEntityRepository.UpdateAsync(result);
             return true;
         }
+
         public async Task<AssetItemViewModel> GetAllRecord()
         {
             AssetItemViewModel model = new AssetItemViewModel();
@@ -90,9 +100,11 @@ namespace app.Services.AssetItemServices
                                                             UnitName = t1.Unit.Name,
                                                             CategoryId = t1.CategoryId,
                                                             CategoryName = t1.Category.Name,
+                                                            HasModelNo = t1.HasModelNo
                                                         }).AsEnumerable());
             return model;
         }
+
         public async Task<DataTablePagination<AssetItemSearchDto>> SearchAsync(DataTablePagination<AssetItemSearchDto> searchDto)
         {
             var searchResult = _dbContext.Product.Include(c => c.Category).Include(c => c.Unit).Where(c => c.IsActive == true && c.ProductTypeId == (int)ProductTypeEnum.Asset).AsNoTracking();
