@@ -66,10 +66,10 @@ namespace app.WebApp.AdminControllers
             return RedirectToAction("Search");
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Delete(string id)
+        [HttpPost]
+        public async Task<IActionResult> Delete(UserSearchDto model)
         {
-            var res = await _iUserService.SoftDelete(id);
+            var res = await _iUserService.SoftDelete(model.UserId);
             return RedirectToAction("Search");
         }
 
