@@ -56,10 +56,10 @@ namespace app.WebApp.AdminControllers
             return View(viewModel);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Delete(long id)
+        [HttpPost]
+        public async Task<IActionResult> Delete(MainMenuSearchDto model)
         {
-            var res = await _iService.DeleteRecord(id);
+            var res = await _iService.DeleteRecord(model.Id);
             return RedirectToAction("Search");
         }
 
