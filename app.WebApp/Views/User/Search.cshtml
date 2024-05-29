@@ -84,7 +84,7 @@
 
                 <div class="modal-body">
                     <h3 class="text-danger">Are you sure to delete this?</h3>
-                    @Html.HiddenFor(model => model.Id, new { id = "hidDeleteId" })
+                    @* @Html.HiddenFor(model => model.Id, new { id = "hidDeleteId" }) *@
                     @Html.HiddenFor(model => model.UserId, new { id = "hidDeleteUserId" })
 
                 </div>
@@ -201,7 +201,7 @@
 
         //Delete Modal
         function DeleteOnClick(userId) {
-            $("#hidDeleteUserId").val(userId);
+            $("#hidDeleteUserId").val(userId)
         }
 
     </script>
