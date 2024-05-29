@@ -70,6 +70,7 @@ namespace app.WebApp.AdminControllers
         public async Task<IActionResult> Delete(UserSearchDto model)
         {
             var res = await _iUserService.SoftDelete(model.UserId);
+
             return RedirectToAction("Search");
         }
 
