@@ -42,9 +42,7 @@ namespace app.WebApp.Controllers.AssetManage
             ViewBag.EmployeeList = new SelectList((await _iDropdownService.EmployeeSelectionList()).Select(s => new { s.Id, s.Name }), "Id", "Name");
             ViewBag.DepartmentList = new SelectList((await _iDropdownService.DepartmentSelectionList()).Select(s => new { s.Id, s.Name }), "Id", "Name");
             ViewBag.ProductList = new SelectList((await _iDropdownService.AssetSelectionList()).Select(s => new { s.Id, s.Name }), "Id", "Name");
-
-
-
+            ViewBag.StorehouseList = new SelectList((await _iDropdownService.StorehouseSelectionList()).Select(s => new { s.Id, s.Name }), "Id", "Name");
             return View(viewModel);
         }
 

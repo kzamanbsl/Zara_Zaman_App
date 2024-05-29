@@ -23,6 +23,8 @@ namespace app.Services.AssetAllocationServices
         public string EmployeeName { get; set; }
         public long? DepartmentId { get; set; }
         public string DepartmentName { get; set; }
+        public long StorehouseId { get; set; }
+        public string StorehouseName { get; set; }
         public DateTime Date { get; set; }
         public string Description { get; set; }
         public ActionEnum ActionEum { get { return (ActionEnum)this.ActionId; } }

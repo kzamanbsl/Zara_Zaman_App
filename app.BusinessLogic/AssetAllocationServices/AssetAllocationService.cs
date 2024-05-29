@@ -40,13 +40,17 @@ namespace app.Services.AssetAllocationServices
                            DateTime.Now.ToString("dd") + "-" +
                            poMax.ToString().PadLeft(2, '0');
 
-            AssetAllocation assetAllocation = new AssetAllocation();
-            assetAllocation.AllocationNo = poCid;
-            assetAllocation.Date = vm.Date;
-            assetAllocation.EmployeeId = vm.EmployeeId;
-            assetAllocation.DepartmentId = vm.DepartmentId;
-            assetAllocation.Description = vm.Description;
-            assetAllocation.StatusId = (int)AssetAllocationStatusEnum.Draft;
+            AssetAllocation assetAllocation = new AssetAllocation()
+            {
+                AllocationNo = poCid,
+                Date = vm.Date,
+                EmployeeId = vm.EmployeeId,
+                DepartmentId = vm.DepartmentId,
+                StorehouseId = vm.StorehouseId,
+                Description = vm.Description,
+                StatusId = (int)AssetAllocationStatusEnum.Draft
+            };
+
             var res = await _iEntityRepository.AddAsync(assetAllocation);
             vm.Id = res?.Id ?? 0;
             return true;
@@ -73,20 +77,23 @@ namespace app.Services.AssetAllocationServices
         public async Task<AssetAllocationViewModel> GetAssetAllocation(long assetAllocationId = 0)
         {
             AssetAllocationViewModel assetAllocationModel = new AssetAllocationViewModel();
-            assetAllocationModel = await Task.Run(() => (from t1 in _dbContext.AssetAllocation.Where(x => x.IsActive && x.Id == assetAllocationId)
-                                                         select new AssetAllocationViewModel
-                                                         {
-                                                             Id = t1.Id,
-                                                             AllocationNo = t1.AllocationNo,
-                                                             StatusId = (int)(AssetAllocationStatusEnum)t1.StatusId,
-                                                             EmployeeId = t1.EmployeeId,
-                                                             EmployeeName = t1.Employee.Name,
-                                                             DepartmentId = t1.DepartmentId,
-                                                             DepartmentName = t1.Department.Name,
-                                                             Date = t1.Date,
-                                                             //Qty = t1.Qty,
-                                                             Description = t1.Description,
-                                                         }).FirstOrDefault()); ;
+
+            assetAllocationModel = await _dbContext.AssetAllocation.AsNoTracking().Where(c => c.Id.Equals(assetAllocationId)).Include(c => c.Storehouse)
+                .Select(c => new AssetAllocationViewModel()
+                {
+                    Id = c.Id,
+                    AllocationNo = c.AllocationNo,
+                    StatusId = c.StatusId,
+                    EmployeeId = c.EmployeeId,
+                    EmployeeName = c.Employee.Name,
+                    DepartmentId = c.DepartmentId,
+                    DepartmentName = c.Department.Name,
+                    Date = c.Date,
+                    StorehouseName = c.Storehouse.Name,
+                    Description = c.Description,
+                }).FirstOrDefaultAsync();
+
+            if (assetAllocationModel == null) return assetAllocationModel;
 
             assetAllocationModel.AssetAllocationDetailsList = await Task.Run(() => (from t1 in _dbContext.AssetAllocationDetail.Where(x => x.IsActive && x.Allocation.Id == assetAllocationId)
                                                                                     select new AssetAllocationDetailViewModel
