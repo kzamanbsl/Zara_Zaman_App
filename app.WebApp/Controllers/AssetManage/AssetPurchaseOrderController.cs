@@ -1,6 +1,4 @@
-﻿using app.EntityModel.AppModels;
-using app.Services.DropdownServices;
-using app.Services.InventoryServices;
+﻿using app.Services.DropdownServices;
 using app.Services.AssetPurchaseOrderDetailServices;
 using app.Services.AssetPurchaseOrderServices;
 using app.Utility;
@@ -8,8 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using app.Services.IAssetnventoryServices;
 using app.EntityModel.DataTablePaginationModels;
-using app.Services.PurchaseOrderServices;
-using app.Services.DesignationServices;
 
 namespace app.WebApp.Controllers.AssetManage
 {
@@ -25,7 +21,6 @@ namespace app.WebApp.Controllers.AssetManage
             _iAssetPurchaseOrderService = iAssetPurchaseOrderService;
             _iAssetPurchaseOrderDetailService = iAssetPurchaseOrderDetailService;
             _iDropdownService = iDropdownService;
-            //_inventoryService = inventoryService;
             _iAssetInventoryService = iAssetInventoryService;
         }
 

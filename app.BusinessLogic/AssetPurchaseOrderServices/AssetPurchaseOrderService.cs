@@ -5,9 +5,6 @@ using app.Utility;
 using app.Services.AssetPurchaseOrderDetailServices;
 using Microsoft.EntityFrameworkCore;
 using app.EntityModel.DataTablePaginationModels;
-using app.Services.ProductServices;
-using app.Services.PurchaseOrderServices;
-using app.Services.SupplierServices;
 using app.EntityModel.AppModels.PurchaseModels;
 
 namespace app.Services.AssetPurchaseOrderServices
@@ -23,7 +20,7 @@ namespace app.Services.AssetPurchaseOrderServices
             _dbContext = dbContext;
             _iWorkContext = iWorkContext;
         }
-        
+
         public async Task<bool> AddRecord(AssetPurchaseOrderViewModel vm)
         {
 
@@ -51,7 +48,7 @@ namespace app.Services.AssetPurchaseOrderServices
             vm.Id = res?.Id ?? 0;
             return true;
         }
-        
+
         public async Task<bool> UpdateAssetPurchaseOrder(AssetPurchaseOrderViewModel vm)
         {
             var assetPurchaseOrder = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id == vm.Id);
@@ -66,7 +63,7 @@ namespace app.Services.AssetPurchaseOrderServices
             }
             return false;
         }
-        
+
         public async Task<AssetPurchaseOrderViewModel> GetAssetPurchaseOrder(long assetPurchaseOrderId = 0)
         {
             AssetPurchaseOrderViewModel assetPurchaseOrderModel = new AssetPurchaseOrderViewModel();

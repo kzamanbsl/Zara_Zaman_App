@@ -69,6 +69,34 @@
     </div>
 
 </section>
+<!--Delete Modal-->
+
+<div class="modal fade" tabindex="-1" id="deleteModal" data-toggle="modal" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form asp-action="Delete" asp-controller="User" method="post">
+                <div class="modal-header bg-light">
+                    <h5 class="modal-title " id="exampleModalLabel">Delete User</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <h3 class="text-danger">Are you sure to delete this?</h3>
+                    @* @Html.HiddenFor(model => model.Id, new { id = "hidDeleteId" }) *@
+                    @Html.HiddenFor(model => model.UserId, new { id = "hidDeleteUserId" })
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
 
 @section Scripts {
     @{
@@ -162,7 +190,7 @@
                         data: "Action",
                         render: function (data, type, row, meta) {
                             var editBtn = "<a href='UpdateRecord/" + row.userId + "'><i class='fas fa-pen text-warning m-1' title='Edit' aria-hidden='true'></i></a>";
-                            var deleteBtn = "<a href='Delete/" + row.userId + "'><i class='fas fa-trash text-danger m-1' title='Delete' aria-hidden='true'></i></a>";
+                            var deleteBtn = `<a href='Delete/${row.userId}' data-toggle='modal' data-target='#deleteModal' data-id='${row.userId}' onclick='DeleteOnClick("${row.userId}")'><i class='fas fa-trash text-danger m-1' title='Delete' aria-hidden='true'></i></a>`;
                             var actionBtn = editBtn + deleteBtn;
                             return actionBtn;
                         }
@@ -170,5 +198,11 @@
                 ]
             });
         }
+
+        //Delete Modal
+        function DeleteOnClick(userId) {
+            $("#hidDeleteUserId").val(userId)
+        }
+
     </script>
 }
