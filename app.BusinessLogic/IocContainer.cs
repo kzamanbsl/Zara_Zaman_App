@@ -1,10 +1,13 @@
-﻿using app.Services.AssetAllocationDetailServices;
+﻿using app.EntityModel.AppModels.AssetModels;
+using app.Services.AssetAllocationDetailServices;
 using app.Services.AssetAllocationServices;
 using app.Services.AssetCategoryServices;
 using app.Services.AssetInventoryServices;
 using app.Services.AssetItemServices;
 using app.Services.AssetPurchaseOrderDetailServices;
 using app.Services.AssetPurchaseOrderServices;
+using app.Services.AssetTransferDetailServices;
+using app.Services.AssetTransferServices;
 using app.Services.ATMAssemble.AssembleWorkCategoryServices;
 using app.Services.ATMAssemble.AssembleWorkDetailServices;
 using app.Services.ATMAssemble.AssembleWorkEmployeeServices;
@@ -112,6 +115,8 @@ namespace app.Services
             services.AddTransient<ISupplierCategoryService, SupplierCategoryService>();
             services.AddTransient<IBankService, BankService>();
             services.AddTransient<IBankBranchService, BankBranchService>();
+            services.AddTransient<IAssetTransferService, AssetTransferService>();
+            services.AddTransient<IAssetTransferDetailService, AssetTransferDetailService>();
 
 
             #region ATM Assemble

@@ -61,7 +61,7 @@ namespace app.Services.AssetPurchaseOrderServices
                 assetPurchaseOrder.PurchaseDate = vm.PurchaseDate;
                 assetPurchaseOrder.SupplierId = vm.SupplierId;
                 assetPurchaseOrder.StorehouseId = vm.StorehouseId;
-                await _iEntityRepository.UpdateAsync(assetPurchaseOrder);
+               var res= await _iEntityRepository.UpdateAsync(assetPurchaseOrder);
                 return true;
             }
             return false;

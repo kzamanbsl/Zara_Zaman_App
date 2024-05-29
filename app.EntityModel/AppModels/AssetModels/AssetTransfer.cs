@@ -11,7 +11,7 @@ public class AssetTransfer : BaseEntity
     public BusinessCenter FromStore { get; set; }
     public long ToStoreId { get; set; }
     public BusinessCenter ToStore { get; set; }
-    public string Remarks { get; set; }
+    public string Description { get; set; }
     public int StatusId { get; set; } // AssetTransferStatusEnum
 }
 

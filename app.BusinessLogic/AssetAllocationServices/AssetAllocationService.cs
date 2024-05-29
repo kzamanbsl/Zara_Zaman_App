@@ -59,19 +59,21 @@ namespace app.Services.AssetAllocationServices
         public async Task<bool> UpdateAssetAllocation(AssetAllocationViewModel vm)
         {
             var assetAllocation = _iEntityRepository.AllIQueryableAsync().FirstOrDefault(f => f.Id == vm.Id);
-            if (assetAllocation != null)
+            if (assetAllocation == null)
             {
-                assetAllocation.Id = vm.Id;
-                assetAllocation.AllocationNo = vm.AllocationNo;
-                assetAllocation.Date = vm.Date;
-                assetAllocation.EmployeeId = vm.EmployeeId;
-                assetAllocation.DepartmentId = vm.DepartmentId;
-                assetAllocation.StatusId = vm.StatusId;
-                assetAllocation.Description = vm.Description;
-                await _iEntityRepository.UpdateAsync(assetAllocation);
-                return true;
+                return false;
             }
-            return false;
+            assetAllocation.Id = vm.Id;
+            assetAllocation.AllocationNo = vm.AllocationNo;
+            assetAllocation.Date = vm.Date;
+            assetAllocation.EmployeeId = vm.EmployeeId;
+            assetAllocation.DepartmentId = vm.DepartmentId;
+            assetAllocation.StatusId = vm.StatusId;
+            assetAllocation.Description = vm.Description;
+            var res = await _iEntityRepository.UpdateAsync(assetAllocation);
+            return true;
+
+
         }
 
         public async Task<AssetAllocationViewModel> GetAssetAllocation(long assetAllocationId = 0)

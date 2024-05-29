@@ -65,6 +65,8 @@ namespace app.Infrastructure.ModelConfig
             new SupplierCategoryConfig()?.Configure(builder.Entity<SupplierCategory>());
             new BankBranchConfig()?.Configure(builder.Entity<BankBranch>());
             new BankConfig()?.Configure(builder.Entity<Bank>());
+            new AssetTransferConfig()?.Configure(builder.Entity<AssetTransfer>());
+            new AssetTransferDetailConfig()?.Configure(builder.Entity<AssetTransferDetail>());
 
 
             #region   AssembleWorkCategory,

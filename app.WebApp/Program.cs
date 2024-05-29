@@ -64,7 +64,9 @@ namespace app.WebApp
             //}
             if (app.Environment.IsDevelopment())
             {
-                app.UseExceptionHandler("/Home/Error");
+                 app.UseDeveloperExceptionPage();
+                //app.UseMigrationsEndPoint();
+                //app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
             else

@@ -44,6 +44,8 @@
         SalesOrderDetails,
         AssetAllocation,
         AssetAllocationDetail,
+        AssetTransfer,
+        AssetTransferDetail,
         SalesProductDetail,
         SupplierCategory,
         Bank,
