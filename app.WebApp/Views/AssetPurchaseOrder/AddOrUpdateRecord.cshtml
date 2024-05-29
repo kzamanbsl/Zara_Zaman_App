@@ -295,10 +295,11 @@
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
+
     <script>
         $(document).ready(function () {
             $('#Asset-Management').addClass('menu-open');
-            $('#AssetPurchaseOrderAddAssetPurchaseOrderAndDetail').addClass('active');
+            $('#AssetPurchaseOrderAddOrUpdateRecord').addClass('active');
 
             $('#supplierSelect').change(function () {
                 var supplierId = $(this).val();
